@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Xamarin.Forms;
-
+using FControlType = Xamarin.Forms.StackLayout;
 namespace HotForms {
 
 
-	public class Stack : BaseControl<StackLayout>, IEnumerable, IEnumerable<View> {
+	public class Stack : BaseControl<FControlType>, IEnumerable, IEnumerable<View> {
 		
 		public IEnumerator<View> GetEnumerator () => FormsControl.Children.GetEnumerator ();
 

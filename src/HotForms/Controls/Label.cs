@@ -1,7 +1,7 @@
 ﻿using System;
-using FControl = Xamarin.Forms.Label;
+using FControlType = Xamarin.Forms.Label;
 namespace HotForms {
-	public class Label : BaseControl<FControl> {
+	public class Label : BaseControl<FControlType> {
 		public string Text {
 			get => FormsControl.Text;
 			set => FormsControl.Text = value;

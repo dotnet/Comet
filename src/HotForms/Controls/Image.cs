@@ -1,7 +1,7 @@
 ﻿using System;
-using FControl = Xamarin.Forms.Image;
+using FControlType = Xamarin.Forms.Image;
 namespace HotForms {
-	public class Image : BaseControl<FControl> {
+	public class Image : BaseControl<FControlType> {
 		string source;
 		public string Source {
 			get => source;
@@ -13,7 +13,7 @@ namespace HotForms {
 					ImageSource = null;
 				}
 				object s = source;
-				var successs = HotForms.Internal.BindingExpression.TryConvert (ref s, FControl.SourceProperty, typeof (Xamarin.Forms.ImageSource), true);
+				var successs = HotForms.Internal.BindingExpression.TryConvert (ref s, FControlType.SourceProperty, typeof (Xamarin.Forms.ImageSource), true);
 				if (successs)
 					ImageSource = (Xamarin.Forms.ImageSource)s;
 				else
