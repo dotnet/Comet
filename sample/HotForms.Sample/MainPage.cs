@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace HotForms.Sample {
 	public class MainPage : StateHotPage {
@@ -23,9 +24,19 @@ namespace HotForms.Sample {
 					state.Foo = $"Clicked: {state.ClickCount++}";
 				},
 			},
-			new WebView {
-				VerticalOptions = LayoutOptions.FillAndExpand,
-				Source = state.Url,
+			//new WebView {
+			//	VerticalOptions = LayoutOptions.FillAndExpand,
+			//	Source = state.Url,
+			//}
+			new ListView {
+				new Stack {
+					new Label {
+						Text = "Foo",
+					}
+				},
+				new Xamarin.Forms.Label {
+					Text = "Foo",
+				},
 			}
 		};
 	}
@@ -53,4 +64,49 @@ namespace HotForms.Sample {
 			}
 		};
 	}
+
+	/// <summary>
+	/// This one lets you pass in any arbitrary list of view or cells. Great for a settings screen
+	/// </summary>
+	public class ListPage : HotPage {
+		protected override Xamarin.Forms.View Build () => new ListView {
+			new Stack {
+				new Label("First Item"),
+			},
+			new Stack {
+				new Label("Second Item"),
+			},
+			new Xamarin.Forms.SwitchCell(),
+		};
+	}
+
+
+	public class ListPage1 : HotPage {
+		protected override Xamarin.Forms.View Build () => new ListView {
+			ItemsSource = Enumerable.Range(0,10),
+			ViewFor  = (x) => new Stack {
+				new Label(x.ToString()),
+				new Label("Hi"),
+			},
+		};
+	}
+
+
+
+	public class ListPage2 : HotPage {
+		class MyDataModel {
+			public string Foo { get; set; } = "Foo";
+			public string Bar { get; set; } = "Bar";
+			public int Index { get; set; }
+		}
+		protected override Xamarin.Forms.View Build () => new ListView<MyDataModel> {
+			ItemsSource = Enumerable.Range (0, 10).Select(x=> new MyDataModel { Index = x }),
+			ViewFor = (x) => new Stack {
+				new Label($"Index: {x.Index}"),
+				new Label($"Foo: {x.Foo}"),
+				new Label($"Bar: {x.Bar}"),
+			},
+		};
+	}
+
 }

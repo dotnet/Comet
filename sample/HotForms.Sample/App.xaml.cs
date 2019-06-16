@@ -8,7 +8,7 @@ namespace HotForms.Sample {
 		{
 			InitializeComponent ();
 
-			MainPage = new MainPage ();
+			MainPage = new ListPage1 ();
 		}
 
 		protected override void OnStart ()
