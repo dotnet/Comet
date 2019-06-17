@@ -10,7 +10,6 @@ namespace HotForms {
 		CenterAndExpand,
 		EndAndExpand,
 		FillAndExpand
-		
 	}
 
 	public abstract class BaseControl {
