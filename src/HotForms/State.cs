@@ -11,8 +11,17 @@ namespace HotForms {
 
 	[Serializable]
 	public class State : DynamicObject, IState {
+
+		public IEnumerable<KeyValuePair<string,object>> ChangedProperties => changeDictionary;
+
+		internal void ResetChangeDictionary ()
+		{
+			changeDictionary.Clear ();
+		}
 		internal Action StateChanged;
 		Dictionary<string, object> dictionary = new Dictionary<string, object> ();
+
+		protected Dictionary<string, object> changeDictionary = new Dictionary<string, object> ();
 
 		public override bool TryGetMember (GetMemberBinder binder, out object result)
 		{
@@ -22,12 +31,21 @@ namespace HotForms {
 		}
 		public override bool TrySetMember (SetMemberBinder binder, object value)
 		{
+
+			if (dictionary.TryGetValue (binder.Name, out var val) && val == value)
+				return true;
 			dictionary [binder.Name] = value;
+			changeDictionary [binder.Name] = value;
 			if (!isUpdating)
 				EndUpdate ();
 			return true;
 		}
-
+		internal void Apply(State state)
+		{
+			foreach(var pair in state.changeDictionary) {
+				changeDictionary [pair.Key] = dictionary [pair.Key] = pair.Value;
+			}
+		}
 		public override IEnumerable<string> GetDynamicMemberNames () => dictionary.Keys;
 
 		protected bool UpdatePropertyValue<T> (ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")

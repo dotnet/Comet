@@ -40,9 +40,10 @@ namespace HotForms {
 			get {
 				if (state == null) {
 					var s = new State ();
-					s.StateChanged = Reload;
 					state = s.ActLike (typeof(T));
 					CreateState (state);
+					s.ResetChangeDictionary ();
+					s.StateChanged = Reload;
 				}
 				return state;
 			}
@@ -82,8 +83,9 @@ namespace HotForms {
 			get {
 				if (state == null) {
 					state = new State ();
-					state.StateChanged = Reload;
 					CreateState (state);
+					state.StateChanged = Reload;
+					state.ResetChangeDictionary ();
 				}
 				return state;
 			}
