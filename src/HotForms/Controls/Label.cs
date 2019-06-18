@@ -28,11 +28,19 @@ namespace HotForms {
 			if (IsControlCreated)
 				FormsControl.Text = TextBinding.Invoke ();
 		}
+
 		public Func<string> TextBinding { get; set; }
 
-		protected override object CreateFormsView ()
+
+
+		protected override void UnbindFormsView (object formsView)
 		{
-			var control = (FControlType)base.CreateFormsView ();
+
+		}
+
+		protected override void UpdateFormsView (object formsView)
+		{
+			var control = (FControlType)formsView;
 			if (Text != null && TextBinding != null)
 				throw new Exception ("Cannot use both Text and TextBinding");
 			if (TextBinding != null) {
@@ -44,20 +52,12 @@ namespace HotForms {
 					State.BindingState.AddViewProperty (props, updateTextFromBinding);
 				}
 				control.Text = text;
-				
+
 
 				//We are going to figure out what was 
 			} else {
 				control.Text = Text;
 			}
-
-			return control;
-
-		}
-
-
-		internal void PropertyChanged (string property, object value)
-		{
 
 		}
 	}

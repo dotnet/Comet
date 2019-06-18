@@ -24,13 +24,13 @@ namespace HotForms {
 			});
 		}
 
-		public void Add (FCell view)
-		{
-			if (view == null)
-				return;
+		//public void Add (FCell view)
+		//{
+		//	if (view == null)
+		//		return;
 
-			views.Add (view);
-		}
+		//	views.Add (view);
+		//}
 
 		void CheckCanAddView ()
 		{
@@ -87,6 +87,16 @@ namespace HotForms {
 			return control;
 		}
 
+		protected override void UnbindFormsView (object formsView)
+		{
+
+		}
+
+		protected override void UpdateFormsView (object formsView)
+		{
+
+		}
+
 		private void Control_ItemSelected (object sender, SelectedItemChangedEventArgs e)
 		{
 			ItemSelected?.Invoke ((T)e.SelectedItem);
@@ -106,42 +116,42 @@ namespace HotForms {
 	}
 
 	//Going to add a custom renderer, so it doesnt use forms horrible abstraction over tables views
-	public class GroupedListView<T> : View<FControlType> {
+	//public class GroupedListView<T> : View<FControlType> {
 
-		public Func<int> NumberOfSections { get; set; }
-		public Func<int,int> RowsInSections { get; set; }
-		public Func<(int section, int row), T> ObjectForRow { get; set; }
-		public Func<T, FView> ViewFor { get; set; }
+	//	public Func<int> NumberOfSections { get; set; }
+	//	public Func<int,int> RowsInSections { get; set; }
+	//	public Func<(int section, int row), T> ObjectForRow { get; set; }
+	//	public Func<T, FView> ViewFor { get; set; }
 
-		public Action<T> ItemSelected { get; set; }
+	//	public Action<T> ItemSelected { get; set; }
 
-		protected override object CreateFormsView ()
-		{
-			var control = (FControlType)base.CreateFormsView ();
-			control.HasUnevenRows = true;
-			if (ViewFor != null)
-				control.ItemTemplate = new ListViewCellTemplate<T> { CellFor = ViewFor };
-			if (ItemSelected != null)
-				control.ItemSelected += Control_ItemSelected;
-			return control;
-		}
+	//	protected override object CreateFormsView ()
+	//	{
+	//		var control = (FControlType)base.CreateFormsView ();
+	//		control.HasUnevenRows = true;
+	//		if (ViewFor != null)
+	//			control.ItemTemplate = new ListViewCellTemplate<T> { CellFor = ViewFor };
+	//		if (ItemSelected != null)
+	//			control.ItemSelected += Control_ItemSelected;
+	//		return control;
+	//	}
 
-		private void Control_ItemSelected (object sender, SelectedItemChangedEventArgs e)
-		{
-			ItemSelected?.Invoke ((T)e.SelectedItem);
-		}
+	//	private void Control_ItemSelected (object sender, SelectedItemChangedEventArgs e)
+	//	{
+	//		ItemSelected?.Invoke ((T)e.SelectedItem);
+	//	}
 
-		class ListViewCellTemplate<T> : Template {
-			public Func<T, FView> CellFor { get; set; }
-			protected override DataTemplate OnSelectTemplate (object item, BindableObject container)
-			{
-				return new DataTemplate (() => {
-					return new ViewCell {
-						View = CellFor.Invoke ((T)item)
-					};
-				});
-			}
-		}
-	}
+	//	class ListViewCellTemplate<T> : Template {
+	//		public Func<T, FView> CellFor { get; set; }
+	//		protected override DataTemplate OnSelectTemplate (object item, BindableObject container)
+	//		{
+	//			return new DataTemplate (() => {
+	//				return new ViewCell {
+	//					View = CellFor.Invoke ((T)item)
+	//				};
+	//			});
+	//		}
+	//	}
+	//}
 
 }

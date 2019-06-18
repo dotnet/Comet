@@ -13,7 +13,7 @@ namespace HotForms {
 	}
 
 	public abstract class View {
-		
+
 		protected State State { get; set; }
 
 		public View ()
@@ -22,21 +22,42 @@ namespace HotForms {
 			State.StartBuildingView ();
 		}
 
+		internal void UpdateFromOldView (object view) => FormsView = view;
 
-		protected bool IsControlCreated => formsView != null;
+
+		public bool IsControlCreated => formsView != null;
 
 		object formsView;
 		public object FormsView {
-			get => formsView ?? (formsView = CreateFormsView ());
-			protected set => formsView = value;
+			get => formsView ?? (FormsView = CreateFormsView ());
+			protected set {
+				if(value == null) {
+					if (formsView != null) {
+						UnbindFormsView (formsView);
+						formsView = null;
+					}
+					return;
+				}
+				if (formsView == value)
+					return;
+				if (formsView != null)
+					UnbindFormsView (formsView);
+				formsView = value;
+				UpdateFormsView (formsView);
+			}
 		}
+
+		protected abstract void UnbindFormsView (object formsView);
+		protected abstract void UpdateFormsView (object formsView);
+
 		protected abstract object CreateFormsView ();
 
-		public static implicit operator Xamarin.Forms.View (View control )=> (Xamarin.Forms.View)control.FormsView;
+		public static implicit operator Xamarin.Forms.View (View control) => (Xamarin.Forms.View)control.FormsView;
+		
 	}
 
 	//Right now this directly ties to Xamarin.Forms. I plan on changing this!
-	public class View<T> : View where T : Xamarin.Forms.View, new() {
+	public abstract class View<T> : View where T : Xamarin.Forms.View, new() {
 
 
 		protected override object CreateFormsView () => new T ();

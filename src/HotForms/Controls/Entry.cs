@@ -39,9 +39,22 @@ namespace HotForms {
 
 		private void FormsControl_Focused (object sender, Xamarin.Forms.FocusEventArgs e) => Focused?.Invoke (this);
 
-		protected override object CreateFormsView ()
+
+		protected override void UnbindFormsView (object formsView)
 		{
-			var control = (FControlType)base.CreateFormsView ();
+
+			var control = (FControlType)formsView;
+
+			control.Focused -= FormsControl_Focused;
+			control.TextChanged -= FormsControl_TextChanged;
+			control.Unfocused -= FormsControl_Unfocused;
+			control.Completed -= FormsControl_Completed;
+			
+		}
+
+		protected override void UpdateFormsView (object formsView)
+		{
+			var control = (FControlType)formsView;
 
 			control.Focused += FormsControl_Focused;
 			control.TextChanged += FormsControl_TextChanged;
@@ -50,7 +63,6 @@ namespace HotForms {
 
 			control.Text = Text;
 			control.Placeholder = Placeholder;
-			return control;
 		}
 	}
 }

@@ -9,6 +9,7 @@ namespace HotForms.Sample {
 
 		protected override void CreateState (dynamic state)
 		{
+			Console.WriteLine ("Create State Called");
 			state.CanEdit = true;
 			state.Text = "Foo";
 			state.ClickCount = 1;
@@ -19,12 +20,12 @@ namespace HotForms.Sample {
 		protected override View Build (dynamic state) =>
 			new Stack {
 			 (state.CanEdit ?
-				(Xamarin.Forms.View)new Entry {
+				(View)new Entry {
 					Text = state.Text,
 					Completed =(e)=> state.Text = e
 				}
 				: new Label { Text =  $"{state.Text}: multiText" }),// Fromated Text will warn you. This should be done by TextBinding
-				new Label {TextBinding = ()=> state.Text},
+				new Label {Text = state.Text},
 				new Button{Text = "Toggle Entry/Label", OnClick = ()=> state.CanEdit = !state.CanEdit},
 				new Button{Text = "Update Text", OnClick = ()=>{
 						state.Text = $"Click Count: {state.ClickCount++}";
@@ -48,7 +49,7 @@ namespace HotForms.Sample {
 			},
 			new Label {
 				Text = state.Foo,
-				TextBinding = ()=> state.Foo,
+				//TextBinding = ()=> state.Foo,
 			},
 			new Button {
 				Text = "Click Me",
@@ -102,13 +103,12 @@ namespace HotForms.Sample {
 	/// </summary>
 	public class ListPage : HotPage {
 		protected override View Build () => new ListView {
-			new Stack {
-				new Label(){Text = "First Item",
-			},
-			new Stack {
-				new Label{Text = "Second Item" },
-			},
-			//new Xamarin.Forms.SwitchCell(),
+				new Stack {
+					new Label(){Text = "First Item",
+				},
+				new Stack {
+					new Label{Text = "Second Item" },
+				}
 			}
 		};
 	}

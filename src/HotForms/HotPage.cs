@@ -17,13 +17,15 @@ namespace HotForms {
 		{
 			SetupView ();
 		}
-
+		View currentView;
 		void SetupView()
 		{
-			var oldView = base.Content;
+			var oldView = currentView;
 			var newView = Build ();
-			//TODO compare and update old View;
-			base.Content = newView;
+			if(oldView != null) {
+				newView.DiffUpdate (oldView);
+			}
+			base.Content = currentView = newView;
 		}
 
 		protected override void OnAppearing ()
@@ -55,15 +57,20 @@ namespace HotForms {
 			SetupView ();
 		}
 
+		View currentView;
 		void SetupView ()
 		{
-			var oldView = base.Content;
+			var oldView = currentView;
 			//It is always a state!!!
-			using (new StateBuilder ((State)(object)State)) {
+			var state = (State)(object)State;
+			state.BindingState.Clear ();
+			using (new StateBuilder (state)) {
 				var newView = Build (State);
-				//TODO compare and update old View;
-				base.Content = newView;
+				if (oldView != null)
+					newView.DiffUpdate (oldView);
+				base.Content = currentView = newView;
 			}
+			Console.WriteLine ("Page is recreated");
 		}
 
 		protected override void OnAppearing ()
@@ -100,14 +107,21 @@ namespace HotForms {
 			SetupView ();
 		}
 
+
+		View currentView;
 		void SetupView ()
 		{
-			var oldView = base.Content;
+			Console.WriteLine ("Setup View is Called");
+			var oldView = currentView;
+			//It is always a state!!!
+			State.BindingState.Clear ();
 			using (new StateBuilder (State)) {
 				var newView = Build (State);
-				//TODO compare and update old View;
-				base.Content = newView;
+				if (oldView != null)
+					newView.DiffUpdate (oldView);
+				base.Content = currentView = newView;
 			}
+			Console.WriteLine ("Page is recreated");
 		}
 
 		protected override void OnAppearing ()
