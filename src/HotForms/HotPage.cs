@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 using System.Dynamic;
 using ImpromptuInterface;
 using Xamarin.Forms;
@@ -66,11 +65,12 @@ namespace HotForms {
 			state.BindingState.Clear ();
 			using (new StateBuilder (state)) {
 				var newView = Build (State);
-				if (oldView != null)
+				if (oldView != null) {
+					Console.WriteLine ("Page is recreated");
 					newView.DiffUpdate (oldView);
+				}
 				base.Content = currentView = newView;
 			}
-			Console.WriteLine ("Page is recreated");
 		}
 
 		protected override void OnAppearing ()
@@ -111,17 +111,17 @@ namespace HotForms {
 		View currentView;
 		void SetupView ()
 		{
-			Console.WriteLine ("Setup View is Called");
 			var oldView = currentView;
 			//It is always a state!!!
 			State.BindingState.Clear ();
 			using (new StateBuilder (State)) {
 				var newView = Build (State);
-				if (oldView != null)
+				if (oldView != null) {
+					Console.WriteLine ("Page is recreated");
 					newView.DiffUpdate (oldView);
+				}
 				base.Content = currentView = newView;
 			}
-			Console.WriteLine ("Page is recreated");
 		}
 
 		protected override void OnAppearing ()
