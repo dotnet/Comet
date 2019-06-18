@@ -19,7 +19,7 @@ namespace HotForms.Sample {
 		protected override View Build (dynamic state) =>
 			new Stack {
 			 (state.CanEdit ?
-				(Xamarin.Forms.View)new Entry (state) {
+				(Xamarin.Forms.View)new Entry {
 					Text = state.Text,
 					Completed =(e)=> state.Text = e
 				}
@@ -87,7 +87,6 @@ namespace HotForms.Sample {
 		protected override View Build (IFoo state) => new Stack {
 			new Label {
 				Text = state.Foo,
-				TextBinding =()=> state.Foo,
 			},
 			new Button {
 				Text = "Click Me",

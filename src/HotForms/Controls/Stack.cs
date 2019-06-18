@@ -7,13 +7,9 @@ namespace HotForms {
 
 
 	public class Stack : View<FControlType>, IEnumerable, IEnumerable<Xamarin.Forms.View> {
-		
+
 		public IEnumerator<Xamarin.Forms.View> GetEnumerator () => FormsControl.Children.GetEnumerator ();
-
-
 		IEnumerator IEnumerable.GetEnumerator () => FormsControl.Children.GetEnumerator ();
-
-
 		public void Add (Xamarin.Forms.View view)
 		{
 			if (view == null)

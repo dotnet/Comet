@@ -2,48 +2,16 @@
 using FControlType = Xamarin.Forms.Entry;
 namespace HotForms {
 	public class Entry : View<FControlType> {
-		private string text;
 
 		public Entry ()
 		{
-		}
-		State _state;
-		public Entry (State state)
-		{
-			_state = state;
-			state.StartBuildingView ();
+
 		}
 
+		string text;
 		public string Text {
 			get => text;
-			set {
-				//TODO: move this to a magic extension
-				//We can find magic bindings
-				if (_state?.IsBuilding ?? false) {
-					var props = _state.EndProperty ();
-					var propCount = props.Length;
-					//This is databound!
-					if (propCount > 0) {
-						bool isGlobal = propCount > 1;
-						if (propCount == 1) {
-							var prop = props [0];
-							var stateValue = _state.GetValue (prop);
-							//1 to 1 binding!
-							if (value == stateValue) {
-								_state.BindingState.AddViewProperty (prop, updateText);
-							} else {
-								isGlobal = true;
-							}
-						}
-
-						if (isGlobal) {
-							_state.BindingState.AddGlobalProperties (props);
-						}
-					}
-				}
-				text = value;
-				updateText (value);
-			}
+			set => this.SetValue (State, ref text, value, updateText);
 		}
 
 		void updateText (object stringObject)
@@ -74,8 +42,6 @@ namespace HotForms {
 		protected override object CreateFormsView ()
 		{
 			var control = (FControlType)base.CreateFormsView ();
-
-
 
 			control.Focused += FormsControl_Focused;
 			control.TextChanged += FormsControl_TextChanged;

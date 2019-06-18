@@ -13,8 +13,16 @@ namespace HotForms {
 	}
 
 	public abstract class View {
-
 		
+		protected State State { get; set; }
+
+		public View ()
+		{
+			State = StateBuilder.CurrentState;
+			State.StartBuildingView ();
+		}
+
+
 		protected bool IsControlCreated => formsView != null;
 
 		object formsView;
