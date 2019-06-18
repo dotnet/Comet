@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using FControlType = Xamarin.Forms.Button;
 namespace HotForms {
-	public class Button : BaseControl<FControlType> {
+	public class Button : View<FControlType> {
 		public string Text {
 			get => FormsControl.Text;
 			set => FormsControl.Text = value;

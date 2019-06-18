@@ -7,10 +7,34 @@ using System.Runtime.CompilerServices;
 namespace HotForms {
 
 	public interface IState {
+
 	}
+
+	public class StateBuilder : IDisposable {
+		static List<State> currentStates = new List<State> ();
+		public static State CurrentState => currentStates.LastOrDefault ();
+		public StateBuilder(State state)
+		{
+			State = state;
+			state.StartBuildingView ();
+			currentStates.Add (state);
+		}
+
+		public State State { get; }
+
+		public void Dispose ()
+		{
+			State.EndBuildingView ();
+			currentStates.Remove (State);
+		}
+	}
+
 
 	[Serializable]
 	public class State : DynamicObject, IState {
+
+
+		public BindingState BindingState { get; } = new BindingState ();
 
 		public IEnumerable<KeyValuePair<string,object>> ChangedProperties => changeDictionary;
 
@@ -25,19 +49,33 @@ namespace HotForms {
 
 		public override bool TryGetMember (GetMemberBinder binder, out object result)
 		{
+			if (isBuilding)
+				listProperties.Add (binder.Name);
 			dictionary.TryGetValue (binder.Name, out var val);
 			result = val;
 			return true;
 		}
+
+
+		public object GetValue (string property)
+		{
+			dictionary.TryGetValue (property, out var val);
+			return val;
+		}
+
+
+
+		List<(string property, object value)> pendingUpdates = new List<(string, object)> ();
 		public override bool TrySetMember (SetMemberBinder binder, object value)
 		{
-
 			if (dictionary.TryGetValue (binder.Name, out var val) && val == value)
 				return true;
 			dictionary [binder.Name] = value;
 			changeDictionary [binder.Name] = value;
-			if (!isUpdating)
+			pendingUpdates.Add ((binder.Name, value));
+			if (!isUpdating) {
 				EndUpdate ();
+			}
 			return true;
 		}
 		internal void Apply(State state)
@@ -63,6 +101,40 @@ namespace HotForms {
 		{
 			return base.TryConvert (binder, out result);
 		}
+		bool isBuilding;
+		public bool IsBuilding => isBuilding;
+		internal void StartBuildingView()
+		{
+			isBuilding = true;
+			if (listProperties.Any ()) {
+				BindingState.AddGlobalProperties (listProperties);
+			}
+			listProperties.Clear ();
+		}
+		internal void EndBuildingView()
+		{
+			listProperties.Clear ();
+			isBuilding = false;
+		}
+
+		List<string> listProperties = new List<string> ();
+		internal void StartProperty()
+		{
+			isBuilding = true;
+			if(listProperties.Any()) {
+				BindingState.AddGlobalProperties (listProperties);
+			}
+			listProperties.Clear ();
+		}
+
+		internal string[] EndProperty()
+		{
+			var props = listProperties.Distinct().ToArray();
+			listProperties.Clear ();
+			return props;
+
+		}
+
 
 		bool isUpdating;
 		public void StartUpdate()
@@ -73,7 +145,11 @@ namespace HotForms {
 		public void EndUpdate ()
 		{
 			isUpdating = false;
-			StateChanged?.Invoke ();
+
+			if (pendingUpdates.Any () && !BindingState.UpdateValues (pendingUpdates)) {
+				StateChanged?.Invoke ();
+			}
+			pendingUpdates.Clear ();
 		}
 	}
 }

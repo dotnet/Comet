@@ -41,7 +41,7 @@ namespace HotForms {
 
 		}
 
-		public void Add (BaseControl view)
+		public void Add (View view)
 		{
 			if (view == null)
 				return;
@@ -67,7 +67,7 @@ namespace HotForms {
 	}
 
 
-	public class ListView<T> : BaseControl<FControlType>  {
+	public class ListView<T> : View<FControlType>  {
 
 		public IEnumerable ItemsSource { get; set; }
 		public Func<T,FView> ViewFor { get; set; }
@@ -106,7 +106,7 @@ namespace HotForms {
 	}
 
 	//Going to add a custom renderer, so it doesnt use forms horrible abstraction over tables views
-	public class GroupedListView<T> : BaseControl<FControlType> {
+	public class GroupedListView<T> : View<FControlType> {
 
 		public Func<int> NumberOfSections { get; set; }
 		public Func<int,int> RowsInSections { get; set; }

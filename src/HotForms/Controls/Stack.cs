@@ -6,15 +6,15 @@ using FControlType = Xamarin.Forms.StackLayout;
 namespace HotForms {
 
 
-	public class Stack : BaseControl<FControlType>, IEnumerable, IEnumerable<View> {
+	public class Stack : View<FControlType>, IEnumerable, IEnumerable<Xamarin.Forms.View> {
 		
-		public IEnumerator<View> GetEnumerator () => FormsControl.Children.GetEnumerator ();
+		public IEnumerator<Xamarin.Forms.View> GetEnumerator () => FormsControl.Children.GetEnumerator ();
 
 
 		IEnumerator IEnumerable.GetEnumerator () => FormsControl.Children.GetEnumerator ();
 
 
-		public void Add (View view)
+		public void Add (Xamarin.Forms.View view)
 		{
 			if (view == null)
 				return;

@@ -7,10 +7,10 @@ using Xamarin.Forms;
 namespace HotForms {
 	//For now this subclasses Content Page.  I pln on changing that and having an implicit cast.
 	public abstract class HotPage : ContentPage {
-		public new View Content {
-			get => base.Content;// ?? (base.Content = Build());
-			set => throw new Exception ("Don't do this!!!");
-		}
+		//public new View Content {
+		//	get => base.Content;// ?? (base.Content = Build());
+		//	set => throw new Exception ("Don't do this!!!");
+		//}
 		protected abstract View Build ();
 
 		public void Reload()
@@ -58,9 +58,12 @@ namespace HotForms {
 		void SetupView ()
 		{
 			var oldView = base.Content;
-			var newView = Build (State);
-			//TODO compare and update old View;
-			base.Content = newView;
+			//It is always a state!!!
+			using (new StateBuilder ((State)(object)State)) {
+				var newView = Build (State);
+				//TODO compare and update old View;
+				base.Content = newView;
+			}
 		}
 
 		protected override void OnAppearing ()
@@ -84,8 +87,8 @@ namespace HotForms {
 				if (state == null) {
 					state = new State ();
 					CreateState (state);
-					state.StateChanged = Reload;
 					state.ResetChangeDictionary ();
+					state.StateChanged = Reload;
 				}
 				return state;
 			}
@@ -100,9 +103,11 @@ namespace HotForms {
 		void SetupView ()
 		{
 			var oldView = base.Content;
-			var newView = Build (State);
-			//TODO compare and update old View;
-			base.Content = newView;
+			using (new StateBuilder (State)) {
+				var newView = Build (State);
+				//TODO compare and update old View;
+				base.Content = newView;
+			}
 		}
 
 		protected override void OnAppearing ()

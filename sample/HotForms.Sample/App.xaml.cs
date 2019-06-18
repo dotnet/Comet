@@ -8,7 +8,7 @@ namespace HotForms.Sample {
 		{
 			InitializeComponent ();
 
-			MainPage = new ListPage1 ();
+			MainPage = new NavigationPage (new MyDynamicStatePage ());
 		}
 
 		protected override void OnStart ()

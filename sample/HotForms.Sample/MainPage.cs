@@ -1,7 +1,38 @@
 ﻿using System;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace HotForms.Sample {
+
+
+	public class MyDynamicStatePage : StateHotPage {
+
+		protected override void CreateState (dynamic state)
+		{
+			state.CanEdit = true;
+			state.Text = "Foo";
+			state.ClickCount = 1;
+
+
+		}
+
+		protected override View Build (dynamic state) =>
+			new Stack {
+			 (state.CanEdit ?
+				(Xamarin.Forms.View)new Entry (state) {
+					Text = state.Text,
+					Completed =(e)=> state.Text = e
+				}
+				: new Label { Text =  $"{state.Text}: multiText" }),// Fromated Text will warn you. This should be done by TextBinding
+				new Label {TextBinding = ()=> state.Text},
+				new Button{Text = "Toggle Entry/Label", OnClick = ()=> state.CanEdit = !state.CanEdit},
+				new Button{Text = "Update Text", OnClick = ()=>{
+						state.Text = $"Click Count: {state.ClickCount++}";
+					}
+				}
+			};
+	}
+
 	public class MainPage : StateHotPage {
 		protected override void CreateState (dynamic state)
 		{
@@ -11,12 +42,13 @@ namespace HotForms.Sample {
 			state.Url = "https://www.Xamarin.com";
 		}
 
-		protected override Xamarin.Forms.View Build (dynamic state) => new Stack {
+		protected override View Build (dynamic state) => new Stack {
 			new Image {
 				Source = state.ImageUrl,
 			},
 			new Label {
-				Text = state.Foo
+				Text = state.Foo,
+				TextBinding = ()=> state.Foo,
 			},
 			new Button {
 				Text = "Click Me",
@@ -52,9 +84,10 @@ namespace HotForms.Sample {
 			state.ClickCount = 1;
 		}
 
-		protected override Xamarin.Forms.View Build (IFoo state) => new Stack {
+		protected override View Build (IFoo state) => new Stack {
 			new Label {
-				Text = state.Foo
+				Text = state.Foo,
+				TextBinding =()=> state.Foo,
 			},
 			new Button {
 				Text = "Click Me",
@@ -69,24 +102,25 @@ namespace HotForms.Sample {
 	/// This one lets you pass in any arbitrary list of view or cells. Great for a settings screen
 	/// </summary>
 	public class ListPage : HotPage {
-		protected override Xamarin.Forms.View Build () => new ListView {
+		protected override View Build () => new ListView {
 			new Stack {
-				new Label("First Item"),
+				new Label(){Text = "First Item",
 			},
 			new Stack {
-				new Label("Second Item"),
+				new Label{Text = "Second Item" },
 			},
-			new Xamarin.Forms.SwitchCell(),
+			//new Xamarin.Forms.SwitchCell(),
+			}
 		};
 	}
 
 
 	public class ListPage1 : HotPage {
-		protected override Xamarin.Forms.View Build () => new ListView {
-			ItemsSource = Enumerable.Range(0,10),
-			ViewFor  = (x) => new Stack {
-				new Label(x.ToString()),
-				new Label("Hi"),
+		protected override View Build () => new ListView {
+			ItemsSource = Enumerable.Range (0, 10),
+			ViewFor = (x) => new Stack {
+				new Label{Text = x.ToString() },
+				new Label{Text = "Hi" },
 			},
 		};
 	}
@@ -99,12 +133,12 @@ namespace HotForms.Sample {
 			public string Bar { get; set; } = "Bar";
 			public int Index { get; set; }
 		}
-		protected override Xamarin.Forms.View Build () => new ListView<MyDataModel> {
-			ItemsSource = Enumerable.Range (0, 10).Select(x=> new MyDataModel { Index = x }),
+		protected override View Build () => new ListView<MyDataModel> {
+			ItemsSource = Enumerable.Range (0, 10).Select (x => new MyDataModel { Index = x }),
 			ViewFor = (x) => new Stack {
-				new Label($"Index: {x.Index}"),
-				new Label($"Foo: {x.Foo}"),
-				new Label($"Bar: {x.Bar}"),
+				new Label{Text = $"Index: {x.Index}" },
+				new Label{Text = $"Foo: {x.Foo}" },
+				new Label{Text = $"Bar: {x.Bar}" },
 			},
 		};
 	}

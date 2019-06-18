@@ -12,7 +12,11 @@ namespace HotForms {
 		FillAndExpand
 	}
 
-	public abstract class BaseControl {
+	public abstract class View {
+
+		
+		protected bool IsControlCreated => formsView != null;
+
 		object formsView;
 		public object FormsView {
 			get => formsView ?? (formsView = CreateFormsView ());
@@ -20,15 +24,14 @@ namespace HotForms {
 		}
 		protected abstract object CreateFormsView ();
 
-		public static implicit operator Xamarin.Forms.View (BaseControl control )=> (Xamarin.Forms.View)control.FormsView;
+		public static implicit operator Xamarin.Forms.View (View control )=> (Xamarin.Forms.View)control.FormsView;
 	}
 
 	//Right now this directly ties to Xamarin.Forms. I plan on changing this!
-	public class BaseControl<T> : BaseControl where T : Xamarin.Forms.View, new() {
+	public class View<T> : View where T : Xamarin.Forms.View, new() {
 
 
 		protected override object CreateFormsView () => new T ();
-
 		protected T FormsControl {
 			get => (FormsView as T);
 			set => FormsView = value;

@@ -1,7 +1,7 @@
 ﻿using System;
 using FControlType = Xamarin.Forms.WebView;
 namespace HotForms {
-	public class WebView : BaseControl<FControlType> {
+	public class WebView : View<FControlType> {
 		public string Html {
 			get => (FormsControl.Source as Xamarin.Forms.HtmlWebViewSource)?.Html;
 			set => FormsControl.Source = new Xamarin.Forms.HtmlWebViewSource { Html = value };

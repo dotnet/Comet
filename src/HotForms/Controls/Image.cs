@@ -1,7 +1,7 @@
 ﻿using System;
 using FControlType = Xamarin.Forms.Image;
 namespace HotForms {
-	public class Image : BaseControl<FControlType> {
+	public class Image : View<FControlType> {
 		string source;
 		public string Source {
 			get => source;
