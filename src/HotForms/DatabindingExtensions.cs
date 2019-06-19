@@ -16,7 +16,7 @@ namespace HotForms {
 					bool isGlobal = propCount > 1;
 					if (propCount == 1) {
 						var prop = props [0];
-						var stateValue = (T)state.GetValue (prop);
+						var stateValue = (T)state.GetValue(prop);
 						//1 to 1 binding!
 						if (EqualityComparer<T>.Default.Equals (stateValue, newValue)) {
 							state.BindingState.AddViewProperty (prop, onUpdate);

@@ -3,11 +3,36 @@ using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace HotForms {
-	public abstract class ViewBuilder {
-		public abstract View BuildView ();
+	public abstract class ViewBuilder : State {
+		protected abstract View Build ();
+
+		public void Reload ()
+		{
+			ReBuildView ();
+		}
+		protected View View {
+			get => GetProperty<View> ();
+			set => SetProperty (value);
+		}
+
+		public View ReBuildView()
+		{
+			var oldView = View;
+			BindingState.Clear ();
+			using (new StateBuilder (this)) {
+				var newView = Build ();
+				if (oldView != null) {
+					newView.DiffUpdate (oldView);
+				}
+				View = newView;
+			}
+			return View;
+		}
 	}
 
-	public abstract class StateViewBuilder {
+
+
+public abstract class StateViewBuilder {
 
 		State state;
 		public State State {

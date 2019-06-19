@@ -1,23 +1,37 @@
 ﻿using System;
 using System.Linq;
-using Xamarin.Forms;
 
 namespace HotForms.Sample {
 
 
-	public class MyDynamicStatePage : StateHotPage {
-
-		protected override void CreateState (dynamic state)
-		{
-			Console.WriteLine ("Create State Called");
-			state.CanEdit = true;
-			state.Text = "Foo";
-			state.ClickCount = 1;
-
-
+	public class MyDynamicStatePage : HotPage {
+		class MyBindingObject : BindingObject {
+			public bool CanEdit {
+				get => GetProperty<bool> ();
+				set => SetProperty (value);
+			}
+			public string Text {
+				get => GetProperty<string> ();
+				set => SetProperty (value);
+			}
+			public int ClickCount {
+				get => GetProperty<int> ();
+				set => SetProperty (value);
+			}
 		}
 
-		protected override View Build (dynamic state) =>
+		[State]
+		readonly MyBindingObject state;
+		public MyDynamicStatePage()
+		{
+			state = new MyBindingObject {
+				Text = "Foo",
+				CanEdit = true,
+				ClickCount = 1,
+			};
+		}
+
+		protected override View Build () =>
 			new Stack {
 			 (state.CanEdit ?
 				(View)new Entry {
@@ -34,69 +48,69 @@ namespace HotForms.Sample {
 			};
 	}
 
-	public class MainPage : StateHotPage {
-		protected override void CreateState (dynamic state)
-		{
-			state.Foo = "Hello";
-			state.ClickCount = 1;
-			state.ImageUrl = "http://lh3.googleusercontent.com/_0mvh5XaOwhfDROmqadX1N7morS0kYH7Za4Ym9C5W8H0vQq9X4OkAJz-NTDgOX_Sq1ZIfQi-Vw";
-			state.Url = "https://www.Xamarin.com";
-		}
+	//public class MainPage : StateHotPage {
+	//	protected override void CreateState (dynamic state)
+	//	{
+	//		state.Foo = "Hello";
+	//		state.ClickCount = 1;
+	//		state.ImageUrl = "http://lh3.googleusercontent.com/_0mvh5XaOwhfDROmqadX1N7morS0kYH7Za4Ym9C5W8H0vQq9X4OkAJz-NTDgOX_Sq1ZIfQi-Vw";
+	//		state.Url = "https://www.Xamarin.com";
+	//	}
 
-		protected override View Build (dynamic state) => new Stack {
-			new Image {
-				Source = state.ImageUrl,
-			},
-			new Label {
-				Text = state.Foo,
-				//TextBinding = ()=> state.Foo,
-			},
-			new Button {
-				Text = "Click Me",
-				OnClick =()=>{
-					state.Foo = $"Clicked: {state.ClickCount++}";
-				},
-			},
-			//new WebView {
-			//	VerticalOptions = LayoutOptions.FillAndExpand,
-			//	Source = state.Url,
-			//}
-			new ListView {
-				new Stack {
-					new Label {
-						Text = "Foo",
-					}
-				},
-				new Xamarin.Forms.Label {
-					Text = "Foo",
-				},
-			}
-		};
-	}
+	//	protected override View Build (dynamic state) => new Stack {
+	//		new Image {
+	//			Source = state.ImageUrl,
+	//		},
+	//		new Label {
+	//			Text = state.Foo,
+	//			//TextBinding = ()=> state.Foo,
+	//		},
+	//		new Button {
+	//			Text = "Click Me",
+	//			OnClick =()=>{
+	//				state.Foo = $"Clicked: {state.ClickCount++}";
+	//			},
+	//		},
+	//		//new WebView {
+	//		//	VerticalOptions = LayoutOptions.FillAndExpand,
+	//		//	Source = state.Url,
+	//		//}
+	//		new ListView {
+	//			new Stack {
+	//				new Label {
+	//					Text = "Foo",
+	//				}
+	//			},
+	//			new Xamarin.Forms.Label {
+	//				Text = "Foo",
+	//			},
+	//		}
+	//	};
+	//}
 
-	public interface IFoo : IState {
-		string Foo { get; set; }
-		int ClickCount { get; set; }
-	}
-	public class MainPage2 : StateHotPage<IFoo> {
-		protected override void CreateState (IFoo state)
-		{
-			state.Foo = "Hello";
-			state.ClickCount = 1;
-		}
+	//public interface IFoo : IState {
+	//	string Foo { get; set; }
+	//	int ClickCount { get; set; }
+	//}
+	//public class MainPage2 : StateHotPage<IFoo> {
+	//	protected override void CreateState (IFoo state)
+	//	{
+	//		state.Foo = "Hello";
+	//		state.ClickCount = 1;
+	//	}
 
-		protected override View Build (IFoo state) => new Stack {
-			new Label {
-				Text = state.Foo,
-			},
-			new Button {
-				Text = "Click Me",
-				OnClick =()=>{
-					state.Foo = $"Clicked: {state.ClickCount++}";
-				},
-			}
-		};
-	}
+	//	protected override View Build (IFoo state) => new Stack {
+	//		new Label {
+	//			Text = state.Foo,
+	//		},
+	//		new Button {
+	//			Text = "Click Me",
+	//			OnClick =()=>{
+	//				state.Foo = $"Clicked: {state.ClickCount++}";
+	//			},
+	//		}
+	//	};
+	//}
 
 	/// <summary>
 	/// This one lets you pass in any arbitrary list of view or cells. Great for a settings screen
