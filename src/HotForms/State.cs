@@ -6,14 +6,25 @@ using System.Runtime.CompilerServices;
 
 namespace HotForms {
 
-	[AttributeUsage (AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
+	[AttributeUsage (AttributeTargets.Field)]
 	public class StateAttribute : Attribute {
 
 	}
-	public interface IState {
 
+	public class State<T> : BindingObject {
+		public State(T value)
+		{
+			Value = value;
+		}
+		public State ()
+		{
+
+		}
+		public T Value {
+			get => GetProperty<T> ();
+			set => SetProperty (value);
+		}
 	}
-
 	public class StateBuilder : IDisposable {
 		static List<State> currentStates = new List<State> ();
 		public static State CurrentState => currentStates.LastOrDefault ();

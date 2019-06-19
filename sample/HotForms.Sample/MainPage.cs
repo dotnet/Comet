@@ -14,20 +14,20 @@ namespace HotForms.Sample {
 				get => GetProperty<string> ();
 				set => SetProperty (value);
 			}
-			public int ClickCount {
-				get => GetProperty<int> ();
-				set => SetProperty (value);
-			}
 		}
 
 		[State]
 		readonly MyBindingObject state;
+
+		readonly State<int> clickCount = new State<int> (1);
+
+		readonly State<bool> bar = new State<bool> ();
+
 		public MyDynamicStatePage()
 		{
 			state = new MyBindingObject {
 				Text = "Foo",
 				CanEdit = true,
-				ClickCount = 1,
 			};
 		}
 
@@ -42,11 +42,14 @@ namespace HotForms.Sample {
 				new Label {Text = state.Text},
 				new Button{Text = "Toggle Entry/Label", OnClick = ()=> state.CanEdit = !state.CanEdit},
 				new Button{Text = "Update Text", OnClick = ()=>{
-						state.Text = $"Click Count: {state.ClickCount++}";
+						state.Text = $"Click Count: {clickCount.Value++}";
 					}
 				}
 			};
 	}
+
+
+
 
 	//public class MainPage : StateHotPage {
 	//	protected override void CreateState (dynamic state)

@@ -51,23 +51,25 @@ namespace HotForms {
 		}
 
 		bool hasChecked = false;
+		static Assembly hotFormsAssembly = typeof (BindingObject).Assembly;
 		void CheckForStateAttributes()
 		{
 			if (hasChecked)
 				return;
 			var type = this.GetType ();
-			var properties = type.GetProperties (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
-				Where (x => Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
+			//var properties = type.GetProperties (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
+			//	Where (x => Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
 			var fields = type.GetFields (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
-				Where (x => Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
-			if (properties.Any()) {
-				foreach(var prop in properties) {
-					var child = prop.GetValue (this) as BindingObject;
-					if (child != null) {
-						SetProperty(child,prop.Name);
-					}
-				}
-			}
+				//ToList ();
+				Where (x => (x.FieldType.Assembly == hotFormsAssembly && x.FieldType.Name == "State`1")|| Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
+			//if (properties.Any()) {
+			//	foreach(var prop in properties) {
+			//		var child = prop.GetValue (this) as BindingObject;
+			//		if (child != null) {
+			//			SetProperty(child,prop.Name);
+			//		}
+			//	}
+			//}
 
 			if (fields.Any ()) {
 				foreach (var field in fields) {
