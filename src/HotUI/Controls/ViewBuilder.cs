@@ -57,14 +57,6 @@ namespace HotUI {
 			ViewHandler?.UpdateValue (property, value);
 		}
 
-		public virtual void OnAppearing()
-		{
-
-		}
-		public virtual void OnDisppearing ()
-		{
-
-		}
 
 	}
 

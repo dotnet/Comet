@@ -21,13 +21,12 @@ namespace HotUI.Forms {
 
 		}
 
-		ViewBuilder viewBuilder;
+		HotPage hotPage;
 		public void SetViewBuilder (ViewBuilder builder)
 		{
-			viewBuilder = builder;
+			hotPage = builder as HotPage;
 			if (builder.View == null)
 				builder.ReBuildView ();
-			var hotPage = builder as HotPage;
 			this.UpdateProperties (hotPage);
 		}
 
@@ -39,12 +38,12 @@ namespace HotUI.Forms {
 		protected override void OnAppearing ()
 		{
 			base.OnAppearing ();
-			viewBuilder?.OnAppearing ();
+			hotPage?.OnAppearing ();
 		}
 		protected override void OnDisappearing ()
 		{
 			base.OnDisappearing ();
-			viewBuilder?.OnDisppearing ();
+			hotPage?.OnDisppearing ();
 		}
 	}
 }
