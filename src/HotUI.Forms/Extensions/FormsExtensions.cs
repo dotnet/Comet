@@ -11,6 +11,10 @@ using HotUI;
 
 namespace HotUI.Forms {
 	public static class FormsExtensions {
+		static FormsExtensions()
+		{
+			UI.Init ();
+		}
 		public static FPage ToForms (this HotPage hotPage)
 		{
 			if (hotPage == null)

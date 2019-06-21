@@ -3,8 +3,12 @@ using HotUI;
 
 namespace HotUI.Forms {
 	public static class UI {
+		static bool didInit;
 		public static void Init ()
 		{
+			if (didInit)
+				return;
+			didInit = true;
 			Registrar.Handlers.Register<Button, ButtonHandler> ();
 			Registrar.Handlers.Register<Entry, EntryHandler> ();
 			Registrar.Handlers.Register<Label, LabelHandler> ();
