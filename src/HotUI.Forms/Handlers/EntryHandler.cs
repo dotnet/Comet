@@ -29,6 +29,7 @@ namespace HotUI.Forms {
 			entry = view as HEntry;
 			if (entry == null)
 				return;
+			this.UpdateProperties (entry);
 
 		}
 
