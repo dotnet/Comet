@@ -5,17 +5,21 @@ using System.Diagnostics;
 namespace HotForms {
 	public abstract class ViewBuilder : State {
 		protected abstract View Build ();
-
 		public void Reload ()
 		{
 			ReBuildView ();
 		}
-		protected View View {
+
+		public View View {
 			get => GetProperty<View> ();
-			set => SetProperty (value);
+			protected set {
+				if (SetProperty (value)) {
+					ViewHandler?.SetView (value);
+				}
+			}
 		}
 
-		public View ReBuildView()
+		public void ReBuildView()
 		{
 			var oldView = View;
 			BindingState.Clear ();
@@ -26,8 +30,26 @@ namespace HotForms {
 				}
 				View = newView;
 			}
-			return View;
 		}
+
+
+		IViewBuilderHandler formsView;
+		public IViewBuilderHandler ViewHandler {
+			get => formsView;
+			set {
+				if (formsView == value)
+					return;
+				formsView?.Remove (View);
+				formsView = value;
+				formsView?.SetView (View);
+			}
+		}
+
+		protected void ViewPropertyChanged (string property, object value)
+		{
+			ViewHandler?.UpdateValue (property, value);
+		}
+
 	}
 
 
@@ -54,8 +76,8 @@ public abstract class StateViewBuilder {
 	}
 
 	public class BindingState {
-		public HashSet<string> GlobalProperties { get; set; } = new HashSet<string> ();
-		public Dictionary<string, HashSet<Action<object>>> ViewUpdateProperties = new Dictionary<string, HashSet<Action<object>>> ();
+		public List<string> GlobalProperties { get; set; } = new List<string> ();
+		public Dictionary<string, List<Action<string,object>>> ViewUpdateProperties = new Dictionary<string, List<Action<string,object>>> ();
 		public void AddGlobalProperty (string property)
 		{
 			GlobalProperties.Add (property);
@@ -65,14 +87,14 @@ public abstract class StateViewBuilder {
 			foreach(var prop in properties)
 				GlobalProperties.Add (prop);
 		}
-		public void AddViewProperty(string property, Action<object> update)
+		public void AddViewProperty(string property, Action<string,object> update)
 		{
 			if (!ViewUpdateProperties.TryGetValue (property, out var actions))
-				ViewUpdateProperties[property]  = actions = new HashSet<Action<object>> ();
+				ViewUpdateProperties[property]  = actions = new List<Action<string,object>> ();
 			actions.Add (update);
 		}
 
-		public void AddViewProperty (string[] properties, Action<object> update)
+		public void AddViewProperty (string[] properties, Action<string,object> update)
 		{
 			foreach(var property in properties) {
 				AddViewProperty (property, update);
@@ -100,7 +122,7 @@ public abstract class StateViewBuilder {
 					return false;
 				if(ViewUpdateProperties.TryGetValue(update.property, out var actions)) {
 					foreach (var a in actions)
-							a.Invoke (update.value);
+							a.Invoke (update.property, update.value);
 					didUpdate = true;
 				}
 			}

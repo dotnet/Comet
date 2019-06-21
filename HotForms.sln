@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotForms.Sample.iOS", "samp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotForms.Sample", "sample\HotForms.Sample\HotForms.Sample.csproj", "{FC3EBAAE-64E5-41CE-B75B-1C2920C90E74}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Forms", "src\HotUI.Forms\HotUI.Forms.csproj", "{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,18 @@ Global
 		{FC3EBAAE-64E5-41CE-B75B-1C2920C90E74}.Debug|iPhone.Build.0 = Debug|Any CPU
 		{FC3EBAAE-64E5-41CE-B75B-1C2920C90E74}.Release|iPhone.ActiveCfg = Release|Any CPU
 		{FC3EBAAE-64E5-41CE-B75B-1C2920C90E74}.Release|iPhone.Build.0 = Release|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{236BC489-2FA6-45A2-AD7C-B4B8C881D5EC}.Release|iPhone.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{EE9C0FEE-E58C-489F-8281-154E9418B4FC} = {C3FDCDB7-0C29-472D-A406-E2F21A4B0EAE}

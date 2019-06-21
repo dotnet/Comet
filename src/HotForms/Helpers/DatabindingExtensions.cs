@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace HotForms {
 	public static class DatabindingExtensions {
-		public static void SetValue<T> (this View view, State state, ref T currentValue, T newValue, Action<object> onUpdate, [CallerMemberName] string propertyName = "")
+		public static void SetValue<T> (this State state, ref T currentValue, T newValue, Action<string,object> onUpdate, [CallerMemberName] string propertyName = "")
 		{
 			if (state?.IsBuilding ?? false) {
 				var props = state.EndProperty ();
@@ -20,7 +20,7 @@ namespace HotForms {
 						//1 to 1 binding!
 						if (EqualityComparer<T>.Default.Equals (stateValue, newValue)) {
 							state.BindingState.AddViewProperty (prop, onUpdate);
-							Debug.WriteLine ($"Databinding: {view.GetType ()}.{propertyName} to {prop}");
+							Debug.WriteLine ($"Databinding: {propertyName} to {prop}");
 						} else {
 							Debug.WriteLine ($"Warning: {propertyName} is using formated Text. For performance reasons, please switch to TextBinding");
 							isGlobal = true;
@@ -36,7 +36,12 @@ namespace HotForms {
 				}
 			}
 			currentValue = newValue;
-			onUpdate (newValue);
+			onUpdate (propertyName,newValue);
+		}
+
+		public static void SetValue<T> (this View view, State state, ref T currentValue, T newValue, Action<string, object> onUpdate, [CallerMemberName] string propertyName = "")
+		{
+			state.SetValue<T> (ref currentValue, newValue, onUpdate, propertyName);
 		}
 
 
@@ -96,13 +101,7 @@ namespace HotForms {
 				}
 			}
 
-
-
-			var formsContnrol = oldView.FormsView;
-			//This will unhook any events
-			oldView.UpdateFromOldView (null);
-			//Use the old control.
-			newView.UpdateFromOldView (formsContnrol);
+			newView.ViewHandler = oldView.ViewHandler;
 
 
 			return newView;
@@ -120,10 +119,7 @@ namespace HotForms {
 
 		public static bool AreSameType (this View view, View compareView)
 		{
-			if (view is FormsView f1 && view is FormsView f2) {
-				return f1.FormsViewType == f2.FormsViewType;
-			}
-
+			
 			//Add in more edge cases
 			return view?.GetType () == compareView?.GetType ();
 		}

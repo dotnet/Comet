@@ -118,45 +118,45 @@ namespace HotForms.Sample {
 	/// <summary>
 	/// This one lets you pass in any arbitrary list of view or cells. Great for a settings screen
 	/// </summary>
-	public class ListPage : HotPage {
-		protected override View Build () => new ListView {
-				new Stack {
-					new Label(){Text = "First Item",
-				},
-				new Stack {
-					new Label{Text = "Second Item" },
-				}
-			}
-		};
-	}
+	//public class ListPage : HotPage {
+	//	protected override View Build () => new ListView {
+	//			new Stack {
+	//				new Label(){Text = "First Item",
+	//			},
+	//			new Stack {
+	//				new Label{Text = "Second Item" },
+	//			}
+	//		}
+	//	};
+	//}
 
 
-	public class ListPage1 : HotPage {
-		protected override View Build () => new ListView {
-			ItemsSource = Enumerable.Range (0, 10),
-			ViewFor = (x) => new Stack {
-				new Label{Text = x.ToString() },
-				new Label{Text = "Hi" },
-			},
-		};
-	}
+	//public class ListPage1 : HotPage {
+	//	protected override View Build () => new ListView {
+	//		ItemsSource = Enumerable.Range (0, 10),
+	//		ViewFor = (x) => new Stack {
+	//			new Label{Text = x.ToString() },
+	//			new Label{Text = "Hi" },
+	//		},
+	//	};
+	//}
 
 
 
-	public class ListPage2 : HotPage {
-		class MyDataModel {
-			public string Foo { get; set; } = "Foo";
-			public string Bar { get; set; } = "Bar";
-			public int Index { get; set; }
-		}
-		protected override View Build () => new ListView<MyDataModel> {
-			ItemsSource = Enumerable.Range (0, 10).Select (x => new MyDataModel { Index = x }),
-			ViewFor = (x) => new Stack {
-				new Label{Text = $"Index: {x.Index}" },
-				new Label{Text = $"Foo: {x.Foo}" },
-				new Label{Text = $"Bar: {x.Bar}" },
-			},
-		};
-	}
+	//public class ListPage2 : HotPage {
+	//	class MyDataModel {
+	//		public string Foo { get; set; } = "Foo";
+	//		public string Bar { get; set; } = "Bar";
+	//		public int Index { get; set; }
+	//	}
+	//	protected override View Build () => new ListView<MyDataModel> {
+	//		ItemsSource = Enumerable.Range (0, 10).Select (x => new MyDataModel { Index = x }),
+	//		ViewFor = (x) => new Stack {
+	//			new Label{Text = $"Index: {x.Index}" },
+	//			new Label{Text = $"Foo: {x.Foo}" },
+	//			new Label{Text = $"Bar: {x.Bar}" },
+	//		},
+	//	};
+	//}
 
 }
