@@ -28,7 +28,7 @@ namespace HotUI {
 
 		void updateTextFromBinding (string property, object stringObject)
 		{
-			if (IsControlCreated)
+			if (IsViewHandlerCreated)
 				Text = TextBinding.Invoke ();
 		}
 

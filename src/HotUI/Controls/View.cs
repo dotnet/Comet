@@ -25,20 +25,21 @@ namespace HotUI {
 			State?.StartBuildingView ();
 		}
 
-		public bool IsControlCreated => formsView != null;
+		public bool IsViewHandlerCreated => viewHandler != null;
 
-		IViewHandler formsView;
+		IViewHandler viewHandler;
 		public IViewHandler ViewHandler {
-			get => formsView;
+			get => viewHandler;
 			set {
-				if (formsView == value)
+				if (viewHandler == value)
 					return;
-				formsView?.Remove (this);
-				formsView = value;
+				viewHandler?.Remove (this);
+				viewHandler = value;
 				WillUpdateView ();
-				formsView?.SetView (this);
+				viewHandler?.SetView (this);
 			}
 		}
+		internal void UpdateFromOldView(IViewHandler handler) => viewHandler = handler;
 
 		LayoutOptions verticalOptions;
 		public LayoutOptions VerticalOptions {

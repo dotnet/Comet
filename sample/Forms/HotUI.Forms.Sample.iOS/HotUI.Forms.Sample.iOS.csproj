@@ -125,7 +125,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI.Forms.Sample\HotUI.Forms.Sample.csproj">
-      <Project>{D353F3C7-F2F8-424E-AABF-C74455E48828}</Project>
+      <Project>{618C336D-1E53-49B9-A554-7D2B9671DEC5}</Project>
       <Name>HotUI.Forms.Sample</Name>
     </ProjectReference>
   </ItemGroup>

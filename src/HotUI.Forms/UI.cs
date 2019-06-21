@@ -10,6 +10,7 @@ namespace HotUI.Forms {
 			Registrar.Handlers.Register<Label, LabelHandler> ();
 			Registrar.Handlers.Register<Stack, StackHandler> ();
 			Registrar.Handlers.Register<WebView, WebViewHandler> ();
+			Registrar.Handlers.Register<ScrollView, ScrollViewHandler> ();
 
 			Registrar.Pages.Register<HotPage, HotPageHandler> ();
 		}

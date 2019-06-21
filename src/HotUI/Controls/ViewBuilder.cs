@@ -28,10 +28,13 @@ namespace HotUI {
 			var oldView = View;
 			BindingState.Clear ();
 			using (new StateBuilder (this)) {
+				var start = DateTime.Now;
 				var newView = Build ();
 				if (oldView != null) {
 					newView.DiffUpdate (oldView);
 				}
+				var end = DateTime.Now;
+				Debug.WriteLine ($"View Diffing took: {(end - start).TotalMilliseconds} ms");
 				View = newView;
 			}
 		}

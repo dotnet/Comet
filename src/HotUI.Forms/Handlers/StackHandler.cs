@@ -26,18 +26,33 @@ namespace HotUI.Forms {
 
 			stack.ChildrenChanged += Stack_ChildrenChanged;
 			this.UpdateProperties (stack);
-			Children.Clear ();
-			foreach (var v in stack.GetChildren ()) {
-				Children.Add (v.ToForms ());
+			UpdateChildren (stack);
+		}
+
+		protected void UpdateChildren(Stack stack)
+		{
+			var children = stack.GetChildren ();
+			var childrenCount = children.Count;
+			var maxInt = Math.Max (children.Count, childrenCount);
+			for (var i = 0; i < maxInt; i++) {
+				if (i >= childrenCount) {
+					Children.Remove (Children [i]);
+					continue;
+				}
+				if (i >= Children.Count) {
+					Children.Add (children [i].ToForms ());
+				}
+				var cView = children [i].ToForms ();
+				if (Children [i] == cView)
+					continue;
+				Children [i] = cView;
 			}
+			
 		}
 
 		private void Stack_ChildrenChanged (object sender, EventArgs e)
 		{
-			Children.Clear ();
-			foreach (var v in stack.GetChildren ()) {
-				Children.Add (v.ToForms ());
-			}
+			UpdateChildren (stack);
 		}
 
 		public void UpdateValue (string property, object value)
