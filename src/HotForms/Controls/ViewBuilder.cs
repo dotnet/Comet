@@ -4,6 +4,10 @@ using System.Diagnostics;
 
 namespace HotForms {
 	public abstract class ViewBuilder : State {
+		public ViewBuilder ()
+		{
+			StateChanged = Reload;
+		}
 		protected abstract View Build ();
 		public void Reload ()
 		{
@@ -80,12 +84,13 @@ public abstract class StateViewBuilder {
 		public Dictionary<string, List<Action<string,object>>> ViewUpdateProperties = new Dictionary<string, List<Action<string,object>>> ();
 		public void AddGlobalProperty (string property)
 		{
+			Debug.WriteLine ($"Adding Global Property: {property}");
 			GlobalProperties.Add (property);
 		}
 		public void AddGlobalProperties(IEnumerable<string> properties)
 		{
 			foreach(var prop in properties)
-				GlobalProperties.Add (prop);
+				AddGlobalProperty (prop);
 		}
 		public void AddViewProperty(string property, Action<string,object> update)
 		{

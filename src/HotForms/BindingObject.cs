@@ -20,7 +20,18 @@ namespace HotForms {
 		internal protected Action<BindingObject,List<(string property, object value)>> UpdateParentValueChanged;
 		internal protected string ParentProperty { get; set; }
 
-		public BindingState BindingState { get; } = new BindingState ();
+		BindingState bindingState = new BindingState ();
+		public BindingState BindingState {
+			get => bindingState;
+			set {
+				if (bindingState == value)
+					return;
+				bindingState = value;
+				foreach(var child in bindableChildren) {
+					child.BindingState = value;
+				}
+			}
+		} 
 
 		public IEnumerable<KeyValuePair<string, object>> ChangedProperties => changeDictionary;
 
@@ -139,7 +150,9 @@ namespace HotForms {
 				if (UpdateParentValueChanged != null) {
 					UpdateParentValueChanged (this,pendingUpdates);
 				} else if (!BindingState.UpdateValues (pendingUpdates)) {
+					pendingUpdates.Clear ();
 					StateChanged?.Invoke ();
+					return;
 				}
 			}
 			pendingUpdates.Clear ();
@@ -198,6 +211,7 @@ namespace HotForms {
 			//This should fail if there are two properties with the same binding object as it's value. But that should never happen!
 			child.ParentProperty = propertyName;			
 			child.UpdateParentValueChanged = Child_PropertiesChanged;
+			child.BindingState = this.BindingState;
 			bindableChildren.Add (child);
 		}
 
@@ -211,6 +225,7 @@ namespace HotForms {
 		{
 			child.UpdateParentValueChanged = null;
 			child.ParentProperty = null;
+			child.BindingState = new BindingState ();
 			bindableChildren.Remove (child);
 		}
 
