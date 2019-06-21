@@ -1,5 +1,5 @@
 ﻿using System;
-using HotForms;
+using HotUI;
 using Xamarin.Forms;
 
 namespace HotUI.Forms {
@@ -7,12 +7,12 @@ namespace HotUI.Forms {
 
 		public Xamarin.Forms.Page Page => this;
 
-		public void Remove (HotForms.View view)
+		public void Remove (HotUI.View view)
 		{
 			Content = null;
 		}
 
-		public void SetView (HotForms.View view)
+		public void SetView (HotUI.View view)
 		{
 			Content = view.ToForms ();
 

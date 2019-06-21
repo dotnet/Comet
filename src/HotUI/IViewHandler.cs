@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotForms {
+namespace HotUI {
 	public interface IViewHandler {
 		void SetView (View view);
 		void UpdateValue (string property, object value);

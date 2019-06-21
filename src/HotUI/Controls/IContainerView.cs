@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace HotForms {
+namespace HotUI {
 	public interface IContainerView
 	{ 
 		IReadOnlyList<View> GetChildren();

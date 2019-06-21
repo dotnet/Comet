@@ -20,7 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xamarin.Forms.Loader\Xamarin.Forms.Loader.csproj" />
-    <ProjectReference Include="..\HotForms\HotForms.csproj" />
+    <ProjectReference Include="..\HotUI\HotUI.csproj" />
   </ItemGroup>
   <ItemGroup>
     <None Remove=".DS_Store" />

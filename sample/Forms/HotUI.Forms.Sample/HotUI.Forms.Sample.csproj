@@ -15,7 +15,7 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\HotForms\HotForms.csproj" />
-    <ProjectReference Include="..\..\src\HotUI.Forms\HotUI.Forms.csproj" />
+    <ProjectReference Include="..\..\..\src\HotUI\HotUI.csproj" />
+    <ProjectReference Include="..\..\..\src\HotUI.Forms\HotUI.Forms.csproj" />
   </ItemGroup>
 </Project>

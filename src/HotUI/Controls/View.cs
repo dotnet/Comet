@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HotForms {
+namespace HotUI {
 
 	public enum LayoutOptions {
 		Start,

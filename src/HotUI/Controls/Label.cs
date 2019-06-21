@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
-namespace HotForms {
+namespace HotUI {
 	public class Label : View {
 
 		private string text;

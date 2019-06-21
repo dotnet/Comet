@@ -1,9 +1,9 @@
 ﻿using System;
-using HotForms;
+using HotUI;
 using Xamarin.Forms;
 using FLabel = Xamarin.Forms.Label;
-using HLabel = HotForms.Label;
-using HView = HotForms.View;
+using HLabel = HotUI.Label;
+using HView = HotUI.View;
 
 namespace HotUI.Forms {
 	public class LabelHandler : FLabel, IViewHandler, IFormsView {

@@ -1,5 +1,5 @@
 ﻿using System;
-using HotForms;
+using HotUI;
 using fLayoutOptions = Xamarin.Forms.LayoutOptions;
 namespace HotUI.Forms {
 	public static class ControlsExtensions {
@@ -48,7 +48,7 @@ namespace HotUI.Forms {
 				return null;
 			}
 			object s = source;
-			var successs = HotForms.Internal.BindingExpression.TryConvert (ref s, Xamarin.Forms.WebView.SourceProperty, typeof (Xamarin.Forms.WebViewSource), true);
+			var successs = HotUI.Internal.BindingExpression.TryConvert (ref s, Xamarin.Forms.WebView.SourceProperty, typeof (Xamarin.Forms.WebViewSource), true);
 			if (successs)
 				return (Xamarin.Forms.WebViewSource)s;
 			else
@@ -78,7 +78,7 @@ namespace HotUI.Forms {
 				return null;
 			}
 			object s = source;
-			var successs = HotForms.Internal.BindingExpression.TryConvert (ref s, Xamarin.Forms.Image.SourceProperty, typeof (Xamarin.Forms.ImageSource), true);
+			var successs = HotUI.Internal.BindingExpression.TryConvert (ref s, Xamarin.Forms.Image.SourceProperty, typeof (Xamarin.Forms.ImageSource), true);
 			if (successs)
 				return (Xamarin.Forms.ImageSource)s;
 			else

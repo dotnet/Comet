@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace HotForms {
+namespace HotUI {
 
 	public interface INotifyPropertyRead : INotifyPropertyChanged {
 		event PropertyChangedEventHandler PropertyRead;
@@ -62,7 +62,7 @@ namespace HotForms {
 		}
 
 		bool hasChecked = false;
-		static Assembly hotFormsAssembly = typeof (BindingObject).Assembly;
+		static Assembly HotUIAssembly = typeof (BindingObject).Assembly;
 		void CheckForStateAttributes()
 		{
 			if (hasChecked)
@@ -72,7 +72,7 @@ namespace HotForms {
 			//	Where (x => Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
 			var fields = type.GetFields (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
 				//ToList ();
-				Where (x => (x.FieldType.Assembly == hotFormsAssembly && x.FieldType.Name == "State`1")|| Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
+				Where (x => (x.FieldType.Assembly == HotUIAssembly && x.FieldType.Name == "State`1")|| Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
 			//if (properties.Any()) {
 			//	foreach(var prop in properties) {
 			//		var child = prop.GetValue (this) as BindingObject;

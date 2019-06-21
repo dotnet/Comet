@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
-namespace HotForms {
+namespace HotUI {
 	public static class Registrar {
 		public static Registrar<View, IViewHandler> Handlers { get; private set; }
 		public static Registrar<ViewBuilder, IViewBuilderHandler> Pages { get; private set; }

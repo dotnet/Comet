@@ -8,7 +8,7 @@
 //using Xamarin.Forms;
 //using System.Collections.Generic;
 
-//namespace HotForms {
+//namespace HotUI {
 
 //	public class ListView : ListView<object>, IEnumerable {
 //		public IEnumerator GetEnumerator () => FormsControl.ItemsSource.GetEnumerator ();

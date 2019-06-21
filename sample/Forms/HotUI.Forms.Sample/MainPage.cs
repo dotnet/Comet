@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 
-namespace HotForms.Sample {
+namespace HotUI.Forms.Sample {
 
 
-	public class MyDynamicStatePage : HotPage {
+	public class MainPage : HotPage {
 		class MyBindingObject : BindingObject {
 			public bool CanEdit {
 				get => GetProperty<bool> ();
@@ -23,8 +23,9 @@ namespace HotForms.Sample {
 
 		readonly State<bool> bar = new State<bool> ();
 
-		public MyDynamicStatePage()
+		public MainPage ()
 		{
+			Title = "Hello HotUI";
 			state = new MyBindingObject {
 				Text = "Foo",
 				CanEdit = true,

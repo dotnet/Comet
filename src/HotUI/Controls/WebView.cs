@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotForms {
+namespace HotUI {
 	public class WebView : View {
 		string html;
 		public string Html {

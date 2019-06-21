@@ -4,7 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace HotForms {
+namespace HotUI {
 	public static class DatabindingExtensions {
 		public static void SetValue<T> (this State state, ref T currentValue, T newValue, Action<string,object> onUpdate, [CallerMemberName] string propertyName = "")
 		{

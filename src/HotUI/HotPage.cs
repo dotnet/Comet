@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotForms {
+namespace HotUI {
 
 	public abstract class HotPage : ViewBuilder {
 

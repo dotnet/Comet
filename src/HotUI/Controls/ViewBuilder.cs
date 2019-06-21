@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 
-namespace HotForms {
+namespace HotUI {
 	public abstract class ViewBuilder : State {
 		public ViewBuilder ()
 		{

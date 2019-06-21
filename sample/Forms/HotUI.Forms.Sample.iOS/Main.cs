@@ -5,7 +5,7 @@ using System.Linq;
 using Foundation;
 using UIKit;
 
-namespace HotForms.Sample.iOS {
+namespace HotUI.Forms.Sample.iOS {
 	public class Application {
 		// This is the main entry point of the application.
 		static void Main (string [] args)

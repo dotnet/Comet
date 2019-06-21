@@ -1,8 +1,8 @@
-﻿using HotForms;
+﻿using HotUI;
 using Xamarin.Forms;
 using FImage = Xamarin.Forms.Image;
-using HImage = HotForms.Image;
-using HView = HotForms.View;
+using HImage = HotUI.Image;
+using HView = HotUI.View;
 namespace HotUI.Forms {
 		public class ImageHandler : FImage, IViewHandler, IFormsView {
 		public Xamarin.Forms.View View => this;

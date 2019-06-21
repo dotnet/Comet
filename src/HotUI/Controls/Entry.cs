@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotForms {
+namespace HotUI {
 	public class Entry : View {
 
 		string text;

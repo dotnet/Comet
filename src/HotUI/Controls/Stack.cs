@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-namespace HotForms {
+namespace HotUI {
 
 
 	public class Stack : View, IEnumerable, IEnumerable<View>, IContainerView {

@@ -3,12 +3,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EE9C0FEE-E58C-489F-8281-154E9418B4FC}</ProjectGuid>
+    <ProjectGuid>{9D3CC647-89F9-4BD5-B5E8-29100F640FCA}</ProjectGuid>
     <ProjectTypeGuids>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TemplateGuid>{c9e5eea5-ca05-42a1-839b-61506e0a37df}</TemplateGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>HotForms.Sample.Droid</RootNamespace>
-    <AssemblyName>HotForms.Sample.Android</AssemblyName>
+    <RootNamespace>HotUI.Forms.Sample.Droid</RootNamespace>
+    <AssemblyName>HotUI.Forms.Sample.Android</AssemblyName>
     <AndroidApplication>True</AndroidApplication>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
@@ -97,9 +97,9 @@
     <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotForms.Sample\HotForms.Sample.csproj">
-      <Project>{FC3EBAAE-64E5-41CE-B75B-1C2920C90E74}</Project>
-      <Name>HotUI.Sample</Name>
+    <ProjectReference Include="..\HotUI.Forms.Sample\HotUI.Forms.Sample.csproj">
+      <Project>{D353F3C7-F2F8-424E-AABF-C74455E48828}</Project>
+      <Name>HotUI.Forms.Sample</Name>
     </ProjectReference>
   </ItemGroup>
  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

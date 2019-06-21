@@ -4,7 +4,7 @@ using System.Dynamic;
 using System.Linq;
 using System.Runtime.CompilerServices;
 
-namespace HotForms {
+namespace HotUI {
 
 	[AttributeUsage (AttributeTargets.Field)]
 	public class StateAttribute : Attribute {

@@ -1,15 +1,15 @@
 ﻿using System;
-using HotUI.Forms;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace HotForms.Sample {
+namespace HotUI.Forms.Sample {
 	public partial class App : Application {
 		public App ()
 		{
+			UI.Init ();
 			InitializeComponent ();
-			HotUI.Forms.UI.Init ();
-			MainPage = new NavigationPage (new MyDynamicStatePage ().ToForms());
+
+			MainPage = new NavigationPage(new MainPage ().ToForms());
 		}
 
 		protected override void OnStart ()

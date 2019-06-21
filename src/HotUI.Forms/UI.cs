@@ -1,11 +1,11 @@
 ﻿using System;
-using HotForms;
+using HotUI;
 
 namespace HotUI.Forms {
 	public static class UI {
-		public static void Init()
+		public static void Init ()
 		{
-			Registrar.Handlers.Register<Button, ButtonHandler>();
+			Registrar.Handlers.Register<Button, ButtonHandler> ();
 			Registrar.Handlers.Register<Entry, EntryHandler> ();
 			Registrar.Handlers.Register<Label, LabelHandler> ();
 			Registrar.Handlers.Register<Stack, StackHandler> ();

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotForms {
+namespace HotUI {
 	public class Image : View {
 		string source;
 		public string Source {

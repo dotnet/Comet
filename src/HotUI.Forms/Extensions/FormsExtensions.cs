@@ -7,7 +7,7 @@ using FEntry = Xamarin.Forms.Entry;
 using FWebview = Xamarin.Forms.WebView;
 using FView = Xamarin.Forms.View;
 using FPage = Xamarin.Forms.Page;
-using HotForms;
+using HotUI;
 
 namespace HotUI.Forms {
 	public static class FormsExtensions {
