@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace HotForms {
 
@@ -53,7 +54,9 @@ namespace HotForms {
 
 		protected void ViewPropertyChanged (string property, object value)
 		{
-			ViewHandler?.UpdateValue (property, value);
+			//TODO fix this for real
+			var prop = property.Split ('.').Last ();
+			ViewHandler?.UpdateValue (prop, value);
 		}
 
 		protected virtual void WillUpdateView()
