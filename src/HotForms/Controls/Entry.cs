@@ -1,5 +1,4 @@
 ﻿using System;
-using FControlType = Xamarin.Forms.Entry;
 namespace HotForms {
 	public class Entry : View {
 

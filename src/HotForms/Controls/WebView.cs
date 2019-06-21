@@ -1,5 +1,4 @@
 ﻿using System;
-using FControlType = Xamarin.Forms.WebView;
 namespace HotForms {
 	public class WebView : View {
 		string html;

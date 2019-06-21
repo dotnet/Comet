@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Xamarin.Forms;
-using FControlType = Xamarin.Forms.StackLayout;
 namespace HotForms {
 
 

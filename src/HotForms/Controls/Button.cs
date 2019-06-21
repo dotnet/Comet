@@ -1,5 +1,4 @@
 ﻿using System;
-using Xamarin.Forms;
 namespace HotForms {
 	public class Button : View {
 

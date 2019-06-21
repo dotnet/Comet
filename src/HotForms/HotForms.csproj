@@ -16,14 +16,8 @@
     <DefineConstants>TRACE;RELEASE;NETSTANDARD;NETSTANDARD2_0;FORMS;</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.2.0.659" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Controls\" />
     <Folder Include="Helpers\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Xamarin.Forms.Loader\Xamarin.Forms.Loader.csproj" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
