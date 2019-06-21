@@ -31,7 +31,7 @@ namespace HotUI {
 				var start = DateTime.Now;
 				var newView = Build ();
 				if (oldView != null) {
-					newView.DiffUpdate (oldView);
+					newView.Diff (oldView);
 				}
 				var end = DateTime.Now;
 				Debug.WriteLine ($"View Diffing took: {(end - start).TotalMilliseconds} ms");
@@ -48,13 +48,22 @@ namespace HotUI {
 					return;
 				formsView?.Remove (View);
 				formsView = value;
-				formsView?.SetView (View);
+				formsView?.SetViewBuilder (this);
 			}
 		}
 
 		protected void ViewPropertyChanged (string property, object value)
 		{
 			ViewHandler?.UpdateValue (property, value);
+		}
+
+		public virtual void OnAppearing()
+		{
+
+		}
+		public virtual void OnDisppearing ()
+		{
+
 		}
 
 	}

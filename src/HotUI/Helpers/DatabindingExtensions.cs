@@ -56,8 +56,22 @@ namespace HotUI {
 			state.SetValue<T> (ref currentValue, newValue, onUpdate, propertyName);
 		}
 
-
-		public static View DiffUpdate (this View newView, View oldView)
+		public static View Diff (this View newView, View oldView)
+		{
+			var v = newView.DiffUpdate (oldView);
+			void callUpdateOnView(View view)
+			{
+				if(view is IContainerView container) {
+					foreach(var child in container.GetChildren()) {
+						callUpdateOnView (child);
+					}
+				}
+				view.ViewHandler?.SetView (view);
+			};
+			callUpdateOnView (v);
+			return v;
+		}
+		static View DiffUpdate (this View newView, View oldView)
 		{
 			if (!newView.AreSameType (oldView)) {
 				return newView;
@@ -109,6 +123,7 @@ namespace HotUI {
 					//They don't line up. Maybe we check if 2 were inserted? But for now we are just going to say oh well.
 					//The view will jsut be recreated for the restof these!
 					Debug.WriteLine ("Oh WEll");
+					break;
 
 				}
 			}

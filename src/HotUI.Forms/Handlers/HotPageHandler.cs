@@ -14,12 +14,17 @@ namespace HotUI.Forms {
 
 		public void SetView (HotUI.View view)
 		{
-			Content = view.ToForms ();
+			var newView = view.ToForms ();
+			if (newView == Content)
+				return;
+			Content = newView;
 
 		}
 
+		ViewBuilder viewBuilder;
 		public void SetViewBuilder (ViewBuilder builder)
 		{
+			viewBuilder = builder;
 			if (builder.View == null)
 				builder.ReBuildView ();
 			var hotPage = builder as HotPage;
@@ -29,6 +34,17 @@ namespace HotUI.Forms {
 		public void UpdateValue (string property, object value)
 		{
 			this.UpdateProperty (property, value);
+		}
+
+		protected override void OnAppearing ()
+		{
+			base.OnAppearing ();
+			viewBuilder?.OnAppearing ();
+		}
+		protected override void OnDisappearing ()
+		{
+			base.OnDisappearing ();
+			viewBuilder?.OnDisppearing ();
 		}
 	}
 }

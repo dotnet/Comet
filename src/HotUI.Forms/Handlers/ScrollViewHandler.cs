@@ -20,7 +20,10 @@ namespace HotUI.Forms {
 		public void SetView (HView view)
 		{
 			var scroll = view as HScrollView;
-			this.Content = scroll.View?.ToForms ();
+			var newContent = scroll.View?.ToForms ();
+			if (Content == newContent)
+				return;
+			this.Content = newContent; 
 		}
 
 		public void UpdateValue (string property, object value)

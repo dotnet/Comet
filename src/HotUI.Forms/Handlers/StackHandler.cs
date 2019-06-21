@@ -31,22 +31,29 @@ namespace HotUI.Forms {
 
 		protected void UpdateChildren(Stack stack)
 		{
-			var children = stack.GetChildren ();
-			var childrenCount = children.Count;
-			var maxInt = Math.Max (children.Count, childrenCount);
-			for (var i = 0; i < maxInt; i++) {
-				if (i >= childrenCount) {
-					Children.Remove (Children [i]);
-					continue;
-				}
-				if (i >= Children.Count) {
-					Children.Add (children [i].ToForms ());
-				}
-				var cView = children [i].ToForms ();
-				if (Children [i] == cView)
-					continue;
-				Children [i] = cView;
+			Children.Clear ();
+			foreach (var child in stack.GetChildren ()) {
+				Children.Add (child.ToForms ());
 			}
+			//Clearing seems to be faster. Also, it flashes on android no matter what.
+
+
+			//var children = stack.GetChildren ();
+			//var childrenCount = children.Count;
+			//var maxInt = Math.Max (children.Count, childrenCount);
+			//for (var i = 0; i < maxInt; i++) {
+			//	if (i >= childrenCount) {
+			//		Children.Remove (Children [i]);
+			//		continue;
+			//	}
+			//	if (i >= Children.Count) {
+			//		Children.Add (children [i].ToForms ());
+			//	}
+			//	var cView = children [i].ToForms ();
+			//	if (Children [i] == cView)
+			//		continue;
+			//	Children [i] = cView;
+			//}
 			
 		}
 

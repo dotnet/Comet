@@ -20,16 +20,10 @@ namespace HotUI {
 				var props = State.EndProperty ();
 				var propCount = props.Length;
 				if (propCount > 0) {
-					State.BindingState.AddViewProperty (props, updateTextFromBinding);
+					State.BindingState.AddViewProperty (props, (s, o) => Text = TextBinding.Invoke ());
 				}
 				Text = text;
 			}
-		}
-
-		void updateTextFromBinding (string property, object stringObject)
-		{
-			if (IsViewHandlerCreated)
-				Text = TextBinding.Invoke ();
 		}
 
 	}
