@@ -130,7 +130,7 @@
   <ItemGroup>
     <ProjectReference Include="..\HotForms.Sample\HotForms.Sample.csproj">
       <Project>{FC3EBAAE-64E5-41CE-B75B-1C2920C90E74}</Project>
-      <Name>HotForms.Sample</Name>
+      <Name>HotUI.Sample</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
