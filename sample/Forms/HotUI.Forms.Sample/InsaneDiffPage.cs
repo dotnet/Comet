@@ -7,12 +7,13 @@ namespace HotUI.Forms.Sample {
 		}
 
 		readonly State<bool> myBoolean = new State<bool> ();
+		readonly State<string> myText = new State<string> ();
 
 		protected override View Build () {
 			var stack = new Stack {
 				new Button {
-					//TextBinding = ()=> $"State: {myBoolean.Value}",
-					Text = $"State: {myBoolean.Value}",
+					TextBinding = ()=> myBoolean.Value ? myText.Value : $"State: {myBoolean.Value}",
+					//Text = $"State: {myBoolean.Value}",
 					OnClick = ()=> myBoolean.Value = !myBoolean.Value,
 				},
 			};

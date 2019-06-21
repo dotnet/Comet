@@ -44,6 +44,9 @@ namespace HotUI {
 			if (val == null)
 				return default;
 			try {
+				if(typeof(T) == typeof(string)) {
+					return (T)(object)val?.ToString ();
+				}
 				return (T)val;
 			}
 			catch(Exception ex) {
