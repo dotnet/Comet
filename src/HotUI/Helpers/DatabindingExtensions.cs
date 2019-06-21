@@ -6,7 +6,7 @@ using System.Runtime.CompilerServices;
 
 namespace HotUI {
 	public static class DatabindingExtensions {
-		public static void SetValue<T> (this State state, ref T currentValue, T newValue, Action<string,object> onUpdate, [CallerMemberName] string propertyName = "")
+		public static void SetValue<T> (this State state, ref T currentValue, T newValue, Action<string, object> onUpdate, [CallerMemberName] string propertyName = "")
 		{
 			if (state?.IsBuilding ?? false) {
 				var props = state.EndProperty ();
@@ -16,7 +16,7 @@ namespace HotUI {
 					bool isGlobal = propCount > 1;
 					if (propCount == 1) {
 						var prop = props [0];
-						var stateValue = (T)state.GetValue(prop);
+						var stateValue = (T)state.GetValue (prop);
 						//1 to 1 binding!
 						if (EqualityComparer<T>.Default.Equals (stateValue, newValue)) {
 							state.BindingState.AddViewProperty (prop, onUpdate);
@@ -36,7 +36,7 @@ namespace HotUI {
 				}
 			}
 			currentValue = newValue;
-			onUpdate (propertyName,newValue);
+			onUpdate (propertyName, newValue);
 		}
 
 		public static void SetValue<T> (this View view, State state, ref T currentValue, T newValue, Action<string, object> onUpdate, [CallerMemberName] string propertyName = "")
@@ -54,11 +54,11 @@ namespace HotUI {
 			//Yes if one is IContainer, the other is too!
 			if (newView is IContainerView newContainer && oldView is IContainerView oldContainer) {
 				var newChildren = newContainer.GetChildren ();
-				var oldChildren = oldContainer.GetChildren ().ToList () ;
+				var oldChildren = oldContainer.GetChildren ().ToList ();
 				for (var i = 0; i < Math.Max (newChildren.Count, oldChildren.Count); i++) {
 					var n = newChildren.GetViewAtIndex (i);
 					var o = oldChildren.GetViewAtIndex (i);
-					if(n.AreSameType(o)) {
+					if (n.AreSameType (o)) {
 						Debug.WriteLine ("The controls are the same!");
 						DiffUpdate (n, o);
 						continue;
@@ -84,7 +84,7 @@ namespace HotUI {
 						oldChildren.RemoveAt (i);
 						continue;
 					}
-					if (n1.AreSameType (o)){
+					if (n1.AreSameType (o)) {
 						//The next ones line up, so this was just a new one being inserted!
 						//Lets add an empty one to make them line up
 
@@ -93,7 +93,7 @@ namespace HotUI {
 						oldChildren.Insert (i, null);
 						continue;
 					}
-					
+
 					//They don't line up. Maybe we check if 2 were inserted? But for now we are just going to say oh well.
 					//The view will jsut be recreated for the restof these!
 					Debug.WriteLine ("Oh WEll");
@@ -108,7 +108,7 @@ namespace HotUI {
 
 		}
 
-		static View GetViewAtIndex(this IReadOnlyList<View> list, int index)
+		static View GetViewAtIndex (this IReadOnlyList<View> list, int index)
 		{
 			if (index >= list.Count)
 				return null;
@@ -119,7 +119,7 @@ namespace HotUI {
 
 		public static bool AreSameType (this View view, View compareView)
 		{
-			
+
 			//Add in more edge cases
 			return view?.GetType () == compareView?.GetType ();
 		}

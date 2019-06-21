@@ -16,9 +16,9 @@ namespace HotUI.Forms {
 			if (hotPage == null)
 				return null;
 			var handler = hotPage.ViewHandler;
-			if(handler == null) {
+			if (handler == null) {
 
-				handler = Registrar.Pages.GetRenderer (hotPage.GetType ()) as IViewBuilderHandler ;
+				handler = Registrar.Pages.GetRenderer (hotPage.GetType ()) as IViewBuilderHandler;
 				hotPage.ViewHandler = handler;
 				hotPage.ReBuildView ();
 			}

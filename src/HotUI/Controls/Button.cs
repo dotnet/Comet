@@ -9,6 +9,6 @@ namespace HotUI {
 		}
 
 		public Action OnClick { get; set; }
-		
+
 	}
 }

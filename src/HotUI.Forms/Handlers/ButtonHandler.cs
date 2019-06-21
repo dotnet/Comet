@@ -23,7 +23,7 @@ namespace HotUI.Forms {
 			if (button == null)
 				return;
 			Command = new Command ((s) => button.OnClick?.Invoke ());
-			this.UpdateProperties (button) ;
+			this.UpdateProperties (button);
 		}
 
 		public void UpdateValue (string property, object value)

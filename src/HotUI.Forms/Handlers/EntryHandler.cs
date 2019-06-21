@@ -5,7 +5,7 @@ using FEntry = Xamarin.Forms.Entry;
 using HEntry = HotUI.Entry;
 using HView = HotUI.View;
 namespace HotUI.Forms {
-	public class EntryHandler : FEntry , HotUI.IViewHandler, IFormsView{
+	public class EntryHandler : FEntry, HotUI.IViewHandler, IFormsView {
 		public EntryHandler ()
 		{
 			this.Focused += FormsControl_Focused;

@@ -43,7 +43,7 @@ namespace HotUI.Forms {
 
 		public static Xamarin.Forms.WebViewSource ToWebViewSource (this string source)
 		{
-			
+
 			if (string.IsNullOrWhiteSpace (source)) {
 				return null;
 			}
@@ -72,7 +72,7 @@ namespace HotUI.Forms {
 			return fView.UpdateBaseProperty (property, value);
 		}
 
-		public static Xamarin.Forms.ImageSource ToImageSource(this string source)
+		public static Xamarin.Forms.ImageSource ToImageSource (this string source)
 		{
 			if (string.IsNullOrWhiteSpace (source)) {
 				return null;
@@ -96,12 +96,12 @@ namespace HotUI.Forms {
 		public static bool UpdateProperty (this Xamarin.Forms.Entry fView, string property, object value)
 		{
 			switch (property) {
-				case nameof (Entry.Text):
-					fView.Text = (string)value;
-					return true;
-				case nameof (Entry.Placeholder):
-					fView.Placeholder = (string)value;
-					return true;
+			case nameof (Entry.Text):
+				fView.Text = (string)value;
+				return true;
+			case nameof (Entry.Placeholder):
+				fView.Placeholder = (string)value;
+				return true;
 			}
 			return fView.UpdateBaseProperty (property, value);
 		}
@@ -115,9 +115,9 @@ namespace HotUI.Forms {
 		public static bool UpdateProperty (this Xamarin.Forms.Button fView, string property, object value)
 		{
 			switch (property) {
-				case nameof (Button.Text):
-					fView.Text = (string)value;
-					return true;
+			case nameof (Button.Text):
+				fView.Text = (string)value;
+				return true;
 			}
 			return fView.UpdateBaseProperty (property, value);
 		}
@@ -132,9 +132,9 @@ namespace HotUI.Forms {
 		public static bool UpdateProperty (this Xamarin.Forms.Label fView, string property, object value)
 		{
 			switch (property) {
-				case nameof (Label.Text):
-					fView.Text = (string)value;
-					return true;
+			case nameof (Label.Text):
+				fView.Text = (string)value;
+				return true;
 			}
 			return fView.UpdateBaseProperty (property, value);
 		}

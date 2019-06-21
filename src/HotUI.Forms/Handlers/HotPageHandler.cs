@@ -3,7 +3,7 @@ using HotUI;
 using Xamarin.Forms;
 
 namespace HotUI.Forms {
-	public class HotPageHandler : ContentPage , IFormsPage, IViewBuilderHandler {
+	public class HotPageHandler : ContentPage, IFormsPage, IViewBuilderHandler {
 
 		public Xamarin.Forms.Page Page => this;
 

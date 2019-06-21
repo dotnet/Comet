@@ -12,7 +12,7 @@ namespace HotUI {
 	}
 
 	public class State<T> : BindingObject {
-		public State(T value)
+		public State (T value)
 		{
 			Value = value;
 		}
@@ -28,7 +28,7 @@ namespace HotUI {
 	public class StateBuilder : IDisposable {
 		static List<State> currentStates = new List<State> ();
 		public static State CurrentState => currentStates.LastOrDefault ();
-		public StateBuilder(State state)
+		public StateBuilder (State state)
 		{
 			State = state;
 			state.StartBuildingView ();
@@ -47,16 +47,17 @@ namespace HotUI {
 
 	[Serializable]
 	public class State : BindingObject {
-		internal object GetValue (string property) {
+		internal object GetValue (string property)
+		{
 			var bindingParts = property.Split ('.');
 			var dict = dictionary;
-			for(var i = 0; i < bindingParts.Length - 1; i++) {
+			for (var i = 0; i < bindingParts.Length - 1; i++) {
 				var part = bindingParts [i];
 				dict.TryGetValue (part, out var val);
 				var child = val as BindingObject;
 				dict = child.dictionary;
 			}
-			dict.TryGetValue (bindingParts.Last(), out var value);
+			dict.TryGetValue (bindingParts.Last (), out var value);
 			return value;
 		}
 	}

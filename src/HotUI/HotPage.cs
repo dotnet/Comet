@@ -7,7 +7,7 @@ namespace HotUI {
 		string title;
 		public string Title {
 			get => title;
-			set => this.SetValue ( ref title, value, ViewPropertyChanged);
+			set => this.SetValue (ref title, value, ViewPropertyChanged);
 		}
 
 		//public HotPage()

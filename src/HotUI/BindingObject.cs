@@ -17,7 +17,7 @@ namespace HotUI {
 
 		internal Action StateChanged;
 
-		internal protected Action<BindingObject,List<(string property, object value)>> UpdateParentValueChanged;
+		internal protected Action<BindingObject, List<(string property, object value)>> UpdateParentValueChanged;
 		internal protected string ParentProperty { get; set; }
 
 		BindingState bindingState = new BindingState ();
@@ -27,11 +27,11 @@ namespace HotUI {
 				if (bindingState == value)
 					return;
 				bindingState = value;
-				foreach(var child in bindableChildren) {
+				foreach (var child in bindableChildren) {
 					child.BindingState = value;
 				}
 			}
-		} 
+		}
 
 		public IEnumerable<KeyValuePair<string, object>> ChangedProperties => changeDictionary;
 
@@ -63,7 +63,7 @@ namespace HotUI {
 
 		bool hasChecked = false;
 		static Assembly HotUIAssembly = typeof (BindingObject).Assembly;
-		void CheckForStateAttributes()
+		void CheckForStateAttributes ()
 		{
 			if (hasChecked)
 				return;
@@ -72,7 +72,7 @@ namespace HotUI {
 			//	Where (x => Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
 			var fields = type.GetFields (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
 				//ToList ();
-				Where (x => (x.FieldType.Assembly == HotUIAssembly && x.FieldType.Name == "State`1")|| Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
+				Where (x => (x.FieldType.Assembly == HotUIAssembly && x.FieldType.Name == "State`1") || Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
 			//if (properties.Any()) {
 			//	foreach(var prop in properties) {
 			//		var child = prop.GetValue (this) as BindingObject;
@@ -117,7 +117,7 @@ namespace HotUI {
 		internal string [] EndProperty (bool includeParent = false)
 		{
 			var children = bindableChildren.SelectMany (x => x.EndProperty (true));
-			var props = listProperties.Select(x=> includeParent ? $"{ParentProperty}.{x}" : x).Union(children).Distinct ().ToArray ();
+			var props = listProperties.Select (x => includeParent ? $"{ParentProperty}.{x}" : x).Union (children).Distinct ().ToArray ();
 			listProperties.Clear ();
 			return props;
 
@@ -148,7 +148,7 @@ namespace HotUI {
 
 			if (pendingUpdates.Any ()) {
 				if (UpdateParentValueChanged != null) {
-					UpdateParentValueChanged (this,pendingUpdates);
+					UpdateParentValueChanged (this, pendingUpdates);
 				} else if (!BindingState.UpdateValues (pendingUpdates)) {
 					pendingUpdates.Clear ();
 					StateChanged?.Invoke ();
@@ -194,7 +194,7 @@ namespace HotUI {
 			dictionary [propertyName] = value;
 			changeDictionary [propertyName] = value;
 			//If this is tied to a parent, we need to send that notification as well
-			if(!string.IsNullOrWhiteSpace(ParentProperty))
+			if (!string.IsNullOrWhiteSpace (ParentProperty))
 				pendingUpdates.Add (($"{ParentProperty}.{propertyName}", value));
 			pendingUpdates.Add ((propertyName, value));
 			if (!isUpdating) {
@@ -209,7 +209,7 @@ namespace HotUI {
 		void TrackChild (string propertyName, BindingObject child)
 		{
 			//This should fail if there are two properties with the same binding object as it's value. But that should never happen!
-			child.ParentProperty = propertyName;			
+			child.ParentProperty = propertyName;
 			child.UpdateParentValueChanged = Child_PropertiesChanged;
 			child.BindingState = this.BindingState;
 			bindableChildren.Add (child);
