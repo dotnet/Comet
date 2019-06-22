@@ -4,14 +4,22 @@ namespace HotUI.iOS {
 	public class EntryHandler : UITextField, IUIView  {
 		public EntryHandler ()
 		{
-			this.Ended += EntryHandler_Ended;
+			this.EditingDidEnd += EntryHandler_EditingDidEnd;
+
+			this.ShouldReturn = (s) => {
+				this.ResignFirstResponder ();
+				return true;
+			};
+			
 		}
+
+		private void EntryHandler_EditingDidEnd (object sender, EventArgs e) =>entry?.Completed (Text);
 
 		public UIView View => this;
 
 		public void Remove (View view)
 		{
-
+			entry = null;
 		}
 		Entry entry;
 		public void SetView (View view)
@@ -26,7 +34,6 @@ namespace HotUI.iOS {
 			this.UpdateProperty (property, value);
 		}
 
-		void EntryHandler_Ended (object sender, EventArgs e) => entry?.Completed (this.Text);
 	}
 
 
