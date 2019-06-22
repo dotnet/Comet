@@ -148,7 +148,9 @@ namespace HotUI {
 
 			if (pendingUpdates.Any ()) {
 				if (UpdateParentValueChanged != null) {
-					UpdateParentValueChanged (this, pendingUpdates);
+					var updates = pendingUpdates.ToList ();
+					pendingUpdates.Clear ();
+					UpdateParentValueChanged (this, updates);
 				} else if (!BindingState.UpdateValues (pendingUpdates)) {
 					pendingUpdates.Clear ();
 					StateChanged?.Invoke ();
@@ -161,7 +163,8 @@ namespace HotUI {
 
 		protected T GetProperty<T> ([CallerMemberName] string propertyName = "")
 		{
-			if (isBuilding) {
+			//Ignore View for the ViewBuilders
+			if (isBuilding && typeof(T) != typeof(View)) {
 				listProperties.Add (propertyName);
 			}
 
@@ -192,13 +195,16 @@ namespace HotUI {
 				TrackChild (propertyName, b);
 			}
 			dictionary [propertyName] = value;
-			changeDictionary [propertyName] = value;
-			//If this is tied to a parent, we need to send that notification as well
-			if (!string.IsNullOrWhiteSpace (ParentProperty))
-				pendingUpdates.Add (($"{ParentProperty}.{propertyName}", value));
-			pendingUpdates.Add ((propertyName, value));
-			if (!isUpdating) {
-				EndUpdate ();
+			//If we track the ViewBuilder.View property it can easily get into a loop!
+			if (typeof (T) != typeof (View)) {
+				changeDictionary [propertyName] = value;
+				//If this is tied to a parent, we need to send that notification as well
+				if (!string.IsNullOrWhiteSpace (ParentProperty))
+					pendingUpdates.Add (($"{ParentProperty}.{propertyName}", value));
+				pendingUpdates.Add ((propertyName, value));
+				if (!isUpdating) {
+					EndUpdate ();
+				}
 			}
 			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
 			return true;

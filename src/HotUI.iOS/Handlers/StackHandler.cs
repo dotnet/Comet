@@ -40,18 +40,33 @@ namespace HotUI.iOS {
 		List<UIView> views = new List<UIView> ();
 		protected void UpdateChildren (Stack stack)
 		{
-			views.ForEach (x => {
-				RemoveArrangedSubview (x);
-				x.RemoveFromSuperview ();
-			});
+			var children = stack.GetChildren ();
+			if (views.Count == children.Count) {
+				bool areSame = false;
+				for (var i = 0; i < views.Count; i++) {
+					var v = views [i];
+					var c = children [i].ToView ();
+					areSame = c == v;
+					if (!areSame) {
+						break;
+					}
+				}
+				if (areSame)
+					return;
+			}
+
+			foreach (var v in views) {
+				RemoveArrangedSubview (v);
+				v.RemoveFromSuperview ();
+			}
 			views.Clear ();
-			foreach (var child in stack.GetChildren ()) {
+			foreach (var child in children) {
 				var cview = child.ToView ();
 				views.Add (cview);
 				//cview.ContentMode = UIViewContentMode.Top;
 				AddSubview (cview);
 				AddArrangedSubview (cview);
-				
+
 			}
 
 
