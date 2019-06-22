@@ -6,6 +6,10 @@ namespace HotUI.iOS {
 		public ButtonHandler ()
 		{
 			this.TouchUpInside += ButtonHandler_TouchUpInside;
+			this.SetTitleColor (UIColor.Blue, UIControlState.Normal);
+			this.Layer.BorderColor = UIColor.Blue.CGColor;
+			this.Layer.BorderWidth = .5f;
+			this.Layer.CornerRadius = 3f;
 		}
 
 		private void ButtonHandler_TouchUpInside (object sender, EventArgs e) => button?.OnClick ();

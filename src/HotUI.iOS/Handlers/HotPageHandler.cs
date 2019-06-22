@@ -63,7 +63,7 @@ namespace HotUI.iOS {
 		public override void LoadView ()
 		{
 			base.LoadView ();
-			View.BackgroundColor = UIColor.Gray;
+			View.BackgroundColor = UIColor.White;
 		}
 	}
 
