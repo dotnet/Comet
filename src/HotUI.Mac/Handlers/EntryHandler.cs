@@ -9,11 +9,13 @@ namespace HotUI.Mac.Handlers {
 			EditingEnded += EntryHandler_Ended;
 		}
 
+		void EntryHandler_Ended (object sender, EventArgs e) => entry?.Completed (StringValue);
+
 		public NSView View => this;
 
 		public void Remove (View view)
 		{
-
+			entry = null;
 		}
 		Entry entry;
 		public void SetView (View view)
@@ -28,7 +30,6 @@ namespace HotUI.Mac.Handlers {
 			this.UpdateProperty (property, value);
 		}
 
-		void EntryHandler_Ended (object sender, EventArgs e) => entry?.Completed (this.StringValue);
 	}
 
 
