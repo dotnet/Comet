@@ -36,7 +36,10 @@ namespace HotUI {
 					}
 				}
 			}
+			if (EqualityComparer<T>.Default.Equals (currentValue, newValue))
+				return;
 			currentValue = newValue;
+
 			onUpdate (propertyName, newValue);
 		}
 		static T Cast<T>(this object val)
