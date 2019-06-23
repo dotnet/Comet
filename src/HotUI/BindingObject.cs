@@ -1,73 +1,212 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace HotUI {
 
+
 	public interface INotifyPropertyRead : INotifyPropertyChanged {
 		event PropertyChangedEventHandler PropertyRead;
 	}
+	public class BindingObject : INotifyPropertyRead {
 
-	public class BindingObject : INotifyPropertyChanged {
-
+		public event PropertyChangedEventHandler PropertyRead;
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		internal Action StateChanged;
+		internal protected Dictionary<string, object> dictionary = new Dictionary<string, object> ();
 
-		internal protected Action<BindingObject, List<(string property, object value)>> UpdateParentValueChanged;
-		internal protected string ParentProperty { get; set; }
-
-		BindingState bindingState = new BindingState ();
-		public BindingState BindingState {
-			get => bindingState;
-			set {
-				if (bindingState == value)
-					return;
-				bindingState = value;
-				foreach (var child in bindableChildren) {
-					child.BindingState = value;
-				}
-			}
+		protected T GetProperty<T> ([CallerMemberName] string propertyName = "")
+		{
+			PropertyRead?.Invoke (this, new PropertyChangedEventArgs (propertyName));
+			if (dictionary.TryGetValue (propertyName, out var val))
+				return (T)val;
+			return default;
 		}
 
+		internal object GetValue (string propertyName)
+		{
+			dictionary.TryGetValue (propertyName, out var val);
+			return val;
+		}
+		/// <summary>
+		/// Returns true if the value changed
+		/// </summary>
+		/// <typeparam name="T"></typeparam>
+		/// <param name="currentValue"></param>
+		/// <param name="newValue"></param>
+		/// <param name="propertyName"></param>
+		/// <returns></returns>
+		protected bool SetProperty<T> (T value, [CallerMemberName] string propertyName = "")
+		{
+			if (dictionary.TryGetValue (propertyName, out object val)) {
+				if (EqualityComparer<T>.Default.Equals ((T)val, value))
+					return false;
+			}
+			dictionary [propertyName] = value;
+			OnPropertyChanged?.Invoke ((this, propertyName, value));
+			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
+			return true;
+		}
+
+		internal Action<(object Sender, string PropertyName, object Value)> OnPropertyChanged { get; set; }
+	}
+
+	public class BindingObjectManager {
+
+		public BindingState BindingState { get; set; } = new BindingState ();
+		internal Action StateChanged;
+
+		bool isBuilding;
+		public bool IsBuilding => isBuilding;
+
+
 		public IEnumerable<KeyValuePair<string, object>> ChangedProperties => changeDictionary;
+		Dictionary<string, object> changeDictionary = new Dictionary<string, object> ();
+		List<(string property, object value)> pendingUpdates = new List<(string, object)> ();
+
+
+		List<string> listProperties = new List<string> ();
 
 		internal void ResetChangeDictionary ()
 		{
 			changeDictionary.Clear ();
 		}
 
-
-		Dictionary<string, object> changeDictionary = new Dictionary<string, object> ();
-		internal protected Dictionary<string, object> dictionary = new Dictionary<string, object> ();
-		List<(string property, object value)> pendingUpdates = new List<(string, object)> ();
-
-
-
-		bool isBuilding;
-		public bool IsBuilding => isBuilding;
-
 		internal void StartBuildingView ()
 		{
-			CheckForStateAttributes ();
+			CheckForStateAttributes (this);
 			isBuilding = true;
-			bindableChildren.ForEach (x => x.StartBuildingView ());
 			if (listProperties.Any ()) {
 				BindingState.AddGlobalProperties (listProperties);
 			}
 			listProperties.Clear ();
 		}
 
-		bool hasChecked = false;
-		static Assembly HotUIAssembly = typeof (BindingObject).Assembly;
-		void CheckForStateAttributes ()
+		List<INotifyPropertyRead> children = new List<INotifyPropertyRead> ();
+		Dictionary<object, string> childrenProperty = new Dictionary<object, string> ();
+
+		public void StartMonitoring (INotifyPropertyRead obj)
 		{
-			if (hasChecked)
+			if (children.Contains (obj))
 				return;
-			var type = this.GetType ();
+			children.Add (obj);
+			//Check in for more properties!
+			CheckForStateAttributes (obj);
+
+			if (obj is BindingObject bobj) {
+				bobj.OnPropertyChanged = (s) => OnPropertyChanged (s.Sender, s.PropertyName, s.Value);
+			} else {
+				obj.PropertyChanged += Obj_PropertyChanged;
+			}
+			obj.PropertyRead += Obj_PropertyRead;
+		}
+
+		private void Obj_PropertyRead (object sender, PropertyChangedEventArgs e) => OnPropertyRead (sender, e.PropertyName);
+
+		private void Obj_PropertyChanged (object sender, PropertyChangedEventArgs e)
+		{
+			if (sender is BindingObject b) {
+				OnPropertyChanged (sender, e.PropertyName, b.GetValue (e.PropertyName));
+				return;
+			}
+
+			var value = sender.GetPropertyValue (e.PropertyName);
+			OnPropertyChanged (sender, e.PropertyName, value);
+		}
+
+		public void StopMonitoring (INotifyPropertyRead obj)
+		{
+			if (!children.Contains (obj))
+				return;
+			children.Remove (obj);
+			if (obj is BindingObject b) {
+				b.OnPropertyChanged = null;
+			} else {
+				obj.PropertyChanged -= Obj_PropertyRead;
+			}
+			obj.PropertyRead -= Obj_PropertyRead;
+
+		}
+
+		internal void EndBuildingView ()
+		{
+			listProperties.Clear ();
+			isBuilding = false;
+		}
+
+		internal void StartProperty ()
+		{
+			isBuilding = true;
+			if (listProperties.Any ()) {
+				BindingState.AddGlobalProperties (listProperties);
+			}
+			listProperties.Clear ();
+		}
+
+		internal string [] EndProperty (bool includeParent = false)
+		{
+			var  changed =  listProperties.Distinct ().ToArray ();
+			listProperties.Clear ();
+			return changed;
+
+		}
+
+		bool isUpdating;
+		public void StartUpdate ()
+		{
+			isUpdating = true;
+		}
+
+		public void EndUpdate ()
+		{
+			isUpdating = false;
+			if (pendingUpdates.Any ()) {
+				if (!BindingState.UpdateValues (pendingUpdates)) {
+					pendingUpdates.Clear ();
+					StateChanged?.Invoke ();
+					return;
+				}
+			}
+			pendingUpdates.Clear ();
+		}
+
+
+		void OnPropertyChanged (object sender, string propertyName, object value)
+		{
+			if (value?.GetType () == typeof (View))
+				return;
+
+			changeDictionary [propertyName] = value;
+			childrenProperty.TryGetValue (sender, out var parentproperty);
+			var prop = string.IsNullOrWhiteSpace (parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
+			pendingUpdates.Add ((prop, value));
+			if (!isUpdating) {
+				EndUpdate ();
+			}
+
+		}
+
+		void OnPropertyRead (object sender, string propertyName)
+		{
+			if (!isBuilding)
+				return;
+			childrenProperty.TryGetValue (sender, out var parentproperty);
+			var prop = string.IsNullOrWhiteSpace (parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
+			listProperties.Add (prop);
+		}
+
+
+		bool hasChecked;
+		static Assembly HotUIAssembly = typeof (BindingObject).Assembly;
+		void CheckForStateAttributes (object obj)
+		{
+			if (hasChecked && obj == this)
+				return;
+			var type = obj.GetType ();
 			//var properties = type.GetProperties (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
 			//	Where (x => Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
 			var fields = type.GetFields (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
@@ -84,9 +223,10 @@ namespace HotUI {
 
 			if (fields.Any ()) {
 				foreach (var field in fields) {
-					var child = field.GetValue (this) as BindingObject;
+					var child = field.GetValue (obj) as INotifyPropertyRead;
 					if (child != null) {
-						SetProperty (child, field.Name);
+						childrenProperty [child] = field.Name;
+						StartMonitoring (child);
 					}
 				}
 			}
@@ -94,148 +234,63 @@ namespace HotUI {
 			hasChecked = true;
 		}
 
-		internal void EndBuildingView ()
-		{
+	}
 
-			bindableChildren.ForEach (x => x.EndBuildingView ());
-			listProperties.Clear ();
-			isBuilding = false;
+	public class BindingState {
+		public List<string> GlobalProperties { get; set; } = new List<string> ();
+		public Dictionary<string, List<Action<string, object>>> ViewUpdateProperties = new Dictionary<string, List<Action<string, object>>> ();
+		public void AddGlobalProperty (string property)
+		{
+			if (GlobalProperties.Contains (property))
+				return;
+			Debug.WriteLine ($"Adding Global Property: {property}");
+			GlobalProperties.Add (property);
+		}
+		public void AddGlobalProperties (IEnumerable<string> properties)
+		{
+			foreach (var prop in properties)
+				AddGlobalProperty (prop);
+		}
+		public void AddViewProperty (string property, Action<string, object> update)
+		{
+			if (!ViewUpdateProperties.TryGetValue (property, out var actions))
+				ViewUpdateProperties [property] = actions = new List<Action<string, object>> ();
+			actions.Add (update);
 		}
 
-		List<string> listProperties = new List<string> ();
-		internal void StartProperty ()
+		public void AddViewProperty (string [] properties, Action<string, object> update)
 		{
-			isBuilding = true;
-			if (listProperties.Any ()) {
-				BindingState.AddGlobalProperties (listProperties);
+			foreach (var property in properties) {
+				AddViewProperty (property, update);
 			}
-			listProperties.Clear ();
-
-			bindableChildren.ForEach (x => x.StartProperty ());
 		}
-
-		internal string [] EndProperty (bool includeParent = false)
+		public void Clear ()
 		{
-			var children = bindableChildren.SelectMany (x => x.EndProperty (true));
-			var props = listProperties.Select (x => includeParent ? $"{ParentProperty}.{x}" : x).Union (children).Distinct ().ToArray ();
-			listProperties.Clear ();
-			return props;
-
-		}
-
-		//private List<string> CheckChildrenProperties(List<string> properties)
-		//{
-		//	List<string> realProperties = new List<string> ();
-		//	foreach(var prop in properties) {
-		//		if(bindableChildren.TryGetValue(prop, out var child)) {
-		//			var childProps = 
-		//		}
-		//		realProperties.Add (prop);
-		//	}
-		//}
-
-
-		bool isUpdating;
-		public void StartUpdate ()
-		{
-			isUpdating = true;
-		}
-
-		public void EndUpdate ()
-		{
-			isUpdating = false;
-
-
-			if (pendingUpdates.Any ()) {
-				if (UpdateParentValueChanged != null) {
-					var updates = pendingUpdates.ToList ();
-					pendingUpdates.Clear ();
-					UpdateParentValueChanged (this, updates);
-				} else if (!BindingState.UpdateValues (pendingUpdates)) {
-					pendingUpdates.Clear ();
-					StateChanged?.Invoke ();
-					return;
-				}
+			GlobalProperties?.Clear ();
+			foreach (var key in ViewUpdateProperties) {
+				key.Value.Clear ();
 			}
-			pendingUpdates.Clear ();
+			ViewUpdateProperties.Clear ();
 		}
-
-
-		protected T GetProperty<T> ([CallerMemberName] string propertyName = "")
-		{
-			//Ignore View for the ViewBuilders
-			if (isBuilding && typeof(T) != typeof(View)) {
-				listProperties.Add (propertyName);
-			}
-
-			if (dictionary.TryGetValue (propertyName, out var val))
-				return (T)val;
-			return default (T);
-		}
-
 		/// <summary>
-		/// Returns true if the value changed
+		/// This returns true, if it updated the UI based on the changes
+		/// False, if it couldnt update, or the value was global so the whole UI needs refreshed
 		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="currentValue"></param>
-		/// <param name="newValue"></param>
-		/// <param name="propertyName"></param>
+		/// <param name="updates"></param>
 		/// <returns></returns>
-		protected bool SetProperty<T> (T value, [CallerMemberName] string propertyName = "")
+		public bool UpdateValues (IEnumerable<(string property, object value)> updates)
 		{
-
-			if (dictionary.TryGetValue (propertyName, out object val)) {
-				if (EqualityComparer<T>.Default.Equals ((T)val, value))
-					return true;
-				if (val is BindingObject oldChild) {
-					UntrackChild (propertyName, oldChild);
+			bool didUpdate = true;
+			foreach (var update in updates) {
+				if (GlobalProperties.Contains (update.property))
+					return false;
+				if (ViewUpdateProperties.TryGetValue (update.property, out var actions)) {
+					foreach (var a in actions)
+						a.Invoke (update.property, update.value);
+					didUpdate = true;
 				}
 			}
-			if (value is BindingObject b) {
-				TrackChild (propertyName, b);
-			}
-			dictionary [propertyName] = value;
-			//If we track the ViewBuilder.View property it can easily get into a loop!
-			if (typeof (T) != typeof (View)) {
-				changeDictionary [propertyName] = value;
-				//If this is tied to a parent, we need to send that notification as well
-				if (!string.IsNullOrWhiteSpace (ParentProperty))
-					pendingUpdates.Add (($"{ParentProperty}.{propertyName}", value));
-				pendingUpdates.Add ((propertyName, value));
-				if (!isUpdating) {
-					EndUpdate ();
-				}
-			}
-			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
-			return true;
+			return didUpdate;
 		}
-
-		List<BindingObject> bindableChildren = new List<BindingObject> ();
-
-		void TrackChild (string propertyName, BindingObject child)
-		{
-			//This should fail if there are two properties with the same binding object as it's value. But that should never happen!
-			child.ParentProperty = propertyName;
-			child.UpdateParentValueChanged = Child_PropertiesChanged;
-			child.BindingState = this.BindingState;
-			bindableChildren.Add (child);
-		}
-
-		private void Child_PropertiesChanged (BindingObject child, List<(string property, object value)> changes)
-		{
-			pendingUpdates.AddRange (changes);
-			EndUpdate ();
-		}
-
-		void UntrackChild (string propertyName, BindingObject child)
-		{
-			child.UpdateParentValueChanged = null;
-			child.ParentProperty = null;
-			child.BindingState = new BindingState ();
-			bindableChildren.Remove (child);
-		}
-
-
-
 	}
 }

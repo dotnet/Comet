@@ -46,19 +46,20 @@ namespace HotUI {
 
 
 	[Serializable]
-	public class State : BindingObject {
+	public class State : BindingObjectManager {
 		internal object GetValue (string property)
 		{
-			var bindingParts = property.Split ('.');
-			var dict = dictionary;
-			for (var i = 0; i < bindingParts.Length - 1; i++) {
-				var part = bindingParts [i];
-				dict.TryGetValue (part, out var val);
-				var child = val as BindingObject;
-				dict = child.dictionary;
-			}
-			dict.TryGetValue (bindingParts.Last (), out var value);
-			return value;
+			return this.GetPropertyValue (property);
+			//var bindingParts = property.Split ('.');
+			//var dict = dictionary;
+			//for (var i = 0; i < bindingParts.Length - 1; i++) {
+			//	var part = bindingParts [i];
+			//	dict.TryGetValue (part, out var val);
+			//	var child = val as BindingObject;
+			//	dict = child.dictionary;
+			//}
+			//dict.TryGetValue (bindingParts.Last (), out var value);
+			//return value;
 		}
 	}
 }
