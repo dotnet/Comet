@@ -29,21 +29,18 @@ namespace HotUI.Samples {
 		}
 
 		protected override View Build () =>
-			//new ScrollView{
+			new ScrollView{
 				new Stack {
-			 (state.CanEdit ?
-				(View)new Entry {
-					Text = state.Text,
-					Completed =(e)=> state.Text = e
-				}
-				: new Label { TextBinding = () =>  $"{state.Text}: multiText" }),// Fromated Text will warn you. This should be done by TextBinding
-				new Label {Text = state.Text},
-				new Button{Text = "Toggle Entry/Label", OnClick = ()=> state.CanEdit = !state.CanEdit},
-				new Button{Text = "Update Text", OnClick = ()=>{
+					(state.CanEdit ? (View)new Entry(state.Text) {
+						Completed =(e)=> state.Text = e
+					} : new Label (() =>  $"{state.Text}: multiText" )),// Fromated Text will warn you. This should be done by TextBinding
+				new Label (state.Text),
+				new Button("Toggle Entry/Label"){ OnClick = ()=> state.CanEdit = !state.CanEdit},
+				new Button("Update Text"){ OnClick = ()=>{
 						state.Text = $"Click Count: {clickCount.Value++}";
 					}
 				}
-			//}
-			};
+			}
+		};
 	}
 }

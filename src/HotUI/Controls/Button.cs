@@ -1,7 +1,18 @@
 ﻿using System;
 namespace HotUI {
 	public class Button : View {
+		public Button ()
+		{
 
+		}
+		public Button (string text)
+		{
+			Text = text;
+		}
+		public Button (Func<string> formatedText)
+		{
+			TextBinding = formatedText;
+		}
 		private string text;
 		public string Text {
 			get => text;

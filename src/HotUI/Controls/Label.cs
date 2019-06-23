@@ -2,7 +2,18 @@
 using System.Diagnostics;
 namespace HotUI {
 	public class Label : View {
+		public Label()
+		{
 
+		}
+		public Label(string text)
+		{
+			Text = text;
+		}
+		public Label(Func<string> formatedText)
+		{
+			TextBinding = formatedText;
+		}
 		private string text;
 		public string Text {
 			get => text;

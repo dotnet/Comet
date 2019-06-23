@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.CompilerServices;
 
 namespace HotUI {
@@ -17,7 +18,8 @@ namespace HotUI {
 					if (propCount == 1) {
 						var prop = props [0];
 
-						var stateValue =  state.GetValue (prop).Cast<T>();
+						var stateValue = state.GetValue (prop).Cast<T> ();
+						var old = state.EndProperty ();
 						//1 to 1 binding!
 						if (EqualityComparer<T>.Default.Equals (stateValue, newValue)) {
 							state.BindingState.AddViewProperty (prop, onUpdate);
@@ -42,17 +44,16 @@ namespace HotUI {
 
 			onUpdate (propertyName, newValue);
 		}
-		static T Cast<T>(this object val)
+		static T Cast<T> (this object val)
 		{
 			if (val == null)
 				return default;
 			try {
-				if(typeof(T) == typeof(string)) {
+				if (typeof (T) == typeof (string)) {
 					return (T)(object)val?.ToString ();
 				}
 				return (T)val;
-			}
-			catch(Exception ex) {
+			} catch (Exception ex) {
 				//This is ok, sometimes the values are not the same.
 				return default;
 			}
@@ -65,10 +66,10 @@ namespace HotUI {
 		public static View Diff (this View newView, View oldView)
 		{
 			var v = newView.DiffUpdate (oldView);
-			void callUpdateOnView(View view)
+			void callUpdateOnView (View view)
 			{
-				if(view is IContainerView container) {
-					foreach(var child in container.GetChildren()) {
+				if (view is IContainerView container) {
+					foreach (var child in container.GetChildren ()) {
 						callUpdateOnView (child);
 					}
 				}
@@ -134,7 +135,7 @@ namespace HotUI {
 				}
 			}
 
-			newView.UpdateFromOldView(oldView.ViewHandler);
+			newView.UpdateFromOldView (oldView.ViewHandler);
 
 
 			return newView;
@@ -157,5 +158,35 @@ namespace HotUI {
 			return view?.GetType () == compareView?.GetType ();
 		}
 
+		public static object GetPropertyValue (this object obj, string name)
+		{
+			foreach (var part in name.Split ('.')) {
+				if (obj == null)
+					return null;
+				if (obj is BindingObject bo) {
+					obj = bo.GetValue (part);
+				} else {
+					var type = obj.GetType ();
+					var info = type.GetProperty (part, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+					if (info == null) {
+						var field = type.GetField (part, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+						if (field == null)
+							return null;
+						obj = field.GetValue (obj);
+					} else {
+						obj = info.GetValue (obj, null);
+					}
+				}
+			}
+			return obj;
+		}
+
+		public static T GetPropValue<T> (this object obj, string name)
+		{
+			var retval = GetPropertyValue (obj, name);
+			if (retval == null)
+				return default;
+			return (T)retval;
+		}
 	}
 }

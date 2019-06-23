@@ -1,6 +1,18 @@
 ﻿using System;
 namespace HotUI {
 	public class Entry : View {
+		public Entry ()
+		{
+
+		}
+		public Entry (string text)
+		{
+			Text = text;
+		}
+		public Entry (Func<string> formatedText)
+		{
+			TextBinding = formatedText;
+		}
 
 		string text;
 		public string Text {
