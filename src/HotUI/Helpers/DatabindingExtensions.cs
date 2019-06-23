@@ -163,16 +163,19 @@ namespace HotUI {
 			foreach (var part in name.Split ('.')) {
 				if (obj == null)
 					return null;
-
-				var type = obj.GetType ();
-				var info = type.GetProperty (part, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-				if (info == null) {
-					var field = type.GetField (part, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-					if (field == null)
-						return null;
-					obj = field.GetValue (obj);
+				if (obj is BindingObject bo) {
+					obj = bo.GetValue (part);
 				} else {
-					obj = info.GetValue (obj, null);
+					var type = obj.GetType ();
+					var info = type.GetProperty (part, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+					if (info == null) {
+						var field = type.GetField (part, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+						if (field == null)
+							return null;
+						obj = field.GetValue (obj);
+					} else {
+						obj = info.GetValue (obj, null);
+					}
 				}
 			}
 			return obj;
