@@ -36,7 +36,7 @@ namespace HotUI.Samples {
 					Text = state.Text,
 					Completed =(e)=> state.Text = e
 				}
-				: new Label { TextBinding = () =>  $"{state.Text}: multiText" }),// Fromated Text will warn you. This should be done by TextBinding
+				: new Label { FormatedText = () =>  $"{state.Text}: multiText" }),// Fromated Text will warn you. This should be done by TextBinding
 				new Label {Text = state.Text},
 				new Button{Text = "Toggle Entry/Label", OnClick = ()=> state.CanEdit = !state.CanEdit},
 				new Button{Text = "Update Text", OnClick = ()=>{
