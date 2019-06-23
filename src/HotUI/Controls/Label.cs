@@ -12,7 +12,7 @@ namespace HotUI {
 		}
 		public Label(Func<string> formatedText)
 		{
-			FormatedText = formatedText;
+			TextBinding = formatedText;
 		}
 		private string text;
 		public string Text {
@@ -20,18 +20,18 @@ namespace HotUI {
 			set => this.SetValue (State, ref text, value, ViewPropertyChanged);
 		}
 
-		public Func<string> FormatedText { get; set; }
+		public Func<string> TextBinding { get; set; }
 
 		protected override void WillUpdateView ()
 		{
 			base.WillUpdateView ();
-			if (FormatedText != null) {
+			if (TextBinding != null) {
 				State.StartProperty ();
-				var text = FormatedText.Invoke ();
+				var text = TextBinding.Invoke ();
 				var props = State.EndProperty ();
 				var propCount = props.Length;
 				if (propCount > 0) {
-					State.BindingState.AddViewProperty (props, (s, o) => Text = FormatedText.Invoke ());
+					State.BindingState.AddViewProperty (props, (s, o) => Text = TextBinding.Invoke ());
 				}
 				Text = text;
 			}
