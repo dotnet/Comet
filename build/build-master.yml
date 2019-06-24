@@ -4,7 +4,7 @@ trigger:
 stages:
 - stage: BuildSource
   jobs:
-  - job: Build HotUI
+  - job: BuildHotUI
     displayName: Build HoTUI Source
     pool:
       name: Hosted macOS
@@ -60,7 +60,7 @@ stages:
 - stage: BuildSamples
   dependsOn: BuildSource
   jobs:
-  - job: Build HotUI.Samples
+  - job: BuildHotUISamples
     displayName: Build HoTUI Samples
     pool:
       name: Hosted macOS
