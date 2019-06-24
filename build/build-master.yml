@@ -95,6 +95,7 @@ stages:
       inputs:
         solutionFile: 'sample/HotUI.iOS.Sample/HotUI.iOS.Sample.csproj'
         configuration: '$(BuildConfiguration)'
+        platform: 'iPhoneSimulator'
         packageApp: false
         buildForSimulator: true
         runNugetRestore: false
@@ -111,6 +112,7 @@ stages:
       inputs:
         solutionFile: 'sample/Forms/HotUI.Forms.Sample.iOS/HotUI.Forms.Sample.iOS.csproj'
         configuration: '$(BuildConfiguration)'
+        platform: 'iPhoneSimulator'
         packageApp: false
         buildForSimulator: true
         runNugetRestore: false
