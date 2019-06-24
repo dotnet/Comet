@@ -95,12 +95,14 @@ stages:
       inputs:
           solution: 'src/HotUI/HotUI.csproj'
           configuration: '$(BuildConfiguration)'
+          platform: 'iPhoneSimulator'
 
     - task: MSBuild@1
       displayName: 'Build HotUI.iOS'
       inputs:
         solution: 'src/HotUI.iOS/HotUI.iOS.csproj'
         configuration: '$(BuildConfiguration)'
+        platform: 'iPhoneSimulator'
 
     - task: XamariniOS@2
       displayName: 'Build HotUI.iOS.Sample App'
@@ -150,6 +152,7 @@ stages:
       inputs:
         solution: 'src/HotUI.Forms/HotUI.Forms.csproj'
         configuration: '$(BuildConfiguration)'
+        platform: 'iPhoneSimulator'
 
     - task: XamariniOS@2
       displayName: 'Build HotUI.Forms.iOS.Sample App'
