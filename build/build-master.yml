@@ -57,11 +57,11 @@ stages:
         solution: 'src/HotUI.Forms/HotUI.Forms.csproj'
         configuration: '$(BuildConfiguration)'
 
-- stage: BuildSamples
+- stage: BuildSamplesNative
   dependsOn: BuildSource
   jobs:
-  - job: BuildHotUISamples
-    displayName: Build HoTUI Samples
+  - job: BuildHotUISamplesNative
+    displayName: Build HoTUI Native Samples
     pool:
       name: Hosted macOS
       vmImage: 'macos-latest'
@@ -90,6 +90,18 @@ stages:
         configuration: '$(BuildConfiguration)'
         createAppPackage: false
 
+    - task: MSBuild@1
+      displayName: 'Build HotUI'
+      inputs:
+          solution: 'src/HotUI/HotUI.csproj'
+          configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.iOS'
+      inputs:
+        solution: 'src/HotUI.iOS/HotUI.iOS.csproj'
+        configuration: '$(BuildConfiguration)'
+
     - task: XamariniOS@2
       displayName: 'Build HotUI.iOS.Sample App'
       inputs:
@@ -100,12 +112,33 @@ stages:
         buildForSimulator: true
         runNugetRestore: false
 
+  - stage: BuildSamplesForms
+    dependsOn: BuildSource
+    jobs:
+    - job: BuildHotUISamplesForms
+      displayName: Build HoTUI Forms Samples
+      pool:
+        name: Hosted macOS
+        vmImage: 'macos-latest'
+        demands:
+        - MSBuild
+        - Xamarin.Android
+        - xcode
+        - Xamarin.iOS
+        - msbuild
+
     - task: XamarinAndroid@1
       displayName: 'Build HotUI.Forms.Android.Sample App'
       inputs:
         projectFile: sample/Forms/HotUI.Forms.Sample.Android/HotUI.Forms.Sample.Android.csproj
         configuration: '$(BuildConfiguration)'
         createAppPackage: false
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Forms'
+      inputs:
+        solution: 'src/HotUI.Forms/HotUI.Forms.csproj'
+        configuration: '$(BuildConfiguration)'
 
     - task: XamariniOS@2
       displayName: 'Build HotUI.Forms.iOS.Sample App'
