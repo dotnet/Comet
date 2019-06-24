@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotUI.Forms.Sample {
+namespace HotUI.Samples {
 	public class InsaneDiffPage : HotPage {
 		public InsaneDiffPage ()
 		{

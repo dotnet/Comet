@@ -1,4 +1,5 @@
 ﻿using System;
+using HotUI.Samples;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

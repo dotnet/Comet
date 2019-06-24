@@ -17,5 +17,6 @@
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\HotUI\HotUI.csproj" />
     <ProjectReference Include="..\..\..\src\HotUI.Forms\HotUI.Forms.csproj" />
+    <ProjectReference Include="..\..\HotUI.Samples\HotUI.Samples.csproj" />
   </ItemGroup>
 </Project>
