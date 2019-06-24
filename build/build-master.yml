@@ -112,20 +112,31 @@ stages:
         buildForSimulator: true
         runNugetRestore: false
 
-  - stage: BuildSamplesForms
-    dependsOn: BuildSource
-    jobs:
-    - job: BuildHotUISamplesForms
-      displayName: Build HoTUI Forms Samples
-      pool:
-        name: Hosted macOS
-        vmImage: 'macos-latest'
-        demands:
-        - MSBuild
-        - Xamarin.Android
-        - xcode
-        - Xamarin.iOS
-        - msbuild
+- stage: BuildSamplesForms
+  dependsOn: BuildSource
+  jobs:
+  - job: BuildHotUISamplesForms
+    displayName: Build HoTUI Forms Samples
+    pool:
+      name: Hosted macOS
+      vmImage: 'macos-latest'
+      demands:
+      - MSBuild
+      - Xamarin.Android
+      - xcode
+      - Xamarin.iOS
+      - msbuild
+
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: Use Nuget 4.3.0
+      inputs:
+        versionSpec: '4.3.0'
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: HotUI.sln
 
     - task: XamarinAndroid@1
       displayName: 'Build HotUI.Forms.Android.Sample App'
