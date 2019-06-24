@@ -7,10 +7,9 @@ namespace HotUI.Forms.Sample {
 	public partial class App : Application {
 		public App ()
 		{
-			UI.Init ();
 			InitializeComponent ();
 
-			MainPage = new NavigationPage(new MainPage ().ToForms());
+			MainPage = new NavigationPage(new ListPage ().ToForms());
 		}
 
 		protected override void OnStart ()

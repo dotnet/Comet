@@ -4,26 +4,18 @@ using System.Collections.Generic;
 
 namespace HotUI {
 
-	public class ListView<T> : View, IEnumerable, IEnumerable<Func<T, View>> {
-		public ListView (IList<T> list)
+	public class ListView<T> : ListView
+	{
+		public ListView (IList<T> list) : base((IList)list)
 		{
-			List = list;
-		}
 
-		public IList<T> List { get; }
-		public IEnumerator GetEnumerator () => List.GetEnumerator ();
-		Func<object, View> cellCreator;
-		public void Add (Func<object, View> viewCreator)
+		}
+		public void Add (Func<T, View> viewCreator)
 		{
-			if (cellCreator != null) {
+			if (CellCreator != null) {
 				throw new Exception ("You can only have one View Creator");
 			}
-			cellCreator = viewCreator;
-		}
-
-		IEnumerator<Func<T, View>> IEnumerable<Func<T, View>>.GetEnumerator ()
-		{
-			throw new NotImplementedException ();
+			CellCreator =  (o) => viewCreator?.Invoke((T)o);
 		}
 	}
 
@@ -35,13 +27,14 @@ namespace HotUI {
 
 		public IList List { get; }
 		public IEnumerator GetEnumerator () => List.GetEnumerator ();
-		Func<object, View> cellCreator;
+
+		public Func<object, View> CellCreator { get; protected set; }
 		public void Add(Func<object,View> viewCreator)
 		{
-			if(cellCreator != null) {
+			if(CellCreator != null) {
 				throw new NotImplementedException ("You can only have one View Creator");
 			}
-			cellCreator = viewCreator;
+			CellCreator = viewCreator;
 		}
 
 		IEnumerator<Func<object, View>> IEnumerable<Func<object, View>>.GetEnumerator ()

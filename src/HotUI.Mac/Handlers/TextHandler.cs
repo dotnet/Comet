@@ -10,6 +10,9 @@ namespace HotUI.Mac.Handlers
         public TextHandler()
         {
             Editable = false;
+            Bezeled = false;
+            DrawsBackground = false;
+            Selectable = false;
         }
 
         public void Remove(View view)
@@ -32,7 +35,7 @@ namespace HotUI.Mac.Handlers
     {
         public static void UpdateLabelProperties(this NSTextField view, Text hView)
         {
-            view.StringValue = hView?.Value;
+            view.UpdateLabelProperty(nameof(Text.Value), hView?.Value);
             view.UpdateBaseProperties(hView);
         }
 
@@ -42,6 +45,7 @@ namespace HotUI.Mac.Handlers
             {
                 case nameof(Text.Value):
                     view.StringValue = (string) value;
+                    view.SizeToFit();
                     return true;
             }
 

@@ -37,7 +37,7 @@ namespace HotUI.Mac.Handlers
     {
         public static void UpdateProperties(this NSButton view, Button hView)
         {
-            view.Title = hView?.Text;
+            view.UpdateProperty(nameof(Button.Text), hView?.Text);
             view.UpdateBaseProperties(hView);
         }
 
@@ -47,6 +47,7 @@ namespace HotUI.Mac.Handlers
             {
                 case nameof(Button.Text):
                     view.Title = (string) value;
+                    view.SizeToFit();
                     return true;
             }
 
