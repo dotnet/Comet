@@ -4,7 +4,7 @@ using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public class ButtonHandler : AButton, IViewHandler, IView
+    public class ButtonHandler : AButton, IView
     {
         public ButtonHandler() : base(AndroidContext.CurrentContext)
         {

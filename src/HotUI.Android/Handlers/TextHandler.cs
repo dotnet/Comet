@@ -1,15 +1,15 @@
-﻿using AppKit;
-using HotUI.Mac.Extensions;
+﻿using Android.Widget;
+using AView = Android.Views.View;
 
-namespace HotUI.Mac.Handlers
+namespace HotUI.Android
 {
-    public class LabelHandler : NSTextField, IViewHandler, INSView
+    public class TextHandler : TextView, IView
     {
-        public NSView View => this;
+        public AView View => this;
 
-        public LabelHandler()
+        public TextHandler() : base(AndroidContext.CurrentContext)
         {
-            Editable = false;
+            
         }
 
         public void Remove(View view)
@@ -18,7 +18,7 @@ namespace HotUI.Mac.Handlers
 
         public void SetView(View view)
         {
-            var label = view as Label;
+            var label = view as Text;
             this.UpdateLabelProperties(label);
         }
 
@@ -30,18 +30,18 @@ namespace HotUI.Mac.Handlers
 
     public static partial class ControlExtensions
     {
-        public static void UpdateLabelProperties(this NSTextField view, Label hView)
+        public static void UpdateLabelProperties(this TextView view, Text hView)
         {
-            view.StringValue = hView?.Text;
+            view.Text = hView?.Value;
             view.UpdateBaseProperties(hView);
         }
 
-        public static bool UpdateLabelProperty(this NSTextField view, string property, object value)
+        public static bool UpdateLabelProperty(this TextView view, string property, object value)
         {
             switch (property)
             {
-                case nameof(Label.Text):
-                    view.StringValue = (string) value;
+                case nameof(Text.Value):
+                    view.Text = (string) value;
                     return true;
             }
 

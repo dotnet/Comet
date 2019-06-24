@@ -1,14 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using Android.Content;
 using Android.Graphics;
-using Android.Runtime;
 using Android.Widget;
 using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public class StackHandler : LinearLayout, IViewHandler, IView
+    public class StackHandler : LinearLayout, IView
     {
         public StackHandler() : base(AndroidContext.CurrentContext)
         {

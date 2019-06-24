@@ -4,7 +4,7 @@ using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-    public class ButtonHandler : NSButton, IViewHandler, INSView
+    public class ButtonHandler : NSButton, INSView
     {
         public ButtonHandler()
         {

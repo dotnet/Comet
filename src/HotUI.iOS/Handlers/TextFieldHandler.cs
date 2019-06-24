@@ -1,8 +1,8 @@
 ﻿using System;
 using UIKit;
 namespace HotUI.iOS {
-	public class EntryHandler : UITextField, IUIView  {
-		public EntryHandler ()
+	public class TextFieldHandler : UITextField, IUIView  {
+		public TextFieldHandler ()
 		{
 			this.EditingDidEnd += EntryHandler_EditingDidEnd;
 
@@ -13,19 +13,19 @@ namespace HotUI.iOS {
 			
 		}
 
-		private void EntryHandler_EditingDidEnd (object sender, EventArgs e) =>entry?.Completed (Text);
+		private void EntryHandler_EditingDidEnd (object sender, EventArgs e) =>_textField?.Completed (Text);
 
 		public UIView View => this;
 
 		public void Remove (View view)
 		{
-			entry = null;
+			_textField = null;
 		}
-		Entry entry;
+		TextField _textField;
 		public void SetView (View view)
 		{
-			entry = view as Entry;
-			this.UpdateProperties (entry);
+			_textField = view as TextField;
+			this.UpdateProperties (_textField);
 
 		}
 
@@ -39,7 +39,7 @@ namespace HotUI.iOS {
 
 	public static partial class ControlExtensions {
 
-		public static void UpdateProperties (this UITextField view, Entry hView)
+		public static void UpdateProperties (this UITextField view, TextField hView)
 		{
 			view.Text = hView?.Text;
 			view.UpdateBaseProperties (hView);
@@ -48,7 +48,7 @@ namespace HotUI.iOS {
 		public static bool UpdateProperty (this UITextField view, string property, object value)
 		{
 			switch (property) {
-			case nameof (Entry.Text):
+			case nameof (TextField.Text):
 				view.Text = (string)value;
 				return true;
 			}

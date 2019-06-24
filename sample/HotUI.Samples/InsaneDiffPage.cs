@@ -16,7 +16,7 @@ namespace HotUI.Samples {
 				},
 			};
 			for(var i = 0; i < 100; i++) {
-				stack.Add (new Label(i.ToString ()));
+				stack.Add (new Text(i.ToString ()));
 			}
 			return new ScrollView { stack };
 		}

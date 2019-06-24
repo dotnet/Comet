@@ -1,5 +1,4 @@
-﻿using Android.App;
-using AView = Android.Views.View;
+﻿using AView = Android.Views.View;
 
 namespace HotUI.Android
 {

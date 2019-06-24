@@ -44,14 +44,14 @@
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Handlers\ButtonHandler.cs" />
-    <Compile Include="Handlers\LabelHandler.cs" />
+    <Compile Include="Handlers\TextHandler.cs" />
     <Compile Include="Handlers\StackHandler.cs" />
     <Compile Include="Handlers\HotPageHandler.cs" />
     <Compile Include="IUIView.cs" />
     <Compile Include="Extensions\iOSExtensions.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Handlers\ScrollViewHandler.cs" />
-    <Compile Include="Handlers\EntryHandler.cs" />
+    <Compile Include="Handlers\TextFieldHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="UI.cs" />
   </ItemGroup>

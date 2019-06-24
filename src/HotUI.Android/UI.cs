@@ -10,8 +10,8 @@
                 return;
             hasInit = true;
             Registrar.Handlers.Register<Button, ButtonHandler>();
-            Registrar.Handlers.Register<Entry, EntryHandler>();
-            Registrar.Handlers.Register<Label, LabelHandler>();
+            Registrar.Handlers.Register<TextField, TextFieldHandler>();
+            Registrar.Handlers.Register<Text, TextHandler>();
             Registrar.Handlers.Register<Stack, StackHandler>();
             //Registrar.Handlers.Register<WebView, WebViewHandler> ();
             Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();

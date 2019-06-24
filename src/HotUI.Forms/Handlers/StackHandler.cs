@@ -5,7 +5,7 @@ using FStack = Xamarin.Forms.StackLayout;
 using HStack = HotUI.Stack;
 using HView = HotUI.View;
 namespace HotUI.Forms {
-	public class StackHandler : FStack, IViewHandler, IFormsView {
+	public class StackHandler : FStack, IFormsView {
 
 		public Xamarin.Forms.View View => this;
 

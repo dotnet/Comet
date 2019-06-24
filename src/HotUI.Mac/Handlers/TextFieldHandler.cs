@@ -4,28 +4,28 @@ using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-    public class EntryHandler : NSTextField, INSView
+    public class TextFieldHandler : NSTextField, INSView
     {
-        public EntryHandler()
+        public TextFieldHandler()
         {
             EditingEnded += EntryHandler_Ended;
         }
 
-        void EntryHandler_Ended(object sender, EventArgs e) => entry?.Completed(StringValue);
+        void EntryHandler_Ended(object sender, EventArgs e) => _textField?.Completed(StringValue);
 
         public NSView View => this;
 
         public void Remove(View view)
         {
-            entry = null;
+            _textField = null;
         }
 
-        Entry entry;
+        TextField _textField;
 
         public void SetView(View view)
         {
-            entry = view as Entry;
-            this.UpdateProperties(entry);
+            _textField = view as TextField;
+            this.UpdateProperties(_textField);
         }
 
         public void UpdateValue(string property, object value)
@@ -36,7 +36,7 @@ namespace HotUI.Mac.Handlers
 
     public static partial class ControlExtensions
     {
-        public static void UpdateProperties(this NSTextField view, Entry hView)
+        public static void UpdateProperties(this NSTextField view, TextField hView)
         {
             view.StringValue = hView?.Text;
             view.UpdateBaseProperties(hView);
@@ -46,7 +46,7 @@ namespace HotUI.Mac.Handlers
         {
             switch (property)
             {
-                case nameof(Entry.Text):
+                case nameof(TextField.Text):
                     view.StringValue = (string) value;
                     return true;
             }

@@ -1,17 +1,17 @@
 ﻿using System;
 namespace HotUI {
-	public class Entry : View {
-		public Entry ()
+	public class TextField : View {
+		public TextField ()
 		{
 
 		}
-		public Entry (string text)
+		public TextField (string text)
 		{
 			Text = text;
 		}
-		public Entry (Func<string> formatedText)
+		public TextField (Func<string> builder)
 		{
-			TextBinding = formatedText;
+			TextBinding = builder;
 		}
 
 		string text;
@@ -44,8 +44,8 @@ namespace HotUI {
 		}
 
 		public Action<string> Completed { get; set; }
-		public Action<Entry> Focused { get; set; }
-		public Action<Entry> Unfocused { get; set; }
+		public Action<TextField> Focused { get; set; }
+		public Action<TextField> Unfocused { get; set; }
 		public Action<(string NewText, string OldText)> TextChanged { get; set; }
 	}
 }

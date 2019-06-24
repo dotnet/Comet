@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UIKit;
 namespace HotUI.iOS {
-	public class StackHandler : UIStackView, IViewHandler, IUIView {
+	public class StackHandler : UIStackView, IUIView {
 
 		public StackHandler ()
 		{

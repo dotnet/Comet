@@ -86,7 +86,7 @@ namespace HotUI.Forms {
 		}
 
 
-		public static void UpdateProperties (this Xamarin.Forms.Entry fView, Entry view)
+		public static void UpdateProperties (this Xamarin.Forms.Entry fView, TextField view)
 		{
 			fView.UpdateBaseProperties (view);
 			fView.Text = view.Text;
@@ -96,10 +96,10 @@ namespace HotUI.Forms {
 		public static bool UpdateProperty (this Xamarin.Forms.Entry fView, string property, object value)
 		{
 			switch (property) {
-			case nameof (Entry.Text):
+			case nameof (TextField.Text):
 				fView.Text = (string)value;
 				return true;
-			case nameof (Entry.Placeholder):
+			case nameof (TextField.Placeholder):
 				fView.Placeholder = (string)value;
 				return true;
 			}
@@ -123,16 +123,16 @@ namespace HotUI.Forms {
 		}
 
 
-		public static void UpdateProperties (this Xamarin.Forms.Label fView, Label label)
+		public static void UpdateProperties (this Xamarin.Forms.Label fView, Text text)
 		{
-			fView.UpdateBaseProperties (label);
-			fView.Text = label.Text;
+			fView.UpdateBaseProperties (text);
+			fView.Text = text.Value;
 		}
 
 		public static bool UpdateProperty (this Xamarin.Forms.Label fView, string property, object value)
 		{
 			switch (property) {
-			case nameof (Label.Text):
+			case nameof (Text.Value):
 				fView.Text = (string)value;
 				return true;
 			}

@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Diagnostics;
 namespace HotUI {
-	public class Label : View {
-		public Label()
+	public class Text : View {
+		public Text()
 		{
 
 		}
-		public Label(string text)
+		public Text(string value)
 		{
-			Text = text;
+			Value = value;
 		}
-		public Label(Func<string> formatedText)
+		public Text(Func<string> formatedText)
 		{
 			TextBinding = formatedText;
 		}
-		private string text;
-		public string Text {
-			get => text;
-			private set => this.SetValue (State, ref text, value, ViewPropertyChanged);
+		private string _value;
+		public string Value {
+			get => _value;
+			private set => this.SetValue (State, ref _value, value, ViewPropertyChanged);
 		}
 
 		public Func<string> TextBinding { get; private set; }
@@ -31,9 +31,9 @@ namespace HotUI {
 				var props = State.EndProperty ();
 				var propCount = props.Length;
 				if (propCount > 0) {
-					State.BindingState.AddViewProperty (props, (s, o) => Text = TextBinding.Invoke ());
+					State.BindingState.AddViewProperty (props, (s, o) => Value = TextBinding.Invoke ());
 				}
-				Text = text;
+				Value = text;
 			}
 		}
 

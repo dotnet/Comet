@@ -2,18 +2,17 @@
 using HotUI;
 using Xamarin.Forms;
 using FEntry = Xamarin.Forms.Entry;
-using HEntry = HotUI.Entry;
 using HView = HotUI.View;
 namespace HotUI.Forms {
-	public class EntryHandler : FEntry, HotUI.IViewHandler, IFormsView {
-		public EntryHandler ()
+	public class TextFieldHandler : FEntry, IFormsView {
+		public TextFieldHandler ()
 		{
 			this.Focused += FormsControl_Focused;
 			this.TextChanged += FormsControl_TextChanged;
 			this.Unfocused += FormsControl_Unfocused;
 			this.Completed += FormsControl_Completed;
 		}
-		HEntry entry;
+		TextField _textField;
 		public Xamarin.Forms.View View => this;
 
 		public void Remove (HView view)
@@ -26,10 +25,10 @@ namespace HotUI.Forms {
 
 		public void SetView (HView view)
 		{
-			entry = view as HEntry;
-			if (entry == null)
+			_textField = view as TextField;
+			if (_textField == null)
 				return;
-			this.UpdateProperties (entry);
+			this.UpdateProperties (_textField);
 
 		}
 
@@ -39,14 +38,14 @@ namespace HotUI.Forms {
 		}
 
 
-		private void FormsControl_Completed (object sender, EventArgs e) => entry?.Completed?.Invoke (Text);
+		private void FormsControl_Completed (object sender, EventArgs e) => _textField?.Completed?.Invoke (Text);
 
-		private void FormsControl_Unfocused (object sender, Xamarin.Forms.FocusEventArgs e) => entry?.Unfocused?.Invoke (entry);
+		private void FormsControl_Unfocused (object sender, Xamarin.Forms.FocusEventArgs e) => _textField?.Unfocused?.Invoke (_textField);
 
 		private void FormsControl_TextChanged (object sender, Xamarin.Forms.TextChangedEventArgs e) =>
-			entry?.TextChanged?.Invoke ((e.NewTextValue, e.OldTextValue));
+			_textField?.TextChanged?.Invoke ((e.NewTextValue, e.OldTextValue));
 
-		private void FormsControl_Focused (object sender, Xamarin.Forms.FocusEventArgs e) => entry?.Focused?.Invoke (entry);
+		private void FormsControl_Focused (object sender, Xamarin.Forms.FocusEventArgs e) => _textField?.Focused?.Invoke (_textField);
 
 	}
 }

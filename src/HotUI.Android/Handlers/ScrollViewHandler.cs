@@ -1,7 +1,4 @@
-﻿using System;
-using Android.Content;
-using Android.Runtime;
-using AView = Android.Views.View;
+﻿using AView = Android.Views.View;
 using AScrollView = Android.Widget.ScrollView;
 
 namespace HotUI.Android

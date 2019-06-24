@@ -1,33 +1,31 @@
 ﻿using System;
-using Android.Content;
-using Android.Runtime;
 using Android.Widget;
 using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public class EntryHandler : EditText, IView
+    public class TextFieldHandler : EditText, IView
     {
-        public EntryHandler() : base(AndroidContext.CurrentContext)
+        public TextFieldHandler() : base(AndroidContext.CurrentContext)
         {
             TextChanged += HandleTextChanged;
         }
         
-        private void HandleTextChanged(object sender, EventArgs e) => entry?.Completed(Text);
+        private void HandleTextChanged(object sender, EventArgs e) => _textField?.Completed(Text);
 
         public AView View => this;
 
         public void Remove(View view)
         {
-            entry = null;
+            _textField = null;
         }
 
-        Entry entry;
+        TextField _textField;
 
         public void SetView(View view)
         {
-            entry = view as Entry;
-            this.UpdateProperties(entry);
+            _textField = view as TextField;
+            this.UpdateProperties(_textField);
         }
 
         public void UpdateValue(string property, object value)
@@ -38,7 +36,7 @@ namespace HotUI.Android
 
     public static partial class ControlExtensions
     {
-        public static void UpdateProperties(this EditText view, Entry hView)
+        public static void UpdateProperties(this EditText view, TextField hView)
         {
             view.Text = hView?.Text;
             view.UpdateBaseProperties(hView);
@@ -48,7 +46,7 @@ namespace HotUI.Android
         {
             switch (property)
             {
-                case nameof(Entry.Text):
+                case nameof(TextField.Text):
                     view.Text = (string) value;
                     return true;
             }

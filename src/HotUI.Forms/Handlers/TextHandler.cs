@@ -2,11 +2,10 @@
 using HotUI;
 using Xamarin.Forms;
 using FLabel = Xamarin.Forms.Label;
-using HLabel = HotUI.Label;
 using HView = HotUI.View;
 
 namespace HotUI.Forms {
-	public class LabelHandler : FLabel, IViewHandler, IFormsView {
+	public class TextHandler : FLabel, IFormsView {
 		public Xamarin.Forms.View View => this;
 
 		public void Remove (HView view)
@@ -14,7 +13,7 @@ namespace HotUI.Forms {
 		}
 		public void SetView (HView view)
 		{
-			var label = view as HLabel;
+			var label = view as Text;
 			if (label == null) {
 				return;
 			}

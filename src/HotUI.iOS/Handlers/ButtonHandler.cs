@@ -2,7 +2,7 @@
 using UIKit;
 
 namespace HotUI.iOS {
-	public class ButtonHandler : UIButton, IViewHandler, IUIView {
+	public class ButtonHandler : UIButton, IUIView {
 		public ButtonHandler ()
 		{
 			this.TouchUpInside += ButtonHandler_TouchUpInside;

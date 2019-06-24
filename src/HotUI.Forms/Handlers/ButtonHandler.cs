@@ -5,7 +5,7 @@ using FButton = Xamarin.Forms.Button;
 using HButton = HotUI.Button;
 using HView = HotUI.View;
 namespace HotUI.Forms {
-	public class ButtonHandler : FButton, IViewHandler, IFormsView {
+	public class ButtonHandler : FButton, IFormsView {
 
 		HButton button;
 		public Xamarin.Forms.View View => this;

@@ -2,7 +2,7 @@
 using UIKit;
 
 namespace HotUI.iOS {
-	public class LabelHandler : UILabel, IViewHandler, IUIView {
+	public class TextHandler : UILabel, IUIView {
 
 		public UIView View => this;
 
@@ -13,7 +13,7 @@ namespace HotUI.iOS {
 
 		public void SetView (View view)
 		{
-			var label = view as Label;
+			var label = view as Text;
 			this.UpdateProperties (label);
 
 		}
@@ -26,16 +26,16 @@ namespace HotUI.iOS {
 
 	public static partial class ControlExtensions {
 
-		public static void UpdateProperties (this UILabel view, Label hView)
+		public static void UpdateProperties (this UILabel view, Text hView)
 		{
-			view.Text = hView?.Text;
+			view.Text = hView?.Value;
 			view.UpdateBaseProperties (hView);
 		}
 
 		public static bool UpdateProperty (this UILabel view, string property, object value)
 		{
 			switch (property) {
-			case nameof (Label.Text):
+			case nameof (Text.Value):
 				view.Text = (string)value;
 				return true;
 			}

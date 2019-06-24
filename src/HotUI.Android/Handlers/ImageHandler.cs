@@ -2,8 +2,6 @@
 using FFImageLoading;
 using System.Threading.Tasks;
 using System.Diagnostics;
-using Android.Content;
-using Android.Runtime;
 using Android.Widget;
 using FFImageLoading.Drawables;
 using AView = Android.Views.View;

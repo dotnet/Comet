@@ -5,7 +5,7 @@ using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-    public class StackHandler : NSStackView, IViewHandler, INSView
+    public class StackHandler : NSStackView, INSView
     {
         public StackHandler()
         {
