@@ -25,29 +25,30 @@ namespace HotUI.Mac.Handlers
         public void SetView(View view)
         {
             _textField = view as TextField;
-            this.UpdateProperties(_textField);
+            this.UpdateTextFieldProperties(_textField);
         }
 
         public void UpdateValue(string property, object value)
         {
-            this.UpdateProperty(property, value);
+            this.UpdateTextFieldProperty(property, value);
         }
     }
 
     public static partial class ControlExtensions
     {
-        public static void UpdateProperties(this NSTextField view, TextField hView)
+        public static void UpdateTextFieldProperties(this NSTextField view, TextField hView)
         {
-            view.StringValue = hView?.Text;
+            view.UpdateLabelProperty(nameof(Text.Value), hView?.Text);
             view.UpdateBaseProperties(hView);
         }
 
-        public static bool UpdateProperty(this NSTextField view, string property, object value)
+        public static bool UpdateTextFieldProperty(this NSTextField view, string property, object value)
         {
             switch (property)
             {
                 case nameof(TextField.Text):
                     view.StringValue = (string) value;
+                    view.SizeToFit();
                     return true;
             }
 

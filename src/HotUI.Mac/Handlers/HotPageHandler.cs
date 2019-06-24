@@ -16,9 +16,13 @@ namespace HotUI.Mac.Handlers
 
         public void SetView(View view)
         {
-            currentView?.RemoveFromSuperview();
-            currentView = view.ToView();
-            View.AddSubview(currentView);
+            var newView = view.ToView();
+            if (newView != currentView)
+            {
+                currentView?.RemoveFromSuperview();
+                currentView = view.ToView();
+                View = currentView;
+            }
         }
 
         HotPage hotpage;
@@ -46,12 +50,6 @@ namespace HotUI.Mac.Handlers
         {
             base.ViewWillDisappear();
             hotpage?.OnDisppearing();
-        }
-
-        public override void LoadView()
-        {
-            base.LoadView();
-            View.Layer.BackgroundColor = NSColor.Gray.CGColor;
         }
     }
 
