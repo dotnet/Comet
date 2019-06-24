@@ -1,71 +1,77 @@
 ﻿using AppKit;
 using HotUI.Mac.Extensions;
 
-namespace HotUI.Mac.Handlers {
-	public class HotPageHandler : NSViewController, INSViewController {
+namespace HotUI.Mac.Handlers
+{
+    public class HotPageHandler : NSViewController, INSViewController
+    {
+        public NSViewController ViewController => this;
 
-		public NSViewController ViewController => this;
+        NSView currentView;
 
-		NSView currentView;
-		public void Remove (View view)
-		{
-			currentView?.RemoveFromSuperview ();
-		}
+        public void Remove(View view)
+        {
+            currentView?.RemoveFromSuperview();
+        }
 
-		public void SetView (View view)
-		{
-			currentView?.RemoveFromSuperview ();
-			currentView = view.ToView ();
-			View.AddSubview(currentView);
-		}
-		HotPage hotpage;
-		public void SetViewBuilder (ViewBuilder builder)
-		{
-			hotpage = builder as HotPage;
-			if (hotpage.View == null)
-				hotpage.ReBuildView ();
-			this.UpdateProperties (hotpage);
-		}
+        public void SetView(View view)
+        {
+            currentView?.RemoveFromSuperview();
+            currentView = view.ToView();
+            View.AddSubview(currentView);
+        }
 
-		public void UpdateValue (string property, object value)
-		{
-			this.UpdateProperty (property, value);
-		}
+        HotPage hotpage;
 
-		public override void ViewWillAppear()
-		{
-			base.ViewWillAppear();
-			hotpage?.OnAppearing ();
-		}
-		
-		public override void ViewWillDisappear ()
-		{
-			base.ViewWillDisappear ();
-			hotpage?.OnDisppearing ();
-		}
-		
-		public override void LoadView ()
-		{
-			base.LoadView ();
-			View.Layer.BackgroundColor = NSColor.Gray.CGColor;
-		}
-	}
+        public void SetViewBuilder(ViewBuilder builder)
+        {
+            hotpage = builder as HotPage;
+            if (hotpage.View == null)
+                hotpage.ReBuildView();
+            this.UpdateProperties(hotpage);
+        }
 
-	public static partial class ControlExtensions {
+        public void UpdateValue(string property, object value)
+        {
+            this.UpdateProperty(property, value);
+        }
 
-		public static void UpdateProperties (this NSViewController view, HotPage hView)
-		{
-			view.Title = hView.Title;
-		}
+        public override void ViewWillAppear()
+        {
+            base.ViewWillAppear();
+            hotpage?.OnAppearing();
+        }
 
-		public static bool UpdateProperty (this NSViewController view, string property, object value)
-		{
-			switch (property) {
-			case nameof (HotPage.Title):
-				view.Title = (string)value;
-				return true;
-			}
-			return false;
-		}
-	}
+        public override void ViewWillDisappear()
+        {
+            base.ViewWillDisappear();
+            hotpage?.OnDisppearing();
+        }
+
+        public override void LoadView()
+        {
+            base.LoadView();
+            View.Layer.BackgroundColor = NSColor.Gray.CGColor;
+        }
+    }
+
+    public static partial class ControlExtensions
+    {
+        public static void UpdateProperties(this NSViewController view, HotPage hView)
+        {
+            view.Title = hView.Title;
+        }
+
+        public static bool UpdateProperty(this NSViewController view, string property, object value)
+        {
+            switch (property)
+            {
+                case nameof(HotPage.Title):
+                    view.Title = (string) value;
+                    return true;
+            }
+
+            return false;
+        }
+    }
 }

@@ -10,6 +10,7 @@ namespace HotUI.iOS {
 		public void Remove (View view)
 		{
 			currentView?.RemoveFromSuperview ();
+			currentView = null;
 		}
 
 		public void SetView (View view)

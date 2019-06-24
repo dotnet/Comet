@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace HotUI {
 	public interface IViewHandler {
 		void SetView (View view);
