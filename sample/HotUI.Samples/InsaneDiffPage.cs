@@ -11,14 +11,12 @@ namespace HotUI.Samples {
 
 		protected override View Build () {
 			var stack = new Stack {
-				new Button {
-					TextBinding = ()=> myBoolean.Value ? myText.Value : $"State: {myBoolean.Value}",
-					//Text = $"State: {myBoolean.Value}",
+				new Button (()=> myBoolean.Value ? myText.Value : $"State: {myBoolean.Value}") {
 					OnClick = ()=> myBoolean.Value = !myBoolean.Value,
 				},
 			};
 			for(var i = 0; i < 100; i++) {
-				stack.Add (new Label { Text = i.ToString () });
+				stack.Add (new Label(i.ToString ()));
 			}
 			return new ScrollView { stack };
 		}
