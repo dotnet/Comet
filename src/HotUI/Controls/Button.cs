@@ -16,12 +16,12 @@ namespace HotUI {
 		private string text;
 		public string Text {
 			get => text;
-			set => this.SetValue (State, ref text, value, ViewPropertyChanged);
+			private set => this.SetValue (State, ref text, value, ViewPropertyChanged);
 		}
 
 		public Action OnClick { get; set; }
 
-		public Func<string> TextBinding { get; set; }
+		public Func<string> TextBinding { get; private set; }
 
 		protected override void WillUpdateView ()
 		{

@@ -9,7 +9,7 @@ namespace HotUI {
 		string source;
 		public string Source {
 			get => source;
-			set => this.SetValue (State, ref source, value, ViewPropertyChanged);
+			private set => this.SetValue (State, ref source, value, ViewPropertyChanged);
 		}
 		
 	}
