@@ -7,7 +7,6 @@ stages:
   - job: BuildHotUI
     displayName: Build HoTUI Source
     pool:
-      name: Hosted macOS
       vmImage: 'macos-latest'
       demands:
       - MSBuild
@@ -63,7 +62,6 @@ stages:
   - job: BuildHotUISamplesNative
     displayName: Build HoTUI Native Samples
     pool:
-      name: Hosted macOS
       vmImage: 'macos-latest'
       demands:
       - MSBuild
