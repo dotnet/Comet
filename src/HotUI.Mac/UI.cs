@@ -17,8 +17,8 @@ namespace HotUI.Mac
             Registrar.Handlers.Register<Stack, StackHandler>();
             //Registrar.Handlers.Register<WebView, WebViewHandler> ();
             Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();
-
-            Registrar.Pages.Register<HotPage, HotPageHandler>();
-        }
+			Registrar.Handlers.Register<Image, ImageHandler> ();
+			Registrar.Handlers.Register<View, ViewHandler> ();
+		}
     }
 }

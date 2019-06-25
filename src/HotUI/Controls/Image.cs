@@ -2,7 +2,7 @@
 namespace HotUI {
 	public class Image : View {
 		public Image () { }
-		public Image(string source)
+		public Image(string source) : base (true)
 		{
 			Source = source;
 		}

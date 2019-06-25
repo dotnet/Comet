@@ -6,9 +6,4 @@ namespace HotUI.Android
     {
         AView View { get; }
     }
-
-    public interface IViewContainer : IViewBuilderHandler
-    {
-        AView View { get; }
-    }
 }

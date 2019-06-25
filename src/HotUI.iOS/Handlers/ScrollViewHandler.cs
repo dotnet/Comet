@@ -3,6 +3,11 @@ using UIKit;
 
 namespace HotUI.iOS {
 	public class ScrollViewHandler : UIScrollView, IUIView {
+
+		public ScrollViewHandler()
+		{
+			ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always;
+		}
 		public UIView View => this;
 
 		public void Remove (View view)
