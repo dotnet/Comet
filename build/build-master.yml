@@ -64,7 +64,7 @@ stages:
     displayName: Build HoTUI Native Samples
     pool:
       name: Hosted macOS
-      vmImage: 'macos-latest'
+      vmImage: 'macOS 10.14'
       demands:
       - MSBuild
       - Xamarin.Android
