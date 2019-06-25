@@ -5,7 +5,7 @@ using HotUI.Samples.Models;
 
 namespace HotUI.Samples
 {
-    public class ListPage2 : HotPage
+    public class ListPage2 : View
     {
         //This should come from a database or something
         List<Song> Songs = new List<Song>
@@ -24,23 +24,25 @@ namespace HotUI.Samples
             }
         };
 
-        protected override View Build() => new ListView<Song>(Songs)
-        {
-            Cell = song => new Stack
-                {
-                    new Image(song.ArtworkUrl),
-                    new Stack
-                    {
-                        new Text(song.Title),
-                        new Text(song.Artist),
-                        new Text(song.Album),
-                    }
-                },
-            Header = group => new Stack
-                {
-                    new Text(group)
-                },
-            BackgroundColor = Color.Green,
-        }.OnSelected((song) => { Console.WriteLine("Song Selected"); });
+		public ListPage2 ()
+		{
+			Body = () => new ListView<Song> (Songs) {
+				Cell = song => new Stack
+					{
+					new Image(song.ArtworkUrl),
+					new Stack
+					{
+						new Text(song.Title),
+						new Text(song.Artist),
+						new Text(song.Album),
+					}
+				},
+				Header = group => new Stack
+					{
+					new Text(group.ToString())
+				},
+			}.OnSelected ((song) => { Console.WriteLine ("Song Selected"); });
+		}
+
     }
 }

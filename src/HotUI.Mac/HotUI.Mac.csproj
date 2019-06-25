@@ -68,7 +68,6 @@
     <Compile Include="Extensions\MacExtensions.cs" />
     <Compile Include="Handlers\ButtonHandler.cs" />
     <Compile Include="Handlers\TextFieldHandler.cs" />
-    <Compile Include="Handlers\HotPageHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="Handlers\TextHandler.cs" />
     <Compile Include="Handlers\ScrollViewHandler.cs" />
@@ -76,6 +75,8 @@
     <Compile Include="INSView.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="Controls\StackView.cs" />
+    <Compile Include="HotUIViewController.cs" />
+    <Compile Include="Handlers\ViewHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">

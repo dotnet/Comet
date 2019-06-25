@@ -4,22 +4,6 @@ using fLayoutOptions = Xamarin.Forms.LayoutOptions;
 namespace HotUI.Forms {
 	public static class ControlsExtensions {
 
-		public static void UpdateProperties (this Xamarin.Forms.ContentPage fView, HotPage view)
-		{
-			fView.Title = view.Title;
-		}
-
-		public static bool UpdateProperty (this Xamarin.Forms.ContentPage fView, string property, object value)
-		{
-			switch (property) {
-			case nameof (HotPage.Title):
-				fView.Title = (string)value;
-				return true;
-			}
-			return false;
-		}
-
-
 		public static void UpdateProperties (this Xamarin.Forms.WebView fView, WebView view)
 		{
 			fView.UpdateBaseProperties (view);

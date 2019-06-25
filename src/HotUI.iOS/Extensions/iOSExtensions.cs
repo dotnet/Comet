@@ -8,22 +8,14 @@ namespace HotUI.iOS {
 		{
 			HotUI.iOS.UI.Init ();
 		}
-		public static UIViewController ToViewController (this HotPage hotPage)
+		public static UIViewController ToViewController (this View view)
 		{
-			if (hotPage == null)
-				return null;
-			var handler = hotPage.ViewHandler;
-			if (handler == null) {
-
-				handler = Registrar.Pages.GetRenderer (hotPage.GetType ()) as IViewBuilderHandler;
-				hotPage.ViewHandler = handler;
-				hotPage.ReBuildView ();
-			}
-			var page = handler as IUIViewController;
-			return page.ViewController;
+			var handler = view.ToIUIView ();
+			return new HotUIViewController {
+				CurrentView = handler,
+			};
 		}
-
-		public static UIView ToView (this View view)
+		public static IUIView ToIUIView(this View view)
 		{
 			if (view == null)
 				return null;
@@ -33,8 +25,13 @@ namespace HotUI.iOS {
 				handler = Registrar.Handlers.GetRenderer (view.GetType ()) as IViewHandler;
 				view.ViewHandler = handler;
 			}
-			var page = handler as IUIView;
-			return page.View;
+			var iUIView = handler as IUIView;
+			return iUIView;
+		}
+		public static UIView ToView (this View view)
+		{
+			var handler = view.ToIUIView ();
+			return handler?.View;
 		}
 
 

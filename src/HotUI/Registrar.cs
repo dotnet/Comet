@@ -5,11 +5,9 @@ using System.Diagnostics;
 namespace HotUI {
 	public static class Registrar {
 		public static Registrar<View, IViewHandler> Handlers { get; private set; }
-		public static Registrar<ViewBuilder, IViewBuilderHandler> Pages { get; private set; }
 		static Registrar ()
 		{
 			Handlers = new Registrar<View, IViewHandler> ();
-			Pages = new Registrar<ViewBuilder, IViewBuilderHandler> ();
 		}
 	}
 	public class Registrar<TType, TTypeRender> {

@@ -5,7 +5,7 @@ namespace HotUI {
 		{
 
 		}
-		public TextField (string text)
+		public TextField (string text) : base (true)
 		{
 			Text = text;
 		}

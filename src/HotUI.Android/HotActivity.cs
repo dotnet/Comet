@@ -8,15 +8,15 @@ namespace HotUI.Android
 {
     public abstract class HotActivity : AppCompatActivity
     {
-        private HotPage _page;
+        private View _page;
 
-        public HotPage Page
+        public View Page
         {
             get => _page;
             set
             {
                 _page = value;
-                SetContentView(_page?.ToView(this));
+                SetContentView(_page?.ToView());
             }
         }
 
@@ -31,56 +31,6 @@ namespace HotUI.Android
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
-        
-        protected override void OnRestart()
-        {
-            base.OnRestart();
-            _page?.OnAppearing();
-        }
-
-        protected override void OnResume()
-        {
-            base.OnResume();
-            _page?.OnAppearing();
-        }
-
-        protected override void OnStart()
-        {
-            base.OnStart();
-            _page?.OnAppearing();
-        }
-
-        protected override void OnStop()
-        {
-            base.OnStop();
-            _page?.OnDisppearing();
-        }
-
-        protected override void OnPause()
-        {
-            base.OnPause();
-            _page?.OnDisppearing();
-        }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateProperties(this Activity view, HotPage hView)
-        {
-            view.Title = hView.Title;
-        }
-
-        public static bool UpdateProperty(this Activity view, string property, object value)
-        {
-            switch (property)
-            {
-                case nameof(HotPage.Title):
-                    view.Title = (string) value;
-                    return true;
-            }
-
-            return false;
         }
     }
 }

@@ -56,7 +56,19 @@ namespace HotUI {
 	}
 
 	public class BindingObjectManager {
+		public BindingObjectManager()
+		{
 
+		}
+		protected View parent;
+		public void SetParent (View parent)
+		{
+			if(this.parent == parent) {
+				return;
+			}
+			this.parent = parent;
+			CheckForStateAttributes (parent);
+		}
 		public BindingState BindingState { get; set; } = new BindingState ();
 		internal Action StateChanged;
 
@@ -147,8 +159,10 @@ namespace HotUI {
 			listProperties.Clear ();
 		}
 
-		internal string [] EndProperty (bool includeParent = false)
+		internal string [] EndProperty (bool endIsBuilding = true)
 		{
+			if (endIsBuilding)
+				isBuilding = false;
 			var  changed =  listProperties.Distinct ().ToArray ();
 			listProperties.Clear ();
 			return changed;

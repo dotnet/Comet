@@ -15,22 +15,17 @@ namespace HotUI.Forms {
 		{
 			UI.Init ();
 		}
-		public static FPage ToForms (this HotPage hotPage)
+		public static FPage ToPage (this View view)
 		{
-			if (hotPage == null)
-				return null;
-			var handler = hotPage.ViewHandler;
-			if (handler == null) {
-
-				handler = Registrar.Pages.GetRenderer (hotPage.GetType ()) as IViewBuilderHandler;
-				hotPage.ViewHandler = handler;
-				hotPage.ReBuildView ();
-			}
-			var page = handler as IFormsPage;
-			return page.Page;
+			var v = view.ToIFormsView ();
+			return new HotUIPage {
+				Content = v?.View,
+			};
 		}
 
-		public static FView ToForms (this View view)
+		public static FView ToForms (this View view) => view.ToIFormsView ()?.View;
+
+		public static IFormsView ToIFormsView(this View view)
 		{
 			if (view == null)
 				return null;
@@ -40,8 +35,7 @@ namespace HotUI.Forms {
 				handler = Registrar.Handlers.GetRenderer (view.GetType ()) as IViewHandler;
 				view.ViewHandler = handler;
 			}
-			var page = handler as IFormsView;
-			return page.View;
+			return handler as IFormsView;
 		}
 
 	}
