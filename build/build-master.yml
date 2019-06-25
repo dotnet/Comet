@@ -73,10 +73,6 @@ stages:
       - msbuild
       
     steps:
-
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
-      displayName: 'Select the Xamarin SDK version'
-
     - task: NuGetToolInstaller@1
       displayName: Use Nuget 4.3.0
       inputs:
@@ -119,10 +115,6 @@ stages:
       - msbuild
 
     steps:
-
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
-      displayName: 'Select the Xamarin SDK version'
-
     - task: NuGetToolInstaller@1
       displayName: Use Nuget 4.3.0
       inputs:
