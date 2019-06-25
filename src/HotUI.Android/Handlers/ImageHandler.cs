@@ -13,8 +13,8 @@ namespace HotUI.Android
         public ImageHandler() : base(AndroidContext.CurrentContext)
         {
         }
-        
-        public AView View => throw new NotImplementedException();
+
+		public AView View => this;
 
         private Image image;
         public void Remove(View view)

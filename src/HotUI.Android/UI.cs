@@ -15,6 +15,7 @@
             Registrar.Handlers.Register<Stack, StackHandler>();
             //Registrar.Handlers.Register<WebView, WebViewHandler> ();
             Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();
+			Registrar.Handlers.Register<Image, ImageHandler> ();
 
             Registrar.Pages.Register<HotPage, HotPageHandler>();
         }
