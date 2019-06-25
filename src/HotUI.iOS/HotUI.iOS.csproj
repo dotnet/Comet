@@ -56,6 +56,7 @@
     <Compile Include="Handlers\TextFieldHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="UI.cs" />
+    <Compile Include="Handlers\ListViewHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">

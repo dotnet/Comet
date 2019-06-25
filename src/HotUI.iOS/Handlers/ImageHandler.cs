@@ -10,21 +10,22 @@ namespace HotUI.iOS {
 		{
 		}
 
-		public UIView View => throw new NotImplementedException ();
+		public UIView View => this;
 
 		public void Remove (View view)
 		{
-			throw new NotImplementedException ();
+			//throw new NotImplementedException ();
 		}
 
 		public void SetView (View view)
 		{
-			throw new NotImplementedException ();
+			var image = view as Image;
+			this.UpdateProperties (image);
 		}
 
 		public void UpdateValue (string property, object value)
 		{
-			throw new NotImplementedException ();
+			this.UpdateProperty (property,value);
 		}
 		string currentSource;
 		public async void UpdateSource(string source)
