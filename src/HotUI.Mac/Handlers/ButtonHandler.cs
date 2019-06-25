@@ -1,21 +1,26 @@
 ﻿using System;
+using System.Collections.Generic;
 using AppKit;
-using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
     public class ButtonHandler : NSButton, INSView
     {
+        private static readonly PropertyMapper<Button, ButtonHandler> Mapper = new PropertyMapper<Button, ButtonHandler>(new Dictionary<string, Func<ButtonHandler, Button, bool>>()
+        {
+            [nameof(Button.Text)] = MapTextProperty
+        });
+        
         public ButtonHandler()
         {
             Activated += ButtonHandler_TouchUpInside;
         }
 
-        private void ButtonHandler_TouchUpInside(object sender, EventArgs e) => button?.OnClick();
+        private void ButtonHandler_TouchUpInside(object sender, EventArgs e) => _button?.OnClick();
 
         public NSView View => this;
 
-        Button button;
+        Button _button;
 
         public void Remove(View view)
         {
@@ -23,35 +28,20 @@ namespace HotUI.Mac.Handlers
 
         public void SetView(View view)
         {
-            button = view as Button;
-            this.UpdateProperties(button);
+            _button = view as Button;
+            Mapper.UpdateProperties(this, _button);
         }
 
         public void UpdateValue(string property, object value)
         {
-            this.UpdateProperty(property, value);
-        }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateProperties(this NSButton view, Button hView)
-        {
-            view.UpdateProperty(nameof(Button.Text), hView?.Text);
-            view.UpdateBaseProperties(hView);
+            Mapper.UpdateProperty(this, _button, property);
         }
 
-        public static bool UpdateProperty(this NSButton view, string property, object value)
+        public static bool MapTextProperty(NSButton nativeButton, Button virtualButton)
         {
-            switch (property)
-            {
-                case nameof(Button.Text):
-                    view.Title = (string) value;
-                    view.SizeToFit();
-                    return true;
-            }
-
-            return view.UpdateBaseProperty(property, value);
+            nativeButton.Title = virtualButton.Text;
+            nativeButton.SizeToFit();
+            return true;
         }
     }
 }
