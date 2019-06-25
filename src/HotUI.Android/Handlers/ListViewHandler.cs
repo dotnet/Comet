@@ -10,6 +10,18 @@ namespace HotUI.Android {
 		public ListViewHandler () : base (AndroidContext.CurrentContext)
 		{
 			this.Adapter = new ListViewAdapter ();
+			this.ItemSelected += ListViewHandler_ItemSelected;
+			this.ItemClick += ListViewHandler_ItemClick;
+		}
+
+		private void ListViewHandler_ItemClick (object sender, ItemClickEventArgs e)
+		{
+			((ListViewAdapter)this.Adapter).ListView?.OnSelected (e.Position);
+		}
+
+		private void ListViewHandler_ItemSelected (object sender, ItemSelectedEventArgs e)
+		{
+			((ListViewAdapter)this.Adapter).ListView?.OnSelected (e.Position);
 		}
 
 		public AView View => this;

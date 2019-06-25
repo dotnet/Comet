@@ -2,12 +2,13 @@
 using Foundation;
 using UIKit;
 namespace HotUI.iOS {
-	public class ListViewHandler : UITableView, IUIView, IUITableViewDataSource {
+	public class ListViewHandler : UITableView, IUIView, IUITableViewDataSource, IUITableViewDelegate {
 		public UIView View => this;
 
 		public ListViewHandler ()
 		{
 			this.WeakDataSource = this;
+			this.WeakDelegate = this;
 		}
 		ListView listView;
 
@@ -31,11 +32,6 @@ namespace HotUI.iOS {
 			this.ReloadData ();
 		}
 
-		public override nint NumberOfSections () => listView?.List?.Count  > 0 ? 1 :0;
-
-		public override nint NumberOfRowsInSection (nint section) => listView?.List?.Count ?? 0;
-
-
 		static readonly string cellType = "ViewCell";
 		
 
@@ -48,6 +44,15 @@ namespace HotUI.iOS {
 			var v = listView?.CellCreator (item);
 			cell.SetView (v);
 			return cell;
+		}
+
+		[Export ("tableView:didSelectRowAtIndexPath:")]
+		public void RowSelected (UITableView tableView, NSIndexPath indexPath)
+		{
+			if (indexPath.Row < 0)
+				return;
+			tableView.DeselectRow (indexPath, true);
+			listView?.OnSelected (indexPath.Row);
 		}
 
 		class ViewCell : UITableViewCell {

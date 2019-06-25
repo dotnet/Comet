@@ -17,6 +17,10 @@ namespace HotUI {
 			}
 			CellCreator =  (o) => viewCreator?.Invoke((T)o);
 		}
+		public void Add (Action<T> onTap)
+		{
+			this.ItemSelected = (o) => onTap?.Invoke ((T)o);
+		}
 	}
 
 	public class ListView : View, IEnumerable, IEnumerable<Func<object,View>> {
@@ -41,6 +45,11 @@ namespace HotUI {
 		{
 			throw new NotImplementedException ();
 		}
+		public Action<object> ItemSelected { get; set; }
+
+		public void OnSelected(int index) => ItemSelected?.Invoke (List [index]);
+
+		public void OnSelected (object item) => ItemSelected?.Invoke (item);
 	}
 
 	//public class ListView : ListView<object>, IEnumerable {

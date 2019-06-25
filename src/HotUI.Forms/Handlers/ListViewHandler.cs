@@ -34,9 +34,12 @@ namespace HotUI.Forms {
 		{
 			this.HasUnevenRows = true;
 			this.ItemTemplate = new Xamarin.Forms.DataTemplate (typeof (HotViewCell));
-			
+			this.ItemSelected += ListViewHandler_ItemSelected;
+				
 		}
 
+		private void ListViewHandler_ItemSelected (object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
+			=> listView?.OnSelected (e.SelectedItem);
 
 		public Xamarin.Forms.View View => this;
 		HListView listView;

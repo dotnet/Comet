@@ -26,7 +26,9 @@ namespace HotUI.Samples {
 					new Text(song.Artist),
 					new Text(song.Album),
 				}
-			}
-		};
+			},
+		}.OnSelected((song) => {
+				Console.WriteLine ("Song Selected");
+		});
 	}
 }
