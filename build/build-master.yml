@@ -106,7 +106,7 @@ stages:
     - task: MSBuild@1
       displayName: 'Build HotUI.iOS.Sample App'
       inputs:
-        solution: 'sample/Forms/HotUI.Forms.Sample.iOS/HotUI.Forms.Sample.iOS.csproj'
+        solution: 'sample/HotUI.iOS.Sample/HotUI.iOS.Sample.csproj'
         platform: iPhoneSimulator
         configuration: '$(BuildConfiguration)'
 
