@@ -6,9 +6,4 @@ namespace HotUI.Mac
     {
         NSView View { get; }
     }
-
-    public interface INSViewController : IViewBuilderHandler
-    {
-        NSViewController ViewController { get; }
-    }
 }

@@ -9,35 +9,24 @@ namespace HotUI.Mac.Extensions
             UI.Init();
         }
 
-        public static NSViewController ToViewController(this HotPage hotPage)
-        {
-            if (hotPage == null)
-                return null;
-            var handler = hotPage.ViewHandler;
-            if (handler == null)
-            {
-                handler = Registrar.Pages.GetRenderer(hotPage.GetType()) as IViewBuilderHandler;
-                hotPage.ViewHandler = handler;
-                hotPage.ReBuildView();
-            }
+        public static NSViewController ToViewController(this View view) => new HotUIViewController {
+				CurrentView = view.ToINSView (),
+			};
 
-            var page = handler as INSViewController;
-            return page.ViewController;
-        }
+		public static NSView ToView (this View view) => view?.ToINSView ()?.View;
 
-        public static NSView ToView(this View view)
-        {
-            if (view == null)
-                return null;
-            var handler = view.ViewHandler;
-            if (handler == null)
-            {
-                handler = Registrar.Handlers.GetRenderer(view.GetType()) as IViewHandler;
-                view.ViewHandler = handler;
-            }
+		public static INSView ToINSView(this View view)
+		{
+			if (view == null)
+				return null;
+			var handler = view.ViewHandler;
+			if (handler == null) {
+				handler = Registrar.Handlers.GetRenderer (view.GetType ()) as IViewHandler;
+				view.ViewHandler = handler;
+			}
 
-            var page = handler as INSView;
-            return page.View;
-        }
-    }
+			return handler as INSView;
+		}
+
+	}
 }
