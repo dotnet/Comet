@@ -97,7 +97,7 @@ stages:
         configuration: '$(BuildConfiguration)'
         platform: 'iPhoneSimulator'
         packageApp: false
-        buildForSimulator: false
+        buildForSimulator: true
         runNugetRestore: false
 
 - stage: BuildSamplesForms
@@ -133,5 +133,5 @@ stages:
         configuration: '$(BuildConfiguration)'
         platform: 'iPhoneSimulator'
         packageApp: false
-        buildForSimulator: false
+        buildForSimulator: true
         runNugetRestore: false
