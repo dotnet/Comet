@@ -63,7 +63,6 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchNoSymbolStrip></MtouchNoSymbolStrip>
     <IOSDebugOverWiFi></IOSDebugOverWiFi>
-    <DelaySign>false</DelaySign>
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>

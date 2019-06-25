@@ -17,11 +17,8 @@ namespace HotUI.Android.Sample
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-            Page = new MainPage();
+            Page = new ListPage();
         }
-
-    
-
     }
 }
 

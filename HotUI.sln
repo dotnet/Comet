@@ -215,4 +215,8 @@ Global
 		{BCAF5569-30DB-4D44-BF46-DFFE93DDCBD0} = {AB9AD206-4B1E-4B0C-88A2-5C769314E8A4}
 		{1E8FBBC2-9E06-4960-A116-65CDEFEFE11D} = {AB9AD206-4B1E-4B0C-88A2-5C769314E8A4}
 	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		Policies = $0
+		$0.DotNetNamingPolicy = $1
+	EndGlobalSection
 EndGlobal
