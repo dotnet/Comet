@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace HotUI {
 
@@ -21,6 +22,18 @@ namespace HotUI {
 		{
 			this.ItemSelected = (o) => onTap?.Invoke ((T)o);
 		}
+
+		public Func<T, View> BuildCell
+		{
+			get => o => CellCreator?.Invoke(o);
+			set => CellCreator = o => value.Invoke((T)o);
+		}
+	
+		// todo: this doesn't do anything, just added this for prototyping purposes.
+		public Func<object, View> BuildHeader { get; set; }
+		
+		// todo: doesn't do anything, just added this for right now as a sample.
+		public Color BackgroundColor { get; set; }
 	}
 
 	public class ListView : View, IEnumerable, IEnumerable<Func<object,View>> {
@@ -32,7 +45,7 @@ namespace HotUI {
 		public IList List { get; }
 		public IEnumerator GetEnumerator () => List.GetEnumerator ();
 
-		public Func<object, View> CellCreator { get; protected set; }
+		public Func<object, View> CellCreator { get; set; }
 		public void Add(Func<object,View> viewCreator)
 		{
 			if(CellCreator != null) {

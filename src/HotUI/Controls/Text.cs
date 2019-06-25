@@ -6,10 +6,17 @@ namespace HotUI {
 		{
 
 		}
+		
+		public Text(object value)
+		{
+			Value = value?.ToString();
+		}
+		
 		public Text(string value)
 		{
 			Value = value;
 		}
+		
 		public Text(Func<string> formatedText)
 		{
 			TextBinding = formatedText;
