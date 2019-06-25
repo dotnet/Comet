@@ -5,6 +5,10 @@ using HotUI.Mac.Extensions;
 namespace HotUI.Mac {
 	public class HotUIViewController : NSViewController {
 
+		public HotUIViewController()
+		{
+			View = new NSView ();
+		}
 		INSView currentView;
 		public INSView CurrentView {
 			get => currentView;
@@ -30,8 +34,13 @@ namespace HotUI.Mac {
 			currentlyShownView = view;
 			if (view == null)
 				return;
-			View = view;
-
+			View.AddSubview(view);
+		}
+		public override void ViewDidLayout ()
+		{
+			base.ViewDidLayout ();
+			if (currentlyShownView != null)
+				currentlyShownView.Frame = View.Bounds;
 		}
 	}
 }
