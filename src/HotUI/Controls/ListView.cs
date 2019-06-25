@@ -32,8 +32,6 @@ namespace HotUI {
 		// todo: this doesn't do anything, just added this for prototyping purposes.
 		public Func<object, View> Header { get; set; }
 		
-		// todo: doesn't do anything, just added this for right now as a sample.
-		public Color BackgroundColor { get; set; }
 	}
 
 	public class ListView : View, IEnumerable, IEnumerable<Func<object,View>> {

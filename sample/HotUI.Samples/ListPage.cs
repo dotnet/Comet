@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using HotUI.Samples.Models;
 
 namespace HotUI.Samples {
-	public class ListPage : HotPage {
+	public class ListPage : View {
 		//This should come from a database or something
 		List<Song> Songs = new List<Song> {
 			new Song {
@@ -17,18 +17,23 @@ namespace HotUI.Samples {
 				Album = "Awake",
 			}
 		};
+		public ListPage()
+		{
+			Body = body;
+		}
 
-		protected override View Build () => new ListView<Song> (Songs) {
-			(song) =>  new Stack {
-				new Image(song.ArtworkUrl),
-				new Stack {
-					new Text(song.Title),
-					new Text(song.Artist),
-					new Text(song.Album),
-				}
-			},
-		}.OnSelected((song) => {
-				Console.WriteLine ("Song Selected");
-		});
+		View body ()  => new ListView<Song>(Songs) {
+					Cell = (song) => new Stack {
+						new Image (song.ArtworkUrl),
+						new Stack {
+							new Text (song.Title),
+							new Text (song.Artist),
+							new Text (song.Album),
+						}
+					},
+				}.OnSelected ((song) => {
+					Console.WriteLine ("Song Selected");
+			});
+
 	}
 }
