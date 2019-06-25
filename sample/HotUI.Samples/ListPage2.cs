@@ -26,7 +26,7 @@ namespace HotUI.Samples
 
         protected override View Build() => new ListView<Song>(Songs)
         {
-            BuildCell = song => new Stack
+            Cell = song => new Stack
                 {
                     new Image(song.ArtworkUrl),
                     new Stack
@@ -36,7 +36,7 @@ namespace HotUI.Samples
                         new Text(song.Album),
                     }
                 },
-            BuildHeader = group => new Stack
+            Header = group => new Stack
                 {
                     new Text(group)
                 },

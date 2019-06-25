@@ -23,14 +23,14 @@ namespace HotUI {
 			this.ItemSelected = (o) => onTap?.Invoke ((T)o);
 		}
 
-		public Func<T, View> BuildCell
+		public Func<T, View> Cell
 		{
 			get => o => CellCreator?.Invoke(o);
 			set => CellCreator = o => value.Invoke((T)o);
 		}
 	
 		// todo: this doesn't do anything, just added this for prototyping purposes.
-		public Func<object, View> BuildHeader { get; set; }
+		public Func<object, View> Header { get; set; }
 		
 		// todo: doesn't do anything, just added this for right now as a sample.
 		public Color BackgroundColor { get; set; }
