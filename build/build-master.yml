@@ -90,10 +90,22 @@ stages:
         configuration: '$(BuildConfiguration)'
         createAppPackage: false
 
+    - task: MSBuild@1
+      displayName: 'Build HotUI'
+      inputs:
+          solution: 'src/HotUI/HotUI.csproj'
+          configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.iOS'
+      inputs:
+        solution: 'src/HotUI.iOS/HotUI.iOS.csproj'
+        configuration: '$(BuildConfiguration)'
+
     - task: XamariniOS@2
       displayName: 'Build HotUI.iOS.Sample App'
       inputs:
-        solutionFile: 'HotUI.sln'
+        solutionFile: 'sample/HotUI.iOS.Sample/HotUI.iOS.Sample.csproj'
         configuration: '$(BuildConfiguration)'
         platform: 'iPhoneSimulator'
         packageApp: false
@@ -125,6 +137,12 @@ stages:
       displayName: 'NuGet restore'
       inputs:
         restoreSolution: HotUI.sln
+    
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Forms'
+      inputs:
+        solution: 'src/HotUI.Forms/HotUI.Forms.csproj'
+        configuration: '$(BuildConfiguration)'
 
     - task: XamariniOS@2
       displayName: 'Build HotUI.Forms.iOS.Sample App'
