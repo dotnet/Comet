@@ -26,23 +26,6 @@ namespace HotUI.Android
             return page.Activity;
         }*/
 
-        public static AView ToView(this HotPage hotPage, Activity activity)
-        {
-            if (hotPage == null)
-                return null;
-
-            var handler = hotPage.ViewHandler;
-            if (handler == null)
-            {
-                handler = Registrar.Pages.GetRenderer(hotPage.GetType()) as IViewContainer;
-                hotPage.ViewHandler = handler;
-                hotPage.ReBuildView();
-            }
-
-            var page = handler as IViewContainer;
-            return page.View;
-        }
-
         public static AView ToView(this View view)
         {
             if (view == null)
