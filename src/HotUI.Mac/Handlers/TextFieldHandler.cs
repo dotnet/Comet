@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using AppKit;
 using HotUI.Mac.Extensions;
 
@@ -6,6 +7,11 @@ namespace HotUI.Mac.Handlers
 {
     public class TextFieldHandler : NSTextField, INSView
     {
+        private static readonly PropertyMapper<TextField, NSTextField> Mapper = new PropertyMapper<TextField, NSTextField>(new Dictionary<string, Func<NSTextField, TextField, bool>>()
+        {
+            [nameof(TextField.Text)] = MapTextProperty
+        });
+        
         public TextFieldHandler()
         {
             EditingEnded += EntryHandler_Ended;
@@ -25,34 +31,19 @@ namespace HotUI.Mac.Handlers
         public void SetView(View view)
         {
             _textField = view as TextField;
-            this.UpdateTextFieldProperties(_textField);
+            Mapper.UpdateProperties(this, _textField);
         }
 
         public void UpdateValue(string property, object value)
         {
-            this.UpdateTextFieldProperty(property, value);
+            Mapper.UpdateProperty(this, _textField, property);
         }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateTextFieldProperties(this NSTextField view, TextField hView)
+        
+        public static bool MapTextProperty(NSTextField nativeView, TextField virtualView)
         {
-            view.UpdateLabelProperty(nameof(Text.Value), hView?.Text);
-            view.UpdateBaseProperties(hView);
-        }
-
-        public static bool UpdateTextFieldProperty(this NSTextField view, string property, object value)
-        {
-            switch (property)
-            {
-                case nameof(TextField.Text):
-                    view.StringValue = (string) value;
-                    view.SizeToFit();
-                    return true;
-            }
-
-            return view.UpdateBaseProperty(property, value);
+            nativeView.StringValue = virtualView.Text;
+            nativeView.SizeToFit();
+            return true;
         }
     }
 }

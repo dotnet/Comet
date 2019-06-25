@@ -73,6 +73,10 @@ stages:
       - msbuild
       
     steps:
+
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
+      displayName: 'Select the Xamarin SDK version'
+
     - task: NuGetToolInstaller@1
       displayName: Use Nuget 4.3.0
       inputs:
@@ -93,9 +97,8 @@ stages:
     - task: XamariniOS@2
       displayName: 'Build HotUI.iOS.Sample App'
       inputs:
-        solutionFile: 'HotUI.sln'
+        solutionFile: 'sample/HotUI.iOS.Sample/HotUI.iOS.Sample.csproj'
         configuration: '$(BuildConfiguration)'
-        platform: 'iPhoneSimulator'
         packageApp: false
         buildForSimulator: true
         runNugetRestore: false
@@ -116,6 +119,10 @@ stages:
       - msbuild
 
     steps:
+
+    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
+      displayName: 'Select the Xamarin SDK version'
+
     - task: NuGetToolInstaller@1
       displayName: Use Nuget 4.3.0
       inputs:
@@ -126,12 +133,18 @@ stages:
       inputs:
         restoreSolution: HotUI.sln
 
+    - task: XamarinAndroid@1
+      displayName: 'Build HotUI.Forms.Android.Sample App'
+      inputs:
+        projectFile: sample/Forms/HotUI.Forms.Sample.Android/HotUI.Forms.Sample.Android.csproj
+        configuration: '$(BuildConfiguration)'
+        createAppPackage: false
+
     - task: XamariniOS@2
       displayName: 'Build HotUI.Forms.iOS.Sample App'
       inputs:
         solutionFile: 'sample/Forms/HotUI.Forms.Sample.iOS/HotUI.Forms.Sample.iOS.csproj'
         configuration: '$(BuildConfiguration)'
-        platform: 'iPhoneSimulator'
         packageApp: false
         buildForSimulator: true
         runNugetRestore: false

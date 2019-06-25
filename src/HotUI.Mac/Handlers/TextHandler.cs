@@ -1,10 +1,17 @@
-﻿using AppKit;
+﻿using System;
+using System.Collections.Generic;
+using AppKit;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
     public class TextHandler : NSTextField, INSView
     {
+        private static readonly PropertyMapper<Text, NSTextField> Mapper = new PropertyMapper<Text, NSTextField>(new Dictionary<string, Func<NSTextField, Text, bool>>()
+        {
+            [nameof(Text.Value)] = MapValueProperty
+        });
+        
         public NSView View => this;
 
         public TextHandler()
@@ -19,15 +26,24 @@ namespace HotUI.Mac.Handlers
         {
         }
 
+        private Text _text;
+        
         public void SetView(View view)
         {
-            var label = view as Text;
-            this.UpdateLabelProperties(label);
+            _text = view as Text;
+            Mapper.UpdateProperties(this, _text);
         }
 
         public void UpdateValue(string property, object value)
         {
-            this.UpdateLabelProperty(property, value);
+            Mapper.UpdateProperty(this, _text, property);
+        }
+        
+        public static bool MapValueProperty(NSTextField nativeView, Text virtualView)
+        {
+            nativeView.StringValue = virtualView.Value;
+            nativeView.SizeToFit();
+            return true;
         }
     }
 
