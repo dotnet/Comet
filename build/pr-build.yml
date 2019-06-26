@@ -54,8 +54,41 @@ stages:
         solution: 'src/HotUI.Forms/HotUI.Forms.csproj'
         configuration: '$(BuildConfiguration)'
 
+- stage: RunTests
+  jobs:
+  - job: BuildHotUI
+    displayName: Build HoTUI Source
+    pool:
+      name: Hosted macOS
+      vmImage: 'macOS 10.14'
+      demands:
+      - MSBuild
+      - Xamarin.Android
+      - xcode
+      - Xamarin.iOS
+
+    steps:
+    - task: MSBuild@1
+      displayName: 'Build Tests'
+      inputs:
+        solution: 'tests/HotUI.Tests/HotUI.Tests.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: VSTest@2
+      inputs:
+        testSelector: 'testAssemblies'
+        testAssemblyVer2: '**\bin\$(BuildConfiguration)\**\*test*.dll
+          !**\obj\**
+          !**\xunit.runner.visualstudio.testadapter.dll
+          !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
+        searchFolder: '$(System.DefaultWorkingDirectory)'
+        codeCoverageEnabled: true
+        otherConsoleOptions: '/InIsolation'
+      enabled: "false"
+
+
 - stage: BuildSamplesAndroid
-  dependsOn: BuildSource
+  dependsOn: RunTests
   jobs:
   - job: BuildHotUISamplesAndroid
     displayName: Build HoTUI Android Samples
@@ -96,7 +129,7 @@ stages:
         createAppPackage: false
 
 - stage: BuildSamplesFormsiOS
-  dependsOn: BuildSource
+  dependsOn: RunTests
   jobs:
   - job: BuildHotUISamplesFormsiOS
     displayName: Build HoTUI iOS and Mac Samples
@@ -122,11 +155,19 @@ stages:
       inputs:
         restoreSolution: HotUI.sln
 
-    - task: XamariniOS@2
-      displayName: 'Build HotUI.Forms.iOS.Sample App'
+
+    - task: MSBuild@1
+      displayName: 'Build iOS and Mac'
       inputs:
-        solutionFile: 'HotUI.sln'
+        solution: 'HotUI.sln'
+        platform: iPhoneSimulator
         configuration: '$(BuildConfiguration)'
-        packageApp: false
-        buildForSimulator: true
-        runNugetRestore: false
+
+    # - task: XamariniOS@2
+    #   displayName: 'Build HotUI.Forms.iOS.Sample App'
+    #   inputs:
+    #     solutionFile: 'HotUI.sln'
+    #     configuration: '$(BuildConfiguration)'
+    #     packageApp: false
+    #     buildForSimulator: true
+    #     runNugetRestore: false
