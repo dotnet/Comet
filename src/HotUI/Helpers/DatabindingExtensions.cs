@@ -158,6 +158,23 @@ namespace HotUI {
 			return view?.GetView().GetType () == compareView?.GetView()?.GetType ();
 		}
 
+
+		public static void SetPropertyValue (this object obj, string name, object value)
+		{
+			var type = obj.GetType ();
+			var info = type.GetProperty (name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+			if (info != null) {
+				info.SetValue (obj, value);
+			} else {
+
+				var field = type.GetField (name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+				if (field == null)
+					return;
+				field.SetValue (obj, value);
+			}
+		}
+
+
 		public static object GetPropertyValue (this object obj, string name)
 		{
 			foreach (var part in name.Split ('.')) {
@@ -168,13 +185,13 @@ namespace HotUI {
 				} else {
 					var type = obj.GetType ();
 					var info = type.GetProperty (part, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-					if (info == null) {
+					if (info != null) {
+						obj = info.GetValue (obj, null);
+					} else {
 						var field = type.GetField (part, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 						if (field == null)
 							return null;
 						obj = field.GetValue (obj);
-					} else {
-						obj = info.GetValue (obj, null);
 					}
 				}
 			}
