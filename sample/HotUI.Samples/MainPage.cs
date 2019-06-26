@@ -2,7 +2,7 @@
 
 namespace HotUI.Samples
 {
-    public class MainPage : HotPage
+    public class MainPage : View
     {
         class MyBindingObject : BindingObject
         {
@@ -28,27 +28,33 @@ namespace HotUI.Samples
 
         public MainPage()
         {
-            Title = "Hello HotUI";
             state = new MyBindingObject
             {
                 Text = "Bar",
                 CanEdit = true,
             };
+			Body = Build;
         }
 
-        protected override View Build() =>
+        View Build () =>
             new ScrollView
             {
                 new VStack    
                 {
                     (state.CanEdit
-                        ? (View) new TextField(state.Text)
+                        ? (View) new TextField(()=>state.Text)
                         {
                             Completed = (e) => state.Text = e
                         }
                         : new Text(() => $"{state.Text}: multiText")), // Fromated Text will warn you. This should be done by TextBinding
                     new Text(state.Text),
+<<<<<<< HEAD
                     new HStack
+=======
+                    new Button("Toggle Entry/Label") {
+						OnClick = () => state.CanEdit = !state.CanEdit},
+                    new Button("Update Text")
+>>>>>>> e74f9dd7706c6fad5d14f00592b5c31a72b3453c
                     {
                         new Button("Toggle Entry/Label") {OnClick = () => state.CanEdit = !state.CanEdit},
                         new Button("Update Text")

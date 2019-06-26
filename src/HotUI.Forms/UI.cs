@@ -17,8 +17,7 @@ namespace HotUI.Forms {
 			Registrar.Handlers.Register<ScrollView, ScrollViewHandler> ();
 			Registrar.Handlers.Register<Image, ImageHandler> ();
 			Registrar.Handlers.Register<ListView, ListViewHandler> ();
-
-			Registrar.Pages.Register<HotPage, HotPageHandler> ();
+			Registrar.Handlers.Register<View, ViewHandler> ();
 		}
 	}
 }

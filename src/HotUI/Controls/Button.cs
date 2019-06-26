@@ -5,7 +5,7 @@ namespace HotUI {
 		{
 
 		}
-		public Button (string text)
+		public Button (string text) : base (true)
 		{
 			Text = text;
 		}

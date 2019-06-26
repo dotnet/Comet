@@ -7,12 +7,7 @@ namespace HotUI {
 
 		}
 		
-		public Text(object value)
-		{
-			Value = value?.ToString();
-		}
-		
-		public Text(string value)
+		public Text(string value) : base(true)
 		{
 			Value = value;
 		}

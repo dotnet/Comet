@@ -10,7 +10,7 @@ namespace HotUI {
 		public static void SetValue<T> (this State state, ref T currentValue, T newValue, Action<string, object> onUpdate, [CallerMemberName] string propertyName = "")
 		{
 			if (state?.IsBuilding ?? false) {
-				var props = state.EndProperty ();
+				var props = state.EndProperty (false);
 				var propCount = props.Length;
 				//This is databound!
 				if (propCount > 0) {
@@ -19,7 +19,7 @@ namespace HotUI {
 						var prop = props [0];
 
 						var stateValue = state.GetValue (prop).Cast<T> ();
-						var old = state.EndProperty ();
+						var old = state.EndProperty (false);
 						//1 to 1 binding!
 						if (EqualityComparer<T>.Default.Equals (stateValue, newValue)) {
 							state.BindingState.AddViewProperty (prop, onUpdate);
@@ -155,7 +155,7 @@ namespace HotUI {
 		{
 
 			//Add in more edge cases
-			return view?.GetType () == compareView?.GetType ();
+			return view?.GetView().GetType () == compareView?.GetView()?.GetType ();
 		}
 
 		public static object GetPropertyValue (this object obj, string name)
