@@ -44,6 +44,10 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Extensions\CoreGraphicsExtensions.cs" />
+    <Compile Include="Handlers\AbstractLayoutHandler.cs" />
+    <Compile Include="Handlers\HStackHandler.cs" />
+    <Compile Include="Handlers\VStackHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Handlers\ButtonHandler.cs" />
     <Compile Include="Handlers\TextHandler.cs" />
