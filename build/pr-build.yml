@@ -83,7 +83,7 @@ stages:
       inputs:
         solution: 'tests/HotUI.Tests/HotUI.Tests.csproj'
         configuration: '$(BuildConfiguration)'
-        restoreNugetPackages: false
+        msbuildArguments: '--no-restore'
 
     - task: VSTest@2
       inputs:
