@@ -13,6 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Handlers\" />
+    <ProjectReference Include="..\..\src\HotUI\HotUI.csproj" />
   </ItemGroup>
 </Project>

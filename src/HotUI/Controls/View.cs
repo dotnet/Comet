@@ -78,6 +78,10 @@ namespace HotUI {
 		{
 			//TODO fix this for real
 			var prop = property.Split ('.').Last ();
+			//Lets only set this in debug mode. It is really only used by tests.
+#if DEBUG
+			this.SetPropertyValue (prop, value);
+#endif
 			ViewHandler?.UpdateValue (prop, value);
 		}
 	}
