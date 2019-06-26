@@ -9,12 +9,14 @@ namespace HotUI.Samples {
 			new Song {
 				Title = "All the Small Things",
 				Artist = "Blink-182",
-				Album = "Dude Ranch",
+				Album = "Greatest Hits",
+				ArtworkUrl = "http://lh3.googleusercontent.com/9Ofo9ZHQODFvahjpq2ZVUUOog4v5J1c4Gw9qjTw-KADTQZ6sG98GA1732mZA165RBoyxfoMblA"
 			},
 			new Song {
 				Title = "Monster",
 				Artist = "Skillet",
 				Album = "Awake",
+				ArtworkUrl = "http://lh3.googleusercontent.com/uhjRXO19CiZbT46srdXSM-lQ8xCsurU-xaVg6lvJvNy8TisdjlaHrHsBwcWAzpu_vkKXAA9SdbA",
 			}
 		};
 		public ListPage()
