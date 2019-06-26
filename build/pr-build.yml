@@ -68,6 +68,16 @@ stages:
       - Xamarin.iOS
 
     steps:
+    - task: NuGetToolInstaller@1
+      displayName: Use Nuget 4.3.0
+      inputs:
+        versionSpec: '4.3.0'
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: HotUI.sln
+
     - task: MSBuild@1
       displayName: 'Build Tests'
       inputs:
