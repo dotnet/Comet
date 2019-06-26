@@ -92,10 +92,6 @@ stages:
           !**\xunit.runner.visualstudio.testadapter.dll
           !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
         searchFolder: '$(System.DefaultWorkingDirectory)'
-        codeCoverageEnabled: true
-        otherConsoleOptions: '/InIsolation'
-      enabled: "false"
-
 
 - stage: BuildSamplesAndroid
   dependsOn: RunTests
