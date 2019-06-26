@@ -8,6 +8,7 @@ namespace HotUI.iOS {
 		{
 			HotUI.iOS.UI.Init ();
 		}
+		
 		public static UIViewController ToViewController (this HotPage hotPage)
 		{
 			if (hotPage == null)

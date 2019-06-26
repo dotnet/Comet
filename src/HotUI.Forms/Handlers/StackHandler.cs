@@ -11,16 +11,16 @@ namespace HotUI.Forms {
 
 		public void Remove (HView view)
 		{
-			var s = view as HStack;
+			var s = view as Stack;
 			if (s == null)
 				return;
 			s.ChildrenChanged -= Stack_ChildrenChanged;
 
 		}
-		HStack stack;
+		Stack stack;
 		public void SetView (HView view)
 		{
-			stack = view as HStack;
+			stack = view as Stack;
 			if (stack == null)
 				return;
 

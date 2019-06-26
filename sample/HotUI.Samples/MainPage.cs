@@ -39,7 +39,7 @@ namespace HotUI.Samples
         protected override View Build() =>
             new ScrollView
             {
-                new Stack
+                new VStack    
                 {
                     (state.CanEdit
                         ? (View) new TextField(state.Text)
@@ -48,10 +48,13 @@ namespace HotUI.Samples
                         }
                         : new Text(() => $"{state.Text}: multiText")), // Fromated Text will warn you. This should be done by TextBinding
                     new Text(state.Text),
-                    new Button("Toggle Entry/Label") {OnClick = () => state.CanEdit = !state.CanEdit},
-                    new Button("Update Text")
+                    new HStack
                     {
-                        OnClick = () => { state.Text = $"Click Count: {clickCount.Value++}"; }
+                        new Button("Toggle Entry/Label") {OnClick = () => state.CanEdit = !state.CanEdit},
+                        new Button("Update Text")
+                        {
+                            OnClick = () => { state.Text = $"Click Count: {clickCount.Value++}"; }
+                        }
                     }
                 }
             };
