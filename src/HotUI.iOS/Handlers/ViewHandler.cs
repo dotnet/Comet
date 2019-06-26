@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using UIKit;
 
 namespace HotUI.iOS {
@@ -8,7 +9,18 @@ namespace HotUI.iOS {
 		{
 		}
 
-		public UIView View => currentView?.ToView () ?? new UIView();
+		public UIView View {
+			get {
+				var iView = currentView?.ToIUIView ();
+				if (iView?.GetType () == typeof (ViewHandler) && currentView?.Body == null) {
+					//This is recusrive!!!
+					Debug.WriteLine ($"There is no View Handler for {currentView.GetType ()}");
+					return new UIView ();
+				}
+
+				return iView?.View ?? new UIView ();
+			}
+		}
 
 		View currentView;
 		public void Remove (View view)

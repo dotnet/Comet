@@ -1,9 +1,6 @@
-using System;
 using System.Collections.Generic;
 using System.Drawing;
 using CoreGraphics;
-using FFImageLoading.Helpers;
-using Foundation;
 using HotUI.Layout;
 using UIKit;
 
@@ -131,12 +128,6 @@ namespace HotUI.iOS
         public IEnumerable<UIView> GetSubviews()
         {
             return Subviews;
-        }
-
-        public override void TouchesBegan(NSSet touches, UIEvent evt)
-        {
-            Console.WriteLine("Got here");
-            base.TouchesBegan(touches, evt);
         }
     }
 }
