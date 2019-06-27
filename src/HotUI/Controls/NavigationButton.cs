@@ -33,12 +33,12 @@ namespace HotUI {
 		{
 			var view = Destination?.Invoke ();
 			if(view is ModalView modal) {
-				NavigationView.NavigateModal ((this, modal.Content));
+				ModalView.Present (modal.Content);
 			}
 			else if(this.Navigation != null) {
-				Navigation.Navigate.Invoke(view);
+				Navigation.Navigate(view);
 			} else {
-				NavigationView.NavigateModal ((this,view));
+				ModalView.Present (view);
 			}
 		}
 	}

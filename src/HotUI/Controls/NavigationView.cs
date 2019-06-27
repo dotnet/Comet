@@ -1,8 +1,9 @@
 ﻿using System;
 namespace HotUI {
 	public class NavigationView : ContentView {
-		public Action<View> Navigate;
-		public static Action<(View FromView, View ToView)> NavigateModal;
+		public void Navigate (View view) => PerformNavigate(view);
+		public Action<View> PerformNavigate;
+
 		public override void Add (View view)
 		{
 			base.Add (view);
