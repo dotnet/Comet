@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using HotUI;
 using UIKit;
 
@@ -25,6 +26,7 @@ namespace HotUI.iOS {
 			NavigationView.NavigateModal = (o) => {
 				PresentingViewController.PresentViewController (o.ToView.ToViewController(), true,null);
 			};
+			ModalView.PerformDismiss = () => PresentingViewController.DismissModalViewController (true);
 		}
 
 		internal static UIViewController PresentingViewController {
