@@ -8,6 +8,7 @@ namespace HotUI.iOS {
 	public class ImageHandler : UIImageView, IUIView {
 		public ImageHandler ()
 		{
+			this.Frame = new CoreGraphics.CGRect (0, 0, 56, 56);
 		}
 
 		public UIView View => this;
