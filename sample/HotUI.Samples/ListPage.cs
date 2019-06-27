@@ -25,12 +25,14 @@ namespace HotUI.Samples {
 		}
 
 		View body ()  => new ListView<Song>(Songs) {
-					Cell = (song) => new Stack {
-						new Image (song.ArtworkUrl),
+					Cell = (song) => new NavigationButton(()=> new ListViewDetails(song)){
 						new Stack {
-							new Text (song.Title),
-							new Text (song.Artist),
-							new Text (song.Album),
+							new Image (song.ArtworkUrl),
+							new Stack {
+								new Text (song.Title),
+								new Text (song.Artist),
+								new Text (song.Album),
+							}
 						}
 					},
 				}.OnSelected ((song) => {

@@ -7,6 +7,7 @@ namespace HotUI {
 		{
 			base.Add (view);
 			if (view != null) {
+				view.Navigation = this;
 				view.Parent = this;
 			}
 		}
