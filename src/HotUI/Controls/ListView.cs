@@ -43,7 +43,7 @@ namespace HotUI {
 		public IList List { get; }
 		public IEnumerator GetEnumerator () => List.GetEnumerator ();
 
-		public Func<object, View> CellCreator { get; set; }
+		public Func<object, View> CellCreator { get; protected set; }
 		public void Add(Func<object,View> viewCreator)
 		{
 			if(CellCreator != null) {

@@ -42,6 +42,7 @@ namespace HotUI.iOS {
 			var cell = this.DequeueReusableCell (cellType) as ViewCell ?? new ViewCell ();
 			var item = listView?.List [indexPath.Row];
 			var v = listView?.CellCreator (item);
+			v.Parent = listView;
 			cell.SetView (v);
 			return cell;
 		}

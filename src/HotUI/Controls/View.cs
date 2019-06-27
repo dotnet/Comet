@@ -5,7 +5,21 @@ using System.Linq;
 namespace HotUI {
 
 	public class View {
-
+		View parent;
+		public View Parent {
+			get => parent;
+			set {
+				if (parent == value)
+					return;
+				parent = value;
+				OnParentChange (value);
+			}
+		}
+		protected virtual void OnParentChange(View parent)
+		{
+			this.Navigation = parent.Navigation;
+		}
+		public NavigationView Navigation { get; set; }
 		protected State State { get; set; }
 		public View (bool hasConstructors)
 		{
@@ -35,6 +49,7 @@ namespace HotUI {
 		}
 		internal void UpdateFromOldView (IViewHandler handler) => viewHandler = handler;
 		View builtView;
+		public View BuiltView => builtView;
 		void ResetView()
 		{
 			builtView = null;
@@ -51,7 +66,8 @@ namespace HotUI {
 			set => this.SetValue(State,ref body, value, (s,o)=> ResetView());
 		}
 		internal View GetView () => GetRenderView ();
-		protected View GetRenderView ()
+
+		protected virtual View GetRenderView ()
 		{
 			if (Body == null)
 				return this;

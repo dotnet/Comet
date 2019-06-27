@@ -14,11 +14,20 @@ namespace HotUI {
 		{
 			if (view == null)
 				return;
+			view.Parent = this;
+			view.Navigation = this.Navigation;
 			views.Add (view);
 			ChildrenChanged?.Invoke (this,EventArgs.Empty);
 		}
 
 		public event EventHandler ChildrenChanged;
 		public IReadOnlyList<View> GetChildren () => views;
+		protected override void OnParentChange (View parent)
+		{
+			base.OnParentChange (parent);
+			foreach (var view in views) {
+				view.Parent = this;
+			}
+		}
 	}
 }

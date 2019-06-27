@@ -63,6 +63,7 @@
     <Compile Include="Handlers\ListViewHandler.cs" />
     <Compile Include="HotUIViewController.cs" />
     <Compile Include="Handlers\ViewHandler.cs" />
+    <Compile Include="Handlers\ContentViewHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">

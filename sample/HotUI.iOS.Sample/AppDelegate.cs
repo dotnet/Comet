@@ -24,7 +24,7 @@ namespace HotUI.iOS.Sample {
 			// If not required for your application you can safely delete this method
 
 			window = new UIWindow {
-				RootViewController = new UINavigationController (new ListPage ().ToViewController ()),
+				RootViewController = new MainPage ().ToViewController (),
 			};
 			window.MakeKeyAndVisible ();
 

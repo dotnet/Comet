@@ -4,6 +4,7 @@ using UIKit;
 
 namespace HotUI.iOS {
 	public class ViewHandler : IUIView {
+		public UIViewController CurrentViewController;
 		public Action ViewChanged { get; set; }
 		public ViewHandler ()
 		{

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using UIKit;
 namespace HotUI.iOS {
 	public static partial class iOSExtensions {
@@ -8,12 +9,26 @@ namespace HotUI.iOS {
 		{
 			HotUI.iOS.UI.Init ();
 		}
-		public static UIViewController ToViewController (this View view)
+		public static UIViewController ToViewController (this View view, bool allowNav = true)
 		{
 			var handler = view.ToIUIView ();
-			return new HotUIViewController {
+			
+			var vc = new HotUIViewController {
 				CurrentView = handler,
 			};
+			if (view.BuiltView is NavigationView nav && allowNav) {
+				var navController = new UINavigationController ();
+				nav.Navigate = (toView) => {
+					//Since iOS doesn't allow nested navigations, pass the navigate along
+					if(toView is NavigationView newNav) {
+						newNav.Navigate = nav.Navigate;
+					}
+					navController.PushViewController (toView.ToViewController (false), true);
+				};
+				navController.PushViewController (vc, false);
+				return navController;
+			}
+			return vc;
 		}
 		public static IUIView ToIUIView(this View view)
 		{

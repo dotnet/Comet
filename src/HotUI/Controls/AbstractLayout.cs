@@ -14,9 +14,10 @@ namespace HotUI
         
         public void Add(View view)
         {
-            if (view == null)
-                return;
-            _views.Add(view);
+			if (view == null)
+				return;
+			view.Parent = this;
+			_views.Add(view);
             ChildrenChanged?.Invoke(this, new LayoutEventArgs(_views.Count - 1, 1));
         }
 
@@ -43,6 +44,7 @@ namespace HotUI
             var index = _views.IndexOf(item);
             if (index >= 0)
             {
+				item.Parent = null;
                 _views.Remove(item);
                 ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1));
                 return true;
@@ -66,6 +68,7 @@ namespace HotUI
         public void Insert(int index, View item)
         {
             _views.Insert(index, item);
+			item.Parent = null;
             ChildrenAdded?.Invoke(this, new LayoutEventArgs(index,1));
         }
 
@@ -84,5 +87,12 @@ namespace HotUI
                 ChildrenChanged?.Invoke(this, new LayoutEventArgs(index, 1));
             }
         }
-    }
+		protected override void OnParentChange (View parent)
+		{
+			base.OnParentChange (parent);
+			foreach(var view in _views) {
+				view.Parent = this;
+			}
+		}
+	}
 }
