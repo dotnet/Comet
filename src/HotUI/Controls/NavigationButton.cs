@@ -32,8 +32,10 @@ namespace HotUI {
 		public void Navigate()
 		{
 			var view = Destination?.Invoke ();
-			//TODO: Check if modal type;
-			if(this.Navigation != null) {
+			if(view is ModalView modal) {
+				NavigationView.NavigateModal ((this, modal.Content));
+			}
+			else if(this.Navigation != null) {
 				Navigation.Navigate.Invoke(view);
 			} else {
 				NavigationView.NavigateModal ((this,view));

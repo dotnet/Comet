@@ -58,7 +58,15 @@ namespace HotUI {
 		}
 		public Action<object> ItemSelected { get; set; }
 
-		public void OnSelected(int index) => ItemSelected?.Invoke (List [index]);
+
+		public void OnSelected (int index)
+		{
+			var item = List [index];
+			var navbutton = CellCreator?.Invoke (item) as NavigationButton;
+			if (navbutton != null)
+				navbutton?.Destination ();
+			ItemSelected?.Invoke (item);
+		}
 
 		public void OnSelected (object item) => ItemSelected?.Invoke (item);
 	}

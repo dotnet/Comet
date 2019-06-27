@@ -1,5 +1,6 @@
 ﻿using System;
 using HotUI;
+using UIKit;
 
 namespace HotUI.iOS {
 	public static class UI {
@@ -21,6 +22,22 @@ namespace HotUI.iOS {
 			Registrar.Handlers.Register<ListView, ListViewHandler> ();
 			Registrar.Handlers.Register<View, ViewHandler> ();
 			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
+			NavigationView.NavigateModal = (o) => {
+				PresentingViewController.NavigationController.PresentViewController (o.ToView.ToViewController(), true,null);
+			};
+		}
+
+		internal static UIViewController PresentingViewController {
+			get {
+				//if (overrideVc != null)
+				//    return overrideVc;
+
+				var window = UIApplication.SharedApplication.KeyWindow;
+				var vc = window.RootViewController;
+				while (vc.PresentedViewController != null)
+					vc = vc.PresentedViewController;
+				return vc;
+			}
 		}
 	}
 }
