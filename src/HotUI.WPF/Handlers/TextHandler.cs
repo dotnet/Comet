@@ -1,0 +1,41 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Windows;
+using WPFLabel = System.Windows.Controls.Label;
+
+namespace HotUI.WPF
+{
+    public class TextHandler : WPFLabel, IUIElement
+    {
+        private static readonly PropertyMapper<Text, TextHandler> Mapper = new PropertyMapper<Text, TextHandler>(
+            new Dictionary<string, Func<TextHandler, Text, bool>>()
+            {
+                [nameof(Text.Value)] = MapValueProperty
+            });
+
+        private Text _text;
+
+        public UIElement View => this;
+
+        public void Remove(View view)
+        {
+        }
+
+        public void SetView(View view)
+        {
+            _text = view as Text;
+            Mapper.UpdateProperties(this, _text);
+        }
+
+        public void UpdateValue(string property, object value)
+        {
+            Mapper.UpdateProperty(this, _text, property);
+        }
+
+        public static bool MapValueProperty(WPFLabel nativeView, Text virtualView)
+        {
+            nativeView.Content = virtualView.Value;
+            return true;
+        }
+    }
+}

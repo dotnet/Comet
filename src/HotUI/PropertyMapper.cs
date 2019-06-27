@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HotUI.Mac.Handlers
+namespace HotUI
 {
     public class PropertyMapper<TVirtualView, TNativeView>
     {

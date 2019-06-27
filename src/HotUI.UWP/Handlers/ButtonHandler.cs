@@ -1,27 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
-using AppKit;
+using Windows.UI.Xaml;
+using UWPButton = Windows.UI.Xaml.Controls.Button;
 
-namespace HotUI.Mac.Handlers
+namespace HotUI.UWP
 {
-    public class ButtonHandler : NSButton, INSView
+    public class ButtonHandler : UWPButton, IUIElement
     {
         private static readonly PropertyMapper<Button, ButtonHandler> Mapper = new PropertyMapper<Button, ButtonHandler>(new Dictionary<string, Func<ButtonHandler, Button, bool>>()
         {
             [nameof(Button.Text)] = MapTextProperty
         });
         
+        private Button _button;
+
         public ButtonHandler()
         {
-            Activated += HandleTouchUpInside;
+            Click += HandleClick;
         }
+        
 
-        private void HandleTouchUpInside(object sender, EventArgs e) => _button?.OnClick();
-
-        public NSView View => this;
-
-        Button _button;
-
+        public UIElement View => this;
+        
         public void Remove(View view)
         {
         }
@@ -37,10 +37,11 @@ namespace HotUI.Mac.Handlers
             Mapper.UpdateProperty(this, _button, property);
         }
 
-        public static bool MapTextProperty(NSButton nativeButton, Button virtualButton)
+        private void HandleClick(object sender, RoutedEventArgs e) => _button?.OnClick();
+
+        public static bool MapTextProperty(UWPButton nativeButton, Button virtualButton)
         {
-            nativeButton.Title = virtualButton.Text;
-            nativeButton.SizeToFit();
+            nativeButton.Content = virtualButton.Text;
             return true;
         }
     }
