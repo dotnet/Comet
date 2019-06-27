@@ -23,7 +23,7 @@ namespace HotUI.iOS {
 			Registrar.Handlers.Register<View, ViewHandler> ();
 			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
 			NavigationView.NavigateModal = (o) => {
-				PresentingViewController.NavigationController.PresentViewController (o.ToView.ToViewController(), true,null);
+				PresentingViewController.PresentViewController (o.ToView.ToViewController(), true,null);
 			};
 		}
 
