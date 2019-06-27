@@ -14,7 +14,7 @@ namespace HotUI.iOS
             Layer.CornerRadius = 3f;
         }
 
-        private void ButtonHandler_TouchUpInside(object sender, EventArgs e) => button?.OnClick();
+        private void ButtonHandler_TouchUpInside(object sender, EventArgs e) => button?.OnClick?.Invoke();
 
         public UIView View => this;
 
