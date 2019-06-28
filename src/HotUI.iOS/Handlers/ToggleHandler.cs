@@ -5,10 +5,10 @@ namespace HotUI.iOS
 {
     public class ToggleHandler : UISwitch, IUIView
     {
-        private static readonly PropertyMapper<Toggle, UISwitch> Mapper = new PropertyMapper<Toggle, UISwitch>(new Dictionary<string, Func<UISwitch, Toggle, bool>>()
-        {
+		private static readonly PropertyMapper<Toggle, UISwitch> Mapper = new PropertyMapper<Toggle, UISwitch> ()
+		{ 
             [nameof(Toggle.IsOn)] = MapIsOnProperty
-        });
+        };
 
         public ToggleHandler()
         {
