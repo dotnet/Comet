@@ -1,36 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using AppKit;
-using CoreGraphics;
-using HotUI.Mac.Controls;
-using HotUI.Mac.Extensions;
+using Android.Graphics;
+using Android.Widget;
+using AView = Android.Views.View;
 
-namespace HotUI.Mac.Handlers
+namespace HotUI.Android
 {
-    public class StackHandler : StackView, INSView
+    public class HStackHandler : LinearLayout, IView
     {
-        public StackHandler()
+        public HStackHandler() : base(AndroidContext.CurrentContext)
         {
-            Frame = new CGRect(0, 0, 800, 600);
-            Console.WriteLine("New stack handler created");
+            Orientation = Orientation.Vertical;
+            base.SetBackgroundColor(Color.Green);
         }
-
-        public NSView View => this;
+        
+        public AView View => this;
 
         public void Remove(View view)
         {
-            if (stack != null)
-            {
-                stack.ChildrenChanged -= Stack_ChildrenChanged;
-                stack = null;
-            }
         }
 
-        Stack stack;
+        HStack stack;
 
         public void SetView(View view)
         {
-            stack = view as Stack;
+            stack = view as HStack;
             UpdateChildren(stack);
             stack.ChildrenChanged += Stack_ChildrenChanged;
         }
@@ -44,9 +38,9 @@ namespace HotUI.Mac.Handlers
         {
         }
 
-        List<NSView> views = new List<NSView>();
+        List<AView> views = new List<AView>();
 
-        protected void UpdateChildren(Stack stack)
+        protected void UpdateChildren(HStack stack)
         {
             var children = stack.GetChildren();
             if (views.Count == children.Count)
@@ -68,24 +62,18 @@ namespace HotUI.Mac.Handlers
             }
 
             foreach (var v in views)
-                v.RemoveFromSuperview();
-            views.Clear();
+            {
+                base.RemoveView(v);
+            }
 
+            views.Clear();
             foreach (var child in children)
             {
                 var cview = child.ToView();
-                cview.TranslatesAutoresizingMaskIntoConstraints = false;
-
                 views.Add(cview);
-
-                // todo: fixme, this is hack to get the controls to show up
-                if (cview.Bounds.Width <= 0 && cview.Bounds.Height <= 0)
-                    cview.SetFrameSize(new CGSize(200, 24));
-
-                AddSubview(cview);
+                //cview.ContentMode = UIViewContentMode.Top;
+                base.AddView(cview);
             }
-
-            LayoutSubviews();
         }
     }
 }

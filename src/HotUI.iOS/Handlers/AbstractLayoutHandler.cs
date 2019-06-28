@@ -14,14 +14,32 @@ namespace HotUI.iOS
         protected AbstractLayoutHandler(CGRect rect, ILayoutManager<UIView> layoutManager) : base(rect)
         {
             _layoutManager = layoutManager;
-            TranslatesAutoresizingMaskIntoConstraints = false;
+            InitializeDefaults();
         }
 
         protected AbstractLayoutHandler(ILayoutManager<UIView> layoutManager)
         {
             _layoutManager = layoutManager;
-            TranslatesAutoresizingMaskIntoConstraints = false;
-            BackgroundColor = UIColor.Green;
+        }
+
+        public SizeF GetSize(UIView view)
+        {
+            return view.Bounds.Size.ToSizeF();
+        }
+
+        public void SetFrame(UIView view, float x, float y, float width, float height)
+        {
+            view.Frame = new CGRect(x, y, width, height);
+        }
+
+        public void SetSize(UIView view, float width, float height)
+        {
+            view.Frame = new CGRect(Frame.X, Frame.Y, width, height);
+        }
+
+        public IEnumerable<UIView> GetSubviews()
+        {
+            return Subviews;
         }
 
         public UIView View => this;
@@ -34,7 +52,7 @@ namespace HotUI.iOS
                 _view.ChildrenChanged += HandleChildrenChanged;
                 _view.ChildrenAdded += HandleChildrenAdded;
                 _view.ChildrenRemoved += ViewOnChildrenRemoved;
-                
+
                 foreach (var subView in _view)
                 {
                     var nativeView = subView.ToView();
@@ -61,12 +79,17 @@ namespace HotUI.iOS
 
         public virtual void UpdateValue(string property, object value)
         {
+        }
 
+        private void InitializeDefaults()
+        {
+            TranslatesAutoresizingMaskIntoConstraints = false;
+            BackgroundColor = UIColor.Green;
         }
 
         private void HandleChildrenAdded(object sender, LayoutEventArgs e)
         {
-            for (int i = 0; i < e.Count; i++)
+            for (var i = 0; i < e.Count; i++)
             {
                 var index = e.Start + i;
                 var view = _view[index];
@@ -79,7 +102,7 @@ namespace HotUI.iOS
 
         private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
         {
-            for (int i = 0; i < e.Count; i++)
+            for (var i = 0; i < e.Count; i++)
             {
                 var index = e.Start + i;
                 var nativeView = Subviews[index];
@@ -91,7 +114,7 @@ namespace HotUI.iOS
 
         private void HandleChildrenChanged(object sender, LayoutEventArgs e)
         {
-            for (int i = 0; i < e.Count; i++)
+            for (var i = 0; i < e.Count; i++)
             {
                 var index = e.Start + i;
                 var oldNativeView = Subviews[index];
@@ -108,26 +131,6 @@ namespace HotUI.iOS
         public override void LayoutSubviews()
         {
             _layoutManager.Layout(this, this, _view);
-        }
-
-        public SizeF GetSize(UIView view)
-        {
-            return view.Bounds.Size.ToSizeF();
-        }
-
-        public void SetFrame(UIView view, float x, float y, float width, float height)
-        {
-            view.Frame = new CGRect(x,y,width, height);
-        }
-
-        public void SetSize(UIView view, float width, float height)
-        {
-            view.Frame = new CGRect(Frame.X, Frame.Y, width, height);
-        }
-
-        public IEnumerable<UIView> GetSubviews()
-        {
-            return Subviews;
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using WPFScrollView = System.Windows.Controls.ScrollViewer;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.WPF.Handlers
 {

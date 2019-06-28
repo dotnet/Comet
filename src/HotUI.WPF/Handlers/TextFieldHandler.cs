@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Windows;
 using WPFTextField = System.Windows.Controls.TextBox;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.WPF.Handlers
 {

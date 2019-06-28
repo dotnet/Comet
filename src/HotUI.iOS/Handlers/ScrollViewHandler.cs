@@ -1,40 +1,57 @@
 ﻿using System;
+using System.Collections.Generic;
 using UIKit;
+// ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.iOS {
-	public class ScrollViewHandler : UIScrollView, IUIView {
+namespace HotUI.iOS
+{
+    public class ScrollViewHandler : UIScrollView, IUIView
+    {
+        private static readonly PropertyMapper<ScrollView, ScrollViewHandler> Mapper = new PropertyMapper<ScrollView, ScrollViewHandler>(new Dictionary<string, Func<ScrollViewHandler, ScrollView, bool>>
+        {
+            
+        });
 
-		public ScrollViewHandler()
-		{
-			ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always;
-		}
-		public UIView View => this;
+        private ScrollView _scroll;
+        private UIView _content;
 
-		public void Remove (View view)
-		{
-			content?.RemoveFromSuperview ();
-		}
-		UIView content;
-		public void SetView (View view)
-		{
-			var scroll = view as ScrollView;
+        public ScrollViewHandler()
+        {
+            ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always;
+        }
 
-			content = scroll?.View?.ToView ();
-			if(content != null)
-				Add (content);
-			this.UpdateProperties (view);
-			NSLayoutConstraint.ActivateConstraints (new []{
-				content.LeadingAnchor.ConstraintEqualTo (this.LeadingAnchor),
-				content.TrailingAnchor.ConstraintEqualTo (this.TrailingAnchor),
-				content.TopAnchor.ConstraintEqualTo (this.TopAnchor),
-				content.BottomAnchor.ConstraintEqualTo (this.BottomAnchor),
-			});
+        public UIView View => this;
 
-		}
+        public void Remove(View view)
+        {
+            _content?.RemoveFromSuperview();
+            _scroll = null;
+            _content = null;
+        }
 
-		public void UpdateValue (string property, object value)
-		{
-			this.UpdateProperty (property, value);
-		}
-	}
+        public void SetView(View view)
+        {
+            _scroll = view as ScrollView;
+
+            _content = _scroll?.View?.ToView();
+            if (_content != null)
+            {
+                Add(_content);
+                NSLayoutConstraint.ActivateConstraints(new[]
+                {
+                    _content.LeadingAnchor.ConstraintEqualTo(LeadingAnchor),
+                    _content.TrailingAnchor.ConstraintEqualTo(TrailingAnchor),
+                    _content.TopAnchor.ConstraintEqualTo(TopAnchor),
+                    _content.BottomAnchor.ConstraintEqualTo(BottomAnchor)
+                });
+            }
+
+            Mapper.UpdateProperties(this, _scroll);
+        }
+
+        public void UpdateValue(string property, object value)
+        {
+            Mapper.UpdateProperty(this, _scroll, property);
+        }
+    }
 }

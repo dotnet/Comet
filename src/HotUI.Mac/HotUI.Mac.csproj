@@ -70,7 +70,7 @@
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="Handlers\TextHandler.cs" />
     <Compile Include="Handlers\ScrollViewHandler.cs" />
-    <Compile Include="Handlers\StackHandler.cs" />
+    <Compile Include="Handlers\VStackHandler.cs" />
     <Compile Include="INSView.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="Controls\StackView.cs" />

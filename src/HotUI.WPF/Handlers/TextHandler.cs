@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using WPFLabel = System.Windows.Controls.Label;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.WPF.Handlers
 {

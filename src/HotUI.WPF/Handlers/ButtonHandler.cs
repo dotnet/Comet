@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Windows;
 using WPFButton = System.Windows.Controls.Button;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.WPF.Handlers
 {

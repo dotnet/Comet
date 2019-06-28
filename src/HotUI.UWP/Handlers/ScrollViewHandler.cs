@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using UWPScrollView = Windows.UI.Xaml.Controls.ScrollViewer;
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.UWP.Handlers
 {

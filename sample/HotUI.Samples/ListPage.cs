@@ -26,9 +26,9 @@ namespace HotUI.Samples {
 
 		View body ()  => new ListView<Song>(Songs) {
 					Cell = (song) => new NavigationButton(()=> new ListViewDetails(song)){
-						new Stack {
+						new HStack {
 							new Image (song.ArtworkUrl),
-							new Stack {
+							new VStack {
 								new Text (song.Title),
 								new Text (song.Artist),
 								new Text (song.Album),

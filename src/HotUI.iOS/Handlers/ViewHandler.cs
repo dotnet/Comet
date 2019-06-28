@@ -1,44 +1,55 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using UIKit;
+// ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS {
-	public class ViewHandler : IUIView {
-		public UIViewController CurrentViewController;
-		public Action ViewChanged { get; set; }
-		public ViewHandler ()
-		{
-		}
+namespace HotUI.iOS
+{
+    public class ViewHandler : IUIView
+    {
+        private static readonly PropertyMapper<View, ViewHandler> Mapper = new PropertyMapper<View, ViewHandler>(new Dictionary<string, Func<ViewHandler, View, bool>>()
+        {
+            [nameof(HotUI.View.Body)] = MapBodyProperty
+        });
+        
+        private View _view;
+        private UIView _body;
+        
+        public Action ViewChanged { get; set; }
 
-		public UIView View {
-			get {
-				var iView = currentView?.ToIUIView ();
-				if (iView?.GetType () == typeof (ViewHandler) && currentView?.Body == null) {
-					//This is recusrive!!!
-					Debug.WriteLine ($"There is no View Handler for {currentView.GetType ()}");
-					return new UIView ();
-				}
+        public UIView View => _body;
+        
+        public void Remove(View view)
+        {
+            _view = null;
+            _body = null;
+        }
 
-				return iView?.View ?? new UIView ();
-			}
-		}
+        public void SetView(View view)
+        {
+            _view = view;
+            Mapper.UpdateProperties(this, _view);
+            ViewChanged?.Invoke();
+        }
 
-		View currentView;
-		public void Remove (View view)
-		{
-			currentView = null;
-		}
+        public void UpdateValue(string property, object value)
+        {
+            Mapper.UpdateProperties(this, _view);
+        }
+        
+        public static bool MapBodyProperty(ViewHandler nativeView, View virtualView)
+        {
+            var uiElement = virtualView?.ToIUIView();
+            if (uiElement?.GetType() == typeof(ViewHandler) && virtualView.Body == null)
+            {
+                // this is recursive.
+                Debug.WriteLine($"There is no ViewHandler for {virtualView.GetType()}");
+                return true;
+            }
 
-		public void SetView (View view)
-		{
-			currentView = view;
-			View.UpdateProperties (view);
-			ViewChanged?.Invoke ();
-		}
-
-		public void UpdateValue (string property, object value)
-		{
-			View.UpdateBaseProperty (property, value);
-		}
-	}
+            nativeView._body = uiElement?.View ?? new UIView();
+            return true;
+        }
+    }
 }

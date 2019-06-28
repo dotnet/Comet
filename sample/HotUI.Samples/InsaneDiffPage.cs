@@ -6,7 +6,7 @@ namespace HotUI.Samples {
 		public InsaneDiffPage ()
 		{
 			Body = () => {
-				var stack = new Stack {
+				var stack = new VStack {
 					new Button (()=> myBoolean.Value ? myText.Value : $"State: {myBoolean.Value}") {
 						OnClick = ()=> myBoolean.Value = !myBoolean.Value,
 					},

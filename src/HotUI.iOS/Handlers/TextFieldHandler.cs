@@ -1,63 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
 using UIKit;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.iOS
 {
     public class TextFieldHandler : UITextField, IUIView
     {
+        private static readonly PropertyMapper<TextField, TextFieldHandler> Mapper = new PropertyMapper<TextField, TextFieldHandler>(new Dictionary<string, Func<TextFieldHandler, TextField, bool>>()
+        {
+            [nameof(TextField.Text)] = MapTextProperty
+        });
+        
+        private TextField _textField;
+
         public TextFieldHandler()
         {
             EditingDidEnd += EntryHandler_EditingDidEnd;
 
-            ShouldReturn = (s) =>
+            ShouldReturn = s =>
             {
                 ResignFirstResponder();
                 return true;
             };
         }
 
-        private void EntryHandler_EditingDidEnd(object sender, EventArgs e) => _textField?.Completed(Text);
-
         public UIView View => this;
-
+        
         public void Remove(View view)
         {
             _textField = null;
         }
 
-        TextField _textField;
-
         public void SetView(View view)
         {
             _textField = view as TextField;
-            this.UpdateProperties(_textField);
+            Mapper.UpdateProperties(this, _textField);
         }
 
         public void UpdateValue(string property, object value)
         {
-            this.UpdateProperty(property, value);
-        }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateProperties(this UITextField view, TextField hView)
-        {
-            view.UpdateProperty(nameof(TextField.Text), hView?.Text);
-            view.UpdateBaseProperties(hView);
+            Mapper.UpdateProperty(this, _textField, property);
         }
 
-        public static bool UpdateProperty(this UITextField view, string property, object value)
+        private void EntryHandler_EditingDidEnd(object sender, EventArgs e)
         {
-            switch (property)
-            {
-                case nameof(TextField.Text):
-                    view.Text = (string) value;
-                    view.SizeToFit();
-                    return true;
-            }
-
-            return view.UpdateBaseProperty(property, value);
+            _textField?.Completed(Text);
+        }
+        
+        public static bool MapTextProperty(TextFieldHandler nativeView, TextField virtualView)
+        {
+            nativeView.Text = virtualView.Text;
+            nativeView.SizeToFit();
+            return true;
         }
     }
 }

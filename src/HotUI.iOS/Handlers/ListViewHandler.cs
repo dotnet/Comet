@@ -1,88 +1,96 @@
 ﻿using System;
 using Foundation;
 using UIKit;
-namespace HotUI.iOS {
-	public class ListViewHandler : UITableView, IUIView, IUITableViewDataSource, IUITableViewDelegate {
-		public UIView View => this;
+// ReSharper disable ClassNeverInstantiated.Global
 
-		public ListViewHandler ()
-		{
-			this.WeakDataSource = this;
-			this.WeakDelegate = this;
-		}
-		ListView listView;
+namespace HotUI.iOS
+{
+    public class ListViewHandler : UITableView, IUIView, IUITableViewDataSource, IUITableViewDelegate
+    {
+        private static readonly string CellType = "ViewCell";
+        private ListView _listView;
 
-		public void SetView (View view)
-		{
-			listView = view as ListView;
-			//TODO: Some crude size estimation
-			var v = listView.CellCreator (listView.List [0]);
-			this.EstimatedRowHeight = 200;
-			this.ReloadData ();
-		}
+        public ListViewHandler()
+        {
+            WeakDataSource = this;
+            WeakDelegate = this;
+        }
 
-		public void UpdateValue (string property, object value)
-		{
-			this.ReloadData ();
-			
-		}
 
-		public void Remove (View view)
-		{
-			this.ReloadData ();
-		}
+        public nint RowsInSection(UITableView tableView, nint section)
+        {
+            return _listView?.List?.Count ?? 0;
+        }
 
-		static readonly string cellType = "ViewCell";
-		
+        public UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+        {
+            var cell = DequeueReusableCell(CellType) as ViewCell ?? new ViewCell();
+            var item = _listView?.List[indexPath.Row];
+            var v = _listView?.CellCreator(item);
+            v.Parent = _listView;
+            cell.SetView(v);
+            return cell;
+        }
 
-		public nint RowsInSection (UITableView tableView, nint section) => listView?.List?.Count ?? 0;
+        public UIView View => this;
 
-		public UITableViewCell GetCell (UITableView tableView, NSIndexPath indexPath)
-		{
-			var cell = this.DequeueReusableCell (cellType) as ViewCell ?? new ViewCell ();
-			var item = listView?.List [indexPath.Row];
-			var v = listView?.CellCreator (item);
-			v.Parent = listView;
-			cell.SetView (v);
-			return cell;
-		}
+        public void SetView(View view)
+        {
+            _listView = view as ListView;
+            //TODO: Some crude size estimation
+            var v = _listView.CellCreator(_listView.List[0]);
+            EstimatedRowHeight = 200;
+            ReloadData();
+        }
 
-		[Export ("tableView:didSelectRowAtIndexPath:")]
-		public void RowSelected (UITableView tableView, NSIndexPath indexPath)
-		{
-			if (indexPath.Row < 0)
-				return;
-			tableView.DeselectRow (indexPath, true);
-			listView?.OnSelected (indexPath.Row);
-		}
+        public void UpdateValue(string property, object value)
+        {
+            ReloadData();
+        }
 
-		class ViewCell : UITableViewCell {
-			UIView currentContent;
+        public void Remove(View view)
+        {
+            ReloadData();
+        }
 
-			public override void LayoutSubviews ()
-			{
-				base.LayoutSubviews ();
-				if (currentContent == null)
-					return;
-				currentContent.Frame = ContentView.Bounds;
-			}
-			View currentView;
-			public void SetView(View view)
-			{
+        [Export("tableView:didSelectRowAtIndexPath:")]
+        public void RowSelected(UITableView tableView, NSIndexPath indexPath)
+        {
+            if (indexPath.Row < 0)
+                return;
+            tableView.DeselectRow(indexPath, true);
+            _listView?.OnSelected(indexPath.Row);
+        }
 
-				//TODO:We should do View Compare
-				//view.Diff (view);
-				currentContent?.RemoveFromSuperview ();
-				currentContent = view.ToView ();
-				ContentView.Add (currentContent);
-				//This should let it autosize
-				NSLayoutConstraint.ActivateConstraints (new []{
-				currentContent.LeadingAnchor.ConstraintEqualTo (this.LeadingAnchor),
-				currentContent.TrailingAnchor.ConstraintEqualTo (this.TrailingAnchor),
-				currentContent.TopAnchor.ConstraintEqualTo (this.TopAnchor),
-				currentContent.BottomAnchor.ConstraintEqualTo (this.BottomAnchor),
-			});
-			}
-		}
-	}
+        private class ViewCell : UITableViewCell
+        {
+            private UIView _currentContent;
+            private View _currentView;
+
+            public override void LayoutSubviews()
+            {
+                base.LayoutSubviews();
+                if (_currentContent == null)
+                    return;
+                _currentContent.Frame = ContentView.Bounds;
+            }
+
+            public void SetView(View view)
+            {
+                //TODO:We should do View Compare
+                //view.Diff (view);
+                _currentContent?.RemoveFromSuperview();
+                _currentContent = view.ToView();
+                ContentView.Add(_currentContent);
+                //This should let it autosize
+                NSLayoutConstraint.ActivateConstraints(new[]
+                {
+                    _currentContent.LeadingAnchor.ConstraintEqualTo(LeadingAnchor),
+                    _currentContent.TrailingAnchor.ConstraintEqualTo(TrailingAnchor),
+                    _currentContent.TopAnchor.ConstraintEqualTo(TopAnchor),
+                    _currentContent.BottomAnchor.ConstraintEqualTo(BottomAnchor)
+                });
+            }
+        }
+    }
 }
