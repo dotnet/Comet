@@ -24,6 +24,9 @@ namespace HotUI.WPF
         public void SetView(View view)
         {
             _text = view as Text;
+            /*RenderSize = new Size(100, 24);
+            Width = RenderSize.Width;
+            Height = RenderSize.Height;*/
             Mapper.UpdateProperties(this, _text);
         }
 

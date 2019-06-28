@@ -29,6 +29,9 @@ namespace HotUI.WPF
         public void SetView(View view)
         {
             _button = view as Button;
+            /*RenderSize = new Size(100, 24);
+            Width = RenderSize.Width;
+            Height = RenderSize.Height;*/
             Mapper.UpdateProperties(this, _button);
         }
 

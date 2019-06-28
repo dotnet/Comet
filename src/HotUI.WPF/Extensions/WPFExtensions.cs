@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 
 namespace HotUI.WPF
 {
@@ -28,6 +29,15 @@ namespace HotUI.WPF
         {
             var handler = view.ToIUIElement();
             return handler?.View;
+        }
+
+        public static UIElement ToEmbeddableView(this View view)
+        {
+            var handler = view.ToIUIElement();
+            if (handler == null)
+                throw new Exception("Unable to build handler for view");
+
+            return new HotUIContainerView(view);
         }
     }
 }

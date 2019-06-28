@@ -3,11 +3,11 @@ using HotUI.Layout;
 
 namespace HotUI.WPF
 {
-    public class HStackHandler : AbstractLayoutHandler
-    {
-        
-        public HStackHandler() : base(new HStackLayoutManager<UIElement>())
+    public class HStackHandler : AbstractStackLayoutHandler
+    {        
+        public HStackHandler() 
         {
+            Orientation = System.Windows.Controls.Orientation.Horizontal;
         }
     }
 }

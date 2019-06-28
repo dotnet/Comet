@@ -23,6 +23,9 @@ namespace HotUI.WPF
         public void SetView(View view)
         {
             _textField = view as TextField;
+            /*RenderSize = new Size(100, 24);
+            Width = RenderSize.Width;
+            Height = RenderSize.Height;*/
             Mapper.UpdateProperties(this, _textField);
         }
 
@@ -34,6 +37,8 @@ namespace HotUI.WPF
         public static bool MapTextProperty(WPFTextField nativeView, TextField virtualView)
         {
             nativeView.Text = virtualView.Text;
+            //nativeView.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
+            //var desiredSize = nativeView.DesiredSize;
             return true;
         }
     }

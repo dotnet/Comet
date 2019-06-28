@@ -21,8 +21,10 @@ namespace HotUI.WPF
 
         public SizeF GetSize(UIElement view)
         {
-            if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0) return view.DesiredSize.ToSizeF();
-
+            if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0)
+            {
+                return view.DesiredSize.ToSizeF();
+            }
             return view.RenderSize.ToSizeF();
         }
 
@@ -46,12 +48,12 @@ namespace HotUI.WPF
 
         public void SetSize(UIElement view, float width, float height)
         {
-            UIElement relativeTo = this;
+            view.RenderSize = new Size(width, height);
             if (view is FrameworkElement element)
-                relativeTo = element.Parent as UIElement ?? this;
-
-            var point = view.TranslatePoint(new Point(0, 0), relativeTo);
-            SetFrame(view, (float)point.X, (float)point.Y, width, height);
+            {
+                element.Width = view.RenderSize.Width;
+                element.Height = view.RenderSize.Height;
+            }
         }
 
         public IEnumerable<UIElement> GetSubviews()
@@ -172,12 +174,20 @@ namespace HotUI.WPF
             return availableSize;
         }
 
+        private bool _inArrange = false;
+
         protected override Size ArrangeOverride(Size finalSize)
         {
+            if (_inArrange)
+                return finalSize;
+
+            _inArrange = true;
             RenderSize = finalSize;
             Width = finalSize.Width;
             Height = finalSize.Height;
-            if (finalSize.Width > 0 && finalSize.Height > 0) LayoutSubviews();
+            if (finalSize.Width > 0 && finalSize.Height > 0)
+                LayoutSubviews();
+            _inArrange = false;
 
             return finalSize;
         }
