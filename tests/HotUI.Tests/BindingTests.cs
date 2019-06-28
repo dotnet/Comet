@@ -185,5 +185,58 @@ namespace HotUI.Tests {
 
 		}
 
+
+
+		[Fact]
+		public void BindingMultipleLabelsUpdatesBoth ()
+		{
+			TextField textField = null;
+			Text text = null;
+			VStack stack = null;
+			var view = new StatePage ();
+
+			view.text.Value = "Hello";
+			int buildCount = 0;
+
+			view.Body = () => {
+				buildCount++;
+				stack = new VStack {
+					(textField = new TextField (view.text.Value)),
+					(text = new Text (view.text.Value),
+				};
+				//text = new Text ($"{view.text.Value} - {view.clickCount.Value}");
+				return stack;
+			};
+
+			var viewHandler = new GenericViewHandler ();
+			view.ViewHandler = viewHandler;
+
+			var stackHandler = new GenericViewHandler ();
+			stack.ViewHandler = stackHandler;
+
+
+			var textFieldHandler = new GenericViewHandler ();
+			textField.ViewHandler = textFieldHandler;
+
+
+			var textHandler = new GenericViewHandler ();
+			text.ViewHandler = textHandler;
+
+			view.text.Value = "Good bye";
+
+			const string tfValue = nameof (TextField.Text);
+			const string tValue = nameof (Text.Value);
+
+			Assert.True(textFieldHandler.ChangedProperties.ContainsKey (tfValue),"TextField Value didnt change");
+
+			Assert.True (textHandler.ChangedProperties.ContainsKey (tValue),"Text Value didnt change");
+
+			var text1Value = textFieldHandler.ChangedProperties [tfValue];
+			var text2Value = textHandler.ChangedProperties [tValue];
+			Assert.Equal (text1Value, text2Value);
+		}
+
+
+
 	}
 }
