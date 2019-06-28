@@ -100,17 +100,4 @@ namespace HotUI {
 			ViewHandler?.UpdateValue (property, value);
 		}
 	}
-
-
-
-	public enum LayoutOptions {
-		Start,
-		Center,
-		End,
-		Fill,
-		StartAndExpand,
-		CenterAndExpand,
-		EndAndExpand,
-		FillAndExpand
-	}
 }
