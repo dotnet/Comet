@@ -10,6 +10,7 @@
                 return;
             hasInit = true;
             Registrar.Handlers.Register<Button, ButtonHandler>();
+            Registrar.Handlers.Register<Toggle, ToggleHandler>();
             Registrar.Handlers.Register<TextField, TextFieldHandler>();
             Registrar.Handlers.Register<Text, TextHandler>();
             Registrar.Handlers.Register<VStack, VStackHandler>();
@@ -19,6 +20,7 @@
 			Registrar.Handlers.Register<Image, ImageHandler> ();
 			Registrar.Handlers.Register<ListView, ListViewHandler> ();
 			Registrar.Handlers.Register<View, ViewHandler>();
-        }
+			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
+		}
     }
 }
