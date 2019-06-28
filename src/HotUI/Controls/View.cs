@@ -5,6 +5,8 @@ using System.Linq;
 namespace HotUI {
 
 	public class View {
+		internal static readonly EnvironmentData Environment = new EnvironmentData ();
+		internal readonly EnvironmentData Context = new EnvironmentData ();
 		View parent;
 		public View Parent {
 			get => parent;
@@ -23,6 +25,7 @@ namespace HotUI {
 		protected State State { get; set; }
 		public View (bool hasConstructors)
 		{
+			Context.View = this;
 			State = StateBuilder.CurrentState ?? new State {
 				StateChanged = ResetView
 			};
@@ -77,7 +80,7 @@ namespace HotUI {
 				State.SetParent (this);
 				State.StartProperty ();
 				var view = Body.Invoke ();
-				view.Parent = this.Parent;
+				view.Parent = this;
 				var props = State.EndProperty ();
 				var propCount = props.Length;
 				if (propCount > 0) {
@@ -99,5 +102,13 @@ namespace HotUI {
 #endif
 			ViewHandler?.UpdateValue (property, value);
 		}
+
+		public static void SetGlobalEnvironment (string key, object value) => Environment.SetValue (key, value);
+		public static void SetGlobalEnvironment (IDictionary<string, object> data)
+		{
+			foreach(var pair in data)
+				Environment.SetValue (pair.Key, pair.Value);
+		}
+		public static T GetGlobalEnvironment<T> (string key) => Environment.GetValue<T> (key);
 	}
 }
