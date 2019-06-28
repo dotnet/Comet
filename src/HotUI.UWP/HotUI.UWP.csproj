@@ -124,6 +124,7 @@
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="Handlers\AbstractStackLayoutHandler.cs" />
     <Compile Include="Handlers\ButtonHandler.cs" />
+    <Compile Include="Handlers\ContentViewHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="Handlers\ListViewHandler.cs" />

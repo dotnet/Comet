@@ -21,6 +21,7 @@ namespace HotUI.WPF
             Registrar.Handlers.Register<Image, ImageHandler>();
             Registrar.Handlers.Register<ListView, ListViewHandler>();
             Registrar.Handlers.Register<View, ViewHandler>();
+            Registrar.Handlers.Register<ContentView, ContentViewHandler>();
         }
     }
 }

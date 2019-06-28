@@ -7,11 +7,6 @@ namespace HotUI.iOS
 {
     public class ContentViewHandler : IUIView
     {
-        private static readonly PropertyMapper<ContentView, ContentViewHandler> Mapper = new PropertyMapper<ContentView, ContentViewHandler>()
-        {
-            
-        };
-        
         private ContentView _contentView;
 
         public UIView View => _contentView?.Content?.ToView();
@@ -24,12 +19,10 @@ namespace HotUI.iOS
         public void SetView(View view)
         {
             _contentView = view as ContentView;
-            Mapper.UpdateProperties(this, _contentView);
         }
 
         public void UpdateValue(string property, object value)
         {
-            Mapper.UpdateProperty(this, _contentView, property);
         }
     }
 }
