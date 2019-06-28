@@ -3,26 +3,15 @@ using System.Collections.Generic;
 
 namespace HotUI
 {
-    public class PropertyMapper<TVirtualView, TNativeView>
-    {
-        private readonly Dictionary<string, Func<TNativeView, TVirtualView, bool>> _updaters;
-
-        public PropertyMapper()
-        {
-            _updaters = new Dictionary<string, Func<TNativeView, TVirtualView, bool>>();
-        }
-        
-        public PropertyMapper(Dictionary<string, Func<TNativeView, TVirtualView, bool>> updaters)
-        {
-            _updaters = updaters;
-        }
+    public class PropertyMapper<TVirtualView, TNativeView> : Dictionary<string, Func<TNativeView, TVirtualView, bool>>
+    {        
 
         public void UpdateProperties( TNativeView nativeView, TVirtualView virtualView)
         {
             if (virtualView == null)
                 return;
             
-            foreach (var entry in _updaters)
+            foreach (var entry in this)
                 entry.Value.Invoke(nativeView, virtualView);
         }
         
@@ -31,7 +20,7 @@ namespace HotUI
             if (virtualView == null)
                 return false;
             
-            if (_updaters.TryGetValue(property, out var updater))
+            if (TryGetValue(property, out var updater))
                 return updater.Invoke(nativeView, virtualView);
 
             return false;

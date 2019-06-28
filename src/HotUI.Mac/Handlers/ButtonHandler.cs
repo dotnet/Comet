@@ -6,10 +6,10 @@ namespace HotUI.Mac.Handlers
 {
     public class ButtonHandler : NSButton, INSView
     {
-        private static readonly PropertyMapper<Button, ButtonHandler> Mapper = new PropertyMapper<Button, ButtonHandler>(new Dictionary<string, Func<ButtonHandler, Button, bool>>()
+        private static readonly PropertyMapper<Button, ButtonHandler> Mapper = new PropertyMapper<Button, ButtonHandler>()
         {
             [nameof(Button.Text)] = MapTextProperty
-        });
+        };
         
         public ButtonHandler()
         {

@@ -8,9 +8,9 @@ namespace HotUI.WPF.Handlers
 {
     public class ListViewHandler : WPFListView, IUIElement
     {
-        private static readonly PropertyMapper<ListView, ListViewHandler> Mapper = new PropertyMapper<ListView, ListViewHandler>(new Dictionary<string, Func<ListViewHandler, ListView, bool>>()
+        private static readonly PropertyMapper<ListView, ListViewHandler> Mapper = new PropertyMapper<ListView, ListViewHandler>()
         {
-        });
+        };
         
         private ListView _listView;
 

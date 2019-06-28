@@ -7,10 +7,10 @@ namespace HotUI.iOS
 {
     public class ContentViewHandler : IUIView
     {
-        private static readonly PropertyMapper<ContentView, ContentViewHandler> Mapper = new PropertyMapper<ContentView, ContentViewHandler>(new Dictionary<string, Func<ContentViewHandler, ContentView, bool>>
+        private static readonly PropertyMapper<ContentView, ContentViewHandler> Mapper = new PropertyMapper<ContentView, ContentViewHandler>()
         {
             
-        });
+        };
         
         private ContentView _contentView;
 

@@ -9,10 +9,10 @@ namespace HotUI.UWP.Handlers
 {
     public class TextHandler : IUIElement
     {
-        private static readonly PropertyMapper<Text, UWPLabel> Mapper = new PropertyMapper<Text, UWPLabel>(new Dictionary<string, Func<UWPLabel, Text, bool>>()
+        private static readonly PropertyMapper<Text, UWPLabel> Mapper = new PropertyMapper<Text, UWPLabel>()
             {
                 [nameof(Text.Value)] = MapValueProperty
-            });
+            };
 
         private Text _text;
         private readonly UWPLabel _textBlock;
