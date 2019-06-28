@@ -252,7 +252,7 @@ namespace HotUI {
 
 	public class BindingState {
 		public List<string> GlobalProperties { get; set; } = new List<string> ();
-		public Dictionary<string, List<Action<string, object>>> ViewUpdateProperties = new Dictionary<string, List<Action<string, object>>> ();
+		public Dictionary<string, List<(string PropertyName, Action<string, object> Action)>> ViewUpdateProperties = new Dictionary<string, List<(string PropertyName, Action<string, object> Action)>> ();
 		public void AddGlobalProperty (string property)
 		{
 			if (GlobalProperties.Contains (property))
@@ -265,17 +265,17 @@ namespace HotUI {
 			foreach (var prop in properties)
 				AddGlobalProperty (prop);
 		}
-		public void AddViewProperty (string property, Action<string, object> update)
+		public void AddViewProperty (string property, string propertyName, Action<string, object> update)
 		{
 			if (!ViewUpdateProperties.TryGetValue (property, out var actions))
-				ViewUpdateProperties [property] = actions = new List<Action<string, object>> ();
-			actions.Add (update);
+				ViewUpdateProperties [property] = actions = new List<(string PropertyName, Action<string, object> Action)> ();
+			actions.Add ((propertyName,update));
 		}
 
 		public void AddViewProperty (string [] properties, Action<string, object> update)
 		{
-			foreach (var property in properties) {
-				AddViewProperty (property, update);
+			foreach (var p in properties) {
+				AddViewProperty (p,p, update);
 			}
 		}
 		public void Clear ()
@@ -300,7 +300,7 @@ namespace HotUI {
 					return false;
 				if (ViewUpdateProperties.TryGetValue (update.property, out var actions)) {
 					foreach (var a in actions)
-						a.Invoke (update.property, update.value);
+						a.Action.Invoke (a.PropertyName, update.value);
 					didUpdate = true;
 				}
 			}
