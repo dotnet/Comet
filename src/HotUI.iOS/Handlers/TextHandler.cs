@@ -10,10 +10,17 @@ namespace HotUI.iOS
     {
         private static readonly PropertyMapper<Text, TextHandler> Mapper = new PropertyMapper<Text, TextHandler>()
         {
-            [nameof(HotUI.Text.Value)] = MapValueProperty
-        };
-        
-        private Text _text;
+            [nameof(HotUI.Text.Value)] = MapValueProperty,
+			[EnvironmentKeys.Fonts.FontSize] = MapFontSizeProperty
+		};
+
+		int DefaultFontSize;
+		private Text _text;
+
+		public TextHandler ()
+		{
+			DefaultFontSize = (int)this.Font.PointSize;
+		}
 
         public UIView View => this;
 
@@ -30,7 +37,8 @@ namespace HotUI.iOS
 
         public void UpdateValue(string property, object value)
         {
-            Mapper.UpdateProperty(this, _text, property);
+			if (Mapper.UpdateProperty (this, _text, property))
+				return;
         }
         
         public static bool MapValueProperty(TextHandler nativeView, Text virtualView)
@@ -39,5 +47,16 @@ namespace HotUI.iOS
             nativeView.SizeToFit();
             return true;
         }
-    }
+
+		public static bool MapFontSizeProperty (TextHandler nativeView, Text virtualView)
+		{
+			var fontSize = (nfloat)virtualView.GetFontSize (nativeView.DefaultFontSize);
+			if (fontSize != nativeView.Font.PointSize) {
+				nativeView.Font = nativeView.Font.WithSize (fontSize);
+				nativeView.SizeToFit ();
+			}
+			return true;
+		}
+
+	}
 }

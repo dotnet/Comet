@@ -9,6 +9,11 @@ namespace HotUI {
 		public const string DocumentsFolder = "DocumentsFolder";
 		public const string UserFolder = "UserFolder";
 		public const string OS = "OS";
+
+		public static class Fonts {
+			public const string FontSize = "FontSize";
+		}
+
 	}
 
 	class EnvironmentData : BindingObject {

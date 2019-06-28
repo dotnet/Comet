@@ -35,7 +35,7 @@ namespace HotUI.iOS
 
         public void UpdateValue(string property, object value)
         {
-            Mapper.UpdateProperties(this, _view);
+            Mapper.UpdateProperty(this, _view, property);
         }
         
         public static bool MapBodyProperty(ViewHandler nativeView, View virtualView)
