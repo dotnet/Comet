@@ -20,7 +20,7 @@ namespace HotUI.Forms {
 			var handler = view.ToIFormsView ();
 
 			var vc = new HotUIPage {
-				Content = handler?.View,
+				Content = new HotUIContainerView(view),
 			};
 			if (view.BuiltView is NavigationView nav && allowNav) {
 				var navController = new Xamarin.Forms.NavigationPage (vc);
