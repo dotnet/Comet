@@ -15,18 +15,35 @@ namespace HotUI.Forms {
 				View = new Xamarin.Forms.BoxView ();
 			}
 
+			View currentView;
 			protected override void OnBindingContextChanged ()
 			{
 				if (BindingContext == null) {
 					View = new Xamarin.Forms.BoxView ();
 				}
-				var v = (BindingContext as Tuple<object,HotUI.View>)?.Item2;
+
+				currentView = (BindingContext as Tuple<object,HotUI.View>)?.Item2;
+
+				var parent = (this.Parent as ListViewHandler)?.listView;
+				if(parent != null)
+					currentView.Parent = parent;
+
 				//TODO; implement something smart here to re-use the old view if possible.
 				//View builders really are perfect for this. Maybe cell stuff should be wrapped in ViewBuilder
 				if(View is IViewHandler iview) {
-					v.ViewHandler = iview;
+					currentView.ViewHandler = iview;
 				}
-				View = v.ToForms ();
+				View = currentView.ToForms ();
+			}
+			protected override void OnParentSet ()
+			{
+				base.OnParentSet ();
+				if (currentView == null)
+					return;
+
+				var parent = (this.Parent as ListViewHandler)?.listView;
+				if (parent != null)
+					currentView.Parent = parent;
 			}
 		}
 
@@ -42,7 +59,7 @@ namespace HotUI.Forms {
 			=> listView?.OnSelected ((e.SelectedItem as Tuple<object, HotUI.View>)?.Item1);
 
 		public Xamarin.Forms.View View => this;
-		HListView listView;
+		protected HListView listView;
 		public void Remove (HView view)
 		{
 			//throw new NotImplementedException ();
