@@ -48,8 +48,12 @@ namespace HotUI.Android {
 
 			public override long GetItemId (int position) => position;
 
-			public override AView GetView (int position, AView convertView, ViewGroup parent) =>
-				ListView?.CellCreator?.Invoke (ListView.List [position]).ToView ();
+			public override AView GetView (int position, AView convertView, ViewGroup parent)
+			{
+				var view = ListView?.CellCreator?.Invoke (ListView.List [position]);
+				view.Parent = ListView;
+				var cell = view.ToView ();
+			}
 
 		}
 	}

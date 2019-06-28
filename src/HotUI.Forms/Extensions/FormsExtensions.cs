@@ -15,12 +15,25 @@ namespace HotUI.Forms {
 		{
 			UI.Init ();
 		}
-		public static FPage ToPage (this View view)
+		public static FPage ToPage (this View view, bool allowNav = true)
 		{
-			var v = view.ToIFormsView ();
-			return new HotUIPage {
-				Content = v?.View,
+			var handler = view.ToIFormsView ();
+
+			var vc = new HotUIPage {
+				Content = handler?.View,
 			};
+			if (view.BuiltView is NavigationView nav && allowNav) {
+				var navController = new Xamarin.Forms.NavigationPage (vc);
+				nav.PerformNavigate = (toView) => {
+					//Since iOS doesn't allow nested navigations, pass the navigate along
+					if (toView is NavigationView newNav) {
+						newNav.PerformNavigate = nav.PerformNavigate;
+					}
+					navController.PushAsync(toView.ToPage (false), true);
+				};
+				return navController;
+			}
+			return vc;
 		}
 
 		public static FView ToForms (this View view) => view.ToIFormsView ()?.View;
