@@ -5,7 +5,8 @@ namespace HotUI.Samples {
 	public class MainPage : View {
 		List<(string Title, Func<View> View)> pages = new List<(string Title, Func<View> View)> {
 			("Binding Sample",()=> new BindingSample()),
-			("ListPage1", ()=> new ListPage()),
+            ("BasicTestView",()=> new BasicTestView()),
+            ("ListPage1", ()=> new ListPage()),
 			("ListPage2", ()=> new ListPage2()),
 			("Insane Diff", ()=> new InsaneDiffPage()),
 		};

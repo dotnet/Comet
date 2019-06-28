@@ -1,26 +1,54 @@
 ﻿using System;
+using System.Diagnostics;
 using Xamarin.Forms;
-using FView = Xamarin.Forms.ContentView;
+using FView = Xamarin.Forms.View;
 using HView = HotUI.View;
 
-namespace HotUI.Forms {
-	public class ViewHandler : FView, IFormsView {
-		public Xamarin.Forms.View View => this;
+namespace HotUI.Forms
+{
+	public class ViewHandler : FView, IFormsView
+    {
+        private static readonly PropertyMapper<View, ViewHandler> Mapper = new PropertyMapper<View, ViewHandler>()
+        {
+            [nameof(HotUI.View.Body)] = MapBodyProperty
+        };
 
-		public void Remove (HView view)
-		{
+        private View _view;
 
-		}
+        public Action ViewChanged { get; set; }
 
-		public void SetView (HView view)
-		{
-			Content = view.ToForms ();
-			this.UpdateBaseProperties (view);
-		}
+        public FView View { get; private set; }
 
-		public void UpdateValue (string property, object value)
-		{
-			this.UpdateProperty (property, value);
-		}
-	}
+        public void Remove(View view)
+        {
+            _view = null;
+            View = null;
+        }
+
+        public void SetView(View view)
+        {
+            _view = view;
+            Mapper.UpdateProperties(this, _view);
+            ViewChanged?.Invoke();
+        }
+
+        public void UpdateValue(string property, object value)
+        {
+            Mapper.UpdateProperties(this, _view);
+        }
+
+        public static bool MapBodyProperty(ViewHandler nativeView, View virtualView)
+        {
+            var formsView = virtualView?.ToIFormsView();
+            if (formsView?.GetType() == typeof(ViewHandler) && virtualView.Body == null)
+            {
+                // this is recursive.
+                Debug.WriteLine($"There is no ViewHandler for {virtualView.GetType()}");
+                return true;
+            }
+
+            nativeView.View = formsView?.View ?? new Xamarin.Forms.ContentView();
+            return true;
+        }
+    }
 }

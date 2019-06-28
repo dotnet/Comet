@@ -1,12 +1,15 @@
 ﻿using System;
+using System.Diagnostics;
 using HotUI;
 using Xamarin.Forms;
 using FStack = Xamarin.Forms.StackLayout;
 using HStack = HotUI.VStack;
 using HView = HotUI.View;
-namespace HotUI.Forms {
-	public class VStackHandler : FStack, IFormsView {
 
+namespace HotUI.Forms
+{
+	public class VStackHandler : FStack, IFormsView
+    {
 		public Xamarin.Forms.View View => this;
 
 		public void Remove (HView view)
@@ -15,8 +18,8 @@ namespace HotUI.Forms {
 			if (s == null)
 				return;
 			s.ChildrenChanged -= Stack_ChildrenChanged;
-
 		}
+
 		VStack stack;
 		public void SetView (HView view)
 		{
@@ -31,30 +34,14 @@ namespace HotUI.Forms {
 
 		protected void UpdateChildren(VStack stack)
 		{
-			Children.Clear ();
-			foreach (var child in stack.GetChildren ()) {
-				Children.Add (child.ToForms ());
+            //Clearing seems to be faster. Also, it flashes on android no matter what.
+            Children.Clear ();
+			foreach (var child in stack.GetChildren ())
+            {
+                var nativeView = child.ToForms();
+                if (nativeView != null)
+                    Children.Add (nativeView);
 			}
-			//Clearing seems to be faster. Also, it flashes on android no matter what.
-
-
-			//var children = stack.GetChildren ();
-			//var childrenCount = children.Count;
-			//var maxInt = Math.Max (children.Count, childrenCount);
-			//for (var i = 0; i < maxInt; i++) {
-			//	if (i >= childrenCount) {
-			//		Children.Remove (Children [i]);
-			//		continue;
-			//	}
-			//	if (i >= Children.Count) {
-			//		Children.Add (children [i].ToForms ());
-			//	}
-			//	var cView = children [i].ToForms ();
-			//	if (Children [i] == cView)
-			//		continue;
-			//	Children [i] = cView;
-			//}
-			
 		}
 
 		private void Stack_ChildrenChanged (object sender, EventArgs e)
