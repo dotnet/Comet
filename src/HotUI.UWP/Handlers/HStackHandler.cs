@@ -1,13 +1,14 @@
-using Windows.UI.Xaml;
-using HotUI.Layout;
+using Windows.UI.Xaml.Controls;
+// ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
-    public class HStackHandler : AbstractLayoutHandler
+    public class HStackHandler : AbstractStackLayoutHandler
     {
         
-        public HStackHandler() : base(new HStackLayoutManager<UIElement>())
+        public HStackHandler()
         {
+            Orientation = Orientation.Horizontal;
         }
     }
 }

@@ -6,9 +6,9 @@ using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public class StackHandler : LinearLayout, IView
+    public class VStackHandler : LinearLayout, IView
     {
-        public StackHandler() : base(AndroidContext.CurrentContext)
+        public VStackHandler() : base(AndroidContext.CurrentContext)
         {
             Orientation = Orientation.Vertical;
             base.SetBackgroundColor(Color.Green);
@@ -20,11 +20,11 @@ namespace HotUI.Android
         {
         }
 
-        Stack stack;
+        VStack stack;
 
         public void SetView(View view)
         {
-            stack = view as Stack;
+            stack = view as VStack;
             UpdateChildren(stack);
             stack.ChildrenChanged += Stack_ChildrenChanged;
         }
@@ -40,7 +40,7 @@ namespace HotUI.Android
 
         List<AView> views = new List<AView>();
 
-        protected void UpdateChildren(Stack stack)
+        protected void UpdateChildren(VStack stack)
         {
             var children = stack.GetChildren();
             if (views.Count == children.Count)

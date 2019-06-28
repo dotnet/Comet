@@ -1,47 +1,43 @@
 ﻿using System;
+using System.Collections.Generic;
 using UIKit;
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace HotUI.iOS
 {
     public class TextHandler : UILabel, IUIView
     {
+        private static readonly PropertyMapper<Text, TextHandler> Mapper = new PropertyMapper<Text, TextHandler>(new Dictionary<string, Func<TextHandler, Text, bool>>()
+        {
+            [nameof(HotUI.Text.Value)] = MapValueProperty
+        });
+        
+        private Text _text;
+
         public UIView View => this;
 
         public void Remove(View view)
         {
+            _text = null;
         }
 
         public void SetView(View view)
         {
-            var label = view as Text;
-            this.UpdateProperties(label);
+            _text= view as Text;
+            Mapper.UpdateProperties(this, _text);
         }
 
         public void UpdateValue(string property, object value)
         {
-            this.UpdateProperty(property, value);
+            Mapper.UpdateProperty(this, _text, property);
         }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateProperties(this UILabel view, Text hView)
+        
+        public static bool MapValueProperty(TextHandler nativeView, Text virtualView)
         {
-            view.UpdateProperty(nameof(Text.Value), hView?.Value);
-            view.UpdateBaseProperties(hView);
-        }
-
-        public static bool UpdateProperty(this UILabel view, string property, object value)
-        {
-            switch (property)
-            {
-                case nameof(Text.Value):
-                    view.Text = (string) value;
-                    view.SizeToFit();
-                    return true;
-            }
-
-            return view.UpdateBaseProperty(property, value);
+            nativeView.Text = virtualView.Value;
+            nativeView.SizeToFit();
+            return true;
         }
     }
 }

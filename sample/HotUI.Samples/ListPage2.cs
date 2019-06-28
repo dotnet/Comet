@@ -27,17 +27,17 @@ namespace HotUI.Samples
 		public ListPage2 ()
 		{
 			Body = () => new ListView<Song> (Songs) {
-				Cell = song => new Stack
+				Cell = song => new HStack
 					{
 					new Image(song.ArtworkUrl),
-					new Stack
+					new VStack
 					{
 						new Text(song.Title),
 						new Text(song.Artist),
 						new Text(song.Album),
 					}
 				},
-				Header = group => new Stack
+				Header = group => new VStack
 					{
 					new Text(group.ToString())
 				},

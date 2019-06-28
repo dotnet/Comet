@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 
 namespace HotUI.UWP
 {
@@ -28,6 +29,15 @@ namespace HotUI.UWP
         {
             var handler = view.ToIUIElement();
             return handler?.View;
+        }
+        
+        public static UIElement ToEmbeddableView(this View view)
+        {
+            var handler = view.ToIUIElement();
+            if (handler == null)
+                throw new Exception("Unable to build handler for view");
+
+            return new HotUIContainerView(view);
         }
     }
 }

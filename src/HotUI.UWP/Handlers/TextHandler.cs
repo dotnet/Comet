@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using UWPLabel = Windows.UI.Xaml.Controls.TextBlock;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
     public class TextHandler : IUIElement
     {
-        private static readonly PropertyMapper<Text, UWPLabel> Mapper = new PropertyMapper<Text, UWPLabel>(
-            new Dictionary<string, Func<UWPLabel, Text, bool>>()
+        private static readonly PropertyMapper<Text, UWPLabel> Mapper = new PropertyMapper<Text, UWPLabel>(new Dictionary<string, Func<UWPLabel, Text, bool>>()
             {
                 [nameof(Text.Value)] = MapValueProperty
             });

@@ -1,7 +1,5 @@
-using System.Windows;
-using HotUI.Layout;
-
-namespace HotUI.WPF
+// ReSharper disable ClassNeverInstantiated.Global
+namespace HotUI.WPF.Handlers
 {
     public class VStackHandler : AbstractStackLayoutHandler
     {

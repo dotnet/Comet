@@ -1,26 +1,30 @@
 ﻿using System;
-using HotUI;
 using Xamarin.Forms;
 using FStack = Xamarin.Forms.StackLayout;
-using HStack = HotUI.Stack;
+using HStack = HotUI.HStack;
 using HView = HotUI.View;
 namespace HotUI.Forms {
-	public class StackHandler : FStack, IFormsView {
+	public class HStackHandler : FStack, IFormsView {
 
 		public Xamarin.Forms.View View => this;
 
+		public HStackHandler()
+		{
+			Orientation = StackOrientation.Horizontal;
+		}
+		
 		public void Remove (HView view)
 		{
-			var s = view as Stack;
+			var s = view as HStack;
 			if (s == null)
 				return;
 			s.ChildrenChanged -= Stack_ChildrenChanged;
 
 		}
-		Stack stack;
+		HStack stack;
 		public void SetView (HView view)
 		{
-			stack = view as Stack;
+			stack = view as HStack;
 			if (stack == null)
 				return;
 
@@ -29,7 +33,7 @@ namespace HotUI.Forms {
 			UpdateChildren (stack);
 		}
 
-		protected void UpdateChildren(Stack stack)
+		protected void UpdateChildren(HStack stack)
 		{
 			Children.Clear ();
 			foreach (var child in stack.GetChildren ()) {

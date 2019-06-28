@@ -12,7 +12,8 @@ namespace HotUI.Forms {
 			Registrar.Handlers.Register<Button, ButtonHandler> ();
 			Registrar.Handlers.Register<TextField, TextFieldHandler> ();
 			Registrar.Handlers.Register<Text, TextHandler> ();
-			Registrar.Handlers.Register<Stack, StackHandler> ();
+			Registrar.Handlers.Register<VStack, VStackHandler> ();
+			Registrar.Handlers.Register<HStack, HStackHandler> ();
 			Registrar.Handlers.Register<WebView, WebViewHandler> ();
 			Registrar.Handlers.Register<ScrollView, ScrollViewHandler> ();
 			Registrar.Handlers.Register<Image, ImageHandler> ();

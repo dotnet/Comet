@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Windows;
 using WPFLabel = System.Windows.Controls.Label;
+// ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
     public class TextHandler : WPFLabel, IUIElement
     {

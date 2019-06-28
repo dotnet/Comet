@@ -8,7 +8,7 @@ namespace HotUI.Samples {
 		public ListViewDetails (Song song)
 		{
 			this.song = song;
-			Body = () => new Stack {
+			Body = () => new VStack {
 				new Image(song.ArtworkUrl),
 				new Text(song.Title),
 				new Text(song.Artist),

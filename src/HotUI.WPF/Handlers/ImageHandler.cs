@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
 using WPFImage = System.Windows.Controls.Image;
+// ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
     public class ImageHandler : WPFImage, IUIElement
     {

@@ -1,60 +1,58 @@
 ﻿using System;
+using System.Collections.Generic;
 using UIKit;
+
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace HotUI.iOS
 {
     public class ButtonHandler : UIButton, IUIView
     {
+        private static readonly PropertyMapper<Button, UIButton> Mapper = new PropertyMapper<Button, UIButton>(new Dictionary<string, Func<UIButton, Button, bool>>
+        {
+            [nameof(Button.Text)] = MapTextProperty
+        });
+
+        private Button _button;
+
         public ButtonHandler()
         {
-            TouchUpInside += ButtonHandler_TouchUpInside;
+            TouchUpInside += HandleTouchUpInside;
             SetTitleColor(UIColor.Blue, UIControlState.Normal);
             Layer.BorderColor = UIColor.Blue.CGColor;
             Layer.BorderWidth = .5f;
             Layer.CornerRadius = 3f;
         }
 
-        private void ButtonHandler_TouchUpInside(object sender, EventArgs e) => button?.OnClick?.Invoke();
-
         public UIView View => this;
-
-        Button button;
 
         public void Remove(View view)
         {
+            _button = null;
         }
 
         public void SetView(View view)
         {
-            button = view as Button;
-            this.UpdateProperties(button);
+            _button = view as Button;
+            Mapper.UpdateProperties(this, _button);
         }
 
         public void UpdateValue(string property, object value)
         {
-            this.UpdateProperty(property, value);
-        }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateProperties(this UIButton view, Button hView)
-        {
-            view.UpdateProperty(nameof(Button.Text), hView?.Text);
-            view.UpdateBaseProperties(hView);
+            Mapper.UpdateProperty(this, _button, property);
         }
 
-        public static bool UpdateProperty(this UIButton view, string property, object value)
+        private void HandleTouchUpInside(object sender, EventArgs e)
         {
-            switch (property)
-            {
-                case nameof(Button.Text):
-                    view.SetTitle((string) value, UIControlState.Normal);
-                    view.SizeToFit();
-                    return true;
-            }
+            _button?.OnClick();
+        }
 
-            return view.UpdateBaseProperty(property, value);
+        public static bool MapTextProperty(UIButton nativeView, Button virtualView)
+        {
+            nativeView.SetTitle(virtualView.Text, UIControlState.Normal);
+            nativeView.SizeToFit();
+            return true;
         }
     }
 }

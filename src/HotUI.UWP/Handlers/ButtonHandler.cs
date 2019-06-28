@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using UWPButton = Windows.UI.Xaml.Controls.Button;
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
     public class ButtonHandler : UWPButton, IUIElement
     {

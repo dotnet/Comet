@@ -1,23 +1,31 @@
 ﻿using System;
+using System.Threading.Tasks;
+using FFImageLoading;
 using UIKit;
 
 namespace HotUI.iOS {
 	public static partial class ControlExtensions {
-		public static void UpdateProperties (this UIView view, View hView)
+		public static Task<UIImage> LoadImage(this string source)
 		{
-
+			var isUrl = Uri.IsWellFormedUriString(source, UriKind.RelativeOrAbsolute);
+			if (isUrl)
+				return LoadImageAsync(source);
+			return LoadFileAsync(source);
 		}
-		public static void UpdateBaseProperties (this UIView view, View hView)
+
+		private static Task<UIImage> LoadImageAsync(string urlString)
 		{
-			view.UpdateProperties (hView);
+			return ImageService.Instance
+				.LoadUrl(urlString)
+				.AsUIImageAsync();
 		}
 
-		public static bool UpdateProperty (this UIView view, string property, object value)
+		private static Task<UIImage> LoadFileAsync(string filePath)
 		{
-			return false;
+			return ImageService.Instance
+				.LoadFile(filePath)
+				.AsUIImageAsync();
 		}
-		public static bool UpdateBaseProperty (this UIView view, string property, object value) => view.UpdateProperty (property, value);
-
 
 	}
 }

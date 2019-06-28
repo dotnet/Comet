@@ -1,4 +1,6 @@
-﻿namespace HotUI.UWP
+﻿using HotUI.UWP.Handlers;
+
+namespace HotUI.UWP
 {
     public static class UI
     {

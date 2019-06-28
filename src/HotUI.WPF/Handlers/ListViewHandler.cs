@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Windows;
 using WPFListView = System.Windows.Controls.ListView;
+// ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
     public class ListViewHandler : WPFListView, IUIElement
     {
@@ -13,7 +14,7 @@ namespace HotUI.WPF
         
         private ListView _listView;
 
-        public UIElement View => this;
+        public new UIElement View => this;
         
         public void Remove(View view)
         {
