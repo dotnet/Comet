@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 using HotUI.Layout;
 using Size = Windows.Foundation.Size;
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
     public abstract class AbstractLayoutHandler : Canvas, IUIElement, ILayoutHandler<UIElement>
     {

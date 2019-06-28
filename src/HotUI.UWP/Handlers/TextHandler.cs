@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using UWPLabel = Windows.UI.Xaml.Controls.TextBlock;
+// ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
     public class TextHandler : IUIElement
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using WPFTextField = System.Windows.Controls.TextBox;
 
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
     public class TextFieldHandler : WPFTextField, IUIElement
     {

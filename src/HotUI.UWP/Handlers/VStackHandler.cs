@@ -1,12 +1,12 @@
-using Windows.UI.Xaml;
-using HotUI.Layout;
+using Windows.UI.Xaml.Controls;
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
-    public class VStackHandler : AbstractLayoutHandler
+    public class VStackHandler : AbstractStackLayoutHandler
     {
-        public VStackHandler() : base(new VStackLayoutManager<UIElement>())
+        public VStackHandler()
         {
+            Orientation = Orientation.Vertical;
         }
     }
 }

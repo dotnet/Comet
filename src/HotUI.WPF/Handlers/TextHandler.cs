@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using WPFLabel = System.Windows.Controls.Label;
 
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
     public class TextHandler : WPFLabel, IUIElement
     {

@@ -6,7 +6,7 @@ using System.Windows;
 using System.Windows.Media;
 using WPFImage = System.Windows.Controls.Image;
 
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
     public class ImageHandler : WPFImage, IUIElement
     {

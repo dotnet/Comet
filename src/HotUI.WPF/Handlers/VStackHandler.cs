@@ -1,7 +1,4 @@
-using System.Windows;
-using HotUI.Layout;
-
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
     public class VStackHandler : AbstractStackLayoutHandler
     {

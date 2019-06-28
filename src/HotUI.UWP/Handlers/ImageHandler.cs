@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media;
 using UWPImage = Windows.UI.Xaml.Controls.Image;
+// ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
     public class ImageHandler : IUIElement
     {

@@ -1,7 +1,7 @@
-using System.Windows;
-using System.Windows.Controls;
+using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
-namespace HotUI.WPF.Handlers
+namespace HotUI.UWP.Handlers
 {
     public abstract class AbstractStackLayoutHandler : StackPanel, IUIElement
     {

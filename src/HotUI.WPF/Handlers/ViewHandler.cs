@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.Windows;
 using System.Windows.Controls;
 
-namespace HotUI.WPF
+// ReSharper disable MemberCanBePrivate.Global
+
+namespace HotUI.WPF.Handlers
 {
     public class ViewHandler : Grid, IUIElement
     {
@@ -14,11 +16,7 @@ namespace HotUI.WPF
         });
         
         private View _view;
-        internal UIElement _body;
-
-        public ViewHandler()
-        {
-        }
+        private UIElement _body;
 
         public Action ViewChanged { get; set; }
 
@@ -45,13 +43,13 @@ namespace HotUI.WPF
         public static bool MapBodyProperty(ViewHandler nativeView, View virtualView)
         {
             var uiElement = virtualView?.ToIUIElement();
-            if (uiElement?.GetType() == typeof(ViewHandler) && virtualView?.Body == null)
+            if (uiElement?.GetType() == typeof(ViewHandler) && virtualView.Body == null)
             {
                 Debug.WriteLine($"There is no ViewHandler for {virtualView.GetType()}");
                 return true;
             }
 
-            nativeView._body = uiElement.View;
+            nativeView._body = uiElement?.View;
             return true;
         }
     }

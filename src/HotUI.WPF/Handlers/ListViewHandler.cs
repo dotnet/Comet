@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using WPFListView = System.Windows.Controls.ListView;
 
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
     public class ListViewHandler : WPFListView, IUIElement
     {

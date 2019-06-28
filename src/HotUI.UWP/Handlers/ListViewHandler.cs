@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using UWPListView = Windows.UI.Xaml.Controls.ListView;
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
     public class ListViewHandler : UWPListView, IUIElement
     {

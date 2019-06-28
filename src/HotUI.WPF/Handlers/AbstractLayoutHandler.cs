@@ -4,10 +4,9 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using HotUI.Layout;
-using Point = System.Windows.Point;
 using Size = System.Windows.Size;
 
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
     public abstract class AbstractLayoutHandler : Panel, IUIElement, ILayoutHandler<UIElement>
     {

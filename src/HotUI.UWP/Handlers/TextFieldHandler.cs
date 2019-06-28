@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using UWPTextField = Windows.UI.Xaml.Controls.TextBox;
+// ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
     public class TextFieldHandler : UWPTextField, IUIElement
     {

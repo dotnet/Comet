@@ -1,4 +1,6 @@
-﻿namespace HotUI.WPF
+﻿using HotUI.WPF.Handlers;
+
+namespace HotUI.WPF
 {
     public static class UI
     {

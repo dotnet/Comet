@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Windows;
 using WPFButton = System.Windows.Controls.Button;
 
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
     public class ButtonHandler : WPFButton, IUIElement
     {

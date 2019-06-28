@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Windows.UI.Xaml;
 using UWPScrollView = Windows.UI.Xaml.Controls.ScrollViewer;
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
     public class ScrollViewHandler : IUIElement
     {
