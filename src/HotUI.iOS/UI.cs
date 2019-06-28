@@ -23,7 +23,7 @@ namespace HotUI.iOS {
 			Registrar.Handlers.Register<ListView, ListViewHandler> ();
 			Registrar.Handlers.Register<View, ViewHandler> ();
 			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
-			NavigationView.PerformNavigate = (o) => {
+			ModalView.PerformPresent = (o) => {
 				PresentingViewController.PresentViewController (o.ToView.ToViewController(), true,null);
 			};
 			ModalView.PerformDismiss = () => PresentingViewController.DismissModalViewController (true);
