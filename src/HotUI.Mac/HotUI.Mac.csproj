@@ -79,6 +79,7 @@
     <Compile Include="Controls\NSNavigationController.cs" />
     <Compile Include="Controls\NSColorView.cs" />
     <Compile Include="Handlers\ContentViewHandler.cs" />
+    <Compile Include="Handlers\ListViewHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">

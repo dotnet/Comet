@@ -12,21 +12,21 @@ namespace HotUI.Mac.Handlers
         {
         }
 
-        public NSView View => throw new NotImplementedException();
+		public NSView View => this;
 
         public void Remove(View view)
         {
-            throw new NotImplementedException();
         }
 
         public void SetView(View view)
         {
-            throw new NotImplementedException();
+			var image = view as Image;
+			this.UpdateProperties (image);
         }
 
         public void UpdateValue(string property, object value)
         {
-            throw new NotImplementedException();
+			this.UpdateProperty (property, value);
         }
 
         string currentSource;

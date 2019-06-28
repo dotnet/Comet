@@ -40,7 +40,7 @@ namespace HotUI.Mac {
 		{
 			if (currentView != null) {
 				currentView.View.RemoveFromSuperview ();
-				var childIndex = Array.IndexOf (ChildViewControllers, viewController);
+				var childIndex = Array.IndexOf (ChildViewControllers, currentView);
 				this.RemoveChildViewController (childIndex);
 			}
 

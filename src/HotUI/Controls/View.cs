@@ -17,7 +17,7 @@ namespace HotUI {
 		}
 		protected virtual void OnParentChange(View parent)
 		{
-			this.Navigation = parent.Navigation;
+			this.Navigation = parent.Navigation ?? parent as NavigationView;
 		}
 		public NavigationView Navigation { get; set; }
 		protected State State { get; set; }
@@ -77,6 +77,7 @@ namespace HotUI {
 				State.SetParent (this);
 				State.StartProperty ();
 				var view = Body.Invoke ();
+				view.Parent = this.Parent;
 				var props = State.EndProperty ();
 				var propCount = props.Length;
 				if (propCount > 0) {
