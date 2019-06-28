@@ -93,6 +93,7 @@ namespace HotUI {
 		}
 		protected void ViewPropertyChanged (string property, object value)
 		{
+			//These views are destroyed and not used again. We keep this on in Debug, so we can easily write tests to check the value changed
 #if DEBUG
 			this.SetPropertyValue (property, value);
 #endif
