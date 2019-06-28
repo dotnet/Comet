@@ -76,6 +76,9 @@
     <Compile Include="Controls\StackView.cs" />
     <Compile Include="HotUIViewController.cs" />
     <Compile Include="Handlers\ViewHandler.cs" />
+    <Compile Include="Controls\NSNavigationController.cs" />
+    <Compile Include="Controls\NSColorView.cs" />
+    <Compile Include="Handlers\ContentViewHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">
