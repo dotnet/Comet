@@ -63,6 +63,7 @@
     <Compile Include="UI.cs" />
     <Compile Include="Handlers\ListViewHandler.cs" />
     <Compile Include="Handlers\ViewHandler.cs" />
+    <Compile Include="Handlers\ToggleHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

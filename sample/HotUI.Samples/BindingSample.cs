@@ -51,7 +51,11 @@ namespace HotUI.Samples {
 						{
 							OnClick = () => { state.Text = $"Click Count: {clickCount.Value++}"; }
 						},
-					}
+					},
+                    new Toggle(() =>state.CanEdit)
+                    {
+                        IsOnChanged = (e) => state.CanEdit = e
+                    }
 				}
 			}
 		};
