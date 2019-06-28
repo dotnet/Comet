@@ -8,10 +8,10 @@ namespace HotUI.iOS
 {
     public class TextHandler : UILabel, IUIView
     {
-        private static readonly PropertyMapper<Text, TextHandler> Mapper = new PropertyMapper<Text, TextHandler>(new Dictionary<string, Func<TextHandler, Text, bool>>()
+        private static readonly PropertyMapper<Text, TextHandler> Mapper = new PropertyMapper<Text, TextHandler>()
         {
             [nameof(HotUI.Text.Value)] = MapValueProperty
-        });
+        };
         
         private Text _text;
 

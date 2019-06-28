@@ -9,10 +9,10 @@ namespace HotUI.UWP.Handlers
 {
     public class ButtonHandler : UWPButton, IUIElement
     {
-        private static readonly PropertyMapper<Button, ButtonHandler> Mapper = new PropertyMapper<Button, ButtonHandler>(new Dictionary<string, Func<ButtonHandler, Button, bool>>()
+        private static readonly PropertyMapper<Button, ButtonHandler> Mapper = new PropertyMapper<Button, ButtonHandler>()
         {
             [nameof(Button.Text)] = MapTextProperty
-        });
+        };
         
         private Button _button;
 

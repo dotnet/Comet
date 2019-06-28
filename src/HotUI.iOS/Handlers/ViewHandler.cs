@@ -8,10 +8,10 @@ namespace HotUI.iOS
 {
     public class ViewHandler : IUIView
     {
-        private static readonly PropertyMapper<View, ViewHandler> Mapper = new PropertyMapper<View, ViewHandler>(new Dictionary<string, Func<ViewHandler, View, bool>>()
+        private static readonly PropertyMapper<View, ViewHandler> Mapper = new PropertyMapper<View, ViewHandler>()
         {
             [nameof(HotUI.View.Body)] = MapBodyProperty
-        });
+        };
         
         private View _view;
         private UIView _body;

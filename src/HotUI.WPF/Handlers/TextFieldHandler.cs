@@ -9,10 +9,10 @@ namespace HotUI.WPF.Handlers
 {
     public class TextFieldHandler : WPFTextField, IUIElement
     {
-        private static readonly PropertyMapper<TextField, TextFieldHandler> Mapper = new PropertyMapper<TextField, TextFieldHandler>(new Dictionary<string, Func<TextFieldHandler, TextField, bool>>()
+        private static readonly PropertyMapper<TextField, TextFieldHandler> Mapper = new PropertyMapper<TextField, TextFieldHandler>()
         {
             [nameof(TextField.Text)] = MapTextProperty
-        });
+        };
         
         private TextField _textField;
         

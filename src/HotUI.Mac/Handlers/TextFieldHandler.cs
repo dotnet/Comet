@@ -7,10 +7,10 @@ namespace HotUI.Mac.Handlers
 {
     public class TextFieldHandler : NSTextField, INSView
     {
-        private static readonly PropertyMapper<TextField, NSTextField> Mapper = new PropertyMapper<TextField, NSTextField>(new Dictionary<string, Func<NSTextField, TextField, bool>>()
+        private static readonly PropertyMapper<TextField, NSTextField> Mapper = new PropertyMapper<TextField, NSTextField>()
         {
             [nameof(TextField.Text)] = MapTextProperty
-        });
+        };
         
         public TextFieldHandler()
         {

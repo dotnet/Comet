@@ -7,10 +7,10 @@ namespace HotUI.iOS
 {
     public class ScrollViewHandler : UIScrollView, IUIView
     {
-        private static readonly PropertyMapper<ScrollView, ScrollViewHandler> Mapper = new PropertyMapper<ScrollView, ScrollViewHandler>(new Dictionary<string, Func<ScrollViewHandler, ScrollView, bool>>
+        private static readonly PropertyMapper<ScrollView, ScrollViewHandler> Mapper = new PropertyMapper<ScrollView, ScrollViewHandler>()
         {
             
-        });
+        };
 
         private ScrollView _scroll;
         private UIView _content;

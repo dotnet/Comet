@@ -8,9 +8,9 @@ namespace HotUI.UWP.Handlers
 {
     public class ListViewHandler : UWPListView, IUIElement
     {
-        private static readonly PropertyMapper<ListView, ListViewHandler> Mapper = new PropertyMapper<ListView, ListViewHandler>(new Dictionary<string, Func<ListViewHandler, ListView, bool>>()
+        private static readonly PropertyMapper<ListView, ListViewHandler> Mapper = new PropertyMapper<ListView, ListViewHandler>()
         {
-        });
+        };
         
         private ListView _listView;
 
