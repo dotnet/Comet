@@ -19,6 +19,7 @@ namespace HotUI.Mac
             Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();
 			Registrar.Handlers.Register<Image, ImageHandler> ();
 			Registrar.Handlers.Register<View, ViewHandler> ();
+			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
 		}
     }
 }

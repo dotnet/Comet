@@ -18,10 +18,10 @@ namespace HotUI.iOS {
 			};
 			if (view.BuiltView is NavigationView nav && allowNav) {
 				var navController = new UINavigationController ();
-				nav.Navigate = (toView) => {
+				nav.PerformNavigate = (toView) => {
 					//Since iOS doesn't allow nested navigations, pass the navigate along
 					if(toView is NavigationView newNav) {
-						newNav.Navigate = nav.Navigate;
+						newNav.PerformNavigate = nav.PerformNavigate;
 					}
 					navController.PushViewController (toView.ToViewController (false), true);
 				};
