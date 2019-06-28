@@ -22,7 +22,7 @@ namespace HotUI {
 						var old = state.EndProperty (false);
 						//1 to 1 binding!
 						if (EqualityComparer<T>.Default.Equals (stateValue, newValue)) {
-							state.BindingState.AddViewProperty (prop, onUpdate);
+							state.BindingState.AddViewProperty (prop,propertyName, onUpdate);
 							Debug.WriteLine ($"Databinding: {propertyName} to {prop}");
 						} else {
 							Debug.WriteLine ($"Warning: {propertyName} is using formated Text. For performance reasons, please switch to TextBinding");
