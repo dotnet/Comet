@@ -5,6 +5,7 @@ using System.Linq;
 namespace HotUI {
 
 	public class View {
+		HashSet<string> usedEnvironmentData = new HashSet<string> ();
 		internal static readonly EnvironmentData Environment = new EnvironmentData ();
 		internal readonly EnvironmentData Context = new EnvironmentData ();
 		View parent;
@@ -29,6 +30,8 @@ namespace HotUI {
 			State = StateBuilder.CurrentState ?? new State {
 				StateChanged = ResetView
 			};
+			State.StartMonitoring (View.Environment);
+			State.StartMonitoring (this.Context);
 			SetEnvironmentFields ();
 			if (!hasConstructors)
 				State.StartBuildingView ();
@@ -52,17 +55,20 @@ namespace HotUI {
 				viewHandler?.SetView (this.GetRenderView());
 			}
 		}
-		internal void UpdateFromOldView (IViewHandler handler) => viewHandler = handler;
+		internal void UpdateFromOldView (IViewHandler handler) => ViewHandler = handler;
 		View builtView;
 		public View BuiltView => builtView;
 		void ResetView()
 		{
+			if (usedEnvironmentData.Any ())
+				SetEnvironmentFields ();
+			var oldView = builtView;
 			builtView = null;
 			if (ViewHandler == null)
 				return;
 			ViewHandler.Remove (this);
-			WillUpdateView ();
-			ViewHandler?.SetView (this.GetRenderView ());
+			var view = this.GetRenderView ().Diff (oldView);
+			ViewHandler?.SetView (view);
 		}
 
 		Func<View> body;
@@ -98,10 +104,7 @@ namespace HotUI {
 		}
 		protected void ViewPropertyChanged (string property, object value)
 		{
-			//These views are destroyed and not used again. We keep this on in Debug, so we can easily write tests to check the value changed
-#if DEBUG
 			this.SetPropertyValue (property, value);
-#endif
 			ViewHandler?.UpdateValue (property, value);
 		}
 
@@ -122,13 +125,19 @@ namespace HotUI {
 				var attribute = f.GetCustomAttributes (true).OfType<EnvironmentAttribute> ().FirstOrDefault();
 				var key = attribute.Key ?? f.Name;
 				var value = this.GetEnvironment (key);
+				State.BindingState.AddGlobalProperty (key);
+				usedEnvironmentData.Add (key);
 				if (value == null) {
 					//Lets try again with first letter uppercased;
 					key = key.FirstCharToUpper ();
 					value = this.GetEnvironment (key);
-				}
+					if (value != null) {
+						usedEnvironmentData.Add (key);
+						State.BindingState.AddGlobalProperty (key);
+					}
+				} 
 				
-				if(value != null)
+				if (value != null)
 					f.SetValue (this, value);
 
 			}
