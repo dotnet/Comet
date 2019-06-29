@@ -19,6 +19,13 @@ namespace HotUI.Tests {
 			public readonly MyBindingObject myBindingObject;
 		}
 
+		public class SecondPage : View {
+
+			[Environment]
+			public readonly State<int> clickCount;
+
+		}
+
 
 		[Fact]
 		public void CanSetAndReadGlobalEnvironment()
@@ -140,11 +147,36 @@ namespace HotUI.Tests {
 
 			View.SetGlobalEnvironment (nameof (StatePage.clickCount), new State<int> (1));
 
-			var page = new StatePage ();
-			page.Body = () => new Text (() => page.clickCount.Value.ToString ());
+			Text text = null;
+			var view = new StatePage ();
+			view.Body = () =>(text =  new Text (() => view.clickCount.Value.ToString ()));
 
-			Assert.NotNull (page.clickCount);
-			Assert.Equal (1, page.clickCount.Value);
+			Assert.NotNull (view.clickCount);
+			Assert.Equal (1, view.clickCount.Value);
+
+			var viewHandler = new GenericViewHandler ();
+			view.ViewHandler = viewHandler;
+
+
+			var textHandler = new GenericViewHandler ();
+			text.ViewHandler = textHandler;
+
+			view.clickCount.Value++;
+			Assert.Equal (2, view.clickCount.Value);
+
+
+			Assert.Equal ("2", text.Value);
+
+
+			View.SetGlobalEnvironment (nameof (StatePage.clickCount), new State<int> (3));
+
+
+			Assert.Equal (3, view.clickCount.Value);
+
+
+			Assert.Equal ("3", text.Value);
+
+
 		}
 	}
 }

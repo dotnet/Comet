@@ -25,12 +25,12 @@ namespace HotUI {
 		protected State State { get; set; }
 		public View (bool hasConstructors)
 		{
-			SetEnvironmentFields ();
 			Context.View = this;
 			State = StateBuilder.CurrentState ?? new State {
 				StateChanged = ResetView
 			};
-			if(!hasConstructors)
+			SetEnvironmentFields ();
+			if (!hasConstructors)
 				State.StartBuildingView ();
 
 		}
@@ -127,6 +127,7 @@ namespace HotUI {
 					key = key.FirstCharToUpper ();
 					value = this.GetEnvironment (key);
 				}
+				
 				if(value != null)
 					f.SetValue (this, value);
 
