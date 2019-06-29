@@ -55,7 +55,10 @@ namespace HotUI {
 				viewHandler?.SetView (this.GetRenderView());
 			}
 		}
-		internal void UpdateFromOldView (IViewHandler handler) => ViewHandler = handler;
+		internal void UpdateFromOldView (View view) {
+			ViewHandler = view.ViewHandler;
+			view.ViewHandler = null;
+		}
 		View builtView;
 		public View BuiltView => builtView;
 		void ResetView()

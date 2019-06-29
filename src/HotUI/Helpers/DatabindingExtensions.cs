@@ -135,7 +135,7 @@ namespace HotUI {
 				}
 			}
 
-			newView.UpdateFromOldView (oldView.ViewHandler);
+			newView.UpdateFromOldView (oldView);
 
 
 			return newView;
