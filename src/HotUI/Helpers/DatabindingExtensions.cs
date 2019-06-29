@@ -181,7 +181,7 @@ namespace HotUI {
 				if (obj == null)
 					return null;
 				if (obj is BindingObject bo) {
-					obj = bo.GetValue (part);
+					obj = bo.GetValueInternal (part);
 				} else {
 					var type = obj.GetType ();
 					var info = type.GetProperty (part, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);

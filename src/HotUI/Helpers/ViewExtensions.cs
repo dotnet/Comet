@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 
 namespace HotUI {
 	public static class ViewExtensions {
@@ -10,7 +12,7 @@ namespace HotUI {
 			return listview;
 		}
 
-		public static T SetEnvironment<T>(this T view, string key, object value) where T: View
+		public static T SetEnvironment<T> (this T view, string key, object value) where T : View
 		{
 			view.Context.SetValue (key, value);
 			return view;
@@ -24,6 +26,15 @@ namespace HotUI {
 		}
 
 		public static T GetEnvironment<T> (this View view, string key) => view.Context.GetValue<T> (key);
+		public static object GetEnvironment (this View view, string key) => view.Context.GetValue (key);
+
+		internal static List<FieldInfo> GetFieldsWithAttribute (this object obj, Type attribute)
+		{
+			var type = obj.GetType ();
+			var fields = type.GetFields (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
+				Where (x => Attribute.IsDefined (x, attribute)).ToList ();
+			return fields;
+		}
 
 	}
 }

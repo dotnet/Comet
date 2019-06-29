@@ -16,6 +16,17 @@ namespace HotUI {
 
 	}
 
+	[AttributeUsage (AttributeTargets.Field)]
+	public class EnvironmentAttribute : StateAttribute {
+
+		public EnvironmentAttribute(string key = null)
+		{
+			Key = key;
+		}
+
+		public string Key { get; }
+	}
+
 	class EnvironmentData : BindingObject {
 
 		public View View { get; internal set; }
@@ -44,11 +55,24 @@ namespace HotUI {
 		{
 			try {
 				var value = GetValue (key);
-				if (value == null)
-					value = View?.Parent?.Context?.GetValue (key) ?? View.Environment.GetValue (key);
 				return (T)value;
 			} catch (Exception ex) {
 				return default;
+			}
+		}
+
+		public object GetValue (string key)
+		{
+			try {
+				var value = GetValueInternal (key);
+				if (value == null) {
+					if (View?.Parent == null)
+						return View.Environment.GetValueInternal (key);
+					value = View?.Parent?.Context?.GetValue (key);
+				}
+				return value;
+			} catch (Exception ex) {
+				return null;
 			}
 		}
 

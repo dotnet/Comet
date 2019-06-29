@@ -25,6 +25,7 @@ namespace HotUI {
 		protected State State { get; set; }
 		public View (bool hasConstructors)
 		{
+			SetEnvironmentFields ();
 			Context.View = this;
 			State = StateBuilder.CurrentState ?? new State {
 				StateChanged = ResetView
@@ -35,6 +36,7 @@ namespace HotUI {
 		}
 		public View () : this (false)
 		{
+
 		}
 
 
@@ -110,5 +112,25 @@ namespace HotUI {
 				Environment.SetValue (pair.Key, pair.Value);
 		}
 		public static T GetGlobalEnvironment<T> (string key) => Environment.GetValue<T> (key);
+
+		void SetEnvironmentFields ()
+		{
+			var fields = this.GetFieldsWithAttribute (typeof (EnvironmentAttribute));
+			if (!fields.Any ())
+				return;
+			foreach(var f in fields) {
+				var attribute = f.GetCustomAttributes (true).OfType<EnvironmentAttribute> ().FirstOrDefault();
+				var key = attribute.Key ?? f.Name;
+				var value = this.GetEnvironment (key);
+				if (value == null) {
+					//Lets try again with first letter uppercased;
+					key = key.FirstCharToUpper ();
+					value = this.GetEnvironment (key);
+				}
+				if(value != null)
+					f.SetValue (this, value);
+
+			}
+		}
 	}
 }

@@ -4,6 +4,22 @@ using Xunit;
 namespace HotUI.Tests {
 	public class EnvironmentTests {
 
+		public class MyBindingObject : BindingObject {
+			public string Foo {
+				get => GetProperty<string> () ?? "Bar";
+				set => SetProperty (value);
+			}
+		}
+		public class StatePage : View {
+
+			[Environment]
+			public readonly State<int> clickCount;
+
+			[Environment]
+			public readonly MyBindingObject myBindingObject;
+		}
+
+
 		[Fact]
 		public void CanSetAndReadGlobalEnvironment()
 		{
@@ -116,6 +132,19 @@ namespace HotUI.Tests {
 
 			var text2Value = text2.GetEnvironment<string> (myStringKey);
 			Assert.Equal (parentStringValue, text2Value);
+		}
+
+		[Fact]
+		public void FieldsWithAttributesPopulateFromEnvironment ()
+		{
+
+			View.SetGlobalEnvironment (nameof (StatePage.clickCount), new State<int> (1));
+
+			var page = new StatePage ();
+			page.Body = () => new Text (() => page.clickCount.Value.ToString ());
+
+			Assert.NotNull (page.clickCount);
+			Assert.Equal (1, page.clickCount.Value);
 		}
 	}
 }

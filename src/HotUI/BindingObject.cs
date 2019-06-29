@@ -27,7 +27,7 @@ namespace HotUI {
 			return default;
 		}
 
-		internal object GetValue (string propertyName)
+		internal object GetValueInternal (string propertyName)
 		{
 			dictionary.TryGetValue (propertyName, out var val);
 			return val;
@@ -122,7 +122,7 @@ namespace HotUI {
 		private void Obj_PropertyChanged (object sender, PropertyChangedEventArgs e)
 		{
 			if (sender is BindingObject b) {
-				OnPropertyChanged (sender, e.PropertyName, b.GetValue (e.PropertyName));
+				OnPropertyChanged (sender, e.PropertyName, b.GetValueInternal (e.PropertyName));
 				return;
 			}
 
