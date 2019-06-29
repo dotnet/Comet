@@ -88,7 +88,7 @@ namespace HotUI.Tests {
 
 
 		[Fact]
-		public void NestedViewGetsIts ()
+		public void NestedViewGetsItsVariablesFromItself ()
 		{
 
 			const string myStringConstant = "myString";
