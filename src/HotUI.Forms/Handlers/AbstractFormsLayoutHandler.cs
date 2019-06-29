@@ -25,7 +25,7 @@ namespace HotUI.Forms
 
                 foreach (var subView in _view)
                 {
-                    var nativeView = subView.ToForms() ?? new ContentView();
+                    var nativeView = subView.ToForms() ?? new Xamarin.Forms.ContentView ();
                     _formsLayout.Children.Add(nativeView);
                 }
             }
@@ -54,7 +54,7 @@ namespace HotUI.Forms
             {
                 var index = e.Start + i;
                 var view = _view[index];
-                var nativeView = view.ToForms() ?? new ContentView();
+                var nativeView = view.ToForms() ?? new Xamarin.Forms.ContentView();
                 _formsLayout.Children.Insert(index, nativeView);
             }
         }

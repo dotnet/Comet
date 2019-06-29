@@ -53,6 +53,7 @@ namespace HotUI.Android {
 				var view = ListView?.CellCreator?.Invoke (ListView.List [position]);
 				view.Parent = ListView;
 				var cell = view.ToView ();
+				return cell;
 			}
 
 		}
