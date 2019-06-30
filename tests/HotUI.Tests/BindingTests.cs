@@ -1,6 +1,6 @@
 ﻿using System;
 using Xunit;
-
+[assembly: CollectionBehavior (DisableTestParallelization = true)]
 namespace HotUI.Tests {
 	public class BindingTests {
 
@@ -13,6 +13,7 @@ namespace HotUI.Tests {
 		[Fact]
 		public void LabelTextDirectBinding ()
 		{
+			
 			Text text = null;
 			var view = new StatePage ();
 			const string startingValue = "Hello";
