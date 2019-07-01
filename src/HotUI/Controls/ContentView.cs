@@ -18,8 +18,7 @@ namespace HotUI {
 		{
 			base.OnParentChange (parent);
 			if (Content != null) {
-				Content.Parent = this.Parent;
-				Content.Navigation = this.Parent?.Navigation;
+				Content.Parent = this;
 			}
 		}
 
