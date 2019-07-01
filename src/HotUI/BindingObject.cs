@@ -47,10 +47,10 @@ namespace HotUI {
 					return false;
 			}
 			dictionary [propertyName] = value;
-			Device.InvokeOnMainThread (() => {
-				OnPropertyChanged?.Invoke ((this, propertyName, value));
-				PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
-			});
+			
+            OnPropertyChanged?.Invoke ((this, propertyName, value));
+			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
+
 			return true;
 		}
 
