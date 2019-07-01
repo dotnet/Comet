@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
+﻿using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using HotUI.UWP.Handlers;
 
@@ -25,7 +23,7 @@ namespace HotUI.UWP
             Registrar.Handlers.Register<Image, ImageHandler>();
             Registrar.Handlers.Register<ListView, ListViewHandler>();
             Registrar.Handlers.Register<View, ViewHandler>();
-            HotUI.PerformInvokeOnMainThread = async a => await GetDispatcher().RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => a());
+            Device.PerformInvokeOnMainThread = (a) => Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, a);
 
         }
 
@@ -38,6 +36,28 @@ namespace HotUI.UWP
                 dispatcher = coreWindow.Dispatcher;
 
             return dispatcher ?? (dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher);
+        }
+
+        private static void InvokeWithDispatcher(CoreDispatcher dispatcher, Action action)
+        {
+            var tcs = new TaskCompletionSource<bool>();
+
+#pragma warning disable CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+            dispatcher.RunAsync(CoreDispatcherPriority.Normal, delegate
+            {
+                try
+                {
+                    action();
+                    tcs.TrySetResult(true);
+                }
+                catch (Exception exc)
+                {
+                    tcs.SetException(exc);
+                }
+            });
+#pragma warning restore CS4014 // Because this call is not awaited, execution of the current method continues before the call is completed
+
+            AsyncPump.Run(async delegate { await tcs.Task; });
         }
     }
 }

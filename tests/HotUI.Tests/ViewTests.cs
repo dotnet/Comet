@@ -2,7 +2,7 @@
 using Xunit;
 
 namespace HotUI.Tests {
-	public class ViewTests {
+	public class ViewTests : TestBase {
 
 		public class StatePage : View {
 			public readonly State<int> clickCount = new State<int> (1);
