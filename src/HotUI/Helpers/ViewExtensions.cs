@@ -15,6 +15,9 @@ namespace HotUI {
 		public static T SetEnvironment<T> (this T view, string key, object value) where T : View
 		{
 			view.Context.SetValue (key, value);
+			Device.InvokeOnMainThread (() => {
+				view.ContextPropertyChanged (key, value);
+			});
 			return view;
 		}
 

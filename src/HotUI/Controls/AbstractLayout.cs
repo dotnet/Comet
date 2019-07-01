@@ -94,5 +94,12 @@ namespace HotUI
 				view.Parent = this;
 			}
 		}
+		internal override void ContextPropertyChanged (string property, object value)
+		{
+			base.ContextPropertyChanged (property, value);
+			foreach (var view in _views) {
+				view.ContextPropertyChanged (property, value);
+			}
+		}
 	}
 }

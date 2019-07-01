@@ -108,10 +108,15 @@ namespace HotUI {
 		{
 
 		}
-		protected void ViewPropertyChanged (string property, object value)
+		protected virtual void ViewPropertyChanged (string property, object value)
 		{
 			this.SetPropertyValue (property, value);
 			ViewHandler?.UpdateValue (property, value);
+		}
+
+		internal virtual void ContextPropertyChanged(string property, object value)
+		{
+			ViewPropertyChanged (property, value);
 		}
 
 		public static void SetGlobalEnvironment (string key, object value)

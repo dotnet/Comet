@@ -21,6 +21,11 @@ namespace HotUI {
 				Content.Parent = this;
 			}
 		}
+		internal override void ContextPropertyChanged (string property, object value)
+		{
+			base.ContextPropertyChanged (property, value);
+			Content?.ContextPropertyChanged (property, value);
+		}
 
 	}
 }
