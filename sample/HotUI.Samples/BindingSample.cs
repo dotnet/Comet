@@ -51,11 +51,20 @@ namespace HotUI.Samples {
 						{
 							OnClick = () => { state.Text = $"Click Count: {clickCount.Value++}"; }
 						},
+						new Button("Update FontSize")
+						{
+							OnClick = () => {
+
+								var getFontSize =View.GetGlobalEnvironment<int>(EnvironmentKeys.Fonts.FontSize);
+								getFontSize+=5;
+								View.SetGlobalEnvironment (EnvironmentKeys.Fonts.FontSize, getFontSize);
+							}
+						},
 					},
-                    new Toggle(() =>state.CanEdit)
-                    {
-                        IsOnChanged = (e) => state.CanEdit = e
-                    }
+					new Toggle(() =>state.CanEdit)
+					{
+						IsOnChanged = (e) => state.CanEdit = e
+					}
 				}
 			}
 		};

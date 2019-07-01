@@ -4,7 +4,8 @@ using System.Linq;
 
 namespace HotUI {
 
-	public class View {
+	public class View : IDisposable {
+		internal readonly static List<View> ActiveViews = new List<View> ();
 		HashSet<string> usedEnvironmentData = new HashSet<string> ();
 		internal static readonly EnvironmentData Environment = new EnvironmentData ();
 		internal readonly EnvironmentData Context = new EnvironmentData ();
@@ -26,6 +27,7 @@ namespace HotUI {
 		protected State State { get; set; }
 		public View (bool hasConstructors)
 		{
+			ActiveViews.Add (this);
 			Context.View = this;
 			State = StateBuilder.CurrentState ?? new State {
 				StateChanged = ResetView
@@ -112,7 +114,13 @@ namespace HotUI {
 			ViewHandler?.UpdateValue (property, value);
 		}
 
-		public static void SetGlobalEnvironment (string key, object value) => Environment.SetValue (key, value);
+		public static void SetGlobalEnvironment (string key, object value)
+		{
+			Environment.SetValue (key, value);
+			Device.InvokeOnMainThread (() => {
+				ActiveViews.ForEach (x => x.ViewPropertyChanged (key, value));
+			});
+		}
 		public static void SetGlobalEnvironment (IDictionary<string, object> data)
 		{
 			foreach(var pair in data)
@@ -145,6 +153,11 @@ namespace HotUI {
 					f.SetValue (this, value);
 
 			}
+		}
+
+		public void Dispose ()
+		{
+			ActiveViews.Remove (this);
 		}
 	}
 }
