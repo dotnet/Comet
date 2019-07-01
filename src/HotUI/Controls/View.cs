@@ -42,7 +42,7 @@ namespace HotUI {
 
 		}
 
-
+		public string AccessibilityId { get; set; }
 		IViewHandler viewHandler;
 		public IViewHandler ViewHandler {
 			get => viewHandler;
