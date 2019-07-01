@@ -11,7 +11,7 @@ namespace HotUI.UWP.Handlers
     {
         private static readonly PropertyMapper<View, ViewHandler> Mapper = new PropertyMapper<View, ViewHandler>()
         {
-            [nameof(HotUI.View.Body)] = MapBodyProperty
+            [nameof(global::HotUI.View.Body)] = MapBodyProperty
         };
         
         private View _view;
