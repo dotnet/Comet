@@ -26,6 +26,12 @@ namespace HotUI {
 			base.ContextPropertyChanged (property, value);
 			Content?.ContextPropertyChanged (property, value);
 		}
+		protected override void OnDisposing ()
+		{
+			base.OnDisposing ();
+			Content?.Dispose ();
+			Content = null;
+		}
 
 	}
 }

@@ -132,6 +132,16 @@ namespace HotUI {
 			OnPropertyChanged (sender, e.PropertyName, value);
 		}
 
+		internal void Reset()
+		{
+			changeDictionary.Clear ();
+			var watchedChildren = children.ToList ();
+			foreach(var child in watchedChildren) {
+				StopMonitoring (child);
+			}
+			
+		}
+
 		public void StopMonitoring (INotifyPropertyRead obj)
 		{
 			if (!children.Contains (obj))

@@ -77,5 +77,9 @@ namespace HotUI {
 		}
 
 		public void SetValue (string key, object value) => SetProperty (value, key);
+		internal void Clear()
+		{
+			dictionary.Clear ();
+		}
 	}
 }

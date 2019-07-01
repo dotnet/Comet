@@ -74,6 +74,7 @@ namespace HotUI {
 				return;
 			ViewHandler.Remove (this);
 			var view = this.GetRenderView ().Diff (oldView);
+			oldView.Dispose ();
 			ViewHandler?.SetView (view);
 		}
 
@@ -163,6 +164,16 @@ namespace HotUI {
 		public void Dispose ()
 		{
 			ActiveViews.Remove (this);
+			ViewHandler = null;
+			Body = null;
+			Context.Clear ();
+			State?.Reset ();
+			State = null;
+			OnDisposing ();
+		}
+		protected virtual void OnDisposing()
+		{
+
 		}
 	}
 }
