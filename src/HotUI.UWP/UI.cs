@@ -23,7 +23,7 @@ namespace HotUI.UWP
             Registrar.Handlers.Register<Image, ImageHandler>();
             Registrar.Handlers.Register<ListView, ListViewHandler>();
             Registrar.Handlers.Register<View, ViewHandler>();
-            HotUI.PerformInvokeOnMainThread = (a) => Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, a);
+            Device.PerformInvokeOnMainThread = (a) => Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, a);
 
         }
 
