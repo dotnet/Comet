@@ -1,7 +1,7 @@
 ﻿using System;
-using Windows.UI.Xaml;
+using System.Windows;
 
-namespace HotUI.UWP
+namespace HotUI.WPF
 {
 	public class ContentViewHandler : IUIElement
     {
@@ -16,7 +16,8 @@ namespace HotUI.UWP
 			ContentView = null;
 		}
 
-		ContentView ContentView;
+        private ContentView ContentView { get; set; }
+
 		public void SetView (View view)
 		{
 			ContentView = view as ContentView;
