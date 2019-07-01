@@ -2,7 +2,7 @@
 using Xunit;
 
 namespace HotUI.Tests {
-	public class EnvironmentTests {
+	public class EnvironmentTests : TestBase {
 
 		public class MyBindingObject : BindingObject {
 			public string Foo {

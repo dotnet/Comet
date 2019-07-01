@@ -1,8 +1,7 @@
 ﻿using System;
 using Xunit;
-[assembly: CollectionBehavior (DisableTestParallelization = true)]
 namespace HotUI.Tests {
-	public class BindingTests {
+	public class BindingTests : TestBase {
 
 		public class StatePage : View {
 			public readonly State<int> clickCount = new State<int> (1);
