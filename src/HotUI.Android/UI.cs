@@ -21,6 +21,7 @@
 			Registrar.Handlers.Register<ListView, ListViewHandler> ();
 			Registrar.Handlers.Register<View, ViewHandler>();
 			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
+			HotUI.PerformInvokeOnMainThread = (a) => AndroidContext.CurrentContext.RunOnUiThread(a);
 		}
     }
 }

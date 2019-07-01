@@ -1,11 +1,13 @@
 ﻿
 using System;
+using Foundation;
 using HotUI;
 using UIKit;
 
 namespace HotUI.iOS {
 	public static class UI {
 		static bool hasInit;
+		static NSObject invoker = new NSObject ();
 		public static void Init ()
 		{
 			if (hasInit)
@@ -27,6 +29,7 @@ namespace HotUI.iOS {
 				PresentingViewController.PresentViewController (o.ToViewController(), true,null);
 			};
 			ModalView.PerformDismiss = () => PresentingViewController.DismissModalViewController (true);
+			HotUI.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
 		}
 
 		internal static UIViewController PresentingViewController {

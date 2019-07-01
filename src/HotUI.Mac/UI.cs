@@ -1,10 +1,13 @@
-﻿using HotUI.Mac.Handlers;
+﻿using Foundation;
+using HotUI.Mac.Handlers;
 
 namespace HotUI.Mac
 {
     public static class UI
     {
-        static bool hasInit;
+
+		static NSObject invoker = new NSObject ();
+		static bool hasInit;
 
         public static void Init()
         {
@@ -21,6 +24,8 @@ namespace HotUI.Mac
 			Registrar.Handlers.Register<View, ViewHandler> ();
 			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
 			Registrar.Handlers.Register<ListView, ListViewHandler> ();
+
+			HotUI.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
 		}
     }
 }

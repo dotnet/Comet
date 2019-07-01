@@ -47,8 +47,10 @@ namespace HotUI {
 					return false;
 			}
 			dictionary [propertyName] = value;
-			OnPropertyChanged?.Invoke ((this, propertyName, value));
-			PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
+			HotUI.InvokeOnMainThread (() => {
+				OnPropertyChanged?.Invoke ((this, propertyName, value));
+				PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
+			});
 			return true;
 		}
 
@@ -251,14 +253,12 @@ namespace HotUI {
 	}
 
 	public class BindingState {
-		public List<string> GlobalProperties { get; set; } = new List<string> ();
+		public HashSet<string> GlobalProperties { get; set; } = new HashSet<string> ();
 		public Dictionary<string, List<(string PropertyName, Action<string, object> Action)>> ViewUpdateProperties = new Dictionary<string, List<(string PropertyName, Action<string, object> Action)>> ();
 		public void AddGlobalProperty (string property)
 		{
-			if (GlobalProperties.Contains (property))
-				return;
-			Debug.WriteLine ($"Adding Global Property: {property}");
-			GlobalProperties.Add (property);
+			if(GlobalProperties.Add (property))
+				Debug.WriteLine ($"Adding Global Property: {property}");
 		}
 		public void AddGlobalProperties (IEnumerable<string> properties)
 		{
@@ -300,7 +300,7 @@ namespace HotUI {
 					return false;
 				if (ViewUpdateProperties.TryGetValue (update.property, out var actions)) {
 					foreach (var a in actions)
-						a.Action.Invoke (a.PropertyName, update.value);
+						HotUI.InvokeOnMainThread(()=> a.Action.Invoke (a.PropertyName, update.value));
 					didUpdate = true;
 				}
 			}
