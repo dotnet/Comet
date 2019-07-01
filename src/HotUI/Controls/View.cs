@@ -56,8 +56,9 @@ namespace HotUI {
 			}
 		}
 		internal void UpdateFromOldView (View view) {
-			ViewHandler = view.ViewHandler;
-			view.ViewHandler = null;
+            var handler = view.ViewHandler;
+            view.ViewHandler = null;
+            ViewHandler = handler;
 		}
 		View builtView;
 		public View BuiltView => builtView;
