@@ -47,7 +47,7 @@ namespace HotUI {
 					return false;
 			}
 			dictionary [propertyName] = value;
-			HotUI.InvokeOnMainThread (() => {
+			Device.InvokeOnMainThread (() => {
 				OnPropertyChanged?.Invoke ((this, propertyName, value));
 				PropertyChanged?.Invoke (this, new PropertyChangedEventArgs (propertyName));
 			});
@@ -300,7 +300,7 @@ namespace HotUI {
 					return false;
 				if (ViewUpdateProperties.TryGetValue (update.property, out var actions)) {
 					foreach (var a in actions)
-						HotUI.InvokeOnMainThread(()=> a.Action.Invoke (a.PropertyName, update.value));
+						Device.InvokeOnMainThread(()=> a.Action.Invoke (a.PropertyName, update.value));
 					didUpdate = true;
 				}
 			}

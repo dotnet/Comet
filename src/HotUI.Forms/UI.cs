@@ -25,7 +25,7 @@ namespace HotUI.Forms {
 
             ModalView.PerformPresent = (o) => Xamarin.Forms.Application.Current.MainPage.Navigation.PushModalAsync (o.ToPage ());
 			ModalView.PerformDismiss = () => Xamarin.Forms.Application.Current.MainPage.Navigation.PopModalAsync();
-			HotUI.PerformInvokeOnMainThread = Xamarin.Forms.Device.BeginInvokeOnMainThread;
+			Device.PerformInvokeOnMainThread = Xamarin.Forms.Device.BeginInvokeOnMainThread;
 		}
 	}
 }

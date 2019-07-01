@@ -25,7 +25,7 @@ namespace HotUI.Mac
 			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
 			Registrar.Handlers.Register<ListView, ListViewHandler> ();
 
-			HotUI.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
+			Device.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
 		}
     }
 }

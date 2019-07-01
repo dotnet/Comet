@@ -29,7 +29,7 @@ namespace HotUI.iOS {
 				PresentingViewController.PresentViewController (o.ToViewController(), true,null);
 			};
 			ModalView.PerformDismiss = () => PresentingViewController.DismissModalViewController (true);
-			HotUI.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
+			Device.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
 		}
 
 		internal static UIViewController PresentingViewController {
