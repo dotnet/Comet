@@ -66,15 +66,11 @@ namespace HotUI {
 			}
 		}
 
-        internal IViewHandler tempViewHandler;
 		internal void UpdateFromOldView (View view) {
-            tempViewHandler = view.ViewHandler;
+            var oldView = view.ViewHandler;
             view.ViewHandler = null;
+            this.ViewHandler = oldView;
 		}
-        internal void FinalizeUpdateFromOldView()
-        {
-            ViewHandler = tempViewHandler;
-        }
 		View builtView;
 		public View BuiltView => builtView;
 		void ResetView()
