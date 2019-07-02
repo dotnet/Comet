@@ -1,8 +1,4 @@
 ﻿using HotUI.Samples;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Windows;
 
 namespace HotUI.WPF.Sample
@@ -16,8 +12,7 @@ namespace HotUI.WPF.Sample
         {
             InitializeComponent();
 
-            var hotuiView = new BasicTestView().ToEmbeddableView();
-            MainView.Children.Add(hotuiView);
+            MainFrame.NavigationService.Navigate(new HotUIPage(MainFrame, new BasicNavigationTestView()));
         }
     }
 }
