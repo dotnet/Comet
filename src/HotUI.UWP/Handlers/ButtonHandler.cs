@@ -26,6 +26,7 @@ namespace HotUI.UWP.Handlers
         
         public void Remove(View view)
         {
+            _button = null;
         }
 
         public void SetView(View view)

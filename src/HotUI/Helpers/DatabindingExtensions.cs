@@ -66,17 +66,19 @@ namespace HotUI {
 		public static View Diff (this View newView, View oldView)
 		{
 			var v = newView.DiffUpdate (oldView);
-			void callUpdateOnView (View view)
-			{
-				if (view is IContainerView container) {
-					foreach (var child in container.GetChildren ()) {
-						callUpdateOnView (child);
-					}
-				}
-				view.ViewHandler?.SetView (view);
-			};
-			callUpdateOnView (v);
-			return v;
+            void callUpdateOnView(View view)
+            {
+                if (view is IContainerView container)
+                {
+                    foreach (var child in container.GetChildren())
+                    {
+                        callUpdateOnView(child);
+                    }
+                }
+                view.FinalizeUpdateFromOldView();
+            };
+            callUpdateOnView(v);
+            return v;
 		}
 		static View DiffUpdate (this View newView, View oldView)
 		{

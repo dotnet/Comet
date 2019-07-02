@@ -65,11 +65,16 @@ namespace HotUI {
 				viewHandler?.SetView (this.GetRenderView());
 			}
 		}
+
+        internal IViewHandler tempViewHandler;
 		internal void UpdateFromOldView (View view) {
-            var handler = view.ViewHandler;
+            tempViewHandler = view.ViewHandler;
             view.ViewHandler = null;
-            ViewHandler = handler;
 		}
+        internal void FinalizeUpdateFromOldView()
+        {
+            ViewHandler = tempViewHandler;
+        }
 		View builtView;
 		public View BuiltView => builtView;
 		void ResetView()
@@ -175,7 +180,7 @@ namespace HotUI {
 			ViewHandler = null;
 			Body = null;
 			Context.Clear ();
-			State?.Reset ();
+            State.DisposingObject(this);
 			State = null;
 			OnDisposing ();
 		}
