@@ -4,7 +4,8 @@ using System.Collections.Generic;
 
 namespace HotUI
 {
-	public abstract class AbstractLayout : View, IList<View>, IContainerView {
+	public abstract class AbstractLayout : View, IList<View>, IContainerView
+    {
 		readonly List<View> _views = new List<View> ();
 
 		public event EventHandler<LayoutEventArgs> ChildrenChanged;
@@ -16,14 +17,16 @@ namespace HotUI
 			if (view == null)
 				return;
 			view.Parent = this;
-			_views.Add (view);
+            view.Navigation = Parent as NavigationView ?? Parent?.Navigation;
+            _views.Add (view);
 			ChildrenChanged?.Invoke (this, new LayoutEventArgs (_views.Count - 1, 1));
 		}
 
 		public void Clear ()
 		{
 			var count = _views.Count;
-			if (count > 0) {
+			if (count > 0)
+            {
 				_views.Clear ();
 				ChildrenRemoved?.Invoke (this, new LayoutEventArgs (0, count));
 			}
@@ -40,9 +43,12 @@ namespace HotUI
 		public bool Remove (View item)
 		{
 			var index = _views.IndexOf (item);
-			if (index >= 0) {
+			if (index >= 0)
+            {
 				item.Parent = null;
-				_views.Remove (item);
+                item.Navigation = null;
+
+                _views.Remove (item);
 				ChildrenRemoved?.Invoke (this, new LayoutEventArgs (index, 1));
 				return true;
 			}
@@ -63,31 +69,55 @@ namespace HotUI
 		public int IndexOf (View item) => _views.IndexOf (item);
 
 		public void Insert (int index, View item)
-		{
+        {
+            if (item == null)
+                return;
+
 			_views.Insert (index, item);
-			item.Parent = null;
-			ChildrenAdded?.Invoke (this, new LayoutEventArgs (index, 1));
+            item.Parent = this;
+            item.Navigation = Parent as NavigationView ?? Parent?.Navigation;
+            ChildrenAdded?.Invoke (this, new LayoutEventArgs (index, 1));
 		}
 
 		public void RemoveAt (int index)
-		{
-			_views.RemoveAt (index);
-			ChildrenRemoved?.Invoke (this, new LayoutEventArgs (index, 1));
-		}
+        {
+            if (index >= 0 && index < _views.Count)
+            {
+                var item = _views[index];
+                item.Parent = null;
+                item.Navigation = null;
 
-		public View this [int index] {
+                _views.RemoveAt(index);
+                ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1));
+            }
+        }
+
+		public View this [int index]
+        {
 			get => _views [index];
-			set {
-				_views [index] = value;
-				ChildrenChanged?.Invoke (this, new LayoutEventArgs (index, 1));
+			set
+            {
+                var item = _views[index];
+                item.Parent = null;
+                item.Navigation = null;
+
+                _views [index] = value;
+
+                value.Parent = null;
+                value.Navigation = null;
+
+                ChildrenChanged?.Invoke (this, new LayoutEventArgs (index, 1));
 			}
 		}
+
 		protected override void OnParentChange (View parent)
 		{
 			base.OnParentChange (parent);
-			foreach (var view in _views) {
+			foreach (var view in _views)
+            {
 				view.Parent = this;
-			}
+                view.Navigation = parent as NavigationView ?? parent?.Navigation;
+            }
 		}
 		internal override void ContextPropertyChanged (string property, object value)
 		{

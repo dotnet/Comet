@@ -1,5 +1,5 @@
 ﻿<Page
-    x:Class="HotUI.UWP.Sample.MainPage"
+    x:Class="HotUI.UWP.Sample.BlankPage1"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:HotUI.UWP.Sample"
@@ -8,7 +8,7 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
-    <Grid x:Name="MainView">
+    <Grid>
 
     </Grid>
 </Page>

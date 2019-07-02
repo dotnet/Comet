@@ -25,6 +25,8 @@ namespace HotUI.UWP
             Registrar.Handlers.Register<Image, ImageHandler>();
             Registrar.Handlers.Register<ListView, ListViewHandler>();
             Registrar.Handlers.Register<View, ViewHandler>();
+            Registrar.Handlers.Register<ContentView, ContentViewHandler>();
+
             Device.PerformInvokeOnMainThread = async a => await GetDispatcher().RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => a());
 
         }

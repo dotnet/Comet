@@ -120,6 +120,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="HotUIPage.xaml.cs">
+      <DependentUpon>HotUIPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="FoundationExtensions.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="Handlers\AbstractStackLayoutHandler.cs" />
@@ -150,6 +153,12 @@
       <Project>{1817646e-e71e-48cf-80a4-3030ef870d61}</Project>
       <Name>HotUI</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="HotUIPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
