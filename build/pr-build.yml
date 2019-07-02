@@ -81,14 +81,26 @@ stages:
         solution: 'tests/HotUI.Tests/HotUI.Tests.csproj'
         configuration: '$(BuildConfiguration)'
 
+    # - task: VSTest@2
+    #   inputs:
+    #     testSelector: 'testAssemblies'
+    #     testAssemblyVer2: '**\bin\$(BuildConfiguration)\**\*test*.dll
+    #       !**\obj\**
+    #       !**\xunit.runner.visualstudio.testadapter.dll
+    #       !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
+    #     searchFolder: '$(System.DefaultWorkingDirectory)\tests\HotUI.Tests'
+
     - task: VSTest@2
       inputs:
-        testSelector: 'testAssemblies'
-        testAssemblyVer2: '**\bin\$(BuildConfiguration)\**\*test*.dll
+        inputs:
+          testAssemblyVer2: '|
+          **\*UnitTests.dll
+          !**\*TestAdapter.dll
           !**\obj\**
-          # !**\xunit.runner.visualstudio.testadapter.dll
-          # !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
-        searchFolder: '$(System.DefaultWorkingDirectory)\tests\HotUI.Tests'
+          **\bin\$(BuildConfiguration)\**\*test*.dll
+          !**\xunit.runner.visualstudio.testadapter.dll
+          !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
+          diagnosticsEnabled: True
 
 - stage: BuildSamplesAndroid
   dependsOn: RunTests
