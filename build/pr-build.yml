@@ -86,9 +86,9 @@ stages:
         testSelector: 'testAssemblies'
         testAssemblyVer2: '**\bin\$(BuildConfiguration)\**\*test*.dll
           !**\obj\**
-          !**\xunit.runner.visualstudio.testadapter.dll
-          !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
-        searchFolder: '$(System.DefaultWorkingDirectory)'
+          # !**\xunit.runner.visualstudio.testadapter.dll
+          # !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
+        searchFolder: '$(System.DefaultWorkingDirectory)\tests\HotUI.Tests'
 
 - stage: BuildSamplesAndroid
   dependsOn: RunTests
@@ -108,9 +108,9 @@ stages:
       displayName: 'Select the Xamarin SDK version'
 
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 4.3.0
+      displayName: Use Nuget 5.0.2
       inputs:
-        versionSpec: '4.3.0'
+        versionSpec: '5.0.2'
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
@@ -149,9 +149,9 @@ stages:
       displayName: 'Select the Xamarin SDK version'
 
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 4.3.0
+      displayName: Use Nuget 5.0.2
       inputs:
-        versionSpec: '4.3.0'
+        versionSpec: '5.0.2'
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
