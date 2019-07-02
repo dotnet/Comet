@@ -10,6 +10,14 @@ namespace HotUI {
 		internal static readonly EnvironmentData Environment = new EnvironmentData ();
 		internal readonly EnvironmentData Context = new EnvironmentData ();
 		View parent;
+        string id;
+
+        public string Id
+        {
+            get => id ?? (id = Guid.NewGuid().ToString());
+            set => id = value;
+        }
+
 		public View Parent {
 			get => parent;
 			set {

@@ -11,6 +11,8 @@ namespace HotUI.WPF.Handlers
 
         public void SetView(View view)
         {
+            System.Diagnostics.Debug.WriteLine($"v SetView [{GetType().Name}] [{view.Id}]");
+
             _view = view as AbstractLayout;
             if (_view != null)
             {
@@ -21,13 +23,29 @@ namespace HotUI.WPF.Handlers
                 foreach (var subView in _view)
                 {
                     var nativeView = subView.ToView();
-                    Children.Add(nativeView);
+                    if (!Children.Contains(nativeView))
+                    {
+                        System.Diagnostics.Debug.WriteLine("  -Adding native view to parent.");
+                        Children.Add(nativeView);
+                    }
+                    else
+                    {
+                        System.Diagnostics.Debug.WriteLine("  -Parent already contains native view. Skipping");
+                    }
+
+                    System.Diagnostics.Debug.WriteLine($"    -Child [{subView.Id}] of type [{subView.GetType().Name}]");
+                    System.Diagnostics.Debug.WriteLine($"    -Parent [{_view.Id}] of type [{_view.GetType().Name}]");
                 }
             }
+
+            System.Diagnostics.Debug.WriteLine($"^ SetView");
+
         }
 
         public void Remove(View view)
         {
+            System.Diagnostics.Debug.WriteLine($"v Remove [{GetType().Name}] [{view.Id}]");
+
             Children.Clear();
 
             if (view != null)
@@ -37,6 +55,8 @@ namespace HotUI.WPF.Handlers
                 _view.ChildrenRemoved -= ViewOnChildrenRemoved;
                 _view = null;
             }
+
+            System.Diagnostics.Debug.WriteLine($"^ Remove");
         }
 
         public virtual void UpdateValue(string property, object value)
