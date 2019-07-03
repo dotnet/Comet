@@ -49,57 +49,73 @@ namespace HotUI.iOS {
 			return handler?.View;
 		}
 
+        public static Color ToColor(this UIColor color)
+        {
+            if (color == null)
+                return null;
 
-		//public static LayoutOptions ToContentMode (this UIViewContentMode content, bool isVertical )
-		//{
-		//	bool isExpand = content.HasFlag (UIViewContentMode.ScaleToFill);
-		//	switch (content) {
-		//	case UIViewContentMode.Bottom:
-		//		return  (isVertical ? LayoutOptions.End : LayoutOptions.Center).WithExpand(isExpand);
-		//	case UIViewContentMode.BottomLeft:
-		//		return (isVertical ? LayoutOptions.End : LayoutOptions.Start).WithExpand(isExpand);
-		//	case UIViewContentMode.BottomRight:
-		//		return LayoutOptions.End.WithExpand(isExpand);
-		//	case UIViewContentMode.Center:
-		//		return LayoutOptions.Center;
-		//	case UIViewContentMode.Left:
-		//		return isVertical ? LayoutOptions.Center : LayoutOptions.Start;
-		//	case UIViewContentMode.Right:
-		//	case UIViewContentMode.ScaleAspectFill:
-		//	case UIViewContentMode.Top:
-		//	case UIViewContentMode.TopLeft:
-		//	case UIViewContentMode.TopRight:
+            color.GetRGBA(out var red, out var green, out var blue, out var alpha);
+            return new Color((float)red, (float)green, (float)blue, (float)alpha);
+        }
 
-		//	}
-		//}
+        public static UIColor ToUIColor(this Color color)
+        {
+            if (color == null)
+                return null;
 
-		//static LayoutOptions WithExpand (this LayoutOptions layoutOptions, bool isExpand)
-		//{
-		//	if (!isExpand)
-		//		return layoutOptions;
-		//	switch(layoutOptions) {
-		//	case LayoutOptions.End:
-		//		return LayoutOptions.EndAndExpand;
-		//	case LayoutOptions.Center:
-		//		return LayoutOptions.CenterAndExpand:
-		//		case 
-		//	}
+            return new UIColor(color.Red, color.Green, color.Blue, color.Alpha);
+        }
 
-		//}
-		//public static UIViewContentMode ToContentMode(this LayoutOptions )
-		//{
-		//	switch(layoutOptions) {
-		//	case LayoutOptions.Center:
-		//	case LayoutOptions.CenterAndExpand:
-		//	case LayoutOptions.End:
-		//	case LayoutOptions.EndAndExpand:
-		//	case LayoutOptions.Fill:
-		//	case LayoutOptions.FillAndExpand:
-		//	case LayoutOptions.Start:
-		//	case LayoutOptions.StartAndExpand:
-		//		return 
-		//	}
-		//}
+        //public static LayoutOptions ToContentMode (this UIViewContentMode content, bool isVertical )
+        //{
+        //	bool isExpand = content.HasFlag (UIViewContentMode.ScaleToFill);
+        //	switch (content) {
+        //	case UIViewContentMode.Bottom:
+        //		return  (isVertical ? LayoutOptions.End : LayoutOptions.Center).WithExpand(isExpand);
+        //	case UIViewContentMode.BottomLeft:
+        //		return (isVertical ? LayoutOptions.End : LayoutOptions.Start).WithExpand(isExpand);
+        //	case UIViewContentMode.BottomRight:
+        //		return LayoutOptions.End.WithExpand(isExpand);
+        //	case UIViewContentMode.Center:
+        //		return LayoutOptions.Center;
+        //	case UIViewContentMode.Left:
+        //		return isVertical ? LayoutOptions.Center : LayoutOptions.Start;
+        //	case UIViewContentMode.Right:
+        //	case UIViewContentMode.ScaleAspectFill:
+        //	case UIViewContentMode.Top:
+        //	case UIViewContentMode.TopLeft:
+        //	case UIViewContentMode.TopRight:
 
-	}
+        //	}
+        //}
+
+        //static LayoutOptions WithExpand (this LayoutOptions layoutOptions, bool isExpand)
+        //{
+        //	if (!isExpand)
+        //		return layoutOptions;
+        //	switch(layoutOptions) {
+        //	case LayoutOptions.End:
+        //		return LayoutOptions.EndAndExpand;
+        //	case LayoutOptions.Center:
+        //		return LayoutOptions.CenterAndExpand:
+        //		case 
+        //	}
+
+        //}
+        //public static UIViewContentMode ToContentMode(this LayoutOptions )
+        //{
+        //	switch(layoutOptions) {
+        //	case LayoutOptions.Center:
+        //	case LayoutOptions.CenterAndExpand:
+        //	case LayoutOptions.End:
+        //	case LayoutOptions.EndAndExpand:
+        //	case LayoutOptions.Fill:
+        //	case LayoutOptions.FillAndExpand:
+        //	case LayoutOptions.Start:
+        //	case LayoutOptions.StartAndExpand:
+        //		return 
+        //	}
+        //}
+
+    }
 }

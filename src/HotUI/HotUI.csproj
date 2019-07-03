@@ -15,7 +15,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Controls\" />
-    <Folder Include="Helpers\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

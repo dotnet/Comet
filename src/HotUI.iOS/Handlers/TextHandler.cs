@@ -11,15 +11,18 @@ namespace HotUI.iOS
         private static readonly PropertyMapper<Text, TextHandler> Mapper = new PropertyMapper<Text, TextHandler>()
         {
             [nameof(HotUI.Text.Value)] = MapValueProperty,
-			[EnvironmentKeys.Fonts.FontSize] = MapFontSizeProperty
+            [EnvironmentKeys.Fonts.FontSize] = MapFontSizeProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty
 		};
 
-		int DefaultFontSize;
+        int DefaultFontSize;
+        Color DefaultColor;
 		private Text _text;
 
 		public TextHandler ()
 		{
-			DefaultFontSize = (int)this.Font.PointSize;
+            DefaultFontSize = (int)this.Font.PointSize;
+            DefaultColor = this.TextColor.ToColor();
 		}
 
         public UIView View => this;
@@ -58,5 +61,14 @@ namespace HotUI.iOS
 			return true;
 		}
 
-	}
+        public static bool MapColorProperty(TextHandler nativeView, Text virtualView)
+        {
+            var color = virtualView.GetColor(nativeView.DefaultColor);
+            var nativeColor = nativeView.TextColor.ToColor();
+            if (!color.Equals(nativeColor))
+                nativeView.TextColor = color.ToUIColor();
+
+            return true;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HotUI.Samples.Comparisons;
 
 namespace HotUI.Samples {
 	public class MainPage : View {
@@ -8,7 +9,9 @@ namespace HotUI.Samples {
             ("BasicTestView",()=> new BasicTestView()),
             ("ListPage1", ()=> new ListPage()),
 			("ListPage2", ()=> new ListPage2()),
-			("Insane Diff", ()=> new InsaneDiffPage()),
+            ("Insane Diff", ()=> new InsaneDiffPage()),
+            ("SwiftUI Tutorial Section 1", ()=> new Section1()),
+            ("SwiftUI Tutorial Section 2", ()=> new Section2()),
 		};
 		public MainPage ()
 		{

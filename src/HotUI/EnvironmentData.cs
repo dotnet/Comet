@@ -14,7 +14,11 @@ namespace HotUI {
 			public const string FontSize = "FontSize";
 		}
 
-	}
+        public static class Colors
+        {
+            public const string Color = "Color";
+        }
+    }
 
 	[AttributeUsage (AttributeTargets.Field)]
 	public class EnvironmentAttribute : StateAttribute {
