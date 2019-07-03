@@ -37,7 +37,7 @@ namespace HotUI.UWP.Sample
             if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
-                    rootFrame.Navigate(typeof(HotUIPage), new BasicNavigationTestView());
+                    rootFrame.Navigate(typeof(HotUIPage), new MainPage());
 
                 Window.Current.Activate();
             }

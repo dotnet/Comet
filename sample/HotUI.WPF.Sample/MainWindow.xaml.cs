@@ -12,7 +12,7 @@ namespace HotUI.WPF.Sample
         {
             InitializeComponent();
 
-            MainFrame.NavigationService.Navigate(new HotUIPage(MainFrame, new BasicNavigationTestView()));
+            MainFrame.NavigationService.Navigate(new HotUIPage(MainFrame, new MainPage()));
         }
     }
 }
