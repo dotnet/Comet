@@ -279,7 +279,7 @@ namespace HotUI
                     }
                 }
             }
-            Console.WriteLine(type);
+           // Console.WriteLine(type);
             hasChecked = true;
         }
         internal void DisposingObject(object obj)
@@ -311,7 +311,7 @@ namespace HotUI
                     }
                 }
             }
-            Console.WriteLine(type);
+            //Console.WriteLine(type);
             hasChecked = true;
         }
 
