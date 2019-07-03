@@ -23,6 +23,7 @@ namespace HotUI.WPF
             Registrar.Handlers.Register<ListView, ListViewHandler>();
             Registrar.Handlers.Register<View, ViewHandler>();
             Registrar.Handlers.Register<ContentView, ContentViewHandler>();
+            Registrar.Handlers.Register<Toggle, ToggleHandler>();
 
             Device.PerformInvokeOnMainThread = a => Application.Current.Dispatcher.Invoke(a);
         }
