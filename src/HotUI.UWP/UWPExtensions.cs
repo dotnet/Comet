@@ -1,5 +1,6 @@
 ﻿using System;
 using Windows.UI.Xaml;
+using Windows.UI.Xaml.Controls;
 
 namespace HotUI.UWP
 {
@@ -37,7 +38,50 @@ namespace HotUI.UWP
             if (handler == null)
                 throw new Exception("Unable to build handler for view");
 
+            if (handler is FrameworkElement element)
+            {
+                if (element.Parent is HotUIContainerView container)
+                    return container;
+            }
+            
             return new HotUIContainerView(view);
+        }
+
+        public static void RemoveChild(this DependencyObject parent, UIElement child)
+        {
+            if (parent is Panel panel)
+            {
+                panel.Children.Remove(child);
+                return;
+            }
+
+            /*var decorator = parent as Decorator;
+            if (decorator != null)
+            {
+                if (decorator.Child == child)
+                {
+                    decorator.Child = null;
+                }
+                return;
+            }*/
+
+            if (parent is ContentPresenter contentPresenter)
+            {
+                if (contentPresenter.Content == child)
+                {
+                    contentPresenter.Content = null;
+                }
+                return;
+            }
+
+            if (parent is ContentControl contentControl)
+            {
+                if (contentControl.Content == child)
+                {
+                    contentControl.Content = null;
+                }
+                return;
+            }
         }
     }
 }
