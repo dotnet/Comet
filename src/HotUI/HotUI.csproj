@@ -13,9 +13,6 @@
     <DefineConstants>TRACE;RELEASE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-  </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

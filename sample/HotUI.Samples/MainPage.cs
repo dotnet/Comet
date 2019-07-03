@@ -12,6 +12,7 @@ namespace HotUI.Samples {
             ("Insane Diff", ()=> new InsaneDiffPage()),
             ("SwiftUI Tutorial Section 1", ()=> new Section1()),
             ("SwiftUI Tutorial Section 2", ()=> new Section2()),
+            ("SwiftUI Tutorial Section 3", ()=> new Section3()),
 		};
 		public MainPage ()
 		{

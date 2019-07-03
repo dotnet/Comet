@@ -18,6 +18,11 @@ namespace HotUI {
         {
             public const string Color = "Color";
         }
+
+        public static class Layout
+        {
+            public const string Padding = "Padding";
+        }
     }
 
 	[AttributeUsage (AttributeTargets.Field)]
