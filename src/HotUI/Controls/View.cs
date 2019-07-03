@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace HotUI {
@@ -100,6 +101,7 @@ namespace HotUI {
 				return this;
 			if (builtView != null)
 				return builtView;
+			Debug.WriteLine ($"Building View: {this.GetType().Name}");
 			using (new StateBuilder (State)) {
 				State.SetParent (this);
 				State.StartProperty ();
