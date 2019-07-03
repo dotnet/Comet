@@ -120,6 +120,7 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Handlers\ToggleHandler.cs" />
     <Compile Include="HotUIPage.xaml.cs">
       <DependentUpon>HotUIPage.xaml</DependentUpon>
     </Compile>

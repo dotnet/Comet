@@ -13,6 +13,7 @@ namespace HotUI.UWP.Handlers
             };
 
         private ScrollView _virtualScrollView;
+        private UIElement _content;
         private readonly UWPScrollView _nativeScrollView;
         
         public ScrollViewHandler()
@@ -29,6 +30,12 @@ namespace HotUI.UWP.Handlers
         public void SetView(View view)
         {
             _virtualScrollView = view as ScrollView;
+            _content = _virtualScrollView?.View?.ToEmbeddableView();
+            if (_content != null)
+            {
+                _nativeScrollView.Content = _content;
+            }
+
             Mapper.UpdateProperties(_nativeScrollView, _virtualScrollView);
         }
 
