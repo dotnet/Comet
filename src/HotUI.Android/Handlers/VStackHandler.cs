@@ -11,7 +11,6 @@ namespace HotUI.Android
         public VStackHandler() : base(AndroidContext.CurrentContext)
         {
             Orientation = Orientation.Vertical;
-            base.SetBackgroundColor(Color.Green);
         }
         
         public AView View => this;
@@ -38,7 +37,7 @@ namespace HotUI.Android
         {
         }
 
-        List<AView> views = new List<AView>();
+        readonly List<AView> views = new List<AView>();
 
         protected void UpdateChildren(VStack stack)
         {

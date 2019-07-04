@@ -29,10 +29,10 @@ namespace HotUI.Samples {
 						new HStack {
 							new Image (song.ArtworkUrl),
 							new VStack {
-								new Text (song.Title).SetFontSize(20),
+								new Text (song.Title).FontSize(20),
 								new Text (song.Artist),
 								new Text (song.Album),
-							}.SetFontSize(10)
+							}.FontSize(10)
 						}
 					},
 				}.OnSelected ((song) => {

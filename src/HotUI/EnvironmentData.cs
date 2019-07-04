@@ -11,6 +11,7 @@ namespace HotUI {
 		public const string OS = "OS";
 
 		public static class Fonts {
+			public const string Font = "Font";
 			public const string FontSize = "FontSize";
 		}
 

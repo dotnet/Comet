@@ -11,7 +11,6 @@ namespace HotUI.Android
         public HStackHandler() : base(AndroidContext.CurrentContext)
         {
             Orientation = Orientation.Vertical;
-            base.SetBackgroundColor(Color.Green);
         }
         
         public AView View => this;
