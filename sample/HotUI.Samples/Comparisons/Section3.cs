@@ -36,14 +36,14 @@ namespace HotUI.Samples.Comparisons
                 new VStack(alignment: HorizontalAlignment.Leading)
                 {
                     new Text("Turtle Rock")
-                        .FontSize(24),
+                        .Font(Font.Title),
                     new HStack()
                     {
                         new Text("Joshua Tree National Park")
-                            .FontSize(12),
+                            .Font(Font.SubHeadline),
                         new Spacer(),
                         new Text("California")
-                            .FontSize(12),
+                            .Font(Font.SubHeadline),
                     }
                 }.Padding();
         }
