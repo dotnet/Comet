@@ -68,6 +68,10 @@ namespace HotUI {
 		}
 
 		internal void UpdateFromOldView (View view) {
+			if(view is NavigationView nav)
+			{
+				((NavigationView)this).PerformNavigate = nav.PerformNavigate;
+			}
             var oldView = view.ViewHandler;
             view.ViewHandler = null;
             this.ViewHandler = oldView;
