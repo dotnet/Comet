@@ -55,7 +55,7 @@ namespace HotUI.iOS
 
                 foreach (var subView in _view)
                 {
-                    var nativeView = subView.ToView();
+                    var nativeView = subView.ToView() ?? new UIView();
                     AddSubview(nativeView);
                 }
 
@@ -93,7 +93,7 @@ namespace HotUI.iOS
             {
                 var index = e.Start + i;
                 var view = _view[index];
-                var nativeView = view.ToView();
+                var nativeView = view.ToView() ?? new UIView();
                 InsertSubview(nativeView, index);
             }
 
@@ -121,7 +121,7 @@ namespace HotUI.iOS
                 oldNativeView.RemoveFromSuperview();
 
                 var view = _view[index];
-                var newNativeView = view.ToView();
+                var newNativeView = view.ToView() ?? new UIView();
                 InsertSubview(newNativeView, index);
             }
 

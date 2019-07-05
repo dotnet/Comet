@@ -66,6 +66,35 @@ namespace HotUI.iOS {
             return new UIColor(color.Red, color.Green, color.Blue, color.Alpha);
         }
 
+        public static Font ToFont(this UIFont font)
+        {
+	        if (font == null)
+		        return Font.System(12);
+
+	        // todo: implement support for attributes other than name and size.
+	        return font.Name == Device.FontService.SystemFontName 
+		        ? Font.System((float)font.PointSize) 
+		        : Font.Custom(font.Name, (float) font.PointSize);
+        }
+
+        public static UIFont ToUIFont(this Font font)
+        {
+			if (font == null)
+				return UIFont.SystemFontOfSize(12);
+
+			var attributes = font.Attributes;
+			if (attributes.Name == Device.FontService.SystemFontName)
+			{
+				var weight = (int) attributes.Weight;
+				if (weight > (int)Weight.Regular)
+					return UIFont.BoldSystemFontOfSize(attributes.Size);
+				
+				return UIFont.SystemFontOfSize(attributes.Size);
+			}
+			
+			return UIFont.FromName(attributes.Name, attributes.Size);
+        }
+        
         //public static LayoutOptions ToContentMode (this UIViewContentMode content, bool isVertical )
         //{
         //	bool isExpand = content.HasFlag (UIViewContentMode.ScaleToFill);

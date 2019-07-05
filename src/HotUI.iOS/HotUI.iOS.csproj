@@ -57,6 +57,7 @@
     <Compile Include="Handlers\ScrollViewHandler.cs" />
     <Compile Include="Handlers\TextFieldHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
+    <Compile Include="Services\iOSFontService.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="Handlers\ListViewHandler.cs" />
     <Compile Include="HotUIViewController.cs" />

@@ -11,18 +11,23 @@ namespace HotUI.iOS
         private static readonly PropertyMapper<Text, TextHandler> Mapper = new PropertyMapper<Text, TextHandler>()
         {
             [nameof(HotUI.Text.Value)] = MapValueProperty,
-            [EnvironmentKeys.Fonts.FontSize] = MapFontSizeProperty,
+            [EnvironmentKeys.Fonts.Font] = MapFontProperty,
             [EnvironmentKeys.Colors.Color] = MapColorProperty
 		};
 
-        int DefaultFontSize;
-        Color DefaultColor;
+        private static Font DefaultFont;
+        private static Color DefaultColor;
+        
 		private Text _text;
 
 		public TextHandler ()
 		{
-            DefaultFontSize = (int)this.Font.PointSize;
-            DefaultColor = this.TextColor.ToColor();
+			// todo: answer the question of whether or not these should be default or not.
+			if (DefaultColor == null)
+			{
+				DefaultFont = Font.ToFont();
+				DefaultColor = TextColor.ToColor();
+			}
 		}
 
         public UIView View => this;
@@ -51,19 +56,17 @@ namespace HotUI.iOS
             return true;
         }
 
-		public static bool MapFontSizeProperty (TextHandler nativeView, Text virtualView)
+		public static bool MapFontProperty (TextHandler nativeView, Text virtualView)
 		{
-			var fontSize = (nfloat)virtualView.GetFontSize (nativeView.DefaultFontSize);
-			if (fontSize != nativeView.Font.PointSize) {
-				nativeView.Font = nativeView.Font.WithSize (fontSize);
-				nativeView.SizeToFit ();
-			}
+			var font = virtualView.GetFont(DefaultFont);
+			nativeView.Font = font.ToUIFont();
+			nativeView.SizeToFit ();
 			return true;
 		}
 
         public static bool MapColorProperty(TextHandler nativeView, Text virtualView)
         {
-            var color = virtualView.GetColor(nativeView.DefaultColor);
+            var color = virtualView.GetColor(DefaultColor);
             var nativeColor = nativeView.TextColor.ToColor();
             if (!color.Equals(nativeColor))
                 nativeView.TextColor = color.ToUIColor();

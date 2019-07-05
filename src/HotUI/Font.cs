@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace HotUI
 {
     /// <summary>
@@ -6,17 +7,38 @@ namespace HotUI
     /// </summary>
     public partial class Font
     {
-        private Font()
+        private FontAttributes _attributes;
+
+        private Font(Font template)
         {
+            _attributes = template._attributes;
+        }
+        
+        private Font(
+            string name, 
+            float size, 
+            bool italic = false, 
+            Weight weight = HotUI.Weight.Regular,
+            bool smallcaps = false)
+        {
+            _attributes.Name = name;
+            _attributes.Size = size;
+            _attributes.Weight = weight;
+            _attributes.Italic = italic;
+            _attributes.Smallcaps = smallcaps;
         }
 
+        public FontAttributes Attributes => _attributes;
+        
         /// <summary>
         /// Adds bold styling to the font.
         /// </summary>
         /// <returns></returns>
         public Font Bold()
         {
-            throw new NotImplementedException();
+            var font = new Font(this);
+            font._attributes.Weight = HotUI.Weight.Bold;
+            return font;
         }
 
         /// <summary>
@@ -25,7 +47,9 @@ namespace HotUI
         /// <returns></returns>
         public Font Italic()
         {
-            throw new NotImplementedException();
+            var font = new Font(this);
+            font._attributes.Italic = true;
+            return font;
         }
 
         /// <summary>
@@ -34,7 +58,9 @@ namespace HotUI
         /// <returns></returns>
         public Font MonospacedDigit()
         {
-            throw new NotImplementedException();
+            var font = new Font(this);
+            font._attributes.Name = Device.FontService.MonospacedFontName;
+            return font;
         }
 
         /// <summary>
@@ -43,7 +69,9 @@ namespace HotUI
         /// <returns></returns>
         public Font SmallCaps()
         {
-            throw new NotImplementedException();
+            var font = new Font(this);
+            font._attributes.Smallcaps = true;
+            return font;
         }
 
         /// <summary>
@@ -53,7 +81,9 @@ namespace HotUI
         /// <returns></returns>
         public Font Weight(Weight weight)
         {
-            throw new NotImplementedException();
+            var font = new Font(this);
+            font._attributes.Weight = weight;
+            return font;
         }
 
         /// <summary>
@@ -64,7 +94,42 @@ namespace HotUI
         /// <returns></returns>
         public static Font System(TextStyle style, Design design = Design.Default)
         {
-            throw new NotImplementedException();
+            var fontName = design.FontName();
+            var size = 12f;
+            var italic = false;
+            var smallcaps = false;
+            var weight = HotUI.Weight.Regular;
+            
+            // todo: figure out what these values should be for real by playing around
+            // with SwiftUI or figure out if iOS 13 allows me to get these values.
+            switch (style)
+            {
+                case TextStyle.Body:
+                    break;
+                case TextStyle.Callout:
+                    break;
+                case TextStyle.Caption:
+                    break;
+                case TextStyle.Footnote:
+                    italic = true;
+                    break;
+                case TextStyle.Headline:
+                    break;
+                case TextStyle.LargeTitle:
+                    weight = HotUI.Weight.Bold;
+                    size = 24f;
+                    break;
+                case TextStyle.Subheadline:
+                    break;
+                case TextStyle.Title:
+                    weight = HotUI.Weight.Bold;
+                    size = 17f;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(style), style, null);
+            }
+            
+            return new Font(fontName, size, italic, weight, smallcaps);
         }
 
         /// <summary>
@@ -75,7 +140,7 @@ namespace HotUI
         /// <returns></returns>
         public static Font System(float size, Design design = Design.Default)
         {
-            throw new NotImplementedException();
+            return new Font(design.FontName(), size);
         }
 
         /// <summary>

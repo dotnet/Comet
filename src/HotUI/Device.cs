@@ -2,6 +2,7 @@
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
+using HotUI.Services;
 
 [assembly: InternalsVisibleTo ("HotUI.Tests")]
 
@@ -21,5 +22,7 @@ namespace HotUI{
 			else
 				PerformInvokeOnMainThread (action);
 		}
+
+		public static IFontService FontService = new FallbackFontService();
 	}
 }

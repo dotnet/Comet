@@ -2,6 +2,7 @@
 using System;
 using Foundation;
 using HotUI;
+using HotUI.iOS.Services;
 using UIKit;
 
 namespace HotUI.iOS {
@@ -30,6 +31,7 @@ namespace HotUI.iOS {
 			};
 			ModalView.PerformDismiss = () => PresentingViewController.DismissModalViewController (true);
 			Device.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
+			Device.FontService = new iOSFontService();
 		}
 
 		internal static UIViewController PresentingViewController {
