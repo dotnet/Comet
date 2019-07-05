@@ -18,6 +18,7 @@ namespace HotUI {
         public static class Colors
         {
             public const string Color = "Color";
+            public const string BackgroundColor = "BackgroundColor";
         }
 
         public static class Layout

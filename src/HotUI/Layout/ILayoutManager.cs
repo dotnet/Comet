@@ -2,6 +2,7 @@ namespace HotUI.Layout
 {
     public interface ILayoutManager<T>
     {
-        void Layout(ILayoutHandler<T> handler, T parentView, AbstractLayout layout);
+        Size Measure(ILayoutHandler<T> handler, T parentView, AbstractLayout layout, Size available);
+        void Layout(ILayoutHandler<T> handler, T parentView, AbstractLayout layout, Size measured);
     }
 }

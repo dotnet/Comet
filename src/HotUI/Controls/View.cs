@@ -93,10 +93,12 @@ namespace HotUI {
 		}
 
 		Func<View> body;
-		public Func<View> Body {
+		public Func<View> Body
+        {
 			get => body;
 			set => this.SetValue(State,ref body, value, (s,o)=> ResetView());
 		}
+
 		internal View GetView () => GetRenderView ();
 
 		protected virtual View GetRenderView ()

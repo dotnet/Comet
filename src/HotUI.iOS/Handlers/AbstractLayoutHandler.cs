@@ -10,6 +10,8 @@ namespace HotUI.iOS
     {
         private readonly ILayoutManager<UIView> _layoutManager;
         private AbstractLayout _view;
+        private Size _measured;
+        private bool _measurementValid;
 
         public AbstractLayout Layout => _view;
         
@@ -24,14 +26,30 @@ namespace HotUI.iOS
             _layoutManager = layoutManager;
         }
 
-        public SizeF GetAvailableSize()
+        public Size Measure(UIView view, Size available)
         {
-            return Superview?.Bounds.Size.ToSizeF() ?? Bounds.Size.ToSizeF();
+            CGSize size;
+            if (view is AbstractLayoutHandler handler)
+            {
+                size = handler.SizeThatFits(available.ToCGSize());
+            }
+            else
+            {
+                size = view.IntrinsicContentSize;
+                if (size.Width == 0 || size.Height == 0)
+                    size = view.Bounds.Size;
+            }
+
+            return size.ToHotUISize();
         }
 
-        public SizeF GetSize(UIView view)
+        public Size GetSize(UIView view)
         {
-            return view.Bounds.Size.ToSizeF();
+            var size = view.Bounds.Size;
+            if (size.Width == 0 || size.Height == 0)
+                size = view.IntrinsicContentSize;
+
+            return size.ToHotUISize();
         }
 
         public void SetFrame(UIView view, float x, float y, float width, float height)
@@ -41,6 +59,9 @@ namespace HotUI.iOS
 
         public void SetSize(UIView view, float width, float height)
         {
+            if ((Equals(width, (float)Frame.Width) && Equals(height, (float)Frame.Height)))
+                return;
+
             view.Frame = new CGRect(Frame.X, Frame.Y, width, height);
         }
 
@@ -66,7 +87,8 @@ namespace HotUI.iOS
                     AddSubview(nativeView);
                 }
 
-                LayoutSubviews();
+                SetNeedsLayout();
+                _measurementValid = false;
             }
         }
 
@@ -104,7 +126,8 @@ namespace HotUI.iOS
                 InsertSubview(nativeView, index);
             }
 
-            LayoutSubviews();
+            SetNeedsLayout();
+            _measurementValid = false;
         }
 
         private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
@@ -116,7 +139,8 @@ namespace HotUI.iOS
                 nativeView.RemoveFromSuperview();
             }
 
-            LayoutSubviews();
+            SetNeedsLayout();
+            _measurementValid = false;
         }
 
         private void HandleChildrenChanged(object sender, LayoutEventArgs e)
@@ -132,21 +156,39 @@ namespace HotUI.iOS
                 InsertSubview(newNativeView, index);
             }
 
-            LayoutSubviews();
+            SetNeedsLayout();
+            _measurementValid = false;
         }
 
+        public override CGSize SizeThatFits(CGSize size)
+        {
+            _measured = _layoutManager.Measure(this, this, _view, size.ToHotUISize());
+            _measurementValid = true;
+            return _measured.ToCGSize();
+        }
+
+        public override void SizeToFit()
+        {
+            _measured = _layoutManager.Measure(this, this, _view, Superview?.Bounds.Size.ToHotUISize() ?? UIScreen.MainScreen.Bounds.Size.ToHotUISize());
+            _measurementValid = true;
+            base.Frame = new CGRect(new CGPoint(0, 0), _measured.ToCGSize());
+        }
+
+        public override CGSize IntrinsicContentSize => _measured.ToCGSize();
+        
         public override void LayoutSubviews()
         {
-            if (Superview == null)
+            if (Superview == null || Bounds.Size.IsEmpty)
                 return;
-            
-            _layoutManager.Layout(this, this, _view);
-        }
 
-        public override void MovedToSuperview()
-        {
-            base.MovedToSuperview();
-            SetNeedsLayout();
+            var available = Bounds.Size.ToHotUISize();
+            if (!_measurementValid)
+            {
+                _measured = _layoutManager.Measure(this, this, _view, available);
+                _measurementValid = true;
+            }
+
+            _layoutManager.Layout(this, this, _view, _measured);
         }
     }
 }

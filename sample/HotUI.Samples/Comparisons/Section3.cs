@@ -40,10 +40,12 @@ namespace HotUI.Samples.Comparisons
                     new HStack()
                     {
                         new Text("Joshua Tree National Park")
-                            .Font(Font.SubHeadline),
+                            .Font(Font.SubHeadline)
+                            .Background(Colors.Salmon),
                         new Spacer(),
                         new Text("California")
-                            .Font(Font.SubHeadline),
+                            .Font(Font.SubHeadline)
+                            .Background(Colors.Green),
                     }
                 }.Padding();
         }

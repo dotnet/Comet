@@ -1,22 +1,55 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace HotUI.Layout
 {
     public class HStackLayoutManager<T> : ILayoutManager<T>
     {
+        public Size Measure(
+            ILayoutHandler<T> handler,
+            T parentView,
+            AbstractLayout layout,
+            Size available)
+        {
+            var width = 0f;
+            var height = 0f;
+            var spacerCount = 0;
+            var index = 0;
+
+            foreach (var subview in handler.GetSubviews())
+            {
+                var view = layout[index];
+                if (view is Spacer)
+                {
+                    spacerCount++;
+                }
+                else
+                {
+                    var size = handler.Measure(subview, available);
+                    height = Math.Max(size.Height, height);
+                    width += size.Width;
+                }
+                index++;
+            }
+
+            if (spacerCount > 0)
+                width = available.Width;
+
+            return new Size(width, height);
+        }
+
         public void Layout(
             ILayoutHandler<T> handler, 
             T parentView, 
-            AbstractLayout layout)
+            AbstractLayout layout,
+            Size measured)
         {
             var height = 0f;
             
             var index = 0;
             var nonSpacerWidth = 0f;
             var spacerCount = 0;
-            List<SizeF> sizes = new List<SizeF>();
+            List<Size> sizes = new List<Size>();
             
             foreach (var subview in handler.GetSubviews())
             {
@@ -24,7 +57,7 @@ namespace HotUI.Layout
                 if (view is Spacer)
                 {
                     spacerCount++;
-                    sizes.Add(new SizeF());
+                    sizes.Add(new Size());
                 }
                 else
                 {
@@ -32,15 +65,14 @@ namespace HotUI.Layout
                     sizes.Add(size);
                     height = Math.Max(size.Height, height);
                     nonSpacerWidth += size.Width;
-                    index++;
                 }
+                index++;
             }
 
             var spacerWidth = 0f;
             if (spacerCount>0)
             {
-                var parentSize = handler.GetAvailableSize();
-                var availableWidth = parentSize.Width - nonSpacerWidth;
+                var availableWidth = measured.Width - nonSpacerWidth;
                 spacerWidth = availableWidth / spacerCount;
             }
 
@@ -50,23 +82,20 @@ namespace HotUI.Layout
             foreach (var subview in handler.GetSubviews())
             {
                 var view = layout[index];
-                SizeF size;
+                Size size;
                 if (view is Spacer)
                 {
-                    size = new SizeF(spacerWidth, height);
+                    size = new Size(spacerWidth, height);
                 }
                 else
                 {
                     size = sizes[index];
-                    index++; 
                 }
                 
                 handler.SetFrame(subview,x,y,size.Width, size.Height);
                 x += size.Width;
+                index++;
             }
-
-
-            handler.SetSize(parentView, x, height);
         }
     }
 }

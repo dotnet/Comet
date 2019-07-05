@@ -18,17 +18,12 @@ namespace HotUI.UWP.Handlers
         {
             _layoutManager = layoutManager;
         }
-
-        public SizeF GetAvailableSize()
-        {
-            throw new NotImplementedException();
-        }
         
-        public SizeF GetSize(UIElement view)
+        public Size GetSize(UIElement view)
         {
-            if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0) return view.DesiredSize.ToSizeF();
+            if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0) return view.DesiredSize.ToSize();
 
-            return view.RenderSize.ToSizeF();
+            return view.RenderSize.ToSize();
         }
 
         public void SetFrame(UIElement view, float x, float y, float width, float height)

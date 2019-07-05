@@ -1,13 +1,17 @@
-using System.Drawing;
 using CoreGraphics;
 
 namespace HotUI.iOS
 {
     public static class CoreGraphicsExtensions
     {
-        public static SizeF ToSizeF(this CGSize size)
+        public static Size ToHotUISize(this CGSize size)
         {
-            return new SizeF((float)size.Width, (float)size.Height);
+            return new Size((float)size.Width, (float)size.Height);
+        }
+
+        public static CGSize ToCGSize(this Size size)
+        {
+            return new CGSize(size.Width, size.Height);
         }
     }
 }

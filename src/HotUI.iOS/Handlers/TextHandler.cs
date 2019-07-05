@@ -12,13 +12,15 @@ namespace HotUI.iOS
         {
             [nameof(HotUI.Text.Value)] = MapValueProperty,
             [EnvironmentKeys.Fonts.Font] = MapFontProperty,
-            [EnvironmentKeys.Colors.Color] = MapColorProperty
-		};
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
+            [EnvironmentKeys.Colors.BackgroundColor] = MapBackgroundColorProperty
+        };
 
         private static Font DefaultFont;
         private static Color DefaultColor;
-        
-		private Text _text;
+        private static Color DefaultBackgroundColor;
+
+        private Text _text;
 
 		public TextHandler ()
 		{
@@ -26,9 +28,10 @@ namespace HotUI.iOS
 			if (DefaultColor == null)
 			{
 				DefaultFont = Font.ToFont();
-				DefaultColor = TextColor.ToColor();
-			}
-		}
+                DefaultColor = TextColor.ToColor();
+                DefaultBackgroundColor = BackgroundColor.ToColor();
+            }
+        }
 
         public UIView View => this;
 
@@ -71,6 +74,15 @@ namespace HotUI.iOS
             if (!color.Equals(nativeColor))
                 nativeView.TextColor = color.ToUIColor();
 
+            return true;
+        }
+
+        public static bool MapBackgroundColorProperty(TextHandler nativeView, Text virtualView)
+        {
+            var color = virtualView.GetBackgroundColor(DefaultBackgroundColor);
+            var nativeColor = nativeView.BackgroundColor.ToColor();
+            if (!color.Equals(nativeColor))
+                nativeView.BackgroundColor = color.ToUIColor();
             return true;
         }
     }

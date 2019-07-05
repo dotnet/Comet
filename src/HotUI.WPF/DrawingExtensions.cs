@@ -5,9 +5,9 @@ namespace HotUI.WPF
 {
     public static class DrawingExtensions
     {
-        public static SizeF ToSizeF(this Size size)
+        public static Size ToSize(this Size size)
         {
-            return new SizeF((float) size.Width, (float) size.Height);
+            return new Size((float) size.Width, (float) size.Height);
         }
     }
 }

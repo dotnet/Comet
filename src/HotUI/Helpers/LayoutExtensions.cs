@@ -36,9 +36,12 @@ namespace HotUI
 		public static Thickness GetPadding (this View view, Thickness defaultPadding)
 		{
 			var padding = view.GetEnvironment<Thickness?> (EnvironmentKeys.Layout.Padding);
-			if (padding != null) {
+			if (padding != null)
 				return (Thickness)padding;
-			}
+
+            if (view.BuiltView != null)
+                return view.BuiltView.GetPadding(defaultPadding);
+
 			return defaultPadding;
 		}
 	}
