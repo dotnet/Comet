@@ -4,7 +4,7 @@ namespace HotUI {
 		public void Navigate (View view)
 		{
 			view.Navigation = this;
-			view.Parent = this;
+			view.UpdateNavigation ();
 			PerformNavigate (view);
 		}
 		public Action<View> PerformNavigate;
