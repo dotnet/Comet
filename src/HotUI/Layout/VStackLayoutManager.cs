@@ -12,7 +12,7 @@ namespace HotUI.Layout
             var x = 0f;
             var y = 0f;
             var width = 0f;
-            
+
             foreach (var subview in handler.GetSubviews())
             {
                 var size = handler.GetSize(subview);

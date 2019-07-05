@@ -1,5 +1,4 @@
-﻿using System;
-using CoreGraphics;
+﻿using CoreGraphics;
 using UIKit;
 
 namespace HotUI.iOS
@@ -10,20 +9,22 @@ namespace HotUI.iOS
         {
         }
 
-        IUIView currentView;
+        private View _view;
+        private IUIView _handler;
 
-        public IUIView CurrentView
+        public View CurrentView
         {
-            get => currentView;
+            get => _view;
             set
             {
-                if (value == currentView)
+                
+                if (value == _view)
                     return;
-                currentView = value;
-                if (currentView is ViewHandler vh)
-                {
+
+                _view = value;
+                _handler = _view.ToIUIView();
+                if (_handler is ViewHandler vh)
                     vh.ViewChanged = SetView;
-                }
 
                 SetView();
             }
@@ -33,9 +34,10 @@ namespace HotUI.iOS
 
         void SetView()
         {
-            if (this.ViewIfLoaded == null || CurrentView == null)
+            if (ViewIfLoaded == null || CurrentView == null)
                 return;
-            var view = CurrentView?.View;
+            
+            var view = _handler?.View;
             if (view == currentlyShownView)
                 return;
             currentlyShownView?.RemoveFromSuperview();
@@ -70,6 +72,15 @@ namespace HotUI.iOS
                 bounds.Y += safe.Top;
                 bounds.Height -= safe.Top + safe.Bottom;
                 bounds.Width -= safe.Left + safe.Right;
+
+                var padding = _view.GetPadding();
+                if (!padding.IsEmpty)
+                {
+                    bounds.X += padding.Left;
+                    bounds.Y += padding.Top;
+                    bounds.Width -= padding.HorizontalThickness;
+                    bounds.Height -= padding.VerticalThickness;
+                }
                 
                 if (currentlyShownView is UITableView lv)
                     currentlyShownView.Frame = bounds;

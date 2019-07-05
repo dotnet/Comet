@@ -11,10 +11,9 @@ namespace HotUI.iOS {
 		}
 		public static UIViewController ToViewController (this View view, bool allowNav = true)
 		{
-			var handler = view.ToIUIView ();
-			
-			var vc = new HotUIViewController {
-				CurrentView = handler,
+			var vc = new HotUIViewController 
+			{
+				CurrentView = view,
 			};
 			if (view.BuiltView is NavigationView nav && allowNav) {
 				var navController = new UINavigationController ();

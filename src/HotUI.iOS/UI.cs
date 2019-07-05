@@ -26,6 +26,8 @@ namespace HotUI.iOS {
 			Registrar.Handlers.Register<ListView, ListViewHandler> ();
 			Registrar.Handlers.Register<View, ViewHandler> ();
 			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
+			Registrar.Handlers.Register<Spacer, SpacerHandler> ();
+			
 			ModalView.PerformPresent = (o) => {
 				PresentingViewController.PresentViewController (o.ToViewController(), true,null);
 			};

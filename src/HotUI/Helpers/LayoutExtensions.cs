@@ -28,6 +28,11 @@ namespace HotUI
 			return view;
 		}
 
+	    public static Thickness GetPadding (this View view)
+	    {
+		    return view.GetPadding(Thickness.Empty);
+	    }
+	    
 		public static Thickness GetPadding (this View view, Thickness defaultPadding)
 		{
 			var padding = view.GetEnvironment<Thickness?> (EnvironmentKeys.Layout.Padding);

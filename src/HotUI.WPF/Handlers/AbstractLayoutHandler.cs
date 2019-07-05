@@ -18,6 +18,11 @@ namespace HotUI.WPF.Handlers
             _layoutManager = layoutManager;
         }
 
+        public SizeF GetAvailableSize()
+        {
+            throw new NotImplementedException();
+        }
+        
         public SizeF GetSize(UIElement view)
         {
             if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0)

@@ -5,6 +5,8 @@ namespace HotUI
     [DebuggerDisplay("Left={Left}, Top={Top}, Right={Right}, Bottom={Bottom}, HorizontalThickness={HorizontalThickness}, VerticalThickness={VerticalThickness}")]
     public struct Thickness
     {
+        public static readonly Thickness Empty = new Thickness(0);
+        
         public float Left { get; set; }
 
         public float Top { get; set; }
@@ -17,7 +19,7 @@ namespace HotUI
 
         public float VerticalThickness => Top + Bottom;
 
-        internal bool IsEmpty => Left == 0 && Top == 0 && Right == 0 && Bottom == 0;
+        public bool IsEmpty => Left == 0 && Top == 0 && Right == 0 && Bottom == 0;
 
         public Thickness(float uniformSize) : this(uniformSize, uniformSize, uniformSize, uniformSize)
         {

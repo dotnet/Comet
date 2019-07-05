@@ -11,6 +11,8 @@ namespace HotUI.iOS
         private readonly ILayoutManager<UIView> _layoutManager;
         private AbstractLayout _view;
 
+        public AbstractLayout Layout => _view;
+        
         protected AbstractLayoutHandler(CGRect rect, ILayoutManager<UIView> layoutManager) : base(rect)
         {
             _layoutManager = layoutManager;
@@ -20,6 +22,11 @@ namespace HotUI.iOS
         protected AbstractLayoutHandler(ILayoutManager<UIView> layoutManager)
         {
             _layoutManager = layoutManager;
+        }
+
+        public SizeF GetAvailableSize()
+        {
+            return Superview?.Bounds.Size.ToSizeF() ?? Bounds.Size.ToSizeF();
         }
 
         public SizeF GetSize(UIView view)
@@ -130,7 +137,16 @@ namespace HotUI.iOS
 
         public override void LayoutSubviews()
         {
+            if (Superview == null)
+                return;
+            
             _layoutManager.Layout(this, this, _view);
+        }
+
+        public override void MovedToSuperview()
+        {
+            base.MovedToSuperview();
+            SetNeedsLayout();
         }
     }
 }
