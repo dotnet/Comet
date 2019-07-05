@@ -11,8 +11,8 @@ namespace HotUI.UWP.Handlers
     {
         public static readonly PropertyMapper<View, UIElement, ViewHandler> Mapper = new PropertyMapper<View, UIElement, ViewHandler>()
         {
-            [nameof(global::HotUI.View.Body)] = MapBodyProperty
-        };
+
+		};
         
         private View _view;
         private UIElement _body;
@@ -29,7 +29,8 @@ namespace HotUI.UWP.Handlers
 
         public void SetView(View view)
         {
-            _view = view;           
+            _view = view;
+			SetBody();
             Mapper.UpdateProperties(this, _view);
             ViewChanged?.Invoke();
         }

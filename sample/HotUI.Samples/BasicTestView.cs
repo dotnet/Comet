@@ -52,7 +52,7 @@ namespace HotUI.Samples
                     new Button("Toggle Entry/Label")
                     {
                         OnClick = () => state.CanEdit = !state.CanEdit
-                    },
+                    }.Background(Colors.Salmon),
                     new Button("Update Text")
                     {
                         OnClick = () => { state.Text = $"Click Count: {clickCount.Value++}"; }
