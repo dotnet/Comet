@@ -21,7 +21,8 @@ namespace HotUI.Samples.Comparisons
     {
         public Section1()
         {
-            Body = () => new Text("Hello HotUI!");
+            Body = () => 
+                new Text("Hello HotUI!");
         }
     }
 }

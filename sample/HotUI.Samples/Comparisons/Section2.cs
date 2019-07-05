@@ -24,9 +24,9 @@ namespace HotUI.Samples.Comparisons
         public Section2()
         {
             Body = () => 
-                    new Text("Turtle Rock")
-                        .Font(Font.Title)
-                        .Color(Colors.Green);
+                new Text("Turtle Rock")
+                    .Font(Font.Title)
+                    .Color(Colors.Green);
         }
     }
 }
