@@ -28,6 +28,10 @@ namespace HotUI {
 				OnParentChange (value);
 			}
 		}
+		internal void UpdateNavigation()
+		{
+			OnParentChange (Navigation);
+		}
 		protected virtual void OnParentChange(View parent)
 		{
 			this.Navigation = parent.Navigation ?? parent as NavigationView;
@@ -37,6 +41,7 @@ namespace HotUI {
 		public View (bool hasConstructors)
 		{
 			ActiveViews.Add (this);
+			HotReloadHelper.Register (this);
 			Context.View = this;
 			State = StateBuilder.CurrentState ?? new State {
 				StateChanged = ResetView
@@ -62,6 +67,8 @@ namespace HotUI {
 					return;
 				viewHandler?.Remove (this);
 				viewHandler = value;
+				if (replacedView != null)
+					replacedView.ViewHandler = value;
 				WillUpdateView ();
 				viewHandler?.SetView (this.GetRenderView());
 			}
@@ -78,17 +85,20 @@ namespace HotUI {
 		}
 		View builtView;
 		public View BuiltView => builtView;
+		internal void Reload () => ResetView ();
 		void ResetView()
 		{
 			if (usedEnvironmentData.Any ())
 				SetEnvironmentFields ();
 			var oldView = builtView;
 			builtView = null;
+			replacedView?.Dispose ();
+			replacedView = null;
 			if (ViewHandler == null)
 				return;
 			ViewHandler.Remove (this);
 			var view = this.GetRenderView ().Diff (oldView);
-			oldView.Dispose ();
+			oldView?.Dispose ();
 			ViewHandler?.SetView (view);
 		}
 
@@ -100,9 +110,19 @@ namespace HotUI {
 		}
 
 		internal View GetView () => GetRenderView ();
-
+		View replacedView;
 		protected virtual View GetRenderView ()
 		{
+			if (replacedView != null)
+				return replacedView.GetRenderView();
+			var replaced = HotReloadHelper.GetReplacedView (this);
+			if(replaced != this) {
+				replaced.Navigation = this.Navigation;
+				replaced.Parent = this.Parent;
+				replacedView = replaced;
+				replacedView.ViewHandler = ViewHandler;
+				return replacedView.GetRenderView();
+			}
 			if (Body == null)
 				return this;
 			if (builtView != null)
@@ -130,6 +150,7 @@ namespace HotUI {
 		{
 			this.SetPropertyValue (property, value);
 			ViewHandler?.UpdateValue (property, value);
+			replacedView?.ViewPropertyChanged (property, value);
 		}
 
 		internal virtual void ContextPropertyChanged(string property, object value)
@@ -181,10 +202,11 @@ namespace HotUI {
 		public void Dispose ()
 		{
 			ActiveViews.Remove (this);
+			HotReloadHelper.UnRegister (this);
 			ViewHandler = null;
 			Body = null;
 			Context.Clear ();
-            State.DisposingObject(this);
+            State?.DisposingObject(this);
 			State = null;
 			OnDisposing ();
 		}
