@@ -36,14 +36,8 @@ namespace HotUI.iOS
             _content = _scroll?.View?.ToView();
             if (_content != null)
             {
+                _content.SizeToFit();
                 Add(_content);
-                NSLayoutConstraint.ActivateConstraints(new[]
-                {
-                    _content.LeadingAnchor.ConstraintEqualTo(LeadingAnchor),
-                    _content.TrailingAnchor.ConstraintEqualTo(TrailingAnchor),
-                    _content.TopAnchor.ConstraintEqualTo(TopAnchor),
-                    _content.BottomAnchor.ConstraintEqualTo(BottomAnchor)
-                });
             }
 
             Mapper.UpdateProperties(this, _scroll);

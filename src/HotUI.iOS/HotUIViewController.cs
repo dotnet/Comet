@@ -27,7 +27,7 @@ namespace HotUI.iOS
             get
             {
                 if (_containerView == null)
-                    _containerView = new HotUIView();
+                    _containerView = new HotUIView(UIScreen.MainScreen.Bounds);
 
                 return _containerView;
             }

@@ -15,6 +15,12 @@ namespace HotUI.iOS
             TranslatesAutoresizingMaskIntoConstraints = false;
         }
 
+        public HotUIView(CGRect rect) : base(rect)
+        {
+            BackgroundColor = UIColor.White;
+            TranslatesAutoresizingMaskIntoConstraints = false;
+        }
+
         public View CurrentView
         {
             get => _virtualView;
@@ -51,10 +57,21 @@ namespace HotUI.iOS
             SetNeedsLayout();
         }
 
+        public override CGRect Frame
+        {
+            get => base.Frame;
+            set => base.Frame = value;
+        }
+
+        public override CGRect Bounds
+        {
+            get => base.Bounds;
+            set { /* do nothing */ }
+        }
 
         public override void LayoutSubviews()
         {
-            if (_nativeView == null)
+            if (Bounds.IsEmpty || _nativeView == null)
                 return;
 
             if (_nativeView is UIScrollView sv)
