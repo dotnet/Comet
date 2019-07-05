@@ -8,7 +8,7 @@ namespace HotUI.WPF.Handlers
 {
     public class TextHandler : WPFLabel, IUIElement
     {
-        private static readonly PropertyMapper<Text, TextHandler> Mapper = new PropertyMapper<Text, TextHandler>()
+        public static readonly PropertyMapper<Text, UIElement, TextHandler> Mapper = new PropertyMapper<Text, UIElement, TextHandler>()
             {
                 [nameof(Text.Value)] = MapValueProperty
             };

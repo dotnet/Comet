@@ -5,7 +5,7 @@ namespace HotUI.iOS
 {
     public class ToggleHandler : UISwitch, IUIView
     {
-		private static readonly PropertyMapper<Toggle, UISwitch> Mapper = new PropertyMapper<Toggle, UISwitch> ()
+		public static readonly PropertyMapper<Toggle, UIView, UISwitch> Mapper = new PropertyMapper<Toggle, UIView, UISwitch> (ViewHandler.Mapper)
 		{ 
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };

@@ -8,7 +8,7 @@ namespace HotUI.iOS
 {
     public class TextFieldHandler : UITextField, IUIView
     {
-        private static readonly PropertyMapper<TextField, TextFieldHandler> Mapper = new PropertyMapper<TextField, TextFieldHandler>()
+        public static readonly PropertyMapper<TextField, UIView, TextFieldHandler> Mapper = new PropertyMapper<TextField, UIView, TextFieldHandler>(ViewHandler.Mapper)
         {
             [nameof(TextField.Text)] = MapTextProperty
         };

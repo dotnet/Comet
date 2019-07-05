@@ -9,7 +9,7 @@ namespace HotUI.UWP.Handlers
 {
     public class ViewHandler : IUIElement
     {
-        private static readonly PropertyMapper<View, ViewHandler> Mapper = new PropertyMapper<View, ViewHandler>()
+        public static readonly PropertyMapper<View, UIElement, ViewHandler> Mapper = new PropertyMapper<View, UIElement, ViewHandler>()
         {
             [nameof(global::HotUI.View.Body)] = MapBodyProperty
         };
@@ -39,16 +39,16 @@ namespace HotUI.UWP.Handlers
             Mapper.UpdateProperties(this, _view);
         }
 
-        public static bool MapBodyProperty(ViewHandler nativeView, View virtualView)
+        public void SetBody()
         {
-            var uiElement = virtualView?.ToIUIElement();
-            if (uiElement?.GetType() == typeof(ViewHandler) && virtualView.Body == null)
+            var uiElement = _view?.ToIUIElement();
+            if (uiElement?.GetType() == typeof(ViewHandler) && _view.Body == null)
             {
-                Debug.WriteLine($"There is no ViewHandler for {virtualView.GetType()}");
+                Debug.WriteLine($"There is no ViewHandler for {_view.GetType()}");
                 return true;
             }
 
-            nativeView._body = uiElement?.View;
+            _body = uiElement?.View;
             return true;
         }
     }

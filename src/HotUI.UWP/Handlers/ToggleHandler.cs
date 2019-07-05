@@ -7,7 +7,7 @@ namespace HotUI.UWP
 {
     public class ToggleHandler :  IUIElement
     {
-		private static readonly PropertyMapper<Toggle, ToggleSwitch> Mapper = new PropertyMapper<Toggle, ToggleSwitch> ()
+		public static readonly PropertyMapper<Toggle, UIElement, ToggleSwitch> Mapper = new PropertyMapper<Toggle, UIElement, ToggleSwitch> ()
 		{ 
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };

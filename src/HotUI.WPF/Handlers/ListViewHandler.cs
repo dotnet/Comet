@@ -9,7 +9,7 @@ namespace HotUI.WPF.Handlers
 {
     public class ListViewHandler : WPFListView, IUIElement
     {
-        private static readonly PropertyMapper<ListView, ListViewHandler> Mapper = new PropertyMapper<ListView, ListViewHandler>()
+        public static readonly PropertyMapper<ListView, UIElement, ListViewHandler> Mapper = new PropertyMapper<ListView, UIElement, ListViewHandler>()
         {
             [nameof(Text.Value)] = MapListProperty
         };

@@ -8,9 +8,9 @@ namespace HotUI.iOS
 {
     public class ViewHandler : IUIView
     {
-        private static readonly PropertyMapper<View, ViewHandler> Mapper = new PropertyMapper<View, ViewHandler>()
+        public static readonly PropertyMapper<View, UIView, UIView> Mapper = new PropertyMapper<View, UIView, UIView>()
         {
-            [nameof(HotUI.View.Body)] = MapBodyProperty
+            [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty
         };
         
         private View _view;
@@ -29,26 +29,35 @@ namespace HotUI.iOS
         public void SetView(View view)
         {
             _view = view;
-            Mapper.UpdateProperties(this, _view);
+            SetBody();
+            Mapper.UpdateProperties(_body, _view);
             ViewChanged?.Invoke();
         }
 
         public void UpdateValue(string property, object value)
         {
-            Mapper.UpdateProperty(this, _view, property);
+            Mapper.UpdateProperty(_body, _view, property);
         }
-        
-        public static bool MapBodyProperty(ViewHandler nativeView, View virtualView)
+
+        public bool SetBody()
         {
-            var uiElement = virtualView?.ToIUIView();
-            if (uiElement?.GetType() == typeof(ViewHandler) && virtualView.Body == null)
+            var uiElement = _view?.ToIUIView();
+            if (uiElement?.GetType() == typeof(ViewHandler) && _view.Body == null)
             {
                 // this is recursive.
-                Debug.WriteLine($"There is no ViewHandler for {virtualView.GetType()}");
+                Debug.WriteLine($"There is no ViewHandler for {_view.GetType()}");
                 return true;
             }
 
-            nativeView._body = uiElement?.View ?? new UIView();
+            _body = uiElement?.View ?? new UIView();
+            return true;
+        }
+
+        public static bool MapBackgroundColorProperty(UIView nativeView, View virtualView)
+        {
+            var color = virtualView.GetBackgroundColor();
+            if (color != null)
+                nativeView.BackgroundColor = color.ToUIColor();
             return true;
         }
     }

@@ -7,7 +7,7 @@ namespace HotUI.Mac.Handlers
 {
     public class TextFieldHandler : NSTextField, INSView
     {
-        private static readonly PropertyMapper<TextField, NSTextField> Mapper = new PropertyMapper<TextField, NSTextField>()
+        public static readonly PropertyMapper<TextField, NSView, NSTextField> Mapper = new PropertyMapper<TextField, NSView, NSTextField>(ViewHandler.Mapper)
         {
             [nameof(TextField.Text)] = MapTextProperty
         };

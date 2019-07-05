@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace HotUI.Layout
 {
@@ -39,18 +40,58 @@ namespace HotUI.Layout
             AbstractLayout layout,
             Size measured)
         {
-            var x = 0f;
-            var y = 0f;
             var width = 0f;
+
+            var index = 0;
+            var nonSpacerHeight = 0f;
+            var spacerCount = 0;
+            List<Size> sizes = new List<Size>();
 
             foreach (var subview in handler.GetSubviews())
             {
-                var size = handler.GetSize(subview);
-                handler.SetFrame(subview,x,y,size.Width, size.Height);
+                var view = layout[index];
+                if (view is Spacer)
+                {
+                    spacerCount++;
+                    sizes.Add(new Size());
+                }
+                else
+                {
+                    var size = handler.GetSize(subview);
+                    sizes.Add(size);
+                    width = Math.Max(size.Width, width);
+                    nonSpacerHeight += size.Height;
+                }
+                index++;
+            }
+
+            var spacerHeight = 0f;
+            if (spacerCount > 0)
+            {
+                var availableHeight = measured.Height - nonSpacerHeight;
+                spacerHeight = availableHeight / spacerCount;
+            }
+
+            var x = 0f;
+            var y = 0f;
+            index = 0;
+            foreach (var subview in handler.GetSubviews())
+            {
+                var view = layout[index];
+                Size size;
+                if (view is Spacer)
+                {
+                    size = new Size(width, spacerHeight);
+                }
+                else
+                {
+                    size = sizes[index];
+                }
+
+                handler.SetFrame(subview, x, y, size.Width, size.Height);
                 y += size.Height;
-    
-                width = Math.Max(width, size.Width);
-            }            
+                index++;
+            }
         }
     }
 }

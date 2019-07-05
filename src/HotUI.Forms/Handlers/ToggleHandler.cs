@@ -7,7 +7,7 @@ namespace HotUI.Forms
 {
     public class ToggleHandler : FToggle, IFormsView
     {
-		private static readonly PropertyMapper<Toggle, ToggleHandler> Mapper = new PropertyMapper<Toggle, ToggleHandler> ()
+		public static readonly PropertyMapper<Toggle, FView, ToggleHandler> Mapper = new PropertyMapper<Toggle, FView, ToggleHandler> ()
 		{ 
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };

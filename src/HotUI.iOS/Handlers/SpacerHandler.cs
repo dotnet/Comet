@@ -7,7 +7,7 @@ namespace HotUI.iOS
 {
     public class SpacerHandler : UIView, IUIView
     {
-        private static readonly PropertyMapper<Spacer, UIView> Mapper = new PropertyMapper<Spacer, UIView>()
+        public static readonly PropertyMapper<Spacer, UIView, UIView> Mapper = new PropertyMapper<Spacer, UIView, UIView>(ViewHandler.Mapper)
         {
             
         };

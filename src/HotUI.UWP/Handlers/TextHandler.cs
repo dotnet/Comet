@@ -9,7 +9,7 @@ namespace HotUI.UWP.Handlers
 {
     public class TextHandler : IUIElement
     {
-        private static readonly PropertyMapper<Text, UWPLabel> Mapper = new PropertyMapper<Text, UWPLabel>()
+        public static readonly PropertyMapper<Text, UIElement, UWPLabel> Mapper = new PropertyMapper<Text, UIElement, UWPLabel>()
             {
                 [nameof(Text.Value)] = MapValueProperty
             };

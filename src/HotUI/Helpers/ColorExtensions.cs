@@ -34,7 +34,7 @@ namespace HotUI {
             return view;
         }
 
-        public static Color GetBackgroundColor(this View view, Color defaultColor)
+        public static Color GetBackgroundColor(this View view, Color defaultColor = null)
         {
             var color = view.GetEnvironment<Color>(EnvironmentKeys.Colors.BackgroundColor);
             return color ?? defaultColor;

@@ -9,7 +9,7 @@ namespace HotUI.UWP.Handlers
 {
     public class TextFieldHandler : UWPTextField, IUIElement
     {
-        private static readonly PropertyMapper<TextField, TextFieldHandler> Mapper = new PropertyMapper<TextField, TextFieldHandler>()
+        public static readonly PropertyMapper<TextField, UIElement, TextFieldHandler> Mapper = new PropertyMapper<TextField, UIElement, TextFieldHandler>()
         {
             [nameof(TextField.Text)] = MapTextProperty
         };

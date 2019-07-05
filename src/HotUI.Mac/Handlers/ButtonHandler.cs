@@ -6,7 +6,7 @@ namespace HotUI.Mac.Handlers
 {
     public class ButtonHandler : NSButton, INSView
     {
-        private static readonly PropertyMapper<Button, ButtonHandler> Mapper = new PropertyMapper<Button, ButtonHandler>()
+        public static readonly PropertyMapper<Button, NSView, ButtonHandler> Mapper = new PropertyMapper<Button, NSView, ButtonHandler>(ViewHandler.Mapper)
         {
             [nameof(Button.Text)] = MapTextProperty
         };

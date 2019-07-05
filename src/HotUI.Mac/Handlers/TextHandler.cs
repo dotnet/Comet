@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using AppKit;
+﻿using AppKit;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
     public class TextHandler : NSTextField, INSView
     {
-        private static readonly PropertyMapper<Text, NSTextField> Mapper = new PropertyMapper<Text, NSTextField>()
+        public static readonly PropertyMapper<Text, NSView, NSTextField> Mapper = new PropertyMapper<Text, NSView, NSTextField>(ViewHandler.Mapper)
         {
             [nameof(Text.Value)] = MapValueProperty
         };

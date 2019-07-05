@@ -12,7 +12,7 @@ namespace HotUI.UWP.Handlers
 {
     public class ImageHandler : IUIElement
     {
-        private static readonly PropertyMapper<Image, ImageHandler> Mapper = new PropertyMapper<Image, ImageHandler>()
+        public static readonly PropertyMapper<Image, UIElement, ImageHandler> Mapper = new PropertyMapper<Image, UIElement, ImageHandler>()
         {
             [nameof(Image.Source)] = MapSourceProperty
         };

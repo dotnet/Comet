@@ -7,7 +7,7 @@ namespace HotUI.iOS
 {
     public class ScrollViewHandler : UIScrollView, IUIView
     {
-        private static readonly PropertyMapper<ScrollView, ScrollViewHandler> Mapper = new PropertyMapper<ScrollView, ScrollViewHandler>()
+        public static readonly PropertyMapper<ScrollView, UIView, ScrollViewHandler> Mapper = new PropertyMapper<ScrollView, UIView, ScrollViewHandler>(ViewHandler.Mapper)
         {
             
         };

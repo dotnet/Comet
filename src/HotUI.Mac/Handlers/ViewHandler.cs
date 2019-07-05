@@ -3,9 +3,15 @@ using System.Diagnostics;
 using AppKit;
 using HotUI.Mac.Extensions;
 
-namespace HotUI.Mac {
-	public class ViewHandler : INSView {
-		public Action ViewChanged { get; set; }
+namespace HotUI.Mac
+{
+	public class ViewHandler : INSView
+    {
+        public static readonly PropertyMapper<View, NSView, NSView> Mapper = new PropertyMapper<View, NSView, NSView>()
+        {
+        };
+
+        public Action ViewChanged { get; set; }
 
 		public NSView View {
 			get {
@@ -37,5 +43,5 @@ namespace HotUI.Mac {
 		{
 			View.UpdateBaseProperty (property, value);
 		}
-	}
+    }
 }

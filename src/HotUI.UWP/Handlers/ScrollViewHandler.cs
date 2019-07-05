@@ -8,7 +8,7 @@ namespace HotUI.UWP.Handlers
 {
     public class ScrollViewHandler : IUIElement
     {
-        private static readonly PropertyMapper<ScrollView, UWPScrollView> Mapper = new PropertyMapper<ScrollView, UWPScrollView>()
+        public static readonly PropertyMapper<ScrollView, UIElement, UWPScrollView> Mapper = new PropertyMapper<ScrollView, UIElement, UWPScrollView>()
             {
             };
 

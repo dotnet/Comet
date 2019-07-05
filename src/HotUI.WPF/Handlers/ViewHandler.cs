@@ -10,7 +10,7 @@ namespace HotUI.WPF.Handlers
 {
     public class ViewHandler : Grid, IUIElement
     {
-        private static readonly PropertyMapper<View, ViewHandler> Mapper = new PropertyMapper<View, ViewHandler>()
+        public static readonly PropertyMapper<View, UIElement, ViewHandler> Mapper = new PropertyMapper<View, UIElement, ViewHandler>()
         {
             [nameof(HotUI.View.Body)] = MapBodyProperty
         };

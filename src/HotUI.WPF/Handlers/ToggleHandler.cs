@@ -7,7 +7,7 @@ namespace HotUI.WPF
 {
     public class ToggleHandler :  IUIElement
     {
-		private static readonly PropertyMapper<Toggle, CheckBox> Mapper = new PropertyMapper<Toggle, CheckBox> ()
+		public static readonly PropertyMapper<Toggle, UIElement, CheckBox> Mapper = new PropertyMapper<Toggle, UIElement, CheckBox> ()
 		{ 
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };

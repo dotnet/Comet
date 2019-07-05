@@ -9,7 +9,7 @@ namespace HotUI.iOS
 {
     public class ButtonHandler : UIButton, IUIView
     {
-        private static readonly PropertyMapper<Button, UIButton> Mapper = new PropertyMapper<Button, UIButton>()
+        public static readonly PropertyMapper<Button, UIView, UIButton> Mapper = new PropertyMapper<Button, UIView, UIButton>(ViewHandler.Mapper)
         {
             [nameof(Button.Text)] = MapTextProperty
         };

@@ -12,7 +12,7 @@ namespace HotUI.iOS
 {
     public class ImageHandler : UIImageView, IUIView
     {
-        private static readonly PropertyMapper<Image, ImageHandler> Mapper = new PropertyMapper<Image, ImageHandler>()
+        public static readonly PropertyMapper<Image, UIView, ImageHandler> Mapper = new PropertyMapper<Image, UIView, ImageHandler>(ViewHandler.Mapper)
         {
             [nameof(Button.Text)] = MapSourceProperty
         };

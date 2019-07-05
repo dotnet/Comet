@@ -8,12 +8,11 @@ namespace HotUI.iOS
 {
     public class TextHandler : UILabel, IUIView
     {
-        private static readonly PropertyMapper<Text, TextHandler> Mapper = new PropertyMapper<Text, TextHandler>()
+        public static readonly PropertyMapper<Text, UIView, TextHandler> Mapper = new PropertyMapper<Text, UIView, TextHandler>(ViewHandler.Mapper)
         {
             [nameof(HotUI.Text.Value)] = MapValueProperty,
             [EnvironmentKeys.Fonts.Font] = MapFontProperty,
             [EnvironmentKeys.Colors.Color] = MapColorProperty,
-            [EnvironmentKeys.Colors.BackgroundColor] = MapBackgroundColorProperty
         };
 
         private static Font DefaultFont;
@@ -74,15 +73,6 @@ namespace HotUI.iOS
             if (!color.Equals(nativeColor))
                 nativeView.TextColor = color.ToUIColor();
 
-            return true;
-        }
-
-        public static bool MapBackgroundColorProperty(TextHandler nativeView, Text virtualView)
-        {
-            var color = virtualView.GetBackgroundColor(DefaultBackgroundColor);
-            var nativeColor = nativeView.BackgroundColor.ToColor();
-            if (!color.Equals(nativeColor))
-                nativeView.BackgroundColor = color.ToUIColor();
             return true;
         }
     }

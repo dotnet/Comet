@@ -8,9 +8,9 @@ namespace HotUI.Forms
 {
 	public class ViewHandler : FView, IFormsView
     {
-        private static readonly PropertyMapper<View, ViewHandler> Mapper = new PropertyMapper<View, ViewHandler>()
+        public static readonly PropertyMapper<View, FView, ViewHandler> Mapper = new PropertyMapper<View, FView, ViewHandler>()
         {
-            [nameof(HotUI.View.Body)] = MapBodyProperty
+
         };
 
         private View _view;
@@ -28,6 +28,7 @@ namespace HotUI.Forms
         public void SetView(View view)
         {
             _view = view;
+            SetBody();
             Mapper.UpdateProperties(this, _view);
             ViewChanged?.Invoke();
         }
@@ -37,18 +38,16 @@ namespace HotUI.Forms
             Mapper.UpdateProperties(this, _view);
         }
 
-        public static bool MapBodyProperty(ViewHandler nativeView, View virtualView)
+        public void SetBody()
         {
-            var formsView = virtualView?.ToIFormsView();
-            if (formsView?.GetType() == typeof(ViewHandler) && virtualView.Body == null)
+            var formsView = _view?.ToIFormsView();
+            if (formsView?.GetType() == typeof(ViewHandler) && _view.Body == null)
             {
                 // this is recursive.
-                Debug.WriteLine($"There is no ViewHandler for {virtualView.GetType()}");
-                return true;
+                Debug.WriteLine($"There is no ViewHandler for {_view.GetType()}");
             }
 
-            nativeView.View = formsView?.View ?? new Xamarin.Forms.ContentView();
-            return true;
+            View = formsView?.View ?? new Xamarin.Forms.ContentView();
         }
     }
 }
