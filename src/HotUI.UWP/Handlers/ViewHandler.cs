@@ -46,11 +46,9 @@ namespace HotUI.UWP.Handlers
             if (uiElement?.GetType() == typeof(ViewHandler) && _view.Body == null)
             {
                 Debug.WriteLine($"There is no ViewHandler for {_view.GetType()}");
-                return true;
             }
 
             _body = uiElement?.View;
-            return true;
         }
     }
 }
