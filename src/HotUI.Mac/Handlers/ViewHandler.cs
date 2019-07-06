@@ -9,39 +9,66 @@ namespace HotUI.Mac
     {
         public static readonly PropertyMapper<View, NSView, NSView> Mapper = new PropertyMapper<View, NSView, NSView>()
         {
+            [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty
         };
+
+        private View _view;
+        private NSView _body;
 
         public Action ViewChanged { get; set; }
 
-		public NSView View {
-			get {
-				var iView = currentView?.ToINSView ();
-				if(iView?.GetType() == typeof(ViewHandler) && currentView?.Body == null) {
-					//This is recusrive!!!
-					Debug.WriteLine ($"There is no View Handler for {currentView.GetType()}");
-					return new NSView ();
-				}
+        public NSView View => _body;
 
-				return iView?.View ?? new NSView ();
-			}
-		}
+        public void Remove(View view)
+        {
+            _view = null;
+            _body = null;
+        }
 
-		View currentView;
-		public void Remove (View view)
-		{
-			currentView = null;
-		}
+        public void SetView(View view)
+        {
+            _view = view;
+            SetBody();
+            Mapper.UpdateProperties(_body, _view);
+            ViewChanged?.Invoke();
+        }
 
-		public void SetView (View view)
-		{
-			currentView = view;
-			View?.UpdateProperties (view);
-			ViewChanged?.Invoke ();
-		}
+        public void UpdateValue(string property, object value)
+        {
+            Mapper.UpdateProperty(_body, _view, property);
+        }
 
-		public void UpdateValue (string property, object value)
-		{
-			View.UpdateBaseProperty (property, value);
-		}
+        public bool SetBody()
+        {
+            var uiElement = _view?.ToINSView();
+            if (uiElement?.GetType() == typeof(ViewHandler) && _view.Body == null)
+            {
+                // this is recursive.
+                Debug.WriteLine($"There is no ViewHandler for {_view.GetType()}");
+                return true;
+            }
+
+            _body = uiElement?.View ?? new NSColorView();
+            return true;
+        }
+
+        public static bool MapBackgroundColorProperty(NSView nativeView, View virtualView)
+        {
+            var color = virtualView.GetBackgroundColor();
+            if (color != null)
+            {
+                if (nativeView is NSColorView colorView)
+                {
+                    colorView.BackgroundColor = color.ToNSColor();
+                }
+                else if (nativeView is NSTextField textField)
+                {
+                    textField.BackgroundColor = color.ToNSColor();
+                    textField.DrawsBackground = true;
+                }
+            }
+
+            return true;
+        }
     }
 }

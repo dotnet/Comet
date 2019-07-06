@@ -7,13 +7,26 @@ namespace HotUI.Mac.Handlers
     {
         public static readonly PropertyMapper<Text, NSView, NSTextField> Mapper = new PropertyMapper<Text, NSView, NSTextField>(ViewHandler.Mapper)
         {
-            [nameof(Text.Value)] = MapValueProperty
+            [nameof(Text.Value)] = MapValueProperty,
+            [EnvironmentKeys.Fonts.Font] = MapFontProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
         
+        private static Font DefaultFont;
+        private static Color DefaultColor;
+        private static Color DefaultBackgroundColor;
+
         public NSView View => this;
 
         public TextHandler()
         {
+            if (DefaultColor == null)
+            {
+                DefaultFont = Font.ToFont();
+                DefaultColor = TextColor.ToColor();
+                DefaultBackgroundColor = BackgroundColor.ToColor();
+            }
+
             Editable = false;
             Bezeled = false;
             DrawsBackground = false;
@@ -43,27 +56,23 @@ namespace HotUI.Mac.Handlers
             nativeView.SizeToFit();
             return true;
         }
-    }
 
-    public static partial class ControlExtensions
-    {
-        public static void UpdateLabelProperties(this NSTextField view, Text hView)
+        public static bool MapFontProperty(NSTextField nativeView, Text virtualView)
         {
-            view.UpdateLabelProperty(nameof(Text.Value), hView?.Value);
-            view.UpdateBaseProperties(hView);
+            var font = virtualView.GetFont(DefaultFont);
+            nativeView.Font = font.ToUIFont();
+            nativeView.SizeToFit();
+            return true;
         }
 
-        public static bool UpdateLabelProperty(this NSTextField view, string property, object value)
+        public static bool MapColorProperty(NSTextField nativeView, Text virtualView)
         {
-            switch (property)
-            {
-                case nameof(Text.Value):
-                    view.StringValue = (string) value;
-                    view.SizeToFit();
-                    return true;
-            }
+            var color = virtualView.GetColor(DefaultColor);
+            var nativeColor = nativeView.TextColor.ToColor();
+            if (!color.Equals(nativeColor))
+                nativeView.TextColor = color.ToNSColor();
 
-            return view.UpdateBaseProperty(property, value);
+            return true;
         }
     }
 }

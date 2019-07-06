@@ -2,7 +2,7 @@
 
 namespace HotUI.Mac.Extensions
 {
-    public static partial class MacExtensions
+    public static class MacExtensions
     {
         static MacExtensions()
         {
@@ -11,11 +11,11 @@ namespace HotUI.Mac.Extensions
 
 		public static NSViewController ToViewController (this View view, bool allowNav = true)
 		{
-
 			var handler = view.ToINSView ();
 
-			var vc = new HotUIViewController {
-				CurrentView = view.ToINSView (),
+			var vc = new HotUIViewController 
+			{
+				CurrentView = view,
 			};
 			if (view.BuiltView is NavigationView nav && allowNav) {
 				var navController = new NSNavigationController ();
@@ -47,5 +47,33 @@ namespace HotUI.Mac.Extensions
 			return handler as INSView;
 		}
 
-	}
+        public static Font ToFont(this NSFont font)
+        {
+            if (font == null)
+                return Font.System(12);
+
+            // todo: implement support for attributes other than name and size.
+            return font.FamilyName == Device.FontService.SystemFontName
+                ? Font.System((float)font.PointSize)
+                : Font.Custom(font.FamilyName, (float)font.PointSize);
+        }
+
+        public static NSFont ToUIFont(this Font font)
+        {
+            if (font == null)
+                return NSFont.SystemFontOfSize(12);
+
+            var attributes = font.Attributes;
+            if (attributes.Name == Device.FontService.SystemFontName)
+            {
+                var weight = (int)attributes.Weight;
+                if (weight > (int)Weight.Regular)
+                    return NSFont.BoldSystemFontOfSize(attributes.Size);
+
+                return NSFont.SystemFontOfSize(attributes.Size);
+            }
+
+            return NSFont.FromFontName(attributes.Name, attributes.Size);
+        }
+    }
 }
