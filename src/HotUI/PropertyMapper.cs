@@ -47,7 +47,10 @@ namespace HotUI
                 return updater.Invoke(nativeView, virtualView);
 
             if (_chained != null)
-                return _chained.UpdateProperty(nativeView, virtualView, property);
+            {
+                TBaseNativeView native = _toBase?.Invoke(nativeView) ?? nativeView as TBaseNativeView;
+                return _chained.UpdateProperty(native, virtualView, property);
+            }
 
             return false;
         }
