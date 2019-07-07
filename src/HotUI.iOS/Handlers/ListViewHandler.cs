@@ -26,7 +26,7 @@ namespace HotUI.iOS
         {
             var cell = DequeueReusableCell(CellType) as ViewCell ?? new ViewCell();
             var item = _listView?.List[indexPath.Row];
-            var v = _listView?.CellCreator(item);
+            var v = _listView?.CellCreator?.Invoke(item);
             v.Parent = _listView;
             cell.SetView(v);
             return cell;
@@ -38,7 +38,7 @@ namespace HotUI.iOS
         {
             _listView = view as ListView;
             //TODO: Some crude size estimation
-            var v = _listView.CellCreator(_listView.List[0]);
+            var v = _listView?.CellCreator?.Invoke(_listView?.List[0]);
             EstimatedRowHeight = 200;
             ReloadData();
         }
