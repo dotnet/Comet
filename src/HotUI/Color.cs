@@ -2,26 +2,26 @@
 
 namespace HotUI
 {
-    public class Color
+    public partial class Color
     {
-        public readonly float Red;
-        public readonly float Green;
-        public readonly float Blue;
-        public readonly float Alpha = 1;
+        public readonly float R;
+        public readonly float G;
+        public readonly float B;
+        public readonly float A = 1;
 
         public Color(float red, float green, float blue)
         {
-            Red = red;
-            Green = green;
-            Blue = blue;
+            R = red;
+            G = green;
+            B = blue;
         }
 
         public Color(float red, float green, float blue, float alpha)
         {
-            Red = red;
-            Green = green;
-            Blue = blue;
-            Alpha = alpha;
+            R = red;
+            G = green;
+            B = blue;
+            A = alpha;
         }
 
         public Color(string colorAsHex)
@@ -66,26 +66,26 @@ namespace HotUI
                 alpha = int.Parse(colorAsHex.Substring(6, 2), NumberStyles.AllowHexSpecifier, CultureInfo.InvariantCulture);
             }
 
-            Red = red / 255f;
-            Green = green / 255f;
-            Blue = blue / 255f;
-            Alpha = alpha / 255f;
+            R = red / 255f;
+            G = green / 255f;
+            B = blue / 255f;
+            A = alpha / 255f;
         }
 
         public override int GetHashCode()
         {
-            return ((int)Red ^ (int)Blue) ^ ((int)Green ^ (int)Alpha);
+            return ((int)R ^ (int)B) ^ ((int)G ^ (int)A);
         }
 
         public string ToHexString()
         {
-            return "#" + ToHexString(Red) + ToHexString(Green) + ToHexString(Blue);
+            return "#" + ToHexString(R) + ToHexString(G) + ToHexString(B);
         }
 
         public string ToHexStringIncludingAlpha()
         {
-            if (Alpha < 1)
-                return ToHexString() + ToHexString(Alpha);
+            if (A < 1)
+                return ToHexString() + ToHexString(A);
 
             return ToHexString();
         }

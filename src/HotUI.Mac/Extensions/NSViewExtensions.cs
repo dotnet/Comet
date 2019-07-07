@@ -35,7 +35,7 @@ namespace HotUI.Mac.Extensions
             if (color == null)
                 return null;
 
-            return NSColor.FromDeviceRgba(color.Red, color.Green, color.Blue, color.Alpha);
+            return NSColor.FromDeviceRgba(color.R, color.G, color.B, color.A);
         }
     }
 }

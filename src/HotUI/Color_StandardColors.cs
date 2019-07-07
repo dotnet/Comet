@@ -1,6 +1,6 @@
 ﻿namespace HotUI
 {
-    public class Colors
+    public partial class Color
     {
         public static readonly Color Black = new Color("#000000");
         public static readonly Color Navy = new Color("#000080");

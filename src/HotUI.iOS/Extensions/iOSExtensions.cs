@@ -62,7 +62,7 @@ namespace HotUI.iOS {
             if (color == null)
                 return null;
 
-            return new UIColor(color.Red, color.Green, color.Blue, color.Alpha);
+            return new UIColor(color.R, color.G, color.B, color.A);
         }
 
         public static Font ToFont(this UIFont font)
