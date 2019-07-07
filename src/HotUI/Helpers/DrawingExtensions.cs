@@ -5,10 +5,24 @@ namespace HotUI
 {
 	public static class DrawingExtensions 
 	{
-		public static T Shadow<T> (this T view, float radius) where T : View
+		public static T Shadow<T> (this T view, Color color = null, float? radius = null, float? x = null, float? y = null) where T : View
 		{
 			var shadow = view.GetShadow() ?? new Shadow();
-			view.SetEnvironment (EnvironmentKeys.View.Shadow, shadow.WithRadius(radius));
+			
+			if (color != null)
+				shadow = shadow.WithColor(color);
+			
+			if (radius != null)
+				shadow = shadow.WithRadius((float)radius);
+
+			if (x != null || y != null)
+			{
+				var newX = x ?? shadow.Offset.Width;
+				var newY = y ?? shadow.Offset.Height;
+				shadow = shadow.WithOffset(new Size(newX, newY));
+			}
+
+			view.SetEnvironment (EnvironmentKeys.View.Shadow, shadow);
 			return view;
 		}
 		
