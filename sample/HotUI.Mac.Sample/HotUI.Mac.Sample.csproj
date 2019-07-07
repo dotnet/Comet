@@ -57,16 +57,6 @@
     <Reference Include="System.Core" />
     <Reference Include="Xamarin.Mac" />
     <Reference Include="netstandard" />
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\..\packages\Newtonsoft.Json.12.0.2\lib\netstandard2.0\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="HotUI.Reload.Core">
-      <HintPath>..\..\packages\HotUI.Reload.0.0.2-alpha\lib\Xamarin.Mac20\HotUI.Reload.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="HotUI.Reload">
-      <HintPath>..\..\packages\HotUI.Reload.0.0.2-alpha\lib\Xamarin.Mac20\HotUI.Reload.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json" />
@@ -88,7 +78,6 @@
   <ItemGroup>
     <None Include="Info.plist" />
     <None Include="Entitlements.plist" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -116,5 +105,4 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
-  <Import Project="..\..\packages\HotUI.Reload.0.0.2-alpha\build\HotUI.Reload.targets" Condition="Exists('..\..\packages\HotUI.Reload.0.0.2-alpha\build\HotUI.Reload.targets')" />
 </Project>
