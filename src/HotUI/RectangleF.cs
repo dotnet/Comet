@@ -5,7 +5,7 @@ using System.Globalization;
 namespace HotUI
 {
     [DebuggerDisplay("X={X}, Y={Y}, Width={Width}, Height={Height}")]
-    public struct Rectangle
+    public struct RectangleF
     {
         public float X { get; set; }
 
@@ -15,7 +15,7 @@ namespace HotUI
 
         public float Height { get; set; }
 
-        public static Rectangle Zero = new Rectangle();
+        public static RectangleF Zero = new RectangleF();
 
         public override string ToString()
         {
@@ -24,7 +24,7 @@ namespace HotUI
         }
 
         // constructors
-        public Rectangle(float x, float y, float width, float height) : this()
+        public RectangleF(float x, float y, float width, float height) : this()
         {
             X = x;
             Y = y;
@@ -32,16 +32,16 @@ namespace HotUI
             Height = height;
         }
 
-        public Rectangle(Point loc, Size sz) : this(loc.X, loc.Y, sz.Width, sz.Height)
+        public RectangleF(PointF loc, Size sz) : this(loc.X, loc.Y, sz.Width, sz.Height)
         {
         }
 
-        public static Rectangle FromLTRB(float left, float top, float right, float bottom)
+        public static RectangleF FromLTRB(float left, float top, float right, float bottom)
         {
-            return new Rectangle(left, top, right - left, bottom - top);
+            return new RectangleF(left, top, right - left, bottom - top);
         }
 
-        public bool Equals(Rectangle other)
+        public bool Equals(RectangleF other)
         {
             return X.Equals(other.X) && Y.Equals(other.Y) && Width.Equals(other.Width) && Height.Equals(other.Height);
         }
@@ -50,7 +50,7 @@ namespace HotUI
         {
             if (ReferenceEquals(null, obj))
                 return false;
-            return obj is Rectangle && Equals((Rectangle)obj);
+            return obj is RectangleF && Equals((RectangleF)obj);
         }
 
         public override int GetHashCode()
@@ -65,23 +65,23 @@ namespace HotUI
             }
         }
 
-        public static bool operator ==(Rectangle r1, Rectangle r2)
+        public static bool operator ==(RectangleF r1, RectangleF r2)
         {
             return (r1.Location == r2.Location) && (r1.Size == r2.Size);
         }
 
-        public static bool operator !=(Rectangle r1, Rectangle r2)
+        public static bool operator !=(RectangleF r1, RectangleF r2)
         {
             return !(r1 == r2);
         }
 
         // Hit Testing / Intersection / Union
-        public bool Contains(Rectangle rect)
+        public bool Contains(RectangleF rect)
         {
             return X <= rect.X && Right >= rect.Right && Y <= rect.Y && Bottom >= rect.Bottom;
         }
 
-        public bool Contains(Point pt)
+        public bool Contains(PointF pt)
         {
             return Contains(pt.X, pt.Y);
         }
@@ -91,27 +91,27 @@ namespace HotUI
             return (x >= Left) && (x < Right) && (y >= Top) && (y < Bottom);
         }
 
-        public bool IntersectsWith(Rectangle r)
+        public bool IntersectsWith(RectangleF r)
         {
             return !((Left >= r.Right) || (Right <= r.Left) || (Top >= r.Bottom) || (Bottom <= r.Top));
         }
 
-        public Rectangle Union(Rectangle r)
+        public RectangleF Union(RectangleF r)
         {
             return Union(this, r);
         }
 
-        public static Rectangle Union(Rectangle r1, Rectangle r2)
+        public static RectangleF Union(RectangleF r1, RectangleF r2)
         {
             return FromLTRB(Math.Min(r1.Left, r2.Left), Math.Min(r1.Top, r2.Top), Math.Max(r1.Right, r2.Right), Math.Max(r1.Bottom, r2.Bottom));
         }
 
-        public Rectangle Intersect(Rectangle r)
+        public RectangleF Intersect(RectangleF r)
         {
             return Intersect(this, r);
         }
 
-        public static Rectangle Intersect(Rectangle r1, Rectangle r2)
+        public static RectangleF Intersect(RectangleF r1, RectangleF r2)
         {
             float x = Math.Max(r1.X, r2.X);
             float y = Math.Max(r1.Y, r2.Y);
@@ -122,42 +122,39 @@ namespace HotUI
             {
                 return Zero;
             }
-            return new Rectangle(x, y, width, height);
+            return new RectangleF(x, y, width, height);
         }
 
         // Position/Size
         public float Top
         {
-            get { return Y; }
-            set { Y = value; }
+            get => Y;
+            set => Y = value;
         }
 
         public float Bottom
         {
-            get { return Y + Height; }
-            set { Height = value - Y; }
+            get => Y + Height;
+            set => Height = value - Y;
         }
 
         public float Right
         {
-            get { return X + Width; }
-            set { Width = value - X; }
+            get => X + Width;
+            set => Width = value - X;
         }
 
         public float Left
         {
-            get { return X; }
-            set { X = value; }
+            get => X;
+            set => X = value;
         }
 
-        public bool IsEmpty
-        {
-            get { return (Width <= 0) || (Height <= 0); }
-        }
+        public bool IsEmpty => (Width <= 0) || (Height <= 0);
 
         public Size Size
         {
-            get { return new Size(Width, Height); }
+            get => new Size(Width, Height);
             set
             {
                 Width = value.Width;
@@ -165,9 +162,9 @@ namespace HotUI
             }
         }
 
-        public Point Location
+        public PointF Location
         {
-            get { return new Point(X, Y); }
+            get => new PointF(X, Y);
             set
             {
                 X = value.X;
@@ -175,20 +172,17 @@ namespace HotUI
             }
         }
 
-        public Point Center
-        {
-            get { return new Point(X + Width / 2, Y + Height / 2); }
-        }
+        public PointF Center => new PointF(X + Width / 2, Y + Height / 2);
 
         // Inflate and Offset
-        public Rectangle Inflate(Size sz)
+        public RectangleF Inflate(Size sz)
         {
             return Inflate(sz.Width, sz.Height);
         }
 
-        public Rectangle Inflate(float width, float height)
+        public RectangleF Inflate(float width, float height)
         {
-            Rectangle r = this;
+            RectangleF r = this;
             r.X -= width;
             r.Y -= height;
             r.Width += width * 2;
@@ -196,22 +190,22 @@ namespace HotUI
             return r;
         }
 
-        public Rectangle Offset(float dx, float dy)
+        public RectangleF Offset(float dx, float dy)
         {
-            Rectangle r = this;
+            RectangleF r = this;
             r.X += dx;
             r.Y += dy;
             return r;
         }
 
-        public Rectangle Offset(Point dr)
+        public RectangleF Offset(PointF dr)
         {
             return Offset(dr.X, dr.Y);
         }
 
-        public Rectangle Round()
+        public RectangleF Round()
         {
-            return new Rectangle((float)Math.Round(X), (float)Math.Round(Y), (float)Math.Round(Width), (float)Math.Round(Height));
+            return new RectangleF((float)Math.Round(X), (float)Math.Round(Y), (float)Math.Round(Width), (float)Math.Round(Height));
         }
 
         public void Deconstruct(out float x, out float y, out float width, out float height)

@@ -74,9 +74,9 @@ namespace HotUI
             return s1._width != s2._width || s1._height != s2._height;
         }
 
-        public static explicit operator Point(Size size)
+        public static explicit operator PointF(Size size)
         {
-            return new Point(size.Width, size.Height);
+            return new PointF(size.Width, size.Height);
         }
 
         public bool Equals(Size other)

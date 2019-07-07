@@ -5,26 +5,26 @@ using System.Globalization;
 namespace HotUI
 {
     [DebuggerDisplay("X={X}, Y={Y}")]
-    public struct Point
+    public struct PointF
     {
         public float X { get; set; }
 
         public float Y { get; set; }
 
-        public static Point Zero = new Point();
+        public static PointF Zero = new PointF();
 
         public override string ToString()
         {
             return $"{{X={X.ToString(CultureInfo.InvariantCulture)} Y={Y.ToString(CultureInfo.InvariantCulture)}}}";
         }
 
-        public Point(float x, float y) : this()
+        public PointF(float x, float y) : this()
         {
             X = x;
             Y = y;
         }
 
-        public Point(Size sz) : this()
+        public PointF(Size sz) : this()
         {
             X = sz.Width;
             Y = sz.Height;
@@ -32,10 +32,10 @@ namespace HotUI
 
         public override bool Equals(object o)
         {
-            if (!(o is Point))
+            if (!(o is PointF))
                 return false;
 
-            return this == (Point)o;
+            return this == (PointF)o;
         }
 
         public override int GetHashCode()
@@ -43,47 +43,47 @@ namespace HotUI
             return X.GetHashCode() ^ (Y.GetHashCode() * 397);
         }
 
-        public Point Offset(float dx, float dy)
+        public PointF Offset(float dx, float dy)
         {
-            Point p = this;
+            PointF p = this;
             p.X += dx;
             p.Y += dy;
             return p;
         }
 
-        public Point Round()
+        public PointF Round()
         {
-            return new Point((float)Math.Round(X), (float)Math.Round(Y));
+            return new PointF((float)Math.Round(X), (float)Math.Round(Y));
         }
 
         public bool IsEmpty => X == 0 && Y == 0;
 
-        public static explicit operator Size(Point pt)
+        public static explicit operator Size(PointF pt)
         {
             return new Size(pt.X, pt.Y);
         }
 
-        public static Point operator +(Point pt, Size sz)
+        public static PointF operator +(PointF pt, Size sz)
         {
-            return new Point(pt.X + sz.Width, pt.Y + sz.Height);
+            return new PointF(pt.X + sz.Width, pt.Y + sz.Height);
         }
 
-        public static Point operator -(Point pt, Size sz)
+        public static PointF operator -(PointF pt, Size sz)
         {
-            return new Point(pt.X - sz.Width, pt.Y - sz.Height);
+            return new PointF(pt.X - sz.Width, pt.Y - sz.Height);
         }
 
-        public static bool operator ==(Point ptA, Point ptB)
+        public static bool operator ==(PointF ptA, PointF ptB)
         {
             return ptA.X == ptB.X && ptA.Y == ptB.Y;
         }
 
-        public static bool operator !=(Point ptA, Point ptB)
+        public static bool operator !=(PointF ptA, PointF ptB)
         {
             return ptA.X != ptB.X || ptA.Y != ptB.Y;
         }
 
-        public float Distance(Point other)
+        public float Distance(PointF other)
         {
             return (float)Math.Sqrt(Math.Pow(X - other.X, 2) + Math.Pow(Y - other.Y, 2));
         }

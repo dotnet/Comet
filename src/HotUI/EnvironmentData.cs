@@ -25,6 +25,11 @@ namespace HotUI {
         {
             public const string Padding = "Padding";
         }
+        
+        public static class View
+        {
+	        public const string ClipShape = "ClipShape";
+        }
     }
 
 	[AttributeUsage (AttributeTargets.Field)]

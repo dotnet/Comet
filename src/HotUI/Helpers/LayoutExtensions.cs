@@ -44,5 +44,17 @@ namespace HotUI
 
 			return defaultPadding;
 		}
+		
+		public static T Overlay<T> (this T view, View overlayView) where T : View
+		{
+			//view.SetEnvironment (EnvironmentKeys.Layout.Padding, padding);
+			return view;
+		}
+		
+		public static T Overlay<T> (this T view, Shape shape) where T : View
+		{
+			//view.SetEnvironment (EnvironmentKeys.Layout.Padding, padding);
+			return view;
+		}
 	}
 }
