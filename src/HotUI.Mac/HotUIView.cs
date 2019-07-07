@@ -1,24 +1,27 @@
 ﻿using CoreGraphics;
-using UIKit;
+using AppKit;
+using HotUI.Mac.Extensions;
 
-namespace HotUI.iOS
+namespace HotUI.Mac
 {
-    public class HotUIView : UIView
+    public class HotUIView : NSColorView
     {
         private View _virtualView;
-        private IUIView _handler;
-        private UIView _nativeView;
-
+        private INSView _handler;
+        private NSView _nativeView;
+        
         public HotUIView()
         {
-            BackgroundColor = UIColor.White;
             TranslatesAutoresizingMaskIntoConstraints = false;
+            AutoresizesSubviews = true;
+            AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable;
         }
 
         public HotUIView(CGRect rect) : base(rect)
         {
-            BackgroundColor = UIColor.White;
             TranslatesAutoresizingMaskIntoConstraints = false;
+            AutoresizesSubviews = true;
+            AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable;
         }
 
         public View CurrentView
@@ -30,7 +33,7 @@ namespace HotUI.iOS
                     return;
 
                 _virtualView = value;
-                _handler = _virtualView.ToIUIView();
+                _handler = _virtualView.ToINSView();
                 if (_handler is ViewHandler viewHandler)
                     viewHandler.ViewChanged = HandleViewChanged;
 
@@ -52,30 +55,52 @@ namespace HotUI.iOS
             _nativeView = newNativeView;
 
             if (newNativeView != null)
+            {
                 AddSubview(newNativeView);
+                Layout();
+            }
+        }
 
-            SetNeedsLayout();
+        private void SetNeedsLayout()
+        {
+            NeedsLayout = true;
+        }
+
+        public override CGRect Frame
+        {
+            get => base.Frame;
+            set
+            {
+                base.Frame = value;
+                Layout();
+                NeedsLayout = false;
+            }
         }
         
-        public override void LayoutSubviews()
+        public override void ViewDidMoveToSuperview()
+        {
+            if (NeedsLayout)
+            {
+                Layout();
+                NeedsLayout = false;
+            }
+
+            base.ViewDidMoveToSuperview();
+        }
+
+        public override void Layout()
         {
             if (Bounds.IsEmpty || _nativeView == null)
                 return;
 
-            if (_nativeView is UIScrollView sv)
+            if (_nativeView is NSScrollView sv)
             {
                 _nativeView.Frame = Bounds;
             }
             else
             {
-                //TODO: opt out of safe are
                 var bounds = Bounds;
-                var safe = SafeAreaInsets;
-                bounds.X += safe.Left;
-                bounds.Y += safe.Top;
-                bounds.Height -= safe.Top + safe.Bottom;
-                bounds.Width -= safe.Left + safe.Right;
-
+                
                 var padding = _virtualView.GetPadding();
                 if (!padding.IsEmpty)
                 {
@@ -85,11 +110,15 @@ namespace HotUI.iOS
                     bounds.Height -= padding.VerticalThickness;
                 }
 
-                if (_nativeView is UITableView)
+                if (_nativeView is NSTableView || _nativeView is ListViewHandler)
                     _nativeView.Frame = bounds;
                 else
                 {
-                    var sizeThatFits = _nativeView.SizeThatFits(bounds.Size);
+                    CGSize sizeThatFits;
+                    if (_nativeView is AbstractLayoutHandler layout)
+                        sizeThatFits = layout.SizeThatFits(bounds.Size);
+                    else
+                        sizeThatFits = bounds.Size;
                     var x = ((bounds.Width - sizeThatFits.Width) / 2) + padding.Left;
                     var y = ((bounds.Height - sizeThatFits.Height) / 2) + padding.Top;
                     _nativeView.Frame = new CGRect(x, y, sizeThatFits.Width, sizeThatFits.Height);

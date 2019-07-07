@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using AppKit;
+﻿using AppKit;
 using CoreGraphics;
-using HotUI.Mac.Controls;
-using HotUI.Mac.Extensions;
+using HotUI.Layout;
 
 namespace HotUI.Mac.Handlers
 {
-    public class VStackHandler : AbstractLayoutHandler
+    public class HStackHandler : AbstractLayoutHandler
     {
-        public VStackHandler(CGRect rect) : base(rect, new VStackLayoutManager<UIView>())
+        public HStackHandler(CGRect rect) : base(rect, new HStackLayoutManager<NSView>())
         {
         }
 
-        public VStackHandler() : base(new VStackLayoutManager<UIView>())
+        public HStackHandler() : base(new HStackLayoutManager<NSView>())
         {
         }
     }

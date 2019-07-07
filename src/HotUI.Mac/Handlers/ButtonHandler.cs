@@ -13,6 +13,11 @@ namespace HotUI.Mac.Handlers
         
         public ButtonHandler()
         {
+            Cell.ControlSize = NSControlSize.Regular;
+            BezelStyle = NSBezelStyle.Rounded;
+            SetButtonType(NSButtonType.MomentaryPushIn);
+            Font = NSFont.SystemFontOfSize(NSFont.SystemFontSizeForControlSize(NSControlSize.Regular));
+
             Activated += HandleTouchUpInside;
         }
 
