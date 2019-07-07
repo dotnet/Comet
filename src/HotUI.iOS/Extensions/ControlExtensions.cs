@@ -7,7 +7,7 @@ namespace HotUI.iOS {
 	public static partial class ControlExtensions {
 		public static Task<UIImage> LoadImage(this string source)
 		{
-			var isUrl = Uri.IsWellFormedUriString(source, UriKind.RelativeOrAbsolute);
+			var isUrl = Uri.IsWellFormedUriString(source, UriKind.RelativeOrAbsolute) && source.Contains("://");
 			if (isUrl)
 				return LoadImageAsync(source);
 			return LoadFileAsync(source);

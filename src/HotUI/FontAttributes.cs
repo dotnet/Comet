@@ -7,5 +7,5 @@ namespace HotUI
         public bool Smallcaps { get; internal set; }
         public float Size { get; internal set; }
         public Weight Weight { get; internal set; }
-    }
+    }    
 }

@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
 using CoreGraphics;
-using FFImageLoading;
 using UIKit;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
@@ -14,7 +11,7 @@ namespace HotUI.iOS
     {
         public static readonly PropertyMapper<Image, UIView, ImageHandler> Mapper = new PropertyMapper<Image, UIView, ImageHandler>(ViewHandler.Mapper)
         {
-            [nameof(Button.Text)] = MapSourceProperty
+            [nameof(HotUI.Image.Source)] = MapSourceProperty
         };
 
         private Image _image;
@@ -60,7 +57,12 @@ namespace HotUI.iOS
             {
                 var image = await source.LoadImage();
                 if (source == _source)
+                {
+                    Console.WriteLine(Bounds);
                     Image = image;
+                    SizeToFit();
+                    Console.WriteLine(Bounds);
+                }
             }
             catch (Exception e)
             {

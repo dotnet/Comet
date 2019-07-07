@@ -29,6 +29,7 @@ namespace HotUI {
         public static class View
         {
 	        public const string ClipShape = "ClipShape";
+	        public const string Shadow = "Radius";
         }
     }
 

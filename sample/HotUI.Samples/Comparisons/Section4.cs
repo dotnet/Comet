@@ -26,10 +26,11 @@ namespace HotUI.Samples.Comparisons
         public Section4()
         {
             Body = () =>
-                new Image("http://lh3.googleusercontent.com/9Ofo9ZHQODFvahjpq2ZVUUOog4v5J1c4Gw9qjTw-KADTQZ6sG98GA1732mZA165RBoyxfoMblA")
+                new Image("turtlerock.jpg")
                     .ClipShape(new Circle())
                     .Overlay(
-                        new Circle().Stroke(Color.White, lineWidth: 4));
+                        new Circle().Stroke(Color.White, lineWidth: 4))
+                    .Shadow(radius: 10);
         }
     }
 }

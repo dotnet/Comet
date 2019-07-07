@@ -13,6 +13,7 @@ namespace HotUI.Samples {
             ("SwiftUI Tutorial Section 1", ()=> new Section1()),
             ("SwiftUI Tutorial Section 2", ()=> new Section2()),
             ("SwiftUI Tutorial Section 3", ()=> new Section3()),
+            ("SwiftUI Tutorial Section 4", ()=> new Section4()),
 		};
 		public MainPage ()
 		{

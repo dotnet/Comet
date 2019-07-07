@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using CoreGraphics;
 using UIKit;
 namespace HotUI.iOS {
 	public static partial class iOSExtensions {
@@ -65,6 +66,14 @@ namespace HotUI.iOS {
             return new UIColor(color.R, color.G, color.B, color.A);
         }
 
+        public static CGColor ToCGColor(this Color color)
+        {
+	        if (color == null)
+		        return null;
+
+	        return new CGColor(color.R, color.G, color.B, color.A);
+        }
+        
         public static Font ToFont(this UIFont font)
         {
 	        if (font == null)

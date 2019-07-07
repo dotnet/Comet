@@ -1,9 +1,23 @@
 ﻿using System;
+using HotUI.Drawing;
+
 namespace HotUI 
 {
 	public static class DrawingExtensions 
 	{
-
+		public static T Shadow<T> (this T view, float radius) where T : View
+		{
+			var shadow = view.GetShadow() ?? new Shadow();
+			view.SetEnvironment (EnvironmentKeys.View.Shadow, shadow.WithRadius(radius));
+			return view;
+		}
+		
+		public static Shadow GetShadow (this View view, Shadow defaultShadow = null)
+		{
+			var shadow = view.GetEnvironment<Shadow> (EnvironmentKeys.View.Shadow);
+			return shadow ?? defaultShadow;
+		}
+		
 		public static T ClipShape<T> (this T view, Shape shape) where T : View
 		{
 			view.SetEnvironment (EnvironmentKeys.View.ClipShape, shape);

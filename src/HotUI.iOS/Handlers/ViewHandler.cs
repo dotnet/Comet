@@ -9,7 +9,8 @@ namespace HotUI.iOS
     {
         public static readonly PropertyMapper<View, UIView, UIView> Mapper = new PropertyMapper<View, UIView, UIView>()
         {
-            [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty
+            [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
+            [nameof(EnvironmentKeys.View.Shadow)] = MapShadowRadiusProperty
         };
         
         private View _view;
@@ -57,6 +58,20 @@ namespace HotUI.iOS
             var color = virtualView.GetBackgroundColor();
             if (color != null)
                 nativeView.BackgroundColor = color.ToUIColor();
+            return true;
+        }
+        
+        public static bool MapShadowRadiusProperty(UIView nativeView, View virtualView)
+        {
+            var shadow = virtualView.GetShadow();
+            if (shadow != null)
+            {
+                nativeView.Layer.ShadowColor = shadow.Color.ToCGColor();
+                nativeView.Layer.ShadowRadius = (nfloat)shadow.Radius;
+                nativeView.Layer.ShadowOffset = shadow.Offset.ToCGSize();
+                nativeView.Layer.ShadowOpacity = shadow.Opacity;
+            }
+
             return true;
         }
     }
