@@ -20,5 +20,19 @@ namespace HotUI {
 			var font = view.GetEnvironment<Font> (EnvironmentKeys.Fonts.Font);
 			return font ?? defaultFont;
 		}
+		
+		/// <summary>
+		/// Set the font size.
+		/// </summary>
+		/// <param name="view"></param>
+		/// <param name="fontSize"></param>
+		/// <typeparam name="T"></typeparam>
+		/// <returns></returns>
+		public static T FontSize<T> (this T view, float fontSize) where T : View
+		{
+			var font = HotUI.Font.System(fontSize);
+			view.SetEnvironment (EnvironmentKeys.Fonts.Font, font);
+			return view;
+		}
 	}
 }
