@@ -7,26 +7,13 @@ namespace HotUI.Mac.Handlers
     {
         public static readonly PropertyMapper<Text, NSView, NSTextField> Mapper = new PropertyMapper<Text, NSView, NSTextField>(ViewHandler.Mapper)
         {
-            [nameof(Text.Value)] = MapValueProperty,
-            [EnvironmentKeys.Fonts.Font] = MapFontProperty,
-            [EnvironmentKeys.Colors.Color] = MapColorProperty,
+            [nameof(Text.Value)] = MapValueProperty
         };
         
-        private static Font DefaultFont;
-        private static Color DefaultColor;
-        private static Color DefaultBackgroundColor;
-
         public NSView View => this;
 
         public TextHandler()
         {
-            if (DefaultColor == null)
-            {
-                DefaultFont = Font.ToFont();
-                DefaultColor = TextColor.ToColor();
-                DefaultBackgroundColor = BackgroundColor.ToColor();
-            }
-
             Editable = false;
             Bezeled = false;
             DrawsBackground = false;
@@ -56,23 +43,27 @@ namespace HotUI.Mac.Handlers
             nativeView.SizeToFit();
             return true;
         }
+    }
 
-        public static bool MapFontProperty(NSTextField nativeView, Text virtualView)
+    public static partial class ControlExtensions
+    {
+        public static void UpdateLabelProperties(this NSTextField view, Text hView)
         {
-            var font = virtualView.GetFont(DefaultFont);
-            nativeView.Font = font.ToUIFont();
-            nativeView.SizeToFit();
-            return true;
+            view.UpdateLabelProperty(nameof(Text.Value), hView?.Value);
+            view.UpdateBaseProperties(hView);
         }
 
-        public static bool MapColorProperty(NSTextField nativeView, Text virtualView)
+        public static bool UpdateLabelProperty(this NSTextField view, string property, object value)
         {
-            var color = virtualView.GetColor(DefaultColor);
-            var nativeColor = nativeView.TextColor.ToColor();
-            if (!color.Equals(nativeColor))
-                nativeView.TextColor = color.ToNSColor();
+            switch (property)
+            {
+                case nameof(Text.Value):
+                    view.StringValue = (string) value;
+                    view.SizeToFit();
+                    return true;
+            }
 
-            return true;
+            return view.UpdateBaseProperty(property, value);
         }
     }
 }

@@ -5,7 +5,7 @@ using Foundation;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac {
-	public class ListViewHandler : NSColorView, INSView, INSTableViewDataSource, INSTableViewDelegate {
+	public class ListViewHandler : NSView, INSView, INSTableViewDataSource, INSTableViewDelegate {
 
 
 		NSTableView TableView;
@@ -16,8 +16,8 @@ namespace HotUI.Mac {
 
 			TableView.AddColumn (new NSTableColumn ("ListView"));
 			TableView.HeaderView = null;
-			//TableView.UsesAutomaticRowHeights = true;
-			TableView.RowHeight = 44;
+			TableView.UsesAutomaticRowHeights = true;
+			TableView.RowHeight = 100;
 			TableView.SizeLastColumnToFit ();
 			TableView.WeakDataSource = this;
 			TableView.WeakDelegate = this;
@@ -43,16 +43,14 @@ namespace HotUI.Mac {
 				return;
 			cellIdentifier = listView.GetType ().Name;
 			TableView.ReloadData ();
-            TableView.SizeLastColumnToFit();
-        }
+		}
 
-        public void UpdateValue (string property, object value)
+		public void UpdateValue (string property, object value)
 		{
 			TableView.ReloadData ();
-            TableView.SizeLastColumnToFit();
-        }
+		}
 
-        string cellIdentifier = "viewCell";
+		string cellIdentifier = "viewCell";
 		[Export ("tableView:viewForTableColumn:row:")]
 		public NSView GetViewForItem (NSTableView tableView, NSTableColumn tableColumn, nint row)
 		{

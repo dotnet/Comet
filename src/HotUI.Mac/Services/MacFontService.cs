@@ -1,9 +1,9 @@
 using HotUI.Services;
-using AppKit;
+using UIKit;
 
-namespace HotUI.Mac.Services
+namespace HotUI.iOS.Services
 {
-    public class MacFontService : IFontService
+    public class iOSFontService : IFontService
     {
         private string _systemFontName;
         private string _monospacedFontName;
@@ -16,8 +16,8 @@ namespace HotUI.Mac.Services
             {
                 if (_systemFontName == null)
                 {
-                    var font = NSFont.SystemFontOfSize(12);
-                    _systemFontName = font.FamilyName;
+                    var font = UIFont.SystemFontOfSize(12);
+                    _systemFontName = font.Name;
                     font.Dispose();
                 }
 
@@ -31,8 +31,8 @@ namespace HotUI.Mac.Services
             {
                 if (_monospacedFontName == null)
                 {
-                    var font = NSFont.MonospacedDigitSystemFontOfSize(12, (int)Weight.Regular);
-                    _monospacedFontName = font.FamilyName;
+                    var font = UIFont.MonospacedDigitSystemFontOfSize(12, UIFontWeight.Regular);
+                    _monospacedFontName = font.Name;
                     font.Dispose();
                 }
 
@@ -47,8 +47,8 @@ namespace HotUI.Mac.Services
                 // todo: figure out what this should be.  For now, just use the system font.
                 if (_roundedFontName == null)
                 {
-                    var font = NSFont.SystemFontOfSize(12);
-                    _roundedFontName = font.FamilyName;
+                    var font = UIFont.SystemFontOfSize(12);
+                    _roundedFontName = font.Name;
                     font.Dispose();
                 }
 
@@ -63,8 +63,8 @@ namespace HotUI.Mac.Services
                 if (_serifFontName == null)
                 {
                     // todo: figure out what this should be.  For now, just use times new roman font.
-                    var font = NSFont.FromFontName("TimesNewRoman", 12);
-                    _serifFontName = font.FamilyName;
+                    var font = UIFont.FromName("TimesNewRoman", 12);
+                    _serifFontName = font.Name;
                     font.Dispose();
                 }
 

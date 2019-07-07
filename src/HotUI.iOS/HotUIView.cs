@@ -56,7 +56,19 @@ namespace HotUI.iOS
 
             SetNeedsLayout();
         }
-        
+
+        public override CGRect Frame
+        {
+            get => base.Frame;
+            set => base.Frame = value;
+        }
+
+        public override CGRect Bounds
+        {
+            get => base.Bounds;
+            set { /* do nothing */ }
+        }
+
         public override void LayoutSubviews()
         {
             if (Bounds.IsEmpty || _nativeView == null)

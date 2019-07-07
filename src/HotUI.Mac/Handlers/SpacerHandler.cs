@@ -1,20 +1,20 @@
-﻿using AppKit;
+﻿using UIKit;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Mac
+namespace HotUI.iOS
 {
-    public class SpacerHandler : NSColorView, INSView
+    public class SpacerHandler : UIView, IUIView
     {
-        public static readonly PropertyMapper<Spacer, NSView, NSView> Mapper = new PropertyMapper<Spacer, NSView, NSView>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<Spacer, UIView, UIView> Mapper = new PropertyMapper<Spacer, UIView, UIView>(ViewHandler.Mapper)
         {
             
         };
 
         private Spacer _spacer;
 
-        public NSView View => this;
+        public UIView View => this;
 
         public void Remove(View view)
         {
