@@ -41,11 +41,11 @@ namespace HotUI.Samples.Comparisons
                     {
                         new Text("Joshua Tree National Park")
                             .Font(Font.SubHeadline)
-                            .Background(Colors.Salmon),
+                            .Background(Color.Salmon),
                         new Spacer(),
                         new Text("California")
                             .Font(Font.SubHeadline)
-                            .Background(Colors.Green),
+                            .Background(Color.Green),
                     }
                 }.Padding();
         }
