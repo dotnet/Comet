@@ -38,7 +38,7 @@ namespace HotUI
 			return view;
 		}
 		
-		public static Shape GetShape (this View view, Shape defaultShape = null)
+		public static Shape GetClipShape (this View view, Shape defaultShape = null)
 		{
 			var shape = view.GetEnvironment<Shape> (EnvironmentKeys.View.ClipShape);
 			return shape ?? defaultShape;
