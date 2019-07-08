@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using HotUI.Services;
 
 [assembly: InternalsVisibleTo ("HotUI.Tests")]
+[assembly: InternalsVisibleTo ("HotUI.Reload.Tests")]
 
 namespace HotUI{
 	public static class Device {

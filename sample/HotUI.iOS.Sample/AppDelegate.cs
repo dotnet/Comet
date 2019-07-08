@@ -22,7 +22,9 @@ namespace HotUI.iOS.Sample {
 		{
 			// Override point for customization after application launch.
 			// If not required for your application you can safely delete this method
-
+//#if DEBUG
+//			HotUI.Reload.Init ();
+//#endif
 			window = new UIWindow {
 				RootViewController = new MainPage ().ToViewController (),
 			};

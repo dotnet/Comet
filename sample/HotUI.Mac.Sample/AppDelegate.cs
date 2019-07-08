@@ -23,7 +23,10 @@ namespace HotUI.Mac.Sample
             _window.ContentViewController = new MainPage().ToViewController();
             _window.IsVisible = true;
             _window.MakeKeyAndOrderFront(this);*/
-        }
+//#if DEBUG
+//			HotUI.Reload.Init ();
+//#endif
+		}
 
         public override void WillTerminate(NSNotification notification)
         {
