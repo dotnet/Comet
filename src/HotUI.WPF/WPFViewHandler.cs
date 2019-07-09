@@ -2,7 +2,7 @@
 
 namespace HotUI.WPF
 {
-    public interface IUIElement : IViewHandler
+    public interface WPFViewHandler : IViewHandler
     {
         UIElement View { get; }
     }

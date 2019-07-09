@@ -1,13 +1,18 @@
 using System.Drawing;
-using Size = System.Windows.Size;
+using WPFSize = System.Windows.Size;
 
 namespace HotUI.WPF
 {
     public static class DrawingExtensions
     {
-        public static Size ToSize(this Size size)
+        public static Size ToSize(this WPFSize size)
         {
-            return new Size((float) size.Width, (float) size.Height);
+            return new Size((float)size.Width, (float)size.Height);
+        }
+
+        public static WPFSize ToSize(this Size size)
+        {
+            return new WPFSize((float)size.Width, (float)size.Height);
         }
     }
 }

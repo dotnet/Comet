@@ -3,7 +3,7 @@ using System.Windows;
 
 namespace HotUI.WPF
 {
-	public class ContentViewHandler : IUIElement
+	public class ContentViewHandler : WPFViewHandler
     {
 		public ContentViewHandler ()
 		{
@@ -11,7 +11,15 @@ namespace HotUI.WPF
 
 		public UIElement View => ContentView?.Content.ToView ();
 
-		public void Remove (View view)
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+
+        public void Remove (View view)
 		{
 			ContentView = null;
 		}

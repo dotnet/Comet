@@ -9,7 +9,7 @@ namespace HotUI.UWP.Handlers
 {
     public class TextFieldHandler : UWPTextField, IUIElement
     {
-        public static readonly PropertyMapper<TextField, UIElement, TextFieldHandler> Mapper = new PropertyMapper<TextField, UIElement, TextFieldHandler>()
+        public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>()
         {
             [nameof(TextField.Text)] = MapTextProperty
         };
@@ -17,7 +17,15 @@ namespace HotUI.UWP.Handlers
         private TextField _textField;
         
         public UIElement View => this;
-        
+
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+
         public void Remove(View view)
         {
         }
@@ -33,8 +41,9 @@ namespace HotUI.UWP.Handlers
             Mapper.UpdateProperty(this, _textField, property);
         }
         
-        public static bool MapTextProperty(UWPTextField nativeView, TextField virtualView)
+        public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
+            var nativeView = (UWPTextField)viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
             return true;
         }

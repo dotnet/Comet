@@ -6,9 +6,9 @@ using WPFLabel = System.Windows.Controls.Label;
 
 namespace HotUI.WPF.Handlers
 {
-    public class TextHandler : WPFLabel, IUIElement
+    public class TextHandler : WPFLabel, WPFViewHandler
     {
-        public static readonly PropertyMapper<Text, UIElement, TextHandler> Mapper = new PropertyMapper<Text, UIElement, TextHandler>()
+        public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>()
             {
                 [nameof(Text.Value)] = MapValueProperty
             };
@@ -17,6 +17,13 @@ namespace HotUI.WPF.Handlers
 
         public UIElement View => this;
 
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
         public void Remove(View view)
         {
         }
@@ -35,8 +42,9 @@ namespace HotUI.WPF.Handlers
             Mapper.UpdateProperty(this, _text, property);
         }
 
-        public static bool MapValueProperty(WPFLabel nativeView, Text virtualView)
+        public static bool MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
+            var nativeView = (WPFLabel)viewHandler.NativeView;
             nativeView.Content = virtualView.Value;
             return true;
         }

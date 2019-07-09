@@ -6,9 +6,9 @@ using WPFScrollView = System.Windows.Controls.ScrollViewer;
 
 namespace HotUI.WPF.Handlers
 {
-    public class ScrollViewHandler : IUIElement
+    public class ScrollViewHandler : WPFViewHandler
     {
-        public static readonly PropertyMapper<ScrollView, UIElement, WPFScrollView> Mapper = new PropertyMapper<ScrollView, UIElement, WPFScrollView>()
+        public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>()
             {
             };
 
@@ -23,6 +23,14 @@ namespace HotUI.WPF.Handlers
         
         public UIElement View => _nativeScrollView;
 
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+
         public void Remove(View view)
         {
         }
@@ -36,12 +44,12 @@ namespace HotUI.WPF.Handlers
                 _nativeScrollView.Content = _content;
             }
 
-            Mapper.UpdateProperties(_nativeScrollView, _virtualScrollView);
+            Mapper.UpdateProperties(this, _virtualScrollView);
         }
 
         public void UpdateValue(string property, object value)
         {
-            Mapper.UpdateProperty(_nativeScrollView, _virtualScrollView, property);
+            Mapper.UpdateProperty(this, _virtualScrollView, property);
         }
     }
 }

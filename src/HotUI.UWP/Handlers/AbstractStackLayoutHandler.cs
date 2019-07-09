@@ -9,6 +9,14 @@ namespace HotUI.UWP.Handlers
 
         public UIElement View => this;
 
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+
         public void SetView(View view)
         {
             _view = view as AbstractLayout;

@@ -64,7 +64,7 @@
     <Compile Include="HotUIPage.xaml.cs">
       <DependentUpon>HotUIPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="IUIElement.cs" />
+    <Compile Include="WPFViewHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="WPFExtensions.cs" />
