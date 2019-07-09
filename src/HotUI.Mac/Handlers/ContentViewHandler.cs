@@ -1,9 +1,10 @@
 ﻿using System;
 using AppKit;
+using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac {
-	public class ContentViewHandler : INSView {
+	public class ContentViewHandler : MacViewHandler {
 		public ContentViewHandler ()
 		{
 		}
@@ -12,6 +13,7 @@ namespace HotUI.Mac {
 
 		public object NativeView => View;
 		public bool HasContainer { get; set; } = false;
+		public HUIContainerView ContainerView => null;
 
 		public void Remove (View view)
 		{

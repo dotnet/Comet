@@ -1,10 +1,10 @@
 ﻿using System;
-using HotUI.iOS.Controls;
-using UIKit;
+using HotUI.Mac.Controls;
+using AppKit;
 
-namespace HotUI.iOS
+namespace HotUI.Mac
 {
-    public abstract class AbstractHandler<TVirtualView, TNativeView> : iOSViewHandler where TVirtualView : View where TNativeView: UIView
+    public abstract class AbstractHandler<TVirtualView, TNativeView> : MacViewHandler where TVirtualView : View where TNativeView: NSView
     {
         private readonly PropertyMapper<TVirtualView> _mapper;
         private TVirtualView _virtualView;
@@ -20,7 +20,7 @@ namespace HotUI.iOS
 
         protected abstract TNativeView CreateView();
         
-        public UIView View => (UIView)_containerView ?? _nativeView;
+        public NSView View => (NSView)_containerView ?? _nativeView;
 
         public HUIContainerView ContainerView => _containerView;
         

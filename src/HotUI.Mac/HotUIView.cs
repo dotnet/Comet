@@ -7,7 +7,7 @@ namespace HotUI.Mac
     public class HotUIView : NSColorView
     {
         private View _virtualView;
-        private INSView _handler;
+        private MacViewHandler _handler;
         private NSView _nativeView;
         
         public HotUIView()

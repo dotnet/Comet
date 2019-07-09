@@ -2,11 +2,12 @@ using System.Collections.Generic;
 using CoreGraphics;
 using HotUI.Layout;
 using AppKit;
+using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac
 {
-    public class AbstractLayoutHandler : NSView, INSView, ILayoutHandler<NSView>
+    public class AbstractLayoutHandler : NSView, MacViewHandler, ILayoutHandler<NSView>
     {
         private readonly ILayoutManager<NSView> _layoutManager;
         private AbstractLayout _view;
@@ -14,6 +15,8 @@ namespace HotUI.Mac
         private bool _measurementValid;
 
         public AbstractLayout LayoutView => _view;
+        
+        public HUIContainerView ContainerView => null;
 
         public override bool IsFlipped => true;
 

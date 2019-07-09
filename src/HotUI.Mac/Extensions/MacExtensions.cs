@@ -1,4 +1,5 @@
 ﻿using AppKit;
+using CoreGraphics;
 
 namespace HotUI.Mac.Extensions
 {
@@ -34,7 +35,7 @@ namespace HotUI.Mac.Extensions
 
 		public static NSView ToView (this View view) => view?.ToINSView ()?.View;
 
-		public static INSView ToINSView(this View view)
+		public static MacViewHandler ToINSView(this View view)
 		{
 			if (view == null)
 				return null;
@@ -44,7 +45,7 @@ namespace HotUI.Mac.Extensions
 				view.ViewHandler = handler;
 			}
 
-			return handler as INSView;
+			return handler as MacViewHandler;
 		}
 
         public static Font ToFont(this NSFont font)
@@ -74,6 +75,14 @@ namespace HotUI.Mac.Extensions
             }
 
             return NSFont.FromFontName(attributes.Name, attributes.Size);
+        }
+        
+        public static CGColor ToCGColor(this Color color)
+        {
+	        if (color == null)
+		        return null;
+
+	        return new CGColor(color.R, color.G, color.B, color.A);
         }
     }
 }

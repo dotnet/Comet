@@ -1,11 +1,12 @@
 ﻿using AppKit;
+using HotUI.Mac.Controls;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace HotUI.Mac
 {
-    public class SpacerHandler : NSColorView, INSView
+    public class SpacerHandler : NSColorView, MacViewHandler
     {
         public static readonly PropertyMapper<Spacer> Mapper = new PropertyMapper<Spacer>(ViewHandler.Mapper)
         {
@@ -18,6 +19,7 @@ namespace HotUI.Mac
 
         public object NativeView => View;
         public bool HasContainer { get; set; } = false;
+        public HUIContainerView ContainerView => null;
 
         public void Remove(View view)
         {

@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using AppKit;
+using HotUI.Mac.Controls;
 
 namespace HotUI.Mac.Handlers
 {
-    public class ButtonHandler : NSButton, INSView
+    public class ButtonHandler : NSButton, MacViewHandler
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
@@ -27,6 +28,7 @@ namespace HotUI.Mac.Handlers
 
         public object NativeView => View;
         public bool HasContainer { get; set; } = false;
+        public HUIContainerView ContainerView => null;
 
         Button _button;
 

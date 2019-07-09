@@ -137,7 +137,7 @@ namespace HotUI.iOS
                 {
                     var shadowLayer = new CAShapeLayer();
                     shadowLayer.Name = "shadow";
-                    shadowLayer.FillColor = new CGColor(0,0,0,1);
+                    shadowLayer.FillColor = new CGColor(0,0,0,0);
                     shadowLayer.Path = layer.Path;
                     shadowLayer.Frame = layer.Frame;
         

@@ -2,101 +2,34 @@
 using System.Diagnostics;
 using System.Threading.Tasks;
 using AppKit;
+using CoreGraphics;
+using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-    public class ImageHandler : NSImageView, INSView
+    public class ImageHandler : AbstractHandler<Image, HUIImageView>
     {
-        public ImageHandler()
+        public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>(ViewHandler.Mapper)
         {
+            [nameof(Image.Source)] = MapSourceProperty
+        };
+        
+        public ImageHandler() : base(Mapper)
+        {
+
         }
 
-		public NSView View => this;
-
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
-
-        public void Remove(View view)
+        protected override HUIImageView CreateView()
         {
+            return new HUIImageView(new CGRect(0, 0, 44, 44));
         }
 
-        public void SetView(View view)
+        public static bool MapSourceProperty(IViewHandler viewHandler, Image virtualView)
         {
-			var image = view as Image;
-			this.UpdateProperties (image);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-			this.UpdateProperty (property, value);
-        }
-
-        string currentSource;
-
-        public async void UpdateSource(string source)
-        {
-            if (source == currentSource)
-                return;
-            currentSource = source;
-            try
-            {
-                var image = await source.LoadImage();
-                if (source == currentSource)
-                    this.Image = image;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
-        }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateProperties(this ImageHandler view, Image hView)
-        {
-            view.UpdateSource(hView.Source);
-            view.UpdateBaseProperties(hView);
-        }
-
-        public static bool UpdateProperty(this ImageHandler view, string property, object value)
-        {
-            switch (property)
-            {
-                case nameof(Image.Source):
-                    view.UpdateSource((string) value);
-                    return true;
-            }
-
-            return view.UpdateBaseProperty(property, value);
-        }
-
-        public static Task<NSImage> LoadImage(this string source)
-        {
-            var isUrl = Uri.IsWellFormedUriString(source, UriKind.RelativeOrAbsolute);
-            if (isUrl)
-                return LoadImageAsync(source);
-            return LoadFileAsync(source);
-        }
-
-        private static Task<NSImage> LoadImageAsync(string urlString)
-        {
-            throw new NotImplementedException();
-            /*
-            return ImageService.Instance
-                .LoadUrl (urlString)
-                .AsUIImageAsync ();*/
-        }
-
-        private static Task<NSImage> LoadFileAsync(string filePath)
-        {
-            throw new NotImplementedException();
-
-            /*
-            return ImageService.Instance
-                .LoadFile (filePath)
-                .AsUIImageAsync ();*/
+            var nativeView = (HUIImageView) viewHandler.NativeView;
+            nativeView.Source = virtualView.Source;
+            return true;
         }
     }
 }

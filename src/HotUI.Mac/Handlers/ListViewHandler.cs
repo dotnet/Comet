@@ -2,10 +2,11 @@
 using AppKit;
 using CoreGraphics;
 using Foundation;
+using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac {
-	public class ListViewHandler : NSColorView, INSView, INSTableViewDataSource, INSTableViewDelegate {
+	public class ListViewHandler : NSColorView, MacViewHandler, INSTableViewDataSource, INSTableViewDelegate {
 
 
 		NSTableView TableView;
@@ -32,6 +33,7 @@ namespace HotUI.Mac {
 
 		public object NativeView => View;
 		public bool HasContainer { get; set; } = false;
+		public HUIContainerView ContainerView => null;
 
 		public void Remove (View view)
 		{

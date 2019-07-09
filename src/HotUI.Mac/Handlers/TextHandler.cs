@@ -1,9 +1,10 @@
 ﻿using AppKit;
+using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-    public class TextHandler : NSTextField, INSView
+    public class TextHandler : NSTextField, MacViewHandler
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
@@ -20,6 +21,7 @@ namespace HotUI.Mac.Handlers
 
         public object NativeView => View;
         public bool HasContainer { get; set; } = false;
+        public HUIContainerView ContainerView => null;
 
         public TextHandler()
         {

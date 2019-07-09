@@ -1,23 +1,31 @@
-﻿using AppKit;
+﻿using System;
+using System.Threading.Tasks;
+using FFImageLoading;
+using AppKit;
 
-namespace HotUI.Mac.Extensions
-{
-    public static partial class ControlExtensions
-    {
-        public static void UpdateProperties(this NSView view, View hView)
-        {
-        }
+namespace HotUI.Mac {
+	public static partial class ControlExtensions {
+		public static Task<NSImage> LoadImage(this string source)
+		{
+			var isUrl = Uri.IsWellFormedUriString(source, UriKind.RelativeOrAbsolute) && source.Contains("://");
+			if (isUrl)
+				return LoadImageAsync(source);
+			return LoadFileAsync(source);
+		}
 
-        public static void UpdateBaseProperties(this NSView view, View hView)
-        {
-            view.UpdateProperties(hView);
-        }
+		private static Task<NSImage> LoadImageAsync(string urlString)
+		{
+			return ImageService.Instance
+				.LoadUrl(urlString)
+				.AsNSImageAsync();
+		}
 
-        public static bool UpdateProperty(this NSView view, string property, object value)
-        {
-            return false;
-        }
+		private static Task<NSImage> LoadFileAsync(string filePath)
+		{
+			return ImageService.Instance
+				.LoadFile(filePath)
+				.AsNSImageAsync();
+		}
 
-        public static bool UpdateBaseProperty(this NSView view, string property, object value) => view.UpdateProperty(property, value);
-    }
+	}
 }

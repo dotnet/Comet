@@ -4,52 +4,46 @@ using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-    public class ScrollViewHandler : NSScrollView, INSView
+    public class ScrollViewHandler : AbstractHandler<ScrollView, NSScrollView>
     {
-        public NSView View => this;
+        public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
+        {
+            
+        };
 
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
+        private NSView _content;
 
-        public ScrollViewHandler()
+        public ScrollViewHandler() : base(Mapper)
+        {
+        }
+        
+        protected override NSScrollView CreateView()
         {
             Console.WriteLine("New scrollview handler created");
+            return new NSScrollView();
         }
-
-        public void Remove(View view)
+        
+        public override void Remove(View view)
         {
-            content?.RemoveFromSuperview();
+            _content?.RemoveFromSuperview();
+            base.Remove(view);
         }
-
-        NSView content;
-
-        public void SetView(View view)
+        
+        public override void SetView(View view)
         {
-            var scroll = view as ScrollView;
+            base.SetView(view);
 
-            content = scroll?.View?.ToView();
-            if (content != null)
+            var scroll = VirtualView;
+            _content = scroll?.View?.ToView();
+            if (_content != null)
             {
                 //todo: fix this.  This is a hack to get the content to show up in the scrollview
-                if (content.Bounds.Width <= 0 && content.Bounds.Height <= 0)
-                    content.Frame = new CoreGraphics.CGRect(0,0,800,600);
-                 
-                DocumentView = content;
-            }
-            this.UpdateProperties(view);
-            NSLayoutConstraint.ActivateConstraints(
-                new[]
-                {
-                    content.LeadingAnchor.ConstraintEqualToAnchor(this.LeadingAnchor),
-                    content.TrailingAnchor.ConstraintEqualToAnchor(this.TrailingAnchor),
-                    content.TopAnchor.ConstraintEqualToAnchor(this.TopAnchor),
-                    content.BottomAnchor.ConstraintEqualToAnchor(this.BottomAnchor),
-                });
-        }
+                if (_content.Bounds.Width <= 0 && _content.Bounds.Height <= 0)
+                    _content.Frame = new CoreGraphics.CGRect(0,0,800,600);
 
-        public void UpdateValue(string property, object value)
-        {
-            this.UpdateProperty(property, value);
+                var scrollView = (NSScrollView) NativeView;
+                scrollView.DocumentView = _content;
+            }
         }
     }
 }

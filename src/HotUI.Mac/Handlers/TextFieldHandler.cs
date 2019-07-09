@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using AppKit;
+using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-    public class TextFieldHandler : NSTextField, INSView
+    public class TextFieldHandler : NSTextField, MacViewHandler
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
@@ -23,6 +24,7 @@ namespace HotUI.Mac.Handlers
 
         public object NativeView => View;
         public bool HasContainer { get; set; } = false;
+        public HUIContainerView ContainerView => null;
 
         public void Remove(View view)
         {
