@@ -7,7 +7,7 @@ namespace HotUI.Forms
 {
     public class ToggleHandler : FToggle, IFormsView
     {
-		public static readonly PropertyMapper<Toggle, FView, ToggleHandler> Mapper = new PropertyMapper<Toggle, FView, ToggleHandler> ()
+		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> ()
 		{ 
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };
@@ -20,6 +20,8 @@ namespace HotUI.Forms
         void HandleToggled(object sender, EventArgs e) => toggle?.IsOnChanged?.Invoke(IsToggled);
 
         public FView View => this;
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
 
         Toggle toggle;
 
@@ -39,9 +41,9 @@ namespace HotUI.Forms
             Mapper.UpdateProperty(this, toggle, property);
         }
 
-        public static bool MapIsOnProperty(ToggleHandler nativeView, Toggle virtualView)
+        public static bool MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
-            Console.WriteLine($"Xamarin.Forms Switch should be: {virtualView.IsOn}");
+            var nativeView = (ToggleHandler) viewHandler.NativeView;
             nativeView.IsToggled = virtualView.IsOn;
             return true;
         }

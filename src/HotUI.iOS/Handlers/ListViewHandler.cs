@@ -1,11 +1,12 @@
 ﻿using System;
 using Foundation;
+using HotUI.iOS.Controls;
 using UIKit;
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.iOS
 {
-    public class ListViewHandler : UITableView, IUIView, IUITableViewDataSource, IUITableViewDelegate
+    public class ListViewHandler : UITableView, iOSViewHandler, IUITableViewDataSource, IUITableViewDelegate
     {
         private static readonly string CellType = "ViewCell";
         private ListView _listView;
@@ -33,6 +34,12 @@ namespace HotUI.iOS
         }
 
         public UIView View => this;
+
+        public HUIContainerView ContainerView => null;
+
+        public object NativeView => View;
+
+        public bool HasContainer { get; set; } = false;
 
         public void SetView(View view)
         {

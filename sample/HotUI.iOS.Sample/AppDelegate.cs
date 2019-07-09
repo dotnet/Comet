@@ -1,4 +1,5 @@
-﻿using Foundation;
+﻿using System;
+using Foundation;
 using HotUI.Samples;
 using UIKit;
 
@@ -20,11 +21,13 @@ namespace HotUI.iOS.Sample {
 		UIWindow window;
 		public override bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
 		{
-			// Override point for customization after application launch.
-			// If not required for your application you can safely delete this method
-//#if DEBUG
-//			HotUI.Reload.Init ();
-//#endif
+            // Override point for customization after application launch.
+            // If not required for your application you can safely delete this method
+
+            #if DEBUG
+            HotUI.Reload.Init();
+            #endif
+
 			window = new UIWindow {
 				RootViewController = new MainPage ().ToViewController (),
 			};

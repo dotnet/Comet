@@ -7,7 +7,7 @@ namespace HotUI.Mac
 {
 	public class ViewHandler : INSView
     {
-        public static readonly PropertyMapper<View, NSView, NSView> Mapper = new PropertyMapper<View, NSView, NSView>()
+        public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
             [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty
         };
@@ -19,6 +19,9 @@ namespace HotUI.Mac
 
         public NSView View => _body;
 
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
+
         public void Remove(View view)
         {
             _view = null;
@@ -29,13 +32,13 @@ namespace HotUI.Mac
         {
             _view = view;
             SetBody();
-            Mapper.UpdateProperties(_body, _view);
+            Mapper.UpdateProperties(this, _view);
             ViewChanged?.Invoke();
         }
 
         public void UpdateValue(string property, object value)
         {
-            Mapper.UpdateProperty(_body, _view, property);
+            Mapper.UpdateProperty(this, _view, property);
         }
 
         public bool SetBody()
@@ -52,8 +55,9 @@ namespace HotUI.Mac
             return true;
         }
 
-        public static bool MapBackgroundColorProperty(NSView nativeView, View virtualView)
+        public static bool MapBackgroundColorProperty(IViewHandler viewHandler, View virtualView)
         {
+            var nativeView = (NSView)viewHandler.NativeView;
             var color = virtualView.GetBackgroundColor();
             if (color != null)
             {

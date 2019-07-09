@@ -5,7 +5,7 @@ namespace HotUI.Mac.Handlers
 {
     public class TextHandler : NSTextField, INSView
     {
-        public static readonly PropertyMapper<Text, NSView, NSTextField> Mapper = new PropertyMapper<Text, NSView, NSTextField>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
             [nameof(Text.Value)] = MapValueProperty,
             [EnvironmentKeys.Fonts.Font] = MapFontProperty,
@@ -17,6 +17,9 @@ namespace HotUI.Mac.Handlers
         private static Color DefaultBackgroundColor;
 
         public NSView View => this;
+
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
 
         public TextHandler()
         {
@@ -50,23 +53,26 @@ namespace HotUI.Mac.Handlers
             Mapper.UpdateProperty(this, _text, property);
         }
         
-        public static bool MapValueProperty(NSTextField nativeView, Text virtualView)
+        public static bool MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
+            var nativeView = (NSTextField) viewHandler.NativeView;
             nativeView.StringValue = virtualView.Value;
             nativeView.SizeToFit();
             return true;
         }
 
-        public static bool MapFontProperty(NSTextField nativeView, Text virtualView)
+        public static bool MapFontProperty(IViewHandler viewHandler, Text virtualView)
         {
+            var nativeView = (NSTextField) viewHandler.NativeView;
             var font = virtualView.GetFont(DefaultFont);
             nativeView.Font = font.ToUIFont();
             nativeView.SizeToFit();
             return true;
         }
 
-        public static bool MapColorProperty(NSTextField nativeView, Text virtualView)
+        public static bool MapColorProperty(IViewHandler viewHandler, Text virtualView)
         {
+            var nativeView = (NSTextField) viewHandler.NativeView;
             var color = virtualView.GetColor(DefaultColor);
             var nativeColor = nativeView.TextColor.ToColor();
             if (!color.Equals(nativeColor))

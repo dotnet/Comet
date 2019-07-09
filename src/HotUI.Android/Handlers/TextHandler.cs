@@ -6,6 +6,8 @@ namespace HotUI.Android
     public class TextHandler : TextView, IView
     {
         public AView View => this;
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
 
         public TextHandler() : base(AndroidContext.CurrentContext)
         {

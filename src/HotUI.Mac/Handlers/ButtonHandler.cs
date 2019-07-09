@@ -6,7 +6,7 @@ namespace HotUI.Mac.Handlers
 {
     public class ButtonHandler : NSButton, INSView
     {
-        public static readonly PropertyMapper<Button, NSView, ButtonHandler> Mapper = new PropertyMapper<Button, NSView, ButtonHandler>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
             [nameof(Button.Text)] = MapTextProperty
         };
@@ -25,6 +25,9 @@ namespace HotUI.Mac.Handlers
 
         public NSView View => this;
 
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
+
         Button _button;
 
         public void Remove(View view)
@@ -42,8 +45,9 @@ namespace HotUI.Mac.Handlers
             Mapper.UpdateProperty(this, _button, property);
         }
 
-        public static bool MapTextProperty(NSButton nativeButton, Button virtualButton)
+        public static bool MapTextProperty(IViewHandler viewHandler, Button virtualButton)
         {
+            var nativeButton = (NSButton) viewHandler.NativeView;
             nativeButton.Title = virtualButton.Text;
             nativeButton.SizeToFit();
             return true;

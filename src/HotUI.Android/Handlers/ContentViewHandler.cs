@@ -8,6 +8,8 @@ namespace HotUI.Android {
 		}
 
 		public global::Android.Views.View View => _contentView?.Content?.ToView ();
+		public object NativeView => View;
+		public bool HasContainer { get; set; } = false;
 
 		ContentView _contentView;
 

@@ -14,6 +14,8 @@ namespace HotUI.Android
         private void HandleTextChanged(object sender, EventArgs e) => _textField?.Completed(Text);
 
         public AView View => this;
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
 
         public void Remove(View view)
         {

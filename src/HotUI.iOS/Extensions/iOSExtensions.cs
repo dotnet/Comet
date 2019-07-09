@@ -30,7 +30,7 @@ namespace HotUI.iOS {
 			}
 			return vc;
 		}
-		public static IUIView ToIUIView(this View view)
+		public static iOSViewHandler ToIUIView(this View view)
 		{
 			if (view == null)
 				return null;
@@ -40,7 +40,7 @@ namespace HotUI.iOS {
 				handler = Registrar.Handlers.GetRenderer (view.GetType ()) as IViewHandler;
 				view.ViewHandler = handler;
 			}
-			var iUIView = handler as IUIView;
+			var iUIView = handler as iOSViewHandler;
 			return iUIView;
 		}
 		public static UIView ToView (this View view)

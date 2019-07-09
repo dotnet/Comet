@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using HotUI.iOS.Controls;
 using UIKit;
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.iOS
 {
-    public class ScrollViewHandler : UIScrollView, IUIView
+    public class ScrollViewHandler : UIScrollView, iOSViewHandler
     {
-        public static readonly PropertyMapper<ScrollView, UIView, ScrollViewHandler> Mapper = new PropertyMapper<ScrollView, UIView, ScrollViewHandler>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
         {
             
         };
@@ -21,6 +22,12 @@ namespace HotUI.iOS
         }
 
         public UIView View => this;
+
+        public HUIContainerView ContainerView => null;
+
+        public object NativeView => View;
+
+        public bool HasContainer { get; set; } = false;
 
         public void Remove(View view)
         {

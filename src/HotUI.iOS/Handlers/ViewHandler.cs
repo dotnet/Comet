@@ -3,17 +3,18 @@ using System.Diagnostics;
 using CoreAnimation;
 using CoreGraphics;
 using HotUI.Drawing;
+using HotUI.iOS.Controls;
 using UIKit;
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace HotUI.iOS
 {
-    public class ViewHandler : IUIView
+    public class ViewHandler : iOSViewHandler
     {
-        public static readonly PropertyMapper<View, UIView, UIView> Mapper = new PropertyMapper<View, UIView, UIView>()
+        public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
             [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
-            [nameof(EnvironmentKeys.View.Shadow)] = MapShadowRadiusProperty,
+            [nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
             [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty
         };
         
@@ -24,6 +25,12 @@ namespace HotUI.iOS
 
         public UIView View => _body;
         
+        public HUIContainerView ContainerView => null;
+
+        public object NativeView => View;
+
+        public bool HasContainer { get; set; } = false;
+
         public void Remove(View view)
         {
             _view = null;
@@ -34,13 +41,13 @@ namespace HotUI.iOS
         {
             _view = view;
             SetBody();
-            Mapper.UpdateProperties(_body, _view);
+            Mapper.UpdateProperties(this, _view);
             ViewChanged?.Invoke();
         }
 
         public void UpdateValue(string property, object value)
         {
-            Mapper.UpdateProperty(_body, _view, property);
+            Mapper.UpdateProperty(this, _view, property);
         }
 
         public bool SetBody()
@@ -57,22 +64,27 @@ namespace HotUI.iOS
             return true;
         }
 
-        public static bool MapBackgroundColorProperty(UIView nativeView, View virtualView)
+        public static bool MapBackgroundColorProperty(IViewHandler handler, View virtualView)
         {
+            var nativeView = (UIView) handler.NativeView;
             var color = virtualView.GetBackgroundColor();
             if (color != null)
                 nativeView.BackgroundColor = color.ToUIColor();
             return true;
         }
         
-        public static bool MapShadowRadiusProperty(UIView nativeView, View virtualView)
+        public static bool MapShadowProperty(IViewHandler handler, View virtualView)
         {
+            var nativeView = (UIView) handler.NativeView;
             var shadow = virtualView.GetShadow();
             var clipShape = virtualView.GetClipShape();
 
             // If there is a clip shape, then the shadow should be applied to the clip layer, not the view layer
             if (shadow != null && clipShape == null)
+            {
+                handler.HasContainer = false;
                 ApplyShadowToLayer(shadow, nativeView.Layer);
+            }
 
             return true;
         }
@@ -85,16 +97,18 @@ namespace HotUI.iOS
             layer.ShadowOpacity = shadow.Opacity;
         }
 
-        public static bool MapClipShapeProperty(UIView nativeView, View virtualView)
+        public static bool MapClipShapeProperty(IViewHandler handler, View virtualView)
         {
+            var nativeView = (UIView) handler.NativeView;
             var clipShape = virtualView.GetClipShape();
             if (clipShape != null)
             {
+                handler.HasContainer = true;
                 var bounds = nativeView.Bounds;
                 
                 var layer = new CAShapeLayer
                 {
-                    Bounds = bounds
+                    Frame = bounds
                 };
 
                 if (clipShape is Circle)
@@ -105,27 +119,37 @@ namespace HotUI.iOS
                     
                     var path = new CGPath();
                     path.AddEllipseInRect(new CGRect(x,y,size,size));
-
+                    path.CloseSubpath();
+                    
                     layer.Path = path;
                 }
                 else if (clipShape is Path)
                 {
                     
                 }
-                
-                nativeView.Layer.Mask = layer;
+
+                var viewHandler = handler as iOSViewHandler;
+                if (viewHandler?.ContainerView != null)
+                    viewHandler.ContainerView.MaskLayer = layer;
+
                 var shadow = virtualView.GetShadow();
                 if (shadow != null)
                 {
                     var shadowLayer = new CAShapeLayer();
-                    shadowLayer.FillColor = new CGColor(0,0,0,0);
+                    shadowLayer.Name = "shadow";
+                    shadowLayer.FillColor = new CGColor(0,0,0,1);
                     shadowLayer.Path = layer.Path;
                     shadowLayer.Frame = layer.Frame;
         
                     ApplyShadowToLayer(shadow, shadowLayer);
-
-                    nativeView.Superview?.Layer.InsertSublayerBelow(shadowLayer, nativeView.Layer);
+                    
+                    if (viewHandler?.ContainerView != null)
+                        viewHandler.ContainerView.ShadowLayer = shadowLayer;
                 }
+            }
+            else
+            {
+                handler.HasContainer = false;
             }
 
             return true;

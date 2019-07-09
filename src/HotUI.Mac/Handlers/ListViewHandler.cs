@@ -30,6 +30,9 @@ namespace HotUI.Mac {
 
 		public NSView View => this;
 
+		public object NativeView => View;
+		public bool HasContainer { get; set; } = false;
+
 		public void Remove (View view)
 		{
 			listView = null;

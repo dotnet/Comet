@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using UIKit;
+﻿using UIKit;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace HotUI.iOS
 {
-    public class TextHandler : UILabel, IUIView
+    public class TextHandler : AbstractHandler<Text, UILabel>
     {
-        public static readonly PropertyMapper<Text, UIView, TextHandler> Mapper = new PropertyMapper<Text, UIView, TextHandler>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
             [nameof(HotUI.Text.Value)] = MapValueProperty,
             [EnvironmentKeys.Fonts.Font] = MapFontProperty,
@@ -17,57 +15,46 @@ namespace HotUI.iOS
 
         private static Font DefaultFont;
         private static Color DefaultColor;
-        private static Color DefaultBackgroundColor;
-
-        private Text _text;
-
-		public TextHandler ()
+        
+		public TextHandler () : base(Mapper)
 		{
-			// todo: answer the question of whether or not these should be default or not.
-			if (DefaultColor == null)
-			{
-				DefaultFont = Font.ToFont();
-                DefaultColor = TextColor.ToColor();
-                DefaultBackgroundColor = BackgroundColor.ToColor();
+
+        }
+
+        protected override UILabel CreateView()
+        {
+            var label = new UILabel();
+            
+            // todo: answer the question of whether or not these should be default or not.
+            if (DefaultColor == null)
+            {
+                DefaultFont = label.Font.ToFont();
+                DefaultColor = label.TextColor.ToColor();
             }
-        }
 
-        public UIView View => this;
-
-        public void Remove(View view)
-        {
-            _text = null;
-        }
-
-        public void SetView(View view)
-        {
-            _text= view as Text;
-            Mapper.UpdateProperties(this, _text);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-			if (Mapper.UpdateProperty (this, _text, property))
-				return;
+            return label;
         }
         
-        public static bool MapValueProperty(TextHandler nativeView, Text virtualView)
+        public static bool MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
+            var nativeView = (UILabel) viewHandler.NativeView;
             nativeView.Text = virtualView.Value;
             nativeView.SizeToFit();
             return true;
         }
 
-		public static bool MapFontProperty (TextHandler nativeView, Text virtualView)
+		public static bool MapFontProperty (IViewHandler viewHandler, Text virtualView)
 		{
-			var font = virtualView.GetFont(DefaultFont);
+            var nativeView = (UILabel) viewHandler.NativeView;
+            var font = virtualView.GetFont(DefaultFont);
 			nativeView.Font = font.ToUIFont();
 			nativeView.SizeToFit ();
 			return true;
 		}
 
-        public static bool MapColorProperty(TextHandler nativeView, Text virtualView)
+        public static bool MapColorProperty(IViewHandler viewHandler, Text virtualView)
         {
+            var nativeView = (UILabel) viewHandler.NativeView;
             var color = virtualView.GetColor(DefaultColor);
             var nativeColor = nativeView.TextColor.ToColor();
             if (!color.Equals(nativeColor))

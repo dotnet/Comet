@@ -8,6 +8,9 @@ namespace HotUI.Mac.Handlers
     {
         public NSView View => this;
 
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
+
         public ScrollViewHandler()
         {
             Console.WriteLine("New scrollview handler created");

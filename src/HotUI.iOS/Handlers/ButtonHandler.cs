@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HotUI.iOS.Controls;
 using UIKit;
 
 // ReSharper disable ClassNeverInstantiated.Global
@@ -7,9 +8,9 @@ using UIKit;
 
 namespace HotUI.iOS
 {
-    public class ButtonHandler : UIButton, IUIView
+    public class ButtonHandler : UIButton, iOSViewHandler
     {
-        public static readonly PropertyMapper<Button, UIView, UIButton> Mapper = new PropertyMapper<Button, UIView, UIButton>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
             [nameof(Button.Text)] = MapTextProperty
         };
@@ -26,6 +27,12 @@ namespace HotUI.iOS
         }
 
         public UIView View => this;
+
+        public HUIContainerView ContainerView => null;
+
+        public object NativeView => this;
+
+        public bool HasContainer { get; set; } = false;
 
         public void Remove(View view)
         {
@@ -48,8 +55,9 @@ namespace HotUI.iOS
             _button?.OnClick();
         }
 
-        public static bool MapTextProperty(UIButton nativeView, Button virtualView)
+        public static bool MapTextProperty(IViewHandler viewHandler, Button virtualView)
         {
+            var nativeView = (UIButton) viewHandler.NativeView;
             nativeView.SetTitle(virtualView.Text, UIControlState.Normal);
             nativeView.SizeToFit();
             return true;

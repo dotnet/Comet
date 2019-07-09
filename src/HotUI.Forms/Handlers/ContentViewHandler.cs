@@ -8,6 +8,9 @@ namespace HotUI.Forms {
 		}
 
 		public Xamarin.Forms.View View => _contentView?.Content?.ToForms ();
+		public object NativeView => View;
+		public bool HasContainer { get; set; } = false;
+
 		ContentView _contentView;
 		public void Remove (View view)
 		{

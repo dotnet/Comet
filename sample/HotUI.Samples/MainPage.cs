@@ -5,7 +5,7 @@ using HotUI.Samples.Comparisons;
 namespace HotUI.Samples {
 	public class MainPage : View {
 		List<(string Title, Func<View> View)> pages = new List<(string Title, Func<View> View)> {
-			("Binding Sample",()=> new BindingSample()),
+			("Binding Sample   ",()=> new BindingSample()),
             ("BasicTestView",()=> new BasicTestView()),
             ("ListPage1", ()=> new ListPage()),
 			("ListPage2", ()=> new ListPage2()),
@@ -14,6 +14,8 @@ namespace HotUI.Samples {
             ("SwiftUI Tutorial Section 2", ()=> new Section2()),
             ("SwiftUI Tutorial Section 3", ()=> new Section3()),
             ("SwiftUI Tutorial Section 4", ()=> new Section4()),
+            ("SwiftUI Tutorial Section 4b", ()=> new Section4b()),
+            ("SwiftUI Tutorial Section 4c", ()=> new Section4c()),
 		};
 		public MainPage ()
 		{

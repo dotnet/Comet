@@ -44,6 +44,9 @@
     <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\HUIContainerView.cs" />
+    <Compile Include="Controls\HUIImageView.cs" />
+    <Compile Include="Controls\SizeChangedEventArgs.cs" />
     <Compile Include="Extensions\CoreGraphicsExtensions.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />
@@ -52,7 +55,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Handlers\ButtonHandler.cs" />
     <Compile Include="Handlers\TextHandler.cs" />
-    <Compile Include="IUIView.cs" />
+    <Compile Include="iOSViewHandler.cs" />
     <Compile Include="Extensions\iOSExtensions.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Handlers\ScrollViewHandler.cs" />
@@ -66,6 +69,7 @@
     <Compile Include="Handlers\ContentViewHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />
     <Compile Include="HotUIView.cs" />
+    <Compile Include="Handlers\AbstractHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">

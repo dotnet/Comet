@@ -59,6 +59,9 @@ namespace HotUI.Forms {
 			=> listView?.OnSelected ((e.SelectedItem as Tuple<object, HotUI.View>)?.Item1);
 
 		public Xamarin.Forms.View View => this;
+		public object NativeView => View;
+		public bool HasContainer { get; set; } = false;
+
 		protected HListView listView;
 		public void Remove (HView view)
 		{

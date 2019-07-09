@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using HotUI.iOS.Controls;
 using UIKit;
+
 namespace HotUI.iOS
 {
-    public class ToggleHandler : UISwitch, IUIView
+    public class ToggleHandler : UISwitch, iOSViewHandler
     {
-		public static readonly PropertyMapper<Toggle, UIView, UISwitch> Mapper = new PropertyMapper<Toggle, UIView, UISwitch> (ViewHandler.Mapper)
+		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> (ViewHandler.Mapper)
 		{ 
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };
@@ -18,6 +19,12 @@ namespace HotUI.iOS
         void HandleValueChanged(object sender, EventArgs e) => toggle?.IsOnChanged?.Invoke(On);
 
         public UIView View => this;
+
+        public HUIContainerView ContainerView => null;
+
+        public object NativeView => View;
+
+        public bool HasContainer { get; set; } = false;
 
         Toggle toggle;
 
@@ -37,8 +44,9 @@ namespace HotUI.iOS
             Mapper.UpdateProperty(this, toggle, property);
         }
 
-        public static bool MapIsOnProperty(UISwitch nativeView, Toggle virtualView)
+        public static bool MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
+            var nativeView = (UISwitch) viewHandler.NativeView;
             nativeView.On = virtualView.IsOn;
             return true;
         }

@@ -8,7 +8,7 @@ namespace HotUI.Forms
 {
 	public class ViewHandler : FView, IFormsView
     {
-        public static readonly PropertyMapper<View, FView, ViewHandler> Mapper = new PropertyMapper<View, FView, ViewHandler>()
+        public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
 
         };
@@ -18,6 +18,8 @@ namespace HotUI.Forms
         public Action ViewChanged { get; set; }
 
         public FView View { get; private set; }
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
 
         public void Remove(View view)
         {

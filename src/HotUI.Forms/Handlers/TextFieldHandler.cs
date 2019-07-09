@@ -14,6 +14,8 @@ namespace HotUI.Forms {
 		}
 		TextField _textField;
 		public Xamarin.Forms.View View => this;
+		public object NativeView => View;
+		public bool HasContainer { get; set; } = false;
 
 		public void Remove (HView view)
 		{

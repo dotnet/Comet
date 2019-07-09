@@ -1,13 +1,14 @@
-﻿using UIKit;
+﻿using HotUI.iOS.Controls;
+using UIKit;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace HotUI.iOS
 {
-    public class SpacerHandler : UIView, IUIView
+    public class SpacerHandler : UIView, iOSViewHandler
     {
-        public static readonly PropertyMapper<Spacer, UIView, UIView> Mapper = new PropertyMapper<Spacer, UIView, UIView>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<Spacer> Mapper = new PropertyMapper<Spacer>(ViewHandler.Mapper)
         {
             
         };
@@ -15,6 +16,12 @@ namespace HotUI.iOS
         private Spacer _spacer;
 
         public UIView View => this;
+
+        public HUIContainerView ContainerView => null;
+
+        public object NativeView => View;
+
+        public bool HasContainer { get; set; } = false;
 
         public void Remove(View view)
         {

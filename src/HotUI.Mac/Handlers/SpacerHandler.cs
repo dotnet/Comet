@@ -7,7 +7,7 @@ namespace HotUI.Mac
 {
     public class SpacerHandler : NSColorView, INSView
     {
-        public static readonly PropertyMapper<Spacer, NSView, NSView> Mapper = new PropertyMapper<Spacer, NSView, NSView>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<Spacer> Mapper = new PropertyMapper<Spacer>(ViewHandler.Mapper)
         {
             
         };
@@ -15,6 +15,9 @@ namespace HotUI.Mac
         private Spacer _spacer;
 
         public NSView View => this;
+
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
 
         public void Remove(View view)
         {

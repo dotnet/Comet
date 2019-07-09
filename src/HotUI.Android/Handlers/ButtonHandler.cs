@@ -14,6 +14,8 @@ namespace HotUI.Android
         private void HandleClick(object sender, EventArgs e) => button?.OnClick();
 
         public AView View => this;
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
 
         Button button;
 

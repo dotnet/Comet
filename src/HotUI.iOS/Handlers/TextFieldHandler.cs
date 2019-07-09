@@ -1,14 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using HotUI.iOS.Controls;
 using UIKit;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.iOS
 {
-    public class TextFieldHandler : UITextField, IUIView
+    public class TextFieldHandler : UITextField, iOSViewHandler
     {
-        public static readonly PropertyMapper<TextField, UIView, TextFieldHandler> Mapper = new PropertyMapper<TextField, UIView, TextFieldHandler>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
             [nameof(TextField.Text)] = MapTextProperty
         };
@@ -28,6 +29,12 @@ namespace HotUI.iOS
 
         public UIView View => this;
         
+        public HUIContainerView ContainerView => null;
+
+        public object NativeView => View;
+
+        public bool HasContainer { get; set; } = false;
+
         public void Remove(View view)
         {
             _textField = null;
@@ -49,8 +56,9 @@ namespace HotUI.iOS
             _textField?.Completed(Text);
         }
         
-        public static bool MapTextProperty(TextFieldHandler nativeView, TextField virtualView)
+        public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
+            var nativeView = (UITextField) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
             nativeView.SizeToFit();
             return true;

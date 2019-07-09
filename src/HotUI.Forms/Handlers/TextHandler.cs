@@ -7,6 +7,8 @@ using HView = HotUI.View;
 namespace HotUI.Forms {
 	public class TextHandler : FLabel, IFormsView {
 		public Xamarin.Forms.View View => this;
+		public object NativeView => View;
+		public bool HasContainer { get; set; } = false;
 
 		public void Remove (HView view)
 		{

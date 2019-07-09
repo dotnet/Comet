@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using System.Drawing;
 using CoreGraphics;
+using HotUI.iOS.Controls;
 using HotUI.Layout;
 using UIKit;
 
 namespace HotUI.iOS
 {
-    public class AbstractLayoutHandler : UIView, IUIView, ILayoutHandler<UIView>
+    public class AbstractLayoutHandler : UIView, iOSViewHandler, ILayoutHandler<UIView>
     {
         private readonly ILayoutManager<UIView> _layoutManager;
         private AbstractLayout _view;
@@ -29,9 +30,9 @@ namespace HotUI.iOS
         public Size Measure(UIView view, Size available)
         {
             CGSize size;
-            if (view is AbstractLayoutHandler handler)
+            if (view is AbstractLayoutHandler || view is HUIContainerView)
             {
-                size = handler.SizeThatFits(available.ToCGSize());
+                size = view.SizeThatFits(available.ToCGSize());
             }
             else
             {
@@ -72,6 +73,16 @@ namespace HotUI.iOS
 
         public UIView View => this;
 
+        public HUIContainerView ContainerView => null;
+
+        public object NativeView => this;
+
+        public bool HasContainer
+        {
+            get => false; 
+            set {}
+        } 
+
         public void SetView(View view)
         {
             _view = view as AbstractLayout;
@@ -105,7 +116,7 @@ namespace HotUI.iOS
                 _view = null;
             }
         }
-
+        
         public virtual void UpdateValue(string property, object value)
         {
         }

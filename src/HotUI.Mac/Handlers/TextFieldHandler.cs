@@ -7,7 +7,7 @@ namespace HotUI.Mac.Handlers
 {
     public class TextFieldHandler : NSTextField, INSView
     {
-        public static readonly PropertyMapper<TextField, NSView, NSTextField> Mapper = new PropertyMapper<TextField, NSView, NSTextField>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
             [nameof(TextField.Text)] = MapTextProperty
         };
@@ -20,6 +20,9 @@ namespace HotUI.Mac.Handlers
         void EntryHandler_Ended(object sender, EventArgs e) => _textField?.Completed(StringValue);
 
         public NSView View => this;
+
+        public object NativeView => View;
+        public bool HasContainer { get; set; } = false;
 
         public void Remove(View view)
         {
@@ -39,8 +42,9 @@ namespace HotUI.Mac.Handlers
             Mapper.UpdateProperty(this, _textField, property);
         }
         
-        public static bool MapTextProperty(NSTextField nativeView, TextField virtualView)
+        public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
+            var nativeView = (NSTextField) viewHandler.NativeView;
             nativeView.StringValue = virtualView.Text;
             nativeView.SizeToFit();
             return true;

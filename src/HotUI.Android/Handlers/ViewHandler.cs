@@ -5,6 +5,8 @@ namespace HotUI.Android {
 		AView currentView;
 
 		public AView View => currentView;
+		public object NativeView => View;
+		public bool HasContainer { get; set; } = false;
 
 		public void Remove (View view)
 		{

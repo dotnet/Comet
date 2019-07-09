@@ -14,6 +14,10 @@ namespace HotUI.Forms
 
         public Xamarin.Forms.View View => _formsLayout;
 
+        public object NativeView => View;
+
+        public bool HasContainer { get; set; } = false;
+
         public void SetView(View view)
         {
             _view = view as AbstractLayout;

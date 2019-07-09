@@ -6,7 +6,7 @@ namespace HotUI.iOS
     public class HotUIView : UIView
     {
         private View _virtualView;
-        private IUIView _handler;
+        private iOSViewHandler _handler;
         private UIView _nativeView;
 
         public HotUIView()
