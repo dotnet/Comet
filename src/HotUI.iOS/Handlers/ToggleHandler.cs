@@ -1,49 +1,28 @@
 ﻿using System;
-using HotUI.iOS.Controls;
 using UIKit;
 
 namespace HotUI.iOS
 {
-    public class ToggleHandler : UISwitch, iOSViewHandler
+    public class ToggleHandler : AbstractHandler<Toggle, UISwitch>
     {
 		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> (ViewHandler.Mapper)
 		{ 
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };
 
-        public ToggleHandler()
+        public ToggleHandler() : base(Mapper)
         {
-            this.ValueChanged += HandleValueChanged;
         }
 
-        void HandleValueChanged(object sender, EventArgs e) => toggle?.IsOnChanged?.Invoke(On);
-
-        public UIView View => this;
-
-        public HUIContainerView ContainerView => null;
-
-        public object NativeView => View;
-
-        public bool HasContainer { get; set; } = false;
-
-        Toggle toggle;
-
-        public void Remove(View view)
+        protected override UISwitch CreateView()
         {
-            toggle = null;
+            var toggle = new UISwitch();
+            toggle.ValueChanged += HandleValueChanged;
+            return toggle;
         }
-
-        public void SetView(View view)
-        {
-            toggle = view as Toggle;
-            Mapper.UpdateProperties(this, toggle);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperty(this, toggle, property);
-        }
-
+        
+        void HandleValueChanged(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.On);
+        
         public static bool MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (UISwitch) viewHandler.NativeView;

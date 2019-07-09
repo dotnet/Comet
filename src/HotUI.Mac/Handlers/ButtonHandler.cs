@@ -1,52 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
 using AppKit;
-using HotUI.Mac.Controls;
 
 namespace HotUI.Mac.Handlers
 {
-    public class ButtonHandler : NSButton, MacViewHandler
+    public class ButtonHandler : AbstractHandler<Button,NSButton>
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
             [nameof(Button.Text)] = MapTextProperty
         };
         
-        public ButtonHandler()
+        public ButtonHandler() : base(Mapper)
         {
-            Cell.ControlSize = NSControlSize.Regular;
-            BezelStyle = NSBezelStyle.Rounded;
-            SetButtonType(NSButtonType.MomentaryPushIn);
-            Font = NSFont.SystemFontOfSize(NSFont.SystemFontSizeForControlSize(NSControlSize.Regular));
 
-            Activated += HandleTouchUpInside;
+        }
+        
+        protected override NSButton CreateView()
+        {
+            var button = new NSButton();
+
+            button.Cell.ControlSize = NSControlSize.Regular;
+            button.BezelStyle = NSBezelStyle.Rounded;
+            button.SetButtonType(NSButtonType.MomentaryPushIn);
+            button.Font = NSFont.SystemFontOfSize(NSFont.SystemFontSizeForControlSize(NSControlSize.Regular));
+            button.Activated += HandleTouchUpInside;
+            
+            return button;
         }
 
-        private void HandleTouchUpInside(object sender, EventArgs e) => _button?.OnClick();
-
-        public NSView View => this;
-
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
-        public HUIContainerView ContainerView => null;
-
-        Button _button;
-
-        public void Remove(View view)
-        {
-        }
-
-        public void SetView(View view)
-        {
-            _button = view as Button;
-            Mapper.UpdateProperties(this, _button);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperty(this, _button, property);
-        }
-
+        private void HandleTouchUpInside(object sender, EventArgs e) => VirtualView?.OnClick();
+        
         public static bool MapTextProperty(IViewHandler viewHandler, Button virtualButton)
         {
             var nativeButton = (NSButton) viewHandler.NativeView;

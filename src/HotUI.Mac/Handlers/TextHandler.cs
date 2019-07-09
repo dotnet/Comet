@@ -1,10 +1,9 @@
 ﻿using AppKit;
-using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-    public class TextHandler : NSTextField, MacViewHandler
+    public class TextHandler : AbstractHandler<Text,NSTextField>
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
@@ -15,44 +14,27 @@ namespace HotUI.Mac.Handlers
         
         private static Font DefaultFont;
         private static Color DefaultColor;
-        private static Color DefaultBackgroundColor;
 
-        public NSView View => this;
-
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
-        public HUIContainerView ContainerView => null;
-
-        public TextHandler()
+        public TextHandler() : base(Mapper)
         {
+        }
+        
+        protected override NSTextField CreateView()
+        {
+            var textField = new NSTextField();
+            
             if (DefaultColor == null)
             {
-                DefaultFont = Font.ToFont();
-                DefaultColor = TextColor.ToColor();
-                DefaultBackgroundColor = BackgroundColor.ToColor();
+                DefaultFont = textField.Font.ToFont();
+                DefaultColor = textField.TextColor.ToColor();
             }
 
-            Editable = false;
-            Bezeled = false;
-            DrawsBackground = false;
-            Selectable = false;
-        }
+            textField.Editable = false;
+            textField.Bezeled = false;
+            textField.DrawsBackground = false;
+            textField.Selectable = false;
 
-        public void Remove(View view)
-        {
-        }
-
-        private Text _text;
-        
-        public void SetView(View view)
-        {
-            _text = view as Text;
-            Mapper.UpdateProperties(this, _text);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperty(this, _text, property);
+            return textField;
         }
         
         public static bool MapValueProperty(IViewHandler viewHandler, Text virtualView)

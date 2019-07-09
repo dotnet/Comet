@@ -1,59 +1,39 @@
 ﻿using System;
-using System.Collections.Generic;
-using HotUI.iOS.Controls;
 using UIKit;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.iOS
 {
-    public class TextFieldHandler : UITextField, iOSViewHandler
+    public class TextFieldHandler : AbstractHandler<TextField, UITextField>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
             [nameof(TextField.Text)] = MapTextProperty
         };
         
-        private TextField _textField;
-
-        public TextFieldHandler()
+        public TextFieldHandler() : base(Mapper)
         {
-            EditingDidEnd += EntryHandler_EditingDidEnd;
 
-            ShouldReturn = s =>
+        }
+
+        protected override UITextField CreateView()
+        {
+            var textField = new UITextField();
+            textField.EditingDidEnd += EntryHandler_EditingDidEnd;
+
+            textField.ShouldReturn = s =>
             {
-                ResignFirstResponder();
+                textField.ResignFirstResponder();
                 return true;
             };
+            return textField;
         }
 
-        public UIView View => this;
-        
-        public HUIContainerView ContainerView => null;
-
-        public object NativeView => View;
-
-        public bool HasContainer { get; set; } = false;
-
-        public void Remove(View view)
-        {
-            _textField = null;
-        }
-
-        public void SetView(View view)
-        {
-            _textField = view as TextField;
-            Mapper.UpdateProperties(this, _textField);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperty(this, _textField, property);
-        }
-
+       
         private void EntryHandler_EditingDidEnd(object sender, EventArgs e)
         {
-            _textField?.Completed(Text);
+            VirtualView?.Completed(TypedNativeView.Text);
         }
         
         public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)

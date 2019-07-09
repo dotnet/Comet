@@ -26,6 +26,8 @@ namespace HotUI.Mac
         
         public object NativeView => _nativeView;
 
+        public TNativeView TypedNativeView => _nativeView;
+        
         protected TVirtualView VirtualView => _virtualView;
         
         public bool HasContainer

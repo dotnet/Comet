@@ -4,7 +4,9 @@ using UIKit;
 
 namespace HotUI.iOS
 {
-    public abstract class AbstractHandler<TVirtualView, TNativeView> : iOSViewHandler where TVirtualView : View where TNativeView: UIView
+    public abstract class AbstractHandler<TVirtualView, TNativeView> : iOSViewHandler 
+        where TVirtualView : View 
+        where TNativeView: UIView
     {
         private readonly PropertyMapper<TVirtualView> _mapper;
         private TVirtualView _virtualView;
@@ -25,6 +27,8 @@ namespace HotUI.iOS
         public HUIContainerView ContainerView => _containerView;
         
         public object NativeView => _nativeView;
+        
+        public TNativeView TypedNativeView => _nativeView;
 
         protected TVirtualView VirtualView => _virtualView;
         
