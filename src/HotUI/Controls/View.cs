@@ -121,7 +121,7 @@ namespace HotUI {
 				replaced.Parent = this.Parent;
 				replacedView = replaced;
 				replacedView.ViewHandler = ViewHandler;
-				return replacedView.GetRenderView();
+				return builtView = replacedView.GetRenderView();
 			}
 			if (Body == null)
 				return this;
