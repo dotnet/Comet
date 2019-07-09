@@ -3,7 +3,6 @@ using System.Diagnostics;
 using AppKit;
 using CoreAnimation;
 using CoreGraphics;
-using HotUI.Drawing;
 using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
@@ -93,23 +92,33 @@ namespace HotUI.Mac
             if (shadow != null && clipShape == null)
             {
                 handler.HasContainer = false;
-                if (nativeView.Layer == null)
+                nativeView.Shadow = new NSShadow()
+                {
+                    ShadowColor = shadow.Color.ToNSColor(),
+                    ShadowOffset = shadow.Offset.ToCGSize(),
+                    ShadowBlurRadius = (nfloat) shadow.Radius
+                };
+                
+                /*if (nativeView.Layer == null)
                     nativeView.WantsLayer = true;
                 
-                ApplyShadowToLayer(shadow, nativeView.Layer);
+                ApplyShadowToLayer(shadow, nativeView.Layer);*/
+            }
+            else if (nativeView != null)
+            {
+                // todo: Xamarin.Mac bug, you should be able to set Shadow to null.  Either get them to fix this,
+                // or use the Objective-C runtime to set this.
+                nativeView.Shadow = new NSShadow()
+                {
+                    ShadowBlurRadius = 0,
+                    ShadowColor = NSColor.Clear,
+                    ShadowOffset = new CGSize()
+                };
             }
 
             return true;
         }
-
-        private static void ApplyShadowToLayer(Shadow shadow, CALayer layer)
-        {
-            layer.ShadowColor = shadow.Color.ToCGColor();
-            layer.ShadowRadius = (nfloat) shadow.Radius;
-            layer.ShadowOffset = shadow.Offset.ToCGSize();
-            layer.ShadowOpacity = shadow.Opacity;
-        }
-
+        
         public static bool MapClipShapeProperty(IViewHandler handler, View virtualView)
         {
             var nativeView = (NSView) handler.NativeView;
@@ -148,16 +157,15 @@ namespace HotUI.Mac
                 var shadow = virtualView.GetShadow();
                 if (shadow != null)
                 {
-                    var shadowLayer = new CAShapeLayer();
-                    shadowLayer.Name = "shadow";
-                    shadowLayer.FillColor = new CGColor(0,0,0,0);
-                    shadowLayer.Path = layer.Path;
-                    shadowLayer.Frame = layer.Frame;
-        
-                    ApplyShadowToLayer(shadow, shadowLayer);
-                    
-                    if (viewHandler?.ContainerView != null)
-                        viewHandler.ContainerView.ShadowLayer = shadowLayer;
+                    if (viewHandler.ContainerView != null)
+                    {
+                        viewHandler.ContainerView.Shadow = new NSShadow()
+                        {
+                            ShadowColor = shadow.Color.ToNSColor(),
+                            ShadowOffset = shadow.Offset.ToCGSize(),
+                            ShadowBlurRadius = (nfloat) shadow.Radius
+                        };
+                    }
                 }
             }
             else
