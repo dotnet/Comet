@@ -12,7 +12,7 @@ namespace HotUI.UWP.Handlers
 {
     public class ImageHandler : IUIElement
     {
-        public static readonly PropertyMapper<Image, UIElement, ImageHandler> Mapper = new PropertyMapper<Image, UIElement, ImageHandler>()
+        public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>()
         {
             [nameof(Image.Source)] = MapSourceProperty
         };
@@ -27,7 +27,15 @@ namespace HotUI.UWP.Handlers
         }
 
         public UIElement View => NativeImageView;
-        
+
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+
         public void Remove(View view)
         {
         }
@@ -43,8 +51,9 @@ namespace HotUI.UWP.Handlers
             Mapper.UpdateProperty(this, _image, property);
         }
         
-        public static bool MapSourceProperty(ImageHandler nativeView, Image virtualView)
+        public static bool MapSourceProperty(IViewHandler viewHandler, Image virtualView)
         {
+            var nativeView = (ImageHandler)viewHandler;
             nativeView.UpdateSource(virtualView.Source);
             return true;
         }

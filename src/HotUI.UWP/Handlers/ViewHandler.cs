@@ -9,7 +9,7 @@ namespace HotUI.UWP.Handlers
 {
     public class ViewHandler : IUIElement
     {
-        public static readonly PropertyMapper<View, UIElement, ViewHandler> Mapper = new PropertyMapper<View, UIElement, ViewHandler>()
+        public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
 
 		};
@@ -20,6 +20,14 @@ namespace HotUI.UWP.Handlers
         public Action ViewChanged { get; set; }
 
         public UIElement View => _body;
+
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
 
         public void Remove(View view)
         {

@@ -7,7 +7,7 @@ namespace HotUI.UWP
 {
     public class ToggleHandler :  IUIElement
     {
-		public static readonly PropertyMapper<Toggle, UIElement, ToggleSwitch> Mapper = new PropertyMapper<Toggle, UIElement, ToggleSwitch> ()
+		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> ()
 		{ 
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };
@@ -25,6 +25,13 @@ namespace HotUI.UWP
 
         public UIElement View => _nativeToggle;
 
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
         public void Remove(View view)
         {
             _virtualToggle = null;
@@ -33,16 +40,17 @@ namespace HotUI.UWP
         public void SetView(View view)
         {
             _virtualToggle = view as Toggle;
-            Mapper.UpdateProperties(_nativeToggle, _virtualToggle);
+            Mapper.UpdateProperties(this, _virtualToggle);
         }
 
         public void UpdateValue(string property, object value)
         {
-            Mapper.UpdateProperty(_nativeToggle, _virtualToggle, property);
+            Mapper.UpdateProperty(this, _virtualToggle, property);
         }
 
-        public static bool MapIsOnProperty(ToggleSwitch nativeView, Toggle virtualView)
+        public static bool MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
+            var nativeView = (ToggleSwitch)viewHandler.NativeView;
             nativeView.IsOn = virtualView.IsOn;
             return true;
         }

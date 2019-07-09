@@ -13,7 +13,15 @@ namespace HotUI.UWP
 
 		public UIElement View =>_view;
 
-		public void Remove (View view)
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+
+        public void Remove (View view)
 		{
 			ContentView = null;
 		}

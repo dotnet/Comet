@@ -10,7 +10,7 @@ namespace HotUI.WPF
             UI.Init();
         }
 
-        public static IUIElement ToIUIElement(this View view)
+        public static WPFViewHandler ToIUIElement(this View view)
         {
             if (view == null)
                 return null;
@@ -21,7 +21,7 @@ namespace HotUI.WPF
                 view.ViewHandler = handler;
             }
 
-            var iUIElement = handler as IUIElement;
+            var iUIElement = handler as WPFViewHandler;
             return iUIElement;
         }
 

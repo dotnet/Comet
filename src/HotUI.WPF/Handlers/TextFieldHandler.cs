@@ -7,9 +7,9 @@ using WPFTextField = System.Windows.Controls.TextBox;
 
 namespace HotUI.WPF.Handlers
 {
-    public class TextFieldHandler : WPFTextField, IUIElement
+    public class TextFieldHandler : WPFTextField, WPFViewHandler
     {
-        public static readonly PropertyMapper<TextField, UIElement, TextFieldHandler> Mapper = new PropertyMapper<TextField, UIElement, TextFieldHandler>()
+        public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>()
         {
             [nameof(TextField.Text)] = MapTextProperty
         };
@@ -17,7 +17,14 @@ namespace HotUI.WPF.Handlers
         private TextField _textField;
         
         public UIElement View => this;
-        
+
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
         public void Remove(View view)
         {
         }
@@ -36,8 +43,9 @@ namespace HotUI.WPF.Handlers
             Mapper.UpdateProperty(this, _textField, property);
         }
         
-        public static bool MapTextProperty(WPFTextField nativeView, TextField virtualView)
+        public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
+            var nativeView = (WPFTextField)viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
             //nativeView.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             //var desiredSize = nativeView.DesiredSize;

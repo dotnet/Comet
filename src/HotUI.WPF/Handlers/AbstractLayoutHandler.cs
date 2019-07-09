@@ -4,11 +4,11 @@ using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using HotUI.Layout;
-using Size = System.Windows.Size;
+using WPFSize = System.Windows.Size;
 
 namespace HotUI.WPF.Handlers
 {
-    public abstract class AbstractLayoutHandler : Panel, IUIElement, ILayoutHandler<UIElement>
+    public abstract class AbstractLayoutHandler : Panel, WPFViewHandler, ILayoutHandler<UIElement>
     {
         private readonly ILayoutManager<UIElement> _layoutManager;
         private AbstractLayout _view;
@@ -47,7 +47,7 @@ namespace HotUI.WPF.Handlers
 
         public void SetSize(UIElement view, float width, float height)
         {
-            view.RenderSize = new Size(width, height);
+            view.RenderSize = new WPFSize(width, height);
             if (view is FrameworkElement element)
             {
                 element.Width = view.RenderSize.Width;
@@ -61,6 +61,14 @@ namespace HotUI.WPF.Handlers
         }
 
         public UIElement View => this;
+
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
 
         public void SetView(View view)
         {
@@ -139,12 +147,13 @@ namespace HotUI.WPF.Handlers
 
         private void LayoutSubviews()
         {
-            _layoutManager.Layout(this, this, _view);
+            var measure = _layoutManager.Measure(this, this, _view, RenderSize.ToSize());
+            _layoutManager.Layout(this, this, _view, measure);
         }
 
-        protected override Size MeasureOverride(Size availableSize)
+        protected override WPFSize MeasureOverride(WPFSize availableSize)
         {
-            var size = new Size();
+            var size = new WPFSize();
 
             for (var i = 0; i < InternalChildren.Count; i++)
             {
@@ -152,8 +161,8 @@ namespace HotUI.WPF.Handlers
 
                 if (child is System.Windows.Controls.ListView listView)
                 {
-                    var sizeToUse = GetMeasuredSize(listView, availableSize);
-                    child.Measure(sizeToUse);
+                    var sizeToUse = GetMeasuredSize(listView, availableSize.ToSize());
+                    child.Measure(sizeToUse.ToSize());
                     size.Height = Math.Max(child.DesiredSize.Height, size.Height);
                     size.Width = Math.Max(child.DesiredSize.Width, size.Width);
                 }
@@ -175,7 +184,7 @@ namespace HotUI.WPF.Handlers
 
         private bool _inArrange = false;
 
-        protected override Size ArrangeOverride(Size finalSize)
+        protected override WPFSize ArrangeOverride(WPFSize finalSize)
         {
             if (_inArrange)
                 return finalSize;
@@ -189,6 +198,12 @@ namespace HotUI.WPF.Handlers
             _inArrange = false;
 
             return finalSize;
+        }
+
+        public Size Measure(UIElement view, Size available)
+        {
+            view.Measure(available.ToSize());
+            return view.DesiredSize.ToSize();
         }
     }
 }

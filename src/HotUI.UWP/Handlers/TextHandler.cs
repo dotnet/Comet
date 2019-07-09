@@ -9,7 +9,7 @@ namespace HotUI.UWP.Handlers
 {
     public class TextHandler : IUIElement
     {
-        public static readonly PropertyMapper<Text, UIElement, UWPLabel> Mapper = new PropertyMapper<Text, UIElement, UWPLabel>()
+        public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>()
             {
                 [nameof(Text.Value)] = MapValueProperty
             };
@@ -24,6 +24,13 @@ namespace HotUI.UWP.Handlers
         
         public UIElement View => _textBlock;
 
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
         public void Remove(View view)
         {
         }
@@ -31,16 +38,17 @@ namespace HotUI.UWP.Handlers
         public void SetView(View view)
         {
             _text = view as Text;
-            Mapper.UpdateProperties(_textBlock, _text);
+            Mapper.UpdateProperties(this, _text);
         }
 
         public void UpdateValue(string property, object value)
         {
-            Mapper.UpdateProperty(_textBlock, _text, property);
+            Mapper.UpdateProperty(this, _text, property);
         }
 
-        public static bool MapValueProperty(UWPLabel nativeView, Text virtualView)
+        public static bool MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
+            var nativeView = (UWPLabel)viewHandler.NativeView;
             nativeView.Text = virtualView.Value;
             return true;
         }

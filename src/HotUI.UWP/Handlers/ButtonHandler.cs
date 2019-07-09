@@ -9,7 +9,7 @@ namespace HotUI.UWP.Handlers
 {
     public class ButtonHandler : UWPButton, IUIElement
     {
-        public static readonly PropertyMapper<Button, UIElement, ButtonHandler> Mapper = new PropertyMapper<Button, UIElement, ButtonHandler>()
+        public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>()
         {
             [nameof(Button.Text)] = MapTextProperty
         };
@@ -23,7 +23,15 @@ namespace HotUI.UWP.Handlers
         
 
         public UIElement View => this;
-        
+
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+
         public void Remove(View view)
         {
             _button = null;
@@ -42,8 +50,9 @@ namespace HotUI.UWP.Handlers
 
         private void HandleClick(object sender, RoutedEventArgs e) => _button?.OnClick();
 
-        public static bool MapTextProperty(UWPButton nativeButton, Button virtualButton)
+        public static bool MapTextProperty(IViewHandler viewHandler, Button virtualButton)
         {
+            var nativeButton = (UWPButton)viewHandler.NativeView;
             nativeButton.Content = virtualButton.Text;
             return true;
         }

@@ -8,7 +8,7 @@ namespace HotUI.UWP.Handlers
 {
     public class ScrollViewHandler : IUIElement
     {
-        public static readonly PropertyMapper<ScrollView, UIElement, UWPScrollView> Mapper = new PropertyMapper<ScrollView, UIElement, UWPScrollView>()
+        public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>()
             {
             };
 
@@ -23,6 +23,14 @@ namespace HotUI.UWP.Handlers
         
         public UIElement View => _nativeScrollView;
 
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+
         public void Remove(View view)
         {
         }
@@ -36,12 +44,12 @@ namespace HotUI.UWP.Handlers
                 _nativeScrollView.Content = _content;
             }
 
-            Mapper.UpdateProperties(_nativeScrollView, _virtualScrollView);
+            Mapper.UpdateProperties(this, _virtualScrollView);
         }
 
         public void UpdateValue(string property, object value)
         {
-            Mapper.UpdateProperty(_nativeScrollView, _virtualScrollView, property);
+            Mapper.UpdateProperty(this, _virtualScrollView, property);
         }
     }
 }

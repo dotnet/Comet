@@ -7,9 +7,9 @@ using WPFListView = System.Windows.Controls.ListView;
 
 namespace HotUI.WPF.Handlers
 {
-    public class ListViewHandler : WPFListView, IUIElement
+    public class ListViewHandler : WPFListView, WPFViewHandler
     {
-        public static readonly PropertyMapper<ListView, UIElement, ListViewHandler> Mapper = new PropertyMapper<ListView, UIElement, ListViewHandler>()
+        public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>()
         {
             [nameof(Text.Value)] = MapListProperty
         };
@@ -21,7 +21,15 @@ namespace HotUI.WPF.Handlers
             SelectionChanged += HandleSelectionChanged;
         }
         public new UIElement View => this;
-        
+
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+
         public void Remove(View view)
         {
         }
@@ -37,8 +45,9 @@ namespace HotUI.WPF.Handlers
             Mapper.UpdateProperty(this, listView, property);
         }
 
-        public static bool MapListProperty(ListViewHandler nativeView, ListView virtualView)
+        public static bool MapListProperty(IViewHandler viewHandler, ListView virtualView)
         {
+            var nativeView = (ListViewHandler)viewHandler;
             foreach (var item in virtualView.List)
             {
                 nativeView.Items.Add(new ListViewHandlerItem(nativeView, item));

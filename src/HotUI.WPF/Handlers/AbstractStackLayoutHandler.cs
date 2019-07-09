@@ -3,11 +3,19 @@ using System.Windows.Controls;
 
 namespace HotUI.WPF.Handlers
 {
-    public abstract class AbstractStackLayoutHandler : StackPanel, IUIElement
+    public abstract class AbstractStackLayoutHandler : StackPanel, WPFViewHandler
     {
         private AbstractLayout _view;
 
         public UIElement View => this;
+
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
 
         public void SetView(View view)
         {

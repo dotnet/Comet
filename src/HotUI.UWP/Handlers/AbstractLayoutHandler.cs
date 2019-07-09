@@ -5,7 +5,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using HotUI.Layout;
-using Size = Windows.Foundation.Size;
+using UwpSize = Windows.Foundation.Size;
 
 namespace HotUI.UWP.Handlers
 {
@@ -60,6 +60,13 @@ namespace HotUI.UWP.Handlers
 
         public UIElement View => this;
 
+        public object NativeView => View;
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
         public void SetView(View view)
         {
             _view = view as AbstractLayout;
@@ -137,19 +144,20 @@ namespace HotUI.UWP.Handlers
 
         private void LayoutSubviews()
         {
-            _layoutManager.Layout(this, this, _view);
+            var measure = _layoutManager.Measure(this, this, _view, ActualSize.ToSize());
+            _layoutManager.Layout(this, this, _view, measure);
         }
 
-        protected override Size MeasureOverride(Size availableSize)
+        protected override UwpSize MeasureOverride(UwpSize availableSize)
         {
-            var size = new Size();
+            var size = new UwpSize();
 
             foreach (var child in Children)
             {
                 if (child is Windows.UI.Xaml.Controls.ListView listView)
                 {
-                    var sizeToUse = GetMeasuredSize(listView, availableSize);
-                    child.Measure(sizeToUse);
+                    var sizeToUse = GetMeasuredSize(listView, availableSize.ToSize());
+                    child.Measure(sizeToUse.ToSize());
                     size.Height = Math.Max(child.DesiredSize.Height, size.Height);
                     size.Width = Math.Max(child.DesiredSize.Width, size.Width);
                 }
@@ -169,13 +177,18 @@ namespace HotUI.UWP.Handlers
             return availableSize;
         }
 
-        protected override Size ArrangeOverride(Size finalSize)
+        protected override UwpSize ArrangeOverride(UwpSize finalSize)
         {
             Width = finalSize.Width;
             Height = finalSize.Height;
             if (finalSize.Width > 0 && finalSize.Height > 0) LayoutSubviews();
 
             return finalSize;
+        }
+
+        public Size Measure(UIElement view, Size available)
+        {
+            return view.DesiredSize.ToSize();
         }
     }
 }
