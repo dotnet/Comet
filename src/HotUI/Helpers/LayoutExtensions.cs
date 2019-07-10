@@ -47,14 +47,20 @@ namespace HotUI
 		
 		public static T Overlay<T> (this T view, View overlayView) where T : View
 		{
-			//view.SetEnvironment (EnvironmentKeys.Layout.Padding, padding);
+			view.SetEnvironment (EnvironmentKeys.View.Overlay, overlayView);
 			return view;
 		}
 		
 		public static T Overlay<T> (this T view, Shape shape) where T : View
 		{
-			//view.SetEnvironment (EnvironmentKeys.Layout.Padding, padding);
+            var shapeView = new ShapeView(shape);
+			view.SetEnvironment (EnvironmentKeys.View.Overlay, shapeView);
 			return view;
 		}
-	}
+
+        public static View GetOverlay(this View view)
+        {
+            return view.GetEnvironment<View>(EnvironmentKeys.View.Overlay);
+        }
+    }
 }

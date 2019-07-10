@@ -5,11 +5,10 @@ using System.Linq;
 
 namespace HotUI {
 
-	public class View : IDisposable {
+	public class View : ContextualObject, IDisposable
+    {
 		internal readonly static List<View> ActiveViews = new List<View> ();
 		HashSet<string> usedEnvironmentData = new HashSet<string> ();
-		internal static readonly EnvironmentData Environment = new EnvironmentData ();
-		internal readonly EnvironmentData Context = new EnvironmentData ();
 
         public event EventHandler<ViewHandlerChangedEventArgs> ViewHandlerChanged;
 
@@ -158,7 +157,7 @@ namespace HotUI {
 			replacedView?.ViewPropertyChanged (property, value);
 		}
 
-		internal virtual void ContextPropertyChanged(string property, object value)
+		internal override void ContextPropertyChanged(string property, object value)
 		{
 			ViewPropertyChanged (property, value);
 		}

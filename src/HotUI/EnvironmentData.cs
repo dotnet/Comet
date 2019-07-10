@@ -29,7 +29,14 @@ namespace HotUI {
         public static class View
         {
 	        public const string ClipShape = "ClipShape";
-	        public const string Shadow = "Radius";
+            public const string Shadow = "Shadow";
+            public const string Overlay = "Overlay";
+        }
+
+        public static class Shape
+        {
+            public const string Stroke = "Shape.Stroke";
+            public const string Color = "Shape.Color";
         }
     }
 

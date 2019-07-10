@@ -15,7 +15,8 @@ namespace HotUI.iOS
         {
             [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
             [nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
-            [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty
+            [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
+            [nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty
         };
         
         private View _view;
@@ -72,7 +73,20 @@ namespace HotUI.iOS
             if (color != null)
                 nativeView.BackgroundColor = color.ToUIColor();
         }
-        
+
+        public static bool NeedsContainer(View virtualView)
+        {
+            var overlay = virtualView.GetOverlay();
+            if (overlay != null)
+                return true;
+
+            var mask = virtualView.GetClipShape();
+            if (mask != null)
+                return true;
+
+            return false;
+        }
+
         public static void MapShadowProperty(IViewHandler handler, View virtualView)
         {
             var nativeView = (UIView) handler.NativeView;
@@ -88,7 +102,30 @@ namespace HotUI.iOS
             else
             {
                 ClearShadowFromLayer(nativeView.Layer);
-                handler.HasContainer = false;
+                handler.HasContainer = NeedsContainer(virtualView);
+            }
+        }
+
+        public static void MapOverlayProperty(IViewHandler handler, View virtualView)
+        {
+            var nativeView = (UIView)handler.NativeView;
+            var overlay = virtualView.GetOverlay();
+
+            var viewHandler = handler as iOSViewHandler;
+
+
+            // If there is a clip shape, then the shadow should be applied to the clip layer, not the view layer
+            if (overlay != null)
+            {
+                handler.HasContainer = true;
+                if (viewHandler?.ContainerView != null)
+                    viewHandler.ContainerView.OverlayView = overlay.ToView();
+            }
+            else
+            {
+                if (viewHandler?.ContainerView != null)
+                    viewHandler.ContainerView.OverlayView = null;
+                handler.HasContainer = NeedsContainer(virtualView);
             }
         }
 
@@ -164,7 +201,7 @@ namespace HotUI.iOS
                 if (shadow == null)
                     ClearShadowFromLayer(nativeView.Layer);
                 nativeView.Layer.Mask = null;
-                handler.HasContainer = false;
+                handler.HasContainer = NeedsContainer(virtualView);
             }
         }
     }

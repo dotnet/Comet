@@ -8,6 +8,7 @@ namespace HotUI.iOS.Controls
     public class HUIContainerView : UIView
     {
         private UIView _mainView;
+        private UIView _overlayView;
         private CAShapeLayer _shadowLayer;
         private CAShapeLayer _maskLayer;
         private CGSize _size;
@@ -66,11 +67,37 @@ namespace HotUI.iOS.Controls
                     _size = _mainView.Bounds.Size;
                     _mainView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
                     _mainView.Frame = Bounds;
-                    AddSubview(_mainView);
+
+                    if (_overlayView != null)
+                        InsertSubviewBelow(_mainView, _overlayView);
+                    else
+                        AddSubview(_mainView);
                 }
             }
         }
-        
+
+        public UIView OverlayView
+        {
+            get => _overlayView;
+            set
+            {
+                if (_overlayView != null)
+                {
+                    _overlayView.RemoveFromSuperview();
+                }
+
+                _overlayView = value;
+
+                if (_overlayView != null)
+                {
+                    base.Frame = _mainView?.Bounds ?? Bounds;
+                    _overlayView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
+                    _overlayView.Frame = Bounds;
+                    AddSubview(_overlayView);
+                }
+            }
+        }
+
         public CAShapeLayer ShadowLayer
         {
             get => _shadowLayer;
