@@ -31,7 +31,7 @@ namespace HotUI.Samples {
             new MenuItem("SwiftUI Tutorial Section 4", ()=> new Section4()),
             new MenuItem("SwiftUI Tutorial Section 4b", ()=> new Section4b()),
             new MenuItem("SwiftUI Tutorial Section 4c", ()=> new Section4c()),
-		};
+        };
 		public MainPage ()
 		{
 			Body = () => new NavigationView {

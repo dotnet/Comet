@@ -115,6 +115,9 @@ namespace HotUI.iOS.Controls
             get => _maskLayer;
             set
             {
+                if (_maskLayer != null)
+                    _mainView.Layer.Mask = null;
+
                 _maskLayer = value;                    
                 if (_mainView != null)
                     _mainView.Layer.Mask = value;

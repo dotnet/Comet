@@ -12,7 +12,10 @@ namespace HotUI.iOS
         private ContentView _contentView;
 
         public UIView View => _view;
-        
+
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+        public event EventHandler RemovedFromView;
+
         public object NativeView => View;
 
         public HUIContainerView ContainerView => null;

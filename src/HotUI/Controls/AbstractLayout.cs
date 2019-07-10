@@ -27,8 +27,9 @@ namespace HotUI
 			var count = _views.Count;
 			if (count > 0)
             {
-				_views.Clear ();
-				ChildrenRemoved?.Invoke (this, new LayoutEventArgs (0, count));
+                var removed = new List<View>(_views);
+                _views.Clear ();
+				ChildrenRemoved?.Invoke (this, new LayoutEventArgs (0, count, removed));
 			}
 		}
 
@@ -48,8 +49,9 @@ namespace HotUI
 				item.Parent = null;
                 item.Navigation = null;
 
+                var removed = new List<View> { item };
                 _views.Remove (item);
-				ChildrenRemoved?.Invoke (this, new LayoutEventArgs (index, 1));
+				ChildrenRemoved?.Invoke (this, new LayoutEventArgs (index, 1, removed));
 				return true;
 			}
 
@@ -87,8 +89,9 @@ namespace HotUI
                 item.Parent = null;
                 item.Navigation = null;
 
+                var removed = new List<View> { item };
                 _views.RemoveAt(index);
-                ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1));
+                ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1, removed));
             }
         }
 
@@ -100,13 +103,14 @@ namespace HotUI
                 var item = _views[index];
                 item.Parent = null;
                 item.Navigation = null;
+                var removed = new List<View> { item };
 
-                _views [index] = value;
+                _views[index] = value;
 
                 value.Parent = null;
                 value.Navigation = null;
 
-                ChildrenChanged?.Invoke (this, new LayoutEventArgs (index, 1));
+                ChildrenChanged?.Invoke (this, new LayoutEventArgs (index, 1, removed));
 			}
 		}
 

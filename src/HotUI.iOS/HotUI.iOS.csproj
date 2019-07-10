@@ -70,6 +70,7 @@
     <Compile Include="Handlers\ToggleHandler.cs" />
     <Compile Include="HotUIView.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
+    <Compile Include="ViewChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">

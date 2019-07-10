@@ -1,4 +1,5 @@
-﻿using HotUI.iOS.Controls;
+﻿using System;
+using HotUI.iOS.Controls;
 using UIKit;
 
 // ReSharper disable ClassNeverInstantiated.Global
@@ -16,6 +17,9 @@ namespace HotUI.iOS
         private Spacer _spacer;
 
         public UIView View => this;
+
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+        public event EventHandler RemovedFromView;
 
         public HUIContainerView ContainerView => null;
 

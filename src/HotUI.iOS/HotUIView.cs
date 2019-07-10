@@ -32,14 +32,14 @@ namespace HotUI.iOS
                 _virtualView = value;
                 _handler = _virtualView.ToIUIView();
                 if (_handler is ViewHandler viewHandler)
-                    viewHandler.ViewChanged = HandleViewChanged;
+                    viewHandler.NativeViewChanged += HandleViewChanged;
 
-                HandleViewChanged();
+                HandleViewChanged(this, new ViewChangedEventArgs(_virtualView,null,null));
             }
         }
 
 
-        void HandleViewChanged()
+        void HandleViewChanged(object sender, ViewChangedEventArgs args)
         {
             if (_virtualView == null)
                 return;

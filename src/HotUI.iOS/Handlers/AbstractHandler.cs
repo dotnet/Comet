@@ -12,8 +12,9 @@ namespace HotUI.iOS
         private TVirtualView _virtualView;
         private TNativeView _nativeView;
         private HUIContainerView _containerView;
-        
-        public EventHandler ViewChanged { get; set; }
+
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+        public event EventHandler RemovedFromView;
 
         protected AbstractHandler(PropertyMapper<TVirtualView> mapper)
         {
@@ -39,12 +40,15 @@ namespace HotUI.iOS
             {
                 if (!value && _containerView != null)
                 {
+                    var previousContainerView = _containerView;
+
                     _containerView.ShadowLayer = null;
                     _containerView.MaskLayer = null;
                     _containerView = null;
 
+                    _nativeView.Layer.Mask = null;
                     _nativeView.RemoveFromSuperview();
-                    ViewChanged?.Invoke(this, EventArgs.Empty);
+                    NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, previousContainerView, _nativeView));
                     return;
                 }
 
@@ -52,7 +56,7 @@ namespace HotUI.iOS
                 {
                     _containerView = new HUIContainerView();
                     _containerView.MainView = _nativeView;
-                    ViewChanged?.Invoke(this, EventArgs.Empty);
+                    NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, _nativeView, _containerView));
                 }
             }
         }
@@ -67,6 +71,8 @@ namespace HotUI.iOS
                 _nativeView.RemoveFromSuperview();
                 _containerView = null;
             }
+
+            RemovedFromView?.Invoke(this, EventArgs.Empty);
         }
         
         public virtual void SetView(View view)

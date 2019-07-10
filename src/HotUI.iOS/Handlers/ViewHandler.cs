@@ -20,8 +20,9 @@ namespace HotUI.iOS
         
         private View _view;
         private UIView _body;
-        
-        public Action ViewChanged { get; set; }
+
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+        public event EventHandler RemovedFromView;
 
         public UIView View => _body;
         
@@ -39,10 +40,11 @@ namespace HotUI.iOS
 
         public void SetView(View view)
         {
+            var oldBody = _body;
             _view = view;
             SetBody();
             Mapper.UpdateProperties(this, _view);
-            ViewChanged?.Invoke();
+            NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(_view, oldBody, _body));
         }
 
         public void UpdateValue(string property, object value)
@@ -137,7 +139,7 @@ namespace HotUI.iOS
                 {
                     var shadowLayer = new CAShapeLayer();
                     shadowLayer.Name = "shadow";
-                    shadowLayer.FillColor = new CGColor(0,0,0,0);
+                    shadowLayer.FillColor = new CGColor(0,0,0,1);
                     shadowLayer.Path = layer.Path;
                     shadowLayer.Frame = layer.Frame;
         
@@ -149,6 +151,7 @@ namespace HotUI.iOS
             }
             else
             {
+                nativeView.Layer.Mask = null;
                 handler.HasContainer = false;
             }
 
