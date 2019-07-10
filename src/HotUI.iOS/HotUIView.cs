@@ -1,4 +1,5 @@
-﻿using CoreGraphics;
+﻿using System;
+using CoreGraphics;
 using UIKit;
 
 namespace HotUI.iOS
@@ -29,18 +30,52 @@ namespace HotUI.iOS
                 if (value == _virtualView)
                     return;
 
-                _virtualView = value;
-                _handler = _virtualView.ToIUIView();
-                if (_handler is ViewHandler viewHandler)
-                    viewHandler.NativeViewChanged += HandleViewChanged;
+                if (_virtualView != null)
+                {
+                    _virtualView.ViewHandlerChanged -= HandleViewHandlerChanged;
+                    if (_handler is iOSViewHandler viewHandler)
+                        viewHandler.NativeViewChanged -= HandleNativeViewChanged;
+                }
 
-                HandleViewChanged(this, new ViewChangedEventArgs(_virtualView,null,null));
+                _virtualView = value;
+
+                if (_virtualView != null)
+                {
+                    _virtualView.ViewHandlerChanged += HandleViewHandlerChanged;
+                    if (_handler is iOSViewHandler viewHandler)
+                        viewHandler.NativeViewChanged += HandleNativeViewChanged;
+
+                    _handler = _virtualView.ToIUIView();
+                    HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, null, (UIView)_handler.NativeView));
+                }
             }
         }
 
-
-        void HandleViewChanged(object sender, ViewChangedEventArgs args)
+        private void HandleViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
         {
+            Console.WriteLine($"[{GetType().Name}] HandleViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
+
+            if (e.OldViewHandler is iOSViewHandler oldHandler)
+            {
+                oldHandler.NativeViewChanged -= HandleNativeViewChanged;
+                _nativeView?.RemoveFromSuperview();
+                _nativeView = null;
+            }
+
+            if (e.NewViewHandler is iOSViewHandler newHandler)
+            {
+                newHandler.NativeViewChanged += HandleNativeViewChanged;
+                _nativeView = newHandler.View ?? new UIView();
+                AddSubview(_nativeView);
+                SetNeedsLayout();
+            }
+        }
+
+        void HandleNativeViewChanged(object sender, ViewChangedEventArgs args)
+        {
+           
+            Console.WriteLine($"[{GetType().Name}] HandleNativeViewChanged: [{sender.GetType()}] From:[{args.OldNativeView?.GetType()} {(args.OldNativeView as AbstractLayoutHandler)?._instance.ToString() ?? ""}] To:[{args.NewNativeView?.GetType()} {(args.NewNativeView as AbstractLayoutHandler)?._instance.ToString() ?? ""}]");
+
             if (_virtualView == null)
                 return;
 

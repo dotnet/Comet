@@ -49,25 +49,22 @@ namespace HotUI.Android
 			Mapper.UpdateProperty(this, _view, property);
 		}
 		
-		public static bool MapBackgroundColorProperty(IViewHandler handler, View virtualView)
+		public static void MapBackgroundColorProperty(IViewHandler handler, View virtualView)
         {
             var nativeView = (AView) handler.NativeView;
             var color = virtualView.GetBackgroundColor();
             if (color != null)
                 nativeView.SetBackgroundColor(color.ToColor());
-            return true;
         }
         
-        public static bool MapShadowProperty(IViewHandler handler, View virtualView)
+        public static void MapShadowProperty(IViewHandler handler, View virtualView)
         {
             Console.WriteLine("Shadows not yet supported on Android");
-            return true;
         }
 
-        public static bool MapClipShapeProperty(IViewHandler handler, View virtualView)
+        public static void MapClipShapeProperty(IViewHandler handler, View virtualView)
         {
 	        Console.WriteLine("ClipShape not yet supported on Android");
-	        return true;
         }
 	}
 }

@@ -41,11 +41,10 @@ namespace HotUI.Forms
             Mapper.UpdateProperty(this, toggle, property);
         }
 
-        public static bool MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
+        public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (ToggleHandler) viewHandler.NativeView;
             nativeView.IsToggled = virtualView.IsOn;
-            return true;
         }
     }
 }

@@ -35,12 +35,11 @@ namespace HotUI.iOS
             VirtualView?.Completed(TypedNativeView.Text);
         }
         
-        public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)
+        public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (UITextField) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
             nativeView.SizeToFit();
-            return true;
         }
     }
 }

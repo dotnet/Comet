@@ -10,6 +10,9 @@ namespace HotUI {
 		HashSet<string> usedEnvironmentData = new HashSet<string> ();
 		internal static readonly EnvironmentData Environment = new EnvironmentData ();
 		internal readonly EnvironmentData Context = new EnvironmentData ();
+
+        public event EventHandler<ViewHandlerChangedEventArgs> ViewHandlerChanged;
+
 		View parent;
         string id;
 
@@ -65,13 +68,15 @@ namespace HotUI {
 			set {
 				if (viewHandler == value)
 					return;
+                var oldViewHandler = viewHandler;
 				viewHandler?.Remove (this);
 				viewHandler = value;
 				if (replacedView != null)
 					replacedView.ViewHandler = value;
 				WillUpdateView ();
 				viewHandler?.SetView (this.GetRenderView());
-			}
+                ViewHandlerChanged?.Invoke(this, new ViewHandlerChangedEventArgs(this, oldViewHandler, value));
+            }
 		}
 
 		internal void UpdateFromOldView (View view) {

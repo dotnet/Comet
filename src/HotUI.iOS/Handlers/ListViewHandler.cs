@@ -36,7 +36,6 @@ namespace HotUI.iOS
         public UIView View => this;
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
-        public event EventHandler RemovedFromView;
 
         public HUIContainerView ContainerView => null;
 

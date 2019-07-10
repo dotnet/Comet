@@ -26,12 +26,12 @@ namespace HotUI.Samples.Comparisons
         public Section4b()
         {
             Body = () => new VStack
-            {
+            { 
                 new Image("turtlerock.jpg")
-                    .ClipShape(new Circle())
+                    //.ClipShape(new Circle())
                     .Overlay(
                         new Circle().Stroke(Color.White, lineWidth: 4))
-                    .Shadow(radius: 10)
+                    //.Shadow(radius: 10)
             };
         }
     }

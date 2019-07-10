@@ -10,22 +10,26 @@ namespace HotUI.iOS
 {
     public class AbstractLayoutHandler : UIView, iOSViewHandler, ILayoutHandler<UIView>
     {
+        public static int _counter = 0;
+        public int _instance;
+
         private readonly ILayoutManager<UIView> _layoutManager;
         private AbstractLayout _view;
         private Size _measured;
         private bool _measurementValid;
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
-        public event EventHandler RemovedFromView;
 
         protected AbstractLayoutHandler(CGRect rect, ILayoutManager<UIView> layoutManager) : base(rect)
         {
+            _instance = _counter++;
             _layoutManager = layoutManager;
             InitializeDefaults();
         }
 
         protected AbstractLayoutHandler(ILayoutManager<UIView> layoutManager)
         {
+            _instance = _counter++;
             _layoutManager = layoutManager;
         }
 
@@ -85,10 +89,12 @@ namespace HotUI.iOS
         {
             get => false; 
             set {}
-        } 
+        }
 
         public void SetView(View view)
         {
+            Console.WriteLine($"[{GetType().Name} - {_instance}] SetView({view.GetType().Name})");
+
             if (_view != null)
                 Console.WriteLine("Removed should have been called beforehand.");
 
@@ -101,11 +107,9 @@ namespace HotUI.iOS
 
                 foreach (var subview in _view)
                 {
+                    subview.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
                     if (subview.ViewHandler is iOSViewHandler handler)
-                    {
-                        handler.RemovedFromView += HandleHandlerRemovedFromView;
-                        handler.NativeViewChanged += HandleSubviewChanged;
-                    }
+                        handler.NativeViewChanged += HandleSubviewNativeViewChanged;
 
                     var nativeView = subview.ToView() ?? new UIView();
                     AddSubview(nativeView);
@@ -118,13 +122,13 @@ namespace HotUI.iOS
 
         public void Remove(View view)
         {
+            Console.WriteLine($"[{GetType().Name} - {_instance}] Remove({view.GetType().Name})");
+
             foreach (var subview in _view)
             {
+                subview.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
                 if (subview.ViewHandler is iOSViewHandler handler)
-                {
-                    handler.RemovedFromView -= HandleHandlerRemovedFromView;
-                    handler.NativeViewChanged -= HandleSubviewChanged;
-                }
+                    handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
             }
 
             foreach (var subview in Subviews)
@@ -136,20 +140,19 @@ namespace HotUI.iOS
             _view.ChildrenAdded -= HandleChildrenAdded;
             _view.ChildrenRemoved -= ViewOnChildrenRemoved;
             _view = null;
-
-            RemovedFromView?.Invoke(this, EventArgs.Empty);
         }
 
-        private void HandleHandlerRemovedFromView(object sender, EventArgs e)
+        private void HandleSubviewViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
         {
-            var handler = (iOSViewHandler)sender;
-            handler.RemovedFromView -= HandleHandlerRemovedFromView;
-            handler.NativeViewChanged -= HandleSubviewChanged;
+            Console.WriteLine($"[{GetType().Name} - {_instance}] HandleSubviewViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
+
+            if (e.OldViewHandler is iOSViewHandler oldHandler)
+                oldHandler.NativeViewChanged -= HandleSubviewNativeViewChanged;
         }
 
-        private void HandleSubviewChanged(object sender, ViewChangedEventArgs args)
+        private void HandleSubviewNativeViewChanged(object sender, ViewChangedEventArgs args)
         {
-            Console.WriteLine($"HandlerViewChanged: [{sender.GetType()}] From:[{args.OldNativeView.GetType()}] To:[{args.NewNativeView.GetType()}]");
+            Console.WriteLine($"[{GetType().Name} - {_instance}] HandlerViewChanged: [{sender.GetType()}] From:[{args.OldNativeView?.GetType()}] To:[{args.NewNativeView?.GetType()}]");
 
             if (args.OldNativeView != null)
                 args.OldNativeView.RemoveFromSuperview();
@@ -176,11 +179,9 @@ namespace HotUI.iOS
                 var index = e.Start + i;
                 var view = _view[index];
 
+                view.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
                 if (view.ViewHandler is iOSViewHandler handler)
-                {
-                    handler.RemovedFromView += HandleHandlerRemovedFromView;
-                    handler.NativeViewChanged += HandleSubviewChanged;
-                }
+                    handler.NativeViewChanged += HandleSubviewNativeViewChanged;
 
                 var nativeView = view.ToView() ?? new UIView();
                 InsertSubview(nativeView, index);
@@ -196,11 +197,9 @@ namespace HotUI.iOS
             {
                 foreach (var view in e.Removed)
                 {
+                    view.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
                     if (view.ViewHandler is iOSViewHandler handler)
-                    {
-                        handler.RemovedFromView -= HandleHandlerRemovedFromView;
-                        handler.NativeViewChanged -= HandleSubviewChanged;
-                    }
+                        handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
                 }
             }
 
@@ -221,11 +220,9 @@ namespace HotUI.iOS
             {
                 foreach (var view in e.Removed)
                 {
+                    view.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
                     if (view.ViewHandler is iOSViewHandler handler)
-                    {
-                        handler.RemovedFromView -= HandleHandlerRemovedFromView;
-                        handler.NativeViewChanged -= HandleSubviewChanged;
-                    }
+                        handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
                 }
             }
 
@@ -237,11 +234,9 @@ namespace HotUI.iOS
 
                 var view = _view[index];
 
+                view.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
                 if (view.ViewHandler is iOSViewHandler handler)
-                {
-                    handler.RemovedFromView += HandleHandlerRemovedFromView;
-                    handler.NativeViewChanged += HandleSubviewChanged;
-                }
+                    handler.NativeViewChanged += HandleSubviewNativeViewChanged;
 
                 var newNativeView = view.ToView() ?? new UIView();
                 InsertSubview(newNativeView, index);

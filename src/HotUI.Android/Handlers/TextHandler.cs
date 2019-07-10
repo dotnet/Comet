@@ -23,21 +23,18 @@ namespace HotUI.Android
             return new TextView(context);
         }
 
-        public static bool MapValueProperty(IViewHandler viewHandler, Text virtualView)
+        public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (TextView) viewHandler.NativeView;
             nativeView.Text = virtualView.Value;
-            return true;
         }
 
-        public static bool MapFontProperty (IViewHandler viewHandler, Text virtualView)
+        public static void MapFontProperty (IViewHandler viewHandler, Text virtualView)
         {
-            return true;
         }
 
-        public static bool MapColorProperty(IViewHandler viewHandler, Text virtualView)
+        public static void MapColorProperty(IViewHandler viewHandler, Text virtualView)
         {
-            return true;
         }
     }
 }

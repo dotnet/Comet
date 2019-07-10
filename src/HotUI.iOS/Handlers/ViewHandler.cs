@@ -20,10 +20,9 @@ namespace HotUI.iOS
         
         private View _view;
         private UIView _body;
-
+        
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
-        public event EventHandler RemovedFromView;
-
+    
         public UIView View => _body;
         
         public HUIContainerView ContainerView => null;
@@ -66,16 +65,15 @@ namespace HotUI.iOS
             return true;
         }
 
-        public static bool MapBackgroundColorProperty(IViewHandler handler, View virtualView)
+        public static void MapBackgroundColorProperty(IViewHandler handler, View virtualView)
         {
             var nativeView = (UIView) handler.NativeView;
             var color = virtualView.GetBackgroundColor();
             if (color != null)
                 nativeView.BackgroundColor = color.ToUIColor();
-            return true;
         }
         
-        public static bool MapShadowProperty(IViewHandler handler, View virtualView)
+        public static void MapShadowProperty(IViewHandler handler, View virtualView)
         {
             var nativeView = (UIView) handler.NativeView;
             var shadow = virtualView.GetShadow();
@@ -87,8 +85,11 @@ namespace HotUI.iOS
                 handler.HasContainer = false;
                 ApplyShadowToLayer(shadow, nativeView.Layer);
             }
-
-            return true;
+            else
+            {
+                ClearShadowFromLayer(nativeView.Layer);
+                handler.HasContainer = false;
+            }
         }
 
         private static void ApplyShadowToLayer(Shadow shadow, CALayer layer)
@@ -99,7 +100,15 @@ namespace HotUI.iOS
             layer.ShadowOpacity = shadow.Opacity;
         }
 
-        public static bool MapClipShapeProperty(IViewHandler handler, View virtualView)
+        private static void ClearShadowFromLayer(CALayer layer)
+        {
+            layer.ShadowColor = new CGColor(0,0,0,0);
+            layer.ShadowRadius = 0;
+            layer.ShadowOffset = new CGSize();
+            layer.ShadowOpacity = 0;
+        }
+
+        public static void MapClipShapeProperty(IViewHandler handler, View virtualView)
         {
             var nativeView = (UIView) handler.NativeView;
             var clipShape = virtualView.GetClipShape();
@@ -151,11 +160,12 @@ namespace HotUI.iOS
             }
             else
             {
+                var shadow = virtualView.GetShadow();
+                if (shadow == null)
+                    ClearShadowFromLayer(nativeView.Layer);
                 nativeView.Layer.Mask = null;
                 handler.HasContainer = false;
             }
-
-            return true;
         }
     }
 }

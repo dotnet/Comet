@@ -35,32 +35,28 @@ namespace HotUI.iOS
             return label;
         }
         
-        public static bool MapValueProperty(IViewHandler viewHandler, Text virtualView)
+        public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (UILabel) viewHandler.NativeView;
             nativeView.Text = virtualView.Value;
             nativeView.SizeToFit();
-            return true;
         }
 
-		public static bool MapFontProperty (IViewHandler viewHandler, Text virtualView)
+		public static void MapFontProperty (IViewHandler viewHandler, Text virtualView)
 		{
             var nativeView = (UILabel) viewHandler.NativeView;
             var font = virtualView.GetFont(DefaultFont);
 			nativeView.Font = font.ToUIFont();
 			nativeView.SizeToFit ();
-			return true;
 		}
 
-        public static bool MapColorProperty(IViewHandler viewHandler, Text virtualView)
+        public static void MapColorProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (UILabel) viewHandler.NativeView;
             var color = virtualView.GetColor(DefaultColor);
             var nativeColor = nativeView.TextColor.ToColor();
             if (!color.Equals(nativeColor))
                 nativeView.TextColor = color.ToUIColor();
-
-            return true;
         }
     }
 }

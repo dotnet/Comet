@@ -25,11 +25,10 @@ namespace HotUI.Android
 
         private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick();
         
-        public static bool MapTextProperty(IViewHandler viewHandler, Button virtualView)
+        public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
         {
             var nativeView = (AButton) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
-            return true;
         }
     }
 }

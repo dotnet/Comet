@@ -25,11 +25,10 @@ namespace HotUI.Android
         
         private void HandleClick(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.Checked);
         
-        public static bool MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
+        public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (AToggle) viewHandler.NativeView;
             nativeView.Checked = virtualView.IsOn;
-            return true;
         }
     }
 }

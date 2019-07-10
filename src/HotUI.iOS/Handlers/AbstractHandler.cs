@@ -14,7 +14,6 @@ namespace HotUI.iOS
         private HUIContainerView _containerView;
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
-        public event EventHandler RemovedFromView;
 
         protected AbstractHandler(PropertyMapper<TVirtualView> mapper)
         {
@@ -71,8 +70,6 @@ namespace HotUI.iOS
                 _nativeView.RemoveFromSuperview();
                 _containerView = null;
             }
-
-            RemovedFromView?.Invoke(this, EventArgs.Empty);
         }
         
         public virtual void SetView(View view)

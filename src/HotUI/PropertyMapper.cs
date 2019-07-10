@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HotUI
 {
-    public class PropertyMapper<TVirtualView> : Dictionary<string, Func<IViewHandler, TVirtualView, bool>> 
+    public class PropertyMapper<TVirtualView> : Dictionary<string, Action<IViewHandler, TVirtualView>> 
         where TVirtualView:View 
     {
         private readonly PropertyMapper<View> _chained;
@@ -28,15 +28,15 @@ namespace HotUI
             _chained?.UpdateProperties(viewHandler, virtualView);
         }
         
-        public bool UpdateProperty(IViewHandler viewHandler, TVirtualView virtualView, string property)
+        public void UpdateProperty(IViewHandler viewHandler, TVirtualView virtualView, string property)
         {
             if (virtualView == null)
-                return false;
-            
-            if (TryGetValue(property, out var updater))
-                return updater.Invoke(viewHandler, virtualView);
+                return;
 
-            return _chained != null && _chained.UpdateProperty(viewHandler, virtualView, property);
+            if (TryGetValue(property, out var updater))
+                updater.Invoke(viewHandler, virtualView);
+
+            _chained?.UpdateProperty(viewHandler, virtualView, property);
         }
     }
 }

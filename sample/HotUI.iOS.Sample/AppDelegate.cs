@@ -24,9 +24,11 @@ namespace HotUI.iOS.Sample {
             // Override point for customization after application launch.
             // If not required for your application you can safely delete this method
 
-            #if DEBUG
+#if DEBUG
             HotUI.Reload.Init();
-            #endif
+#endif
+            
+            "turtlerock.jpg".LoadImage();
 
 			window = new UIWindow {
 				RootViewController = new MainPage ().ToViewController (),

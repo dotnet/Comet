@@ -25,11 +25,10 @@ namespace HotUI.Android
 
         private void HandleTextChanged(object sender, EventArgs e) => VirtualView?.Completed(TypedNativeView.Text);
 
-        public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)
+        public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (EditText) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
-            return true;
         }
     }
 }

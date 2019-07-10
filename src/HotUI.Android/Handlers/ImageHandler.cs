@@ -20,11 +20,10 @@ namespace HotUI.Android
             return new HUIImageView(context);
         }
 
-        public static bool MapSourceProperty(IViewHandler viewHandler, Image virtualView)
+        public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)
         {
             var nativeView = (HUIImageView) viewHandler.NativeView;
             nativeView.Source = virtualView.Source;
-            return true;
         }
     }
 }

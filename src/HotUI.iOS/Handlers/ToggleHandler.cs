@@ -23,11 +23,10 @@ namespace HotUI.iOS
         
         void HandleValueChanged(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.On);
         
-        public static bool MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
+        public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (UISwitch) viewHandler.NativeView;
             nativeView.On = virtualView.IsOn;
-            return true;
         }
     }
 }

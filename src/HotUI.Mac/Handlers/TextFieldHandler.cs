@@ -23,12 +23,11 @@ namespace HotUI.Mac.Handlers
 
         void EntryHandler_Ended(object sender, EventArgs e) => VirtualView?.Completed(TypedNativeView.StringValue);
 
-        public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)
+        public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (NSTextField) viewHandler.NativeView;
             nativeView.StringValue = virtualView.Text;
             nativeView.SizeToFit();
-            return true;
         }
     }
 }

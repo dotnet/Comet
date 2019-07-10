@@ -6,7 +6,6 @@ namespace HotUI.iOS
 	public interface iOSViewHandler : IViewHandler 
 	{
         event EventHandler<ViewChangedEventArgs> NativeViewChanged;
-        event EventHandler RemovedFromView;
 
         UIView View { get; }
 

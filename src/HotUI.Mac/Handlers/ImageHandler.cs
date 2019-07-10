@@ -25,11 +25,10 @@ namespace HotUI.Mac.Handlers
             return new HUIImageView(new CGRect(0, 0, 44, 44));
         }
 
-        public static bool MapSourceProperty(IViewHandler viewHandler, Image virtualView)
+        public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)
         {
             var nativeView = (HUIImageView) viewHandler.NativeView;
             nativeView.Source = virtualView.Source;
-            return true;
         }
     }
 }

@@ -14,7 +14,6 @@ namespace HotUI.iOS
         public UIView View => _view;
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
-        public event EventHandler RemovedFromView;
 
         public object NativeView => View;
 

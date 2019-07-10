@@ -62,7 +62,7 @@ namespace HotUI.Mac
             return true;
         }
 
-        public static bool MapBackgroundColorProperty(IViewHandler viewHandler, View virtualView)
+        public static void MapBackgroundColorProperty(IViewHandler viewHandler, View virtualView)
         {
             var nativeView = (NSView)viewHandler.NativeView;
             var color = virtualView.GetBackgroundColor();
@@ -78,11 +78,9 @@ namespace HotUI.Mac
                     textField.DrawsBackground = true;
                 }
             }
-
-            return true;
         }
         
-        public static bool MapShadowProperty(IViewHandler handler, View virtualView)
+        public static void MapShadowProperty(IViewHandler handler, View virtualView)
         {
             var nativeView = (NSView) handler.NativeView;
             var shadow = virtualView.GetShadow();
@@ -115,11 +113,9 @@ namespace HotUI.Mac
                     ShadowOffset = new CGSize()
                 };
             }
-
-            return true;
         }
         
-        public static bool MapClipShapeProperty(IViewHandler handler, View virtualView)
+        public static void MapClipShapeProperty(IViewHandler handler, View virtualView)
         {
             var nativeView = (NSView) handler.NativeView;
             var clipShape = virtualView.GetClipShape();
@@ -172,8 +168,6 @@ namespace HotUI.Mac
             {
                 handler.HasContainer = false;
             }
-
-            return true;
         }
     }
 }
