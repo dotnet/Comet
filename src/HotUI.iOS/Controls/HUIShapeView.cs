@@ -22,7 +22,7 @@ namespace HotUI.iOS
             var context = UIGraphics.GetCurrentContext();
             if (Shape != null)
             { 
-                var stroke = Shape.GetStroke(4);
+                var stroke = Shape.GetStroke(1);
                 var color = Shape.GetColor(Color.Black);
 
                 context.SetLineWidth(stroke);

@@ -46,14 +46,14 @@ namespace HotUI
 		
 		public static T Stroke<T> (this T shape, Color color, float lineWidth) where T : Shape
 		{
-            shape.SetEnvironment(EnvironmentKeys.Shape.Stroke, shape);
+            shape.SetEnvironment(EnvironmentKeys.Shape.LineWidth, lineWidth);
             shape.SetEnvironment(EnvironmentKeys.Shape.Color, color);
             return shape;
 		}
 		
 		public static float GetStroke (this Shape shape, float defaultStroke)
 		{
-			var stroke = shape.GetEnvironment<float?> (EnvironmentKeys.Shape.Stroke);
+			var stroke = shape.GetEnvironment<float?> (EnvironmentKeys.Shape.LineWidth);
 			return stroke ?? defaultStroke;
 		}
 

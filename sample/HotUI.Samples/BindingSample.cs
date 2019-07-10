@@ -55,9 +55,10 @@ namespace HotUI.Samples {
 						{
 							OnClick = () => {
 
-								var getFontSize =View.GetGlobalEnvironment<int>(EnvironmentKeys.Fonts.FontSize);
-								getFontSize+=5;
-								View.SetGlobalEnvironment (EnvironmentKeys.Fonts.FontSize, getFontSize);
+                                var font = View.GetGlobalEnvironment<Font>(EnvironmentKeys.Fonts.Font) ?? Font.System(14);
+                                var size = font.Attributes.Size + 5;
+                                var newFont = Font.System(size);
+								View.SetGlobalEnvironment (EnvironmentKeys.Fonts.Font, newFont);
 							}
 						},
 					},

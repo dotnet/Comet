@@ -10,9 +10,9 @@ namespace HotUI {
 		public const string UserFolder = "UserFolder";
 		public const string OS = "OS";
 
-		public static class Fonts {
+		public static class Fonts
+        {
 			public const string Font = "Font";
-			public const string FontSize = "FontSize";
 		}
 
         public static class Colors
@@ -35,7 +35,7 @@ namespace HotUI {
 
         public static class Shape
         {
-            public const string Stroke = "Shape.Stroke";
+            public const string LineWidth = "Shape.LineWidth";
             public const string Color = "Shape.Color";
         }
     }
