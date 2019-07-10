@@ -48,11 +48,10 @@ namespace HotUI.UWP
             Mapper.UpdateProperty(this, _virtualToggle, property);
         }
 
-        public static bool MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
+        public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (ToggleSwitch)viewHandler.NativeView;
             nativeView.IsOn = virtualView.IsOn;
-            return true;
         }
     }
 }

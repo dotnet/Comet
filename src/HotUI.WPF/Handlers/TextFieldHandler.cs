@@ -43,13 +43,12 @@ namespace HotUI.WPF.Handlers
             Mapper.UpdateProperty(this, _textField, property);
         }
         
-        public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)
+        public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (WPFTextField)viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
             //nativeView.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             //var desiredSize = nativeView.DesiredSize;
-            return true;
         }
     }
 }

@@ -49,11 +49,10 @@ namespace HotUI.WPF
             Mapper.UpdateProperty(this, _virtualToggle, property);
         }
 
-        public static bool MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
+        public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (CheckBox)viewHandler.NativeView;
             nativeView.IsChecked = virtualView.IsOn;
-            return true;
         }
     }
 }

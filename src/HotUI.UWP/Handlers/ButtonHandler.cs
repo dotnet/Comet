@@ -50,11 +50,10 @@ namespace HotUI.UWP.Handlers
 
         private void HandleClick(object sender, RoutedEventArgs e) => _button?.OnClick();
 
-        public static bool MapTextProperty(IViewHandler viewHandler, Button virtualButton)
+        public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
         {
             var nativeButton = (UWPButton)viewHandler.NativeView;
             nativeButton.Content = virtualButton.Text;
-            return true;
         }
     }
 }

@@ -41,11 +41,10 @@ namespace HotUI.UWP.Handlers
             Mapper.UpdateProperty(this, _textField, property);
         }
         
-        public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)
+        public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (UWPTextField)viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
-            return true;
         }
     }
 }
