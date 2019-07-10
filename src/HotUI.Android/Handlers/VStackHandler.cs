@@ -6,7 +6,7 @@ using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public class VStackHandler : LinearLayout, IView
+    public class VStackHandler : LinearLayout, AndroidViewHandler
     {
         public VStackHandler() : base(AndroidContext.CurrentContext)
         {

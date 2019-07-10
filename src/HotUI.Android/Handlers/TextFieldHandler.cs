@@ -1,59 +1,35 @@
 ﻿using System;
+using Android.Content;
 using Android.Widget;
 using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public class TextFieldHandler : EditText, IView
+    public class TextFieldHandler : AbstractHandler<TextField, EditText>
     {
-        public TextFieldHandler() : base(AndroidContext.CurrentContext)
+        public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
-            TextChanged += HandleTextChanged;
+            [nameof(TextField.Text)] = MapTextProperty
+        };
+        
+        public TextFieldHandler() : base(Mapper)
+        {
         }
         
-        private void HandleTextChanged(object sender, EventArgs e) => _textField?.Completed(Text);
-
-        public AView View => this;
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
-
-        public void Remove(View view)
+        protected override EditText CreateView(Context context)
         {
-            _textField = null;
+            var editText = new EditText(context);
+            editText.TextChanged += HandleTextChanged;
+            return editText;
         }
 
-        TextField _textField;
+        private void HandleTextChanged(object sender, EventArgs e) => VirtualView?.Completed(TypedNativeView.Text);
 
-        public void SetView(View view)
+        public static bool MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
-            _textField = view as TextField;
-            this.UpdateProperties(_textField);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            this.UpdateProperty(property, value);
-        }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateProperties(this EditText view, TextField hView)
-        {
-            view.Text = hView?.Text;
-            view.UpdateBaseProperties(hView);
-        }
-
-        public static bool UpdateProperty(this EditText view, string property, object value)
-        {
-            switch (property)
-            {
-                case nameof(TextField.Text):
-                    view.Text = (string) value;
-                    return true;
-            }
-
-            return view.UpdateBaseProperty(property, value);
+            var nativeView = (EditText) viewHandler.NativeView;
+            nativeView.Text = virtualView.Text;
+            return true;
         }
     }
 }

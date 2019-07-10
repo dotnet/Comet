@@ -1,59 +1,35 @@
 ﻿using System;
+using Android.Content;
 using AButton = Android.Widget.Button;
 using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public class ButtonHandler : AButton, IView
+    public class ButtonHandler : AbstractHandler<Button, AButton>
     {
-        public ButtonHandler() : base(AndroidContext.CurrentContext)
+        public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
-            Click += HandleClick;
+            [nameof(Button.Text)] = MapTextProperty
+        };
+        
+        public ButtonHandler() : base(Mapper)
+        {
         }
         
-        private void HandleClick(object sender, EventArgs e) => button?.OnClick();
-
-        public AView View => this;
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
-
-        Button button;
-
-        public void Remove(View view)
+        protected override AButton CreateView(Context context)
         {
-            button = null;
+            var button = new AButton(context);
+            button.Click += HandleClick;
+            return button;
         }
 
-        public void SetView(View view)
+        private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick();
+        
+        public static bool MapTextProperty(IViewHandler viewHandler, Button virtualView)
         {
-            button = view as Button;
-            this.UpdateProperties(button);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            this.UpdateProperty(property, value);
-        }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateProperties(this AButton view, Button hView)
-        {
-            view.Text = hView?.Text;
-            view.UpdateBaseProperties(hView);
-        }
-
-        public static bool UpdateProperty(this AButton view, string property, object value)
-        {
-            switch (property)
-            {
-                case nameof(Button.Text):
-                    view.Text = (string) value;
-                    return true;
-            }
-
-            return view.UpdateBaseProperty(property, value);
+            var nativeView = (AButton) viewHandler.NativeView;
+            nativeView.Text = virtualView.Text;
+            return true;
         }
     }
 }

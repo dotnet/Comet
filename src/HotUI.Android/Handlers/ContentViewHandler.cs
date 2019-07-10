@@ -1,26 +1,38 @@
 ﻿using System;
 using Android.Views;
+using AView = global::Android.Views.View;
 
-namespace HotUI.Android {
-	public class ContentViewHandler: IView {
+namespace HotUI.Android 
+{
+	public class ContentViewHandler: AndroidViewHandler
+	{
+		private AView _view;
+		private ContentView _contentView;
+
 		public ContentViewHandler ()
 		{
 		}
 
-		public global::Android.Views.View View => _contentView?.Content?.ToView ();
+		public AView View => _view;
+		
 		public object NativeView => View;
-		public bool HasContainer { get; set; } = false;
 
-		ContentView _contentView;
-
+		public bool HasContainer
+		{
+			get => false;
+			set { }
+		} 
+		
 		public void Remove (View view)
 		{
+			_view = null;
 			_contentView = null;
 		}
 
 		public void SetView (View view)
 		{
 			_contentView = view as ContentView;
+			_view = _contentView?.Content?.ToView ();
 		}
 
 		public void UpdateValue (string property, object value)

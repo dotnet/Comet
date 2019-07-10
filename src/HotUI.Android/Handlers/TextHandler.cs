@@ -1,53 +1,43 @@
-﻿using Android.Widget;
+﻿using Android.Content;
+using Android.Widget;
 using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public class TextHandler : TextView, IView
+    public class TextHandler : AbstractHandler<Text,TextView>
     {
-        public AView View => this;
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
+        public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
+        {
+            [nameof(HotUI.Text.Value)] = MapValueProperty,
+            [EnvironmentKeys.Fonts.Font] = MapFontProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
+        };
 
-        public TextHandler() : base(AndroidContext.CurrentContext)
+        public TextHandler() : base(Mapper)
         {
             
         }
-
-        public void Remove(View view)
+        
+        protected override TextView CreateView(Context context)
         {
+            return new TextView(context);
         }
 
-        public void SetView(View view)
+        public static bool MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
-            var label = view as Text;
-            this.UpdateLabelProperties(label);
+            var nativeView = (TextView) viewHandler.NativeView;
+            nativeView.Text = virtualView.Value;
+            return true;
         }
 
-        public void UpdateValue(string property, object value)
+        public static bool MapFontProperty (IViewHandler viewHandler, Text virtualView)
         {
-            this.UpdateLabelProperty(property, value);
-        }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateLabelProperties(this TextView view, Text hView)
-        {
-            view.Text = hView?.Value;
-            view.UpdateBaseProperties(hView);
+            return true;
         }
 
-        public static bool UpdateLabelProperty(this TextView view, string property, object value)
+        public static bool MapColorProperty(IViewHandler viewHandler, Text virtualView)
         {
-            switch (property)
-            {
-                case nameof(Text.Value):
-                    view.Text = (string) value;
-                    return true;
-            }
-
-            return view.UpdateBaseProperty(property, value);
+            return true;
         }
     }
 }

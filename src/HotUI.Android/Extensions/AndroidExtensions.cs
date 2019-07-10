@@ -37,8 +37,20 @@ namespace HotUI.Android
                 view.ViewHandler = handler;
             }
 
-            var page = handler as IView;
+            var page = handler as AndroidViewHandler;
             return page.View;
+        }
+        
+        public static global::Android.Graphics.Color ToColor(this Color color)
+        {
+            if (color == null)
+                return global::Android.Graphics.Color.Black;
+
+            var r = (int) (color.R * 255f);
+            var g = (int) (color.G * 255f);
+            var b = (int) (color.B * 255f);
+            var a = (int) (color.A * 255f);
+            return new global::Android.Graphics.Color(r, g, b, a);
         }
     }
 }

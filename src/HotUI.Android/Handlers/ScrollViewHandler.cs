@@ -1,51 +1,53 @@
-﻿using AView = Android.Views.View;
+﻿using Android.Content;
+using AView = Android.Views.View;
 using AScrollView = Android.Widget.ScrollView;
 
 namespace HotUI.Android
 {
-    public class ScrollViewHandler : AScrollView, IView
+    public class ScrollViewHandler : AbstractHandler<ScrollView,AScrollView>
     {
-        public ScrollViewHandler() : base(AndroidContext.CurrentContext)
+        public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
         {
+            
+        };
+        
+        private AView _content;
+
+        public ScrollViewHandler() : base(Mapper)
+        {
+        }
+
+        protected override AScrollView CreateView(Context context)
+        {
+            return new AScrollView(context);
         }
         
-        public AView View => this;
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
-
-        public void Remove(View view)
+        public override void Remove(View view)
         {
-            if (content != null)
+            if (_content != null)
             {
-                RemoveView(content);
-                content = null;
+                TypedNativeView.RemoveView(_content);
+                _content = null;
             }
+            
+            base.Remove(view);
         }
-
-        AView content;
-
-        public void SetView(View view)
+        
+        public override void SetView(View view)
         {
-            var scroll = view as ScrollView;
+            base.SetView(view);
 
-            var newContent = scroll?.View?.ToView();
-            if (content == null || newContent != content)
+            var newContent = VirtualView?.View?.ToView();
+            if (_content == null || newContent != _content)
             {
-                if (content != null)
-                    RemoveView(content);
+                if (_content != null)
+                    TypedNativeView.RemoveView(_content);
 
-                content = newContent;
+                _content = newContent;
 
-                if (content != null)
-                    base.AddView(content);
+                if (_content != null)
+                    TypedNativeView.AddView(_content);
             }
-
-            this.UpdateProperties(view);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            this.UpdateProperty(property, value);
         }
     }
 }

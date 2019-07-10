@@ -29,8 +29,7 @@ namespace HotUI.iOS
             };
             return textField;
         }
-
-       
+        
         private void EntryHandler_EditingDidEnd(object sender, EventArgs e)
         {
             VirtualView?.Completed(TypedNativeView.Text);

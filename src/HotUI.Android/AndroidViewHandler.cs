@@ -2,7 +2,7 @@
 
 namespace HotUI.Android
 {
-    public interface IView : IViewHandler
+    public interface AndroidViewHandler : IViewHandler
     {
         AView View { get; }
     }

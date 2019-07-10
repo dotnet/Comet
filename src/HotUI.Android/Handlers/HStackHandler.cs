@@ -6,7 +6,7 @@ using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public class HStackHandler : LinearLayout, IView
+    public class HStackHandler : LinearLayout, AndroidViewHandler
     {
         public HStackHandler() : base(AndroidContext.CurrentContext)
         {
@@ -39,7 +39,7 @@ namespace HotUI.Android
         {
         }
 
-        List<AView> views = new List<AView>();
+        readonly List<AView> views = new List<AView>();
 
         protected void UpdateChildren(HStack stack)
         {

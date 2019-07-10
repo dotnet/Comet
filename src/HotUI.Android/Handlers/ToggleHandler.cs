@@ -1,59 +1,35 @@
 ﻿using System;
+using Android.Content;
 using AToggle = Android.Widget.ToggleButton;
 using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public class ToggleHandler : AToggle, IView
+    public class ToggleHandler : AbstractHandler<Toggle,AToggle>
     {
-        public ToggleHandler() : base(AndroidContext.CurrentContext)
+        public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> (ViewHandler.Mapper)
+        { 
+            [nameof(Toggle.IsOn)] = MapIsOnProperty
+        };
+        
+        public ToggleHandler() : base(Mapper)
         {
-            Click += HandleClick;
         }
-
-        private void HandleClick(object sender, EventArgs e) => toggle?.IsOnChanged?.Invoke(this.Checked);
-
-        public AView View => this;
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
-
-        Toggle toggle;
-
-        public void Remove(View view)
+        
+        protected override AToggle CreateView(Context context)
         {
-            toggle = null;
+            var toggle = new AToggle(context);
+            toggle.Click += HandleClick;
+            return toggle;
         }
-
-        public void SetView(View view)
+        
+        private void HandleClick(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.Checked);
+        
+        public static bool MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
-            toggle = view as Toggle;
-            this.UpdateProperties(toggle);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            this.UpdateProperty(property, value);
-        }
-    }
-
-    public static partial class ControlExtensions
-    {
-        public static void UpdateProperties(this AToggle view, Toggle hView)
-        {
-            view.Checked = hView?.IsOn ?? false;
-            view.UpdateBaseProperties(hView);
-        }
-
-        public static bool UpdateProperty(this AToggle view, string property, object value)
-        {
-            switch (property)
-            {
-                case nameof(Toggle.IsOn):
-                    view.Checked = (bool)value;
-                    return true;
-            }
-
-            return view.UpdateBaseProperty(property, value);
+            var nativeView = (AToggle) viewHandler.NativeView;
+            nativeView.Checked = virtualView.IsOn;
+            return true;
         }
     }
 }

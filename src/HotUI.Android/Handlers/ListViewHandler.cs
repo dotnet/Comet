@@ -6,7 +6,7 @@ using Android.Widget;
 using Android.Views;
 
 namespace HotUI.Android {
-	public class ListViewHandler : AListView, IView {
+	public class ListViewHandler : AListView, AndroidViewHandler {
 		public ListViewHandler () : base (AndroidContext.CurrentContext)
 		{
 			this.Adapter = new ListViewAdapter ();

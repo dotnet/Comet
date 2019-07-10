@@ -1,23 +1,33 @@
-﻿using AView = Android.Views.View;
+﻿using System;
+using System.Threading.Tasks;
+using FFImageLoading;
+using FFImageLoading.Drawables;
+using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
     public static partial class ControlExtensions
     {
-        public static void UpdateProperties(this AView view, View hView)
+        public static Task<SelfDisposingBitmapDrawable> LoadImage(this string source)
         {
+            var isUrl = Uri.IsWellFormedUriString(source, UriKind.RelativeOrAbsolute);
+            if (isUrl)
+                return LoadImageAsync(source);
+            return LoadFileAsync(source);
         }
 
-        public static void UpdateBaseProperties(this AView view, View hView)
+        private static Task<SelfDisposingBitmapDrawable> LoadImageAsync(string urlString)
         {
-            view.UpdateProperties(hView);
+            return ImageService.Instance
+                .LoadUrl(urlString)
+                .AsBitmapDrawableAsync();
         }
 
-        public static bool UpdateProperty(this AView view, string property, object value)
+        private static Task<SelfDisposingBitmapDrawable> LoadFileAsync(string filePath)
         {
-            return false;
+            return ImageService.Instance
+                .LoadFile(filePath)
+                .AsBitmapDrawableAsync();
         }
-
-        public static bool UpdateBaseProperty(this AView view, string property, object value) => view.UpdateProperty(property, value);
     }
 }
