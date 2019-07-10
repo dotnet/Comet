@@ -46,11 +46,10 @@ namespace HotUI.UWP.Handlers
             Mapper.UpdateProperty(this, _text, property);
         }
 
-        public static bool MapValueProperty(IViewHandler viewHandler, Text virtualView)
+        public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (UWPLabel)viewHandler.NativeView;
             nativeView.Text = virtualView.Value;
-            return true;
         }
     }
 }

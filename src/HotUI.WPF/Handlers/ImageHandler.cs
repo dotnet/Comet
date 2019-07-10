@@ -44,11 +44,10 @@ namespace HotUI.WPF.Handlers
             Mapper.UpdateProperty(this, _image, property);
         }
         
-        public static bool MapSourceProperty(IViewHandler viewHandler, Image virtualView)
+        public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)
         {
             var nativeView = (ImageHandler)viewHandler;
             nativeView.UpdateSource(virtualView.Source);
-            return true;
         }
     }
 

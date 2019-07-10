@@ -45,14 +45,13 @@ namespace HotUI.WPF.Handlers
             Mapper.UpdateProperty(this, listView, property);
         }
 
-        public static bool MapListProperty(IViewHandler viewHandler, ListView virtualView)
+        public static void MapListProperty(IViewHandler viewHandler, ListView virtualView)
         {
             var nativeView = (ListViewHandler)viewHandler;
             foreach (var item in virtualView.List)
             {
                 nativeView.Items.Add(new ListViewHandlerItem(nativeView, item));
             }
-            return true;
         }
 
         private void HandleSelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -42,11 +42,10 @@ namespace HotUI.WPF.Handlers
             Mapper.UpdateProperty(this, _text, property);
         }
 
-        public static bool MapValueProperty(IViewHandler viewHandler, Text virtualView)
+        public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (WPFLabel)viewHandler.NativeView;
             nativeView.Content = virtualView.Value;
-            return true;
         }
     }
 }

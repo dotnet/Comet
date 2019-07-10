@@ -40,14 +40,13 @@ namespace HotUI.UWP.Handlers
             Mapper.UpdateProperty(this, listView, property);
         }
 
-        public static bool MapListProperty(IViewHandler viewHandler, ListView virtualView)
+        public static void MapListProperty(IViewHandler viewHandler, ListView virtualView)
         {
             var nativeView = (UWPListView)viewHandler.NativeView;
             foreach (var item in virtualView.List)
             {
                 nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler)viewHandler, item));
             }
-            return true;
         }
 
         private void HandleSelectionChanged(object sender, SelectionChangedEventArgs e)
