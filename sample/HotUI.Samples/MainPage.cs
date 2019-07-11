@@ -32,8 +32,11 @@ namespace HotUI.Samples {
             new MenuItem("SwiftUI Tutorial Section 4b", ()=> new Section4b()),
             new MenuItem("SwiftUI Tutorial Section 4c", ()=> new Section4c()),
         };
-		public MainPage ()
+		public MainPage (List<MenuItem> additionalPage = null)
 		{
+            if (additionalPage != null)
+                pages.AddRange(additionalPage);
+
 			Body = () => new NavigationView {
 				new ListView<MenuItem> (pages) {
 					Cell = (page) => new NavigationButton (page.Title,page.Page),

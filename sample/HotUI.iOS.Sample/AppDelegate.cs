@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
+using CoreLocation;
 using Foundation;
 using HotUI.Samples;
+using MapKit;
 using UIKit;
 
 namespace HotUI.iOS.Sample {
@@ -31,7 +34,11 @@ namespace HotUI.iOS.Sample {
             "turtlerock.jpg".LoadImage();
 
 			window = new UIWindow {
-				RootViewController = new MainPage ().ToViewController (),
+				RootViewController = new MainPage (new List<MenuItem>
+                {
+                    new MenuItem("SwiftUI Tutorial Section 5 (Native)", () => new Section5Native()),
+                    new MenuItem("SwiftUI Tutorial Section 5b (Native)", () => new Section5NativeB())
+                }).ToViewController (),
 			};
 			window.MakeKeyAndVisible ();
 
@@ -69,5 +76,48 @@ namespace HotUI.iOS.Sample {
 			// Called when the application is about to terminate. Save data, if needed. See also DidEnterBackground.
 		}
 	}
+
+    public class Section5Native : View
+    {
+        public Section5Native()
+        {
+            Body = () => new VStack
+            {
+                new ViewRepresentable()
+                {
+                    MakeView = () => new MKMapView(UIScreen.MainScreen.Bounds),
+                    UpdateView = (view, data) =>
+                    {
+                        var mapView = (MKMapView)view;
+                        var coordinate = new CLLocationCoordinate2D(latitude: 34.011286, longitude: -116.166868);
+                        var span = new MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0);
+                        var region = new MKCoordinateRegion(center: coordinate, span: span);
+                        mapView.SetRegion(region, animated: true);
+                    }
+                }
+            };
+        }
+    }
+
+    public class Section5NativeB : View
+    {
+        public Section5NativeB()
+        {
+            Body = () => new VStack
+            {
+                new UIViewRepresentable<MKMapView>()
+                {
+                    MakeView = () => new MKMapView(UIScreen.MainScreen.Bounds),
+                    UpdateView = (view, data) =>
+                    {
+                        var coordinate = new CLLocationCoordinate2D(latitude: 34.011286, longitude: -116.166868);
+                        var span = new MKCoordinateSpan(latitudeDelta: 2.0, longitudeDelta: 2.0);
+                        var region = new MKCoordinateRegion(center: coordinate, span: span);
+                        view.SetRegion(region, animated: true);
+                    }
+                }
+            };
+        }
+    }
 }
 

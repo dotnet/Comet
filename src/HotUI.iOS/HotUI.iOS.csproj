@@ -73,6 +73,8 @@
     <Compile Include="ViewChangedEventArgs.cs" />
     <Compile Include="Handlers\ShapeViewHandler.cs" />
     <Compile Include="Controls\HUIShapeView.cs" />
+    <Compile Include="Handlers\ViewRepresentableHandler.cs" />
+    <Compile Include="UIViewRepresentable.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">
