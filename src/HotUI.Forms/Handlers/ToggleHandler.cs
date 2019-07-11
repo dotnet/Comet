@@ -5,7 +5,7 @@ using FView = Xamarin.Forms.View;
 
 namespace HotUI.Forms
 {
-    public class ToggleHandler : FToggle, IFormsView
+    public class ToggleHandler : FToggle, FormsViewHandler
     {
 		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> ()
 		{ 

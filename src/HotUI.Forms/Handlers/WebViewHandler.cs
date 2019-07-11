@@ -5,7 +5,7 @@ using FWebView = Xamarin.Forms.WebView;
 using HWebView = HotUI.WebView;
 using HView = HotUI.View;
 namespace HotUI.Forms {
-	public class WebViewHandler : FWebView, IFormsView {
+	public class WebViewHandler : FWebView, FormsViewHandler {
 		public WebViewHandler ()
 		{
 		}

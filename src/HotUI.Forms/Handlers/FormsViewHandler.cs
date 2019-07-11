@@ -2,8 +2,8 @@
 using Xamarin.Forms;
 
 namespace HotUI.Forms {
-	public class FormsViewHandler : ContentView {
-		public FormsViewHandler ()
+	public abstract class AbstractViewHandler : ContentView {
+		public AbstractViewHandler ()
 		{
 		}
 	}

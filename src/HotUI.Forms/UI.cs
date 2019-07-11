@@ -21,7 +21,7 @@ namespace HotUI.Forms {
 			Registrar.Handlers.Register<View, ViewHandler> ();
             Registrar.Handlers.Register<ContentView, ContentViewHandler>();
             Registrar.Handlers.Register<Toggle, ToggleHandler>();
-
+            Registrar.Handlers.Register<ViewRepresentable, ViewRepresentableHandler>();
 
             ModalView.PerformPresent = (o) => Xamarin.Forms.Application.Current.MainPage.Navigation.PushModalAsync (o.ToPage ());
 			ModalView.PerformDismiss = () => Xamarin.Forms.Application.Current.MainPage.Navigation.PopModalAsync();

@@ -5,7 +5,7 @@ using FLabel = Xamarin.Forms.Label;
 using HView = HotUI.View;
 
 namespace HotUI.Forms {
-	public class TextHandler : FLabel, IFormsView {
+	public class TextHandler : FLabel, FormsViewHandler {
 		public Xamarin.Forms.View View => this;
 		public object NativeView => View;
 		public bool HasContainer { get; set; } = false;

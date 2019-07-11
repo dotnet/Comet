@@ -2,7 +2,7 @@
 
 namespace HotUI.Forms
 {
-    public abstract class AbstractFormsLayoutHandler : IFormsView
+    public abstract class AbstractFormsLayoutHandler : FormsViewHandler
     {
         private readonly Xamarin.Forms.Layout<Xamarin.Forms.View> _formsLayout;
         private AbstractLayout _view;

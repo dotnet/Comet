@@ -1,12 +1,12 @@
 ﻿using System;
-using AppKit;
+using FView = Xamarin.Forms.View;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Mac
+namespace HotUI.Forms
 {
-    public class ViewRepresentableHandler : AbstractHandler<ViewRepresentable, NSView>
+    public class ViewRepresentableHandler : AbstractHandler<ViewRepresentable, FView>
     {
         public static readonly PropertyMapper<ViewRepresentable> Mapper = new PropertyMapper<ViewRepresentable>(ViewHandler.Mapper)
         {
@@ -18,9 +18,9 @@ namespace HotUI.Mac
 
         }
 
-        protected override NSView CreateView()
+        protected override FView CreateView()
         {
-            return VirtualView?.MakeView() as NSView;
+            return VirtualView?.MakeView() as FView;
         }
         
         public static void MapDataProperty(IViewHandler viewHandler, ViewRepresentable virtualView)

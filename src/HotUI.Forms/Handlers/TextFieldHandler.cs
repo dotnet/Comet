@@ -4,7 +4,7 @@ using Xamarin.Forms;
 using FEntry = Xamarin.Forms.Entry;
 using HView = HotUI.View;
 namespace HotUI.Forms {
-	public class TextFieldHandler : FEntry, IFormsView {
+	public class TextFieldHandler : FEntry, FormsViewHandler {
 		public TextFieldHandler ()
 		{
 			this.Focused += FormsControl_Focused;

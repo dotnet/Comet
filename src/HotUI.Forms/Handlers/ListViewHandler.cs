@@ -6,7 +6,7 @@ using FListView = Xamarin.Forms.ListView;
 using HListView = HotUI.ListView;
 using HView = HotUI.View;
 namespace HotUI.Forms {
-	public class ListViewHandler : FListView, IFormsView {
+	public class ListViewHandler : FListView, FormsViewHandler {
 
 		class HotViewCell : Xamarin.Forms.ViewCell {
 

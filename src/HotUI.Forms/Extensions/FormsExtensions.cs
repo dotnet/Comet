@@ -38,7 +38,7 @@ namespace HotUI.Forms {
 
 		public static FView ToForms (this View view) => view.ToIFormsView ()?.View;
 
-		public static IFormsView ToIFormsView(this View view)
+		public static FormsViewHandler ToIFormsView(this View view)
 		{
 			if (view == null)
 				return null;
@@ -48,7 +48,7 @@ namespace HotUI.Forms {
 				handler = Registrar.Handlers.GetRenderer (view.GetType ()) as IViewHandler;
 				view.ViewHandler = handler;
 			}
-			return handler as IFormsView;
+			return handler as FormsViewHandler;
 		}
 
 	}

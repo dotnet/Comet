@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 
 namespace HotUI.Forms {
-	public class ContentViewHandler : IFormsView {
+	public class ContentViewHandler : FormsViewHandler {
 		public ContentViewHandler ()
 		{
 		}

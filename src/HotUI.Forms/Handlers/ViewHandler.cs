@@ -6,7 +6,7 @@ using HView = HotUI.View;
 
 namespace HotUI.Forms
 {
-	public class ViewHandler : FView, IFormsView
+	public class ViewHandler : FView, FormsViewHandler
     {
         public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
