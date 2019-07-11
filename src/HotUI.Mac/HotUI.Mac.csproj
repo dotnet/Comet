@@ -89,6 +89,8 @@
     <Compile Include="Handlers\HStackHandler.cs" />
     <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Services\MacFontService.cs" />
+    <Compile Include="UIViewRepresentable.cs" />
+    <Compile Include="Handlers\ViewRepresentableHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">

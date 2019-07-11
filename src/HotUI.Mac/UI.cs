@@ -25,9 +25,10 @@ namespace HotUI.Mac
 			Registrar.Handlers.Register<Image, ImageHandler> ();
 			Registrar.Handlers.Register<View, ViewHandler> ();
 			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
-			Registrar.Handlers.Register<ListView, ListViewHandler> ();
+            Registrar.Handlers.Register<ListView, ListViewHandler>();
+            Registrar.Handlers.Register<ViewRepresentable, ViewRepresentableHandler>();
 
-			Device.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
+            Device.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
             Device.FontService = new MacFontService();
         }
     }
