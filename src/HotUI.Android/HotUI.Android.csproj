@@ -69,6 +69,8 @@
     <Compile Include="Handlers\ViewHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />
     <Compile Include="Handlers\ContentViewHandler.cs" />
+    <Compile Include="ViewRepresentable.cs" />
+    <Compile Include="Handlers\ViewRepresentableHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

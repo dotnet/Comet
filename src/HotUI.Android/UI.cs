@@ -20,8 +20,10 @@
 			Registrar.Handlers.Register<Image, ImageHandler> ();
 			Registrar.Handlers.Register<ListView, ListViewHandler> ();
 			Registrar.Handlers.Register<View, ViewHandler>();
-			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
-			Device.PerformInvokeOnMainThread = (a) => AndroidContext.CurrentContext.RunOnUiThread(a);
+            Registrar.Handlers.Register<ContentView, ContentViewHandler>();
+            Registrar.Handlers.Register<ViewRepresentable, ViewRepresentableHandler>();
+
+            Device.PerformInvokeOnMainThread = (a) => AndroidContext.CurrentContext.RunOnUiThread(a);
 		}
     }
 }
