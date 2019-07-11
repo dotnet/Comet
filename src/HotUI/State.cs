@@ -17,14 +17,19 @@ namespace HotUI {
 			Value = value;
 		}
 		public State ()
-		{
+		{		
 
 		}
 		public T Value {
 			get => GetProperty<T> ();
 			set => SetProperty (value);
 		}
+		
+		public static implicit operator T(State<T> state) => state.Value;
+		public static implicit operator Action<T>(State<T> state) => value => state.Value = value;
+		public static implicit operator State<T>(T value) => new State<T>(value);
 	}
+	
 	public class StateBuilder : IDisposable {
 		static List<State> currentStates = new List<State> ();
 		public static State CurrentState => currentStates.LastOrDefault ();
