@@ -19,4 +19,15 @@ namespace HotUI
             getValue:() => value,
             setValue: null) { ImplicitFromValue = true };
     }
+
+    public static class BindingExtensions
+    {
+        public static T GetValueOrDefault<T>(this Binding<T> binding, T defaultValue = default)
+        {
+            if (binding?.Get == null)
+                return defaultValue;
+
+            return binding.Get.Invoke();
+        }
+    }
 }

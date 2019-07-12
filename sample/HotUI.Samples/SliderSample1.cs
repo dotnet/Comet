@@ -19,7 +19,7 @@ namespace HotUI.Samples
 {
     public class SliderSample1 : View
     {
-        readonly State<float> celsius = 0;
+        readonly State<float> celsius = 50;
         
         public SliderSample1()
         {

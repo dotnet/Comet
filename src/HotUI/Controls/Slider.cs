@@ -9,13 +9,13 @@ namespace HotUI
 			float from = 0, 
 			float through = 100, 
 			float by = 1,
-			Action<float> onEditingChanged = null) : base(value)
+			Action<float> onEditingChanged = null)
 		{
-			ValueBinding = value?.Get;
+			Value = value.GetValueOrDefault(0);
 			From = from;
 			Through = through;
 			By = by;
-			OnEditingChanged = new MulticastAction<float>(value?.Set, onEditingChanged);
+			OnEditingChanged = new MulticastAction<float>(value, onEditingChanged);
 		}
 		
 		float _value;
@@ -40,23 +40,6 @@ namespace HotUI
 		public float By {
 			get => _by;
 			private set => this.SetValue (State, ref _by, value, ViewPropertyChanged);
-		}
-		
-		public Func<float> ValueBinding { get; private set; }
-		protected override void WillUpdateView ()
-		{
-			base.WillUpdateView ();
-			if (ValueBinding != null) 
-			{
-				State.StartProperty ();
-				var text = ValueBinding.Invoke ();
-				var props = State.EndProperty ();
-				var propCount = props.Length;
-				if (propCount > 0) 
-					State.BindingState.AddViewProperty (props, (s,o)=> Value = ValueBinding.Invoke());
-
-				Value = text;
-			}
 		}
 		
 		public Action<float> OnEditingChanged { get; }

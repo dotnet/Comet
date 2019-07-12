@@ -10,8 +10,8 @@ namespace HotUI.iOS
         public static readonly PropertyMapper<Slider> Mapper = new PropertyMapper<Slider>(ViewHandler.Mapper)
         {
             [nameof(Slider.Value)] = MapValueProperty,
-            [nameof(Slider.Value)] = MapFromProperty,
-            [nameof(Slider.Value)] = MapThroughProperty,
+            [nameof(Slider.From)] = MapFromProperty,
+            [nameof(Slider.Through)] = MapThroughProperty,
         };
         
         public SliderHandler() : base(Mapper)
