@@ -9,7 +9,8 @@ namespace HotUI.iOS
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
-            [nameof(TextField.Text)] = MapTextProperty
+            [nameof(TextField.Text)] = MapTextProperty,
+            [nameof(SecureField.Placeholder)] = MapPlaceholderProperty
         };
         
         public TextFieldHandler() : base(Mapper)
@@ -20,25 +21,39 @@ namespace HotUI.iOS
         protected override UITextField CreateView()
         {
             var textField = new UITextField();
-            textField.EditingDidEnd += EntryHandler_EditingDidEnd;
-
+            textField.EditingDidEnd += HandleEditingDidEnd;
+            textField.EditingChanged += HandleEditingChanged;
+            
             textField.ShouldReturn = s =>
             {
                 textField.ResignFirstResponder();
                 return true;
             };
+            
             return textField;
         }
-        
-        private void EntryHandler_EditingDidEnd(object sender, EventArgs e)
+
+        private void HandleEditingChanged(object sender, EventArgs e)
         {
-            VirtualView?.Completed(TypedNativeView.Text);
+            VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.Text);
+        }
+
+        private void HandleEditingDidEnd(object sender, EventArgs e)
+        {
+            VirtualView?.OnCommit?.Invoke(TypedNativeView.Text);
         }
         
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (UITextField) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
+            nativeView.SizeToFit();
+        }
+        
+        public static void MapPlaceholderProperty(IViewHandler viewHandler, TextField virtualView)
+        {
+            var nativeView = (UITextField) viewHandler.NativeView;
+            nativeView.Placeholder = virtualView.Placeholder;
             nativeView.SizeToFit();
         }
     }

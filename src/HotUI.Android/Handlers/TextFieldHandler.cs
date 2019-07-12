@@ -23,7 +23,10 @@ namespace HotUI.Android
             return editText;
         }
 
-        private void HandleTextChanged(object sender, EventArgs e) => VirtualView?.Completed(TypedNativeView.Text);
+        private void HandleTextChanged(object sender, EventArgs e)
+        {
+            VirtualView?.OnCommit?.Invoke(TypedNativeView.Text);
+        }
 
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {

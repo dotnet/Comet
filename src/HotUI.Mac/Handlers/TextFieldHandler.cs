@@ -3,7 +3,7 @@ using AppKit;
 
 namespace HotUI.Mac.Handlers
 {
-    public class TextFieldHandler : AbstractHandler<TextField,NSTextField>
+    public class TextFieldHandler : AbstractHandler<TextField, NSTextField>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
@@ -13,15 +13,24 @@ namespace HotUI.Mac.Handlers
         public TextFieldHandler() : base(Mapper)
         {
         }
-        
+
         protected override NSTextField CreateView()
         {
             var textField = new NSTextField();
-            textField.EditingEnded += EntryHandler_Ended;
+            textField.EditingEnded += HandleEditingEnded;
+            textField.Changed += HandleEditingChanged;
             return textField;
         }
 
-        void EntryHandler_Ended(object sender, EventArgs e) => VirtualView?.Completed(TypedNativeView.StringValue);
+        private void HandleEditingChanged(object sender, EventArgs e)
+        {
+            VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.StringValue);
+        }
+
+        void HandleEditingEnded(object sender, EventArgs e)
+        {
+            VirtualView?.OnCommit?.Invoke(TypedNativeView.StringValue);
+        }
 
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {

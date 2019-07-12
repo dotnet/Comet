@@ -35,10 +35,7 @@ namespace HotUI.Samples {
 				new VStack
 				{
 					(state.CanEdit
-						? (View) new TextField(() => state.Text)
-						{
-							Completed = (e) => state.Text = e
-						}
+						? (View) new TextField(() => state.Text, onCommit: (value) => state.Text = value )
 						: new Text(() => $"{state.Text}: multiText")), // Fromated Text will warn you. This should be done by TextBinding
                     new Text(state.Text),
 					new HStack
