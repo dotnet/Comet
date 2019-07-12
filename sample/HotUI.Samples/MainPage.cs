@@ -25,6 +25,7 @@ namespace HotUI.Samples {
             new MenuItem("ListPage1", ()=> new ListPage()),
             new MenuItem("ListPage2", ()=> new ListPage2()),
             new MenuItem("Insane Diff", ()=> new InsaneDiffPage()),
+            new MenuItem("ButtonSample1", ()=> new ButtonSample1()),
             new MenuItem("SecureFieldSample1", ()=> new SecureFieldSample1()),
             new MenuItem("SecureFieldSample2", ()=> new SecureFieldSample2()),
             new MenuItem("SecureFieldSample3", ()=> new SecureFieldSample3()),

@@ -1,25 +1,33 @@
 ﻿using System;
-namespace HotUI {
-	public class Button : View {
+
+namespace HotUI 
+{
+	public class Button : View 
+	{
 		public Button ()
 		{
 
 		}
-		public Button (string text) : base (true)
+		
+		public Button (string text, Action action = null) : base (true)
 		{
 			Text = text;
+			OnClick = action;
 		}
-		public Button (Func<string> formatedText)
+		
+		public Button (Func<string> text, Action action = null)
 		{
-			TextBinding = formatedText;
+			TextBinding = text;
+			OnClick = action;
 		}
-		private string text;
+		
+		private string _text;
 		public string Text {
-			get => text;
-			private set => this.SetValue (State, ref text, value, ViewPropertyChanged);
+			get => _text;
+			private set => this.SetValue (State, ref _text, value, ViewPropertyChanged);
 		}
 
-		public Action OnClick { get; set; }
+		public Action OnClick { get; private set; }
 
 		public Func<string> TextBinding { get; private set; }
 
@@ -37,6 +45,5 @@ namespace HotUI {
 				Text = text;
 			}
 		}
-
 	}
 }

@@ -7,9 +7,9 @@ namespace HotUI.Samples {
 		{
 			Body = () => {
 				var stack = new VStack {
-					new Button (()=> myBoolean.Value ? myText.Value : $"State: {myBoolean.Value}") {
-						OnClick = ()=> myBoolean.Value = !myBoolean.Value,
-					},
+					new Button 
+						(()=> myBoolean.Value ? myText.Value : $"State: {myBoolean.Value}",
+						()=> myBoolean.Value = !myBoolean.Value),
 				};
 				for (var i = 0; i < 100; i++) {
 					stack.Add (new Text (i.ToString ()));

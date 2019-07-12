@@ -42,18 +42,15 @@ namespace HotUI.Samples
             {
                 (state.CanEdit
                     ? (View) new TextField(() => state.Text, onCommit: value => state.Text = value)
-                    : new Text(() => $"{state.Text}: multiText")), // Fromated Text will warn you. This should be done by TextBinding
+                    : new Text(() => $"{state.Text}: multiText")), // Text will warn you. This should be done by TextBinding
                 new Text(state.Text),
                 new HStack
                 {
-                    new Button("Toggle Entry/Label")
-                    {
-                        OnClick = () => state.CanEdit = !state.CanEdit
-                    }.Background(Color.Salmon),
-                    new Button("Update Text")
-                    {
-                        OnClick = () => { state.Text = $"Click Count: {clickCount.Value++}"; }
-                    }
+                    new Button("Toggle Entry/Label",
+                        () => state.CanEdit = !state.CanEdit)
+                        .Background(Color.Salmon),
+                    new Button("Update Text",
+                        () => state.Text = $"Click Count: {clickCount.Value++}" )
                 }
             };
     }

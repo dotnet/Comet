@@ -1,23 +1,21 @@
 ﻿using System;
-namespace HotUI {
-	public class NavigationButton : ContentView {
+namespace HotUI 
+{
+	public class NavigationButton : ContentView 
+	{
 		public NavigationButton(Func<View> destination)
 		{
 			Destination = destination;
 		}
 		public NavigationButton (Func<string> text,Func<View> destination)
 		{
-			Content = new Button (text) {
-				OnClick = Navigate,
-			};
+			Content = new Button (text, Navigate);
 
 			Destination = destination;
 		}
 		public NavigationButton (string text, Func<View> destination)
 		{
-			Content = new Button (text) {
-				OnClick = Navigate,
-			};
+			Content = new Button (text,Navigate);
 			Destination = destination;
 		}
 

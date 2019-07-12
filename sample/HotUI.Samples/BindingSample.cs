@@ -40,24 +40,18 @@ namespace HotUI.Samples {
                     new Text(state.Text),
 					new HStack
 					{
-						new Button("Toggle Entry/Label")
-						{
-							OnClick = () => state.CanEdit = !state.CanEdit
-						},
-						new Button("Update Text")
-						{
-							OnClick = () => { state.Text = $"Click Count: {clickCount.Value++}"; }
-						},
-						new Button("Update FontSize")
-						{
-							OnClick = () => {
+						new Button("Toggle Entry/Label",
+							() => state.CanEdit = !state.CanEdit),
+						new Button("Update Text",
+							() => state.Text = $"Click Count: {clickCount.Value++}"),
+						new Button("Update FontSize",
+							() => {
 
-                                var font = View.GetGlobalEnvironment<Font>(EnvironmentKeys.Fonts.Font) ?? Font.System(14);
-                                var size = font.Attributes.Size + 5;
-                                var newFont = Font.System(size);
+								var font = View.GetGlobalEnvironment<Font>(EnvironmentKeys.Fonts.Font) ?? Font.System(14);
+								var size = font.Attributes.Size + 5;
+								var newFont = Font.System(size);
 								View.SetGlobalEnvironment (EnvironmentKeys.Fonts.Font, newFont);
-							}
-						},
+							}),
 					},
 					new Toggle(() =>state.CanEdit)
 					{
