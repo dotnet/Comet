@@ -8,7 +8,12 @@ namespace HotUI.Tests {
 		}
 
 		public View CurrentView { get; private set; }
-		public readonly Dictionary<string, object> ChangedProperties = new Dictionary<string, object> ();
+
+        public object NativeView => throw new NotImplementedException();
+
+        public bool HasContainer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public readonly Dictionary<string, object> ChangedProperties = new Dictionary<string, object> ();
 		public void Remove (View view)
 		{
 			CurrentView = null;
