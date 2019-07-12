@@ -51,7 +51,7 @@ namespace HotUI.Forms
 
 		private void HandleTextChanged(object sender, TextChangedEventArgs e)
 		{
-			_textField?.OnEditingChanged?.Invoke(e.NewTextValue);
+				_textField?.OnEditingChanged?.Invoke(e.NewTextValue);
 		}
 
 		private void HandleFocused(object sender, FocusEventArgs e)

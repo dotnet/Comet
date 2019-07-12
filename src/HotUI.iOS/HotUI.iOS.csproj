@@ -51,6 +51,7 @@
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />
     <Compile Include="Handlers\SecureFieldHandler.cs" />
+    <Compile Include="Handlers\SliderHandler.cs" />
     <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Handlers\VStackHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

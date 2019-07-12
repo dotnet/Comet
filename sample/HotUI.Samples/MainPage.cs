@@ -28,6 +28,7 @@ namespace HotUI.Samples {
             new MenuItem("SecureFieldSample1", ()=> new SecureFieldSample1()),
             new MenuItem("SecureFieldSample2", ()=> new SecureFieldSample2()),
             new MenuItem("SecureFieldSample3", ()=> new SecureFieldSample3()),
+            new MenuItem("SliderSample1", ()=> new SliderSample1()),
             new MenuItem("TextFieldSample1", ()=> new TextFieldSample1()),
             new MenuItem("SwiftUI Tutorial Section 1", ()=> new Section1()),
             new MenuItem("SwiftUI Tutorial Section 2", ()=> new Section2()),
