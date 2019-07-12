@@ -23,7 +23,7 @@ namespace HotUI.Samples
         
         public SliderSample1()
         {
-            Body = () => new VStack
+            Body = () => new VStack    
             {
                 new Slider(value: celsius, from: -100, through: 100, by: 0.1f),
                 new Text($"{celsius.Value} Celsius"),

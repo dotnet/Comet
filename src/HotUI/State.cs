@@ -11,16 +11,20 @@ namespace HotUI {
 
 	}
 
-	public class State<T> : BindingObject {
+	public class State<T> : BindingObject 
+	{
 		public State (T value)
 		{
 			Value = value;
 		}
+		
 		public State ()
 		{		
 
 		}
-		public T Value {
+		
+		public T Value 
+		{
 			get => GetProperty<T> ();
 			set => SetProperty (value);
 		}
@@ -28,6 +32,10 @@ namespace HotUI {
 		public static implicit operator T(State<T> state) => state.Value;
 		public static implicit operator Action<T>(State<T> state) => value => state.Value = value;
 		public static implicit operator State<T>(T value) => new State<T>(value);
+
+		public static implicit operator Binding<T>(State<T> state) => new Binding<T>(
+			getValue: () => state.Value,
+			setValue: state);
 	}
 	
 	public class StateBuilder : IDisposable {
