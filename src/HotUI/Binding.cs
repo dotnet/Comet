@@ -2,7 +2,7 @@ using System;
 
 namespace HotUI
 {
-    public class Binding<T>
+    public class Binding<T> : IBinding
     {
         public Binding(Func<T> getValue, Action<T> setValue)
         {
@@ -12,10 +12,11 @@ namespace HotUI
         
         public Func<T> Get { get; }
         public Action<T> Set { get; }
-        public bool Implicit { get; set; }
+        
+        public bool ImplicitFromValue { get; set; }
         
         public static implicit operator Binding<T>(T value) => new Binding<T>(
             getValue:() => value,
-            setValue: null) { Implicit = true };
+            setValue: null) { ImplicitFromValue = true };
     }
 }

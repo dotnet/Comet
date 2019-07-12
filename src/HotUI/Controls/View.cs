@@ -40,6 +40,12 @@ namespace HotUI {
 		}
 		public NavigationView Navigation { get; set; }
 		protected State State { get; set; }
+
+		protected View(IBinding binding) : this(binding?.ImplicitFromValue ?? false)
+		{
+			
+		}
+		
 		public View (bool hasConstructors)
 		{
 			ActiveViews.Add (this);

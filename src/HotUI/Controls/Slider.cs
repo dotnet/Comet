@@ -5,11 +5,11 @@ namespace HotUI
 	public class Slider : View
 	{
 		public Slider (
-			Binding<float> value = null, 
+			Binding<float> value = null, 	
 			float from = 0, 
 			float through = 100, 
 			float by = 1,
-			Action<float> onEditingChanged = null) : base(value?.Implicit ?? false)
+			Action<float> onEditingChanged = null) : base(value)
 		{
 			ValueBinding = value?.Get;
 			From = from;
