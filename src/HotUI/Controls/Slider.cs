@@ -25,19 +25,19 @@ namespace HotUI
 		float _from;
 		public float From {
 			get => _from;
-			private set => this.SetValue (State, ref _from, value, ViewPropertyChanged);
+			private set => SetValue ( ref _from, value);
 		}
 		
 		float _through;
 		public float Through {
 			get => _through;
-			private set => this.SetValue (State, ref _through, value, ViewPropertyChanged);
+			private set => SetValue ( ref _through, value);
 		}
 
 		float _by;
 		public float By {
 			get => _by;
-			private set => this.SetValue (State, ref _by, value, ViewPropertyChanged);
+			private set => SetValue ( ref _by, value);
 		}
 		
 		public Action<float> OnEditingChanged { get; private set; }

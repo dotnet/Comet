@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 
 namespace HotUI 
 {
@@ -18,6 +19,11 @@ namespace HotUI
 		{
 			get => _boundValue;
 			protected set => this.SetValue (State, ref this._boundValue, value, ViewPropertyChanged, _propertyName);
+		}
+		
+		protected void SetValue<T> (ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")
+		{
+			State.SetValue<T> (ref currentValue, newValue, ViewPropertyChanged, propertyName);
 		}
 		
 		protected override void WillUpdateView ()
