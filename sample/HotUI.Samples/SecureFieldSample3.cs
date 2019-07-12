@@ -25,7 +25,7 @@ namespace HotUI.Samples
         {
             Body = () => new VStack
             {
-                new SecureField("Enter a password", password),
+                new SecureField(null, "Enter a password", password),
                 new Text(password)
             };
         }

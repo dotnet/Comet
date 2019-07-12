@@ -9,7 +9,7 @@ struct ContentView : View {
     var body: some View {
         VStack {
             SecureField("Enter a password", text: $password)
-            Text("You entered: \(password)")
+            Text("You entered: \(password)")    
         }
     }
 }
@@ -25,7 +25,7 @@ namespace HotUI.Samples
         {
             Body = () => new VStack
             {
-                new SecureField("Enter a password", password),
+                new SecureField(password, "Enter a password"),
                 new Text(password)
             };
         }

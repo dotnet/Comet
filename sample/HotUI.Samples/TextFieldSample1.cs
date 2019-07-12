@@ -12,7 +12,7 @@ namespace HotUI.Samples
         {
             Body = () => new VStack
             {
-                new TextField("Name", name1, name2),
+                new TextField(null, "Name", name1, name2),
                 new HStack()
                 {
                     new Text("onEditingChanged:"),

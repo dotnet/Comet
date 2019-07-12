@@ -1,54 +1,31 @@
 ﻿using System;
-namespace HotUI {
-	public class SecureField : View 
+
+namespace HotUI
+{
+	public class SecureField : BoundView<string> 
 	{
-		public SecureField ()
-		{
+        public SecureField(
+            Binding<string> value = null,
+            string placeholder = null,
+            Action<string> onCommit = null) : base(value, nameof(Text))
+        {
+            Placeholder = placeholder;
+            OnCommit = onCommit;
+        }
 
-		}
-			
-		public SecureField (string placeholder, Action<string> onCommit = null) : base (true)
-		{
-			Placeholder = placeholder;
-			OnCommit = onCommit;
-		}
-		
-		public SecureField (string text = null, string placeholder = null, Action<string> onCommit = null) : base (true)
-		{
-			Text = text;
-			Placeholder = placeholder;
-			OnCommit = onCommit;
-		}
-		
-		public SecureField (Func<string> builder, string placeholder = null, Action<string> onCommit = null )
-		{
-			TextBinding = builder;
-			Placeholder = placeholder;
-			OnCommit = onCommit;
-		}
+        public SecureField(
+            Func<string> value = null,
+            string placeholder = null,
+            Action<string> onCommit = null) : this((Binding<string>)value, placeholder, onCommit)
+        {
 
-		string text;
+        }
+
 		public string Text {
-			get => text;
-			private set => this.SetValue (State, ref text, value, ViewPropertyChanged);
+			get => BoundValue;
+			private set => BoundValue = value;
 		}
 		
-		public Func<string> TextBinding { get; private set; }
-		protected override void WillUpdateView ()
-		{
-			base.WillUpdateView ();
-			if (TextBinding != null) {
-				State.StartProperty ();
-				var text = TextBinding.Invoke ();
-				var props = State.EndProperty ();
-				var propCount = props.Length;
-				if (propCount > 0) {
-					State.BindingState.AddViewProperty (props, (s,o)=> Text = TextBinding.Invoke());
-				}
-				Text = text;
-			}
-		}
-
 		string placeholder;
 		public string Placeholder {
 			get => placeholder;
