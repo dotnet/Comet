@@ -2,46 +2,27 @@
 
 namespace HotUI
 {
-    public class Toggle : View
+    public class Toggle : BoundView<bool>
     {
-
-        public Toggle(bool isOn)
+        public Toggle (
+            Binding<bool> value = null,
+            Action<bool> onChanged = null) : base(value, nameof(IsOn))
         {
-            IsOn = isOn;
+            IsOnChanged = new MulticastAction<bool>(value, onChanged);
         }
-
-        public Toggle(Func<bool> builder)
+        
+        public Toggle (
+            Func<bool> value = null,
+            Action<bool> onChanged = null) : this((Binding<bool>)value, onChanged)
         {
-            IsOnBinding = builder;
         }
-      
-       
-        private bool isOn;
+        
         public bool IsOn
         {
-            get => isOn;
-            set => this.SetValue(State, ref isOn, value, ViewPropertyChanged);
+            get => BoundValue;
+            set => BoundValue = value;
         }
-
-        public Func<bool> IsOnBinding { get; private set; }
-
-        protected override void WillUpdateView()
-        {
-            base.WillUpdateView();
-            if (IsOnBinding != null)
-            {
-                State.StartProperty();
-                var on = IsOnBinding.Invoke();
-                var props = State.EndProperty();
-                var propCount = props.Length;
-                if (propCount > 0)
-                {
-                    State.BindingState.AddViewProperty(props, (s, o) => IsOn = IsOnBinding.Invoke());
-                }
-                IsOn = on;
-            }
-        }
-
-        public Action<bool> IsOnChanged { get; set; }
+        
+        public Action<bool> IsOnChanged { get; private set; }
     }
 }

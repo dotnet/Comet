@@ -2,59 +2,39 @@
 
 namespace HotUI 
 {
-	public class TextField : View 
+	public class TextField : BoundView<string>
 	{
-		public TextField (string placeholder, Action<string> onEditingChanged = null, Action<string> onCommit = null) : base (true)
+		public TextField (
+			Binding<string> value = null, 	
+			string placeholder = null,
+			Action<string> onEditingChanged = null,
+			Action<string> onCommit = null) : base(value, nameof(Text))
 		{
 			Placeholder = placeholder;
-			OnEditingChanged = onEditingChanged;
+			OnEditingChanged = new MulticastAction<string>(value, onEditingChanged);
 			OnCommit = onCommit;
 		}
-		
-		public TextField (string text = null, string placeholder = null, Action<string> onEditingChanged = null, Action<string> onCommit = null) : base (true)
+
+		public TextField(
+			Func<string> value = null,
+			string placeholder = null,
+			Action<string> onEditingChanged = null,
+			Action<string> onCommit = null) : this((Binding<string>)value, placeholder, onEditingChanged, onCommit)
 		{
-			Text = text;
-			Placeholder = placeholder;
-			OnEditingChanged = onEditingChanged;
-			OnCommit = onCommit;
+
 		}
 		
-		public TextField (Func<string> builder, string placeholder = null, Action<string> onEditingChanged = null, Action<string> onCommit = null )
-		{
-			TextBinding = builder;
-			Placeholder = placeholder;
-			OnEditingChanged = onEditingChanged;
-			OnCommit = onCommit;
-		}
-		
-		string text;
 		public string Text {
-			get => text;
-			private set => this.SetValue (State, ref text, value, ViewPropertyChanged);
+			get => BoundValue;
+			private set => BoundValue = value;
 		}
 
 		string placeholder;
 		public string Placeholder {
 			get => placeholder;
-			set => this.SetValue (State, ref placeholder, value, ViewPropertyChanged);
+			set => SetValue ( ref placeholder, value);
 		}
 
-		public Func<string> TextBinding { get; private set; }
-		protected override void WillUpdateView ()
-		{
-			base.WillUpdateView ();
-			if (TextBinding != null) {
-				State.StartProperty ();
-				var text = TextBinding.Invoke ();
-				var props = State.EndProperty ();
-				var propCount = props.Length;
-				if (propCount > 0) {
-					State.BindingState.AddViewProperty (props, (s,o)=> Text = TextBinding.Invoke());
-				}
-				Text = text;
-			}
-		}
-		
 		public Action<TextField> Focused { get; private set; }
 		public Action<TextField> Unfocused { get; private set; }
 		public Action<string> OnEditingChanged { get; private set; }

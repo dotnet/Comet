@@ -35,8 +35,8 @@ namespace HotUI.Samples {
 				new VStack
 				{
 					(state.CanEdit
-						? (View) new TextField(() => state.Text, onCommit: (value) => state.Text = value )
-						: new Text(() => $"{state.Text}: multiText")), // Fromated Text will warn you. This should be done by TextBinding
+						? (View) new TextField(state.Text, onCommit: (value) => state.Text = value )
+						: new Text(() => $"{state.Text}: multiText")), // Formatted Text will warn you. This should be done by TextBinding
                     new Text(state.Text),
 					new HStack
 					{
@@ -53,10 +53,7 @@ namespace HotUI.Samples {
 								View.SetGlobalEnvironment (EnvironmentKeys.Fonts.Font, newFont);
 							}),
 					},
-					new Toggle(() =>state.CanEdit)
-					{
-						IsOnChanged = (e) => state.CanEdit = e
-					}
+					new Toggle(state.CanEdit, e => state.CanEdit = e)
 				}
 			}
 		};

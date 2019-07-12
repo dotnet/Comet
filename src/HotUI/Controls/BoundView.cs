@@ -18,7 +18,7 @@ namespace HotUI
 		public T BoundValue 
 		{
 			get => _boundValue;
-			protected set => this.SetValue (State, ref this._boundValue, value, ViewPropertyChanged, _propertyName);
+			protected set => SetValue (ref _boundValue, value, _propertyName);
 		}
 		
 		protected void SetValue<T> (ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")

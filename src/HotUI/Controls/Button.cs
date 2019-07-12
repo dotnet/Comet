@@ -2,48 +2,26 @@
 
 namespace HotUI 
 {
-	public class Button : View 
+	public class Button : BoundView<string> 
 	{
-		public Button ()
+		public Button (
+			Binding<string> value = null, 	
+			Action action = null) : base(value, nameof(Text))
 		{
-
-		}
-		
-		public Button (string text, Action action = null) : base (true)
-		{
-			Text = text;
 			OnClick = action;
 		}
 		
-		public Button (Func<string> text, Action action = null)
+		public Button(
+			Func<string> value,
+			Action action = null) : this((Binding<string>)value, action)
 		{
-			TextBinding = text;
-			OnClick = action;
 		}
 		
-		private string _text;
 		public string Text {
-			get => _text;
-			private set => this.SetValue (State, ref _text, value, ViewPropertyChanged);
+			get => BoundValue;
+			private set => BoundValue = value;
 		}
-
+		
 		public Action OnClick { get; private set; }
-
-		public Func<string> TextBinding { get; private set; }
-
-		protected override void WillUpdateView ()
-		{
-			base.WillUpdateView ();
-			if (TextBinding != null) {
-				State.StartProperty ();
-				var text = TextBinding.Invoke ();
-				var props = State.EndProperty ();
-				var propCount = props.Length;
-				if (propCount > 0) {
-					State.BindingState.AddViewProperty (props, (s, o) => Text = TextBinding.Invoke ());
-				}
-				Text = text;
-			}
-		}
 	}
 }
