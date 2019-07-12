@@ -13,13 +13,16 @@ namespace HotUI
         public Func<T> Get { get; }
         public Action<T> Set { get; }
         
+        public bool IsValue { get; private set; }
+        public bool IsFunc { get; private set; }
+
         public static implicit operator Binding<T>(T value) => new Binding<T>(
             getValue:() => value,
-            setValue: null);
+            setValue: null) { IsValue = true };
         
         public static implicit operator Binding<T>(Func<T> value) => new Binding<T>(
             getValue: value,
-            setValue: null);
+            setValue: null) { IsFunc = true };
     }
 
     public static class BindingExtensions

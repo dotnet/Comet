@@ -14,7 +14,7 @@ namespace HotUI
         }
         
         public Text (
-            Func<string> value = null) : this((Binding<string>)value)
+            Func<string> value) : this((Binding<string>)value)
         {
 
         }

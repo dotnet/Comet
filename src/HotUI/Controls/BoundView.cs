@@ -8,10 +8,13 @@ namespace HotUI
 		private readonly Binding<T> _binding;
 		private readonly string _propertyName;
 		
-		protected BoundView (Binding<T> binding, string propertyName)
+		protected BoundView (Binding<T> binding, string propertyName) : base(binding?.IsValue ?? false)
 		{
 			_binding = binding;
 			_propertyName = propertyName;
+
+			if (binding?.IsValue ?? false)
+				BoundValue = binding.Get.Invoke();
 		}
 		
 		T _boundValue;
@@ -30,7 +33,7 @@ namespace HotUI
 		{
 			base.WillUpdateView ();
 			
-			if (_binding.Get != null) 
+			if (_binding?.Get != null) 
 			{
 				State.StartProperty ();
 				var value = _binding.Get.Invoke ();
