@@ -1,6 +1,3 @@
-trigger:
-- master
-
 stages:
 - stage: BuildSource
   jobs:
@@ -18,47 +15,61 @@ stages:
 
     steps:
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 4.3.0
+      displayName: Use Nuget 5.0.2
       inputs:
-        versionSpec: '4.3.0'
+        versionSpec: '5.0.2'
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: HotUI.sln
+        restoreSolution: build/HotUI-Mac.sln
 
     - task: MSBuild@1
       displayName: 'Build HotUI'
       inputs:
-        solution: 'src/HotUI/HotUI.csproj'
+        solution: 'build/HotUI-Mac.sln'
         configuration: '$(BuildConfiguration)'
 
-    - task: MSBuild@1
-      displayName: 'Build HotUI.Android'
-      inputs:
-        solution: 'src/HotUI.Android/HotUI.Android.csproj'
-        configuration: '$(BuildConfiguration)'
+# - stage: RunTests
+#   jobs:
+#   - job: BuildHotUI
+#     displayName: Build HoTUI Source
+#     pool:
+#       name: Hosted VS2017
+#       demands:
+#       - msbuild
+#       - vstest
 
-    - task: MSBuild@1
-      displayName: 'Build HotUI.iOS'
-      inputs:
-        solution: 'src/HotUI.iOS/HotUI.iOS.csproj'
-        configuration: '$(BuildConfiguration)'
+#     steps:
+#     - task: NuGetToolInstaller@1
+#       displayName: Use Nuget 5.0.2
+#       inputs:
+#         versionSpec: '5.0.2'
 
-    - task: MSBuild@1
-      displayName: 'Build HotUI.Mac'
-      inputs:
-        solution: 'src/HotUI.Mac/HotUI.Mac.csproj'
-        configuration: '$(BuildConfiguration)'
+#     - task: NuGetCommand@2
+#       displayName: 'NuGet restore'
+#       inputs:
+#         restoreSolution: HotUI.sln
 
-    - task: MSBuild@1
-      displayName: 'Build HotUI.Forms'
-      inputs:
-        solution: 'src/HotUI.Forms/HotUI.Forms.csproj'
-        configuration: '$(BuildConfiguration)'
+#     - task: MSBuild@1
+#       displayName: 'Build Tests'
+#       inputs:
+#         solution: 'tests/HotUI.Tests/HotUI.Tests.csproj'
+#         configuration: '$(BuildConfiguration)'
+
+#     - task: VSTest@2
+#       inputs:
+#         testSelector: 'testAssemblies'
+#         testAssemblyVer2: '**\bin\$(BuildConfiguration)\**\*test*.dll
+#           !**\obj\**
+#           **\*UnitTests.dll
+#           !**\*TestAdapter.dll
+#           !**\xunit.runner.visualstudio.testadapter.dll
+#           !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
+#         searchFolder: '$(System.DefaultWorkingDirectory)\tests\HotUI.Tests'
 
 - stage: BuildSamplesAndroid
-  dependsOn: BuildSource
+  dependsOn: RunTests
   jobs:
   - job: BuildHotUISamplesAndroid
     displayName: Build HoTUI Android Samples
@@ -75,9 +86,9 @@ stages:
       displayName: 'Select the Xamarin SDK version'
 
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 4.3.0
+      displayName: Use Nuget 5.0.2
       inputs:
-        versionSpec: '4.3.0'
+        versionSpec: '5.0.2'
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
@@ -99,7 +110,7 @@ stages:
         createAppPackage: false
 
 - stage: BuildSamplesFormsiOS
-  dependsOn: BuildSource
+  dependsOn: RunTests
   jobs:
   - job: BuildHotUISamplesFormsiOS
     displayName: Build HoTUI iOS and Mac Samples
@@ -116,20 +127,28 @@ stages:
       displayName: 'Select the Xamarin SDK version'
 
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 4.3.0
+      displayName: Use Nuget 5.0.2
       inputs:
-        versionSpec: '4.3.0'
+        versionSpec: '5.0.2'
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
         restoreSolution: HotUI.sln
 
-    - task: XamariniOS@2
-      displayName: 'Build HotUI.Forms.iOS.Sample App'
+
+    - task: MSBuild@1
+      displayName: 'Build iOS and Mac'
       inputs:
-        solutionFile: 'HotUI.sln'
+        solution: 'HotUI.sln'
+        platform: iPhoneSimulator
         configuration: '$(BuildConfiguration)'
-        packageApp: false
-        buildForSimulator: true
-        runNugetRestore: false
+
+    # - task: XamariniOS@2
+    #   displayName: 'Build HotUI.Forms.iOS.Sample App'
+    #   inputs:
+    #     solutionFile: 'HotUI.sln'
+    #     configuration: '$(BuildConfiguration)'
+    #     packageApp: false
+    #     buildForSimulator: true
+    #     runNugetRestore: false

@@ -71,7 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">
-      <Project>{1817646e-e71e-48cf-80a4-3030ef870d61}</Project>
+      <Project>{F3FDDAC7-B103-4425-9E0E-4806C663A001}</Project>
       <Name>HotUI</Name>
     </ProjectReference>
   </ItemGroup>
