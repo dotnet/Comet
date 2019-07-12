@@ -3,21 +3,6 @@ using System.Collections.Generic;
 using HotUI.Samples.Comparisons;
 
 namespace HotUI.Samples {
-    public class MenuItem
-    {
-        public MenuItem()
-        {
-
-        }
-        public MenuItem(string title, Func<View> page)
-        {
-            Title = title;
-            Page = page;
-        }
-        public string Title { get; set; }
-        public Func<View> Page { get; set; }
-    }
-
 	public class MainPage : View {
 		List<MenuItem> pages = new List<MenuItem> {
 			new MenuItem("Binding Sample!",()=> new BindingSample()),
@@ -41,6 +26,8 @@ namespace HotUI.Samples {
         };
 		public MainPage (List<MenuItem> additionalPage = null)
 		{
+            //This is only required since there is a parameter for the view
+            HotReloadHelper.Register(this, additionalPage);
             if (additionalPage != null)
                 pages.AddRange(additionalPage);
 
