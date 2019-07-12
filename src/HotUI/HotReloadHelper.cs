@@ -33,9 +33,18 @@ namespace HotUI {
 				return view;
 
 			currentViews.TryGetValue (view, out var parameters);
-			var newView = parameters?.Length > 0 ? Activator.CreateInstance (newViewType, args: parameters) : Activator.CreateInstance (newViewType);
-			//TODO: Apply state!
-			return (View)newView;
+            try
+            {
+                var newView = parameters?.Length > 0 ? Activator.CreateInstance(newViewType, args: parameters) : Activator.CreateInstance(newViewType);
+                //TODO: Apply state!
+                return (View)newView;
+            }
+            catch(MissingMethodException ex)
+            {
+                Debug.WriteLine("You are using HotUI.Reload on a view that requires Parameters. Please call `HotReloadHelper.Register(this, params);` in the constructor;");
+                throw ex;
+            }
+
 		}
 
 		static Dictionary<string, Type> replacedViews = new Dictionary<string, Type> ();
