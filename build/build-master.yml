@@ -69,7 +69,7 @@ stages:
 #         searchFolder: '$(System.DefaultWorkingDirectory)\tests\HotUI.Tests'
 
 - stage: BuildSamplesAndroid
-  dependsOn: RunTests
+#   dependsOn: RunTests
   jobs:
   - job: BuildHotUISamplesAndroid
     displayName: Build HoTUI Android Samples
@@ -110,7 +110,7 @@ stages:
         createAppPackage: false
 
 - stage: BuildSamplesFormsiOS
-  dependsOn: RunTests
+#   dependsOn: RunTests
   jobs:
   - job: BuildHotUISamplesFormsiOS
     displayName: Build HoTUI iOS and Mac Samples
