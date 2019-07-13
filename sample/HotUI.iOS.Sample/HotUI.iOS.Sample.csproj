@@ -74,7 +74,6 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HotUI.Reload" Version="0.0.5-alpha" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
     <PackageReference Include="Xamarin.FFImageLoading">
       <Version>2.4.11.982</Version>
@@ -137,8 +136,6 @@
   <ItemGroup>
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
-    <Compile Include="Section5Native.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
-    <Compile Include="SliderSample1.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\HotUI\HotUI.csproj">
