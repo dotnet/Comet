@@ -87,10 +87,10 @@ namespace HotUI {
 			}
             if(newView is ContentView ncView && oldView is ContentView ocView)
             {
-                return ncView.Content?.DiffUpdate(ocView.Content);
+                ncView.Content?.DiffUpdate(ocView.Content);
             }
 			//Yes if one is IContainer, the other is too!
-			if (newView is IContainerView newContainer && oldView is IContainerView oldContainer) {
+			else if (newView is IContainerView newContainer && oldView is IContainerView oldContainer) {
 				var newChildren = newContainer.GetChildren ();
 				var oldChildren = oldContainer.GetChildren ().ToList ();
 				for (var i = 0; i < Math.Max (newChildren.Count, oldChildren.Count); i++) {
