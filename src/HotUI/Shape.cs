@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using HotUI.Graphics;
 
 namespace HotUI
 {
-    public class Shape :ContextualObject
+    public abstract class Shape : ContextualObject
     {        
         protected Shape()
         {
@@ -13,5 +14,7 @@ namespace HotUI
         {
             
         }
+
+        public abstract PathF PathForBounds(RectangleF rect);
     }    
 }

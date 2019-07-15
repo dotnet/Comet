@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using CoreAnimation;
 using CoreGraphics;
-using HotUI.Drawing;
+using HotUI.Graphics;
 using HotUI.iOS.Controls;
 using UIKit;
 // ReSharper disable MemberCanBePrivate.Global
@@ -159,23 +159,9 @@ namespace HotUI.iOS
                     Frame = bounds
                 };
 
-                if (clipShape is Circle)
-                {
-                    var size = Math.Min(bounds.Width, bounds.Height);
-                    var x = (bounds.Width - size) / 2;
-                    var y = (bounds.Height - size) / 2;
-                    
-                    var path = new CGPath();
-                    path.AddEllipseInRect(new CGRect(x,y,size,size));
-                    path.CloseSubpath();
-                    
-                    layer.Path = path;
-                }
-                else if (clipShape is Path)
-                {
-                    
-                }
-
+                var path = clipShape.PathForBounds(bounds.ToRectangleF());
+                layer.Path = path.ToCGPath();
+                
                 var viewHandler = handler as iOSViewHandler;
                 if (viewHandler?.ContainerView != null)
                     viewHandler.ContainerView.MaskLayer = layer;

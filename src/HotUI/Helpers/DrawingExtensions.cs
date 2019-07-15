@@ -1,5 +1,5 @@
 ﻿using System;
-using HotUI.Drawing;
+using HotUI.Graphics;
 
 namespace HotUI 
 {
@@ -19,7 +19,7 @@ namespace HotUI
 			{
 				var newX = x ?? shadow.Offset.Width;
 				var newY = y ?? shadow.Offset.Height;
-				shadow = shadow.WithOffset(new Size(newX, newY));
+				shadow = shadow.WithOffset(new SizeF(newX, newY));
 			}
 
 			view.SetEnvironment (EnvironmentKeys.View.Shadow, shadow);

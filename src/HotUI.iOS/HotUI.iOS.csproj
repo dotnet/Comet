@@ -47,7 +47,7 @@
     <Compile Include="Controls\HUIContainerView.cs" />
     <Compile Include="Controls\HUIImageView.cs" />
     <Compile Include="Controls\SizeChangedEventArgs.cs" />
-    <Compile Include="Extensions\CoreGraphicsExtensions.cs" />
+    <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />
     <Compile Include="Handlers\SecureFieldHandler.cs" />
@@ -64,6 +64,7 @@
     <Compile Include="Handlers\TextFieldHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="Services\iOSFontService.cs" />
+    <Compile Include="Services\iOSGraphicsService.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="Handlers\ListViewHandler.cs" />
     <Compile Include="HotUIViewController.cs" />

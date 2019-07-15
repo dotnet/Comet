@@ -1,11 +1,11 @@
-namespace HotUI.Drawing
+namespace HotUI.Graphics
 {
     public class Shadow
     {
         public Color Color { get; private set; } = Color.Black;
         public float Opacity { get; private set;} = .5f;
         public float Radius { get; private set;} = 10;
-        public Size Offset { get; private set;} = Size.Zero;
+        public SizeF Offset { get; private set;} = SizeF.Zero;
 
         public Shadow()
         {
@@ -41,7 +41,7 @@ namespace HotUI.Drawing
             return shadow;
         }
         
-        public Shadow WithOffset(Size offset)
+        public Shadow WithOffset(SizeF offset)
         {
             var shadow = new Shadow(this);
             shadow.Offset = offset;

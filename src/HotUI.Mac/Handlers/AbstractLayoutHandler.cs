@@ -11,7 +11,7 @@ namespace HotUI.Mac
     {
         private readonly ILayoutManager<NSView> _layoutManager;
         private AbstractLayout _view;
-        private Size _measured;
+        private SizeF _measured;
         private bool _measurementValid;
 
         public AbstractLayout LayoutView => _view;
@@ -32,7 +32,7 @@ namespace HotUI.Mac
             InitializeDefaults();
         }
 
-        public Size Measure(NSView view, Size available)
+        public SizeF Measure(NSView view, SizeF available)
         {
             CGSize size;
             if (view is AbstractLayoutHandler handler)
@@ -49,7 +49,7 @@ namespace HotUI.Mac
             return size.ToHotUISize();
         }
 
-        public Size GetSize(NSView view)
+        public SizeF GetSize(NSView view)
         {
             var size = view.Bounds.Size;
             if (size.Width == 0 || size.Height == 0)

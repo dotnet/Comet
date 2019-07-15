@@ -26,5 +26,6 @@ namespace HotUI{
 		}
 
 		public static IFontService FontService = new FallbackFontService();
+		public static IGraphicsService GraphicsService;
 	}
 }

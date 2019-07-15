@@ -6,14 +6,14 @@ using System.Globalization;
 namespace HotUI
 {
     [DebuggerDisplay("Width={Width}, Height={Height}")]
-    public struct Size
+    public struct SizeF
     {
         float _width;
         float _height;
 
-        public static readonly Size Zero;
+        public static readonly SizeF Zero;
 
-        public Size(float width, float height)
+        public SizeF(float width, float height)
         {
             if (float.IsNaN(width))
                 throw new ArgumentException("NaN is not a valid value for width");
@@ -49,37 +49,37 @@ namespace HotUI
             }
         }
 
-        public static Size operator +(Size s1, Size s2)
+        public static SizeF operator +(SizeF s1, SizeF s2)
         {
-            return new Size(s1._width + s2._width, s1._height + s2._height);
+            return new SizeF(s1._width + s2._width, s1._height + s2._height);
         }
 
-        public static Size operator -(Size s1, Size s2)
+        public static SizeF operator -(SizeF s1, SizeF s2)
         {
-            return new Size(s1._width - s2._width, s1._height - s2._height);
+            return new SizeF(s1._width - s2._width, s1._height - s2._height);
         }
 
-        public static Size operator *(Size s1, float value)
+        public static SizeF operator *(SizeF s1, float value)
         {
-            return new Size(s1._width * value, s1._height * value);
+            return new SizeF(s1._width * value, s1._height * value);
         }
 
-        public static bool operator ==(Size s1, Size s2)
+        public static bool operator ==(SizeF s1, SizeF s2)
         {
             return s1._width == s2._width && s1._height == s2._height;
         }
 
-        public static bool operator !=(Size s1, Size s2)
+        public static bool operator !=(SizeF s1, SizeF s2)
         {
             return s1._width != s2._width || s1._height != s2._height;
         }
 
-        public static explicit operator PointF(Size size)
+        public static explicit operator PointF(SizeF size)
         {
             return new PointF(size.Width, size.Height);
         }
 
-        public bool Equals(Size other)
+        public bool Equals(SizeF other)
         {
             return _width.Equals(other._width) && _height.Equals(other._height);
         }
@@ -88,7 +88,7 @@ namespace HotUI
         {
             if (ReferenceEquals(null, obj))
                 return false;
-            return obj is Size && Equals((Size)obj);
+            return obj is SizeF && Equals((SizeF)obj);
         }
 
         public override int GetHashCode()

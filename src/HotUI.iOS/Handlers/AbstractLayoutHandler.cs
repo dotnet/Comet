@@ -15,7 +15,7 @@ namespace HotUI.iOS
 
         private readonly ILayoutManager<UIView> _layoutManager;
         private AbstractLayout _view;
-        private Size _measured;
+        private SizeF _measured;
         private bool _measurementValid;
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
@@ -35,7 +35,7 @@ namespace HotUI.iOS
 
         public AbstractLayout Layout => _view;
 
-        public Size Measure(UIView view, Size available)
+        public SizeF Measure(UIView view, SizeF available)
         {
             CGSize size;
             if (view is AbstractLayoutHandler || view is HUIContainerView)
@@ -52,7 +52,7 @@ namespace HotUI.iOS
             return size.ToHotUISize();
         }
 
-        public Size GetSize(UIView view)
+        public SizeF GetSize(UIView view)
         {
             var size = view.Bounds.Size;
             if (size.Width == 0 || size.Height == 0)

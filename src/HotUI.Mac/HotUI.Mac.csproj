@@ -65,7 +65,7 @@
     <Compile Include="Controls\HUIContainerView.cs" />
     <Compile Include="Controls\HUIImageView.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
-    <Compile Include="Extensions\CoreGraphicsExtensions.cs" />
+    <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="Extensions\NSViewExtensions.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
@@ -79,6 +79,7 @@
     <Compile Include="Handlers\ScrollViewHandler.cs" />
     <Compile Include="Handlers\VStackHandler.cs" />
     <Compile Include="MacViewHandler.cs" />
+    <Compile Include="Services\MacGraphicsService.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="HotUIViewController.cs" />
     <Compile Include="Handlers\ViewHandler.cs" />

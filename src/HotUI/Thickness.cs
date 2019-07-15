@@ -37,7 +37,7 @@ namespace HotUI
             Bottom = bottom;
         }
 
-        public static implicit operator Thickness(Size size)
+        public static implicit operator Thickness(SizeF size)
         {
             return new Thickness(size.Width, size.Height, size.Width, size.Height);
         }

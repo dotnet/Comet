@@ -38,6 +38,7 @@ namespace HotUI.iOS {
 			ModalView.PerformDismiss = () => PresentingViewController.DismissModalViewController (true);
 			Device.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
 			Device.FontService = new iOSFontService();
+			Device.GraphicsService = new iOSGraphicsService();
 		}
 
 		internal static UIViewController PresentingViewController {

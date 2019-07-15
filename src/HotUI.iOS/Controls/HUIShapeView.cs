@@ -28,21 +28,15 @@ namespace HotUI.iOS
                 context.SetLineWidth(stroke);
                 context.SetStrokeColor(color.ToCGColor());
 
-                if (Shape is Circle circle)
-                {
-                    var size = Math.Min(rect.Width, rect.Height);
-                    size -= stroke;
+                var shapeBounds = new RectangleF(
+                    (float)rect.X + (stroke / 2),
+                    (float)rect.Y + (stroke / 2),
+                    (float)rect.Width - stroke,
+                    (float)rect.Height - stroke);
 
-                    var x = (rect.Width - size) / 2;
-                    var y = (rect.Height - size) / 2;
-
-                    var path = new CGPath();
-                    path.AddEllipseInRect(new CGRect(x, y, size, size));
-                    path.CloseSubpath();
-
-                    context.AddPath(path);
-                    context.StrokePath();
-                }
+                var path = Shape.PathForBounds(shapeBounds);
+                context.AddPath(path.ToCGPath());
+                context.StrokePath();
             }
         }
     }

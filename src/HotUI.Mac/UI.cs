@@ -30,6 +30,7 @@ namespace HotUI.Mac
 
             Device.PerformInvokeOnMainThread = invoker.BeginInvokeOnMainThread;
             Device.FontService = new MacFontService();
+            Device.GraphicsService = new MacGraphicsService();
         }
     }
 }

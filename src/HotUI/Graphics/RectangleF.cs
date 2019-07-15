@@ -32,7 +32,7 @@ namespace HotUI
             Height = height;
         }
 
-        public RectangleF(PointF loc, Size sz) : this(loc.X, loc.Y, sz.Width, sz.Height)
+        public RectangleF(PointF loc, SizeF sz) : this(loc.X, loc.Y, sz.Width, sz.Height)
         {
         }
 
@@ -152,9 +152,9 @@ namespace HotUI
 
         public bool IsEmpty => (Width <= 0) || (Height <= 0);
 
-        public Size Size
+        public SizeF Size
         {
-            get => new Size(Width, Height);
+            get => new SizeF(Width, Height);
             set
             {
                 Width = value.Width;
@@ -175,7 +175,7 @@ namespace HotUI
         public PointF Center => new PointF(X + Width / 2, Y + Height / 2);
 
         // Inflate and Offset
-        public RectangleF Inflate(Size sz)
+        public RectangleF Inflate(SizeF sz)
         {
             return Inflate(sz.Width, sz.Height);
         }

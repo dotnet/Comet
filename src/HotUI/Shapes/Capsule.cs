@@ -1,3 +1,6 @@
+using System;
+using HotUI.Graphics;
+
 namespace HotUI
 {
     /// <summary>
@@ -6,6 +9,12 @@ namespace HotUI
     /// </summary>
     public class Capsule : Shape
     {
-        
+        public override PathF PathForBounds(RectangleF rect)
+        {
+            var path = new PathF();
+            var cornerSize = Math.Min(rect.Width, rect.Height) / 2;
+            path.AppendRoundedRectangle(rect, cornerSize);
+            return path;
+        }
     }
 }

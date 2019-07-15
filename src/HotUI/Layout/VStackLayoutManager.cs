@@ -5,7 +5,7 @@ namespace HotUI.Layout
 {
     public class VStackLayoutManager<T> : ILayoutManager<T>
     {
-        public Size Measure(ILayoutHandler<T> handler, T parentView, AbstractLayout layout, Size available)
+        public SizeF Measure(ILayoutHandler<T> handler, T parentView, AbstractLayout layout, SizeF available)
         {
             var width = 0f;
             var height = 0f;
@@ -31,21 +31,21 @@ namespace HotUI.Layout
             if (spacerCount > 0)
                 height = available.Height;
 
-            return new Size(width, height);
+            return new SizeF(width, height);
         }
 
         public void Layout(
             ILayoutHandler<T> handler, 
             T parentView, 
             AbstractLayout layout,
-            Size measured)
+            SizeF measured)
         {
             var width = 0f;
 
             var index = 0;
             var nonSpacerHeight = 0f;
             var spacerCount = 0;
-            List<Size> sizes = new List<Size>();
+            List<SizeF> sizes = new List<SizeF>();
 
             foreach (var subview in handler.GetSubviews())
             {
@@ -53,7 +53,7 @@ namespace HotUI.Layout
                 if (view is Spacer)
                 {
                     spacerCount++;
-                    sizes.Add(new Size());
+                    sizes.Add(new SizeF());
                 }
                 else
                 {
@@ -78,10 +78,10 @@ namespace HotUI.Layout
             foreach (var subview in handler.GetSubviews())
             {
                 var view = layout[index];
-                Size size;
+                SizeF size;
                 if (view is Spacer)
                 {
-                    size = new Size(width, spacerHeight);
+                    size = new SizeF(width, spacerHeight);
                 }
                 else
                 {

@@ -1,4 +1,6 @@
-﻿namespace HotUI.Android
+﻿using HotUI.Android.Services;
+
+namespace HotUI.Android
 {
     public static class UI
     {
@@ -24,6 +26,7 @@
             Registrar.Handlers.Register<ViewRepresentable, ViewRepresentableHandler>();
 
             Device.PerformInvokeOnMainThread = (a) => AndroidContext.CurrentContext.RunOnUiThread(a);
+            Device.GraphicsService = new AndroidGraphicsService();
 		}
     }
 }

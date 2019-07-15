@@ -24,7 +24,7 @@ namespace HotUI
             Y = y;
         }
 
-        public PointF(Size sz) : this()
+        public PointF(SizeF sz) : this()
         {
             X = sz.Width;
             Y = sz.Height;
@@ -58,17 +58,17 @@ namespace HotUI
 
         public bool IsEmpty => X == 0 && Y == 0;
 
-        public static explicit operator Size(PointF pt)
+        public static explicit operator SizeF(PointF pt)
         {
-            return new Size(pt.X, pt.Y);
+            return new SizeF(pt.X, pt.Y);
         }
 
-        public static PointF operator +(PointF pt, Size sz)
+        public static PointF operator +(PointF pt, SizeF sz)
         {
             return new PointF(pt.X + sz.Width, pt.Y + sz.Height);
         }
 
-        public static PointF operator -(PointF pt, Size sz)
+        public static PointF operator -(PointF pt, SizeF sz)
         {
             return new PointF(pt.X - sz.Width, pt.Y - sz.Height);
         }
