@@ -108,6 +108,9 @@
     <PackageReference Include="Xamarin.FFImageLoading">
       <Version>2.4.11.982</Version>
     </PackageReference>
+    <PackageReference Include="HotUI.Reload">
+      <Version>0.0.6-alpha</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\HotUI\HotUI.csproj">

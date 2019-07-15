@@ -115,6 +115,9 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="HotUI.Reload">
+      <Version>0.0.6-alpha</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>

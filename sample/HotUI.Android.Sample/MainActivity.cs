@@ -17,10 +17,10 @@ namespace HotUI.Android.Sample
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-//#if DEBUG
-//			HotUI.Reload.Init ();
-//#endif
-			Page = new MainPage();
+#if DEBUG
+            HotUI.Reload.Init();
+#endif
+            Page = new MainPage();
         }
     }
 }
