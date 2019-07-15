@@ -5,13 +5,9 @@ using System.Linq;
 
 namespace HotUI {
 	public static class HotReloadHelper {
-		static HotReloadHelper()
-		{
-			IsEnabled = Debugger.IsAttached;
-		}
-		public static bool IsEnabled { get; set; }
+		public static bool IsEnabled { get; set; } = Debugger.IsAttached;
 
-		public static void Register(View view, params object[] parameters)
+        public static void Register(View view, params object[] parameters)
 		{
 			if (!IsEnabled)
 				return;
@@ -35,9 +31,9 @@ namespace HotUI {
 			currentViews.TryGetValue (view, out var parameters);
             try
             {
-                var newView = parameters?.Length > 0 ? Activator.CreateInstance(newViewType, args: parameters) : Activator.CreateInstance(newViewType);
-                //TODO: Apply state!
-                return (View)newView;
+                var newView = (View)(parameters?.Length > 0 ? Activator.CreateInstance(newViewType, args: parameters) : Activator.CreateInstance(newViewType));
+                TransferState(view, newView);
+                return newView;
             }
             catch(MissingMethodException ex)
             {
@@ -46,6 +42,16 @@ namespace HotUI {
             }
 
 		}
+
+        static void TransferState(View oldView, View newView)
+        {
+            var oldState = oldView.GetState();
+            var changes = oldState.ChangedProperties;
+            foreach(var change in changes)
+            {
+                newView.SetDeepPropertyValue(change.Key, change.Value);
+            }
+        }
 
 		static Dictionary<string, Type> replacedViews = new Dictionary<string, Type> ();
 		static Dictionary<View, object []> currentViews = new Dictionary<View, object []> ();

@@ -223,10 +223,9 @@ namespace HotUI
         {
             if (value?.GetType() == typeof(View))
                 return;
-
-            changeDictionary[propertyName] = value;
             childrenProperty.TryGetValue(sender, out var parentproperty);
             var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
+            changeDictionary[prop] = value;
             pendingUpdates.Add((prop, value));
             if (!isUpdating)
             {

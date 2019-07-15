@@ -23,6 +23,8 @@ namespace HotUI.Tests {
 
 
 			Device.PerformInvokeOnMainThread = (a) => a ();
-		}
+            HotReloadHelper.IsEnabled = true;
+
+        }
 	}
 }

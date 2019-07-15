@@ -22,4 +22,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\HotUI\HotUI.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Helpers\" />
+  </ItemGroup>
 </Project>
