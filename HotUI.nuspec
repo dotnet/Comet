@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>HotUI</id>
+    <version>0.0.1-alpha</version>
+    <title>HotUI</title>
+    <authors>James Clancey</authors>
+    <owners>Clancey</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>HotUI MVU .net framwork</description>
+    <summary>HotUI is an MVU UI Framework. It lets you build UI quickly and efficiently from C#. It also has HotReload.</summary>
+    <copyright>James Clancey</copyright>
+    <projectUrl>https://github.com/clancey/hotui</projectUrl>
+    <repository type="git" url="https://github.com/clancey/hotui"/>
+    <language>C#</language>
+    <dependencies>
+      <group>
+        <dependency id="HotUI.Reload" version="0.0.6-alpha" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+
+    <file src="src/HotUI/bin/Debug/netstandard2.0/HotUI.dll" target="lib/netstandard2.0/HotUI.dll" />
+    <file src="src/HotUI/bin/Debug/netstandard2.0/HotUI.pdb" target="lib/netstandard2.0/HotUI.pdb" />
+    
+    <file src="src/HotUI.iOS/bin/Debug/HotUI.dll" target="lib/xamarinios10/HotUI.dll" />
+    <file src="src/HotUI.iOS/bin/Debug/HotUI.pdb" target="lib/xamarinios10/HotUI.pdb" />
+    <file src="src/HotUI.iOS/bin/Debug/HotUI.iOS.dll" target="lib/xamarinios10/HotUI.iOS.dll" />
+    <file src="src/HotUI.iOS/bin/Debug/HotUI.iOS.pdb" target="lib/xamarinios10/HotUI.iOS.pdb" />
+
+
+    <file src="src/HotUI.Android/bin/Debug/HotUI.dll" target="lib/monoandroid81/HotUI.dll" />
+    <file src="src/HotUI.Android/bin/Debug/HotUI.pdb" target="lib/monoandroid81/HotUI.pdb" />
+    <file src="src/HotUI.Android/bin/Debug/HotUI.Android.dll" target="lib/monoandroid81/HotUI.Android.dll" />
+    <file src="src/HotUI.Android/bin/Debug/HotUI.Android.pdb" target="lib/monoandroid81/HotUI.Android.pdb" />
+
+
+    <file src="src/HotUI.Mac/bin/Debug/HotUI.dll" target="lib/Xamarin.Mac20/HotUI.dll" />
+    <file src="src/HotUI.Mac/bin/Debug/HotUI.pdb" target="lib/Xamarin.Mac20/HotUI.pdb" />
+    <file src="src/HotUI.Mac/bin/Debug/HotUI.Mac.dll" target="lib/Xamarin.Mac20/HotUI.Mac.dll" />
+    <file src="src/HotUI.Mac/bin/Debug/HotUI.Mac.pdb" target="lib/Xamarin.Mac20/HotUI.Mac.pdb" />
+
+
+    <file src="src/HotUI.UWP/bin/Debug/HotUI.dll" target="lib/uap/HotUI.dll" />
+    <file src="src/HotUI.UWP/bin/Debug/HotUI.pdb" target="lib/uap/HotUI.pdb" />
+    <file src="src/HotUI.UWP/bin/Debug/HotUI.UWP.dll" target="lib/uap/HotUI.UWP.dll" />
+    <file src="src/HotUI.UWP/bin/Debug/HotUI.UWP.pdb" target="lib/uap/HotUI.UWP.pdb" />
+
+
+    <file src="src/HotUI.WPF/bin/Debug/HotUI.dll" target="lib/net45/HotUI.dll" />
+    <file src="src/HotUI.WPF/bin/Debug/HotUI.pdb" target="lib/net45/HotUI.pdb" />
+    <file src="src/HotUI.WPF/bin/Debug/HotUI.WPF.dll" target="lib/net45/HotUI.WPF.dll" />
+    <file src="src/HotUI.WPF/bin/Debug/HotUI.WPF.pdb" target="lib/net45/HotUI.WPF.pdb" />
+  </files>
+</package>
