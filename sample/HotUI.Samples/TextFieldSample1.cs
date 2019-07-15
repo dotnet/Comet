@@ -7,25 +7,24 @@ namespace HotUI.Samples
     {
         readonly State<string> name1 = "";
         readonly State<string> name2 = "";
-        
-        public TextFieldSample1()
+
+        [Body]
+        View body() => new VStack
         {
-            Body = () => new VStack
+            new TextField(null, "Name", name1, name2),
+            new HStack()
             {
-                new TextField(null, "Name", name1, name2),
-                new HStack()
-                {
-                    new Text("onEditingChanged:"),
-                    new Text(name1),
-                    new Spacer()
-                },
-                new HStack()
-                {
-                    new Text("onCommit:"),
-                    new Text(name2),
-                    new Spacer()
-                },
-            };
-        }
+                new Text("onEditingChanged:"),
+                new Text(name1),
+                new Spacer()
+            },
+            new HStack()
+            {
+                new Text("onCommit:"),
+                new Text(name2),
+                new Spacer()
+            },
+        };
     }
+
 }

@@ -20,10 +20,9 @@ namespace HotUI.Samples
     public class SliderSample1 : View
     {
         readonly State<float> celsius = 50;
-        
-        public SliderSample1()
-        {
-            Body = () => new VStack    
+
+        [Body]
+        View body() => new VStack
             {
                 //new Slider(value: 12, from: -100, through: 100, by: 0.1f),
                 //new Slider(value: () => 12f, from: -100, through: 100, by: 0.1f),
@@ -32,6 +31,6 @@ namespace HotUI.Samples
                 new Text($"{celsius.Value} Celsius"),
                 new Text($"{celsius.Value * 9 / 5 + 32} Fahrenheit"),
             };
-        }
+
     }
 }

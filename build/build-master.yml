@@ -140,7 +140,7 @@ stages:
     - task: MSBuild@1
       displayName: 'Build iOS and Mac'
       inputs:
-        solution: 'HotUI.sln'
+        solution: 'HotUI.Mac.sln'
         platform: iPhoneSimulator
         configuration: '$(BuildConfiguration)'
 

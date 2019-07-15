@@ -20,14 +20,12 @@ namespace HotUI.Samples
     public class SecureFieldSample3 : View
     {
         readonly State<string> password = new State<string>("");
-        
-        public SecureFieldSample3()
+
+        [Body]
+        View body() => new VStack
         {
-            Body = () => new VStack
-            {
-                new SecureField(null, "Enter a password", password),
-                new Text(password)
-            };
-        }
+            new SecureField(null, "Enter a password", password),
+            new Text(password)
+        };
     }
 }

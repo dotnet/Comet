@@ -28,7 +28,7 @@ namespace HotUI.iOS.Sample {
             // If not required for your application you can safely delete this method
 
 #if DEBUG
-            HotUI.Reload.Init();
+            //HotUI.Reload.Init();
 #endif
             
             "turtlerock.jpg".LoadImage();
