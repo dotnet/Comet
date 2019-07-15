@@ -30,15 +30,12 @@ namespace HotUI.Samples.Comparisons
 {
     public class Section3 : View
     {
-        public Section3()
-        {
-            Body = () =>
-                new VStack(alignment: HorizontalAlignment.Leading)
-                {
+        [Body]
+        View body() =>
+                 new VStack(alignment: HorizontalAlignment.Leading){
                     new Text("Turtle Rock")
                         .Font(Font.Title),
-                    new HStack()
-                    {
+                    new HStack {
                         new Text("Joshua Tree National Park")
                             .Font(Font.SubHeadline)
                             .Background(Color.Salmon),
@@ -47,7 +44,7 @@ namespace HotUI.Samples.Comparisons
                             .Font(Font.SubHeadline)
                             .Background(Color.Green),
                     }
-                }.Padding();
-        }
+                 }.Padding();
+
     }
 }

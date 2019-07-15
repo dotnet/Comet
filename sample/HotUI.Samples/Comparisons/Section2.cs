@@ -21,12 +21,11 @@ namespace HotUI.Samples.Comparisons
 {
     public class Section2 : View
     {
-        public Section2()
-        {
-            Body = () => 
-                new Text("Turtle Rock")
-                    .Font(Font.Title)
-                    .Color(Color.Green);
-        }
+        [Body]
+        View body() =>
+                 new Text("Turtle Rock")
+                     .Font(Font.Title)
+                     .Color(Color.Green);
     }
+
 }
