@@ -161,23 +161,79 @@ namespace HotUI {
 		}
 
 
-		public static void SetPropertyValue (this object obj, string name, object value)
+		public static bool SetPropertyValue (this object obj, string name, object value)
 		{
 			var type = obj.GetType ();
 			var info = type.GetProperty (name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 			if (info != null) {
 				info.SetValue (obj, value);
+                return true;
 			} else {
 
 				var field = type.GetField (name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
 				if (field == null)
-					return;
+					return false;
 				field.SetValue (obj, value);
+                return true;
 			}
 		}
 
+        public static bool SetDeepPropertyValue(this object obj, string name, object value)
+        {
+            if (obj == null)
+                return false;
+            var lastObect = obj;
+            FieldInfo field = null;
+            PropertyInfo info = null;
+            foreach (var part in name.Split('.'))
+            {
+                info = null;
+                field = null;
+                var type = obj.GetType();
+                lastObect = obj;
+                info = type.GetDeepProperty(part);
+                if (info != null)
+                {
+                    obj = info.GetValue(obj, null);
+                }
+                else
+                {
+                    field = type.GetDeepField(part);
+                    if (field == null)
+                        return false;
+                    obj = field.GetValue(obj);
+                }
+            }
+            if(field != null)
+            {
+                field.SetValue(lastObect, value);
+                return true;
+            }
+            else if(info != null)
+            {
+                info.SetValue(lastObect, value);
+                return true;
+            }
+            return false;
+        }
 
-		public static object GetPropertyValue (this object obj, string name)
+        public static FieldInfo GetDeepField (this Type type, string name)
+        {
+            var  fieldInfo = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+                if (fieldInfo == null && type.BaseType != null)
+                    fieldInfo = GetDeepField(type.BaseType, name);
+            return fieldInfo;
+        }
+
+        public static PropertyInfo GetDeepProperty(this Type type, string name)
+        {
+            var prop = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
+            if (prop == null && type.BaseType != null)
+                prop = GetDeepProperty(type.BaseType, name);
+            return prop;
+        }
+
+        public static object GetPropertyValue (this object obj, string name)
 		{
 			foreach (var part in name.Split ('.')) {
 				if (obj == null)

@@ -44,6 +44,7 @@ namespace HotUI
         }
         public NavigationView Navigation { get; set; }
         protected State State { get; set; }
+        internal State GetState() => State;
 
         public View(bool hasConstructors)
         {
