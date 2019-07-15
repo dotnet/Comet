@@ -20,7 +20,15 @@ namespace HotUI {
 				return;
 			currentViews.Remove (view);
 		}
+        public static bool IsReplacedView(View view, View newView)
+        {
+            if (!IsEnabled)
+                return false;
 
+            if (!replacedViews.TryGetValue(view.GetType().FullName, out var newViewType))
+                return false;
+            return newView.GetType() == newViewType;
+        }
 		public static View GetReplacedView(View view)
 		{
 			if (!IsEnabled)

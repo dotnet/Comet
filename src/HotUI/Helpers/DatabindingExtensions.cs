@@ -85,7 +85,10 @@ namespace HotUI {
 			if (!newView.AreSameType (oldView)) {
 				return newView;
 			}
-
+            if(newView is ContentView ncView && oldView is ContentView ocView)
+            {
+                return ncView.Content?.DiffUpdate(ocView.Content);
+            }
 			//Yes if one is IContainer, the other is too!
 			if (newView is IContainerView newContainer && oldView is IContainerView oldContainer) {
 				var newChildren = newContainer.GetChildren ();
@@ -155,9 +158,16 @@ namespace HotUI {
 
 		public static bool AreSameType (this View view, View compareView)
 		{
+            if (HotReloadHelper.IsReplacedView(view, compareView))
+                return true;
+            //Add in more edge cases
+            var viewView = view?.GetView();
+            var compareViewView = compareView?.GetView();
 
-			//Add in more edge cases
-			return view?.GetView().GetType () == compareView?.GetView()?.GetType ();
+            if (HotReloadHelper.IsReplacedView(viewView, compareViewView))
+                return true;
+
+            return viewView?.GetType () == compareViewView?.GetType ();
 		}
 
 
