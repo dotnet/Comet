@@ -6,11 +6,6 @@ using System.Runtime.CompilerServices;
 
 namespace HotUI {
 
-	[AttributeUsage (AttributeTargets.Field)]
-	public class StateAttribute : Attribute {
-
-	}
-
 	public class State<T> : BindingObject 
 	{
 		public State (T value)

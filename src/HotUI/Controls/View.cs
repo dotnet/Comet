@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 
 namespace HotUI
 {
@@ -136,6 +137,7 @@ namespace HotUI
                 replacedView.ViewHandler = ViewHandler;
                 return builtView = replacedView.GetRenderView();
             }
+            CheckForBody();
             if (Body == null)
                 return this;
             if (builtView != null)
@@ -155,6 +157,17 @@ namespace HotUI
                 }
                 return builtView = view;
             }
+        }
+
+        bool didCheckForBody;
+        void CheckForBody()
+        {
+            if (didCheckForBody || Body != null)
+                return;
+            didCheckForBody = true;
+            var bodyMethod = this.GetType().GetMethods(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).Where(m => m.GetCustomAttributes(typeof(BodyAttribute), false).Length > 0).FirstOrDefault();
+            if (bodyMethod != null)
+                Body = (Func<View>)Delegate.CreateDelegate(typeof(Func<View>), this, bodyMethod.Name);
         }
 
         protected virtual void WillUpdateView()

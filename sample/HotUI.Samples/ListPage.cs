@@ -19,11 +19,8 @@ namespace HotUI.Samples {
 				ArtworkUrl = "http://lh3.googleusercontent.com/uhjRXO19CiZbT46srdXSM-lQ8xCsurU-xaVg6lvJvNy8TisdjlaHrHsBwcWAzpu_vkKXAA9SdbA",
 			}
 		};
-		public ListPage()
-		{
-			Body = body;
-		}
 
+        [Body]
 		View body ()  => new ListView<Song>(Songs) {
 					Cell = (song) => new NavigationButton(()=> new ListViewDetails(song)){
 						new HStack {
