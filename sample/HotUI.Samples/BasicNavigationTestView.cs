@@ -5,17 +5,16 @@ namespace HotUI.Samples
 {
     public class BasicNavigationTestView : View
     {
-        public BasicNavigationTestView()
+        [Body]
+        View body() => new NavigationView
         {
-            Body = () => new NavigationView
+            new VStack()
             {
-                new VStack()
-                {
-                    new NavigationButton("Navigate!", () => new BasicTestView()),
-                }
-            };
-        }
-
-
+                new NavigationButton("Navigate!", () => new BasicTestView()),
+            }
+        };
     }
+
+
+
 }
