@@ -2,7 +2,7 @@
 using Xunit;
 
 namespace HotUI.Tests {
-	public class HotReloadTests {
+	public class HotReloadTests : TestBase{
 
 		public class MyOrgView : View {
 			public const string TextValue = "Hello!";
