@@ -1,5 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable UnusedMethodReturnValue.Global
 
 namespace HotUI.Graphics
 {
@@ -10,8 +14,7 @@ namespace HotUI.Graphics
         
         private List<float> _arcAngles;
         private List<bool> _arcClockwise;
-
-
+        
         private RectangleF? _cachedBounds;
         private object _nativePath;
 
@@ -23,6 +26,9 @@ namespace HotUI.Graphics
 
             if (prototype._arcAngles != null)
             {
+                _arcAngles = new List<float>();
+                _arcClockwise = new List<bool>();
+                
                 _arcAngles.AddRange(prototype._arcAngles);
                 _arcClockwise.AddRange(prototype._arcClockwise);
             }
@@ -90,16 +96,97 @@ namespace HotUI.Graphics
                 if (_cachedBounds != null)
                     return (RectangleF)_cachedBounds;
 
-                var graphicsService = Device.GraphicsService;
+                _cachedBounds = CalculateBounds();
+                
+                /* var graphicsService = Device.GraphicsService;
                 if (graphicsService != null)
                     _cachedBounds = graphicsService.GetPathBounds(this);
                 else
-                    throw new Exception("Unable to calculate path bounds as no GraphicsService is registered.");
+                {
+                    
+                }*/
 
                 return (RectangleF)_cachedBounds;
             }
         }
-        
+
+        private RectangleF CalculateBounds()
+        {
+            var xValues = new List<float>();
+            var yValues = new List<float>();
+            
+            int pointIndex = 0;
+            int arcAngleIndex = 0;
+            int arcClockwiseIndex = 0;
+            
+            foreach (var operation in PathOperations)
+            {
+                if (operation == PathOperation.MoveTo)
+                {
+                    pointIndex++;
+                }
+                else if (operation == PathOperation.Line)
+                {
+                    var startPoint = _points[pointIndex-1];
+                    var endPoint = _points[pointIndex++];
+                    
+                    xValues.Add(startPoint.X);
+                    xValues.Add(endPoint.X);
+                    yValues.Add(startPoint.Y);
+                    yValues.Add(endPoint.Y);
+                }
+                else if (operation == PathOperation.Quad)
+                {
+                    var startPoint = _points[pointIndex-1];
+                    var controlPoint = _points[pointIndex++];
+                    var endPoint = _points[pointIndex++];
+
+                    var bounds = GraphicsOperations.GetBoundsOfQuadraticCurve(startPoint, controlPoint, endPoint);
+                    
+                    xValues.Add(bounds.Left);
+                    xValues.Add(bounds.Top);
+                    yValues.Add(bounds.Right);
+                    yValues.Add(bounds.Bottom);
+                }
+                else if (operation == PathOperation.Cubic)
+                {
+                    var startPoint = _points[pointIndex-1];
+                    var controlPoint1 = _points[pointIndex++];
+                    var controlPoint2 = _points[pointIndex++];
+                    var endPoint = _points[pointIndex++];
+
+                    var bounds = GraphicsOperations.GetBoundsOfCubicCurve(startPoint, controlPoint1, controlPoint2, endPoint);
+                    
+                    xValues.Add(bounds.Left);
+                    xValues.Add(bounds.Top);
+                    yValues.Add(bounds.Right);
+                    yValues.Add(bounds.Bottom);
+                }
+                else if (operation == PathOperation.Arc)
+                {
+                    var topLeft = _points[pointIndex++];
+                    var bottomRight = _points[pointIndex++];
+                    float startAngle = GetArcAngle(arcAngleIndex++);
+                    float endAngle = GetArcAngle(arcAngleIndex++);
+                    var clockwise = IsArcClockwise(arcClockwiseIndex++);
+
+                    var bounds = GraphicsOperations.GetBoundsOfArc(topLeft.X, topLeft.Y, bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y, startAngle, endAngle, clockwise);
+                    
+                    xValues.Add(bounds.Left);
+                    xValues.Add(bounds.Top);
+                    yValues.Add(bounds.Right);
+                    yValues.Add(bounds.Bottom);
+                }
+            }
+            
+            var minX = xValues.Min();
+            var minY = yValues.Min();
+            var maxX = xValues.Max();
+            var maxY = yValues.Max();
+
+            return new RectangleF(minX, minY, maxX - minX, maxY - minY);
+        }
+
         public PointF? LastPoint
         {
             get
@@ -241,122 +328,7 @@ namespace HotUI.Graphics
             Invalidate();
             return this;
         }
-        
-        public int GetSegmentPointIndex(int aIndex)
-        {
-            if (aIndex <= OperationCount)
-            {
-                var vPointIndex = 0;
-                for (var vSegment = 0; vSegment < _operations.Count; vSegment++)
-                {
-                    var vType = _operations[vSegment];
-                    if (vType == PathOperation.MoveTo)
-                    {
-                        if (vSegment == aIndex)
-                        {
-                            return vPointIndex;
-                        }
-
-                        vPointIndex++;
-                    }
-                    else if (vType == PathOperation.Line)
-                    {
-                        if (vSegment == aIndex)
-                        {
-                            return vPointIndex;
-                        }
-
-                        vPointIndex++;
-                    }
-                    else if (vType == PathOperation.Quad)
-                    {
-                        if (vSegment == aIndex)
-                        {
-                            return vPointIndex;
-                        }
-
-                        vPointIndex += 2;
-                    }
-                    else if (vType == PathOperation.Cubic)
-                    {
-                        if (vSegment == aIndex)
-                        {
-                            return vPointIndex;
-                        }
-
-                        vPointIndex += 3;
-                    }
-                    else if (vType == PathOperation.Arc)
-                    {
-                        if (vSegment == aIndex)
-                        {
-                            return vPointIndex;
-                        }
-
-                        vPointIndex += 2;
-                    }
-                    else if (vType == PathOperation.Close)
-                    {
-                        if (vSegment == aIndex)
-                        {
-                            return vPointIndex;
-                        }
-                    }
-                }
-            }
-
-            return -1;
-        }
-
-        public PathOperation GetSegmentInfo(int segmentIndex, out int pointIndex, out int arcAngleIndex, out int arcClockwiseIndex)
-        {
-            pointIndex = 0;
-            arcAngleIndex = 0;
-            arcClockwiseIndex = 0;
-
-            if (segmentIndex <= OperationCount)
-            {
-                for (var s = 0; s < _operations.Count; s++)
-                {
-                    var type = _operations[s];
-                    if (type == PathOperation.MoveTo)
-                    {
-                        if (s == segmentIndex) return type;
-
-                        pointIndex++;
-                    }
-                    else if (type == PathOperation.Line)
-                    {
-                        if (s == segmentIndex) return type;
-                        pointIndex++;
-                    }
-                    else if (type == PathOperation.Quad)
-                    {
-                        if (s == segmentIndex) return type;
-                        pointIndex += 2;
-                    }
-                    else if (type == PathOperation.Cubic)
-                    {
-                        if (s == segmentIndex) return type;
-                        pointIndex += 3;
-                    }
-                    else if (type == PathOperation.Arc)
-                    {
-                        if (s == segmentIndex) return type;
-                        pointIndex += 2;
-                        arcAngleIndex += 2;
-                        arcClockwiseIndex++;
-                    }
-                    else if (type == PathOperation.Close)
-                    {
-                        if (s == segmentIndex) return type;
-                    }
-                }
-            }
-
-            return PathOperation.Close;
-        }
-
+       
         public PathF Rotate(float angle)
         {
             var center = Bounds.Center;
@@ -515,8 +487,8 @@ namespace HotUI.Graphics
                 _nativePath = value;
             }
         }
-        
-        public void Invalidate()
+
+        private void Invalidate()
         {
             _cachedBounds = null;
             ReleaseNative();
