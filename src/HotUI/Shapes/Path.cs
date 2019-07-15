@@ -11,6 +11,11 @@ namespace HotUI
             _path = path;
         }
 
+        public Path(string path)
+        {
+            _path = PathBuilder.Build(path);
+        }
+        
         public override PathF PathForBounds(RectangleF rect)
         {
             // todo: this should scale based on some type of setting (AspectFit, ScaleToFit, etc...)
