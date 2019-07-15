@@ -55,7 +55,7 @@ View is state aware. When the state changes, databinding will automatically upda
 
 ## Do you want to use more complex data types?
 
-You can either implement `INotifyPropertyRead` or you can use [BindingObject](https://github.com/Clancey/HotUI/blob/master/src/HotUI/BindingObject.cs) to make it simpler.
+You can either implement [INotifyPropertyRead](https://github.com/Clancey/HotUI/blob/master/src/HotUI/BindingObject.cs#L13) or you can use [BindingObject](https://github.com/Clancey/HotUI/blob/master/src/HotUI/BindingObject.cs) to make it simpler.
 
 Add it as a Field/Property, and add the [State] attribute!
 
