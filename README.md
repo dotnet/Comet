@@ -1,37 +1,67 @@
 # HotUI
 
-What is Hot UI? It is a new UI Framework/Patern to write app UI.  It follows the Model View Update patern. You will notice there is no Databinding defined. It magically databinds for you!  
+What is Hot UI? It is a new UI Framework/Patern to write app UI.  It follows the Model View Update patern. It magically databinds for you!  
 
 # Key Concepts
 HotUI is an MVU style patern.
 
-HotPage is a screen
-It has a build method, this is where you define your UI.
+View is a screen
+Views have a Body method that you can assign either by an Attribute `[Body]` or by specifying
 
 ```
-public class MyPage : HotPage{
-	protected override View Build () => new Label{Text="Hello World};
+public class MyPage : View{
+	[Body]
+	View body () => new Text("Hello World);
 }
 ```
 
-HotPage is state aware. When the state changes, databinding will automatically update, or rebuild the view if needed.
+or
+
+```
+public class MyPage : View{
+	public MyPage(){
+		Body = body;
+	}
+	View body () => new Text("Hello World);
+}
+```
+
+
+# Hot Reload
+HotReload is included by default!
+Download and install the VS extension from the [Releases](https://github.com/Clancey/HotUI/releases/)
+Then add to your apps code.
+
+``` 
+ #if DEBUG
+            HotUI.Reload.Init();
+ #endif
+```
+
 
 # State
 As of right now there are two supported ways to add state.
 Simmple data types like int, bool?
-Just add a State<T> field to your HotPage
+Just add a `State<T>` field to your View
+
 ```
-class MyPage : HotPage{
-	State<int> clickCount = new State<int>(1);
+class MyPage : View{
+	readonly State<int> clickCount = 1;
 }
 ```
 
+
+View is state aware. When the state changes, databinding will automatically update, or rebuild the view if needed.
+
 ## Do you want to use more complex data types?
 
-For now you need to subclass [BindingObject](https://github.com/Clancey/HotUI/blob/master/src/HotUI/BindingObject.cs).
+You can either implement `INotifyPropertyRead` or you can use [BindingObject](https://github.com/Clancey/HotUI/blob/master/src/HotUI/BindingObject.cs) to make it simpler.
+
+Add it as a Field/Property, and add the [State] attribute!
+
 
 ```
-public class MainPage : HotPage {
+public class MainPage : View {
 		class MyBindingObject : BindingObject {
 			public bool CanEdit {
 				get => GetProperty<bool> ();
@@ -49,23 +79,24 @@ public class MainPage : HotPage {
 
 ```
 
-Soon you can implement an interface.
+`INotifyPropertyRead` is just like INotifyPropertyChanged. Just call `PropertyRead` whenever a property Getter is called. And `PropertyChanged` whenever a property Value changes.
 
-## How do I use the sate?
+## How do I use the State?
 
-```	public class MyPage : HotPage {
+```	public class MyPage : View {
 
-		readonly State<int> clickCount = new State<int> (1);
-		readonly State<string> text = new State<string> ("Hello World");
+		readonly State<int> clickCount = 1;
+		readonly State<string> text = "Hello World";
 
-
-		protected override View Build () => new Stack {
-			new Label {Text = text.Value},
-			new Button{Text = "Update Text", OnClick = ()=>{
-					text.Value = $"Click Count: {clickCount.Value++}";
+		public MyPage() {
+			Body = () => new Stack {
+				new Text (text),			
+				new Button("Update Text",
+	                        () => state.Text = $"Click Count: {clickCount.Value++}" )
 				}
-			}
-		};
+			};
+
+		}
 	}
 ```
 
@@ -73,22 +104,23 @@ That is all!, now when the Text Changes everything updates.
 
 #What if I want to format my value without an extra state property?
 
-While `new Label{Text = $"Click Count: {clickCount}"` works, it isnt efficient.
+While `new Text($"Click Count: {clickCount})"` works, it isnt efficient.
 
-You should use `Label.TextBinding`
+You should use `new Text(()=> $"Click Count: {clickCount}")`
 
 ```
-public class MyPage : HotPage {
+public class MyPage : View {
 
 		readonly State<int> clickCount = new State<int> (1);
 
-		protected override View Build () => new Stack {
-			new Label {TextBinding = ()=> $"Click Count: {clickCount}" },
-			new Button{Text = "Update Text", OnClick = ()=>{
-				clickCount.Value++;
+		public MyPage() {
+			Body = () => new Stack {
+				new Text (()=> $"Click Count: {clickCount}"),
+				new Button("Update Text", ()=>{
+					clickCount.Value++;
 				}
-			}
-		};
+			};
+		}
 	}
 
 ```
@@ -104,4 +136,4 @@ public class MyPage : HotPage {
 
 
 # Does this require Xamarin.Forms?
-No!  You can use the navitve versions, and get lots of native awesomesause!
+No!  You can use the native versions, and get lots of native awesomesause!
