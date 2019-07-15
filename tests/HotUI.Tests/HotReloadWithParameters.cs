@@ -24,7 +24,7 @@ namespace HotUI.Tests {
             public const string TextValue = "Hello!";
             public MyOrgView1(string text = TextValue)
             {
-                //HotReloadHelper.Register(this, text);
+                HotReloadHelper.Register(this, text);
                 this.Body = () => new Text(text);
             }
         }
@@ -33,7 +33,7 @@ namespace HotUI.Tests {
             public const string TextValue = "Hello!";
             public MyNewView1(string text = TextValue)
             {
-               // HotReloadHelper.Register(this, text);
+                HotReloadHelper.Register(this, text);
                 this.Body = () => new Text(text);
             }
         }
