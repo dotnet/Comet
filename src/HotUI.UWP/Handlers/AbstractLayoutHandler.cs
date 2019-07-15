@@ -19,7 +19,7 @@ namespace HotUI.UWP.Handlers
             _layoutManager = layoutManager;
         }
         
-        public Size GetSize(UIElement view)
+        public SizeF GetSize(UIElement view)
         {
             if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0) return view.DesiredSize.ToSize();
 
@@ -172,7 +172,7 @@ namespace HotUI.UWP.Handlers
             return size;
         }
 
-        protected virtual Size GetMeasuredSize(UIElement child, Size availableSize)
+        protected virtual SizeF GetMeasuredSize(UIElement child, SizeF availableSize)
         {
             return availableSize;
         }
@@ -186,7 +186,7 @@ namespace HotUI.UWP.Handlers
             return finalSize;
         }
 
-        public Size Measure(UIElement view, Size available)
+        public SizeF Measure(UIElement view, SizeF available)
         {
             return view.DesiredSize.ToSize();
         }

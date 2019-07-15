@@ -18,7 +18,7 @@ namespace HotUI.WPF.Handlers
             _layoutManager = layoutManager;
         }
 
-        public Size GetSize(UIElement view)
+        public SizeF GetSize(UIElement view)
         {
             if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0)
             {
@@ -177,7 +177,7 @@ namespace HotUI.WPF.Handlers
             return size;
         }
 
-        protected virtual Size GetMeasuredSize(UIElement child, Size availableSize)
+        protected virtual SizeF GetMeasuredSize(UIElement child, SizeF availableSize)
         {
             return availableSize;
         }
@@ -200,7 +200,7 @@ namespace HotUI.WPF.Handlers
             return finalSize;
         }
 
-        public Size Measure(UIElement view, Size available)
+        public SizeF Measure(UIElement view, SizeF available)
         {
             view.Measure(available.ToSize());
             return view.DesiredSize.ToSize();
