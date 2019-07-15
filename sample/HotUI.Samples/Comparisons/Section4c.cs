@@ -23,13 +23,11 @@ namespace HotUI.Samples.Comparisons
 {
     public class Section4c : View
     {
-        public Section4c()
-        {
-            Body = () => new VStack
-            {
+        [Body]
+        View body() => new VStack {
                 new Image("turtlerock.jpg")
                     .Shadow(radius: 10)
             };
-        }
+
     }
 }

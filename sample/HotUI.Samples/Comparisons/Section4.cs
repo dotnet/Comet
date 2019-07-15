@@ -23,14 +23,13 @@ namespace HotUI.Samples.Comparisons
 {
     public class Section4 : View
     {
-        public Section4()
-        {
-            Body = () =>
+        [Body]
+        View body() =>
                 new Image("turtlerock.jpg")
-                    .ClipShape(new Circle())
-                    .Overlay(
-                        new Circle().Stroke(Color.White, lineWidth: 4))
-                    .Shadow(radius: 10);
-        }
+                      .ClipShape(new Circle())
+                      .Overlay(
+                          new Circle().Stroke(Color.White, lineWidth: 4))
+                      .Shadow(radius: 10);
     }
+
 }
