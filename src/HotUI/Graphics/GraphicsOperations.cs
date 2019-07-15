@@ -223,11 +223,11 @@ namespace HotUI.Graphics
         
         public static float GetAngleAsDegrees(PointF point1, PointF point2)
         {
-            float dx = point1.X - point2.X;
-                float dy = point1.Y - point2.Y;
+            var dx = point1.X - point2.X;
+                var dy = point1.Y - point2.Y;
 
                 var radians = (float) Math.Atan2(dy, dx);
-                float degrees = radians * 180.0f / (float) Math.PI;
+                var degrees = radians * 180.0f / (float) Math.PI;
 
                 return 180 - degrees;
         }
@@ -454,6 +454,13 @@ namespace HotUI.Graphics
             if (trueAngle >= Math.PI * 3.0 / 2.0 && trueAngle < Math.PI * 2)
                 return 4;
             return 0;
+        }
+        
+        public static PointF GetOppositePoint(PointF pivot, PointF oppositePoint)
+        {
+            var dx = oppositePoint.X - pivot.X;
+            var dy = oppositePoint.Y - pivot.Y;
+            return new PointF(pivot.X - dx, pivot.Y - dy);
         }
     }
 }
