@@ -29,5 +29,10 @@ namespace HotUI.Tests {
 		{
 			ChangedProperties [property] = value;
 		}
-	}
+
+        public void Dispose()
+        {
+            ChangedProperties?.Clear();
+        }
+    }
 }
