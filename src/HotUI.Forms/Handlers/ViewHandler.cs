@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Diagnostics;
-using Xamarin.Forms;
 using FView = Xamarin.Forms.View;
-using HView = HotUI.View;
 
-namespace HotUI.Forms
+namespace HotUI.Forms.Handlers
 {
     public class ViewHandler : FView, FormsViewHandler
     {

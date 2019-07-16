@@ -2,7 +2,7 @@
 using HotUI.iOS.Controls;
 using UIKit;
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public abstract class AbstractHandler<TVirtualView, TNativeView> : iOSViewHandler 
         where TVirtualView : View 
@@ -22,6 +22,8 @@ namespace HotUI.iOS
 
         protected abstract TNativeView CreateView();
         
+        protected abstract void DisposeView(TNativeView nativeView);
+
         public UIView View => (UIView)_containerView ?? _nativeView;
 
         public HUIContainerView ContainerView => _containerView;
@@ -96,6 +98,10 @@ namespace HotUI.iOS
                 return;
 
             _nativeView?.RemoveFromSuperview();
+
+            if (_nativeView != null)
+                DisposeView(_nativeView);
+            
             _nativeView?.Dispose();
             _nativeView = null;
             if (_virtualView != null)

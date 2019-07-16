@@ -2,7 +2,7 @@ using CoreGraphics;
 using HotUI.Layout;
 using UIKit;
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class VStackHandler : AbstractLayoutHandler
     {

@@ -1,7 +1,9 @@
 ﻿using System;
 using UIKit;
 
-namespace HotUI.iOS
+// ReSharper disable MemberCanBePrivate.Global
+
+namespace HotUI.iOS.Handlers
 {
     public class ToggleHandler : AbstractHandler<Toggle, UISwitch>
     {
@@ -20,21 +22,18 @@ namespace HotUI.iOS
             toggle.ValueChanged += HandleValueChanged;
             return toggle;
         }
-        
+
+        protected override void DisposeView(UISwitch toggle)
+        {
+            toggle.ValueChanged -= HandleValueChanged;
+        }
+
         void HandleValueChanged(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.On);
         
         public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (UISwitch) viewHandler.NativeView;
             nativeView.On = virtualView.IsOn;
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            if(TypedNativeView != null)
-                TypedNativeView.ValueChanged -= HandleValueChanged;
-            base.Dispose(disposing);
         }
     }
 }

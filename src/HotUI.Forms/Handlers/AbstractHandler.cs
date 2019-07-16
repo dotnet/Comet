@@ -1,7 +1,7 @@
 ﻿using System;
 using FView = Xamarin.Forms.View;
 
-namespace HotUI.Forms
+namespace HotUI.Forms.Handlers
 {
     public abstract class AbstractHandler<TVirtualView, TNativeView> : FormsViewHandler 
         where TVirtualView : View 
@@ -21,6 +21,8 @@ namespace HotUI.Forms
 
         protected abstract TNativeView CreateView();
         
+        protected abstract void DisposeView(TNativeView nativeView);
+
         public FView View => (FView)_containerView ?? _nativeView;
 
         public HUIContainerView ContainerView => _containerView;
@@ -89,6 +91,10 @@ namespace HotUI.Forms
         {
             if (!disposing)
                 return;
+            
+            if (_nativeView != null)
+                DisposeView(_nativeView);
+            
             _nativeView = null;
             if (_virtualView != null)
                 Remove(_virtualView);

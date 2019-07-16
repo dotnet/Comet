@@ -3,7 +3,7 @@ using Android.Content;
 using HotUI.Android.Controls;
 using AView = Android.Views.View;
 
-namespace HotUI.Android
+namespace HotUI.Android.Handlers
 {
     public abstract class AbstractHandler<TVirtualView, TNativeView> : AndroidViewHandler
         where TVirtualView : View
@@ -22,6 +22,8 @@ namespace HotUI.Android
         }
 
         protected abstract TNativeView CreateView(Context context);
+
+        protected abstract void DisposeView(TNativeView nativeView);
 
         public AView View => (AView)_containerView ?? _nativeView;
 
@@ -88,6 +90,10 @@ namespace HotUI.Android
         {
             if (!disposing)
                 return;
+            
+            if (_nativeView != null)
+                DisposeView(_nativeView);
+            
             _nativeView?.Dispose();
             _nativeView = null;
             if (_virtualView != null)

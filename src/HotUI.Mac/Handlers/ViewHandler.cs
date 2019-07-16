@@ -6,7 +6,7 @@ using CoreGraphics;
 using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
-namespace HotUI.Mac
+namespace HotUI.Mac.Handlers
 {
 	public class ViewHandler : MacViewHandler
     {

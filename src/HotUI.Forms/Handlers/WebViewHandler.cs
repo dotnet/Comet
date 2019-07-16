@@ -1,10 +1,9 @@
-﻿using System;
-using HotUI;
-using Xamarin.Forms;
-using FWebView = Xamarin.Forms.WebView;
+﻿using FWebView = Xamarin.Forms.WebView;
 using HWebView = HotUI.WebView;
-using HView = HotUI.View;
-namespace HotUI.Forms
+
+// ReSharper disable MemberCanBePrivate.Global
+
+namespace HotUI.Forms.Handlers
 {
     public class WebViewHandler : AbstractHandler<HWebView, FWebView>
     {
@@ -19,6 +18,11 @@ namespace HotUI.Forms
         }
 
         protected override FWebView CreateView() => new FWebView();
+        
+        protected override void DisposeView(FWebView nativeView)
+        {
+            
+        }
 
         public static void MapSourceProperty(IViewHandler viewHandler, WebView virtualView)
         {

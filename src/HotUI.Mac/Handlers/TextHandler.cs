@@ -36,7 +36,12 @@ namespace HotUI.Mac.Handlers
 
             return textField;
         }
-        
+
+        protected override void DisposeView(NSTextField nativeView)
+        {
+            
+        }
+
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (NSTextField) viewHandler.NativeView;

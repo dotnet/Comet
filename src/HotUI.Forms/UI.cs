@@ -1,5 +1,6 @@
 ﻿using System;
 using HotUI;
+using HotUI.Forms.Handlers;
 
 namespace HotUI.Forms {
 	public static class UI {

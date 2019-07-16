@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Android.Graphics;
 using Android.Widget;
 using AView = Android.Views.View;
 
-namespace HotUI.Android
+namespace HotUI.Android.Handlers
 {
     public class VStackHandler : LinearLayout, AndroidViewHandler
     {

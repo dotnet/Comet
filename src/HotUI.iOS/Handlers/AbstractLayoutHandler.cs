@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using CoreGraphics;
 using HotUI.iOS.Controls;
 using HotUI.Layout;
 using UIKit;
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class AbstractLayoutHandler : UIView, iOSViewHandler, ILayoutHandler<UIView>
     {

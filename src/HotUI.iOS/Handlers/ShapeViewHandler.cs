@@ -1,8 +1,9 @@
-﻿using UIKit;
+﻿
+
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class ShapeViewHandler : AbstractHandler<ShapeView, HUIShapeView>
     {
@@ -17,12 +18,13 @@ namespace HotUI.iOS
 
         }
 
-        protected override HUIShapeView CreateView()
+        protected override HUIShapeView CreateView() => new HUIShapeView();
+
+        protected override void DisposeView(HUIShapeView nativeView)
         {
-            var shapeview = new HUIShapeView();
-            return shapeview;
+            
         }
-        
+
         public static void MapShapeProperty(IViewHandler viewHandler, ShapeView virtualView)
         {
             var nativeView = (HUIShapeView) viewHandler.NativeView;

@@ -2,6 +2,7 @@
 using System;
 using Foundation;
 using HotUI;
+using HotUI.iOS.Handlers;
 using HotUI.iOS.Services;
 using UIKit;
 

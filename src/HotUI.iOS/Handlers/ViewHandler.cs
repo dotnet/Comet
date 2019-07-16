@@ -5,9 +5,10 @@ using CoreGraphics;
 using HotUI.Graphics;
 using HotUI.iOS.Controls;
 using UIKit;
+
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class ViewHandler : iOSViewHandler
     {

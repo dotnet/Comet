@@ -1,9 +1,10 @@
 ﻿using System;
 using Android.Content;
 using AButton = Android.Widget.Button;
-using AView = Android.Views.View;
 
-namespace HotUI.Android
+// ReSharper disable MemberCanBePrivate.Global
+
+namespace HotUI.Android.Handlers
 {
     public class ButtonHandler : AbstractHandler<Button, AButton>
     {
@@ -23,21 +24,17 @@ namespace HotUI.Android
             return button;
         }
 
+        protected override void DisposeView(AButton nativeView)
+        {
+            nativeView.Click -= HandleClick;
+        }
+
         private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick();
 
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
         {
             var nativeView = (AButton)viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            if (TypedNativeView != null)
-                TypedNativeView.Click -= HandleClick;
-            base.Dispose(disposing);
         }
     }
 }

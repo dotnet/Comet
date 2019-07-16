@@ -5,7 +5,7 @@ using UIKit;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class SpacerHandler : UIView, iOSViewHandler
     {

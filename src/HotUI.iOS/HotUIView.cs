@@ -1,5 +1,6 @@
 ﻿using System;
 using CoreGraphics;
+using HotUI.iOS.Handlers;
 using UIKit;
 
 namespace HotUI.iOS

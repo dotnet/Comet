@@ -1,11 +1,9 @@
-﻿using System;
+﻿using Android.Views;
+using Android.Widget;
 using AView = Android.Views.View;
 using AListView = Android.Widget.ListView;
-using Java.Lang;
-using Android.Widget;
-using Android.Views;
 
-namespace HotUI.Android {
+namespace HotUI.Android.Handlers {
 	public class ListViewHandler : AListView, AndroidViewHandler {
 		public ListViewHandler () : base (AndroidContext.CurrentContext)
 		{

@@ -1,7 +1,4 @@
-﻿using System;
-using Xamarin.Forms;
-
-namespace HotUI.Forms
+﻿namespace HotUI.Forms.Handlers
 {
     public class ContentViewHandler : FormsViewHandler
     {

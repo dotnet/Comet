@@ -1,8 +1,6 @@
 
 
-using System;
-
-namespace HotUI.Forms
+namespace HotUI.Forms.Handlers
 {
     public abstract class AbstractFormsLayoutHandler : FormsViewHandler
     {

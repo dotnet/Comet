@@ -1,11 +1,10 @@
-﻿using System;
-using Android.Content;
+﻿using Android.Content;
 using AView = Android.Views.View;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Android
+namespace HotUI.Android.Handlers
 {
     public class ViewRepresentableHandler : AbstractHandler<ViewRepresentable, AView>
     {
@@ -23,7 +22,12 @@ namespace HotUI.Android
         {
             return VirtualView?.MakeView() as AView;
         }
-        
+
+        protected override void DisposeView(AView nativeView)
+        {
+            
+        }
+
         public static void MapDataProperty(IViewHandler viewHandler, ViewRepresentable virtualView)
         { 
             var data = virtualView.Data;

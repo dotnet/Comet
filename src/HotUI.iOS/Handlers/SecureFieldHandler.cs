@@ -1,9 +1,10 @@
 ﻿using System;
 using UIKit;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class SecureFieldHandler : AbstractHandler<SecureField, UITextField>
     {
@@ -32,7 +33,13 @@ namespace HotUI.iOS
             
             return textField;
         }
-        
+
+        protected override void DisposeView(UITextField nativeView)
+        {
+            nativeView.EditingDidEnd -= EntryHandler_EditingDidEnd;
+            nativeView.ShouldReturn = null;
+        }
+
         private void EntryHandler_EditingDidEnd(object sender, EventArgs e)
         {
             VirtualView?.OnCommit(TypedNativeView.Text);
@@ -50,17 +57,6 @@ namespace HotUI.iOS
             var nativeView = (UITextField) viewHandler.NativeView;
             nativeView.Placeholder = virtualView.Placeholder;
             nativeView.SizeToFit();
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            if(TypedNativeView != null)
-            {
-                TypedNativeView.EditingDidEnd -= EntryHandler_EditingDidEnd;
-                TypedNativeView.ShouldReturn = null;
-            }
-            base.Dispose(disposing);
         }
     }
 }

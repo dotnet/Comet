@@ -1,8 +1,7 @@
 ﻿using System;
-using Android.Views;
 using AView = global::Android.Views.View;
 
-namespace HotUI.Android 
+namespace HotUI.Android.Handlers 
 {
 	public class ContentViewHandler: AndroidViewHandler
 	{

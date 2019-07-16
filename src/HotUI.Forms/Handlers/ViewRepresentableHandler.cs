@@ -1,10 +1,9 @@
-﻿using System;
-using FView = Xamarin.Forms.View;
+﻿using FView = Xamarin.Forms.View;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Forms
+namespace HotUI.Forms.Handlers
 {
     public class ViewRepresentableHandler : AbstractHandler<ViewRepresentable, FView>
     {
@@ -21,6 +20,11 @@ namespace HotUI.Forms
         protected override FView CreateView()
         {
             return VirtualView?.MakeView() as FView;
+        }
+
+        protected override void DisposeView(FView nativeView)
+        {
+            
         }
 
         public static void MapDataProperty(IViewHandler viewHandler, ViewRepresentable virtualView)

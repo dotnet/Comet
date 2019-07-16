@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Specialized;
-using System.Linq;
 using FListView = Xamarin.Forms.ListView;
 using HListView = HotUI.ListView;
 using HView = HotUI.View;
-namespace HotUI.Forms
+namespace HotUI.Forms.Handlers
 {
     public class ListViewHandler : FListView, FormsViewHandler
     {

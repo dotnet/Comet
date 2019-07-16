@@ -1,7 +1,6 @@
-﻿using System;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 
-namespace HotUI.Forms
+namespace HotUI.Forms.Handlers
 {
     public class HStackHandler : AbstractFormsLayoutHandler, FormsViewHandler
     {

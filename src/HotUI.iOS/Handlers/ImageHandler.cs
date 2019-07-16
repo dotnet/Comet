@@ -1,9 +1,10 @@
 ﻿using CoreGraphics;
 using HotUI.iOS.Controls;
+
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class ImageHandler : AbstractHandler<Image, HUIImageView>
     {
@@ -20,6 +21,11 @@ namespace HotUI.iOS
         protected override HUIImageView CreateView()
         {
             return new HUIImageView(new CGRect(0, 0, 44, 44));
+        }
+
+        protected override void DisposeView(HUIImageView nativeView)
+        {
+            
         }
 
         public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)

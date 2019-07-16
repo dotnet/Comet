@@ -1,8 +1,9 @@
 ﻿using Android.Content;
 using HotUI.Android.Controls;
-using AView = Android.Views.View;
 
-namespace HotUI.Android
+// ReSharper disable MemberCanBePrivate.Global
+
+namespace HotUI.Android.Handlers
 {
     public class ImageHandler : AbstractHandler<Image, HUIImageView>
     {
@@ -18,6 +19,11 @@ namespace HotUI.Android
         protected override HUIImageView CreateView(Context context)
         {
             return new HUIImageView(context);
+        }
+
+        protected override void DisposeView(HUIImageView nativeView)
+        {
+            
         }
 
         public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)

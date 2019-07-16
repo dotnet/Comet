@@ -1,10 +1,9 @@
-﻿using System;
-using UIKit;
+﻿using UIKit;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class ViewRepresentableHandler : AbstractHandler<ViewRepresentable, UIView>
     {
@@ -22,7 +21,12 @@ namespace HotUI.iOS
         {
             return VirtualView?.MakeView() as UIView;
         }
-        
+
+        protected override void DisposeView(UIView nativeView)
+        {
+            
+        }
+
         public static void MapDataProperty(IViewHandler viewHandler, ViewRepresentable virtualView)
         { 
             var data = virtualView.Data;
