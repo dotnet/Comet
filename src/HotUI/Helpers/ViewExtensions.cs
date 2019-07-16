@@ -12,7 +12,7 @@ namespace HotUI {
 			return listview;
 		}
 
-		internal static List<FieldInfo> GetFieldsWithAttribute (this object obj, Type attribute)
+		public static List<FieldInfo> GetFieldsWithAttribute (this object obj, Type attribute)
 		{
 			var type = obj.GetType ();
 			var fields = type.GetFields (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
