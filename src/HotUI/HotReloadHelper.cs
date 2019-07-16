@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-
+using HotUI.Reflection;
 namespace HotUI {
 	public static class HotReloadHelper {
 		public static bool IsEnabled { get; set; } = Debugger.IsAttached;

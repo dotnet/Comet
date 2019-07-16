@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Runtime.CompilerServices;
+using HotUI.Reflection;
 
 namespace HotUI {
 
@@ -62,16 +63,6 @@ namespace HotUI {
 		internal object GetValue (string property)
 		{
 			return parent?.GetPropertyValue(property) ?? this.GetPropertyValue (property);
-			//var bindingParts = property.Split ('.');
-			//var dict = dictionary;
-			//for (var i = 0; i < bindingParts.Length - 1; i++) {
-			//	var part = bindingParts [i];
-			//	dict.TryGetValue (part, out var val);
-			//	var child = val as BindingObject;
-			//	dict = child.dictionary;
-			//}
-			//dict.TryGetValue (bindingParts.Last (), out var value);
-			//return value;
 		}
 	}
 }

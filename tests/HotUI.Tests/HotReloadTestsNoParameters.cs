@@ -1,4 +1,5 @@
 ﻿using System;
+using HotUI.Internal;
 using Xunit;
 
 namespace HotUI.Tests {

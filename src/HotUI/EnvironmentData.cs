@@ -52,7 +52,6 @@ namespace HotUI {
 	}
 
 	class EnvironmentData : BindingObject {
-
 		public View View { get; internal set; }
 
 		protected ICollection<string> GetAllKeys ()

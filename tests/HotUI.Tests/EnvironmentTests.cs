@@ -1,4 +1,5 @@
 ﻿using System;
+using HotUI.Internal;
 using Xunit;
 
 namespace HotUI.Tests {
@@ -30,7 +31,7 @@ namespace HotUI.Tests {
 		[Fact]
 		public void CanSetAndReadGlobalEnvironment()
 		{
-			View.Environment.dictionary.Clear ();
+            new View().ResetGlobalEnvironment();
 
 			const string myStringConstant = "myString";
 			const string myStringKey = "myString";

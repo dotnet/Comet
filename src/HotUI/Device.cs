@@ -4,10 +4,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using HotUI.Services;
 
-[assembly: InternalsVisibleTo ("HotUI.Tests")]
-[assembly: InternalsVisibleTo ("HotUI.Reload.Tests")]
-[assembly: InternalsVisibleTo ("HotUI.Reload.NetCore.Tests")]
-
 namespace HotUI{
 	public static class Device {
 
