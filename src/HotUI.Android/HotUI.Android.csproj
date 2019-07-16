@@ -76,6 +76,7 @@
     <Compile Include="Controls\HotUIFragment.cs" />
     <Compile Include="Controls\CustomFrameLayout.cs" />
     <Compile Include="Controls\NavigationViewWrapper.cs" />
+    <Compile Include="Controls\ModalManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

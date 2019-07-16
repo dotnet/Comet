@@ -11,7 +11,7 @@ namespace HotUI.Android
             HotUI.Android.UI.Init();
         }
 
-        /*public static Activity ToActivity(this HotPage hotPage)
+		/*public static Activity ToActivity(this HotPage hotPage)
         {
             if (hotPage == null)
                 return null;
@@ -26,8 +26,9 @@ namespace HotUI.Android
             var page = handler as IViewContainer;
             return page.Activity;
         }*/
+		public static HotUIFragment ToFragment(this View view) => new HotUIFragment(view);
 
-        public static AView ToView(this View view, bool allowNav = true)
+		public static AView ToView(this View view, bool allowNav = true)
         {
             if (view == null)
                 return null;

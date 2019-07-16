@@ -1,4 +1,5 @@
-﻿using HotUI.Android.Handlers;
+﻿using HotUI.Android.Controls;
+using HotUI.Android.Handlers;
 using HotUI.Android.Services;
 
 namespace HotUI.Android
@@ -28,6 +29,9 @@ namespace HotUI.Android
 
             Device.PerformInvokeOnMainThread = (a) => AndroidContext.CurrentContext.RunOnUiThread(a);
             Device.GraphicsService = new AndroidGraphicsService();
-		}
+            ModalView.PerformPresent = ModalManager.ShowModal;
+            ModalView.PerformDismiss = ModalManager.DismisModal;
+
+        }
     }
 }
