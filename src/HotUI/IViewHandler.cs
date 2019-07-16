@@ -2,7 +2,7 @@
 
 namespace HotUI 
 {
-	public interface IViewHandler : IDisposable
+	public interface IViewHandler //TODO: UnComment this: IDisposable
 	{
 		void SetView (View view);
 		void UpdateValue (string property, object value);

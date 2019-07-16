@@ -240,7 +240,8 @@ namespace HotUI
             HotReloadHelper.UnRegister(this);
             var viewHandler = ViewHandler;
             ViewHandler = null;
-            viewHandler?.Dispose();
+            //TODO: Ditch the cast
+            (viewHandler as IDisposable)?.Dispose();
             Body = null;
             Context.Clear();
             State?.DisposingObject(this);
