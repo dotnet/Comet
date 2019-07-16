@@ -108,7 +108,6 @@ namespace HotUI
                 SetEnvironmentFields();
             var oldView = builtView;
             builtView = null;
-            replacedView?.Dispose();
             replacedView = null;
             if (ViewHandler == null)
                 return;
