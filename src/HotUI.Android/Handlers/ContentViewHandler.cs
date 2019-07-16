@@ -1,18 +1,21 @@
 ﻿using System;
 using AView = global::Android.Views.View;
+using HotUI.Android.Controls;
+using LP = Android.Views.ViewGroup.LayoutParams;
 
 namespace HotUI.Android.Handlers 
 {
-	public class ContentViewHandler: AndroidViewHandler
+	public class ContentViewHandler: CustomFrameLayout, AndroidViewHandler
 	{
 		private AView _view;
 		private ContentView _contentView;
 
-		public ContentViewHandler ()
+		public ContentViewHandler () : base(AndroidContext.CurrentContext)
 		{
+
 		}
 
-		public AView View => _view;
+		public AView View => this;
 		
 		public object NativeView => View;
 
@@ -24,6 +27,8 @@ namespace HotUI.Android.Handlers
 		
 		public void Remove (View view)
 		{
+            if(!isDisposed)
+                this.RemoveAllViews();
 			_view = null;
 			_contentView = null;
 		}
@@ -32,48 +37,28 @@ namespace HotUI.Android.Handlers
 		{
 			_contentView = view as ContentView;
 			_view = _contentView?.Content?.ToView ();
-		}
+            AddView(_view, new LP(LP.MatchParent, LP.MatchParent));
+        }
 
 		public void UpdateValue (string property, object value)
 		{
 
 		}
 
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
+        bool isDisposed;
+        protected override void Dispose(bool disposing)
         {
-            if (!disposing)
-                return;
-            _view?.Dispose();
-            _view = null;
-            if (_contentView != null)
-                Remove(_contentView);
+            if(disposing)
+            {
+                if (_contentView != null)
+                {
+                    _contentView.ViewHandler = null;
+                }
+                _contentView = null;
+                _view?.Dispose();
+            }
+            isDisposed = true;
+            base.Dispose(disposing);
         }
-
-        void OnDispose(bool disposing)
-        {
-            if (disposedValue)
-                return;
-            disposedValue = true;
-            Dispose(disposing);
-        }
-
-        ~ContentViewHandler()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            OnDispose(false);
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            OnDispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

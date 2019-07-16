@@ -20,6 +20,10 @@ namespace HotUI.Android.Controls
             Bundle savedInstanceState) => currentBuiltView = view.ToView();
         public override void OnDestroy()
         {
+            if(view  != null)
+            {
+                view.ViewHandler = null;
+            }
             if (currentBuiltView != null)
             {
                 currentBuiltView?.Dispose();
