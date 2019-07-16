@@ -1,4 +1,5 @@
 using System;
+using System.Linq.Expressions;
 
 namespace HotUI
 {
@@ -14,15 +15,21 @@ namespace HotUI
         public Action<T> Set { get; }
         
         public bool IsValue { get; private set; }
-        public bool IsFunc { get; private set; }
-
-        public static implicit operator Binding<T>(T value) => new Binding<T>(
-            getValue:() => value,
-            setValue: null) { IsValue = true };
+        public bool IsFunc { get; internal set; }
         
-        public static implicit operator Binding<T>(Func<T> value) => new Binding<T>(
-            getValue: value,
-            setValue: null) { IsFunc = true };
+        public static implicit operator Binding<T>(T value)
+        {
+            return new Binding<T>(
+                getValue: () => value,
+                setValue: null) {IsValue = true};
+        }
+
+        public static implicit operator Binding<T>(Func<T> value)
+        {
+            return new Binding<T>(
+                getValue: value,
+                setValue: null) {IsFunc = true};
+        }
     }
 
     public static class BindingExtensions
@@ -33,6 +40,27 @@ namespace HotUI
                 return defaultValue;
 
             return binding.Get.Invoke();
+        }
+        
+        public static Binding<T> BindingFor<TBindingObject, T>(this TBindingObject binding, Expression<Func<TBindingObject, T>> expression) where TBindingObject:BindingObject
+        {
+            if (expression.Body is MemberExpression member)
+            {
+                var memberName = member.Member.Name;
+                var getValue = expression.Compile();
+
+                return new Binding<T>(
+                    getValue: () => getValue.Invoke(binding),
+                    setValue: value => binding.SetPropertyInternal(value, memberName));
+            }
+            else
+            {
+                var getValue = expression.Compile();
+
+                return new Binding<T>(
+                    getValue: () => getValue.Invoke(binding),
+                    setValue: null) { IsFunc = true };
+            }
         }
     }
 }

@@ -58,6 +58,16 @@ namespace HotUI
 
             return true;
         }
+        
+        internal bool SetPropertyInternal(object value, [CallerMemberName] string propertyName = "")
+        {
+            dictionary[propertyName] = value;
+
+            OnPropertyChanged?.Invoke((this, propertyName, value));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+
+            return true;
+        }
 
         internal Action<(object Sender, string PropertyName, object Value)> OnPropertyChanged { get; set; }
     }
