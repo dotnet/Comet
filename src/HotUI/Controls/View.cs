@@ -117,6 +117,13 @@ namespace HotUI
             ViewHandler?.SetView(view);
         }
 
+        FrameConstraints frameConstraints;
+        public FrameConstraints FrameConstraints
+        {
+            get => frameConstraints;
+            internal set => this.SetValue(State, ref frameConstraints, value, (s, o) => ResetView());
+        }
+        
         Func<View> body;
         public Func<View> Body
         {

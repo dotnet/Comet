@@ -40,8 +40,7 @@ namespace HotUI
         /// Returns true if the value changed
         /// </summary>
         /// <typeparam name="T"></typeparam>
-        /// <param name="currentValue"></param>
-        /// <param name="newValue"></param>
+        /// <param name="value"></param>
         /// <param name="propertyName"></param>
         /// <returns></returns>
         protected bool SetProperty<T>(T value, [CallerMemberName] string propertyName = "")
