@@ -104,10 +104,15 @@ namespace HotUI.Graphics
             float x3, float y3)
         {
             var tValues = new List<float>();
+
+            float t;
             
-            float a, b, c, t, t1, t2, b2ac, sqrtb2ac;
             for (var i = 0; i < 2; ++i)
             {
+                float b;
+                float c;
+                float a;
+                
                 if (i == 0)
                 {
                     b = 6 * x0 - 12 * x1 + 6 * x2;
@@ -121,9 +126,9 @@ namespace HotUI.Graphics
                     c = 3 * y1 - 3 * y0;
                 }
 
-                if (Math.Abs(a) < Epsilon) // Numerical robustness
+                if (Math.Abs(a) < Epsilon)
                 {
-                    if (Math.Abs(b) < Epsilon) // Numerical robustness
+                    if (Math.Abs(b) < Epsilon) 
                     {
                         continue;
                     }
@@ -137,20 +142,20 @@ namespace HotUI.Graphics
                     continue;
                 }
 
-                b2ac = b * b - 4 * c * a;
-                sqrtb2ac = (float) Math.Sqrt(b2ac);
+                var b2ac = b * b - 4 * c * a;
+                var sqrtb2ac = (float) Math.Sqrt(b2ac);
                 if (b2ac < 0)
                 {
                     continue;
                 }
 
-                t1 = (-b + sqrtb2ac) / (2 * a);
+                var t1 = (-b + sqrtb2ac) / (2 * a);
                 if (0 < t1 && t1 < 1)
                 {
                     tValues.Add(t1);
                 }
 
-                t2 = (-b - sqrtb2ac) / (2 * a);
+                var t2 = (-b - sqrtb2ac) / (2 * a);
                 if (0 < t2 && t2 < 1)
                 {
                     tValues.Add(t2);
@@ -160,7 +165,7 @@ namespace HotUI.Graphics
             var xValues = new List<float>();
             var yValues = new List<float>();
 
-            for (var j = tValues.Count; j >= 0; j--)
+            for (var j = tValues.Count-1; j >= 0; j--)
             {
                 t = tValues[j];
                 var mt = 1 - t;
@@ -169,8 +174,6 @@ namespace HotUI.Graphics
 
                 xValues.Add(x);
                 yValues.Add(y);
-
-                j--;
             }
 
             xValues.Add(x0);

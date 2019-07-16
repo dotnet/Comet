@@ -18,12 +18,18 @@ namespace HotUI.Graphics
         private RectangleF? _cachedBounds;
         private object _nativePath;
 
-        public PathF(PathF prototype) : this()
+        public PathF(PathF prototype, AffineTransformF transform = null) : this()
         {
             _operations.AddRange(prototype._operations);
             foreach (var point in prototype.Points)
-                _points.Add(point);
+            {
+                var newPoint = point;
+                
+                if (transform != null)
+                    newPoint = transform.Transform(point);
 
+                _points.Add(newPoint);
+            }
             if (prototype._arcAngles != null)
             {
                 _arcAngles = new List<float>();
@@ -144,8 +150,8 @@ namespace HotUI.Graphics
                     var bounds = GraphicsOperations.GetBoundsOfQuadraticCurve(startPoint, controlPoint, endPoint);
                     
                     xValues.Add(bounds.Left);
-                    xValues.Add(bounds.Top);
-                    yValues.Add(bounds.Right);
+                    xValues.Add(bounds.Right);
+                    yValues.Add(bounds.Top);
                     yValues.Add(bounds.Bottom);
                 }
                 else if (operation == PathOperation.Cubic)
@@ -158,8 +164,8 @@ namespace HotUI.Graphics
                     var bounds = GraphicsOperations.GetBoundsOfCubicCurve(startPoint, controlPoint1, controlPoint2, endPoint);
                     
                     xValues.Add(bounds.Left);
-                    xValues.Add(bounds.Top);
-                    yValues.Add(bounds.Right);
+                    xValues.Add(bounds.Right);
+                    yValues.Add(bounds.Top);
                     yValues.Add(bounds.Bottom);
                 }
                 else if (operation == PathOperation.Arc)
@@ -173,8 +179,8 @@ namespace HotUI.Graphics
                     var bounds = GraphicsOperations.GetBoundsOfArc(topLeft.X, topLeft.Y, bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y, startAngle, endAngle, clockwise);
                     
                     xValues.Add(bounds.Left);
-                    xValues.Add(bounds.Top);
-                    yValues.Add(bounds.Right);
+                    xValues.Add(bounds.Right);
+                    yValues.Add(bounds.Top);
                     yValues.Add(bounds.Bottom);
                 }
             }
@@ -505,6 +511,11 @@ namespace HotUI.Graphics
                 disposable.Dispose();
 
             _nativePath = null;
+        }
+
+        public PathF Transform(AffineTransformF transform)
+        {
+            return new PathF(this, transform);
         }
     }
 }
