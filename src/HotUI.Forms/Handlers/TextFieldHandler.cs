@@ -3,60 +3,68 @@ using HotUI;
 using Xamarin.Forms;
 using FEntry = Xamarin.Forms.Entry;
 using HView = HotUI.View;
-namespace HotUI.Forms 
+namespace HotUI.Forms
 {
-	public class TextFieldHandler : FEntry, FormsViewHandler 
-	{
-		TextField _textField;
+    public class TextFieldHandler : AbstractHandler<TextField, FEntry>
+    {
+        public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
+        {
+            [nameof(TextField.Text)] = MapTextProperty
+        };
 
-		public TextFieldHandler ()
-		{
-			Focused += HandleFocused;
-			TextChanged += HandleTextChanged;
-			Unfocused += HandleUnfocused;
-			Completed += HandleCompleted;
-		}
-		
-		public Xamarin.Forms.View View => this;
-		public object NativeView => View;
-		public bool HasContainer { get; set; } = false;
+        public TextFieldHandler() : base(Mapper)
+        {
+        }
+        public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
+        {
+            var nativeView = (FEntry)viewHandler.NativeView;
+            nativeView.Text = virtualView.Text;
+        }
 
-		public void Remove (HView view)
-		{
-			
-		}
+        private void HandleCompleted(object sender, EventArgs e)
+        {
+            VirtualView?.OnCommit?.Invoke(TypedNativeView.Text);
+        }
 
-		public void SetView (HView view)
-		{
-			_textField = view as TextField;
-			if (_textField == null)
-				return;
-			this.UpdateProperties (_textField);
-		}
+        private void HandleUnfocused(object sender, FocusEventArgs e)
+        {
+            VirtualView?.Unfocused?.Invoke(VirtualView);
+        }
 
-		public void UpdateValue (string property, object value)
-		{
-			this.UpdateProperty (property, value);
-		}
-		
-		private void HandleCompleted(object sender, EventArgs e)
-		{
-			_textField?.OnCommit?.Invoke(Text);
-		}
+        private void HandleTextChanged(object sender, TextChangedEventArgs e)
+        {
+            VirtualView?.OnEditingChanged?.Invoke(e.NewTextValue);
+        }
 
-		private void HandleUnfocused(object sender, FocusEventArgs e)
-		{
-			_textField?.Unfocused?.Invoke(_textField);
-		}
+        private void HandleFocused(object sender, FocusEventArgs e)
+        {
+            VirtualView?.Focused?.Invoke(VirtualView);
+        }
 
-		private void HandleTextChanged(object sender, TextChangedEventArgs e)
-		{
-				_textField?.OnEditingChanged?.Invoke(e.NewTextValue);
-		}
+        protected override FEntry CreateView()
+        {
+            var entry = new FEntry();
+            entry.Focused += HandleFocused;
+            entry.TextChanged += HandleTextChanged;
+            entry.Unfocused += HandleUnfocused;
+            entry.Completed += HandleCompleted;
+            return entry;
+        }
 
-		private void HandleFocused(object sender, FocusEventArgs e)
-		{
-			_textField?.Focused?.Invoke(_textField);
-		}
-	}
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+            var entry = TypedNativeView;
+            if (entry != null)
+            {
+                entry.Focused -= HandleFocused;
+                entry.TextChanged -= HandleTextChanged;
+                entry.Unfocused -= HandleUnfocused;
+                entry.Completed -= HandleCompleted;
+            }
+            base.Dispose(disposing);
+        }
+
+    }
 }

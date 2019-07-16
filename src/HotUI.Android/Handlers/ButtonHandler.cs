@@ -11,11 +11,11 @@ namespace HotUI.Android
         {
             [nameof(Button.Text)] = MapTextProperty
         };
-        
+
         public ButtonHandler() : base(Mapper)
         {
         }
-        
+
         protected override AButton CreateView(Context context)
         {
             var button = new AButton(context);
@@ -24,10 +24,10 @@ namespace HotUI.Android
         }
 
         private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick();
-        
+
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
         {
-            var nativeView = (AButton) viewHandler.NativeView;
+            var nativeView = (AButton)viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
         }
 

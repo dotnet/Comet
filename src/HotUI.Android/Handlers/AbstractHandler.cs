@@ -5,15 +5,15 @@ using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public abstract class AbstractHandler<TVirtualView, TNativeView> : AndroidViewHandler 
-        where TVirtualView : View 
-        where TNativeView: AView
+    public abstract class AbstractHandler<TVirtualView, TNativeView> : AndroidViewHandler
+        where TVirtualView : View
+        where TNativeView : AView
     {
         private readonly PropertyMapper<TVirtualView> _mapper;
         private TVirtualView _virtualView;
         private TNativeView _nativeView;
         private HUIContainerView _containerView;
-        
+
         public EventHandler ViewChanged { get; set; }
 
         protected AbstractHandler(PropertyMapper<TVirtualView> mapper)
@@ -22,17 +22,17 @@ namespace HotUI.Android
         }
 
         protected abstract TNativeView CreateView(Context context);
-        
+
         public AView View => (AView)_containerView ?? _nativeView;
 
         public HUIContainerView ContainerView => _containerView;
-        
+
         public object NativeView => _nativeView;
-        
+
         public TNativeView TypedNativeView => _nativeView;
 
         protected TVirtualView VirtualView => _virtualView;
-        
+
         public bool HasContainer
         {
             get => _containerView != null;
@@ -40,7 +40,7 @@ namespace HotUI.Android
             {
                 if (!value && _containerView != null)
                 {
-                    _containerView.MainView = null;;
+                    _containerView.MainView = null; ;
                     _containerView = null;
 
                     ViewChanged?.Invoke(this, EventArgs.Empty);
@@ -55,7 +55,7 @@ namespace HotUI.Android
                 }
             }
         }
-        
+
         public virtual void Remove(View view)
         {
             _virtualView = null;
@@ -67,7 +67,7 @@ namespace HotUI.Android
                 _containerView = null;
             }
         }
-        
+
         public virtual void SetView(View view)
         {
             _virtualView = view as TVirtualView;

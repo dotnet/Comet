@@ -4,33 +4,29 @@ using Xamarin.Forms;
 using FButton = Xamarin.Forms.Button;
 using HButton = HotUI.Button;
 using HView = HotUI.View;
-namespace HotUI.Forms {
-	public class ButtonHandler : FButton, FormsViewHandler {
+namespace HotUI.Forms
+{
+    public class ButtonHandler : AbstractHandler<HButton, FButton>
+    {
+        public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
+        {
+            [nameof(Button.Text)] = MapTextProperty
+        };
 
-		HButton button;
-		public Xamarin.Forms.View View => this;
-		public object NativeView => View;
-		public bool HasContainer { get; set; } = false;
+        public ButtonHandler() : base(Mapper)
+        {
+        }
+        public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
+        {
+            var nativeView = (FButton)viewHandler.NativeView;
+            nativeView.Text = virtualView.Text;
+        }
 
-		public void Remove (HView view)
-		{
-			button = null;
-			Command = null;
-		}
-
-		public void SetView (HView view)
-		{
-			button = view as HButton;
-			//Maybe we should throw an exception?
-			if (button == null)
-				return;
-			Command = new Command ((s) => button.OnClick?.Invoke ());
-			this.UpdateProperties (button);
-		}
-
-		public void UpdateValue (string property, object value)
-		{
-			this.UpdateProperty (property, value);
-		}
-	}
+        protected override FButton CreateView()
+        {
+            var button = new FButton();
+            button.Command = new Command((s) => VirtualView?.OnClick?.Invoke());
+            return button;
+        }
+    }
 }

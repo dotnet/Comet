@@ -6,7 +6,7 @@ using HView = HotUI.View;
 
 namespace HotUI.Forms
 {
-	public class ViewHandler : FView, FormsViewHandler
+    public class ViewHandler : FView, FormsViewHandler
     {
         public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
@@ -51,5 +51,36 @@ namespace HotUI.Forms
 
             View = formsView?.View ?? new Xamarin.Forms.ContentView();
         }
+
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+            View = null;
+            if (_view != null)
+                Remove(_view);
+
+        }
+
+
+        void OnDispose(bool disposing)
+        {
+            if (disposedValue)
+                return;
+            disposedValue = true;
+            Dispose(disposing);
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(true);
+        }
+        #endregion
     }
 }

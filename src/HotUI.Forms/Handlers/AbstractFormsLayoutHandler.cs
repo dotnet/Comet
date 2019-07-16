@@ -1,5 +1,7 @@
 
 
+using System;
+
 namespace HotUI.Forms
 {
     public abstract class AbstractFormsLayoutHandler : FormsViewHandler
@@ -29,7 +31,7 @@ namespace HotUI.Forms
 
                 foreach (var subView in _view)
                 {
-                    var nativeView = subView.ToForms() ?? new Xamarin.Forms.ContentView ();
+                    var nativeView = subView.ToForms() ?? new Xamarin.Forms.ContentView();
                     _formsLayout.Children.Add(nativeView);
                 }
             }
@@ -84,5 +86,33 @@ namespace HotUI.Forms
                 _formsLayout.Children.Insert(index, newNativeView);
             }
         }
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+            if (_view != null)
+                Remove(_view);
+
+        }
+        void OnDispose(bool disposing)
+        {
+            if (disposedValue)
+                return;
+            disposedValue = true;
+            Dispose(disposing);
+        }
+
+        
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(true);
+        }
+        #endregion
     }
 }

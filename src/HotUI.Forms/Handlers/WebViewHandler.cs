@@ -4,34 +4,32 @@ using Xamarin.Forms;
 using FWebView = Xamarin.Forms.WebView;
 using HWebView = HotUI.WebView;
 using HView = HotUI.View;
-namespace HotUI.Forms {
-	public class WebViewHandler : FWebView, FormsViewHandler {
-		public WebViewHandler ()
-		{
-		}
+namespace HotUI.Forms
+{
+    public class WebViewHandler : AbstractHandler<HWebView, FWebView>
+    {
+        public static readonly PropertyMapper<HWebView> Mapper = new PropertyMapper<HWebView>(ViewHandler.Mapper)
+        {
+            [nameof(WebView.Source)] = MapSourceProperty,
+            [nameof(WebView.Html)] = MapHtmlProperty
+        };
 
-		public Xamarin.Forms.View View => this;
-		public object NativeView => View;
-		public bool HasContainer { get; set; } = false;
+        public WebViewHandler() : base(Mapper)
+        {
+        }
 
-		public void Remove (HView view)
-		{
+        protected override FWebView CreateView() => new FWebView();
 
-		}
+        public static void MapSourceProperty(IViewHandler viewHandler, WebView virtualView)
+        {
+            var webView = viewHandler.NativeView as FWebView;
+            webView.Source = virtualView.Source?.ToWebViewSource();
+        }
+        public static void MapHtmlProperty(IViewHandler viewHandler, WebView virtualView)
+        {
+            var webView = viewHandler.NativeView as FWebView;
+            webView.Source = virtualView.Html == null ? null : new Xamarin.Forms.HtmlWebViewSource { Html = virtualView.Html };
+        }
 
-		public void SetView (HView view)
-		{
-			var webView = view as HWebView;
-			if (webView == null) {
-				return;
-			}
-			this.UpdateProperties (webView);
-			throw new NotImplementedException ();
-		}
-
-		public void UpdateValue (string property, object value)
-		{
-			this.UpdateBaseProperty (property, value);
-		}
-	}
+    }
 }

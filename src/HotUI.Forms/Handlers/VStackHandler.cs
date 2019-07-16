@@ -2,11 +2,11 @@
 
 namespace HotUI.Forms
 {
-	public class VStackHandler : AbstractFormsLayoutHandler, FormsViewHandler
+    public class VStackHandler : AbstractFormsLayoutHandler, FormsViewHandler
     {
-        public VStackHandler() : base(new Xamarin.Forms.StackLayout() { Orientation = StackOrientation.Vertical})
+        public VStackHandler() : base(new Xamarin.Forms.StackLayout() { Orientation = StackOrientation.Vertical })
         {
 
         }
-	}
+    }
 }

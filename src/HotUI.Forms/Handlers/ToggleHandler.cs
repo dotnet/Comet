@@ -1,50 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using Xamarin.Forms;
 using FToggle = Xamarin.Forms.Switch;
 using FView = Xamarin.Forms.View;
 
 namespace HotUI.Forms
 {
-    public class ToggleHandler : FToggle, FormsViewHandler
+    public class ToggleHandler : AbstractHandler<Toggle, FToggle>
     {
-		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> ()
-		{ 
+        public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle>()
+        {
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };
 
-        public ToggleHandler()
+        public ToggleHandler() : base(Mapper)
         {
-            this.Toggled += HandleToggled;
         }
 
-        void HandleToggled(object sender, EventArgs e) => toggle?.IsOnChanged?.Invoke(IsToggled);
-
-        public FView View => this;
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
-
-        Toggle toggle;
-
-        public void Remove(View view)
+        protected override FToggle CreateView()
         {
-            toggle = null;
+            var toggle = new FToggle();
+            toggle.Toggled += HandleToggled;
+            return toggle;
         }
 
-        public void SetView(View view)
-        {
-            toggle = view as Toggle;
-            Mapper.UpdateProperties(this, toggle);
-        }
+        void HandleToggled(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.IsToggled);
 
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperty(this, toggle, property);
-        }
 
         public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
-            var nativeView = (ToggleHandler) viewHandler.NativeView;
+            var nativeView = (FToggle)viewHandler.NativeView;
             nativeView.IsToggled = virtualView.IsOn;
+        }
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                return;
+            if(TypedNativeView != null)
+                TypedNativeView.Toggled += HandleToggled;
+            base.Dispose(disposing);
         }
     }
 }

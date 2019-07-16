@@ -4,27 +4,37 @@ using Xamarin.Forms;
 using FLabel = Xamarin.Forms.Label;
 using HView = HotUI.View;
 
-namespace HotUI.Forms {
-	public class TextHandler : FLabel, FormsViewHandler {
-		public Xamarin.Forms.View View => this;
-		public object NativeView => View;
-		public bool HasContainer { get; set; } = false;
+namespace HotUI.Forms
+{
+    public class TextHandler : AbstractHandler<Text, FLabel>
+    {
+        public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
+        {
+            [nameof(HotUI.Text.Value)] = MapValueProperty,
+            [EnvironmentKeys.Fonts.Font] = MapFontProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
+        };
 
-		public void Remove (HView view)
-		{
-		}
-		public void SetView (HView view)
-		{
-			var label = view as Text;
-			if (label == null) {
-				return;
-			}
-			this.UpdateProperties (label);
-		}
+        public TextHandler() : base(Mapper)
+        {
 
-		public void UpdateValue (string property, object value)
-		{
-			this.UpdateProperty (property, value);
-		}
-	}
+        }
+
+        protected override FLabel CreateView() => new FLabel();
+
+
+        public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
+        {
+            var nativeView = (FLabel)viewHandler.NativeView;
+            nativeView.Text = virtualView.Value;
+        }
+
+        public static void MapFontProperty(IViewHandler viewHandler, Text virtualView)
+        {
+        }
+
+        public static void MapColorProperty(IViewHandler viewHandler, Text virtualView)
+        {
+        }
+    }
 }

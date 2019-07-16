@@ -3,28 +3,26 @@ using Xamarin.Forms;
 using FImage = Xamarin.Forms.Image;
 using HImage = HotUI.Image;
 using HView = HotUI.View;
-namespace HotUI.Forms {
-	public class ImageHandler : FImage, FormsViewHandler {
-		public Xamarin.Forms.View View => this;
-		public object NativeView => View;
-		public bool HasContainer { get; set; } = false;
+namespace HotUI.Forms
+{
+    public class ImageHandler : AbstractHandler<HImage, FImage>
+    {
+        public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>(ViewHandler.Mapper)
+        {
+            [nameof(Image.Source)] = MapSourceProperty
+        };
 
-		public void Remove (HView view)
-		{
-
-		}
-
-		public void SetView (HView view)
-		{
-			var image = view as HImage;
-			if (image == null)
-				return;
-			this.UpdateProperties (image);
-		}
-
-		public void UpdateValue (string property, object value)
-		{
-			this.UpdateBaseProperty (property, value);
-		}
-	}
+        public ImageHandler() : base(Mapper)
+        {
+        }
+        protected override FImage CreateView()
+        {
+            throw new System.NotImplementedException();
+        }
+        public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)
+        {
+            var nativeView = (FImage)viewHandler.NativeView;
+            nativeView.Source = virtualView.Source?.ToImageSource();
+        }
+    }
 }

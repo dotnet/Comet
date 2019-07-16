@@ -12,7 +12,7 @@ namespace HotUI.Forms
         {
             [nameof(ViewRepresentable.Data)] = MapDataProperty
         };
-        
+
         public ViewRepresentableHandler() : base(Mapper)
         {
 
@@ -22,9 +22,9 @@ namespace HotUI.Forms
         {
             return VirtualView?.MakeView() as FView;
         }
-        
+
         public static void MapDataProperty(IViewHandler viewHandler, ViewRepresentable virtualView)
-        { 
+        {
             var data = virtualView.Data;
             virtualView.UpdateView?.Invoke(viewHandler.NativeView, data);
         }
