@@ -120,6 +120,9 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\HUIContainerView.cs" />
+    <Compile Include="GraphicsExtensions.cs" />
+    <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />
     <Compile Include="HotUIPage.xaml.cs">
       <DependentUpon>HotUIPage.xaml</DependentUpon>
@@ -138,7 +141,7 @@
     <Compile Include="Handlers\ViewHandler.cs" />
     <Compile Include="Handlers\VStackHandler.cs" />
     <Compile Include="HotUIContainerView.cs" />
-    <Compile Include="IUIElement.cs" />
+    <Compile Include="UWPViewHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="UWPExtensions.cs" />

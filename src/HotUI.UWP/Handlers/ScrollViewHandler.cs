@@ -6,7 +6,7 @@ using UWPScrollView = Windows.UI.Xaml.Controls.ScrollViewer;
 
 namespace HotUI.UWP.Handlers
 {
-    public class ScrollViewHandler : IUIElement
+    public class ScrollViewHandler : UWPViewHandler
     {
         public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>()
             {

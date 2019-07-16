@@ -1,53 +1,33 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 using System.Windows.Controls;
 
-
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
-    public class ToggleHandler :  WPFViewHandler
+    public class ToggleHandler :  AbstractHandler<Toggle, CheckBox>
     {
 		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> ()
 		{ 
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };
 
-        private CheckBox _nativeCheckbox;
-        private Toggle _virtualToggle;
-
-        public ToggleHandler()
+        public ToggleHandler() : base(Mapper)
         {
-            _nativeCheckbox = new CheckBox();
-            _nativeCheckbox.Checked += HandleChecked;
+
+        }
+        
+        protected override CheckBox CreateView()
+        {
+            var checkbox = new CheckBox();
+            checkbox.Checked += HandleChecked;
+            return checkbox;
         }
 
-        private void HandleChecked(object sender, RoutedEventArgs e) => _virtualToggle?.IsOnChanged?.Invoke(_nativeCheckbox.IsChecked ?? false);
-
-        public UIElement View => _nativeCheckbox;
-
-        public object NativeView => View;
-
-        public bool HasContainer
+        protected override void DisposeView(CheckBox checkbox)
         {
-            get => false;
-            set { }
+            checkbox.Checked -= HandleChecked;
         }
 
-        public void Remove(View view)
-        {
-            _virtualToggle = null;
-        }
-
-        public void SetView(View view)
-        {
-            _virtualToggle = view as Toggle;
-            Mapper.UpdateProperties(this, _virtualToggle);
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperty(this, _virtualToggle, property);
-        }
+        private void HandleChecked(object sender, RoutedEventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.IsChecked ?? false);
 
         public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {

@@ -1,46 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Windows;
+using System.Windows.Controls;
 using WPFTextField = System.Windows.Controls.TextBox;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.WPF.Handlers
 {
-    public class TextFieldHandler : WPFTextField, WPFViewHandler
+    public class TextFieldHandler : AbstractHandler<TextField, WPFTextField>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>()
         {
             [nameof(TextField.Text)] = MapTextProperty
         };
         
-        private TextField _textField;
-        
-        public UIElement View => this;
-
-        public object NativeView => View;
-
-        public bool HasContainer
-        {
-            get => false;
-            set { }
-        }
-        public void Remove(View view)
+        public TextFieldHandler() : base(Mapper)
         {
         }
 
-        public void SetView(View view)
+        protected override WPFTextField CreateView()
         {
-            _textField = view as TextField;
-            /*RenderSize = new Size(100, 24);
-            Width = RenderSize.Width;
-            Height = RenderSize.Height;*/
-            Mapper.UpdateProperties(this, _textField);
+            var textField = new WPFTextField();
+            textField.TextChanged += HandleTextChanged;
+            return textField;
         }
 
-        public void UpdateValue(string property, object value)
+        protected override void DisposeView(WPFTextField textField)
         {
-            Mapper.UpdateProperty(this, _textField, property);
+            textField.TextChanged -= HandleTextChanged;
+        }
+
+        private void HandleTextChanged(object sender, TextChangedEventArgs e)
+        {
+            VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.Text);
+            VirtualView?.OnCommit?.Invoke(TypedNativeView.Text);
         }
         
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)

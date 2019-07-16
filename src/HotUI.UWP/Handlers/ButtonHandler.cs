@@ -7,48 +7,30 @@ using UWPButton = Windows.UI.Xaml.Controls.Button;
 
 namespace HotUI.UWP.Handlers
 {
-    public class ButtonHandler : UWPButton, IUIElement
+    public class ButtonHandler : AbstractHandler<Button,UWPButton>
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>()
         {
             [nameof(Button.Text)] = MapTextProperty
         };
-        
-        private Button _button;
 
-        public ButtonHandler()
+        public ButtonHandler() : base(Mapper)
         {
-            Click += HandleClick;
-        }
-        
-
-        public UIElement View => this;
-
-        public object NativeView => View;
-
-        public bool HasContainer
-        {
-            get => false;
-            set { }
         }
 
-        public void Remove(View view)
+        protected override UWPButton CreateView()
         {
-            _button = null;
+            var button = new UWPButton();
+            button.Click += HandleClick;
+            return button;
         }
 
-        public void SetView(View view)
+        protected override void DisposeView(UWPButton nativeView)
         {
-            _button = view as Button;
-            Mapper.UpdateProperties(this, _button);
+            nativeView.Click -= HandleClick;
         }
 
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperty(this, _button, property);
-        }
-
-        private void HandleClick(object sender, RoutedEventArgs e) => _button?.OnClick();
+        private void HandleClick(object sender, RoutedEventArgs e) => VirtualView?.OnClick();
 
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
         {

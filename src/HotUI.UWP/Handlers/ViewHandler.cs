@@ -7,7 +7,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace HotUI.UWP.Handlers
 {
-    public class ViewHandler : IUIElement
+    public class ViewHandler : UWPViewHandler
     {
         public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {

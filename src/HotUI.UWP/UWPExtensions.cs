@@ -11,7 +11,7 @@ namespace HotUI.UWP
             UI.Init();
         }
 
-        public static IUIElement ToIUIElement(this View view)
+        public static UWPViewHandler ToIUIElement(this View view)
         {
             if (view == null)
                 return null;
@@ -22,7 +22,7 @@ namespace HotUI.UWP
                 view.ViewHandler = handler;
             }
 
-            var iUIElement = handler as IUIElement;
+            var iUIElement = handler as UWPViewHandler;
             return iUIElement;
         }
 
