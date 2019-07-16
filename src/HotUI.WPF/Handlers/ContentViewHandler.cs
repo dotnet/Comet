@@ -1,7 +1,6 @@
-﻿using System;
-using System.Windows;
+﻿using System.Windows;
 
-namespace HotUI.WPF
+namespace HotUI.WPF.Handlers
 {
 	public class ContentViewHandler : WPFViewHandler
     {

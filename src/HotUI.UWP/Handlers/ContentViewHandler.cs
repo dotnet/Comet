@@ -1,9 +1,8 @@
-﻿using System;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 
-namespace HotUI.UWP
+namespace HotUI.UWP.Handlers
 {
-	public class ContentViewHandler : IUIElement
+	public class ContentViewHandler : UWPViewHandler
     {
         UIElement _view;
 

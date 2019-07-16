@@ -6,51 +6,31 @@ using WPFButton = System.Windows.Controls.Button;
 
 namespace HotUI.WPF.Handlers
 {
-    public class ButtonHandler : WPFButton, WPFViewHandler
+    public class ButtonHandler : AbstractHandler<Button, WPFButton>
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>()
         {
             [nameof(Button.Text)] = MapTextProperty
         };
         
-        private Button _button;
 
-        public ButtonHandler()
+        public ButtonHandler() : base(Mapper)
         {
-            Click += HandleClick;
-        }
-        
-
-        public UIElement View => this;
-
-        public object NativeView => View;
-
-        public bool HasContainer
-        {
-            get => false;
-            set { }
         }
 
-        public void Remove(View view)
+        protected override WPFButton CreateView()
         {
-            _button = null;
+            var button = new WPFButton();
+            button.Click += HandleClick;
+            return button;
         }
 
-        public void SetView(View view)
+        protected override void DisposeView(WPFButton button)
         {
-            _button = view as Button;
-            /*RenderSize = new Size(100, 24);
-            Width = RenderSize.Width;
-            Height = RenderSize.Height;*/
-            Mapper.UpdateProperties(this, _button);
+            button.Click -= HandleClick;
         }
 
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperty(this, _button, property);
-        }
-
-        private void HandleClick(object sender, EventArgs e) => _button?.OnClick();
+        private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick();
 
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
         {

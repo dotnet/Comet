@@ -2,7 +2,7 @@
 
 namespace HotUI.UWP
 {
-    public interface IUIElement : IViewHandler
+    public interface UWPViewHandler : IViewHandler
     {
         UIElement View { get; }
     }

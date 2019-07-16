@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace HotUI.UWP.Handlers
 {
-    public abstract class AbstractStackLayoutHandler : StackPanel, IUIElement
+    public abstract class AbstractStackLayoutHandler : StackPanel, UWPViewHandler
     {
         private AbstractLayout _view;
 

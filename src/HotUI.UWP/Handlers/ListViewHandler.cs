@@ -7,7 +7,7 @@ using UWPListView = Windows.UI.Xaml.Controls.ListView;
 
 namespace HotUI.UWP.Handlers
 {
-    public class ListViewHandler : UWPListView, IUIElement
+    public class ListViewHandler : UWPListView, UWPViewHandler
     {
         public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>()
         {

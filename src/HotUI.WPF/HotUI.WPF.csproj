@@ -46,7 +46,10 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controls\HUIContainerView.cs" />
     <Compile Include="DrawingExtensions.cs" />
+    <Compile Include="GraphicsExtensions.cs" />
+    <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\AbstractStackLayoutHandler.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="Handlers\ButtonHandler.cs" />

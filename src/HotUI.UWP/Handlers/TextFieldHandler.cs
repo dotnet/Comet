@@ -1,46 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml.Controls;
 using UWPTextField = Windows.UI.Xaml.Controls.TextBox;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.UWP.Handlers
 {
-    public class TextFieldHandler : UWPTextField, IUIElement
+    public class TextFieldHandler : AbstractHandler<TextField, UWPTextField>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>()
         {
             [nameof(TextField.Text)] = MapTextProperty
         };
-        
-        private TextField _textField;
-        
-        public UIElement View => this;
 
-        public object NativeView => View;
-
-        public bool HasContainer
-        {
-            get => false;
-            set { }
-        }
-
-        public void Remove(View view)
+        public TextFieldHandler() : base(Mapper)
         {
         }
 
-        public void SetView(View view)
+        protected override UWPTextField CreateView()
         {
-            _textField = view as TextField;
-            Mapper.UpdateProperties(this, _textField);
+            var textField = new UWPTextField();
+            textField.TextChanged += HandleTextChanged;
+            return textField;
         }
 
-        public void UpdateValue(string property, object value)
+        private void HandleTextChanged(object sender, TextChangedEventArgs e)
         {
-            Mapper.UpdateProperty(this, _textField, property);
+            VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.Text);
+            VirtualView?.OnCommit?.Invoke(TypedNativeView.Text);
         }
-        
+
+        protected override void DisposeView(UWPTextField textField)
+        {
+            textField.TextChanged -= HandleTextChanged;
+        }
+
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (UWPTextField)viewHandler.NativeView;

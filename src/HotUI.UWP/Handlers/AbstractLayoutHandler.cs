@@ -9,7 +9,7 @@ using UwpSize = Windows.Foundation.Size;
 
 namespace HotUI.UWP.Handlers
 {
-    public abstract class AbstractLayoutHandler : Canvas, IUIElement, ILayoutHandler<UIElement>
+    public abstract class AbstractLayoutHandler : Canvas, UWPViewHandler, ILayoutHandler<UIElement>
     {
         private readonly ILayoutManager<UIElement> _layoutManager;
         private AbstractLayout _view;
