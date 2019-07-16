@@ -33,5 +33,16 @@ namespace HotUI.Android
             var nativeView = (EditText) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+            if(TypedNativeView != null)
+            {
+                TypedNativeView.TextChanged -= HandleTextChanged;
+            }
+            base.Dispose(disposing);
+        }
     }
 }

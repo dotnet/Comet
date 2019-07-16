@@ -30,5 +30,14 @@ namespace HotUI.Android
             var nativeView = (AButton) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+            if (TypedNativeView != null)
+                TypedNativeView.Click -= HandleClick;
+            base.Dispose(disposing);
+        }
     }
 }

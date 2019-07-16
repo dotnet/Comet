@@ -59,5 +59,14 @@ namespace HotUI.Android {
 			}
 
 		}
-	}
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+            this.ItemSelected -= ListViewHandler_ItemSelected;
+            this.ItemClick -= ListViewHandler_ItemClick;
+            base.Dispose(disposing);
+        }
+    }
 }
