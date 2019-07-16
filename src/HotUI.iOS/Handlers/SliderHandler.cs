@@ -50,5 +50,14 @@ namespace HotUI.iOS
             var nativeView = (UISlider) viewHandler.NativeView;
             nativeView.MaxValue = virtualView.Through;
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+                return;
+            if(TypedNativeView != null)
+                TypedNativeView.ValueChanged -= HandleValueChanged;
+            base.Dispose(disposing);
+        }
     }
 }

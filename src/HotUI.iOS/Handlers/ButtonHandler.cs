@@ -41,5 +41,16 @@ namespace HotUI.iOS
             nativeView.SetTitle(virtualView.Text, UIControlState.Normal);
             nativeView.SizeToFit();
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+            if (TypedNativeView != null)
+            {
+                TypedNativeView.TouchUpInside -= HandleTouchUpInside;
+            }
+
+            base.Dispose(disposing);
+        }
     }
 }

@@ -51,5 +51,16 @@ namespace HotUI.iOS
             nativeView.Placeholder = virtualView.Placeholder;
             nativeView.SizeToFit();
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+            if(TypedNativeView != null)
+            {
+                TypedNativeView.EditingDidEnd -= EntryHandler_EditingDidEnd;
+                TypedNativeView.ShouldReturn = null;
+            }
+            base.Dispose(disposing);
+        }
     }
 }

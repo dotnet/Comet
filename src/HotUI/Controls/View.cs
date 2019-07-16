@@ -238,7 +238,9 @@ namespace HotUI
         {
             ActiveViews.Remove(this);
             HotReloadHelper.UnRegister(this);
+            var viewHandler = ViewHandler;
             ViewHandler = null;
+            viewHandler?.Dispose();
             Body = null;
             Context.Clear();
             State?.DisposingObject(this);
