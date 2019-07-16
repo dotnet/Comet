@@ -1,4 +1,5 @@
 ﻿using Android.App;
+using HotUI.Android.Controls;
 using AView = Android.Views.View;
 
 namespace HotUI.Android
@@ -26,10 +27,11 @@ namespace HotUI.Android
             return page.Activity;
         }*/
 
-        public static AView ToView(this View view)
+        public static AView ToView(this View view, bool allowNav = true)
         {
             if (view == null)
                 return null;
+
             var handler = view.ViewHandler;
             if (handler == null)
             {
@@ -37,6 +39,19 @@ namespace HotUI.Android
                 view.ViewHandler = handler;
             }
 
+            if (view.BuiltView is NavigationView nav && allowNav)
+            {
+                var navController = new NavigationViewWrapper(view);
+                nav.PerformNavigate = (toView) => {
+                    if (toView is NavigationView newNav)
+                    {
+                        newNav.PerformNavigate = nav.PerformNavigate;
+                    }
+                    navController.Push(toView);
+                };
+                return navController;
+            }
+            
             var page = handler as AndroidViewHandler;
             return page.View;
         }

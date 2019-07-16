@@ -1,4 +1,5 @@
 using Android.App;
+using Android.Support.V7.App;
 
 namespace HotUI.Android
 {
@@ -19,5 +20,7 @@ namespace HotUI.Android
                 ContextChanged?.Invoke(_context);
             }
         }
+
+        public static AppCompatActivity AppCompatActivity => CurrentContext as AppCompatActivity;
     }
 }

@@ -75,6 +75,7 @@
     <Compile Include="Handlers\ViewRepresentableHandler.cs" />
     <Compile Include="Controls\HotUIFragment.cs" />
     <Compile Include="Controls\CustomFrameLayout.cs" />
+    <Compile Include="Controls\NavigationViewWrapper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
