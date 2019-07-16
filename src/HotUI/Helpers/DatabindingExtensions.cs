@@ -25,11 +25,11 @@ namespace HotUI {
 							state.BindingState.AddViewProperty (prop,propertyName, onUpdate);
 							Debug.WriteLine ($"Databinding: {propertyName} to {prop}");
 						} else {
-							Debug.WriteLine ($"Warning: {propertyName} is using formated Text. For performance reasons, please switch to TextBinding");
+							Debug.WriteLine ($"Warning: {propertyName} is using formated Text. For performance reasons, please switch to a Lambda.");
 							isGlobal = true;
 						}
 					} else {
-						Debug.WriteLine ($"Warning: {propertyName} is using Multiple state Variables. For performance reasons, please switch to TextBinding");
+						Debug.WriteLine ($"Warning: {propertyName} is using Multiple state Variables. For performance reasons, please switch to a Lambda.");
 					}
 
 					if (isGlobal) {
