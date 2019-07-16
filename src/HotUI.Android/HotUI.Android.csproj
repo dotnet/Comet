@@ -73,6 +73,8 @@
     <Compile Include="Handlers\ContentViewHandler.cs" />
     <Compile Include="ViewRepresentable.cs" />
     <Compile Include="Handlers\ViewRepresentableHandler.cs" />
+    <Compile Include="Controls\HotUIFragment.cs" />
+    <Compile Include="Controls\CustomFrameLayout.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -106,7 +108,7 @@
     <MonoDevelop>
       <Properties>
         <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
+          <DotNetNamingPolicy ResourceNamePolicy="FileFormatDefault" DirectoryNamespaceAssociation="PrefixedHierarchical" />
         </Policies>
       </Properties>
     </MonoDevelop>
