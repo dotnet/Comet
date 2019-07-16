@@ -6,7 +6,7 @@ using AView = Android.Views.View;
 
 namespace HotUI.Android
 {
-    public abstract class HotActivity : AppCompatActivity
+    public abstract class HotUIActivity : AppCompatActivity
     {
         private View _page;
 

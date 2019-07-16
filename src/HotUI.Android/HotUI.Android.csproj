@@ -61,7 +61,7 @@
     <Compile Include="Handlers\TextHandler.cs" />
     <Compile Include="Handlers\ScrollViewHandler.cs" />
     <Compile Include="Handlers\VStackHandler.cs" />
-    <Compile Include="HotActivity.cs" />
+    <Compile Include="HotUIActivity.cs" />
     <Compile Include="AndroidViewHandler.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

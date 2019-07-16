@@ -11,7 +11,7 @@ using HotUI.Samples;
 namespace HotUI.Android.Sample
 {
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
-    public class MainActivity : HotActivity
+    public class MainActivity : HotUIActivity
     {
 
         protected override void OnCreate(Bundle savedInstanceState)
