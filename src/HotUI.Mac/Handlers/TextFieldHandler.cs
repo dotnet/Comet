@@ -38,5 +38,17 @@ namespace HotUI.Mac.Handlers
             nativeView.StringValue = virtualView.Text;
             nativeView.SizeToFit();
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+            if (TypedNativeView != null)
+            {
+                TypedNativeView.EditingEnded -= HandleEditingEnded;
+                TypedNativeView.Changed -= HandleEditingChanged;
+            }
+            base.Dispose(disposing);
+        }
     }
 }

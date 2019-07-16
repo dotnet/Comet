@@ -79,5 +79,44 @@ namespace HotUI.Mac
         {
             _mapper.UpdateProperty(this, _virtualView, property);
         }
+
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+
+            _nativeView?.RemoveFromSuperview();
+            _nativeView?.Dispose();
+            _nativeView = null;
+            if (_virtualView != null)
+                Remove(_virtualView);
+
+        }
+        void OnDispose(bool disposing)
+        {
+            if (disposedValue)
+                return;
+            disposedValue = true;
+            Dispose(disposing);
+        }
+
+        ~AbstractHandler()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(false);
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }

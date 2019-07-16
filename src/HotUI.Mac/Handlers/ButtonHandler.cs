@@ -36,5 +36,13 @@ namespace HotUI.Mac.Handlers
             nativeButton.Title = virtualButton.Text;
             nativeButton.SizeToFit();
         }
+        protected override void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+            if(TypedNativeView != null)
+                TypedNativeView.Activated -= HandleTouchUpInside;
+            base.Dispose(disposing);
+        }
     }
 }

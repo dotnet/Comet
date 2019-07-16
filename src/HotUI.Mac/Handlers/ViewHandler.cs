@@ -155,5 +155,46 @@ namespace HotUI.Mac
                 handler.HasContainer = false;
             }
         }
+
+
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
+
+            _body?.RemoveFromSuperview();
+            _body?.Dispose();
+            _body = null;
+            if (_view != null)
+                Remove(_view);
+
+        }
+
+
+        void OnDispose(bool disposing)
+        {
+            if (disposedValue)
+                return;
+            disposedValue = true;
+            Dispose(disposing);
+        }
+
+        ~ViewHandler()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(false);
+        }
+
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
     }
 }
