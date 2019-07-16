@@ -8,7 +8,7 @@ HotUI is an MVU style patern.
 View is a screen
 Views have a Body method that you can assign either by an Attribute `[Body]` or by specifying
 
-```
+``` cs
 public class MyPage : View{
 	[Body]
 	View body () => new Text("Hello World);
@@ -17,7 +17,7 @@ public class MyPage : View{
 
 or
 
-```
+``` cs
 public class MyPage : View{
 	public MyPage(){
 		Body = body;
@@ -32,7 +32,7 @@ HotReload is included by default!
 Download and install the VS extension from the [Releases](https://github.com/Clancey/HotUI/releases/)
 Then add to your apps code.
 
-``` 
+``` cs
  #if DEBUG
             HotUI.Reload.Init();
  #endif
@@ -44,7 +44,7 @@ As of right now there are two supported ways to add state.
 Simmple data types like int, bool?
 Just add a `State<T>` field to your View
 
-```
+``` cs
 class MyPage : View{
 	readonly State<int> clickCount = 1;
 }
@@ -60,7 +60,7 @@ You can either implement [INotifyPropertyRead](https://github.com/Clancey/HotUI/
 Add it as a Field/Property, and add the [State] attribute!
 
 
-```
+``` cs
 public class MainPage : View {
 		class MyBindingObject : BindingObject {
 			public bool CanEdit {
@@ -83,7 +83,8 @@ public class MainPage : View {
 
 ## How do I use the State?
 
-```	public class MyPage : View {
+``` cs
+public class MyPage : View {
 
 		readonly State<int> clickCount = 1;
 		readonly State<string> text = "Hello World";
@@ -108,7 +109,7 @@ While `new Text($"Click Count: {clickCount})"` works, it isnt efficient.
 
 You should use `new Text(()=> $"Click Count: {clickCount}")`
 
-```
+``` cs
 public class MyPage : View {
 
 		readonly State<int> clickCount = new State<int> (1);
