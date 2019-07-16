@@ -1,10 +1,9 @@
-﻿using System;
-using HotUI;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using FButton = Xamarin.Forms.Button;
 using HButton = HotUI.Button;
-using HView = HotUI.View;
-namespace HotUI.Forms
+
+// ReSharper disable MemberCanBePrivate.Global
+namespace HotUI.Forms.Handlers
 {
     public class ButtonHandler : AbstractHandler<HButton, FButton>
     {
@@ -16,17 +15,23 @@ namespace HotUI.Forms
         public ButtonHandler() : base(Mapper)
         {
         }
-        public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
-        {
-            var nativeView = (FButton)viewHandler.NativeView;
-            nativeView.Text = virtualView.Text;
-        }
-
+        
         protected override FButton CreateView()
         {
             var button = new FButton();
             button.Command = new Command((s) => VirtualView?.OnClick?.Invoke());
             return button;
+        }
+
+        protected override void DisposeView(FButton nativeView)
+        {
+            nativeView.Command = null;
+        }
+
+        public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
+        {
+            var nativeView = (FButton)viewHandler.NativeView;
+            nativeView.Text = virtualView.Text;
         }
     }
 }

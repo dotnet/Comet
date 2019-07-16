@@ -1,9 +1,8 @@
 ﻿using System;
-using HotUI;
 using Xamarin.Forms;
 using FEntry = Xamarin.Forms.Entry;
-using HView = HotUI.View;
-namespace HotUI.Forms
+
+namespace HotUI.Forms.Handlers
 {
     public class TextFieldHandler : AbstractHandler<TextField, FEntry>
     {
@@ -51,20 +50,12 @@ namespace HotUI.Forms
             return entry;
         }
 
-        protected override void Dispose(bool disposing)
+        protected override void DisposeView(Entry entry)
         {
-            if (!disposing)
-                return;
-            var entry = TypedNativeView;
-            if (entry != null)
-            {
-                entry.Focused -= HandleFocused;
-                entry.TextChanged -= HandleTextChanged;
-                entry.Unfocused -= HandleUnfocused;
-                entry.Completed -= HandleCompleted;
-            }
-            base.Dispose(disposing);
+            entry.Focused -= HandleFocused;
+            entry.TextChanged -= HandleTextChanged;
+            entry.Unfocused -= HandleUnfocused;
+            entry.Completed -= HandleCompleted;
         }
-
     }
 }

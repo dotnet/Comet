@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using HotUI.iOS.Controls;
 using UIKit;
+
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class ContentViewHandler : iOSViewHandler
     {

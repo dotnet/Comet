@@ -1,9 +1,10 @@
 ﻿using System;
 using Android.Content;
 using AToggle = Android.Widget.ToggleButton;
-using AView = Android.Views.View;
 
-namespace HotUI.Android
+// ReSharper disable MemberCanBePrivate.Global
+
+namespace HotUI.Android.Handlers
 {
     public class ToggleHandler : AbstractHandler<Toggle,AToggle>
     {
@@ -22,21 +23,18 @@ namespace HotUI.Android
             toggle.Click += HandleClick;
             return toggle;
         }
-        
+
+        protected override void DisposeView(AToggle nativeView)
+        {
+            nativeView.Click -= HandleClick;
+        }
+
         private void HandleClick(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.Checked);
         
         public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (AToggle) viewHandler.NativeView;
             nativeView.Checked = virtualView.IsOn;
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            if(TypedNativeView != null)
-                TypedNativeView.Click -= HandleClick;
-            base.Dispose(disposing);
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using System;
 using UIKit;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class TextFieldHandler : AbstractHandler<TextField, UITextField>
     {
@@ -33,6 +34,13 @@ namespace HotUI.iOS
             return textField;
         }
 
+        protected override void DisposeView(UITextField textField)
+        {
+            textField.EditingDidEnd -= HandleEditingDidEnd;
+            textField.EditingChanged -= HandleEditingChanged;
+            textField.ShouldReturn = null;
+        }
+
         private void HandleEditingChanged(object sender, EventArgs e)
         {
             VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.Text);
@@ -55,21 +63,6 @@ namespace HotUI.iOS
             var nativeView = (UITextField) viewHandler.NativeView;
             nativeView.Placeholder = virtualView.Placeholder;
             nativeView.SizeToFit();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            var textField = TypedNativeView;
-            if (textField != null)
-            {
-                textField.EditingDidEnd -= HandleEditingDidEnd;
-                textField.EditingChanged -= HandleEditingChanged;
-
-                textField.ShouldReturn = null;
-            }
-            base.Dispose(disposing);
         }
     }
 }

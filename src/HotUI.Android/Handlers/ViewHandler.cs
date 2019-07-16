@@ -1,6 +1,6 @@
 ﻿using System;
 using AView = Android.Views.View;
-namespace HotUI.Android 
+namespace HotUI.Android.Handlers 
 {
 	public class ViewHandler : AndroidViewHandler
 	{

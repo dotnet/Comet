@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI.Mac.Controls;
 using AppKit;
+using HotUI.Mac.Controls;
 
-namespace HotUI.Mac
+namespace HotUI.Mac.Handlers
 {
     public abstract class AbstractHandler<TVirtualView, TNativeView> : MacViewHandler where TVirtualView : View where TNativeView: NSView
     {
@@ -20,6 +20,8 @@ namespace HotUI.Mac
 
         protected abstract TNativeView CreateView();
         
+        protected abstract void DisposeView(TNativeView nativeView);
+
         public NSView View => (NSView)_containerView ?? _nativeView;
 
         public HUIContainerView ContainerView => _containerView;
@@ -90,6 +92,10 @@ namespace HotUI.Mac
                 return;
 
             _nativeView?.RemoveFromSuperview();
+            
+            if (_nativeView != null)
+                DisposeView(_nativeView);
+            
             _nativeView?.Dispose();
             _nativeView = null;
             if (_virtualView != null)

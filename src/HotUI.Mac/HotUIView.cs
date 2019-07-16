@@ -1,6 +1,7 @@
 ﻿using CoreGraphics;
 using AppKit;
 using HotUI.Mac.Extensions;
+using HotUI.Mac.Handlers;
 
 namespace HotUI.Mac
 {

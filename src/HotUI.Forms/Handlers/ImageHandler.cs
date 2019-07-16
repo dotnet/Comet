@@ -1,9 +1,7 @@
-﻿using HotUI;
-using Xamarin.Forms;
-using FImage = Xamarin.Forms.Image;
+﻿using FImage = Xamarin.Forms.Image;
 using HImage = HotUI.Image;
-using HView = HotUI.View;
-namespace HotUI.Forms
+
+namespace HotUI.Forms.Handlers
 {
     public class ImageHandler : AbstractHandler<HImage, FImage>
     {
@@ -19,6 +17,12 @@ namespace HotUI.Forms
         {
             throw new System.NotImplementedException();
         }
+
+        protected override void DisposeView(FImage nativeView)
+        {
+            
+        }
+
         public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)
         {
             var nativeView = (FImage)viewHandler.NativeView;

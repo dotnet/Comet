@@ -1,9 +1,10 @@
 ﻿using System;
 using UIKit;
+
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class SliderHandler : AbstractHandler<Slider, UISlider>
     {
@@ -25,6 +26,11 @@ namespace HotUI.iOS
             slider.Continuous = true;
             slider.ValueChanged += HandleValueChanged;
             return slider;
+        }
+
+        protected override void DisposeView(UISlider nativeView)
+        {
+            nativeView.ValueChanged -= HandleValueChanged;
         }
 
         private void HandleValueChanged(object sender, EventArgs e)
@@ -49,15 +55,6 @@ namespace HotUI.iOS
         {
             var nativeView = (UISlider) viewHandler.NativeView;
             nativeView.MaxValue = virtualView.Through;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-                return;
-            if(TypedNativeView != null)
-                TypedNativeView.ValueChanged -= HandleValueChanged;
-            base.Dispose(disposing);
         }
     }
 }

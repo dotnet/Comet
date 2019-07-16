@@ -1,11 +1,11 @@
 using System.Collections.Generic;
+using AppKit;
 using CoreGraphics;
 using HotUI.Layout;
-using AppKit;
 using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
-namespace HotUI.Mac
+namespace HotUI.Mac.Handlers
 {
     public class AbstractLayoutHandler : NSView, MacViewHandler, ILayoutHandler<NSView>
     {

@@ -1,8 +1,9 @@
 ﻿using Android.Content;
 using Android.Widget;
-using AView = Android.Views.View;
 
-namespace HotUI.Android
+// ReSharper disable MemberCanBePrivate.Global
+
+namespace HotUI.Android.Handlers
 {
     public class TextHandler : AbstractHandler<Text, TextView>
     {
@@ -21,6 +22,11 @@ namespace HotUI.Android
         protected override TextView CreateView(Context context)
         {
             return new TextView(context);
+        }
+
+        protected override void DisposeView(TextView nativeView)
+        {
+            
         }
 
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)

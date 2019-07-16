@@ -1,9 +1,8 @@
 ﻿using System;
 using Android.Content;
 using Android.Widget;
-using AView = Android.Views.View;
 
-namespace HotUI.Android
+namespace HotUI.Android.Handlers
 {
     public class TextFieldHandler : AbstractHandler<TextField, EditText>
     {
@@ -23,6 +22,11 @@ namespace HotUI.Android
             return editText;
         }
 
+        protected override void DisposeView(EditText nativeView)
+        {
+            nativeView.TextChanged -= HandleTextChanged;
+        }
+
         private void HandleTextChanged(object sender, EventArgs e)
         {
             VirtualView?.OnCommit?.Invoke(TypedNativeView.Text);
@@ -32,17 +36,6 @@ namespace HotUI.Android
         {
             var nativeView = (EditText) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            if(TypedNativeView != null)
-            {
-                TypedNativeView.TextChanged -= HandleTextChanged;
-            }
-            base.Dispose(disposing);
         }
     }
 }

@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Xamarin.Forms;
 using FToggle = Xamarin.Forms.Switch;
-using FView = Xamarin.Forms.View;
 
-namespace HotUI.Forms
+namespace HotUI.Forms.Handlers
 {
     public class ToggleHandler : AbstractHandler<Toggle, FToggle>
     {
@@ -24,6 +22,11 @@ namespace HotUI.Forms
             return toggle;
         }
 
+        protected override void DisposeView(Switch toggle)
+        {
+            toggle.Toggled -= HandleToggled;
+        }
+
         void HandleToggled(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.IsToggled);
 
 
@@ -31,14 +34,6 @@ namespace HotUI.Forms
         {
             var nativeView = (FToggle)viewHandler.NativeView;
             nativeView.IsToggled = virtualView.IsOn;
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (disposing)
-                return;
-            if(TypedNativeView != null)
-                TypedNativeView.Toggled += HandleToggled;
-            base.Dispose(disposing);
         }
     }
 }

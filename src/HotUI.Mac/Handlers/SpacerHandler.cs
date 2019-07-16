@@ -4,7 +4,7 @@ using HotUI.Mac.Controls;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Mac
+namespace HotUI.Mac.Handlers
 {
     public class SpacerHandler : NSColorView, MacViewHandler
     {

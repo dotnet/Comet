@@ -1,10 +1,9 @@
-﻿using System;
-using HotUI;
-using Xamarin.Forms;
+﻿using Xamarin.Forms;
 using FLabel = Xamarin.Forms.Label;
-using HView = HotUI.View;
 
-namespace HotUI.Forms
+// ReSharper disable MemberCanBePrivate.Global
+
+namespace HotUI.Forms.Handlers
 {
     public class TextHandler : AbstractHandler<Text, FLabel>
     {
@@ -21,8 +20,12 @@ namespace HotUI.Forms
         }
 
         protected override FLabel CreateView() => new FLabel();
-
-
+        
+        protected override void DisposeView(Label nativeView)
+        {
+            
+        }
+        
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (FLabel)viewHandler.NativeView;

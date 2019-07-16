@@ -1,8 +1,9 @@
 ﻿using UIKit;
+
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class TextHandler : AbstractHandler<Text, UILabel>
     {
@@ -34,7 +35,12 @@ namespace HotUI.iOS
 
             return label;
         }
-        
+
+        protected override void DisposeView(UILabel nativeView)
+        {
+            
+        }
+
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (UILabel) viewHandler.NativeView;

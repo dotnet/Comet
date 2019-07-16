@@ -1,5 +1,6 @@
 ﻿using System;
 using AppKit;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace HotUI.Mac.Handlers
 {
@@ -28,6 +29,11 @@ namespace HotUI.Mac.Handlers
             return button;
         }
 
+        protected override void DisposeView(NSButton nativeView)
+        {
+            nativeView.Activated -= HandleTouchUpInside;
+        }
+
         private void HandleTouchUpInside(object sender, EventArgs e) => VirtualView?.OnClick();
         
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
@@ -35,14 +41,6 @@ namespace HotUI.Mac.Handlers
             var nativeButton = (NSButton) viewHandler.NativeView;
             nativeButton.Title = virtualButton.Text;
             nativeButton.SizeToFit();
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            if(TypedNativeView != null)
-                TypedNativeView.Activated -= HandleTouchUpInside;
-            base.Dispose(disposing);
         }
     }
 }

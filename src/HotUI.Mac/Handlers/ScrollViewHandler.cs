@@ -19,10 +19,14 @@ namespace HotUI.Mac.Handlers
         
         protected override NSScrollView CreateView()
         {
-            Console.WriteLine("New scrollview handler created");
             return new NSScrollView();
         }
-        
+
+        protected override void DisposeView(NSScrollView nativeView)
+        {
+            
+        }
+
         public override void Remove(View view)
         {
             _content?.RemoveFromSuperview();

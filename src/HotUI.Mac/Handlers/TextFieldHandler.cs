@@ -22,6 +22,12 @@ namespace HotUI.Mac.Handlers
             return textField;
         }
 
+        protected override void DisposeView(NSTextField nativeView)
+        {
+            nativeView.EditingEnded -= HandleEditingEnded;
+            nativeView.Changed -= HandleEditingChanged;
+        }
+
         private void HandleEditingChanged(object sender, EventArgs e)
         {
             VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.StringValue);
@@ -37,18 +43,6 @@ namespace HotUI.Mac.Handlers
             var nativeView = (NSTextField) viewHandler.NativeView;
             nativeView.StringValue = virtualView.Text;
             nativeView.SizeToFit();
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            if (TypedNativeView != null)
-            {
-                TypedNativeView.EditingEnded -= HandleEditingEnded;
-                TypedNativeView.Changed -= HandleEditingChanged;
-            }
-            base.Dispose(disposing);
         }
     }
 }

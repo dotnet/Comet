@@ -1,4 +1,6 @@
-﻿namespace HotUI.Forms
+﻿using HotUI.Forms.Handlers;
+
+namespace HotUI.Forms
 {
     public class HotUIContainerView : Xamarin.Forms.ContentView
     {

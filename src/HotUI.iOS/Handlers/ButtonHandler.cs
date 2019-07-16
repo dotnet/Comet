@@ -4,7 +4,7 @@ using UIKit;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS
+namespace HotUI.iOS.Handlers
 {
     public class ButtonHandler : AbstractHandler<Button, UIButton>
     {
@@ -29,7 +29,12 @@ namespace HotUI.iOS
 
             return button;
         }
-        
+
+        protected override void DisposeView(UIButton button)
+        {
+            button.TouchUpInside += HandleTouchUpInside;
+        }
+
         private void HandleTouchUpInside(object sender, EventArgs e)
         {
             VirtualView?.OnClick();
@@ -40,17 +45,6 @@ namespace HotUI.iOS
             var nativeView = (UIButton) viewHandler.NativeView;
             nativeView.SetTitle(virtualView.Text, UIControlState.Normal);
             nativeView.SizeToFit();
-        }
-        protected override void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            if (TypedNativeView != null)
-            {
-                TypedNativeView.TouchUpInside -= HandleTouchUpInside;
-            }
-
-            base.Dispose(disposing);
         }
     }
 }

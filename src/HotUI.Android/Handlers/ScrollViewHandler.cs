@@ -2,7 +2,7 @@
 using AView = Android.Views.View;
 using AScrollView = Android.Widget.ScrollView;
 
-namespace HotUI.Android
+namespace HotUI.Android.Handlers
 {
     public class ScrollViewHandler : AbstractHandler<ScrollView,AScrollView>
     {
@@ -21,7 +21,12 @@ namespace HotUI.Android
         {
             return new AScrollView(context);
         }
-        
+
+        protected override void DisposeView(AScrollView nativeView)
+        {
+            
+        }
+
         public override void Remove(View view)
         {
             if (_content != null)
