@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -79,6 +80,13 @@ namespace HotUI.Reflection
             if (prop == null && type.BaseType != null)
                 prop = GetDeepProperty(type.BaseType, name);
             return prop;
+        }
+        public static List<PropertyInfo> GetDeepProperties(this Type type)
+        {
+            var properties = type.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).ToList();
+            if (type.BaseType != null)
+                properties.AddRange(GetDeepProperties(type.BaseType));
+            return properties;
         }
 
         public static MethodInfo GetDeepMethodInfo(this Type type, string name)

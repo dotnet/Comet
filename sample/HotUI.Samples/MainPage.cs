@@ -32,6 +32,7 @@ namespace HotUI.Samples {
             new MenuItem("SwiftUI Tutorial Section 4b", ()=> new Section4b()),
             new MenuItem("SwiftUI Tutorial Section 4c", ()=> new Section4c()),
             new MenuItem("SwiftUI Tutorial Section 4d", ()=> new Section4c()),
+            new MenuItem("AuditReportPage",()=> new AuditReportPage()),
         };
 		public MainPage (List<MenuItem> additionalPage = null)
 		{

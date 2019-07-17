@@ -11,20 +11,13 @@ namespace HotUI {
 		}
 	}
 	public class Registrar<TType, TTypeRender> {
-		internal Dictionary<Type, List<Type>> Handler = new Dictionary<Type, List<Type>> ();
+		internal Dictionary<Type, Type> Handler = new Dictionary<Type, Type> ();
 
 		public void Register<TView, TRender> ()
 			where TView : TType
 				where TRender : TTypeRender
 		{
-			List<Type> renderers;
-			if (!Handler.TryGetValue (typeof (TView), out renderers)) {
-				renderers = new List<Type> { typeof (TRender) };
-				Handler.Add (typeof (TView), renderers);
-				return;
-			}
-			renderers.Add (typeof (TRender));
-
+            Handler[typeof(TView)] = typeof(TRender);
 		}
 		public TTypeRender GetRenderer<T> ()
 		{
@@ -46,26 +39,38 @@ namespace HotUI {
 			}
 			return default (TTypeRender);
 		}
-		TTypeRender getRenderer (Type t)
+
+        public Type GetRendererType(Type type)
+        {
+            List<Type> types = new List<Type> { type };
+            Type baseType = type.BaseType;
+            while (baseType != null)
+            {
+                types.Add(baseType);
+                baseType = baseType.BaseType;
+            }
+
+            foreach (var t in types)
+            {
+                if (Handler.TryGetValue(t, out var returnType))
+                    return returnType;
+            }
+            return null;
+        }
+
+        TTypeRender getRenderer (Type t)
 		{
-			if (!Handler.ContainsKey (t))
+            if(!Handler.TryGetValue(t, out var renderer))
 				return default (TTypeRender);
-			var renderers = Handler [t];
-
-			var length = renderers.Count;
-
-			for (var i = 0; i < length; i++) {
-				var index = length - (i + 1);
-				var renderer = renderers [index];
-				try {
-					var newObject = Activator.CreateInstance (renderer);
-					return (TTypeRender)newObject;
-				} catch (Exception ex) {
-					if (Debugger.IsAttached)
-						throw ex;
-				}
+			try {
+				var newObject = Activator.CreateInstance (renderer);
+				return (TTypeRender)newObject;
+			} catch (Exception ex) {
+				if (Debugger.IsAttached)
+					throw ex;
 			}
-			return default (TTypeRender);
+			
+			return default;
 		}
 	}
 }

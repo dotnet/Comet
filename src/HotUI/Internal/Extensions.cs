@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using HotUI.Reflection;
 
 namespace HotUI.Internal
@@ -18,5 +20,8 @@ namespace HotUI.Internal
         public static View GetView(this View view) => view.GetView();
 
         public static void UpdateFromOldView(this View view, View newView) => view.UpdateFromOldView(newView);
+
+        public static Dictionary<Type, Type> GetAllRenderers(this Registrar<View, IViewHandler> registar) => registar.Handler;
+       
     }
 }
