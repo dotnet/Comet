@@ -47,6 +47,7 @@
     <Compile Include="Controls\HUIContainerView.cs" />
     <Compile Include="Controls\HUIImageView.cs" />
     <Compile Include="Controls\HUITableView.cs" />
+    <Compile Include="Controls\HUITableViewCell.cs" />
     <Compile Include="Controls\SizeChangedEventArgs.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Handlers\ViewRepresentableHandler.cs" />
     <Compile Include="UIViewRepresentable.cs" />
     <Compile Include="Controls\HUINavigationController.cs" />
+    <Compile Include="Controls\HUITableViewSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">

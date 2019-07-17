@@ -4,80 +4,51 @@ using UIKit;
 
 namespace HotUI.iOS.Controls
 {
-    public class HUITableView : UITableView, IUITableViewDataSource, IUITableViewDelegate
+    public class HUITableView : UITableView
     {
-        private static readonly string CellType = "ViewCell";
-        private ListView _listView;
-
+        private HUITableViewSource _delegate;
+        
         public HUITableView()
         {
-            WeakDataSource = this;
-            WeakDelegate = this;
+            _delegate = new HUITableViewSource();
+            WeakDataSource = _delegate;
+            WeakDelegate = _delegate;
         }
 
         public ListView ListView
         {
-            get => _listView;
+            get => _delegate.ListView;
             set
             {
-                _listView = value;
+                _delegate.ListView = value;
+
+                // If we have items in the list, we can check to see if there are frame constraints on the root view.  If so,
+                // we can use those as our cell height.
+                if (value?.List.Count > 0)
+                {
+
+                    var item = value.List[0];
+                    var v = value.CellCreator?.Invoke(item);
+                    
+                    if (v.FrameConstraints?.Height != null)
+                        RowHeight = (float)v.FrameConstraints.Height;
+                    else
+                        RowHeight = -1;
+                }
+                else
+                {
+                    RowHeight = -1;
+                }
+
+
                 ReloadData();
             }
         }
-        
-        public nint RowsInSection(UITableView tableView, nint section)
+
+        public bool UnevenRows
         {
-            return _listView?.List?.Count ?? 0;
-        }
-
-        public UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
-        {
-            var cell = DequeueReusableCell(CellType) as ViewCell ?? new ViewCell();
-            var item = _listView?.List[indexPath.Row];
-            var v = _listView?.CellCreator?.Invoke(item);
-            v.Parent = _listView;
-            cell.SetView(v);
-            return cell;
-        }
-
-        [Export("tableView:didSelectRowAtIndexPath:")]
-        public void RowSelected(UITableView tableView, NSIndexPath indexPath)
-        {
-            if (indexPath.Row < 0)
-                return;
-            tableView.DeselectRow(indexPath, true);
-            _listView?.OnSelected(indexPath.Row);
-        }
-
-        private class ViewCell : UITableViewCell
-        {
-            private UIView _currentContent;
-            private View _currentView;
-
-            public override void LayoutSubviews()
-            {
-                base.LayoutSubviews();
-                if (_currentContent == null)
-                    return;
-                _currentContent.Frame = ContentView.Bounds;
-            }
-
-            public void SetView(View view)
-            {
-                //TODO:We should do View Compare
-                //view.Diff (view);
-                _currentContent?.RemoveFromSuperview();
-                _currentContent = view.ToView();
-                ContentView.Add(_currentContent);
-                //This should let it autosize
-                NSLayoutConstraint.ActivateConstraints(new[]
-                {
-                    _currentContent.LeadingAnchor.ConstraintEqualTo(LeadingAnchor),
-                    _currentContent.TrailingAnchor.ConstraintEqualTo(TrailingAnchor),
-                    _currentContent.TopAnchor.ConstraintEqualTo(TopAnchor),
-                    _currentContent.BottomAnchor.ConstraintEqualTo(BottomAnchor)
-                });
-            }
+            get => _delegate.UnevenRows;
+            set => _delegate.UnevenRows = value;
         }
     }
 }

@@ -17,20 +17,17 @@ namespace HotUI
             view.Padding = defaultThickness;
             return view;
         }
-
-        /// <summary>
-        /// Set the padding to a specified thickness.
-        /// </summary>
-        /// <param name="view"></param>
-        /// <param name="padding"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T Padding<T>(this T view, Thickness padding) where T : View
+        
+        public static T Padding<T>(this T view, float? left = null, float? top= null, float? right= null, float? bottom = null) where T : View
         {
-            view.Padding = padding;
+            view.Padding = new Thickness(
+                left ?? 0,
+                top ?? 0,
+                right ?? 0,
+                bottom ?? 0);
             return view;
         }
-
+        
         public static Thickness GetPadding(this View view)
         {
             return view.Padding;

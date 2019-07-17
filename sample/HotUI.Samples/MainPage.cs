@@ -7,8 +7,8 @@ namespace HotUI.Samples {
 		List<MenuItem> pages = new List<MenuItem> {
 			new MenuItem("Binding Sample!",()=> new BindingSample()),
             new MenuItem("BasicTestView",()=> new BasicTestView()),
-            new MenuItem("ListPage1", ()=> new ListPage()),
-            new MenuItem("ListPage2", ()=> new ListPage2()),
+            new MenuItem("ListViewSample1", ()=> new ListViewSample1()),
+            new MenuItem("ListViewSample2", ()=> new ListViewSample2()),
             new MenuItem("Insane Diff", ()=> new InsaneDiffPage()),
             new MenuItem("ButtonSample1", ()=> new ButtonSample1()),
             new MenuItem("ClipSample1", ()=> new ClipSample1()),
