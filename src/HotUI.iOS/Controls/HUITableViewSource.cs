@@ -80,8 +80,8 @@ namespace HotUI.iOS.Controls
             var view = _listView?.CellCreator?.Invoke(item);
             if (view != null)
             {
-                if (view is NavigationButton)
-                    return 44f;
+                if (view is NavigationButton navigationButton)
+                    view = navigationButton.Content;
 
                 if (view.FrameConstraints?.Height != null)
                     return (float)view.FrameConstraints?.Height;

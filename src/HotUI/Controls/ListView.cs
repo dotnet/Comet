@@ -63,10 +63,9 @@ namespace HotUI {
 		public void OnSelected (int index)
 		{
 			var item = List [index];
-			var navbutton = CellCreator?.Invoke (item) as NavigationButton;
-			if (navbutton != null) {
-				navbutton.Parent = this;
-				navbutton.Navigate ();
+			if (CellCreator?.Invoke (item) is NavigationButton navigation) {
+				navigation.Parent = this;
+				navigation.Navigate ();
 				return;
 			}
 			ItemSelected?.Invoke (item);
