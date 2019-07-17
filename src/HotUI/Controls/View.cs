@@ -51,6 +51,7 @@ namespace HotUI
         public View(bool hasConstructors)
         {
             ActiveViews.Add(this);
+            Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
             HotReloadHelper.Register(this);
             Context.View = this;
             State = StateBuilder.CurrentState ?? new State
@@ -102,6 +103,7 @@ namespace HotUI
             }
             var oldView = view.ViewHandler;
             view.ViewHandler = null;
+            view.replacedView?.Dispose();
             this.ViewHandler = oldView;
         }
         View builtView;
@@ -113,7 +115,12 @@ namespace HotUI
                 SetEnvironmentFields();
             var oldView = builtView;
             builtView = null;
-            replacedView = null;
+            if (replacedView != null)
+            {
+                replacedView.ViewHandler = null;
+                replacedView.Dispose();
+                replacedView = null;
+            }
             if (ViewHandler == null)
                 return;
             ViewHandler.Remove(this);
@@ -149,7 +156,7 @@ namespace HotUI
             {
                 replaced.viewThatWasReplaced = this;
                 replaced.Navigation = this.Navigation;
-                replaced.Parent = this.Parent;
+                replaced.Parent = this.Parent ?? this;
                 replacedView = replaced;
                 replacedView.ViewHandler = ViewHandler;
                 return builtView = replacedView.GetRenderView();
@@ -259,23 +266,43 @@ namespace HotUI
             }
         }
 
-        public void Dispose()
+       
+        bool disposedValue = false;
+        protected virtual void Dispose(bool disposing)
         {
+            if (!disposing)
+                return;
+
             ActiveViews.Remove(this);
+            Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
             HotReloadHelper.UnRegister(this);
-            var viewHandler = ViewHandler;
+            var vh = ViewHandler;
             ViewHandler = null;
             //TODO: Ditch the cast
-            (viewHandler as IDisposable)?.Dispose();
+            (vh as IDisposable)?.Dispose();
+            replacedView?.Dispose();
+            replacedView = null;
+            builtView?.Dispose();
+            builtView = null;
             Body = null;
             Context.Clear();
             State?.DisposingObject(this);
             State = null;
-            OnDisposing();
-        }
-        protected virtual void OnDisposing()
-        {
 
+        }
+        void OnDispose(bool disposing)
+        {
+            if (disposedValue)
+                return;
+            disposedValue = true;
+            Dispose(disposing);
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(true);
+            GC.SuppressFinalize(this);
         }
     }
 }

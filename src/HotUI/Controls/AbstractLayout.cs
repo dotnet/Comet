@@ -130,14 +130,14 @@ namespace HotUI
 				view.ContextPropertyChanged (property, value);
 			}
 		}
-
-        protected override void OnDisposing ()
-		{
-			base.OnDisposing ();
-			foreach (var view in _views) {
-				view.Dispose ();
-			}
-			_views.Clear ();
-		}
+        protected override void Dispose(bool disposing)
+        {
+            foreach (var view in _views)
+            {
+                view.Dispose();
+            }
+            _views.Clear();
+            base.Dispose(disposing);
+        }
 	}
 }
