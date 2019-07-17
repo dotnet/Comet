@@ -258,6 +258,13 @@ namespace HotUI
 
         }
 
+        Thickness padding = Thickness.Empty;
+        public Thickness Padding
+        {
+            get => padding;
+            internal set => this.SetValue(State, ref padding, value, (s, o) => ResetView());
+        }
+        
         FrameConstraints frameConstraints;
         public FrameConstraints FrameConstraints
         {

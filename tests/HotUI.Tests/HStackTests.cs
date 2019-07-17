@@ -189,5 +189,73 @@ namespace HotUI.Tests
 			Assert.Equal(new SizeF(40, 12), text.MeasuredSize);
 			Assert.Equal(new RectangleF(260,8,40,12), text.Frame);
 		}
+		
+		[Fact]
+		public void TestView1WithPaddingAndFrameConstraintsOnItems()
+		{
+			var view = new HStackTestView1();
+			InitializeHandlers(view);
+
+			var stack = view.GetViewWithTag<HStack>("stack").Padding();
+			var textField = view.GetViewWithTag<TextField>("textfield").Frame(height:22);
+			var spacer = view.GetViewWithTag<Spacer>("spacer");
+			var text = view.GetViewWithTag<Text>("text").Frame(height:18);
+			
+			view.Frame = new RectangleF(0,0,320,600);
+			
+			Assert.Equal(true, view.MeasurementValid);
+			Assert.Equal(new SizeF(300, 22), view.MeasuredSize);
+			Assert.Equal(new RectangleF(0,0,320,600), view.Frame);
+
+			Assert.Equal(true, stack.MeasurementValid);
+			Assert.Equal(new SizeF(300, 22), stack.MeasuredSize);
+			Assert.Equal(new RectangleF(10,289,300,22), stack.Frame);
+			
+			Assert.Equal(true,textField.MeasurementValid);
+			Assert.Equal(new SizeF(40, 22), textField.MeasuredSize);
+			Assert.Equal(new RectangleF(0,0,40,22), textField.Frame);
+
+			Assert.Equal(true,spacer.MeasurementValid);
+			Assert.Equal(new SizeF(220, 22), spacer.MeasuredSize);
+			Assert.Equal(new RectangleF(40,0,220,22), spacer.Frame);
+
+			Assert.Equal(true,text.MeasurementValid);
+			Assert.Equal(new SizeF(40, 18), text.MeasuredSize);
+			Assert.Equal(new RectangleF(260,2,40,18), text.Frame);
+		}
+		
+		[Fact]
+		public void TestView1WithPaddingAndFrameConstraintsAndPaddingOnItems()
+		{
+			var view = new HStackTestView1();
+			InitializeHandlers(view);
+
+			var stack = view.GetViewWithTag<HStack>("stack").Padding();
+			var textField = view.GetViewWithTag<TextField>("textfield").Frame(height:22).Padding();
+			var spacer = view.GetViewWithTag<Spacer>("spacer");
+			var text = view.GetViewWithTag<Text>("text").Frame(height:18);
+			
+			view.Frame = new RectangleF(0,0,320,600);
+			
+			Assert.Equal(true, view.MeasurementValid);
+			Assert.Equal(new SizeF(300, 42), view.MeasuredSize);
+			Assert.Equal(new RectangleF(0,0,320,600), view.Frame);
+
+			Assert.Equal(true, stack.MeasurementValid);
+			Assert.Equal(new SizeF(300, 42), stack.MeasuredSize);
+			Assert.Equal(new RectangleF(10,279,300,42), stack.Frame);
+			
+			Assert.Equal(true,textField.MeasurementValid);
+			Assert.Equal(new SizeF(40, 22), textField.MeasuredSize);
+			Assert.Equal(new RectangleF(10,10,40,22), textField.Frame);
+
+			Assert.Equal(true,spacer.MeasurementValid);
+			Assert.Equal(new SizeF(200, 22), spacer.MeasuredSize);
+			Assert.Equal(new RectangleF(60,10,200,22), spacer.Frame);
+
+			Assert.Equal(true,text.MeasurementValid);
+			Assert.Equal(new SizeF(40, 18), text.MeasuredSize);
+			Assert.Equal(new RectangleF(260,12,40,18), text.Frame);
+		}
 	}
 }

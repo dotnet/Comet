@@ -27,8 +27,15 @@ namespace HotUI.Layout
                         view.MeasurementValid = true;
                     }
 
-                    height = Math.Max(size.Height, height);
-                    width += size.Width;
+                    var finalHeight = size.Height;
+                    var finalWidth = size.Width;
+                    
+                    var padding = view.Padding;
+                    finalHeight += padding.VerticalThickness;
+                    finalWidth += padding.HorizontalThickness;
+
+                    height = Math.Max(finalHeight, height);
+                    width += finalWidth;
                 }
                 index++;
             }
@@ -60,7 +67,7 @@ namespace HotUI.Layout
                     var size = view.MeasuredSize;
                     sizes.Add(size);
                     height = Math.Max(size.Height, height);
-                    nonSpacerWidth += size.Width;
+                    nonSpacerWidth += size.Width + view.Padding.HorizontalThickness;
                 }
                 index++;
             }
@@ -89,15 +96,19 @@ namespace HotUI.Layout
 
                 var alignment = view.FrameConstraints?.Alignment ?? Alignment.Center;
                 var alignedY = y;
+
+                var padding = view.GetPadding();
+                
                 switch (alignment.Vertical)
                 {
                     case VerticalAlignment.Center:
-                        alignedY += (measured.Height - size.Height) / 2;
+                        alignedY += (measured.Height - size.Height - padding.Bottom + padding.Top) / 2;
                         break;
                     case VerticalAlignment.Bottom:
-                        alignedY += (measured.Height - size.Height);
+                        alignedY += measured.Height - size.Height - padding.Bottom;
                         break;
                     case VerticalAlignment.Top:
+                        alignedY = padding.Top;
                         break;
                     case VerticalAlignment.FirstTextBaseline:
                         throw new NotSupportedException(VerticalAlignment.FirstTextBaseline.ToString());
@@ -109,8 +120,15 @@ namespace HotUI.Layout
                         throw new ArgumentOutOfRangeException();
                 }
                 
+                if (padding != null)
+                    x += padding.Left;
+                
                 view.Frame = new RectangleF(x,alignedY,size.Width, size.Height);
                 x += size.Width;
+
+                if (padding != null)
+                    x += padding.Right;
+                
                 index++;
             }
         }
