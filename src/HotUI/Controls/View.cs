@@ -117,7 +117,9 @@ namespace HotUI
             if (ViewHandler == null)
                 return;
             ViewHandler.Remove(this);
-            var view = this.GetRenderView().Diff(oldView);
+            var view = this.GetRenderView();
+            if(oldView != null)
+                view = view.Diff(oldView);
             oldView?.Dispose();
             ViewHandler?.SetView(view);
         }
