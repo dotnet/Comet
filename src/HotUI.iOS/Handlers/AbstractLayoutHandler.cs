@@ -269,7 +269,7 @@ namespace HotUI.iOS.Handlers
             if (Superview == null || Bounds.Size.IsEmpty)
                 return;
 
-            _view.Frame = Bounds.ToRectangleF();
+            _view.Frame = Frame.ToRectangleF();
         }
     }
 }

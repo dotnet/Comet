@@ -13,7 +13,6 @@ namespace HotUI.Samples
         View body() => new VStack {
                 new Image("turtlerock.jpg")
                     .ClipShape(new Path(HighwayShield))
-                    .Overlay(new Circle().Stroke(Color.White, lineWidth: 4))
                     .Shadow(radius: 10)
             };
 

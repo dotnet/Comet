@@ -34,6 +34,7 @@ namespace HotUI.iOS
                 if (_virtualView != null)
                 {
                     _virtualView.ViewHandlerChanged -= HandleViewHandlerChanged;
+                    _virtualView.NeedsLayout -= HandleNeedsLayout;
                     if (_handler is iOSViewHandler viewHandler)
                         viewHandler.NativeViewChanged -= HandleNativeViewChanged;
                 }
@@ -43,6 +44,7 @@ namespace HotUI.iOS
                 if (_virtualView != null)
                 {
                     _virtualView.ViewHandlerChanged += HandleViewHandlerChanged;
+                    _virtualView.NeedsLayout += HandleNeedsLayout;
                     if (_handler is iOSViewHandler viewHandler)
                         viewHandler.NativeViewChanged += HandleNativeViewChanged;
 
@@ -50,6 +52,12 @@ namespace HotUI.iOS
                     HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, null, (UIView)_handler.NativeView));
                 }
             }
+        }
+
+        private void HandleNeedsLayout(object sender, EventArgs e)
+        {
+            _nativeView?.SizeToFit();
+            LayoutSubviews();
         }
 
         private void HandleViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)

@@ -44,7 +44,7 @@ namespace HotUI.iOS.Handlers
         {
             var nativeView = (UIButton) viewHandler.NativeView;
             nativeView.SetTitle(virtualView.Text, UIControlState.Normal);
-            nativeView.SizeToFit();
+            virtualView.InvalidateMeasurement();
         }
     }
 }

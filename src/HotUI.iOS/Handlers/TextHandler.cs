@@ -45,7 +45,7 @@ namespace HotUI.iOS.Handlers
         {
             var nativeView = (UILabel) viewHandler.NativeView;
             nativeView.Text = virtualView.Value;
-            nativeView.SizeToFit();
+            virtualView.InvalidateMeasurement();
         }
 
 		public static void MapFontProperty (IViewHandler viewHandler, Text virtualView)
@@ -53,8 +53,8 @@ namespace HotUI.iOS.Handlers
             var nativeView = (UILabel) viewHandler.NativeView;
             var font = virtualView.GetFont(DefaultFont);
 			nativeView.Font = font.ToUIFont();
-			nativeView.SizeToFit ();
-		}
+            virtualView.InvalidateMeasurement();
+        }
 
         public static void MapColorProperty(IViewHandler viewHandler, Text virtualView)
         {

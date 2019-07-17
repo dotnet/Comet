@@ -15,6 +15,7 @@ namespace HotUI
         HashSet<string> usedEnvironmentData = new HashSet<string>();
 
         public event EventHandler<ViewHandlerChangedEventArgs> ViewHandlerChanged;
+        public event EventHandler<EventArgs> NeedsLayout;
 
         View parent;
         string id;
@@ -335,6 +336,13 @@ namespace HotUI
         {
             get => measurementValid;
             internal set => measurementValid = value;
+        }
+
+        public void InvalidateMeasurement()
+        {
+            MeasurementValid = false;
+            Parent?.InvalidateMeasurement();
+            NeedsLayout?.Invoke(this, EventArgs.Empty);
         }
 
         private SizeF measuredSize;
