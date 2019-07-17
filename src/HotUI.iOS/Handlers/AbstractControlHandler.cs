@@ -69,7 +69,7 @@ namespace HotUI.iOS.Handlers
 
         public void SetFrame(RectangleF frame)
         {
-            _nativeView.Frame = frame.ToCGRect();
+            View.Frame = frame.ToCGRect();
         }
 
         public virtual void Remove(View view)
