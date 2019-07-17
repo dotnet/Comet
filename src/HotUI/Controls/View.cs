@@ -406,10 +406,8 @@ namespace HotUI
                     break;
                 case VerticalAlignment.FirstTextBaseline:
                     throw new NotSupportedException("Not yet supported");
-                    break;
                 case VerticalAlignment.LastTextBaseline:
                     throw new NotSupportedException("Not yet supported");
-                    break;
                 default:
                     throw new ArgumentOutOfRangeException();
             }

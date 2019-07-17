@@ -6,7 +6,7 @@ using UIKit;
 
 namespace HotUI.iOS.Handlers
 {
-    public class ButtonHandler : AbstractHandler<Button, UIButton>
+    public class ButtonHandler : AbstractControlHandler<Button, UIButton>
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {

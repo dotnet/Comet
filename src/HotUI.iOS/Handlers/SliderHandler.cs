@@ -6,7 +6,7 @@ using UIKit;
 
 namespace HotUI.iOS.Handlers
 {
-    public class SliderHandler : AbstractHandler<Slider, UISlider>
+    public class SliderHandler : AbstractControlHandler<Slider, UISlider>
     {
         public static readonly PropertyMapper<Slider> Mapper = new PropertyMapper<Slider>(ViewHandler.Mapper)
         {

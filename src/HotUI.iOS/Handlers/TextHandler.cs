@@ -5,7 +5,7 @@
 
 namespace HotUI.iOS.Handlers
 {
-    public class TextHandler : AbstractHandler<Text, UILabel>
+    public class TextHandler : AbstractControlHandler<Text, UILabel>
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {

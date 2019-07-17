@@ -7,100 +7,34 @@ using UIKit;
 
 namespace HotUI.iOS.Handlers
 {
-    public class ListViewHandler : UITableView, iOSViewHandler, IUITableViewDataSource, IUITableViewDelegate
+    public class ListViewHandler : AbstractHandler<ListView, HUITableView>
     {
-        private static readonly string CellType = "ViewCell";
-        private ListView _listView;
-
-        public ListViewHandler()
+        public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>(ViewHandler.Mapper)
         {
-            WeakDataSource = this;
-            WeakDelegate = this;
+            ["ListView"] = MapListViewProperty
+        };
+        
+        public ListViewHandler() : base(Mapper)
+        {
+
+        }
+        
+        protected override HUITableView CreateView()
+        {
+            return new HUITableView();
         }
 
-
-        public nint RowsInSection(UITableView tableView, nint section)
+        public override void Remove(View view)
         {
-            return _listView?.List?.Count ?? 0;
+            TypedNativeView.ListView = null;
+            base.Remove(view);
         }
 
-        public UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+        public static void MapListViewProperty(IViewHandler viewHandler, ListView virtualView)
         {
-            var cell = DequeueReusableCell(CellType) as ViewCell ?? new ViewCell();
-            var item = _listView?.List[indexPath.Row];
-            var v = _listView?.CellCreator?.Invoke(item);
-            v.Parent = _listView;
-            cell.SetView(v);
-            return cell;
-        }
-
-        public UIView View => this;
-
-        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
-
-        public HUIContainerView ContainerView => null;
-
-        public object NativeView => View;
-
-        public bool HasContainer { get; set; } = false;
-
-        public void SetView(View view)
-        {
-            _listView = view as ListView;
-            //TODO: Some crude size estimation
-            //var v = _listView?.CellCreator?.Invoke(_listView?.List[0]);
-            EstimatedRowHeight = 200;
-            ReloadData();
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            ReloadData();
-        }
-
-        public void Remove(View view)
-        {
-            ReloadData();
-        }
-
-        [Export("tableView:didSelectRowAtIndexPath:")]
-        public void RowSelected(UITableView tableView, NSIndexPath indexPath)
-        {
-            if (indexPath.Row < 0)
-                return;
-            tableView.DeselectRow(indexPath, true);
-            _listView?.OnSelected(indexPath.Row);
-        }
-
-        private class ViewCell : UITableViewCell
-        {
-            private UIView _currentContent;
-            private View _currentView;
-
-            public override void LayoutSubviews()
-            {
-                base.LayoutSubviews();
-                if (_currentContent == null)
-                    return;
-                _currentContent.Frame = ContentView.Bounds;
-            }
-
-            public void SetView(View view)
-            {
-                //TODO:We should do View Compare
-                //view.Diff (view);
-                _currentContent?.RemoveFromSuperview();
-                _currentContent = view.ToView();
-                ContentView.Add(_currentContent);
-                //This should let it autosize
-                NSLayoutConstraint.ActivateConstraints(new[]
-                {
-                    _currentContent.LeadingAnchor.ConstraintEqualTo(LeadingAnchor),
-                    _currentContent.TrailingAnchor.ConstraintEqualTo(TrailingAnchor),
-                    _currentContent.TopAnchor.ConstraintEqualTo(TopAnchor),
-                    _currentContent.BottomAnchor.ConstraintEqualTo(BottomAnchor)
-                });
-            }
+            var nativeView = (HUITableView) viewHandler.NativeView;
+            nativeView.ListView = virtualView;
+            nativeView.SizeToFit();
         }
     }
 }

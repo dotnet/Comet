@@ -40,7 +40,7 @@ namespace HotUI.Tests {
 		}
 
 		[Fact]
-		public void LabelFormatedTextBinding ()
+		public void LabelFormattedTextBinding ()
 		{
 			Text text = null;
 			var view = new StatePage ();
@@ -93,14 +93,14 @@ namespace HotUI.Tests {
 			text.ViewHandler = textHandler;
 
 
-			Assert.Equal (buildCount, 1);
-			Assert.Equal (textBuildCount, 1);
+			Assert.Equal (1, buildCount);
+			Assert.Equal (1, textBuildCount);
 
 			view.text.Value = "Goodbye";
 
 
-			Assert.Equal (buildCount, 1);
-			Assert.Equal (textBuildCount, 2);
+			Assert.Equal (1, buildCount);
+			Assert.Equal (2, textBuildCount);
 
 		}
 

@@ -3,14 +3,13 @@ using System.Diagnostics;
 using CoreAnimation;
 using CoreGraphics;
 using HotUI.Graphics;
-using HotUI.iOS.Controls;
 using UIKit;
 
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace HotUI.iOS.Handlers
 {
-    public class ViewHandler : iOSViewHandler
+    public class ViewHandler : AbstractHandler<View, UIView>
     {
         public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
@@ -20,51 +19,24 @@ namespace HotUI.iOS.Handlers
             [nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty
         };
         
-        private View _view;
-        private UIView _body;
-        
-        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
-    
-        public UIView View => _body;
-        
-        public HUIContainerView ContainerView => null;
-
-        public object NativeView => View;
-
-        public bool HasContainer { get; set; } = false;
-
-        public void Remove(View view)
+        protected override UIView CreateView()
         {
-            _view = null;
-            _body = null;
-        }
-
-        public void SetView(View view)
-        {
-            var oldBody = _body;
-            _view = view;
-            SetBody();
-            Mapper.UpdateProperties(this, _view);
-            NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(_view, oldBody, _body));
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperty(this, _view, property);
-        }
-
-        public bool SetBody()
-        {
-            var uiElement = _view?.ToIUIView();
-            if (uiElement?.GetType() == typeof(ViewHandler) && _view.Body == null)
+            var viewHandler = VirtualView?.GetOrCreateViewHandler();
+            if (viewHandler?.GetType() == typeof(ViewHandler) && NativeView == null)
             {
                 // this is recursive.
-                Debug.WriteLine($"There is no ViewHandler for {_view.GetType()}");
-                return true;
+                Debug.WriteLine($"There is no ViewHandler for {VirtualView.GetType()}");
+                return null;
             }
 
-            _body = uiElement?.View ?? new UIView();
-            return true;
+            return viewHandler?.View ?? new UIView();
+        }
+
+        public override void SetView(View view)
+        {
+            var previousView = TypedNativeView;
+            base.SetView(view);
+            BroadcastNativeViewChanged(previousView, TypedNativeView);
         }
 
         public static void MapBackgroundColorProperty(IViewHandler handler, View virtualView)
@@ -191,45 +163,5 @@ namespace HotUI.iOS.Handlers
                 handler.HasContainer = NeedsContainer(virtualView);
             }
         }
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-              
-            _body?.RemoveFromSuperview();
-            _body?.Dispose();
-            _body = null;
-            if (_view != null)
-                Remove(_view);
-             
-        }
-
-
-        void OnDispose(bool disposing)
-        {
-            if (disposedValue)
-                return;
-            disposedValue = true;
-            Dispose(disposing);
-        }
-
-        ~ViewHandler()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            OnDispose(false);
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            OnDispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

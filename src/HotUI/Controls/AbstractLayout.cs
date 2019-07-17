@@ -8,10 +8,26 @@ namespace HotUI
 	public abstract class AbstractLayout : View, IList<View>, IContainerView
     {
 		readonly List<View> _views = new List<View> ();
-
+		private ILayoutManager2 _layout;
+		
 		public event EventHandler<LayoutEventArgs> ChildrenChanged;
 		public event EventHandler<LayoutEventArgs> ChildrenAdded;
 		public event EventHandler<LayoutEventArgs> ChildrenRemoved;
+
+		protected AbstractLayout(ILayoutManager2 layoutManager)
+		{
+			_layout = layoutManager;
+		}
+		
+		protected ILayoutManager2 LayoutManager
+		{
+			get => _layout;
+			set
+			{
+				_layout = value;
+				RequestLayout();
+			}
+		}
 
 		public void Add (View view)
 		{
@@ -44,6 +60,8 @@ namespace HotUI
 
 		public bool Remove (View item)
 		{
+			if (item == null) return false;
+			
 			var index = _views.IndexOf (item);
 			if (index >= 0)
             {
@@ -131,9 +149,7 @@ namespace HotUI
 				view.ContextPropertyChanged (property, value);
 			}
 		}
-        
-        public ILayoutManager2 LayoutManager { get; set; }
-        
+		
         public override SizeF Measure(SizeF availableSize)
         {
 	        var width = FrameConstraints?.Width;
@@ -144,7 +160,7 @@ namespace HotUI
 	        if (width != null && height != null)
 		        return new SizeF((float)width, (float)height);
 
-	        var measuredSize = LayoutManager?.Measure(this, availableSize) ?? availableSize;
+	        var measuredSize = _layout?.Measure(this, availableSize) ?? availableSize;
             
 	        // If we have a constraint for just one of the values, then combine the constrained value
 	        // with the measured value for our size.
@@ -156,7 +172,7 @@ namespace HotUI
 
         public override void LayoutSubviews(RectangleF bounds)
         {
-	        LayoutManager?.Layout(this, bounds.Size);
+	        _layout?.Layout(this, bounds.Size);
         }
     
         protected override void Dispose(bool disposing)

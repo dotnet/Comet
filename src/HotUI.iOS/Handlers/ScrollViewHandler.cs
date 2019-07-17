@@ -6,55 +6,33 @@ using UIKit;
 
 namespace HotUI.iOS.Handlers
 {
-    public class ScrollViewHandler : UIScrollView, iOSViewHandler
+    public class ScrollViewHandler : AbstractHandler<ScrollView, UIScrollView>
     {
-        public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
-        {
-            
-        };
-
-        private ScrollView _scroll;
         private UIView _content;
-
-        public ScrollViewHandler()
+        
+        protected override UIScrollView CreateView()
         {
-            ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always;
-        }
+            var scrollView = new UIScrollView()
+            {
+                ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always
+            };
 
-        public UIView View => this;
-
-        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
-
-        public HUIContainerView ContainerView => null;
-
-        public object NativeView => View;
-
-        public bool HasContainer { get; set; } = false;
-
-        public void Remove(View view)
-        {
-            _content?.RemoveFromSuperview();
-            _scroll = null;
-            _content = null;
-        }
-
-        public void SetView(View view)
-        {
-            _scroll = view as ScrollView;
-
-            _content = _scroll?.View?.ToView();
+            _content = VirtualView?.View?.ToView();
             if (_content != null)
             {
                 _content.SizeToFit();
-                Add(_content);
+                scrollView.Add(_content);
             }
 
-            Mapper.UpdateProperties(this, _scroll);
+            return scrollView;
         }
-
-        public void UpdateValue(string property, object value)
+        
+        public override void Remove(View view)
         {
-            Mapper.UpdateProperty(this, _scroll, property);
+            _content?.RemoveFromSuperview();
+            _content = null;
+            
+            base.Remove(view);
         }
     }
 }

@@ -6,7 +6,7 @@ using UIKit;
 
 namespace HotUI.iOS.Handlers
 {
-    public class SecureFieldHandler : AbstractHandler<SecureField, UITextField>
+    public class SecureFieldHandler : AbstractControlHandler<SecureField, UITextField>
     {
         public static readonly PropertyMapper<SecureField> Mapper = new PropertyMapper<SecureField>(ViewHandler.Mapper)
         {

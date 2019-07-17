@@ -5,7 +5,7 @@ using UIKit;
 
 namespace HotUI.iOS.Handlers
 {
-    public class ToggleHandler : AbstractHandler<Toggle, UISwitch>
+    public class ToggleHandler : AbstractControlHandler<Toggle, UISwitch>
     {
 		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> (ViewHandler.Mapper)
 		{ 

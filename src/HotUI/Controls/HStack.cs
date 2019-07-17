@@ -6,9 +6,9 @@ namespace HotUI
 	{
         public HStack(
             VerticalAlignment alignment = VerticalAlignment.Center,
-            float? spacing = null)
+            float? spacing = null) : base(new HStackLayoutManager2(alignment, spacing))
         {
-            LayoutManager = new HStackLayoutManager2();
+            
         }
     }
 }

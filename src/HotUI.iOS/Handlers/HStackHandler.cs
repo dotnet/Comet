@@ -8,11 +8,11 @@ namespace HotUI.iOS.Handlers
 {
     public class HStackHandler : AbstractLayoutHandler
     {
-        public HStackHandler(CGRect rect) : base(rect, new HStackLayoutManager<UIView>())
+        public HStackHandler(CGRect rect) : base(rect)
         {
         }
 
-        public HStackHandler() : base(new HStackLayoutManager<UIView>())
+        public HStackHandler() : base()
         {
         }
     }

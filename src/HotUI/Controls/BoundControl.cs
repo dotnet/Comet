@@ -18,10 +18,10 @@ namespace HotUI
 		}
 		
 		T _boundValue;
-		public T BoundValue 
+		protected T BoundValue 
 		{
 			get => _boundValue;
-			protected set => SetValue (ref _boundValue, value, _propertyName);
+			set => SetValue (ref _boundValue, value, _propertyName);
 		}
 		
 		protected void SetValue<T> (ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")

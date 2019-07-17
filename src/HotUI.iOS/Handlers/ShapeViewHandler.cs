@@ -5,7 +5,7 @@
 
 namespace HotUI.iOS.Handlers
 {
-    public class ShapeViewHandler : AbstractHandler<ShapeView, HUIShapeView>
+    public class ShapeViewHandler : AbstractControlHandler<ShapeView, HUIShapeView>
     {
         public static readonly PropertyMapper<ShapeView> Mapper = new PropertyMapper<ShapeView>(ViewHandler.Mapper)
         {

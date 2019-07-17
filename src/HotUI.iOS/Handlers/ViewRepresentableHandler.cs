@@ -5,7 +5,7 @@
 
 namespace HotUI.iOS.Handlers
 {
-    public class ViewRepresentableHandler : AbstractHandler<ViewRepresentable, UIView>
+    public class ViewRepresentableHandler : AbstractControlHandler<ViewRepresentable, UIView>
     {
         public static readonly PropertyMapper<ViewRepresentable> Mapper = new PropertyMapper<ViewRepresentable>(ViewHandler.Mapper)
         {

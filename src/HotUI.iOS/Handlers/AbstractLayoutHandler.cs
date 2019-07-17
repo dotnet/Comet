@@ -12,28 +12,23 @@ namespace HotUI.iOS.Handlers
         public static int _counter = 0;
         public int _instance;
 
-        private readonly ILayoutManager<UIView> _layoutManager;
         private AbstractLayout _view;
         private SizeF _measured;
         private bool _measurementValid;
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
-        protected AbstractLayoutHandler(CGRect rect, ILayoutManager<UIView> layoutManager) : base(rect)
+        protected AbstractLayoutHandler(CGRect rect) : base(rect)
         {
             _instance = _counter++;
-            _layoutManager = layoutManager;
             InitializeDefaults();
         }
 
-        protected AbstractLayoutHandler(ILayoutManager<UIView> layoutManager)
+        protected AbstractLayoutHandler()
         {
             _instance = _counter++;
-            _layoutManager = layoutManager;
         }
-
-        public AbstractLayout Layout => _view;
-
+        
         public SizeF Measure(UIView view, SizeF available)
         {
             CGSize size;
@@ -48,7 +43,7 @@ namespace HotUI.iOS.Handlers
                     size = view.Bounds.Size;
             }
 
-            return size.ToHotUISize();
+            return size.ToSizeF();
         }
 
         public SizeF GetSize(UIView view)
@@ -57,7 +52,7 @@ namespace HotUI.iOS.Handlers
             if (size.Width == 0 || size.Height == 0)
                 size = view.IntrinsicContentSize;
 
-            return size.ToHotUISize();
+            return size.ToSizeF();
         }
 
         public void SetFrame(UIView view, float x, float y, float width, float height)
@@ -88,6 +83,16 @@ namespace HotUI.iOS.Handlers
         {
             get => false; 
             set {}
+        }
+
+        public SizeF Measure(SizeF availableSize)
+        {
+            return availableSize;
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            View.Frame = frame.ToCGRect();
         }
 
         public void SetView(View view)
@@ -153,8 +158,7 @@ namespace HotUI.iOS.Handlers
         {
             Console.WriteLine($"[{GetType().Name} - {_instance}] HandlerViewChanged: [{sender.GetType()}] From:[{args.OldNativeView?.GetType()}] To:[{args.NewNativeView?.GetType()}]");
 
-            if (args.OldNativeView != null)
-                args.OldNativeView.RemoveFromSuperview();
+            args.OldNativeView?.RemoveFromSuperview();
 
             var index = _view.IndexOf(args.VirtualView);
             var newView = args.NewNativeView ?? new UIView();
@@ -247,33 +251,25 @@ namespace HotUI.iOS.Handlers
 
         public override CGSize SizeThatFits(CGSize size)
         {
-            _measured = _layoutManager.Measure(this, this, _view, size.ToHotUISize());
-            _measurementValid = true;
+            _measured = _view.Measure(size.ToSizeF());
             return _measured.ToCGSize();
         }
 
         public override void SizeToFit()
         {
-            _measured = _layoutManager.Measure(this, this, _view, Superview?.Bounds.Size.ToHotUISize() ?? UIScreen.MainScreen.Bounds.Size.ToHotUISize());
+            _measured = _view.Measure(Superview?.Bounds.Size.ToSizeF() ?? UIScreen.MainScreen.Bounds.Size.ToSizeF());
             _measurementValid = true;
             base.Frame = new CGRect(new CGPoint(0, 0), _measured.ToCGSize());
         }
 
         public override CGSize IntrinsicContentSize => _measured.ToCGSize();
-
+        
         public override void LayoutSubviews()
         {
             if (Superview == null || Bounds.Size.IsEmpty)
                 return;
 
-            var available = Bounds.Size.ToHotUISize();
-            if (!_measurementValid)
-            {
-                _measured = _layoutManager.Measure(this, this, _view, available);
-                _measurementValid = true;
-            }
-
-            _layoutManager.Layout(this, this, _view, _measured);
+            _view.Frame = Bounds.ToRectangleF();
         }
     }
 }

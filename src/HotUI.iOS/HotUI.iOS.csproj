@@ -46,8 +46,10 @@
   <ItemGroup>
     <Compile Include="Controls\HUIContainerView.cs" />
     <Compile Include="Controls\HUIImageView.cs" />
+    <Compile Include="Controls\HUITableView.cs" />
     <Compile Include="Controls\SizeChangedEventArgs.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
+    <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />
     <Compile Include="Handlers\SecureFieldHandler.cs" />
@@ -72,7 +74,7 @@
     <Compile Include="Handlers\ContentViewHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />
     <Compile Include="HotUIView.cs" />
-    <Compile Include="Handlers\AbstractHandler.cs" />
+    <Compile Include="Handlers\AbstractControlHandler.cs" />
     <Compile Include="ViewChangedEventArgs.cs" />
     <Compile Include="Handlers\ShapeViewHandler.cs" />
     <Compile Include="Controls\HUIShapeView.cs" />

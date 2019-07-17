@@ -6,7 +6,7 @@ using HotUI.iOS.Controls;
 
 namespace HotUI.iOS.Handlers
 {
-    public class ImageHandler : AbstractHandler<Image, HUIImageView>
+    public class ImageHandler : AbstractControlHandler<Image, HUIImageView>
     {
         public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>(ViewHandler.Mapper)
         {

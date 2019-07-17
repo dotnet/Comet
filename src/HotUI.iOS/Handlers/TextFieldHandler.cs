@@ -6,7 +6,7 @@ using UIKit;
 
 namespace HotUI.iOS.Handlers
 {
-    public class TextFieldHandler : AbstractHandler<TextField, UITextField>
+    public class TextFieldHandler : AbstractControlHandler<TextField, UITextField>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {

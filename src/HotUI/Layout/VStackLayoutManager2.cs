@@ -3,14 +3,14 @@ using System.Collections.Generic;
 
 namespace HotUI.Layout
 {
-    public class HStackLayoutManager2 : ILayoutManager2
+    public class VStackLayoutManager2 : ILayoutManager2
     {
-        private readonly VerticalAlignment _defaultAlignment;
+        private readonly HorizontalAlignment _defaultAlignment;
         private readonly float _spacing;
-
-        public HStackLayoutManager2(
-            VerticalAlignment alignment, 
-            float? spacing)
+        
+        public VStackLayoutManager2(
+            HorizontalAlignment alignment = HorizontalAlignment.Center, 
+            float? spacing = null)
         {
             _defaultAlignment = alignment;
             _spacing = spacing ?? 4;
@@ -23,11 +23,11 @@ namespace HotUI.Layout
             var height = 0f;
             var spacerCount = 0;
             var lastWasSpacer = false;
-
+            
             foreach (var view in layout)
             {
                 var isSpacer = false;
-
+                
                 if (view is Spacer)
                 {
                     spacerCount++;
@@ -49,37 +49,37 @@ namespace HotUI.Layout
                     finalHeight += padding.VerticalThickness;
                     finalWidth += padding.HorizontalThickness;
 
-                    height = Math.Max(finalHeight, height);
-                    width += finalWidth;
+                    width = Math.Max(finalWidth, width);
+                    height += finalHeight;
                 }
-
+                
                 if (index > 0 && !lastWasSpacer && !isSpacer)
-                    width += _spacing;
+                    height += _spacing;
 
                 lastWasSpacer = isSpacer;
                 index++;
             }
 
             if (spacerCount > 0)
-                width = available.Width;
+                height = available.Height;
 
             return new SizeF(width, height);
         }
 
         public void Layout(AbstractLayout layout, SizeF measured)
         {
-            var height = 0f;
-            
+            var width = 0f;
+
             var index = 0;
-            var nonSpacerWidth = 0f;
+            var nonSpacerHeight = 0f;
             var spacerCount = 0;
             var sizes = new List<SizeF>();
             var lastWasSpacer = false;
-            
+
             foreach (var view in layout)
             {
                 var isSpacer = false;
-                
+
                 if (view is Spacer)
                 {
                     spacerCount++;
@@ -90,22 +90,22 @@ namespace HotUI.Layout
                 {
                     var size = view.MeasuredSize;
                     sizes.Add(size);
-                    height = Math.Max(size.Height, height);
-                    nonSpacerWidth += size.Width + view.Padding.HorizontalThickness;
+                    width = Math.Max(size.Width, width);
+                    nonSpacerHeight += size.Height + view.Padding.VerticalThickness;
                 }
-
+                
                 if (index > 0 && !lastWasSpacer && !isSpacer)
-                    nonSpacerWidth += _spacing;
+                    nonSpacerHeight += _spacing;
                 
                 lastWasSpacer = isSpacer;
                 index++;
             }
 
-            var spacerWidth = 0f;
-            if (spacerCount>0)
+            var spacerHeight = 0f;
+            if (spacerCount > 0)
             {
-                var availableWidth = measured.Width - nonSpacerWidth;
-                spacerWidth = availableWidth / spacerCount;
+                var availableHeight = measured.Height - nonSpacerHeight;
+                spacerHeight = availableHeight / spacerCount;
             }
 
             var x = 0f;
@@ -114,53 +114,48 @@ namespace HotUI.Layout
             foreach (var view in layout)
             {
                 var isSpacer = false;
-
+                
                 SizeF size;
                 if (view is Spacer)
                 {
                     isSpacer = true;
-                    size = new SizeF(spacerWidth, height);
+                    size = new SizeF(width, spacerHeight);
                 }
                 else
                 {
                     size = sizes[index];
                 }
 
-                var alignment = view.FrameConstraints?.Alignment?.Vertical ?? _defaultAlignment;
-                var alignedY = y;
+                var alignment = view.FrameConstraints?.Alignment?.Horizontal ?? _defaultAlignment;
+                var alignedX = x;
 
                 var padding = view.GetPadding();
                 
                 switch (alignment)
                 {
-                    case VerticalAlignment.Center:
-                        alignedY += (measured.Height - size.Height - padding.Bottom + padding.Top) / 2;
+                    case HorizontalAlignment.Center:
+                        alignedX += (measured.Width - size.Width - padding.Left + padding.Right) / 2;
                         break;
-                    case VerticalAlignment.Bottom:
-                        alignedY += measured.Height - size.Height - padding.Bottom;
+                    case HorizontalAlignment.Trailing:
+                        alignedX += measured.Width - size.Width - padding.Right;
                         break;
-                    case VerticalAlignment.Top:
-                        alignedY = padding.Top;
+                    case HorizontalAlignment.Leading:
+                        alignedX = padding.Left;
                         break;
-                    case VerticalAlignment.FirstTextBaseline:
-                        throw new NotSupportedException(VerticalAlignment.FirstTextBaseline.ToString());
-                    case VerticalAlignment.LastTextBaseline:
-                        throw new NotSupportedException(VerticalAlignment.LastTextBaseline.ToString());
-                    default:
+                      default:
                         throw new ArgumentOutOfRangeException();
                 }
                 
                 if (index > 0 && !lastWasSpacer && !isSpacer)
-                    x += _spacing;
+                    y += _spacing;
                 
-                x += padding.Left;
+                y += padding.Top;
 
-                view.Frame = new RectangleF(x, alignedY, size.Width, size.Height);
+                view.Frame = new RectangleF(alignedX, y, size.Width, size.Height);
                 
-                x += size.Width;
-                x += padding.Right;
+                y += size.Height;
+                y += padding.Bottom;
                 
-                lastWasSpacer = isSpacer;
                 index++;
             }
         }
