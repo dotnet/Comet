@@ -5,7 +5,7 @@ namespace HotUI
     /// <summary>
     /// A view that displays a shape.
     /// </summary>
-    public class ShapeView : View
+    public class ShapeView : Control
     {
         public ShapeView()
         {

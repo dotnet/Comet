@@ -1,6 +1,6 @@
 ﻿using System;
 namespace HotUI {
-	public class WebView : View {
+	public class WebView : Control {
 		string html;
 		public string Html {
 			get => html;

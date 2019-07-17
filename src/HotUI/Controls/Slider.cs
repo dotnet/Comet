@@ -2,7 +2,7 @@
 
 namespace HotUI 
 {
-	public class Slider : BoundView<float>
+	public class Slider : BoundControl<float>
 	{
 		public Slider (
 			Binding<float> value = null, 	

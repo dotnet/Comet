@@ -9,5 +9,7 @@ namespace HotUI
 		void Remove (View view);
 		object NativeView { get; }
 		bool HasContainer { get; set; }
+		SizeF Measure(SizeF availableSize);
+		void SetFrame(RectangleF frame);
 	}
 }

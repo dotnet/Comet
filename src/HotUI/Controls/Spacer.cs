@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HotUI
 {
-    public class Spacer : View
+    public class Spacer : Control
     {
     }
 }

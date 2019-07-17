@@ -2,7 +2,7 @@
 
 namespace HotUI
 {
-    public class Toggle : BoundView<bool>
+    public class Toggle : BoundControl<bool>
     {
         public Toggle (
             Binding<bool> value = null,

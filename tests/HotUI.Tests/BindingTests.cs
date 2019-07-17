@@ -1,4 +1,5 @@
 ﻿using System;
+using HotUI.Tests.Handlers;
 using Xunit;
 namespace HotUI.Tests {
 	public class BindingTests : TestBase {

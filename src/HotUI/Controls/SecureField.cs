@@ -2,7 +2,7 @@
 
 namespace HotUI
 {
-	public class SecureField : BoundView<string> 
+	public class SecureField : BoundControl<string> 
 	{
         public SecureField(
             Binding<string> value = null,

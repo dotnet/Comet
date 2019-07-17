@@ -25,6 +25,13 @@ namespace HotUI
             set => id = value;
         }
 
+        string tag;
+        public string Tag
+        {
+            get => tag;
+            internal set => tag = value;
+        }
+        
         public View Parent
         {
             get => parent;
@@ -115,13 +122,6 @@ namespace HotUI
             var view = this.GetRenderView().Diff(oldView);
             oldView?.Dispose();
             ViewHandler?.SetView(view);
-        }
-
-        FrameConstraints frameConstraints;
-        public FrameConstraints FrameConstraints
-        {
-            get => frameConstraints;
-            internal set => this.SetValue(State, ref frameConstraints, value, (s, o) => ResetView());
         }
         
         Func<View> body;
@@ -236,7 +236,6 @@ namespace HotUI
 
                 if (value != null)
                     f.SetValue(this, value);
-
             }
         }
 
@@ -257,6 +256,140 @@ namespace HotUI
         protected virtual void OnDisposing()
         {
 
+        }
+
+        FrameConstraints frameConstraints;
+        public FrameConstraints FrameConstraints
+        {
+            get => frameConstraints;
+            internal set => this.SetValue(State, ref frameConstraints, value, (s, o) => ResetView());
+        }
+
+        private RectangleF frame;
+        public virtual RectangleF Frame
+        {
+            get => frame;
+            set
+            {
+                frame = value;
+                ViewHandler?.SetFrame(value);
+                RequestLayout();
+            }
+        }
+        
+        private bool measurementValid;
+        public bool MeasurementValid
+        {
+            get => measurementValid;
+            internal set => measurementValid = value;
+        }
+
+        private SizeF measuredSize;
+        public SizeF MeasuredSize
+        {
+            get => measuredSize;
+            internal set => measuredSize = value;
+        }
+
+        public void RequestLayout()
+        {
+            var width = frameConstraints?.Width ?? frame.Width;
+            var height = frameConstraints?.Height ?? frame.Height;
+
+            if (width > 0 && height > 0)
+            {
+                var padding = BuiltView?.GetPadding();
+                if (padding != null)
+                {
+                    width -= ((Thickness) padding).HorizontalThickness;
+                    height -= ((Thickness) padding).VerticalThickness;
+                }
+                
+                if (!MeasurementValid)
+                {
+                    MeasuredSize = Measure(new SizeF(width, height));
+                    MeasurementValid = true;
+                }
+
+                Layout();
+            }
+        }
+
+        private void Layout()
+        {
+            var width = frame.Width;
+            var height = frame.Height;
+
+            var x = width - measuredSize.Width;
+            var y = height - measuredSize.Height;
+
+            var alignment = frameConstraints?.Alignment ?? Alignment.Center;
+
+            switch (alignment.Horizontal)
+            {
+                case HorizontalAlignment.Center:
+                    x *= .5f;
+                    break;
+                case HorizontalAlignment.Leading:
+                    x = 0;
+                    break;
+                case HorizontalAlignment.Trailing:
+                    x *= 1;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            switch (alignment.Vertical)
+            {
+                case VerticalAlignment.Center:
+                    y *= .5f;
+                    break;
+                case VerticalAlignment.Bottom:
+                    y *= 1;
+                    break;
+                case VerticalAlignment.Top:
+                    y = 0;
+                    break;
+                case VerticalAlignment.FirstTextBaseline:
+                    throw new NotSupportedException("Not yet supported");
+                    break;
+                case VerticalAlignment.LastTextBaseline:
+                    throw new NotSupportedException("Not yet supported");
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            LayoutSubviews(new RectangleF(x,y,measuredSize.Width,MeasuredSize.Height));
+        }
+        
+        public virtual SizeF Measure(SizeF availableSize)
+        {
+            if (BuiltView != null)
+                return BuiltView.Measure(availableSize);
+
+            var width = frameConstraints?.Width;
+            var height = frameConstraints?.Height;
+
+            // If we have both width and height constraints, we can skip measuring the control and
+            // return the constrained values.
+            if (width != null && height != null)
+                return new SizeF((float)width, (float)height);
+
+            var measuredSize = viewHandler?.Measure(availableSize) ?? availableSize;
+            
+            // If we have a constraint for just one of the values, then combine the constrained value
+            // with the measured value for our size.
+            if (width != null || height != null)
+                return new SizeF(width ?? measuredSize.Width, height ?? measuredSize.Height);
+
+            return measuredSize;
+        }
+        
+        public virtual void LayoutSubviews(RectangleF bounds)
+        {
+            BuiltView.Frame = bounds;
         }
     }
 }

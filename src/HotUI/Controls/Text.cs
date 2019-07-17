@@ -5,7 +5,7 @@ namespace HotUI
     /// <summary>
     /// A view that displays one or more lines of read-only text.
     /// </summary>
-    public class Text : BoundView<string>
+    public class Text : BoundControl<string>
     {
         public Text (
             Binding<string> value = null) : base(value, nameof(Value))

@@ -1,4 +1,6 @@
-﻿namespace HotUI 
+﻿using HotUI.Layout;
+
+namespace HotUI 
 {
 	public class HStack : AbstractLayout 
 	{
@@ -6,7 +8,7 @@
             VerticalAlignment alignment = VerticalAlignment.Center,
             float? spacing = null)
         {
-
+            LayoutManager = new HStackLayoutManager2();
         }
     }
 }

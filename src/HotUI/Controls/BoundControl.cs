@@ -3,12 +3,12 @@ using System.Runtime.CompilerServices;
 
 namespace HotUI 
 {
-	public abstract class BoundView<T> : View
+	public abstract class BoundControl<T> : Control
 	{
 		private readonly Binding<T> _binding;
 		private readonly string _propertyName;
 		
-		protected BoundView (Binding<T> binding, string propertyName) : base(binding?.IsValue ?? false)
+		protected BoundControl (Binding<T> binding, string propertyName) : base(binding?.IsValue ?? false)
 		{
 			_binding = binding;
 			_propertyName = propertyName;

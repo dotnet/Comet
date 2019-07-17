@@ -2,7 +2,7 @@
 
 namespace HotUI 
 {
-	public class TextField : BoundView<string>
+	public class TextField : BoundControl<string>
 	{
 		public TextField (
 			Binding<string> value = null, 	

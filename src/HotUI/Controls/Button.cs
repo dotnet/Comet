@@ -2,7 +2,7 @@
 
 namespace HotUI 
 {
-	public class Button : BoundView<string> 
+	public class Button : BoundControl<string> 
 	{
 		public Button (
 			Binding<string> value = null, 	

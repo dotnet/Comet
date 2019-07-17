@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading;
+using HotUI.Tests.Handlers;
 
 namespace HotUI.Tests {
 	public static class UI {
@@ -10,9 +11,10 @@ namespace HotUI.Tests {
 				return;
 			hasInit = true;
 			Registrar.Handlers.Register<Button, GenericViewHandler> ();
-			Registrar.Handlers.Register<TextField, GenericViewHandler> ();
-			Registrar.Handlers.Register<Text, GenericViewHandler> ();
+			Registrar.Handlers.Register<TextField, TextFieldHandler> ();
+			Registrar.Handlers.Register<Text, TextHandler> ();
 			Registrar.Handlers.Register<Toggle, GenericViewHandler> ();
+			Registrar.Handlers.Register<ZStack, GenericViewHandler> ();
 			Registrar.Handlers.Register<VStack, GenericViewHandler> ();
 			Registrar.Handlers.Register<HStack, GenericViewHandler> ();
 			Registrar.Handlers.Register<ScrollView, GenericViewHandler> ();
@@ -20,8 +22,7 @@ namespace HotUI.Tests {
 			Registrar.Handlers.Register<ListView, GenericViewHandler> ();
 			Registrar.Handlers.Register<View, GenericViewHandler> ();
 			Registrar.Handlers.Register<ContentView, GenericViewHandler> ();
-
-
+			
 			Device.PerformInvokeOnMainThread = (a) => a ();
             HotReloadHelper.IsEnabled = true;
 

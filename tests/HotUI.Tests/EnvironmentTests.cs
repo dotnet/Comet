@@ -1,5 +1,6 @@
 ﻿using System;
 using HotUI.Internal;
+using HotUI.Tests.Handlers;
 using Xunit;
 
 namespace HotUI.Tests {

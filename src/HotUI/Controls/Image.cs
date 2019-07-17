@@ -1,6 +1,6 @@
 ﻿using System;
 namespace HotUI {
-	public class Image : View {
+	public class Image : Control {
 		public Image () { }
 		public Image(string source) : base (true)
 		{
