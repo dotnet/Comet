@@ -68,7 +68,12 @@ namespace HotUI
         {
 
         }
-
+        WeakReference __viewThatWasReplaced;
+        View viewThatWasReplaced
+        {
+            get => __viewThatWasReplaced?.Target as View;
+            set => __viewThatWasReplaced = new WeakReference(value);
+        }
         public string AccessibilityId { get; set; }
         IViewHandler viewHandler;
         public IViewHandler ViewHandler
@@ -140,6 +145,7 @@ namespace HotUI
             var replaced = HotReloadHelper.GetReplacedView(this);
             if (replaced != this)
             {
+                replaced.viewThatWasReplaced = this;
                 replaced.Navigation = this.Navigation;
                 replaced.Parent = this.Parent;
                 replacedView = replaced;
@@ -224,16 +230,27 @@ namespace HotUI
                 usedEnvironmentData.Add(key);
                 if (value == null)
                 {
-                    //Lets try again with first letter uppercased;
-                    key = key.FirstCharToUpper();
-                    value = this.GetEnvironment(key);
-                    if (value != null)
+                    //Check the replaced view
+                    if(viewThatWasReplaced != null)
                     {
-                        usedEnvironmentData.Add(key);
-                        State.BindingState.AddGlobalProperty(key);
+                        value = viewThatWasReplaced.GetEnvironment(key);
+                    }
+                    if (value == null)
+                    {
+                        //Lets try again with first letter uppercased;
+                        key = key.FirstCharToUpper();
+                        value = this.GetEnvironment(key);
+                        if (value != null)
+                        {
+                            usedEnvironmentData.Add(key);
+                            State.BindingState.AddGlobalProperty(key);
+                        }
                     }
                 }
-
+                if(value == null && viewThatWasReplaced != null)
+                {
+                    value = viewThatWasReplaced.GetEnvironment(key);
+                }
                 if (value != null)
                     f.SetValue(this, value);
 
