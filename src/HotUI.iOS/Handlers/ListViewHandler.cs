@@ -48,7 +48,7 @@ namespace HotUI.iOS.Handlers
         {
             _listView = view as ListView;
             //TODO: Some crude size estimation
-            var v = _listView?.CellCreator?.Invoke(_listView?.List[0]);
+            //var v = _listView?.CellCreator?.Invoke(_listView?.List[0]);
             EstimatedRowHeight = 200;
             ReloadData();
         }

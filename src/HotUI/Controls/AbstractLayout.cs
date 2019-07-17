@@ -131,15 +131,6 @@ namespace HotUI
 				view.ContextPropertyChanged (property, value);
 			}
 		}
-
-        protected override void OnDisposing ()
-		{
-			base.OnDisposing ();
-			foreach (var view in _views) {
-				view.Dispose ();
-			}
-			_views.Clear ();
-		}
         
         public ILayoutManager2 LayoutManager { get; set; }
         
@@ -167,5 +158,15 @@ namespace HotUI
         {
 	        LayoutManager?.Layout(this, bounds.Size);
         }
-    }
+    
+        protected override void Dispose(bool disposing)
+        {
+            foreach (var view in _views)
+            {
+                view.Dispose();
+            }
+            _views.Clear();
+            base.Dispose(disposing);
+        }
+	}
 }

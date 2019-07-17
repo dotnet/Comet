@@ -75,6 +75,8 @@ namespace HotUI {
 
 		public static View Diff (this View newView, View oldView)
 		{
+            if (oldView == null)
+                return newView;
 			var v = newView.DiffUpdate (oldView);
             //void callUpdateOnView(View view)
             //{

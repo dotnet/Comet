@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HotUI.Reflection;
 using HotUI.Internal;
 using System.Linq;
+using System.Reflection;
 
 namespace HotUI.Samples
 {
@@ -11,6 +12,12 @@ namespace HotUI.Samples
         static string[] IgnoredProperties =
         {
             nameof(View.Id),
+            nameof(View.Parent),
+            nameof(View.Navigation),
+            "State",
+            nameof(View.ViewHandler),
+            nameof(View.Body),
+            nameof(View.BuiltView),
         };
 
         static string[] FontProperties =
@@ -41,9 +48,11 @@ namespace HotUI.Samples
             if (!WatchedProperties.TryGetValue(type, out var propList))
             {
                 WatchedProperties[type] = propList = new HashSet<string>();
-                var baseProps = type.GetDeepProperties();
+                var baseProps = type.GetDeepProperties(BindingFlags.Public | BindingFlags.Instance);
                 foreach(var prop in baseProps)
                 {
+                    if (prop.PropertyType.Name.StartsWith("Action", StringComparison.OrdinalIgnoreCase))
+                        continue;
                     if(!IgnoredProperties.Contains(prop.Name))
                         propList.Add(prop.Name);
                 }
@@ -61,7 +70,7 @@ namespace HotUI.Samples
             {
                 reports.Add(GenerateReport(pair.Key, pair.Value));
             }
-            return reports;
+            return reports.OrderByDescending(x=> x.UnHandledProperties.Count).ToList();
         }
 
         static AuditReport GenerateReport(Type viewType, Type handler)
@@ -78,10 +87,16 @@ namespace HotUI.Samples
                 if(baseHandler != null)
                 {
                     var baseReport = GenerateReport(viewType.BaseType, baseHandler);
-                    if(baseReport.HandledProperties?.Count > 0)
-                        report.HandledProperties.AddRange(baseReport.HandledProperties);
-                    if (baseReport.UnHandledProperties?.Count > 0)
-                        report.UnHandledProperties.AddRange(baseReport.UnHandledProperties);
+                    foreach(var p in baseReport.HandledProperties)
+                    {
+                        if(!report.HandledProperties.Contains(p))
+                            report.HandledProperties.Add(p);
+                    }
+                    foreach (var p in baseReport.UnHandledProperties)
+                    {
+                        if (!report.UnHandledProperties.Contains(p))
+                            report.UnHandledProperties.Add(p);
+                    }
                 }
             }
 
@@ -130,7 +145,8 @@ namespace HotUI.Samples
                 }
                 report.MissingMapper = true;
             }
-
+            report.HandledProperties = report.HandledProperties.Distinct().ToList();
+            report.UnHandledProperties = report.UnHandledProperties.Distinct().ToList();
             return report;
 
         }

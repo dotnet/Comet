@@ -81,11 +81,11 @@ namespace HotUI.Reflection
                 prop = GetDeepProperty(type.BaseType, name);
             return prop;
         }
-        public static List<PropertyInfo> GetDeepProperties(this Type type)
+        public static List<PropertyInfo> GetDeepProperties(this Type type, BindingFlags flags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance)
         {
-            var properties = type.GetProperties(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).ToList();
+            var properties = type.GetProperties(flags).ToList();
             if (type.BaseType != null)
-                properties.AddRange(GetDeepProperties(type.BaseType));
+                properties.AddRange(GetDeepProperties(type.BaseType,flags));
             return properties;
         }
 

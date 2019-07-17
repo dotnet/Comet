@@ -78,10 +78,11 @@
     <Compile Include="Controls\HUIShapeView.cs" />
     <Compile Include="Handlers\ViewRepresentableHandler.cs" />
     <Compile Include="UIViewRepresentable.cs" />
+    <Compile Include="Controls\HUINavigationController.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">
-      <Project>{65130DB4-3FFC-4623-8135-8708A4F6201F}</Project>
+      <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
       <Name>HotUI</Name>
     </ProjectReference>
   </ItemGroup>

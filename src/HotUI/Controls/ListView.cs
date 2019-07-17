@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 
 namespace HotUI {
 
@@ -72,5 +73,13 @@ namespace HotUI {
 		}
 
 		public void OnSelected (object item) => ItemSelected?.Invoke (item);
-	}
+
+        protected override void Dispose(bool disposing)
+        {
+            var cells = ActiveViews.Where(x => x.Parent == this).ToList();
+            foreach (var cell in cells)
+                cell.Dispose();
+            base.Dispose(disposing);
+        }
+    }
 }

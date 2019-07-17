@@ -58,6 +58,7 @@ namespace HotUI
         public View(bool hasConstructors)
         {
             ActiveViews.Add(this);
+            Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
             HotReloadHelper.Register(this);
             Context.View = this;
             State = StateBuilder.CurrentState ?? new State
@@ -75,7 +76,12 @@ namespace HotUI
         {
 
         }
-
+        WeakReference __viewThatWasReplaced;
+        View viewThatWasReplaced
+        {
+            get => __viewThatWasReplaced?.Target as View;
+            set => __viewThatWasReplaced = new WeakReference(value);
+        }
         public string AccessibilityId { get; set; }
         IViewHandler viewHandler;
         public IViewHandler ViewHandler
@@ -104,6 +110,7 @@ namespace HotUI
             }
             var oldView = view.ViewHandler;
             view.ViewHandler = null;
+            view.replacedView?.Dispose();
             this.ViewHandler = oldView;
         }
         View builtView;
@@ -115,11 +122,18 @@ namespace HotUI
                 SetEnvironmentFields();
             var oldView = builtView;
             builtView = null;
-            replacedView = null;
+            if (replacedView != null)
+            {
+                replacedView.ViewHandler = null;
+                replacedView.Dispose();
+                replacedView = null;
+            }
             if (ViewHandler == null)
                 return;
             ViewHandler.Remove(this);
-            var view = this.GetRenderView().Diff(oldView);
+            var view = this.GetRenderView();
+            if(oldView != null)
+                view = view.Diff(oldView);
             oldView?.Dispose();
             ViewHandler?.SetView(view);
         }
@@ -140,8 +154,9 @@ namespace HotUI
             var replaced = HotReloadHelper.GetReplacedView(this);
             if (replaced != this)
             {
+                replaced.viewThatWasReplaced = this;
                 replaced.Navigation = this.Navigation;
-                replaced.Parent = this.Parent;
+                replaced.Parent = this.Parent ?? this;
                 replacedView = replaced;
                 replacedView.ViewHandler = ViewHandler;
                 return builtView = replacedView.GetRenderView();
@@ -224,38 +239,69 @@ namespace HotUI
                 usedEnvironmentData.Add(key);
                 if (value == null)
                 {
-                    //Lets try again with first letter uppercased;
-                    key = key.FirstCharToUpper();
-                    value = this.GetEnvironment(key);
-                    if (value != null)
+                    //Check the replaced view
+                    if(viewThatWasReplaced != null)
                     {
-                        usedEnvironmentData.Add(key);
-                        State.BindingState.AddGlobalProperty(key);
+                        value = viewThatWasReplaced.GetEnvironment(key);
+                    }
+                    if (value == null)
+                    {
+                        //Lets try again with first letter uppercased;
+                        key = key.FirstCharToUpper();
+                        value = this.GetEnvironment(key);
+                        if (value != null)
+                        {
+                            usedEnvironmentData.Add(key);
+                            State.BindingState.AddGlobalProperty(key);
+                        }
                     }
                 }
-
+                if(value == null && viewThatWasReplaced != null)
+                {
+                    value = viewThatWasReplaced.GetEnvironment(key);
+                }
                 if (value != null)
                     f.SetValue(this, value);
             }
         }
 
-        public void Dispose()
+       
+        bool disposedValue = false;
+        protected virtual void Dispose(bool disposing)
         {
+            if (!disposing)
+                return;
+
             ActiveViews.Remove(this);
+            Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
             HotReloadHelper.UnRegister(this);
-            var viewHandler = ViewHandler;
+            var vh = ViewHandler;
             ViewHandler = null;
             //TODO: Ditch the cast
-            (viewHandler as IDisposable)?.Dispose();
+            (vh as IDisposable)?.Dispose();
+            replacedView?.Dispose();
+            replacedView = null;
+            builtView?.Dispose();
+            builtView = null;
             Body = null;
             Context.Clear();
             State?.DisposingObject(this);
             State = null;
-            OnDisposing();
-        }
-        protected virtual void OnDisposing()
-        {
 
+        }
+        void OnDispose(bool disposing)
+        {
+            if (disposedValue)
+                return;
+            disposedValue = true;
+            Dispose(disposing);
+        }
+
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(true);
+            GC.SuppressFinalize(this);
         }
 
         Thickness padding = Thickness.Empty;

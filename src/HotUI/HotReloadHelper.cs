@@ -24,6 +24,8 @@ namespace HotUI {
         {
             if (!IsEnabled)
                 return false;
+            if (view == null || newView == null)
+                return false;
 
             if (!replacedViews.TryGetValue(view.GetType().FullName, out var newViewType))
                 return false;
