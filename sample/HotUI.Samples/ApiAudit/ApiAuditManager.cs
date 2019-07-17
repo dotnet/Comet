@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using HotUI.Reflection;
 using HotUI.Internal;
 using System.Linq;
+using System.Reflection;
 
 namespace HotUI.Samples
 {
@@ -11,6 +12,12 @@ namespace HotUI.Samples
         static string[] IgnoredProperties =
         {
             nameof(View.Id),
+            nameof(View.Parent),
+            nameof(View.Navigation),
+            "State",
+            nameof(View.ViewHandler),
+            nameof(View.Body),
+            nameof(View.BuiltView),
         };
 
         static string[] FontProperties =
@@ -41,7 +48,7 @@ namespace HotUI.Samples
             if (!WatchedProperties.TryGetValue(type, out var propList))
             {
                 WatchedProperties[type] = propList = new HashSet<string>();
-                var baseProps = type.GetDeepProperties();
+                var baseProps = type.GetDeepProperties(BindingFlags.Public | BindingFlags.Instance);
                 foreach(var prop in baseProps)
                 {
                     if(!IgnoredProperties.Contains(prop.Name))
