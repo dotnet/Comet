@@ -52,7 +52,7 @@ namespace HotUI
             return view.GetEnvironment<View>(EnvironmentKeys.View.Overlay);
         }
 
-        public static View Frame(this View view, float? width = null, float? height = null, Alignment alignment = null)
+        public static T Frame<T>(this T view, float? width = null, float? height = null, Alignment alignment = null) where T : View
         {
             view.FrameConstraints = new FrameConstraints(width, height, alignment);
             return view;
