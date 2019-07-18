@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using HotUI.Helpers;
 using HotUI.Internal;
 //using System.Reflection;
 using HotUI.Reflection;
@@ -11,7 +12,7 @@ namespace HotUI
 
     public class View : ContextualObject, IDisposable
     {
-        internal readonly static List<View> ActiveViews = new List<View>();
+        internal readonly static WeakReferenceList<View> ActiveViews = new WeakReferenceList<View>();
         HashSet<string> usedEnvironmentData = new HashSet<string>();
 
         public event EventHandler<ViewHandlerChangedEventArgs> ViewHandlerChanged;
