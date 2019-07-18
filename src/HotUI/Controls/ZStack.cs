@@ -4,7 +4,7 @@
 {
 	public class ZStack : AbstractLayout 
 	{
-		public ZStack() : base(new ZStackLayoutManager2())
+		public ZStack() : base(new ZStackLayoutManager())
 		{
 		}
 	}

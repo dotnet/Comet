@@ -1,6 +1,6 @@
 namespace HotUI.Layout
 {
-    public class ZStackLayoutManager2 : ILayoutManager2
+    public class ZStackLayoutManager : ILayoutManager
     {
         public SizeF Measure(AbstractLayout layout, SizeF available)
         {

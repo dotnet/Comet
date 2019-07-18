@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace HotUI.Layout
 {
-    public class VStackLayoutManager2 : ILayoutManager2
+    public class VStackLayoutManager : ILayoutManager
     {
         private readonly HorizontalAlignment _defaultAlignment;
         private readonly float _spacing;
         
-        public VStackLayoutManager2(
+        public VStackLayoutManager(
             HorizontalAlignment alignment = HorizontalAlignment.Center, 
             float? spacing = null)
         {
