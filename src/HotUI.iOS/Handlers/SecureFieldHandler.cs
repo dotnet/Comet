@@ -42,7 +42,7 @@ namespace HotUI.iOS.Handlers
 
         private void EntryHandler_EditingDidEnd(object sender, EventArgs e)
         {
-            VirtualView?.OnCommit(TypedNativeView.Text);
+            VirtualView?.OnCommit?.Invoke(TypedNativeView.Text);
         }
         
         public static void MapTextProperty(IViewHandler viewHandler, SecureField virtualView)
