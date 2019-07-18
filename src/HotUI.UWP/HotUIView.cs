@@ -1,6 +1,6 @@
-﻿using Windows.UI.Xaml;
+﻿using System;
+using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using HotUI.UWP.Handlers;
 
 namespace HotUI.UWP
@@ -46,9 +46,17 @@ namespace HotUI.UWP
             }
 
             _nativeView = _view?.ToView();
-
+           
             if (_nativeView != null)
             {
+                if (_nativeView is FrameworkElement frameworkElement)
+                {
+                    Grid.SetRow(frameworkElement, 0);
+                    Grid.SetColumn(frameworkElement, 0);
+                    Grid.SetColumnSpan(frameworkElement, 1);
+                    Grid.SetRowSpan(frameworkElement, 1);
+                }
+
                 Children.Add(_nativeView);
             }
         }

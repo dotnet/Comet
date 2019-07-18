@@ -35,12 +35,6 @@ namespace HotUI.WPF.Handlers
         public void SetFrame(RectangleF frame)
         {
             Arrange(frame.ToRect());
-
-            /*Canvas.SetLeft(this, frame.Left);
-            Canvas.SetTop(this, frame.Top);
-
-            Width = frame.Width;
-            Height = frame.Height;*/
         }
 
         public void SetView(View view)
@@ -118,65 +112,17 @@ namespace HotUI.WPF.Handlers
             InvalidateArrange();
         }
 
-        private void LayoutSubviews()
-        {
-            if (Width > 0 && Height > 0)
-                _view.Frame = new RectangleF(0,0, (float)Width, (float)Height);
-        }
-
         protected override WPFSize MeasureOverride(WPFSize availableSize)
         {
-            var size = new WPFSize();
-
-            for (var i = 0; i < InternalChildren.Count; i++)
-            {
-                var child = InternalChildren[i];
-
-                if (child is System.Windows.Controls.ListView listView)
-                {
-                    var sizeToUse = GetMeasuredSize(listView, availableSize.ToSizeF());
-                    child.Measure(sizeToUse.ToSize());
-                    size.Height = Math.Max(child.DesiredSize.Height, size.Height);
-                    size.Width = Math.Max(child.DesiredSize.Width, size.Width);
-                }
-                else
-                {
-                    child.Measure(availableSize);
-                    size.Height = Math.Max(child.DesiredSize.Height, size.Height);
-                    size.Width = Math.Max(child.DesiredSize.Width, size.Width);
-                }
-            }
-
-            return size;
+            return _view.Measure(availableSize.ToSizeF()).ToSize();
         }
-
-        protected virtual SizeF GetMeasuredSize(UIElement child, SizeF availableSize)
-        {
-            return availableSize;
-        }
-
-        private bool _inArrange = false;
 
         protected override WPFSize ArrangeOverride(WPFSize finalSize)
         {
-            if (_inArrange)
-                return finalSize;
-
-            _inArrange = true;
-            RenderSize = finalSize;
-            Width = finalSize.Width;
-            Height = finalSize.Height;
             if (finalSize.Width > 0 && finalSize.Height > 0)
-                LayoutSubviews();
-            _inArrange = false;
+                _view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
 
             return finalSize;
-        }
-
-        public SizeF Measure(UIElement view, SizeF available)
-        {
-            view.Measure(available.ToSize());
-            return view.DesiredSize.ToSizeF();
         }
     }
 }

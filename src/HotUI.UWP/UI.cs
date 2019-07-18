@@ -33,13 +33,13 @@ namespace HotUI.UWP
             Registrar.Handlers.Register<Spacer, SpacerHandler>();
 
             // Native Layout
-            Registrar.Handlers.Register<VStack, VStackHandler>();
-            Registrar.Handlers.Register<HStack, HStackHandler>();
+            //Registrar.Handlers.Register<VStack, VStackHandler>();
+            //Registrar.Handlers.Register<HStack, HStackHandler>();
 
             // Managed Layout
-            //Registrar.Handlers.Register<VStack, ManagedVStackHandler>();
-            //Registrar.Handlers.Register<HStack, ManagedHStackHandler>();
-            //Registrar.Handlers.Register<ZStack, ManagedZStackHandler>();
+            Registrar.Handlers.Register<VStack, ManagedVStackHandler>();
+            Registrar.Handlers.Register<HStack, ManagedHStackHandler>();
+            Registrar.Handlers.Register<ZStack, ManagedZStackHandler>();
 
             Device.PerformInvokeOnMainThread = async a => await GetDispatcher().RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => a());
 

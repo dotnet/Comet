@@ -70,15 +70,6 @@ namespace HotUI.UWP.Handlers
         public void SetFrame(RectangleF frame)
         {
             _nativeView.Arrange(frame.ToRect());
-
-            Canvas.SetLeft(_nativeView, frame.Left);
-            Canvas.SetTop(_nativeView, frame.Top);
-
-            if (_nativeView is FrameworkElement element)
-            {
-                element.Width = frame.Width;
-                element.Height = frame.Height;
-            }
         }
 
         public virtual void Remove(View view)
@@ -107,7 +98,7 @@ namespace HotUI.UWP.Handlers
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+        private bool _disposed = false; // To detect redundant calls
 
         protected virtual void Dispose(bool disposing)
         {
@@ -132,9 +123,9 @@ namespace HotUI.UWP.Handlers
 
         void OnDispose(bool disposing)
         {
-            if (disposedValue)
+            if (_disposed)
                 return;
-            disposedValue = true;
+            _disposed = true;
             Dispose(disposing);
         }
 

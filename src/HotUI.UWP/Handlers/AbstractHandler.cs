@@ -77,15 +77,6 @@ namespace HotUI.UWP.Handlers
         public void SetFrame(RectangleF frame)
         {
             _nativeView.Arrange(frame.ToRect());
-
-            Canvas.SetLeft(_nativeView, frame.Left);
-            Canvas.SetTop(_nativeView, frame.Top);
-
-            if (_nativeView is FrameworkElement element)
-            {
-                element.Width = frame.Width;
-                element.Height = frame.Height;
-            }
         }
 
         protected void BroadcastNativeViewChanged(UIElement previousView, UIElement newView)

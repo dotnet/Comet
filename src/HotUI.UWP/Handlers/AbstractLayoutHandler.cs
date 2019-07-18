@@ -7,7 +7,7 @@ using UwpSize = Windows.Foundation.Size;
 
 namespace HotUI.UWP.Handlers
 {
-    public abstract class AbstractLayoutHandler : Canvas, UWPViewHandler
+    public abstract class AbstractLayoutHandler : Panel, UWPViewHandler
     {
         private AbstractLayout _view;
 
@@ -35,12 +35,6 @@ namespace HotUI.UWP.Handlers
 
         public void SetFrame(RectangleF frame)
         {
-            Canvas.SetLeft(this, frame.Left);
-            Canvas.SetTop(this, frame.Top);
-
-            Width = frame.Width;
-            Height = frame.Height;
-
             Arrange(frame.ToRect());
         }
 
@@ -121,42 +115,13 @@ namespace HotUI.UWP.Handlers
 
         protected override UwpSize MeasureOverride(UwpSize availableSize)
         {
-            return Measure(availableSize.ToSizeF()).ToSize();
-
-            /*var size = new UwpSize();
-
-            foreach (var child in Children)
-            {
-                if (child is Windows.UI.Xaml.Controls.ListView listView)
-                {
-                    var sizeToUse = GetMeasuredSize(listView, availableSize.ToSizeF());
-                    child.Measure(sizeToUse.ToSize());
-                    size.Height = Math.Max(child.DesiredSize.Height, size.Height);
-                    size.Width = Math.Max(child.DesiredSize.Width, size.Width);
-                }
-                else
-                {
-                    child.Measure(availableSize);
-                    size.Height = Math.Max(child.DesiredSize.Height, size.Height);
-                    size.Width = Math.Max(child.DesiredSize.Width, size.Width);
-                }
-            }
-
-            return size;*/
-        }
-
-        protected virtual SizeF GetMeasuredSize(UIElement child, SizeF availableSize)
-        {
-            return availableSize;
+            return _view.Measure(availableSize.ToSizeF()).ToSize();
         }
 
         protected override UwpSize ArrangeOverride(UwpSize finalSize)
         {
-
-            Width = finalSize.Width;
-            Height = finalSize.Height;
             if (finalSize.Width > 0 && finalSize.Height > 0)
-                _view.Frame = new RectangleF(0, 0, (float)Width, (float)Height);
+                _view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
 
             return finalSize;
         }
