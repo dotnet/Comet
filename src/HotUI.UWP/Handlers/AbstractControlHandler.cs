@@ -1,4 +1,5 @@
 ﻿using System;
+using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using HotUI.UWP.Controls;
@@ -68,14 +69,16 @@ namespace HotUI.UWP.Handlers
 
         public void SetFrame(RectangleF frame)
         {
-            Canvas.SetLeft(_nativeView, frame.Left);
+            _nativeView.Arrange(frame.ToRect());
+
+            /*Canvas.SetLeft(_nativeView, frame.Left);
             Canvas.SetTop(_nativeView, frame.Top);
 
             if (_nativeView is FrameworkElement element)
             {
                 element.Width = frame.Width;
                 element.Height = frame.Height;
-            }
+            }*/
         }
 
         public virtual void Remove(View view)

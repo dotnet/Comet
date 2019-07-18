@@ -2,57 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Controls;
-using HotUI.Layout;
 using WPFSize = System.Windows.Size;
 
 namespace HotUI.WPF.Handlers
 {
-    public abstract class AbstractLayoutHandler : Panel, WPFViewHandler, ILayoutHandler<UIElement>
+    public abstract class AbstractLayoutHandler : Panel, WPFViewHandler
     {
-        private readonly ILayoutManager<UIElement> _layoutManager;
         private AbstractLayout _view;
-
-        protected AbstractLayoutHandler(ILayoutManager<UIElement> layoutManager)
-        {
-            _layoutManager = layoutManager;
-        }
-
-        public SizeF GetSize(UIElement view)
-        {
-            if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0)
-            {
-                return view.DesiredSize.ToSizeF();
-            }
-            return view.RenderSize.ToSizeF();
-        }
-
-        public void SetFrame(UIElement view, float x, float y, float width, float height)
-        {
-            if (width > 0 && height > 0)
-            {
-                if (view is System.Windows.Controls.ListView listview)
-                {
-                    listview.InvalidateMeasure();
-                    view.Arrange(new Rect(x, y, width, height));
-                    listview.Width = width;
-                    listview.Height = height;
-                }
-                else
-                {
-                    view.Arrange(new Rect(x, y, width, height));
-                }
-            }
-        }
-
-        public void SetSize(UIElement view, float width, float height)
-        {
-            view.RenderSize = new WPFSize(width, height);
-            if (view is FrameworkElement element)
-            {
-                element.Width = view.RenderSize.Width;
-                element.Height = view.RenderSize.Height;
-            }
-        }
 
         public IEnumerable<UIElement> GetSubviews()
         {
@@ -60,6 +16,7 @@ namespace HotUI.WPF.Handlers
         }
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+
         public UIElement View => this;
 
         public object NativeView => View;
@@ -77,11 +34,13 @@ namespace HotUI.WPF.Handlers
 
         public void SetFrame(RectangleF frame)
         {
-            Canvas.SetLeft(this, frame.Left);
+            Arrange(frame.ToRect());
+
+            /*Canvas.SetLeft(this, frame.Left);
             Canvas.SetTop(this, frame.Top);
 
             Width = frame.Width;
-            Height = frame.Height;
+            Height = frame.Height;*/
         }
 
         public void SetView(View view)
@@ -161,8 +120,7 @@ namespace HotUI.WPF.Handlers
 
         private void LayoutSubviews()
         {
-            var measure = _layoutManager.Measure(this, this, _view, RenderSize.ToSizeF());
-            _layoutManager.Layout(this, this, _view, measure);
+            _view.Frame = new RectangleF(0,0, (float)Width, (float)Height);
         }
 
         protected override WPFSize MeasureOverride(WPFSize availableSize)

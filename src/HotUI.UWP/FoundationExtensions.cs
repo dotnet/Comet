@@ -1,6 +1,7 @@
 using System.Drawing;
 using System.Numerics;
 using UWPSize = Windows.Foundation.Size;
+using UWPRect = Windows.Foundation.Rect;
 
 namespace HotUI.UWP
 {
@@ -19,6 +20,11 @@ namespace HotUI.UWP
         public static UWPSize ToSize(this SizeF size)
         {
             return new UWPSize((float)size.Width, (float)size.Height);
+        }
+
+        public static UWPRect ToRect(this RectangleF rect)
+        {
+            return new UWPRect(rect.X, rect.Y, rect.Width, rect.Height);
         }
     }
 }

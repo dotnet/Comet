@@ -1,4 +1,5 @@
 using WPFSize = System.Windows.Size;
+using WPFRect = System.Windows.Rect;
 
 namespace HotUI.WPF
 {
@@ -11,7 +12,12 @@ namespace HotUI.WPF
 
         public static WPFSize ToSize(this SizeF size)
         {
-            return new WPFSize((float)size.Width, (float)size.Height);
+            return new WPFSize(size.Width, size.Height);
+        }
+
+        public static WPFRect ToRect(this RectangleF rect)
+        {
+            return new WPFRect(rect.X, rect.Y, rect.Width, rect.Height);
         }
     }
 }
