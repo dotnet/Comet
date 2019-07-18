@@ -5,8 +5,9 @@ using System.Windows;
 
 namespace HotUI.WPF.Handlers
 {
-    public class ViewHandler : AbstractHandler<ContentView, UIElement>
+    public class ViewHandler : AbstractHandler<View, UIElement>
     {
+
         protected override UIElement CreateView()
         {
             var viewHandler = VirtualView?.GetOrCreateViewHandler();

@@ -42,7 +42,7 @@ namespace HotUI.WPF.Handlers
 
         public virtual void SetView(View view)
         {
-            _virtualView = view as TVirtualView;
+            _virtualView = (TVirtualView)view;
             _nativeView = CreateView();
             mapper?.UpdateProperties(this, _virtualView);
         }

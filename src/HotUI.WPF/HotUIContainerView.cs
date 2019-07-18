@@ -48,6 +48,11 @@ namespace HotUI.WPF
 
             if (_nativeView != null)
             {
+                Grid.SetRow(_nativeView, 0);
+                Grid.SetColumn(_nativeView, 0);
+                Grid.SetColumnSpan(_nativeView, 1);
+                Grid.SetRowSpan(_nativeView, 1);
+
                 Children.Add(_nativeView);
             }
         }

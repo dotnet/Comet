@@ -6,7 +6,7 @@ using Windows.UI.Xaml;
 
 namespace HotUI.UWP.Handlers
 {
-    public class ViewHandler : AbstractHandler<ContentView, UIElement>
+    public class ViewHandler : AbstractHandler<View, UIElement>
     {
         protected override UIElement CreateView()
         {
