@@ -137,6 +137,5 @@ public class MyPage : View {
 * Xamarin.Forms
 
 
-
 # Disclaimer
 HotUI is a proof of concept. There is no official support. Use at your own Risk.
