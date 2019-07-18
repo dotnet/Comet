@@ -52,7 +52,7 @@ namespace HotUI.WPF.Handlers
                 var view = handler.ListView?.CellCreator?.Invoke(value);
                 if (view != null)
                     view.Parent = handler.ListView;
-                Content = view?.ToEmbeddableView();
+                Content = view?.ToView();
             }
         }
     }

@@ -37,7 +37,7 @@ namespace HotUI.UWP.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (UWPTextField)viewHandler.NativeView;
-            nativeView.Text = virtualView.Text;
+            nativeView.Text = virtualView.Text ?? "";
         }
     }
 }

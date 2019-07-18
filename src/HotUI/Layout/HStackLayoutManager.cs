@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace HotUI.Layout
 {
-    public class HStackLayoutManager2 : ILayoutManager2
+    public class HStackLayoutManager : ILayoutManager
     {
         private readonly VerticalAlignment _defaultAlignment;
         private readonly float _spacing;
 
-        public HStackLayoutManager2(
+        public HStackLayoutManager(
             VerticalAlignment alignment, 
             float? spacing)
         {
@@ -100,6 +100,8 @@ namespace HotUI.Layout
                 lastWasSpacer = isSpacer;
                 index++;
             }
+
+            nonSpacerWidth = Math.Min(nonSpacerWidth, measured.Width);
 
             var spacerWidth = 0f;
             if (spacerCount>0)

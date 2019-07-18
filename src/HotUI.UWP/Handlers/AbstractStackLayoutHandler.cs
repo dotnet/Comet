@@ -28,9 +28,10 @@ namespace HotUI.UWP.Handlers
 
         public void SetFrame(RectangleF frame)
         {
+            Arrange(frame.ToRect());
+
             Canvas.SetLeft(this, frame.Left);
             Canvas.SetTop(this, frame.Top);
-
             Width = frame.Width;
             Height = frame.Height;
         }

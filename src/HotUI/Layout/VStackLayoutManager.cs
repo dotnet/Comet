@@ -101,6 +101,8 @@ namespace HotUI.Layout
                 index++;
             }
 
+            nonSpacerHeight = Math.Min(nonSpacerHeight, measured.Height);
+
             var spacerHeight = 0f;
             if (spacerCount > 0)
             {

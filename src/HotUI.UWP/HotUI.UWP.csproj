@@ -124,7 +124,11 @@
     <Compile Include="Controls\HUIContainerView.cs" />
     <Compile Include="GraphicsExtensions.cs" />
     <Compile Include="Handlers\AbstractControlHandler.cs" />
+    <Compile Include="Handlers\ManagedZStackHandler.cs" />
+    <Compile Include="Handlers\ManagedHStackHandler.cs" />
+    <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />
+    <Compile Include="Handlers\ManagedVStackHandler.cs" />
     <Compile Include="HotUIPage.xaml.cs">
       <DependentUpon>HotUIPage.xaml</DependentUpon>
     </Compile>
@@ -141,7 +145,7 @@
     <Compile Include="Handlers\TextHandler.cs" />
     <Compile Include="Handlers\ViewHandler.cs" />
     <Compile Include="Handlers\VStackHandler.cs" />
-    <Compile Include="HotUIContainerView.cs" />
+    <Compile Include="HotUIView.cs" />
     <Compile Include="UWPViewHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.cs" />

@@ -43,14 +43,14 @@ namespace HotUI.WPF.Handlers
         public virtual void SetView(View view)
         {
             _virtualView = (TVirtualView)view;
-            _nativeView = CreateView();
+            if (_nativeView == null)
+                _nativeView = CreateView();
             mapper?.UpdateProperties(this, _virtualView);
         }
 
         public virtual void Remove(View view)
         {
             _virtualView = null;
-            _nativeView = null;
         }
 
         protected virtual void DisposeView(TNativeView nativeView)

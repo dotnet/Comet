@@ -40,11 +40,11 @@ namespace HotUI.UWP
 
             if (handler is FrameworkElement element)
             {
-                if (element.Parent is HotUIContainerView container)
+                if (element.Parent is HotUIView container)
                     return container;
             }
             
-            return new HotUIContainerView(view);
+            return new HotUIView(view);
         }
 
         public static void RemoveChild(this DependencyObject parent, UIElement child)

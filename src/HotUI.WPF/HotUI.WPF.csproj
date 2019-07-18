@@ -58,7 +58,11 @@
     <Compile Include="Handlers\HStackHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="Handlers\ListViewHandler.cs" />
+    <Compile Include="Handlers\ManagedHStackHandler.cs" />
+    <Compile Include="Handlers\ManagedVStackHandler.cs" />
+    <Compile Include="Handlers\ManagedZStackHandler.cs" />
     <Compile Include="Handlers\ScrollViewHandler.cs" />
+    <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Handlers\TextFieldHandler.cs" />
     <Compile Include="Handlers\TextHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />

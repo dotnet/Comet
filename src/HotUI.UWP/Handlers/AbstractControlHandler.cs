@@ -71,14 +71,14 @@ namespace HotUI.UWP.Handlers
         {
             _nativeView.Arrange(frame.ToRect());
 
-            /*Canvas.SetLeft(_nativeView, frame.Left);
+            Canvas.SetLeft(_nativeView, frame.Left);
             Canvas.SetTop(_nativeView, frame.Top);
 
             if (_nativeView is FrameworkElement element)
             {
                 element.Width = frame.Width;
                 element.Height = frame.Height;
-            }*/
+            }
         }
 
         public virtual void Remove(View view)

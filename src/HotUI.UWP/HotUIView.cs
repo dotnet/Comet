@@ -1,16 +1,17 @@
 ﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using HotUI.UWP.Handlers;
 
 namespace HotUI.UWP
 {
-    public class HotUIContainerView : Grid
+    public class HotUIView : Grid
     {
         private View _view;
         private UIElement _nativeView;
         private IViewHandler _handler;
 
-        public HotUIContainerView(View view = null)
+        public HotUIView(View view = null)
         {
             View = view;
         }

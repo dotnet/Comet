@@ -1,10 +1,8 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using HotUI.Layout;
+using Windows.UI.Xaml.Media;
 using UwpSize = Windows.Foundation.Size;
 
 namespace HotUI.UWP.Handlers
@@ -37,13 +35,13 @@ namespace HotUI.UWP.Handlers
 
         public void SetFrame(RectangleF frame)
         {
-            Arrange(frame.ToRect());
-
-           /* Canvas.SetLeft(this, frame.Left);
+            Canvas.SetLeft(this, frame.Left);
             Canvas.SetTop(this, frame.Top);
 
             Width = frame.Width;
-            Height = frame.Height;*/
+            Height = frame.Height;
+
+            Arrange(frame.ToRect());
         }
 
         public void SetView(View view)
@@ -61,7 +59,7 @@ namespace HotUI.UWP.Handlers
                     Children.Add(nativeView);
                 }
 
-                LayoutSubviews();
+                InvalidateMeasure();
             }
         }
 
@@ -92,7 +90,7 @@ namespace HotUI.UWP.Handlers
                 Children.Insert(index, nativeView);
             }
 
-            LayoutSubviews();
+            InvalidateMeasure();
         }
 
         private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
@@ -103,7 +101,7 @@ namespace HotUI.UWP.Handlers
                 Children.RemoveAt(index);
             }
 
-            LayoutSubviews();
+            InvalidateMeasure();
         }
 
         private void HandleChildrenChanged(object sender, LayoutEventArgs e)
@@ -118,17 +116,14 @@ namespace HotUI.UWP.Handlers
                 Children.Insert(index, newNativeView);
             }
 
-            LayoutSubviews();
-        }
-
-        private void LayoutSubviews()
-        {
-            _view.Frame = new RectangleF(0,0,(float)Width, (float)Height);
+            InvalidateMeasure();
         }
 
         protected override UwpSize MeasureOverride(UwpSize availableSize)
         {
-            var size = new UwpSize();
+            return Measure(availableSize.ToSizeF()).ToSize();
+
+            /*var size = new UwpSize();
 
             foreach (var child in Children)
             {
@@ -147,7 +142,7 @@ namespace HotUI.UWP.Handlers
                 }
             }
 
-            return size;
+            return size;*/
         }
 
         protected virtual SizeF GetMeasuredSize(UIElement child, SizeF availableSize)
@@ -161,7 +156,7 @@ namespace HotUI.UWP.Handlers
             Width = finalSize.Width;
             Height = finalSize.Height;
             if (finalSize.Width > 0 && finalSize.Height > 0)
-                LayoutSubviews();
+                _view.Frame = new RectangleF(0, 0, (float)Width, (float)Height);
 
             return finalSize;
         }

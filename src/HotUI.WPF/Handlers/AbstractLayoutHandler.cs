@@ -58,7 +58,7 @@ namespace HotUI.WPF.Handlers
                     InternalChildren.Add(nativeView);
                 }
 
-                LayoutSubviews();
+                InvalidateArrange();
             }
         }
 
@@ -89,7 +89,7 @@ namespace HotUI.WPF.Handlers
                 InternalChildren.Insert(index, nativeView);
             }
 
-            LayoutSubviews();
+            InvalidateArrange();
         }
 
         private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
@@ -100,7 +100,7 @@ namespace HotUI.WPF.Handlers
                 InternalChildren.RemoveAt(index);
             }
 
-            LayoutSubviews();
+            InvalidateArrange();
         }
 
         private void HandleChildrenChanged(object sender, LayoutEventArgs e)
@@ -115,12 +115,13 @@ namespace HotUI.WPF.Handlers
                 InternalChildren.Insert(index, newNativeView);
             }
 
-            LayoutSubviews();
+            InvalidateArrange();
         }
 
         private void LayoutSubviews()
         {
-            _view.Frame = new RectangleF(0,0, (float)Width, (float)Height);
+            if (Width > 0 && Height > 0)
+                _view.Frame = new RectangleF(0,0, (float)Width, (float)Height);
         }
 
         protected override WPFSize MeasureOverride(WPFSize availableSize)

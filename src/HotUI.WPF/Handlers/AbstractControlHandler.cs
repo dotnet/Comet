@@ -67,6 +67,9 @@ namespace HotUI.WPF.Handlers
 
         public void SetFrame(RectangleF frame)
         {
+            _nativeView.Arrange(frame.ToRect());
+
+            /*
             Canvas.SetLeft(_nativeView, frame.Left);
             Canvas.SetTop(_nativeView, frame.Top);
 
@@ -74,7 +77,7 @@ namespace HotUI.WPF.Handlers
             {
                 element.Width = frame.Width;
                 element.Height = frame.Height;
-            }
+            }*/
         }
 
         public virtual void Remove(View view)
