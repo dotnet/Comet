@@ -20,7 +20,8 @@ namespace HotUI
 		}
 
 		public Func<View> Destination { get; }
-		protected override View GetRenderView ()
+        internal override View GetView() => Content;
+        protected override View GetRenderView ()
 		{
 			if (Content == null)
 				throw new Exception ("You are required to pass in Test or a Body");

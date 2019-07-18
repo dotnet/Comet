@@ -145,7 +145,7 @@ namespace HotUI
             set => this.SetValue(State, ref body, value, (s, o) => ResetView());
         }
 
-        internal View GetView() => GetRenderView();
+        internal virtual View GetView() => GetRenderView();
         View replacedView;
         protected virtual View GetRenderView()
         {
