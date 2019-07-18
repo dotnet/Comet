@@ -20,7 +20,9 @@ namespace HotUI.iOS.Handlers
             _content = VirtualView?.View?.ToView();
             if (_content != null)
             {
-                VirtualView.View.NeedsLayout += HandleViewNeedsLayout;
+                if (VirtualView?.View != null)
+                    VirtualView.View.NeedsLayout += HandleViewNeedsLayout;
+                
                 _content.SizeToFit();
                 scrollView.Add(_content);
             }
@@ -30,13 +32,12 @@ namespace HotUI.iOS.Handlers
 
         private void HandleViewNeedsLayout(object sender, EventArgs e)
         {
-            _content.SizeToFit();
-            VirtualView.View.RequestLayout();
+            _content.SetNeedsLayout();
         }
 
         public override void Remove(View view)
         {
-            if (VirtualView.View != null)
+            if (VirtualView?.View != null)
                 VirtualView.View.NeedsLayout -= HandleViewNeedsLayout;
             
             _content?.RemoveFromSuperview();

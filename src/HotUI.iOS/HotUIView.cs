@@ -13,13 +13,11 @@ namespace HotUI.iOS
         public HotUIView()
         {
             BackgroundColor = UIColor.White;
-            TranslatesAutoresizingMaskIntoConstraints = false;
         }
 
         public HotUIView(CGRect rect) : base(rect)
         {
             BackgroundColor = UIColor.White;
-            TranslatesAutoresizingMaskIntoConstraints = false;
         }
 
         public View CurrentView
@@ -53,7 +51,7 @@ namespace HotUI.iOS
                 }
             }
         }
-
+        
         private void HandleNeedsLayout(object sender, EventArgs e)
         {
             SetNeedsLayout();
@@ -92,9 +90,10 @@ namespace HotUI.iOS
             _nativeView = newNativeView;
 
             if (newNativeView != null)
+            {
                 AddSubview(newNativeView);
-
-            SetNeedsLayout();
+                SetNeedsLayout();
+            }
         }
         
         public override void LayoutSubviews()
@@ -125,15 +124,10 @@ namespace HotUI.iOS
                     bounds.Height -= padding.VerticalThickness;
                 }
 
-                if (_nativeView is UITableView)
-                    _nativeView.Frame = bounds;
-                else
-                {
-                    var sizeThatFits = _nativeView.SizeThatFits(bounds.Size);
-                    var x = ((bounds.Width - sizeThatFits.Width) / 2) + padding.Left;
-                    var y = ((bounds.Height - sizeThatFits.Height) / 2) + padding.Top;
-                    _nativeView.Frame = new CGRect(x, y, sizeThatFits.Width, sizeThatFits.Height);
-                }
+                var sizeThatFits = _virtualView.Measure(bounds.Size.ToSizeF());
+                var x = ((bounds.Width - sizeThatFits.Width) / 2) + padding.Left;
+                var y = ((bounds.Height - sizeThatFits.Height) / 2) + padding.Top;
+                _virtualView.Frame = new RectangleF((float)x, (float)y, sizeThatFits.Width, sizeThatFits.Height);
             }
         }
     }

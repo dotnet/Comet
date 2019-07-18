@@ -347,8 +347,11 @@ namespace HotUI
                 if (!frame.Equals(value))
                 {
                     frame = value;
-                    ViewHandler?.SetFrame(value);
-                    RequestLayout();
+
+                    if (BuiltView != null)
+                        BuiltView.Frame = value;
+                    else
+                        ViewHandler?.SetFrame(value);
                 }
             }
         }
@@ -374,77 +377,6 @@ namespace HotUI
             internal set => measuredSize = value;
         }
 
-        public void RequestLayout()
-        {
-            var width = frameConstraints?.Width ?? frame.Width;
-            var height = frameConstraints?.Height ?? frame.Height;
-
-            if (width > 0 && height > 0)
-            {
-                var padding = BuiltView?.GetPadding();
-                if (padding != null)
-                {
-                    width -= ((Thickness)padding).HorizontalThickness;
-                    height -= ((Thickness)padding).VerticalThickness;
-                }
-
-                if (!MeasurementValid)
-                {
-                    MeasuredSize = Measure(new SizeF(width, height));
-                    MeasurementValid = true;
-                }
-
-                Layout();
-            }
-        }
-
-        private void Layout()
-        {
-            var width = frame.Width;
-            var height = frame.Height;
-
-            var x = width - measuredSize.Width;
-            var y = height - measuredSize.Height;
-
-            var alignment = frameConstraints?.Alignment ?? Alignment.Center;
-
-            switch (alignment.Horizontal)
-            {
-                case HorizontalAlignment.Center:
-                    x *= .5f;
-                    break;
-                case HorizontalAlignment.Leading:
-                    x = 0;
-                    break;
-                case HorizontalAlignment.Trailing:
-                    x *= 1;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            switch (alignment.Vertical)
-            {
-                case VerticalAlignment.Center:
-                    y *= .5f;
-                    break;
-                case VerticalAlignment.Bottom:
-                    y *= 1;
-                    break;
-                case VerticalAlignment.Top:
-                    y = 0;
-                    break;
-                case VerticalAlignment.FirstTextBaseline:
-                    throw new NotSupportedException("Not yet supported");
-                case VerticalAlignment.LastTextBaseline:
-                    throw new NotSupportedException("Not yet supported");
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-
-            LayoutSubviews(new RectangleF(x, y, measuredSize.Width, MeasuredSize.Height));
-        }
-
         public virtual SizeF Measure(SizeF availableSize)
         {
             if (BuiltView != null)
@@ -466,11 +398,6 @@ namespace HotUI
                 return new SizeF(width ?? measuredSize.Width, height ?? measuredSize.Height);
 
             return measuredSize;
-        }
-
-        public virtual void LayoutSubviews(RectangleF bounds)
-        {
-            BuiltView.Frame = bounds;
         }
     }
 }

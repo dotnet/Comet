@@ -51,6 +51,7 @@ namespace HotUI.iOS.Handlers
             _view = view as AbstractLayout;
             if (_view != null)
             {
+                _view.NeedsLayout += HandleNeedsLayout;
                 _view.ChildrenChanged += HandleChildrenChanged;
                 _view.ChildrenAdded += HandleChildrenAdded;
                 _view.ChildrenRemoved += ViewOnChildrenRemoved;
@@ -69,6 +70,11 @@ namespace HotUI.iOS.Handlers
             }
         }
 
+        private void HandleNeedsLayout(object sender, EventArgs e)
+        {
+            SetNeedsLayout();
+        }
+
         public void Remove(View view)
         {
             foreach (var subview in _view)
@@ -81,6 +87,7 @@ namespace HotUI.iOS.Handlers
             foreach (var subview in Subviews)
                 subview.RemoveFromSuperview();
 
+            _view.NeedsLayout -= HandleNeedsLayout;
             _view.ChildrenChanged -= HandleChildrenChanged;
             _view.ChildrenAdded -= HandleChildrenAdded;
             _view.ChildrenRemoved -= ViewOnChildrenRemoved;
