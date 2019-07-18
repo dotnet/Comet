@@ -266,7 +266,7 @@ namespace HotUI
             }
         }
 
-       
+        public bool IsDisposed => disposedValue;
         bool disposedValue = false;
         protected virtual void Dispose(bool disposing)
         {
@@ -302,7 +302,6 @@ namespace HotUI
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             OnDispose(true);
-            GC.SuppressFinalize(this);
         }
 
         Thickness padding = Thickness.Empty;
