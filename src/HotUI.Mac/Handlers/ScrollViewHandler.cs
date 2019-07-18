@@ -4,7 +4,7 @@ using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-    public class ScrollViewHandler : AbstractHandler<ScrollView, NSScrollView>
+    public class ScrollViewHandler : AbstractControlHandler<ScrollView, NSScrollView>
     {
         public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
         {

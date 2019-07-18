@@ -67,6 +67,7 @@
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
     <Compile Include="Extensions\NSViewExtensions.cs" />
+    <Compile Include="Handlers\AbstractControlHandler.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="HotUIView.cs" />
@@ -92,6 +93,7 @@
     <Compile Include="Services\MacFontService.cs" />
     <Compile Include="UIViewRepresentable.cs" />
     <Compile Include="Handlers\ViewRepresentableHandler.cs" />
+    <Compile Include="ViewChangedEventArgs.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">

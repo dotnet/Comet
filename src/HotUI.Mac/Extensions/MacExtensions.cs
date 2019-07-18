@@ -12,7 +12,7 @@ namespace HotUI.Mac.Extensions
 
 		public static NSViewController ToViewController (this View view, bool allowNav = true)
 		{
-			var handler = view.ToINSView ();
+			var handler = view.GetOrCreateViewHandler ();
 
 			var vc = new HotUIViewController 
 			{
@@ -33,9 +33,9 @@ namespace HotUI.Mac.Extensions
 			return vc;
 		}
 
-		public static NSView ToView (this View view) => view?.ToINSView ()?.View;
+		public static NSView ToView (this View view) => view?.GetOrCreateViewHandler ()?.View;
 
-		public static MacViewHandler ToINSView(this View view)
+		public static MacViewHandler GetOrCreateViewHandler(this View view)
 		{
 			if (view == null)
 				return null;

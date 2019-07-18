@@ -1,85 +1,51 @@
-using System.Collections.Generic;
+using System;
 using AppKit;
 using CoreGraphics;
-using HotUI.Layout;
 using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-    public class AbstractLayoutHandler : NSView, MacViewHandler, ILayoutHandler<NSView>
+    public class AbstractLayoutHandler : NSView, MacViewHandler
     {
-        private readonly ILayoutManager<NSView> _layoutManager;
         private AbstractLayout _view;
         private SizeF _measured;
-        private bool _measurementValid;
-
-        public AbstractLayout LayoutView => _view;
         
-        public HUIContainerView ContainerView => null;
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
+        protected AbstractLayoutHandler(CGRect rect) : base(rect)
+        {
+            InitializeDefaults();
+        }
+
+        protected AbstractLayoutHandler()
+        {
+            InitializeDefaults();
+        }
+        
         public override bool IsFlipped => true;
-
-        protected AbstractLayoutHandler(CGRect rect, ILayoutManager<NSView> layoutManager) : base(rect)
-        {
-            _layoutManager = layoutManager;
-            InitializeDefaults();
-        }
-
-        protected AbstractLayoutHandler(ILayoutManager<NSView> layoutManager)
-        {
-            _layoutManager = layoutManager;
-            InitializeDefaults();
-        }
-
-        public SizeF Measure(NSView view, SizeF available)
-        {
-            CGSize size;
-            if (view is AbstractLayoutHandler handler)
-            {
-                size = handler.SizeThatFits(available.ToCGSize());
-            }
-            else
-            {
-                size = view.IntrinsicContentSize;
-                if (size.Width == 0 || size.Height == 0)
-                    size = view.Bounds.Size;
-            }
-
-            return size.ToHotUISize();
-        }
-
-        public SizeF GetSize(NSView view)
-        {
-            var size = view.Bounds.Size;
-            if (size.Width == 0 || size.Height == 0)
-                size = view.IntrinsicContentSize;
-
-            return size.ToHotUISize();
-        }
-
-        public void SetFrame(NSView view, float x, float y, float width, float height)
-        {
-            view.Frame = new CGRect(x, y, width, height);
-        }
-
-        public void SetSize(NSView view, float width, float height)
-        {
-            if ((Equals(width, (float)Frame.Width) && Equals(height, (float)Frame.Height)))
-                return;
-
-            view.Frame = new CGRect(Frame.X, Frame.Y, width, height);
-        }
-
-        public IEnumerable<NSView> GetSubviews()
-        {
-            return Subviews;
-        }
-
+        
         public NSView View => this;
         
+        public HUIContainerView ContainerView => null;
+        
         public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
+        
+        public bool HasContainer
+        {
+            get => false; 
+            set {}
+        }        
+        
+        public SizeF Measure(SizeF available)
+        {
+            return available;
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            View.Frame = frame.ToCGRect();
+        }
 
         public void SetView(View view)
         {
@@ -90,19 +56,29 @@ namespace HotUI.Mac.Handlers
                 _view.ChildrenAdded += HandleChildrenAdded;
                 _view.ChildrenRemoved += ViewOnChildrenRemoved;
 
-                foreach (var subView in _view)
+                foreach (var subview in _view)
                 {
-                    var nativeView = subView.ToView() ?? new NSView();
+                    subview.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
+                    if (subview.ViewHandler is MacViewHandler handler)
+                        handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+                    
+                    var nativeView = subview.ToView() ?? new NSView();
                     AddSubview(nativeView);
                 }
 
                 SetNeedsLayout();
-                _measurementValid = false;
             }
         }
 
         public void Remove(View view)
         {
+            foreach (var subview in _view)
+            {
+                subview.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
+                if (subview.ViewHandler is MacViewHandler handler)
+                    handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+            }
+            
             foreach (var subview in Subviews)
                 subview.RemoveFromSuperview();
 
@@ -113,6 +89,21 @@ namespace HotUI.Mac.Handlers
                 _view.ChildrenRemoved -= ViewOnChildrenRemoved;
                 _view = null;
             }
+        }
+        
+        private void HandleSubviewViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
+        {
+            if (e.OldViewHandler is MacViewHandler oldHandler)
+                oldHandler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+        }
+
+        private void HandleSubviewNativeViewChanged(object sender, ViewChangedEventArgs args)
+        {
+            args.OldNativeView?.RemoveFromSuperview();
+
+            var index = _view.IndexOf(args.VirtualView);
+            var newView = args.NewNativeView ?? new NSView();
+            this.InsertSubview(newView, index);
         }
 
         public virtual void UpdateValue(string property, object value)
@@ -130,16 +121,30 @@ namespace HotUI.Mac.Handlers
             {
                 var index = e.Start + i;
                 var view = _view[index];
+                
+                view.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
+                if (view.ViewHandler is MacViewHandler handler)
+                    handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+                
                 var nativeView = view.ToView() ?? new NSView();
                 this.InsertSubview(nativeView, index);
             }
 
             SetNeedsLayout();
-            _measurementValid = false;
         }
 
         private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
         {
+            if (e.Removed != null)
+            {
+                foreach (var view in e.Removed)
+                {
+                    view.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
+                    if (view.ViewHandler is MacViewHandler handler)
+                        handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+                }
+            }
+            
             for (var i = 0; i < e.Count; i++)
             {
                 var index = e.Start + i;
@@ -148,11 +153,20 @@ namespace HotUI.Mac.Handlers
             }
 
             SetNeedsLayout();
-            _measurementValid = false;
         }
 
         private void HandleChildrenChanged(object sender, LayoutEventArgs e)
         {
+            if (e.Removed != null)
+            {
+                foreach (var view in e.Removed)
+                {
+                    view.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
+                    if (view.ViewHandler is MacViewHandler handler)
+                        handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+                }
+            }
+            
             for (var i = 0; i < e.Count; i++)
             {
                 var index = e.Start + i;
@@ -160,12 +174,16 @@ namespace HotUI.Mac.Handlers
                 oldNativeView.RemoveFromSuperview();
 
                 var view = _view[index];
+                
+                view.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
+                if (view.ViewHandler is MacViewHandler handler)
+                    handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+                
                 var newNativeView = view.ToView() ?? new NSView();
                 this.InsertSubview(newNativeView, index);
             }
 
             SetNeedsLayout();
-            _measurementValid = false;
         }
 
         private void SetNeedsLayout()
@@ -175,20 +193,17 @@ namespace HotUI.Mac.Handlers
 
         public CGSize SizeThatFits(CGSize size)
         {
-            _measured = _layoutManager.Measure(this, this, _view, size.ToHotUISize());
-            _measurementValid = true;
+            _measured = _view.Measure(size.ToSizeF());
             return _measured.ToCGSize();
         }
 
         public void SizeToFit()
         {
-            _measured = _layoutManager.Measure(this, this, _view, Superview?.Bounds.Size.ToHotUISize() ?? NSScreen.MainScreen.Frame.Size.ToHotUISize());
-            _measurementValid = true;
+            _measured = _view.Measure(Superview?.Bounds.Size.ToSizeF() ?? NSScreen.MainScreen.Frame.Size.ToSizeF());
             base.Frame = new CGRect(new CGPoint(0, 0), _measured.ToCGSize());
         }
 
         public override CGSize IntrinsicContentSize => _measured.ToCGSize();
-        
         
         public override CGRect Frame
         {
@@ -217,14 +232,7 @@ namespace HotUI.Mac.Handlers
             if (Superview == null || Bounds.Size.IsEmpty)
                 return;
 
-            var available = Bounds.Size.ToHotUISize();
-            if (!_measurementValid)
-            {
-                _measured = _layoutManager.Measure(this, this, _view, available);
-                _measurementValid = true;
-            }
-
-            _layoutManager.Layout(this, this, _view, _measured);
+            _view.Frame = Frame.ToRectangleF();
         }
     }
 }

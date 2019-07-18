@@ -7,72 +7,23 @@ using UIKit;
 
 namespace HotUI.iOS.Handlers
 {
-    public class AbstractLayoutHandler : UIView, iOSViewHandler, ILayoutHandler<UIView>
+    public class AbstractLayoutHandler : UIView, iOSViewHandler
     {
-        public static int _counter = 0;
-        public int _instance;
-
         private AbstractLayout _view;
         private SizeF _measured;
-        private bool _measurementValid;
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
         protected AbstractLayoutHandler(CGRect rect) : base(rect)
         {
-            _instance = _counter++;
             InitializeDefaults();
         }
 
         protected AbstractLayoutHandler()
         {
-            _instance = _counter++;
+            InitializeDefaults();
         }
         
-        public SizeF Measure(UIView view, SizeF available)
-        {
-            CGSize size;
-            if (view is AbstractLayoutHandler || view is HUIContainerView)
-            {
-                size = view.SizeThatFits(available.ToCGSize());
-            }
-            else
-            {
-                size = view.IntrinsicContentSize;
-                if (size.Width == 0 || size.Height == 0)
-                    size = view.Bounds.Size;
-            }
-
-            return size.ToSizeF();
-        }
-
-        public SizeF GetSize(UIView view)
-        {
-            var size = view.Bounds.Size;
-            if (size.Width == 0 || size.Height == 0)
-                size = view.IntrinsicContentSize;
-
-            return size.ToSizeF();
-        }
-
-        public void SetFrame(UIView view, float x, float y, float width, float height)
-        {
-            view.Frame = new CGRect(x, y, width, height);
-        }
-
-        public void SetSize(UIView view, float width, float height)
-        {
-            if ((Equals(width, (float)Frame.Width) && Equals(height, (float)Frame.Height)))
-                return;
-
-            view.Frame = new CGRect(Frame.X, Frame.Y, width, height);
-        }
-
-        public IEnumerable<UIView> GetSubviews()
-        {
-            return Subviews;
-        }
-
         public UIView View => this;
 
         public HUIContainerView ContainerView => null;
@@ -97,11 +48,6 @@ namespace HotUI.iOS.Handlers
 
         public void SetView(View view)
         {
-            Console.WriteLine($"[{GetType().Name} - {_instance}] SetView({view.GetType().Name})");
-
-            if (_view != null)
-                Console.WriteLine("Removed should have been called beforehand.");
-
             _view = view as AbstractLayout;
             if (_view != null)
             {
@@ -120,14 +66,11 @@ namespace HotUI.iOS.Handlers
                 }
 
                 SetNeedsLayout();
-                _measurementValid = false;
             }
         }
 
         public void Remove(View view)
         {
-            Console.WriteLine($"[{GetType().Name} - {_instance}] Remove({view.GetType().Name})");
-
             foreach (var subview in _view)
             {
                 subview.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
@@ -136,9 +79,7 @@ namespace HotUI.iOS.Handlers
             }
 
             foreach (var subview in Subviews)
-            {
                 subview.RemoveFromSuperview();
-            }
 
             _view.ChildrenChanged -= HandleChildrenChanged;
             _view.ChildrenAdded -= HandleChildrenAdded;
@@ -148,16 +89,12 @@ namespace HotUI.iOS.Handlers
 
         private void HandleSubviewViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
         {
-            Console.WriteLine($"[{GetType().Name} - {_instance}] HandleSubviewViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
-
             if (e.OldViewHandler is iOSViewHandler oldHandler)
                 oldHandler.NativeViewChanged -= HandleSubviewNativeViewChanged;
         }
 
         private void HandleSubviewNativeViewChanged(object sender, ViewChangedEventArgs args)
         {
-            Console.WriteLine($"[{GetType().Name} - {_instance}] HandlerViewChanged: [{sender.GetType()}] From:[{args.OldNativeView?.GetType()}] To:[{args.NewNativeView?.GetType()}]");
-
             args.OldNativeView?.RemoveFromSuperview();
 
             var index = _view.IndexOf(args.VirtualView);
@@ -172,7 +109,6 @@ namespace HotUI.iOS.Handlers
         private void InitializeDefaults()
         {
             TranslatesAutoresizingMaskIntoConstraints = false;
-            BackgroundColor = UIColor.Green;
         }
 
         private void HandleChildrenAdded(object sender, LayoutEventArgs e)
@@ -191,7 +127,6 @@ namespace HotUI.iOS.Handlers
             }
 
             SetNeedsLayout();
-            _measurementValid = false;
         }
 
         private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
@@ -214,7 +149,6 @@ namespace HotUI.iOS.Handlers
             }
 
             SetNeedsLayout();
-            _measurementValid = false;
         }
 
         private void HandleChildrenChanged(object sender, LayoutEventArgs e)
@@ -246,7 +180,6 @@ namespace HotUI.iOS.Handlers
             }
 
             SetNeedsLayout();
-            _measurementValid = false;
         }
 
         public override CGSize SizeThatFits(CGSize size)
@@ -258,7 +191,6 @@ namespace HotUI.iOS.Handlers
         public override void SizeToFit()
         {
             _measured = _view.Measure(Superview?.Bounds.Size.ToSizeF() ?? UIScreen.MainScreen.Bounds.Size.ToSizeF());
-            _measurementValid = true;
             base.Frame = new CGRect(new CGPoint(0, 0), _measured.ToCGSize());
         }
 

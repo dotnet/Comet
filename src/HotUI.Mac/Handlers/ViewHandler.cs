@@ -3,65 +3,39 @@ using System.Diagnostics;
 using AppKit;
 using CoreAnimation;
 using CoreGraphics;
-using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
 {
-	public class ViewHandler : MacViewHandler
+	public class ViewHandler : AbstractHandler<View, NSView>
     {
         public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
             [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
             [nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
             [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty
-            
         };
-
-        private View _view;
-        private NSView _body;
-
-        public Action ViewChanged { get; set; }
-
-        public NSView View => _body;
-
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
-        public HUIContainerView ContainerView => null;
-
-        public void Remove(View view)
+        
+        protected override NSView CreateView()
         {
-            _view = null;
-            _body = null;
-        }
-
-        public void SetView(View view)
-        {
-            _view = view;
-            SetBody();
-            Mapper.UpdateProperties(this, _view);
-            ViewChanged?.Invoke();
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperty(this, _view, property);
-        }
-
-        public bool SetBody()
-        {
-            var uiElement = _view?.ToINSView();
-            if (uiElement?.GetType() == typeof(ViewHandler) && _view.Body == null)
+            var viewHandler = VirtualView?.GetOrCreateViewHandler();
+            if (viewHandler?.GetType() == typeof(ViewHandler) && NativeView == null)
             {
                 // this is recursive.
-                Debug.WriteLine($"There is no ViewHandler for {_view.GetType()}");
-                return true;
+                Debug.WriteLine($"There is no ViewHandler for {VirtualView.GetType()}");
+                return null;
             }
 
-            _body = uiElement?.View ?? new NSColorView();
-            return true;
+            return viewHandler?.View ?? new NSColorView();
         }
 
+        public override void SetView(View view)
+        {
+            var previousView = TypedNativeView;
+            base.SetView(view);
+            BroadcastNativeViewChanged(previousView, TypedNativeView);
+        }
+        
         public static void MapBackgroundColorProperty(IViewHandler viewHandler, View virtualView)
         {
             var nativeView = (NSView)viewHandler.NativeView;
@@ -94,7 +68,7 @@ namespace HotUI.Mac.Handlers
                 {
                     ShadowColor = shadow.Color.ToNSColor(),
                     ShadowOffset = shadow.Offset.ToCGSize(),
-                    ShadowBlurRadius = (nfloat) shadow.Radius
+                    ShadowBlurRadius = shadow.Radius
                 };
                 
                 /*if (nativeView.Layer == null)
@@ -145,7 +119,7 @@ namespace HotUI.Mac.Handlers
                         {
                             ShadowColor = shadow.Color.ToNSColor(),
                             ShadowOffset = shadow.Offset.ToCGSize(),
-                            ShadowBlurRadius = (nfloat) shadow.Radius
+                            ShadowBlurRadius = shadow.Radius
                         };
                     }
                 }
@@ -155,46 +129,5 @@ namespace HotUI.Mac.Handlers
                 handler.HasContainer = false;
             }
         }
-
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-
-            _body?.RemoveFromSuperview();
-            _body?.Dispose();
-            _body = null;
-            if (_view != null)
-                Remove(_view);
-
-        }
-
-
-        void OnDispose(bool disposing)
-        {
-            if (disposedValue)
-                return;
-            disposedValue = true;
-            Dispose(disposing);
-        }
-
-        ~ViewHandler()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            OnDispose(false);
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            OnDispose(true);
-            GC.SuppressFinalize(this);
-        }
-        #endregion
     }
 }

@@ -34,16 +34,15 @@ namespace HotUI.Mac
                     return;
 
                 _virtualView = value;
-                _handler = _virtualView.ToINSView();
+                _handler = _virtualView.GetOrCreateViewHandler();
                 if (_handler is ViewHandler viewHandler)
-                    viewHandler.ViewChanged = HandleViewChanged;
+                    viewHandler.NativeViewChanged += HandleNativeViewChanged;
 
-                HandleViewChanged();
+                HandleNativeViewChanged(this, null);
             }
         }
 
-
-        void HandleViewChanged()
+        private void HandleNativeViewChanged(object sender, ViewChangedEventArgs e)
         {
             if (_virtualView == null)
                 return;

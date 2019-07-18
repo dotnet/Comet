@@ -4,7 +4,7 @@ using AppKit;
 
 namespace HotUI.Mac.Handlers
 {
-    public class ButtonHandler : AbstractHandler<Button,NSButton>
+    public class ButtonHandler : AbstractControlHandler<Button,NSButton>
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {

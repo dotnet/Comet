@@ -3,7 +3,7 @@ using AppKit;
 
 namespace HotUI.Mac.Handlers
 {
-    public class TextFieldHandler : AbstractHandler<TextField, NSTextField>
+    public class TextFieldHandler : AbstractControlHandler<TextField, NSTextField>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {

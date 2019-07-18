@@ -1,6 +1,5 @@
 ﻿using System;
 using CoreGraphics;
-using HotUI.iOS.Handlers;
 using UIKit;
 
 namespace HotUI.iOS
@@ -82,9 +81,6 @@ namespace HotUI.iOS
 
         void HandleNativeViewChanged(object sender, ViewChangedEventArgs args)
         {
-           
-            Console.WriteLine($"[{GetType().Name}] HandleNativeViewChanged: [{sender.GetType()}] From:[{args.OldNativeView?.GetType()} {(args.OldNativeView as AbstractLayoutHandler)?._instance.ToString() ?? ""}] To:[{args.NewNativeView?.GetType()} {(args.NewNativeView as AbstractLayoutHandler)?._instance.ToString() ?? ""}]");
-
             if (_virtualView == null)
                 return;
 

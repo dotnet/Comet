@@ -6,11 +6,11 @@ namespace HotUI.Mac.Handlers
 {
     public class VStackHandler : AbstractLayoutHandler
     {
-        public VStackHandler(CGRect rect) : base(rect, new VStackLayoutManager<NSView>())
+        public VStackHandler(CGRect rect) : base(rect)
         {
         }
 
-        public VStackHandler() : base(new VStackLayoutManager<NSView>())
+        public VStackHandler()
         {
         }
     }

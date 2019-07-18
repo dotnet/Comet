@@ -1,16 +1,14 @@
-﻿using AppKit;
-using CoreGraphics;
-using HotUI.Layout;
+﻿using CoreGraphics;
 
 namespace HotUI.Mac.Handlers
 {
     public class HStackHandler : AbstractLayoutHandler
     {
-        public HStackHandler(CGRect rect) : base(rect, new HStackLayoutManager<NSView>())
+        public HStackHandler(CGRect rect) : base(rect)
         {
         }
 
-        public HStackHandler() : base(new HStackLayoutManager<NSView>())
+        public HStackHandler()
         {
         }
     }

@@ -5,7 +5,8 @@ using Foundation;
 using HotUI.Mac.Controls;
 using HotUI.Mac.Extensions;
 
-namespace HotUI.Mac.Handlers {
+namespace HotUI.Mac.Handlers 
+{
 	public class ListViewHandler : NSColorView, MacViewHandler, INSTableViewDataSource, INSTableViewDelegate {
 
 
@@ -28,11 +29,22 @@ namespace HotUI.Mac.Handlers {
 			tableViewContainer.HasVerticalScroller = true;
 		}
 
-
+		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 		public NSView View => this;
 
 		public object NativeView => View;
 		public bool HasContainer { get; set; } = false;
+		
+		public SizeF Measure(SizeF availableSize)
+		{
+			return availableSize;
+		}
+
+		public void SetFrame(RectangleF frame)
+		{
+			View.Frame = frame.ToCGRect();
+		}
+
 		public HUIContainerView ContainerView => null;
 
 		public void Remove (View view)
