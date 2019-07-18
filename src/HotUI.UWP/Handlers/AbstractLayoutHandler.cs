@@ -11,11 +11,6 @@ namespace HotUI.UWP.Handlers
     {
         private AbstractLayout _view;
 
-        public IEnumerable<UIElement> GetSubviews()
-        {
-            foreach (var element in Children) yield return element;
-        }
-
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
         public UIElement View => this;
