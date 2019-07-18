@@ -5,7 +5,7 @@ using HWebView = HotUI.WebView;
 
 namespace HotUI.Forms.Handlers
 {
-    public class WebViewHandler : AbstractHandler<HWebView, FWebView>
+    public class WebViewHandler : AbstractControlHandler<HWebView, FWebView>
     {
         public static readonly PropertyMapper<HWebView> Mapper = new PropertyMapper<HWebView>(ViewHandler.Mapper)
         {

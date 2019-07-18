@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using FView = Xamarin.Forms.View;
 
 namespace HotUI.Forms.Handlers
@@ -7,105 +7,114 @@ namespace HotUI.Forms.Handlers
         where TVirtualView : View 
         where TNativeView: FView
     {
-        private readonly PropertyMapper<TVirtualView> _mapper;
-        private TVirtualView _virtualView;
-        private TNativeView _nativeView;
-        private HUIContainerView _containerView;
-
-        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+        protected readonly PropertyMapper<TVirtualView> mapper;
 
         protected AbstractHandler(PropertyMapper<TVirtualView> mapper)
         {
-            _mapper = mapper;
+            this.mapper = mapper;
         }
 
+        protected AbstractHandler()
+        {
+            
+        }
+        
+        private TVirtualView _virtualView;
+        private TNativeView _nativeView;
+
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+        
         protected abstract TNativeView CreateView();
-        
-        protected abstract void DisposeView(TNativeView nativeView);
 
-        public FView View => (FView)_containerView ?? _nativeView;
-
-        public HUIContainerView ContainerView => _containerView;
+        public FView View => _nativeView;
         
+        //public HUIContainerView ContainerView => null;
+
         public object NativeView => _nativeView;
         
         public TNativeView TypedNativeView => _nativeView;
 
         protected TVirtualView VirtualView => _virtualView;
-        
-        public bool HasContainer
-        {
-            get => _containerView != null;
-            set
-            {
-                if (!value && _containerView != null)
-                {
-                    var previousContainerView = _containerView;
 
-                    _containerView.Children.Remove(_nativeView);
-                    _containerView = null;
-
-                    NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, previousContainerView, _nativeView));
-                    return;
-                }
-
-                if (value && _containerView == null)
-                {
-                    _containerView = new HUIContainerView();
-                    _containerView.MainView = _nativeView;
-                    NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, _nativeView, _containerView));
-                }
-            }
-        }
-        
-        public virtual void Remove(View view)
-        {
-            _virtualView = null;
-
-            // If a container view is being used, then remove the native view from it and get rid of it.
-            if (_containerView != null)
-            {
-                _containerView.Children.Remove(_nativeView);
-                _containerView = null;
-            }
-        }
-        
         public virtual void SetView(View view)
         {
             _virtualView = view as TVirtualView;
-            if (_nativeView == null)
-                _nativeView = CreateView();
-            _mapper.UpdateProperties(this, _virtualView);
+            _nativeView = CreateView();
+            mapper?.UpdateProperties(this, _virtualView);
+        }
+
+        public virtual void Remove(View view)
+        {
+            _virtualView = null;
+            _nativeView = null;
+        }
+
+        protected virtual void DisposeView(TNativeView nativeView)
+        {
+            
         }
 
         public virtual void UpdateValue(string property, object value)
         {
-            _mapper.UpdateProperty(this, _virtualView, property);
+            mapper?.UpdateProperty(this, _virtualView, property);
         }
 
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+        
+        public virtual SizeF Measure(SizeF availableSize)
+        {
+            return availableSize;
+        }
 
+        public void SetFrame(RectangleF frame)
+        {
+            // Do nothing
+        }
+
+        protected void BroadcastNativeViewChanged(FView previousView, FView newView)
+        {
+            NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, previousView, newView));
+        }
+        
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
+        private bool _disposed; // To detect redundant calls
+        
+        private void Dispose(bool disposing)
         {
             if (!disposing)
                 return;
-            
+
             if (_nativeView != null)
                 DisposeView(_nativeView);
+
+            if (_nativeView?.Parent is Xamarin.Forms.Layout<Xamarin.Forms.View> layout)
+                layout.Children.Remove(_nativeView);
+            
+            if (_nativeView is IDisposable disposable)
+                disposable?.Dispose();
             
             _nativeView = null;
+            
             if (_virtualView != null)
                 Remove(_virtualView);
-
         }
+
         void OnDispose(bool disposing)
         {
-            if (disposedValue)
+            if (_disposed)
                 return;
-            disposedValue = true;
+            _disposed = true;
             Dispose(disposing);
+        }
+
+        ~AbstractHandler()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(false);
         }
 
         // This code added to correctly implement the disposable pattern.
@@ -113,6 +122,7 @@ namespace HotUI.Forms.Handlers
         {
             // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
             OnDispose(true);
+            GC.SuppressFinalize(this);
         }
         #endregion
     }

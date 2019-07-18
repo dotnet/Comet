@@ -3,7 +3,7 @@ using HImage = HotUI.Image;
 
 namespace HotUI.Forms.Handlers
 {
-    public class ImageHandler : AbstractHandler<HImage, FImage>
+    public class ImageHandler : AbstractControlHandler<HImage, FImage>
     {
         public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>(ViewHandler.Mapper)
         {

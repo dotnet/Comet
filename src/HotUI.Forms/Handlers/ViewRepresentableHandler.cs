@@ -5,7 +5,7 @@
 
 namespace HotUI.Forms.Handlers
 {
-    public class ViewRepresentableHandler : AbstractHandler<ViewRepresentable, FView>
+    public class ViewRepresentableHandler : AbstractControlHandler<ViewRepresentable, FView>
     {
         public static readonly PropertyMapper<ViewRepresentable> Mapper = new PropertyMapper<ViewRepresentable>(ViewHandler.Mapper)
         {

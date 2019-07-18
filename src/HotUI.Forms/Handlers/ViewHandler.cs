@@ -1,84 +1,31 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using FView = Xamarin.Forms.View;
 
 namespace HotUI.Forms.Handlers
 {
-    public class ViewHandler : FView, FormsViewHandler
+    public class ViewHandler : AbstractHandler<View,FView>
     {
         public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
 
         };
 
-        private View _view;
-
-        public Action ViewChanged { get; set; }
-
-        public FView View { get; private set; }
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
-
-        public void Remove(View view)
+        public ViewHandler() : base(Mapper)
         {
-            _view = null;
-            View = null;
+            
         }
-
-        public void SetView(View view)
+        
+        protected override FView CreateView()
         {
-            _view = view;
-            SetBody();
-            Mapper.UpdateProperties(this, _view);
-            ViewChanged?.Invoke();
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperties(this, _view);
-        }
-
-        public void SetBody()
-        {
-            var formsView = _view?.ToIFormsView();
-            if (formsView?.GetType() == typeof(ViewHandler) && _view.Body == null)
+            var viewHandler = VirtualView?.GetOrCreateViewHandler();
+            if (viewHandler?.GetType() == typeof(ViewHandler) && VirtualView.Body == null)
             {
                 // this is recursive.
-                Debug.WriteLine($"There is no ViewHandler for {_view.GetType()}");
+                Debug.WriteLine($"There is no ViewHandler for {VirtualView.GetType()}");
+                return null;
             }
 
-            View = formsView?.View ?? new Xamarin.Forms.ContentView();
+            return viewHandler?.View ?? new Xamarin.Forms.ContentView();
         }
-
-
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
-            View = null;
-            if (_view != null)
-                Remove(_view);
-
-        }
-
-
-        void OnDispose(bool disposing)
-        {
-            if (disposedValue)
-                return;
-            disposedValue = true;
-            Dispose(disposing);
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            OnDispose(true);
-        }
-        #endregion
     }
 }

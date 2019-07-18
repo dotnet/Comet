@@ -5,7 +5,7 @@ using FLabel = Xamarin.Forms.Label;
 
 namespace HotUI.Forms.Handlers
 {
-    public class TextHandler : AbstractHandler<Text, FLabel>
+    public class TextHandler : AbstractControlHandler<Text, FLabel>
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {

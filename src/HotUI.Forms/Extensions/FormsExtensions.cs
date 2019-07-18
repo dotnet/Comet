@@ -17,7 +17,7 @@ namespace HotUI.Forms {
 		}
 		public static FPage ToPage (this View view, bool allowNav = true)
 		{
-			var handler = view.ToIFormsView ();
+			var handler = view.GetOrCreateViewHandler ();
 
 			var vc = new HotUIPage {
 				Content = new HotUIContainerView(view),
@@ -36,9 +36,9 @@ namespace HotUI.Forms {
 			return vc;
 		}
 
-		public static FView ToForms (this View view) => view.ToIFormsView ()?.View;
+		public static FView ToForms (this View view) => view.GetOrCreateViewHandler ()?.View;
 
-		public static FormsViewHandler ToIFormsView(this View view)
+		public static FormsViewHandler GetOrCreateViewHandler(this View view)
 		{
 			if (view == null)
 				return null;

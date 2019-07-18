@@ -4,7 +4,7 @@ using FEntry = Xamarin.Forms.Entry;
 
 namespace HotUI.Forms.Handlers
 {
-    public class TextFieldHandler : AbstractHandler<TextField, FEntry>
+    public class TextFieldHandler : AbstractControlHandler<TextField, FEntry>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {

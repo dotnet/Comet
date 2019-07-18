@@ -8,7 +8,6 @@ namespace HotUI.Forms.Handlers
 {
     public class ListViewHandler : FListView, FormsViewHandler
     {
-
         class HotViewCell : Xamarin.Forms.ViewCell
         {
 
@@ -62,9 +61,20 @@ namespace HotUI.Forms.Handlers
         private void ListViewHandler_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
             => listView?.OnSelected((e.SelectedItem as Tuple<object, HotUI.View>)?.Item1);
 
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
         public Xamarin.Forms.View View => this;
         public object NativeView => View;
         public bool HasContainer { get; set; } = false;
+        
+        public SizeF Measure(SizeF availableSize)
+        {
+            return availableSize;
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            // Do nothing
+        }
 
         protected HListView listView;
         public void Remove(HView view)

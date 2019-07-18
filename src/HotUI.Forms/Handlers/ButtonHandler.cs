@@ -5,7 +5,7 @@ using HButton = HotUI.Button;
 // ReSharper disable MemberCanBePrivate.Global
 namespace HotUI.Forms.Handlers
 {
-    public class ButtonHandler : AbstractHandler<HButton, FButton>
+    public class ButtonHandler : AbstractControlHandler<HButton, FButton>
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {

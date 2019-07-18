@@ -4,7 +4,7 @@ using FToggle = Xamarin.Forms.Switch;
 
 namespace HotUI.Forms.Handlers
 {
-    public class ToggleHandler : AbstractHandler<Toggle, FToggle>
+    public class ToggleHandler : AbstractControlHandler<Toggle, FToggle>
     {
         public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle>()
         {

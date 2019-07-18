@@ -1,4 +1,5 @@
-﻿using FScrollView = Xamarin.Forms.ScrollView;
+﻿using System;
+using FScrollView = Xamarin.Forms.ScrollView;
 using HScrollView = HotUI.ScrollView;
 using HView = HotUI.View;
 namespace HotUI.Forms.Handlers
@@ -9,9 +10,20 @@ namespace HotUI.Forms.Handlers
         {
         }
 
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
         public Xamarin.Forms.View View => this;
         public object NativeView => View;
         public bool HasContainer { get; set; } = false;
+        
+        public SizeF Measure(SizeF availableSize)
+        {
+            return availableSize;
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            // Do nothing
+        }
 
         public void Dispose()
         {

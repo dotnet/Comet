@@ -1,4 +1,4 @@
-
+using System;
 
 namespace HotUI.Forms.Handlers
 {
@@ -7,16 +7,28 @@ namespace HotUI.Forms.Handlers
         private readonly Xamarin.Forms.Layout<Xamarin.Forms.View> _formsLayout;
         private AbstractLayout _view;
 
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+
         protected AbstractFormsLayoutHandler(Xamarin.Forms.Layout<Xamarin.Forms.View> layout)
         {
             _formsLayout = layout;
         }
-
+        
         public Xamarin.Forms.View View => _formsLayout;
 
         public object NativeView => View;
 
         public bool HasContainer { get; set; } = false;
+        
+        public SizeF Measure(SizeF availableSize)
+        {
+            return availableSize;
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            // Do nothing
+        }
 
         public void SetView(View view)
         {
