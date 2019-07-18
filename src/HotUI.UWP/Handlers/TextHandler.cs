@@ -4,7 +4,7 @@
 
 namespace HotUI.UWP.Handlers
 {
-    public class TextHandler : AbstractHandler<Text, UWPLabel>
+    public class TextHandler : AbstractControlHandler<Text, UWPLabel>
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>()
             {

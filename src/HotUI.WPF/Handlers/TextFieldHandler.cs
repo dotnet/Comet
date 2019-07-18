@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using System.Windows.Controls;
+﻿using System.Windows.Controls;
 using WPFTextField = System.Windows.Controls.TextBox;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.WPF.Handlers
 {
-    public class TextFieldHandler : AbstractHandler<TextField, WPFTextField>
+    public class TextFieldHandler : AbstractControlHandler<TextField, WPFTextField>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>()
         {

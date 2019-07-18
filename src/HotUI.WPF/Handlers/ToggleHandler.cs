@@ -3,7 +3,7 @@ using System.Windows.Controls;
 
 namespace HotUI.WPF.Handlers
 {
-    public class ToggleHandler :  AbstractHandler<Toggle, CheckBox>
+    public class ToggleHandler :  AbstractControlHandler<Toggle, CheckBox>
     {
 		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> ()
 		{ 

@@ -1,62 +1,17 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
-using Windows.Foundation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using HotUI.Layout;
+using Windows.UI.Xaml.Media;
 using UwpSize = Windows.Foundation.Size;
 
 namespace HotUI.UWP.Handlers
 {
-    public abstract class AbstractLayoutHandler : Canvas, UWPViewHandler, ILayoutHandler<UIElement>
+    public abstract class AbstractLayoutHandler : Panel, UWPViewHandler
     {
-        private readonly ILayoutManager<UIElement> _layoutManager;
         private AbstractLayout _view;
 
-        protected AbstractLayoutHandler(ILayoutManager<UIElement> layoutManager)
-        {
-            _layoutManager = layoutManager;
-        }
-        
-        public SizeF GetSize(UIElement view)
-        {
-            if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0) return view.DesiredSize.ToSize();
-
-            return view.RenderSize.ToSize();
-        }
-
-        public void SetFrame(UIElement view, float x, float y, float width, float height)
-        {
-            if (width > 0 && height > 0)
-            {
-                if (view is Windows.UI.Xaml.Controls.ListView listview)
-                {
-                    listview.InvalidateMeasure();
-                    view.Arrange(new Rect(x, y, width, height));
-                    listview.Width = width;
-                    listview.Height = height;
-                }
-                else
-                {
-                    view.Arrange(new Rect(x, y, width, height));
-                }
-            }
-        }
-
-        public void SetSize(UIElement view, float width, float height)
-        {
-            if (view is FrameworkElement element)
-            {
-                element.Width = width;
-                element.Height = height;
-            }
-        }
-
-        public IEnumerable<UIElement> GetSubviews()
-        {
-            foreach (var element in Children) yield return element;
-        }
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
         public UIElement View => this;
 
@@ -67,6 +22,17 @@ namespace HotUI.UWP.Handlers
             get => false;
             set { }
         }
+
+        public SizeF Measure(SizeF availableSize)
+        {
+            return availableSize;
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            Arrange(frame.ToRect());
+        }
+
         public void SetView(View view)
         {
             _view = view as AbstractLayout;
@@ -82,7 +48,7 @@ namespace HotUI.UWP.Handlers
                     Children.Add(nativeView);
                 }
 
-                LayoutSubviews();
+                InvalidateMeasure();
             }
         }
 
@@ -113,7 +79,7 @@ namespace HotUI.UWP.Handlers
                 Children.Insert(index, nativeView);
             }
 
-            LayoutSubviews();
+            InvalidateMeasure();
         }
 
         private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
@@ -124,7 +90,7 @@ namespace HotUI.UWP.Handlers
                 Children.RemoveAt(index);
             }
 
-            LayoutSubviews();
+            InvalidateMeasure();
         }
 
         private void HandleChildrenChanged(object sender, LayoutEventArgs e)
@@ -139,56 +105,20 @@ namespace HotUI.UWP.Handlers
                 Children.Insert(index, newNativeView);
             }
 
-            LayoutSubviews();
-        }
-
-        private void LayoutSubviews()
-        {
-            var measure = _layoutManager.Measure(this, this, _view, ActualSize.ToSize());
-            _layoutManager.Layout(this, this, _view, measure);
+            InvalidateMeasure();
         }
 
         protected override UwpSize MeasureOverride(UwpSize availableSize)
         {
-            var size = new UwpSize();
-
-            foreach (var child in Children)
-            {
-                if (child is Windows.UI.Xaml.Controls.ListView listView)
-                {
-                    var sizeToUse = GetMeasuredSize(listView, availableSize.ToSize());
-                    child.Measure(sizeToUse.ToSize());
-                    size.Height = Math.Max(child.DesiredSize.Height, size.Height);
-                    size.Width = Math.Max(child.DesiredSize.Width, size.Width);
-                }
-                else
-                {
-                    child.Measure(availableSize);
-                    size.Height = Math.Max(child.DesiredSize.Height, size.Height);
-                    size.Width = Math.Max(child.DesiredSize.Width, size.Width);
-                }
-            }
-
-            return size;
-        }
-
-        protected virtual SizeF GetMeasuredSize(UIElement child, SizeF availableSize)
-        {
-            return availableSize;
+            return _view.Measure(availableSize.ToSizeF()).ToSize();
         }
 
         protected override UwpSize ArrangeOverride(UwpSize finalSize)
         {
-            Width = finalSize.Width;
-            Height = finalSize.Height;
-            if (finalSize.Width > 0 && finalSize.Height > 0) LayoutSubviews();
+            if (finalSize.Width > 0 && finalSize.Height > 0)
+                _view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
 
             return finalSize;
-        }
-
-        public SizeF Measure(UIElement view, SizeF available)
-        {
-            return view.DesiredSize.ToSize();
         }
     }
 }

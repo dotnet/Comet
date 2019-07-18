@@ -1,3 +1,4 @@
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -7,6 +8,8 @@ namespace HotUI.UWP.Handlers
     {
         private AbstractLayout _view;
 
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+
         public UIElement View => this;
 
         public object NativeView => View;
@@ -15,6 +18,17 @@ namespace HotUI.UWP.Handlers
         {
             get => false;
             set { }
+        }
+
+        public SizeF Measure(SizeF availableSize)
+        {
+            Measure(availableSize.ToSize());
+            return DesiredSize.ToSizeF();
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            Arrange(frame.ToRect());
         }
 
         public void SetView(View view)

@@ -1,55 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Windows;
-using WPFScrollView = System.Windows.Controls.ScrollViewer;
+﻿using WPFScrollView = System.Windows.Controls.ScrollViewer;
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.WPF.Handlers
 {
-    public class ScrollViewHandler : WPFViewHandler
+    public class ScrollViewHandler : AbstractHandler<ScrollView, WPFScrollView>
     {
         public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>()
-            {
-            };
-
-        private ScrollView _virtualScrollView;
-        private UIElement _content;
-        private readonly WPFScrollView _nativeScrollView;
-        
-        public ScrollViewHandler()
         {
-            _nativeScrollView = new WPFScrollView();
-        }
-        
-        public UIElement View => _nativeScrollView;
+            [nameof(ScrollView.View)] = MapViewProperty
 
-        public object NativeView => View;
+        };
 
-        public bool HasContainer
-        {
-            get => false;
-            set { }
-        }
-
-        public void Remove(View view)
+        public ScrollViewHandler() : base(Mapper)
         {
         }
 
-        public void SetView(View view)
+        protected override WPFScrollView CreateView()
         {
-            _virtualScrollView = view as ScrollView;
-            _content = _virtualScrollView?.View?.ToEmbeddableView();
-            if (_content != null)
-            {
-                _nativeScrollView.Content = _content;
-            }
-
-            Mapper.UpdateProperties(this, _virtualScrollView);
+            return new WPFScrollView();
         }
 
-        public void UpdateValue(string property, object value)
+        public override void Remove(View view)
         {
-            Mapper.UpdateProperty(this, _virtualScrollView, property);
+            TypedNativeView.Content = null;
+            base.Remove(view);
+        }
+
+        public static void MapViewProperty(IViewHandler viewHandler, ScrollView virtualView)
+        {
+            var scrollViewHandler = (ScrollViewHandler)viewHandler;
+            var nativeView = (WPFScrollView)viewHandler.NativeView;
+            var virtualScrollView = scrollViewHandler.VirtualView;
+            var content = virtualScrollView?.View?.ToEmbeddableView();
+            if (content != null)
+                nativeView.Content = content;
         }
     }
 }

@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Controls;
 
 namespace HotUI.UWP.Handlers
 {
-    public class ToggleHandler :  AbstractHandler<Toggle, ToggleSwitch>
+    public class ToggleHandler :  AbstractControlHandler<Toggle, ToggleSwitch>
     {
 		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> ()
 		{ 

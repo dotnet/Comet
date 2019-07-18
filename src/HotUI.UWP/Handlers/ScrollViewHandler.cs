@@ -6,50 +6,38 @@ using UWPScrollView = Windows.UI.Xaml.Controls.ScrollViewer;
 
 namespace HotUI.UWP.Handlers
 {
-    public class ScrollViewHandler : UWPViewHandler
+    public class ScrollViewHandler : AbstractHandler<ScrollView, UWPScrollView>
     {
         public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>()
             {
-            };
+                [nameof(ScrollView.View)] = MapViewProperty
 
-        private ScrollView _virtualScrollView;
-        private UIElement _content;
-        private readonly UWPScrollView _nativeScrollView;
-        
-        public ScrollViewHandler()
-        {
-            _nativeScrollView = new UWPScrollView();
-        }
-        
-        public UIElement View => _nativeScrollView;
+        };
 
-        public object NativeView => View;
-
-        public bool HasContainer
-        {
-            get => false;
-            set { }
-        }
-
-        public void Remove(View view)
+        public ScrollViewHandler() : base(Mapper)
         {
         }
 
-        public void SetView(View view)
+        protected override UWPScrollView CreateView()
         {
-            _virtualScrollView = view as ScrollView;
-            _content = _virtualScrollView?.View?.ToEmbeddableView();
-            if (_content != null)
-            {
-                _nativeScrollView.Content = _content;
-            }
-
-            Mapper.UpdateProperties(this, _virtualScrollView);
+            return new UWPScrollView();
         }
 
-        public void UpdateValue(string property, object value)
+        public override void Remove(View view)
         {
-            Mapper.UpdateProperty(this, _virtualScrollView, property);
+            TypedNativeView.Content = null;
+            base.Remove(view);
+        }
+
+
+        public static void MapViewProperty(IViewHandler viewHandler, ScrollView virtualView)
+        {
+            var scrollViewHandler = (ScrollViewHandler) viewHandler;
+            var nativeView = (UWPScrollView)viewHandler.NativeView;
+            var virtualScrollView = scrollViewHandler.VirtualView;
+            var content = virtualScrollView?.View?.ToEmbeddableView();
+            if (content != null)
+                nativeView.Content = content;
         }
     }
 }

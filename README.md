@@ -1,6 +1,7 @@
 # HotUI
 
-What is Hot UI? It is a new UI Framework/Patern to write app UI.  It follows the Model View Update patern. It magically databinds for you!  
+What is HotUI? HotUI is a prototype for a new UI Framework/Patern to write app UI.  It follows the Model View Update patern. It magically databinds for you!  
+
 
 # Key Concepts
 HotUI is an MVU style patern.
@@ -129,12 +130,12 @@ public class MyPage : View {
 
 ## What platforms will be supported
 
-* Xamarin.Forms
 * iOS
 * Android
 * UWP
 * Mac OS
+* Xamarin.Forms
 
 
-# Does this require Xamarin.Forms?
-No!  You can use the native versions, and get lots of native awesomesause!
+# Disclaimer
+HotUI is a proof of concept. There is no official support. Use at your own Risk.

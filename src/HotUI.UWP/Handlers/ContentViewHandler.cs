@@ -2,39 +2,11 @@
 
 namespace HotUI.UWP.Handlers
 {
-	public class ContentViewHandler : UWPViewHandler
+	public class ContentViewHandler : AbstractHandler<ContentView, UIElement>
     {
-        UIElement _view;
-
-		public ContentViewHandler ()
-		{
-		}
-
-		public UIElement View =>_view;
-
-        public object NativeView => View;
-
-        public bool HasContainer
+        protected override UIElement CreateView()
         {
-            get => false;
-            set { }
+            return VirtualView?.Content.ToView();
         }
-
-        public void Remove (View view)
-		{
-			ContentView = null;
-		}
-
-        ContentView ContentView { get; set; }
-
-		public void SetView (View view)
-		{
-			ContentView = view as ContentView;
-            _view = ContentView?.Content.ToView();
-        }
-
-		public void UpdateValue (string property, object value)
-		{
-		}
-	}
+    }
 }

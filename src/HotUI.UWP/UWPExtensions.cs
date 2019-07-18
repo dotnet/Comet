@@ -11,7 +11,7 @@ namespace HotUI.UWP
             UI.Init();
         }
 
-        public static UWPViewHandler ToIUIElement(this View view)
+        public static UWPViewHandler GetOrCreateViewHandler(this View view)
         {
             if (view == null)
                 return null;
@@ -28,23 +28,23 @@ namespace HotUI.UWP
 
         public static UIElement ToView(this View view)
         {
-            var handler = view.ToIUIElement();
+            var handler = view.GetOrCreateViewHandler();
             return handler?.View;
         }
         
         public static UIElement ToEmbeddableView(this View view)
         {
-            var handler = view.ToIUIElement();
+            var handler = view.GetOrCreateViewHandler();
             if (handler == null)
                 throw new Exception("Unable to build handler for view");
 
             if (handler is FrameworkElement element)
             {
-                if (element.Parent is HotUIContainerView container)
+                if (element.Parent is HotUIView container)
                     return container;
             }
             
-            return new HotUIContainerView(view);
+            return new HotUIView(view);
         }
 
         public static void RemoveChild(this DependencyObject parent, UIElement child)

@@ -7,7 +7,7 @@ using UWPButton = Windows.UI.Xaml.Controls.Button;
 
 namespace HotUI.UWP.Handlers
 {
-    public class ButtonHandler : AbstractHandler<Button,UWPButton>
+    public class ButtonHandler : AbstractControlHandler<Button,UWPButton>
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>()
         {

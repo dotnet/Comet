@@ -1,22 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using HotUI.UWP.Handlers;
 
 namespace HotUI.UWP
 {
-    public class HotUIContainerView : Grid
+    public class HotUIView : Grid
     {
         private View _view;
         private UIElement _nativeView;
         private IViewHandler _handler;
 
-        public HotUIContainerView(View view = null)
+        public HotUIView(View view = null)
         {
             View = view;
         }
@@ -30,19 +25,19 @@ namespace HotUI.UWP
                     return;
 
                 if (_handler is ViewHandler oldViewHandler)
-                    oldViewHandler.ViewChanged = null;
+                    oldViewHandler.NativeViewChanged -= HandleNativeViewChanged;
 
                 _view = value;
                 _handler = _view?.ViewHandler;
 
                 if (_handler is ViewHandler newViewHandler)
-                    newViewHandler.ViewChanged = UpdateNativeView;
+                    newViewHandler.NativeViewChanged += HandleNativeViewChanged;
 
-                UpdateNativeView();
+                HandleNativeViewChanged(this, null);
             }
         }
 
-        private void UpdateNativeView()
+        private void HandleNativeViewChanged(object sender, ViewChangedEventArgs e)
         {
             if (_nativeView != null)
             {
@@ -51,9 +46,17 @@ namespace HotUI.UWP
             }
 
             _nativeView = _view?.ToView();
-
+           
             if (_nativeView != null)
             {
+                if (_nativeView is FrameworkElement frameworkElement)
+                {
+                    Grid.SetRow(frameworkElement, 0);
+                    Grid.SetColumn(frameworkElement, 0);
+                    Grid.SetColumnSpan(frameworkElement, 1);
+                    Grid.SetRowSpan(frameworkElement, 1);
+                }
+
                 Children.Add(_nativeView);
             }
         }

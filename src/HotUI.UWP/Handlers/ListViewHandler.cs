@@ -7,37 +7,30 @@ using UWPListView = Windows.UI.Xaml.Controls.ListView;
 
 namespace HotUI.UWP.Handlers
 {
-    public class ListViewHandler : UWPListView, UWPViewHandler
+    public class ListViewHandler : AbstractHandler<ListView, UWPListView>
     {
         public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>()
         {
-            [nameof(Text.Value)] = MapListProperty
+            [nameof(HotUI.ListView.List)] = MapListProperty
         };
-        
-        internal ListView listView;
 
-        public UIElement View => this;
-
-        public object NativeView => View;
-
-        public bool HasContainer
+        public ListViewHandler() : base(Mapper)
         {
-            get => false;
-            set { }
-        }
-        public void Remove(View view)
-        {
+
         }
 
-        public void SetView(View view)
+        public ListView ListView => VirtualView;
+
+        protected override UWPListView CreateView()
         {
-            listView = view as ListView;
-            Mapper.UpdateProperties(this, listView);
+            var listView = new UWPListView();
+            listView.SelectionChanged += HandleSelectionChanged;
+            return listView;
         }
 
-        public void UpdateValue(string property, object value)
+        protected override void DisposeView(UWPListView listView)
         {
-            Mapper.UpdateProperty(this, listView, property);
+            listView.SelectionChanged -= HandleSelectionChanged;
         }
 
         public static void MapListProperty(IViewHandler viewHandler, ListView virtualView)
@@ -51,7 +44,7 @@ namespace HotUI.UWP.Handlers
 
         private void HandleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            listView?.OnSelected(SelectedIndex);
+            VirtualView?.OnSelected(TypedNativeView.SelectedIndex);
         }
     }
 
@@ -59,11 +52,11 @@ namespace HotUI.UWP.Handlers
     {
         public ListViewHandlerItem(ListViewHandler handler, object value)
         {
-            var listView = handler.listView;
-            var view = listView?.CellCreator?.Invoke(value);
+            var listView = handler.TypedNativeView;
+            var view = handler.ListView?.CellCreator?.Invoke(value);
             if (view != null)
-                view.Parent = listView;
-            Content = view?.ToEmbeddableView();
+                view.Parent = handler.ListView;
+            Content = view?.ToView();
         }
     }
 }

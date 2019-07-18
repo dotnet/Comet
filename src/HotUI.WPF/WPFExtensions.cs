@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace HotUI.WPF
 {
@@ -10,7 +11,7 @@ namespace HotUI.WPF
             UI.Init();
         }
 
-        public static WPFViewHandler ToIUIElement(this View view)
+        public static WPFViewHandler GetOrCreateViewHandler(this View view)
         {
             if (view == null)
                 return null;
@@ -27,17 +28,53 @@ namespace HotUI.WPF
 
         public static UIElement ToView(this View view)
         {
-            var handler = view.ToIUIElement();
+            var handler = view.GetOrCreateViewHandler();
             return handler?.View;
         }
 
         public static UIElement ToEmbeddableView(this View view)
         {
-            var handler = view.ToIUIElement();
+            var handler = view.GetOrCreateViewHandler();
             if (handler == null)
                 throw new Exception("Unable to build handler for view");
 
             return new HotUIContainerView(view);
+        }
+
+        public static void RemoveChild(this DependencyObject parent, UIElement child)
+        {
+            if (parent is Panel panel)
+            {
+                panel.Children.Remove(child);
+                return;
+            }
+
+            if (parent is Decorator decorator)
+            {
+                if (decorator.Child == child)
+                {
+                    decorator.Child = null;
+                }
+                return;
+            }
+
+            if (parent is ContentPresenter contentPresenter)
+            {
+                if (contentPresenter.Content == child)
+                {
+                    contentPresenter.Content = null;
+                }
+                return;
+            }
+
+            if (parent is ContentControl contentControl)
+            {
+                if (contentControl.Content == child)
+                {
+                    contentControl.Content = null;
+                }
+                return;
+            }
         }
     }
 }

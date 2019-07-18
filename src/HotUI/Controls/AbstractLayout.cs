@@ -8,18 +8,18 @@ namespace HotUI
 	public abstract class AbstractLayout : View, IList<View>, IContainerView
     {
 		readonly List<View> _views = new List<View> ();
-		private ILayoutManager2 _layout;
+		private ILayoutManager _layout;
 		
 		public event EventHandler<LayoutEventArgs> ChildrenChanged;
 		public event EventHandler<LayoutEventArgs> ChildrenAdded;
 		public event EventHandler<LayoutEventArgs> ChildrenRemoved;
 
-		protected AbstractLayout(ILayoutManager2 layoutManager)
+		protected AbstractLayout(ILayoutManager layoutManager)
 		{
 			_layout = layoutManager;
 		}
 		
-		protected ILayoutManager2 LayoutManager
+		protected ILayoutManager LayoutManager
 		{
 			get => _layout;
 			set
