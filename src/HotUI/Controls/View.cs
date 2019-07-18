@@ -145,7 +145,7 @@ namespace HotUI
             set => this.SetValue(State, ref body, value, (s, o) => ResetView());
         }
 
-        internal virtual View GetView() => GetRenderView();
+        internal View GetView() => GetRenderView();
         View replacedView;
         protected virtual View GetRenderView()
         {
@@ -266,7 +266,7 @@ namespace HotUI
             }
         }
 
-       
+        public bool IsDisposed => disposedValue;
         bool disposedValue = false;
         protected virtual void Dispose(bool disposing)
         {
