@@ -34,6 +34,7 @@ namespace HotUI.iOS.Controls
                         RowHeight = (float)v.FrameConstraints.Height;
                     else
                         RowHeight = -1;
+                    v.Dispose();
                 }
                 else
                 {

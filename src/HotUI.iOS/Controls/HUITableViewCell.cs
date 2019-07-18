@@ -22,21 +22,18 @@ namespace HotUI.iOS.Controls
 
         public void SetView(View view)
         {
-            if (_currentView != null)
+            if (_currentView != null && !_currentView.IsDisposed)
             {
-                //view = view.Diff(_currentView);
-                _currentContent?.RemoveFromSuperview();
+                view = view.Diff(_currentView);
             }
-            
-            if (_currentView != null)
-            {
-                _currentView.ViewHandler = null;
-                _currentView?.Dispose();
-            }
-            
+            _currentView?.Dispose();
             _currentView = view;
-            _currentContent = view.ToView();
-            ContentView.Add(_currentContent);
+            var newView = view.ToView();
+            if (_currentContent != newView)
+                _currentContent?.RemoveFromSuperview();
+            _currentContent = newView;
+            if (_currentContent.Superview != ContentView)
+                ContentView.Add(_currentContent);
         }
     }
 }
