@@ -16,18 +16,27 @@ namespace HotUI.iOS {
 			{
 				CurrentView = view,
 			};
-			if (view.BuiltView is NavigationView nav && allowNav) {
-				var navController = new HUINavigationController();
-				nav.PerformNavigate = (toView) => {
-					//Since iOS doesn't allow nested navigations, pass the navigate along
-					if(toView is NavigationView newNav) {
-						newNav.PerformNavigate = nav.PerformNavigate;
-					}
-					navController.PushViewController (toView.ToViewController (false), true);
-				};
-				navController.PushViewController (vc, false);
-				return navController;
+			
+			if (vc.View != null)
+			{
+				if (view.BuiltView is NavigationView nav && allowNav)
+				{
+					var navController = new HUINavigationController();
+					nav.PerformNavigate = (toView) =>
+					{
+						//Since iOS doesn't allow nested navigations, pass the navigate along
+						if (toView is NavigationView newNav)
+						{
+							newNav.PerformNavigate = nav.PerformNavigate;
+						}
+
+						navController.PushViewController(toView.ToViewController(false), true);
+					};
+					navController.PushViewController(vc, false);
+					return navController;
+				}
 			}
+
 			return vc;
 		}
 		public static iOSViewHandler GetOrCreateViewHandler(this View view)

@@ -43,7 +43,7 @@ namespace HotUI.iOS.Handlers
 
         public void SetFrame(RectangleF frame)
         {
-            View.Frame = frame.ToCGRect();
+            Frame = frame.ToCGRect();
         }
 
         public void SetView(View view)
@@ -190,7 +190,11 @@ namespace HotUI.iOS.Handlers
 
         public override void SizeToFit()
         {
-            _measured = _view.Measure(Superview?.Bounds.Size.ToSizeF() ?? UIScreen.MainScreen.Bounds.Size.ToSizeF());
+            var size = Superview?.Bounds.Size;
+            if (size == null || ((CGSize)size).IsEmpty)
+                size = UIScreen.MainScreen.Bounds.Size;
+            
+            _measured = _view.Measure(((CGSize)size).ToSizeF());
             base.Frame = new CGRect(new CGPoint(0, 0), _measured.ToCGSize());
         }
 

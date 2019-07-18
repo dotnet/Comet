@@ -34,7 +34,7 @@ namespace HotUI.iOS.Controls
                         var fy = value.Size.Height / _size.Height;
                         var transform = CGAffineTransform.MakeScale(fx, fy);
                         var path = _shadowLayer?.Path ?? _maskLayer?.Path;
-                        var transformedPath = path.CopyByTransformingPath(transform);
+                        var transformedPath = path?.CopyByTransformingPath(transform);
                         if (_shadowLayer != null)
                             _shadowLayer.Path = transformedPath;
 
@@ -81,10 +81,7 @@ namespace HotUI.iOS.Controls
             get => _overlayView;
             set
             {
-                if (_overlayView != null)
-                {
-                    _overlayView.RemoveFromSuperview();
-                }
+                _overlayView?.RemoveFromSuperview();
 
                 _overlayView = value;
 
