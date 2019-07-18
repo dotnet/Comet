@@ -78,20 +78,27 @@ namespace HotUI.iOS.Controls
             
             // todo: we really need a "GetOrCreate" method.
             var view = _listView?.CellCreator?.Invoke(item);
-            if (view != null)
+            try
             {
-                if (view is NavigationButton navigationButton)
-                    view = navigationButton.Content;
-
-                if (view.FrameConstraints?.Height != null)
-                    return (float)view.FrameConstraints?.Height;
-                
-                // todo: this is really inefficient.
-                if (view.ToView() != null)
+                if (view != null)
                 {
-                    var measure = view.Measure(tableView.Bounds.Size.ToSizeF());
-                    return measure.Height;
+                    if (view is NavigationButton navigationButton)
+                        view = navigationButton.Content;
+
+                    if (view.FrameConstraints?.Height != null)
+                        return (float)view.FrameConstraints?.Height;
+
+                    // todo: this is really inefficient.
+                    if (view.ToView() != null)
+                    {
+                        var measure = view.Measure(tableView.Bounds.Size.ToSizeF());
+                        return measure.Height;
+                    }
                 }
+            }
+            finally
+            {
+                view?.Dispose();
             }
 
             return 44f;
