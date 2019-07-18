@@ -39,6 +39,7 @@ namespace HotUI.Layout
                     if (!view.MeasurementValid)
                     {
                         view.MeasuredSize = size = view.Measure(available);
+                        Console.WriteLine($"{view.GetType().Name}: {size}");
                         view.MeasurementValid = true;
                     }
 

@@ -8,7 +8,7 @@ namespace HotUI
 	public abstract class AbstractLayout : View, IList<View>, IContainerView
     {
 		readonly List<View> _views = new List<View> ();
-		private ILayoutManager _layout;
+		private readonly ILayoutManager _layout;
 		
 		public event EventHandler<LayoutEventArgs> ChildrenChanged;
 		public event EventHandler<LayoutEventArgs> ChildrenAdded;
@@ -19,16 +19,6 @@ namespace HotUI
 			_layout = layoutManager;
 		}
 		
-		protected ILayoutManager LayoutManager
-		{
-			get => _layout;
-			set
-			{
-				_layout = value;
-				RequestLayout();
-			}
-		}
-
 		public void Add (View view)
 		{
 			if (view == null)
@@ -150,6 +140,87 @@ namespace HotUI
 			}
 		}
 		
+		public override RectangleF Frame
+		{
+			get => base.Frame;
+			set
+			{
+				base.Frame = value;
+				RequestLayout();
+			}
+		}
+		
+		private void RequestLayout()
+        {
+            var width = FrameConstraints?.Width ?? Frame.Width;
+            var height = FrameConstraints?.Height ?? Frame.Height;
+
+            if (width > 0 && height > 0)
+            {
+                var padding = BuiltView?.GetPadding();
+                if (padding != null)
+                {
+                    width -= ((Thickness) padding).HorizontalThickness;
+                    height -= ((Thickness) padding).VerticalThickness;
+                }
+                
+                if (!MeasurementValid)
+                {
+                    MeasuredSize = Measure(new SizeF(width, height));
+                    MeasurementValid = true;
+                }
+
+                Layout();
+            }
+        }
+
+        private void Layout()
+        {
+            var width = Frame.Width;
+            var height = Frame.Height;
+
+            var x = width - MeasuredSize.Width;
+            var y = height - MeasuredSize.Height;
+
+            var alignment = FrameConstraints?.Alignment ?? Alignment.Center;
+
+            switch (alignment.Horizontal)
+            {
+                case HorizontalAlignment.Center:
+                    x *= .5f;
+                    break;
+                case HorizontalAlignment.Leading:
+                    x = 0;
+                    break;
+                case HorizontalAlignment.Trailing:
+                    x *= 1;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            switch (alignment.Vertical)
+            {
+                case VerticalAlignment.Center:
+                    y *= .5f;
+                    break;
+                case VerticalAlignment.Bottom:
+                    y *= 1;
+                    break;
+                case VerticalAlignment.Top:
+                    y = 0;
+                    break;
+                case VerticalAlignment.FirstTextBaseline:
+                    throw new NotSupportedException("Not yet supported");
+                case VerticalAlignment.LastTextBaseline:
+                    throw new NotSupportedException("Not yet supported");
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            LayoutSubviews(new RectangleF(x,y,MeasuredSize.Width,MeasuredSize.Height));
+        }
+		
         public override SizeF Measure(SizeF availableSize)
         {
 	        var width = FrameConstraints?.Width;
@@ -169,8 +240,8 @@ namespace HotUI
 
 	        return measuredSize;
         }
-
-        public override void LayoutSubviews(RectangleF bounds)
+        
+        public virtual void LayoutSubviews(RectangleF bounds)
         {
 	        _layout?.Layout(this, bounds.Size);
         }
