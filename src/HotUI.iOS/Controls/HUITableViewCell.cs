@@ -24,7 +24,7 @@ namespace HotUI.iOS.Controls
         {
             if (_currentView != null)
             {
-                view = view.Diff(_currentView);
+                //view = view.Diff(_currentView);
                 _currentContent?.RemoveFromSuperview();
             }
             

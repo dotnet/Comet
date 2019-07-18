@@ -6,16 +6,15 @@ using AView = Android.Views.View;
 
 namespace HotUI.Android.Handlers
 {
-    public class ViewRepresentableHandler : AbstractHandler<ViewRepresentable, AView>
+    public class ViewRepresentableHandler : AbstractControlHandler<ViewRepresentable, AView>
     {
         public static readonly PropertyMapper<ViewRepresentable> Mapper = new PropertyMapper<ViewRepresentable>(ViewHandler.Mapper)
         {
             [nameof(ViewRepresentable.Data)] = MapDataProperty
         };
-        
+
         public ViewRepresentableHandler() : base(Mapper)
         {
-
         }
 
         protected override AView CreateView(Context context)
@@ -25,11 +24,10 @@ namespace HotUI.Android.Handlers
 
         protected override void DisposeView(AView nativeView)
         {
-            
         }
 
         public static void MapDataProperty(IViewHandler viewHandler, ViewRepresentable virtualView)
-        { 
+        {
             var data = virtualView.Data;
             virtualView.UpdateView?.Invoke(viewHandler.NativeView, data);
         }

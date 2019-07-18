@@ -6,17 +6,17 @@ using AToggle = Android.Widget.ToggleButton;
 
 namespace HotUI.Android.Handlers
 {
-    public class ToggleHandler : AbstractHandler<Toggle,AToggle>
+    public class ToggleHandler : AbstractControlHandler<Toggle, AToggle>
     {
-        public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle> (ViewHandler.Mapper)
-        { 
+        public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle>(ViewHandler.Mapper)
+        {
             [nameof(Toggle.IsOn)] = MapIsOnProperty
         };
-        
+
         public ToggleHandler() : base(Mapper)
         {
         }
-        
+
         protected override AToggle CreateView(Context context)
         {
             var toggle = new AToggle(context);
@@ -30,7 +30,7 @@ namespace HotUI.Android.Handlers
         }
 
         private void HandleClick(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.Checked);
-        
+
         public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (AToggle) viewHandler.NativeView;

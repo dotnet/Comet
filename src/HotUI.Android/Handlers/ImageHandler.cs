@@ -5,13 +5,13 @@ using HotUI.Android.Controls;
 
 namespace HotUI.Android.Handlers
 {
-    public class ImageHandler : AbstractHandler<Image, HUIImageView>
+    public class ImageHandler : AbstractControlHandler<Image, HUIImageView>
     {
         public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>(ViewHandler.Mapper)
         {
             [nameof(Image.Source)] = MapSourceProperty
         };
-        
+
         public ImageHandler() : base(Mapper)
         {
         }
@@ -23,7 +23,6 @@ namespace HotUI.Android.Handlers
 
         protected override void DisposeView(HUIImageView nativeView)
         {
-            
         }
 
         public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)

@@ -4,17 +4,17 @@ using Android.Widget;
 
 namespace HotUI.Android.Handlers
 {
-    public class TextFieldHandler : AbstractHandler<TextField, EditText>
+    public class TextFieldHandler : AbstractControlHandler<TextField, EditText>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
             [nameof(TextField.Text)] = MapTextProperty
         };
-        
+
         public TextFieldHandler() : base(Mapper)
         {
         }
-        
+
         protected override EditText CreateView(Context context)
         {
             var editText = new EditText(context);

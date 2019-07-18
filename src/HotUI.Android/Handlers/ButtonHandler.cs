@@ -6,7 +6,7 @@ using AButton = Android.Widget.Button;
 
 namespace HotUI.Android.Handlers
 {
-    public class ButtonHandler : AbstractHandler<Button, AButton>
+    public class ButtonHandler : AbstractControlHandler<Button, AButton>
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
@@ -33,7 +33,7 @@ namespace HotUI.Android.Handlers
 
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
         {
-            var nativeView = (AButton)viewHandler.NativeView;
+            var nativeView = (AButton) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
         }
     }

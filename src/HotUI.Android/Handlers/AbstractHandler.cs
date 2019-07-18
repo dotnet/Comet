@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using Android.Content;
-using HotUI.Android.Controls;
+using Android.Views;
 using AView = Android.Views.View;
 
 namespace HotUI.Android.Handlers
@@ -9,25 +9,27 @@ namespace HotUI.Android.Handlers
         where TVirtualView : View
         where TNativeView : AView
     {
-        private readonly PropertyMapper<TVirtualView> _mapper;
-        private TVirtualView _virtualView;
-        private TNativeView _nativeView;
-        private HUIContainerView _containerView;
-
-        public EventHandler ViewChanged { get; set; }
+        protected readonly PropertyMapper<TVirtualView> mapper;
 
         protected AbstractHandler(PropertyMapper<TVirtualView> mapper)
         {
-            _mapper = mapper;
+            this.mapper = mapper;
         }
+
+        protected AbstractHandler()
+        {
+        }
+
+        private TVirtualView _virtualView;
+        private TNativeView _nativeView;
+
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
         protected abstract TNativeView CreateView(Context context);
 
-        protected abstract void DisposeView(TNativeView nativeView);
+        public AView View => _nativeView;
 
-        public AView View => (AView)_containerView ?? _nativeView;
-
-        public HUIContainerView ContainerView => _containerView;
+        //public HUIContainerView ContainerView => null;
 
         public object NativeView => _nativeView;
 
@@ -35,76 +37,78 @@ namespace HotUI.Android.Handlers
 
         protected TVirtualView VirtualView => _virtualView;
 
-        public bool HasContainer
+        public virtual void SetView(View view)
         {
-            get => _containerView != null;
-            set
-            {
-                if (!value && _containerView != null)
-                {
-                    _containerView.MainView = null; ;
-                    _containerView = null;
-
-                    ViewChanged?.Invoke(this, EventArgs.Empty);
-                    return;
-                }
-
-                if (value && _containerView == null)
-                {
-                    _containerView = new HUIContainerView();
-                    _containerView.MainView = _nativeView;
-                    ViewChanged?.Invoke(this, EventArgs.Empty);
-                }
-            }
+            _virtualView = view as TVirtualView;
+            _nativeView = CreateView(AndroidContext.CurrentContext);
+            mapper?.UpdateProperties(this, _virtualView);
         }
 
         public virtual void Remove(View view)
         {
             _virtualView = null;
-
-            // If a container view is being used, then remove the native view from it and get rid of it.
-            if (_containerView != null)
-            {
-                _containerView.MainView = null;
-                _containerView = null;
-            }
+            _nativeView = null;
         }
 
-        public virtual void SetView(View view)
+        protected virtual void DisposeView(TNativeView nativeView)
         {
-            _virtualView = view as TVirtualView;
-            if (_nativeView == null)
-                _nativeView = CreateView(AndroidContext.CurrentContext);
-            _mapper.UpdateProperties(this, _virtualView);
         }
 
         public virtual void UpdateValue(string property, object value)
         {
-            _mapper.UpdateProperty(this, _virtualView, property);
+            mapper?.UpdateProperty(this, _virtualView, property);
+        }
+
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+
+        public virtual SizeF Measure(SizeF availableSize)
+        {
+            return availableSize;
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            // Do nothing
+        }
+
+        protected void BroadcastNativeViewChanged(AView previousView, AView newView)
+        {
+            NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, previousView, newView));
         }
 
         #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
 
-        protected virtual void Dispose(bool disposing)
+        private bool _disposed; // To detect redundant calls
+
+        private void Dispose(bool disposing)
         {
             if (!disposing)
                 return;
-            
+
             if (_nativeView != null)
                 DisposeView(_nativeView);
-            
-            _nativeView?.Dispose();
+
+            if (_nativeView?.Parent is ViewGroup viewGroup)
+                viewGroup.RemoveView(_nativeView);
+
+            if (_nativeView is IDisposable disposable)
+                disposable.Dispose();
+
             _nativeView = null;
+
             if (_virtualView != null)
                 Remove(_virtualView);
-
         }
+
         void OnDispose(bool disposing)
         {
-            if (disposedValue)
+            if (_disposed)
                 return;
-            disposedValue = true;
+            _disposed = true;
             Dispose(disposing);
         }
 
@@ -121,6 +125,7 @@ namespace HotUI.Android.Handlers
             OnDispose(true);
             GC.SuppressFinalize(this);
         }
+
         #endregion
     }
 }

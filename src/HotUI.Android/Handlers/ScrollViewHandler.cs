@@ -4,13 +4,12 @@ using AScrollView = Android.Widget.ScrollView;
 
 namespace HotUI.Android.Handlers
 {
-    public class ScrollViewHandler : AbstractHandler<ScrollView,AScrollView>
+    public class ScrollViewHandler : AbstractControlHandler<ScrollView, AScrollView>
     {
         public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
         {
-            
         };
-        
+
         private AView _content;
 
         public ScrollViewHandler() : base(Mapper)
@@ -24,7 +23,6 @@ namespace HotUI.Android.Handlers
 
         protected override void DisposeView(AScrollView nativeView)
         {
-            
         }
 
         public override void Remove(View view)
@@ -34,10 +32,10 @@ namespace HotUI.Android.Handlers
                 TypedNativeView.RemoveView(_content);
                 _content = null;
             }
-            
+
             base.Remove(view);
         }
-        
+
         public override void SetView(View view)
         {
             base.SetView(view);

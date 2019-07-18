@@ -7,14 +7,26 @@ namespace HotUI.Android.Handlers
 {
     public class VStackHandler : LinearLayout, AndroidViewHandler
     {
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+
         public VStackHandler() : base(AndroidContext.CurrentContext)
         {
             Orientation = Orientation.Vertical;
         }
-        
+
         public AView View => this;
         public object NativeView => View;
         public bool HasContainer { get; set; } = false;
+
+        public SizeF Measure(SizeF availableSize)
+        {
+            return availableSize;
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            // Do nothing
+        }
 
         public void Remove(View view)
         {

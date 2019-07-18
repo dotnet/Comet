@@ -5,7 +5,7 @@ using Android.Widget;
 
 namespace HotUI.Android.Handlers
 {
-    public class TextHandler : AbstractHandler<Text, TextView>
+    public class TextHandler : AbstractControlHandler<Text, TextView>
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
@@ -16,7 +16,6 @@ namespace HotUI.Android.Handlers
 
         public TextHandler() : base(Mapper)
         {
-
         }
 
         protected override TextView CreateView(Context context)
@@ -26,12 +25,11 @@ namespace HotUI.Android.Handlers
 
         protected override void DisposeView(TextView nativeView)
         {
-            
         }
 
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
-            var nativeView = (TextView)viewHandler.NativeView;
+            var nativeView = (TextView) viewHandler.NativeView;
             nativeView.Text = virtualView.Value;
         }
 
