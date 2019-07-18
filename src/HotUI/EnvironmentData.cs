@@ -52,7 +52,22 @@ namespace HotUI {
 	}
 
 	class EnvironmentData : BindingObject {
-		public View View { get; internal set; }
+
+        public EnvironmentData()
+        {
+            isStatic = true;
+        }
+        bool isStatic = false;
+        public EnvironmentData(ContextualObject contextualObject)
+        {
+            View = contextualObject as View;
+        }
+
+        WeakReference _viewRef;
+        public View View {
+            get => _viewRef?.Target as View;
+            private set => _viewRef = new WeakReference(value);
+        }
 
 		protected ICollection<string> GetAllKeys ()
 		{
@@ -98,8 +113,27 @@ namespace HotUI {
 				return null;
 			}
 		}
+        protected override void CallPropertyRead(string propertyName)
+        {
+            if (View != null)
+                View?.GetState().OnPropertyRead(this, propertyName);
+            else if (isStatic)
+            {
+                View.ActiveViews.ForEach(x => x.GetState()?.OnPropertyRead(this, propertyName));
+            }
+            base.CallPropertyRead(propertyName);
+        }
 
-		public void SetValue (string key, object value) => SetProperty (value, key);
+        public void SetValue(string key, object value)
+        {
+            SetProperty(value, key);
+            if (View != null)
+                View?.GetState().OnPropertyChanged(this, key,value);
+            else if(isStatic)
+            {
+                View.ActiveViews.ForEach(x => x.GetState()?.OnPropertyChanged(this, key, value));
+            }
+        }
 		internal void Clear()
 		{
 			dictionary.Clear ();

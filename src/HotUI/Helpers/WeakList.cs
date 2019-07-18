@@ -62,7 +62,8 @@ namespace HotUI.Helpers
         }
         public void ForEach(Action<T> action)
         {
-            foreach(var item in CleanseItems())
+            var items = CleanseItems().ToList();
+            foreach(var item in items)
             {
                 if(item.IsAlive)
                     action?.Invoke((T)item.Target);

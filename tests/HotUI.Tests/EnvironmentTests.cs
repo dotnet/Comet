@@ -32,7 +32,7 @@ namespace HotUI.Tests {
 		[Fact]
 		public void CanSetAndReadGlobalEnvironment()
 		{
-            new View().ResetGlobalEnvironment();
+            ResetHotUI();
 
 			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
@@ -54,7 +54,8 @@ namespace HotUI.Tests {
 		[Fact]
 		public void CanSetAndReadGlobalEnvironmentFromView ()
 		{
-			const string myStringConstant = "myString";
+            ResetHotUI();
+            const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 
 			View.SetGlobalEnvironment (myStringKey, myStringConstant);
@@ -70,7 +71,8 @@ namespace HotUI.Tests {
 		[Fact]
 		public void ViewEnvironmentOverwritesGlobal ()
 		{
-			const string myStringConstant = "myString";
+            ResetHotUI();
+            const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
 
@@ -88,8 +90,8 @@ namespace HotUI.Tests {
 		[Fact]
 		public void NestedViewGetsValueFromParent ()
 		{
-
-			const string myStringConstant = "myString";
+            ResetHotUI();
+            const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
 
@@ -115,8 +117,8 @@ namespace HotUI.Tests {
 		[Fact]
 		public void NestedViewGetsItsVariablesFromItself ()
 		{
-
-			const string myStringConstant = "myString";
+            ResetHotUI();
+            const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
 			const string testStringValue = "myTextString";
@@ -146,8 +148,8 @@ namespace HotUI.Tests {
 		[Fact]
 		public void FieldsWithAttributesPopulateFromEnvironment ()
 		{
-
-			View.SetGlobalEnvironment (nameof (StatePage.clickCount), new State<int> (1));
+            ResetHotUI();
+            View.SetGlobalEnvironment (nameof (StatePage.clickCount), new State<int> (1));
 
 			Text text = null;
 			var view = new StatePage ();

@@ -26,7 +26,8 @@ namespace HotUI
 
         protected T GetProperty<T>([CallerMemberName] string propertyName = "")
         {
-            PropertyRead?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CallPropertyRead(propertyName);
+            
             if (dictionary.TryGetValue(propertyName, out var val))
                 return (T)val;
             return default;
@@ -53,12 +54,22 @@ namespace HotUI
             }
             dictionary[propertyName] = value;
 
-            OnPropertyChanged?.Invoke((this, propertyName, value));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CallPropertyChanged(propertyName, value);
 
             return true;
         }
-        
+
+        protected virtual void CallPropertyChanged(string propertyName, object value)
+        {
+            OnPropertyChanged?.Invoke((this, propertyName, value));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected virtual void CallPropertyRead(string propertyName)
+        {
+            PropertyRead?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         internal bool SetPropertyInternal(object value, [CallerMemberName] string propertyName = "")
         {
             dictionary[propertyName] = value;
@@ -118,8 +129,8 @@ namespace HotUI
             listProperties.Clear();
         }
 
-        List<INotifyPropertyRead> children = new List<INotifyPropertyRead>();
-        Dictionary<object, string> childrenProperty = new Dictionary<object, string>();
+        WeakList<INotifyPropertyRead> children = new WeakList<INotifyPropertyRead>();
+        Dictionary<WeakReference, string> childrenProperty = new Dictionary<WeakReference, string>();
 
         public void StartMonitoring(INotifyPropertyRead obj)
         {
@@ -230,11 +241,12 @@ namespace HotUI
         }
 
 
-        void OnPropertyChanged(object sender, string propertyName, object value)
+        internal void OnPropertyChanged(object sender, string propertyName, object value)
         {
             if (value?.GetType() == typeof(View))
                 return;
-            childrenProperty.TryGetValue(sender, out var parentproperty);
+            var first = childrenProperty.FirstOrDefault(x => x.Key.Target == sender);
+            string parentproperty = first.Value;
             var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
             changeDictionary[prop] = value;
             pendingUpdates.Add((prop, value));
@@ -245,11 +257,12 @@ namespace HotUI
 
         }
 
-        void OnPropertyRead(object sender, string propertyName)
+        internal void OnPropertyRead(object sender, string propertyName)
         {
             if (!isBuilding)
                 return;
-            childrenProperty.TryGetValue(sender, out var parentproperty);
+            var first = childrenProperty.FirstOrDefault(x => x.Key.Target == sender);
+            string parentproperty = first.Value;
             var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
             listProperties.Add(prop);
         }
@@ -284,7 +297,9 @@ namespace HotUI
                     var child = field.GetValue(obj) as INotifyPropertyRead;
                     if (child != null)
                     {
-                        childrenProperty[child] = field.Name;
+                        if (children.Contains(child))
+                            continue;
+                        childrenProperty[new WeakReference(child)] = field.Name;
                         StartMonitoring(child);
                     }
                 }
@@ -316,7 +331,7 @@ namespace HotUI
                     var child = field.GetValue(obj) as INotifyPropertyRead;
                     if (child != null)
                     {
-                        childrenProperty.Remove(child);
+                        childrenProperty.Remove(new WeakReference(child));
                         StopMonitoring(child);
                     }
                 }

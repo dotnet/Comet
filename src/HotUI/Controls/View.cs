@@ -33,7 +33,7 @@ namespace HotUI
             get => tag;
             internal set => tag = value;
         }
-        
+
         public View Parent
         {
             get => parent;
@@ -62,13 +62,10 @@ namespace HotUI
             ActiveViews.Add(this);
             Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
             HotReloadHelper.Register(this);
-            Context.View = this;
             State = StateBuilder.CurrentState ?? new State
             {
                 StateChanged = ResetView
             };
-            State.StartMonitoring(View.Environment);
-            State.StartMonitoring(this.Context);
             SetEnvironmentFields();
             if (!hasConstructors)
                 State.StartBuildingView();
@@ -134,17 +131,17 @@ namespace HotUI
                 return;
             ViewHandler.Remove(this);
             var view = this.GetRenderView();
-            if(oldView != null)
+            if (oldView != null)
                 view = view.Diff(oldView);
             oldView?.Dispose();
             ViewHandler?.SetView(view);
         }
-        
+
         Func<View> body;
         public Func<View> Body
         {
             get => body;
-            set => this.SetValue(State, ref body, value,ResetPropertyString);
+            set => this.SetValue(State, ref body, value, ResetPropertyString);
         }
 
         internal View GetView() => GetRenderView();
@@ -179,7 +176,7 @@ namespace HotUI
                 var propCount = props.Length;
                 if (propCount > 0)
                 {
-                    State.BindingState.AddViewProperty(props,this,ResetPropertyString);
+                    State.BindingState.AddViewProperty(props, this, ResetPropertyString);
                 }
                 return builtView = view;
             }
@@ -203,25 +200,28 @@ namespace HotUI
 
         internal void BindingPropertyChanged(string property, object value)
         {
-            try
-            {
-                if(property != ResetPropertyString)
-                    this.SetPropertyValue(property, value);
-            }
-            catch(Exception ex)
-            {
-                Console.WriteLine(ex);
-            }
+
             ViewPropertyChanged(property, value);
         }
         protected const string ResetPropertyString = "ResetPropertyString";
         protected virtual void ViewPropertyChanged(string property, object value)
         {
-            if(property == ResetPropertyString)
+            if (property == ResetPropertyString)
             {
                 ResetView();
                 return;
             }
+
+            try
+            {
+                this.SetPropertyValue(property, value);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error setting property:{property} : {value}");
+                Debug.WriteLine(ex);
+            }
+
             ViewHandler?.UpdateValue(property, value);
             replacedView?.ViewPropertyChanged(property, value);
         }
@@ -261,7 +261,7 @@ namespace HotUI
                 if (value == null)
                 {
                     //Check the replaced view
-                    if(viewThatWasReplaced != null)
+                    if (viewThatWasReplaced != null)
                     {
                         value = viewThatWasReplaced.GetEnvironment(key);
                     }
@@ -277,7 +277,7 @@ namespace HotUI
                         }
                     }
                 }
-                if(value == null && viewThatWasReplaced != null)
+                if (value == null && viewThatWasReplaced != null)
                 {
                     value = viewThatWasReplaced.GetEnvironment(key);
                 }
@@ -330,7 +330,7 @@ namespace HotUI
             get => padding;
             internal set => this.SetValue(State, ref padding, value, ResetPropertyString);
         }
-        
+
         FrameConstraints frameConstraints;
         public FrameConstraints FrameConstraints
         {
@@ -352,7 +352,7 @@ namespace HotUI
                 }
             }
         }
-        
+
         private bool measurementValid;
         public bool MeasurementValid
         {
@@ -384,10 +384,10 @@ namespace HotUI
                 var padding = BuiltView?.GetPadding();
                 if (padding != null)
                 {
-                    width -= ((Thickness) padding).HorizontalThickness;
-                    height -= ((Thickness) padding).VerticalThickness;
+                    width -= ((Thickness)padding).HorizontalThickness;
+                    height -= ((Thickness)padding).VerticalThickness;
                 }
-                
+
                 if (!MeasurementValid)
                 {
                     MeasuredSize = Measure(new SizeF(width, height));
@@ -422,7 +422,7 @@ namespace HotUI
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
+
             switch (alignment.Vertical)
             {
                 case VerticalAlignment.Center:
@@ -441,10 +441,10 @@ namespace HotUI
                 default:
                     throw new ArgumentOutOfRangeException();
             }
-            
-            LayoutSubviews(new RectangleF(x,y,measuredSize.Width,MeasuredSize.Height));
+
+            LayoutSubviews(new RectangleF(x, y, measuredSize.Width, MeasuredSize.Height));
         }
-        
+
         public virtual SizeF Measure(SizeF availableSize)
         {
             if (BuiltView != null)
@@ -459,7 +459,7 @@ namespace HotUI
                 return new SizeF((float)width, (float)height);
 
             var measuredSize = viewHandler?.Measure(availableSize) ?? availableSize;
-            
+
             // If we have a constraint for just one of the values, then combine the constrained value
             // with the measured value for our size.
             if (width != null || height != null)
@@ -467,7 +467,7 @@ namespace HotUI
 
             return measuredSize;
         }
-        
+
         public virtual void LayoutSubviews(RectangleF bounds)
         {
             BuiltView.Frame = bounds;

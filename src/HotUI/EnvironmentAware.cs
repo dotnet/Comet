@@ -5,11 +5,11 @@ namespace HotUI
     public abstract class ContextualObject
     {
         internal static readonly EnvironmentData Environment = new EnvironmentData();
-        internal readonly EnvironmentData Context = new EnvironmentData();
+        internal readonly EnvironmentData Context;
 
         protected ContextualObject()
         {
-            
+            Context = new EnvironmentData(this);
         }
 
         internal abstract void ContextPropertyChanged(string property, object value);
