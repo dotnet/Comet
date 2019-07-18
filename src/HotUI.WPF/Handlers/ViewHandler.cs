@@ -1,65 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Windows;
-using System.Windows.Controls;
 
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace HotUI.WPF.Handlers
 {
-    public class ViewHandler : Grid, WPFViewHandler
+    public class ViewHandler : AbstractHandler<ContentView, UIElement>
     {
-        public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
+        protected override UIElement CreateView()
         {
-
-        };
-        
-        private View _view;
-        private UIElement _body;
-
-        public Action ViewChanged { get; set; }
-
-        public UIElement View => _body;
-
-        public object NativeView => View;
-
-        public bool HasContainer
-        {
-            get => false;
-            set { }
-        }
-
-        public void Remove(View view)
-        {
-            _view = null;
-            _body = null;
-        }
-
-        public void SetView(View view)
-        {
-            _view = view;
-            SetBody();
-            Mapper.UpdateProperties(this, _view);
-            ViewChanged?.Invoke();
-        }
-
-        public void UpdateValue(string property, object value)
-        {
-            Mapper.UpdateProperties(this, _view);
-        }
-
-        public bool SetBody()
-        {
-            var uiElement = _view?.ToIUIElement();
-            if (uiElement?.GetType() == typeof(ViewHandler) && _view.Body == null)
+            var viewHandler = VirtualView?.GetOrCreateViewHandler();
+            if (viewHandler?.GetType() == typeof(ViewHandler) && VirtualView.Body == null)
             {
-                Debug.WriteLine($"There is no ViewHandler for {_view.GetType()}");
-                return true;
+                Debug.WriteLine($"There is no ViewHandler for {VirtualView.GetType()}");
+                return null;
             }
 
-            _body = uiElement?.View;
-            return true;
+            return viewHandler?.View;
         }
     }
 }

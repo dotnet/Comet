@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Media;
 using WPFImage = System.Windows.Controls.Image;
 // ReSharper disable ClassNeverInstantiated.Global
 
 namespace HotUI.WPF.Handlers
 {
-    public class ImageHandler : AbstractHandler<Image, WPFImage>
+    public class ImageHandler : AbstractControlHandler<Image, WPFImage>
     {
         public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>()
         {

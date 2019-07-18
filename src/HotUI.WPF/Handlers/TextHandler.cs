@@ -3,7 +3,7 @@
 
 namespace HotUI.WPF.Handlers
 {
-    public class TextHandler : AbstractHandler<Text, WPFLabel>
+    public class TextHandler : AbstractControlHandler<Text, WPFLabel>
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>()
             {

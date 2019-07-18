@@ -21,9 +21,9 @@ namespace HotUI.UWP.Handlers
         
         public SizeF GetSize(UIElement view)
         {
-            if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0) return view.DesiredSize.ToSize();
+            if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0) return view.DesiredSize.ToSizeF();
 
-            return view.RenderSize.ToSize();
+            return view.RenderSize.ToSizeF();
         }
 
         public void SetFrame(UIElement view, float x, float y, float width, float height)
@@ -58,6 +58,8 @@ namespace HotUI.UWP.Handlers
             foreach (var element in Children) yield return element;
         }
 
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+
         public UIElement View => this;
 
         public object NativeView => View;
@@ -67,6 +69,21 @@ namespace HotUI.UWP.Handlers
             get => false;
             set { }
         }
+
+        public SizeF Measure(SizeF availableSize)
+        {
+            return availableSize;
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            Canvas.SetLeft(this, frame.Left);
+            Canvas.SetTop(this, frame.Top);
+
+            Width = frame.Width;
+            Height = frame.Height;
+        }
+
         public void SetView(View view)
         {
             _view = view as AbstractLayout;
@@ -144,7 +161,7 @@ namespace HotUI.UWP.Handlers
 
         private void LayoutSubviews()
         {
-            var measure = _layoutManager.Measure(this, this, _view, ActualSize.ToSize());
+            var measure = _layoutManager.Measure(this, this, _view, ActualSize.ToSizeF());
             _layoutManager.Layout(this, this, _view, measure);
         }
 
@@ -156,7 +173,7 @@ namespace HotUI.UWP.Handlers
             {
                 if (child is Windows.UI.Xaml.Controls.ListView listView)
                 {
-                    var sizeToUse = GetMeasuredSize(listView, availableSize.ToSize());
+                    var sizeToUse = GetMeasuredSize(listView, availableSize.ToSizeF());
                     child.Measure(sizeToUse.ToSize());
                     size.Height = Math.Max(child.DesiredSize.Height, size.Height);
                     size.Width = Math.Max(child.DesiredSize.Width, size.Width);
@@ -188,7 +205,7 @@ namespace HotUI.UWP.Handlers
 
         public SizeF Measure(UIElement view, SizeF available)
         {
-            return view.DesiredSize.ToSize();
+            return view.DesiredSize.ToSizeF();
         }
     }
 }

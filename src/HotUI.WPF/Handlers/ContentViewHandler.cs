@@ -2,36 +2,11 @@
 
 namespace HotUI.WPF.Handlers
 {
-	public class ContentViewHandler : WPFViewHandler
+	public class ContentViewHandler : AbstractHandler<ContentView, UIElement>
     {
-		public ContentViewHandler ()
-		{
-		}
-
-		public UIElement View => ContentView?.Content.ToView ();
-
-        public object NativeView => View;
-
-        public bool HasContainer
+        protected override UIElement CreateView()
         {
-            get => false;
-            set { }
+            return VirtualView?.Content.ToView();
         }
-
-        public void Remove (View view)
-		{
-			ContentView = null;
-		}
-
-        private ContentView ContentView { get; set; }
-
-		public void SetView (View view)
-		{
-			ContentView = view as ContentView;
-		}
-
-		public void UpdateValue (string property, object value)
-		{
-		}
-	}
+    }
 }

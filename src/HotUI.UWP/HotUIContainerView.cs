@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using HotUI.UWP.Handlers;
 
@@ -30,19 +24,19 @@ namespace HotUI.UWP
                     return;
 
                 if (_handler is ViewHandler oldViewHandler)
-                    oldViewHandler.ViewChanged = null;
+                    oldViewHandler.NativeViewChanged -= HandleNativeViewChanged;
 
                 _view = value;
                 _handler = _view?.ViewHandler;
 
                 if (_handler is ViewHandler newViewHandler)
-                    newViewHandler.ViewChanged = UpdateNativeView;
+                    newViewHandler.NativeViewChanged += HandleNativeViewChanged;
 
-                UpdateNativeView();
+                HandleNativeViewChanged(this, null);
             }
         }
 
-        private void UpdateNativeView()
+        private void HandleNativeViewChanged(object sender, ViewChangedEventArgs e)
         {
             if (_nativeView != null)
             {

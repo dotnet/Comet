@@ -6,12 +6,12 @@ namespace HotUI.UWP
 {
     public static class FoundationExtensions
     {
-        public static SizeF ToSize(this Vector2 size)
+        public static SizeF ToSizeF(this Vector2 size)
         {
             return new SizeF((float)size.X, (float)size.Y);
         }
 
-        public static SizeF ToSize(this UWPSize size)
+        public static SizeF ToSizeF(this UWPSize size)
         {
             return new SizeF((float) size.Width, (float) size.Height);
         }

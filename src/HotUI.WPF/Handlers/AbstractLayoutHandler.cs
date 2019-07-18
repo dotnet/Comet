@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using HotUI.Layout;
@@ -22,9 +21,9 @@ namespace HotUI.WPF.Handlers
         {
             if (view.RenderSize.Width <= 0 && view.RenderSize.Height <= 0)
             {
-                return view.DesiredSize.ToSize();
+                return view.DesiredSize.ToSizeF();
             }
-            return view.RenderSize.ToSize();
+            return view.RenderSize.ToSizeF();
         }
 
         public void SetFrame(UIElement view, float x, float y, float width, float height)
@@ -60,6 +59,7 @@ namespace HotUI.WPF.Handlers
             foreach (var element in InternalChildren) yield return (UIElement) element;
         }
 
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
         public UIElement View => this;
 
         public object NativeView => View;
@@ -68,6 +68,20 @@ namespace HotUI.WPF.Handlers
         {
             get => false;
             set { }
+        }
+
+        public SizeF Measure(SizeF availableSize)
+        {
+            return availableSize;
+        }
+
+        public void SetFrame(RectangleF frame)
+        {
+            Canvas.SetLeft(this, frame.Left);
+            Canvas.SetTop(this, frame.Top);
+
+            Width = frame.Width;
+            Height = frame.Height;
         }
 
         public void SetView(View view)
@@ -147,7 +161,7 @@ namespace HotUI.WPF.Handlers
 
         private void LayoutSubviews()
         {
-            var measure = _layoutManager.Measure(this, this, _view, RenderSize.ToSize());
+            var measure = _layoutManager.Measure(this, this, _view, RenderSize.ToSizeF());
             _layoutManager.Layout(this, this, _view, measure);
         }
 
@@ -161,7 +175,7 @@ namespace HotUI.WPF.Handlers
 
                 if (child is System.Windows.Controls.ListView listView)
                 {
-                    var sizeToUse = GetMeasuredSize(listView, availableSize.ToSize());
+                    var sizeToUse = GetMeasuredSize(listView, availableSize.ToSizeF());
                     child.Measure(sizeToUse.ToSize());
                     size.Height = Math.Max(child.DesiredSize.Height, size.Height);
                     size.Width = Math.Max(child.DesiredSize.Width, size.Width);
@@ -203,7 +217,7 @@ namespace HotUI.WPF.Handlers
         public SizeF Measure(UIElement view, SizeF available)
         {
             view.Measure(available.ToSize());
-            return view.DesiredSize.ToSize();
+            return view.DesiredSize.ToSizeF();
         }
     }
 }

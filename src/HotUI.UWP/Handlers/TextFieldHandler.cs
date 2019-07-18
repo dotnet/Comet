@@ -5,7 +5,7 @@ using UWPTextField = Windows.UI.Xaml.Controls.TextBox;
 
 namespace HotUI.UWP.Handlers
 {
-    public class TextFieldHandler : AbstractHandler<TextField, UWPTextField>
+    public class TextFieldHandler : AbstractControlHandler<TextField, UWPTextField>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>()
         {

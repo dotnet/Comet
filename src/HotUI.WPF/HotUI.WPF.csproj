@@ -49,6 +49,7 @@
     <Compile Include="Controls\HUIContainerView.cs" />
     <Compile Include="DrawingExtensions.cs" />
     <Compile Include="GraphicsExtensions.cs" />
+    <Compile Include="Handlers\AbstractControlHandler.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\AbstractStackLayoutHandler.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
@@ -67,6 +68,7 @@
     <Compile Include="HotUIPage.xaml.cs">
       <DependentUpon>HotUIPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewChangedEventArgs.cs" />
     <Compile Include="WPFViewHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.cs" />
