@@ -324,9 +324,12 @@ namespace HotUI
             get => frame;
             set
             {
-                frame = value;
-                ViewHandler?.SetFrame(value);
-                RequestLayout();
+                if (!frame.Equals(value))
+                {
+                    frame = value;
+                    ViewHandler?.SetFrame(value);
+                    RequestLayout();
+                }
             }
         }
         

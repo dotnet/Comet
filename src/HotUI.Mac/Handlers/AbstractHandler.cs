@@ -74,7 +74,8 @@ namespace HotUI.Mac.Handlers
 
         public void SetFrame(RectangleF frame)
         {
-            _nativeView.Frame = frame.ToCGRect();
+            if (_nativeView != null)
+                _nativeView.Frame = frame.ToCGRect();
         }
 
         protected void BroadcastNativeViewChanged(NSView previousView, NSView newView)
