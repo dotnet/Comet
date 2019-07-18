@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using HotUI.Helpers;
 using HotUI.Reflection;
 
 namespace HotUI
@@ -25,7 +26,8 @@ namespace HotUI
 
         protected T GetProperty<T>([CallerMemberName] string propertyName = "")
         {
-            PropertyRead?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CallPropertyRead(propertyName);
+            
             if (dictionary.TryGetValue(propertyName, out var val))
                 return (T)val;
             return default;
@@ -52,12 +54,22 @@ namespace HotUI
             }
             dictionary[propertyName] = value;
 
-            OnPropertyChanged?.Invoke((this, propertyName, value));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CallPropertyChanged(propertyName, value);
 
             return true;
         }
-        
+
+        protected virtual void CallPropertyChanged(string propertyName, object value)
+        {
+            OnPropertyChanged?.Invoke((this, propertyName, value));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        protected virtual void CallPropertyRead(string propertyName)
+        {
+            PropertyRead?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         internal bool SetPropertyInternal(object value, [CallerMemberName] string propertyName = "")
         {
             dictionary[propertyName] = value;
@@ -117,8 +129,8 @@ namespace HotUI
             listProperties.Clear();
         }
 
-        List<INotifyPropertyRead> children = new List<INotifyPropertyRead>();
-        Dictionary<object, string> childrenProperty = new Dictionary<object, string>();
+        WeakList<INotifyPropertyRead> children = new WeakList<INotifyPropertyRead>();
+        Dictionary<WeakReference, string> childrenProperty = new Dictionary<WeakReference, string>();
 
         public void StartMonitoring(INotifyPropertyRead obj)
         {
@@ -229,11 +241,12 @@ namespace HotUI
         }
 
 
-        void OnPropertyChanged(object sender, string propertyName, object value)
+        internal void OnPropertyChanged(object sender, string propertyName, object value)
         {
             if (value?.GetType() == typeof(View))
                 return;
-            childrenProperty.TryGetValue(sender, out var parentproperty);
+            var first = childrenProperty.FirstOrDefault(x => x.Key.Target == sender);
+            string parentproperty = first.Value;
             var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
             changeDictionary[prop] = value;
             pendingUpdates.Add((prop, value));
@@ -244,11 +257,12 @@ namespace HotUI
 
         }
 
-        void OnPropertyRead(object sender, string propertyName)
+        internal void OnPropertyRead(object sender, string propertyName)
         {
             if (!isBuilding)
                 return;
-            childrenProperty.TryGetValue(sender, out var parentproperty);
+            var first = childrenProperty.FirstOrDefault(x => x.Key.Target == sender);
+            string parentproperty = first.Value;
             var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
             listProperties.Add(prop);
         }
@@ -283,7 +297,9 @@ namespace HotUI
                     var child = field.GetValue(obj) as INotifyPropertyRead;
                     if (child != null)
                     {
-                        childrenProperty[child] = field.Name;
+                        if (children.Contains(child))
+                            continue;
+                        childrenProperty[new WeakReference(child)] = field.Name;
                         StartMonitoring(child);
                     }
                 }
@@ -315,7 +331,7 @@ namespace HotUI
                     var child = field.GetValue(obj) as INotifyPropertyRead;
                     if (child != null)
                     {
-                        childrenProperty.Remove(child);
+                        childrenProperty.Remove(new WeakReference(child));
                         StopMonitoring(child);
                     }
                 }
@@ -331,7 +347,7 @@ namespace HotUI
     public class BindingState
     {
         public HashSet<string> GlobalProperties { get; set; } = new HashSet<string>();
-        public Dictionary<string, List<(string PropertyName, Action<string, object> Action)>> ViewUpdateProperties = new Dictionary<string, List<(string PropertyName, Action<string, object> Action)>>();
+        public Dictionary<string, List<(string PropertyName, WeakReference ViewReference)>> ViewUpdateProperties = new Dictionary<string, List<(string PropertyName, WeakReference ViewReference)>>();
         public void AddGlobalProperty(string property)
         {
             if (GlobalProperties.Add(property))
@@ -341,19 +357,19 @@ namespace HotUI
         {
             foreach (var prop in properties)
                 AddGlobalProperty(prop);
-        }
-        public void AddViewProperty(string property, string propertyName, Action<string, object> update)
+        } 
+        public void AddViewProperty(string property, string propertyName, View view)
         {
             if (!ViewUpdateProperties.TryGetValue(property, out var actions))
-                ViewUpdateProperties[property] = actions = new List<(string PropertyName, Action<string, object> Action)>();
-            actions.Add((propertyName, update));
+                ViewUpdateProperties[property] = actions = new List<(string PropertyName, WeakReference ViewReference)>();
+            actions.Add((propertyName, new WeakReference(view)));
         }
 
-        public void AddViewProperty(string[] properties, Action<string, object> update)
+        public void AddViewProperty(string[] properties, View view, string propertyName)
         {
             foreach (var p in properties)
             {
-                AddViewProperty(p, p, update);
+                AddViewProperty(p, propertyName ?? p, view);
             }
         }
         public void Clear()
@@ -380,8 +396,19 @@ namespace HotUI
                     return false;
                 if (ViewUpdateProperties.TryGetValue(update.property, out var actions))
                 {
-                    foreach (var a in actions)
-                        Device.InvokeOnMainThread(() => a.Action.Invoke(a.PropertyName, update.value));
+                    var removed = new List<(string PropertyName, WeakReference ViewReference)> ();
+                    Device.InvokeOnMainThread(() => {
+                        foreach (var a in actions)
+                        {
+                            var view = a.ViewReference.Target as View;
+                            if (view == null)
+                                removed.Add(a);
+                            else
+                                view.BindingPropertyChanged(a.PropertyName, update.value);
+                        }
+                    });
+                    foreach (var r in removed)
+                        actions.Remove(r);
                     didUpdate = true;
                 }
             }

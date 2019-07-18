@@ -10,7 +10,7 @@ namespace HotUI
 {
     public static class DatabindingExtensions
     {
-        public static void SetValue<T>(this State state, ref T currentValue, T newValue, Action<string, object> onUpdate, [CallerMemberName] string propertyName = "")
+        public static void SetValue<T>(this State state, ref T currentValue, T newValue, View view, [CallerMemberName] string propertyName = "")
         {
             if (state?.IsBuilding ?? false)
             {
@@ -29,7 +29,7 @@ namespace HotUI
                         //1 to 1 binding!
                         if (EqualityComparer<T>.Default.Equals(stateValue, newValue))
                         {
-                            state.BindingState.AddViewProperty(prop, propertyName, onUpdate);
+                            state.BindingState.AddViewProperty(prop, propertyName, view);
                             Debug.WriteLine($"Databinding: {propertyName} to {prop}");
                         }
                         else
@@ -66,7 +66,7 @@ namespace HotUI
                 return;
             currentValue = newValue;
 
-            onUpdate(propertyName, newValue);
+            view.BindingPropertyChanged(propertyName, newValue);
         }
 
         static T Cast<T>(this object val)
@@ -89,9 +89,9 @@ namespace HotUI
             }
         }
 
-        public static void SetValue<T>(this View view, State state, ref T currentValue, T newValue, Action<string, object> onUpdate, [CallerMemberName] string propertyName = "")
+        public static void SetValue<T>(this View view, State state, ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")
         {
-            state.SetValue<T>(ref currentValue, newValue, onUpdate, propertyName);
+            state.SetValue<T>(ref currentValue, newValue, view, propertyName);
         }
 
         public static View Diff(this View newView, View oldView)

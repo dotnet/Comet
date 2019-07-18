@@ -26,7 +26,7 @@ namespace HotUI
 		
 		protected void SetValue<T> (ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")
 		{
-			State.SetValue<T> (ref currentValue, newValue, ViewPropertyChanged, propertyName);
+			State.SetValue<T> (ref currentValue, newValue, this , propertyName);
 		}
 		
 		protected override void WillUpdateView ()
@@ -39,11 +39,20 @@ namespace HotUI
 				var value = _binding.Get.Invoke ();
 				var props = State.EndProperty ();
 				var propCount = props.Length;
-				if (propCount > 0) 
-					State.BindingState.AddViewProperty (props, (s, o) => BoundValue = _binding.Get.Invoke ());
+                if (propCount > 0)
+                    State.BindingState.AddViewProperty(props,this,nameof(BoundValue)) ;
 
 				BoundValue = value;
 			}
 		}
-	}
+        protected override void ViewPropertyChanged(string property, object value)
+        {
+            if(property == nameof(BoundValue))
+            {
+                BoundValue = _binding.Get.Invoke();
+                return;
+            }
+            base.ViewPropertyChanged(property, value);
+        }
+    }
 }

@@ -26,7 +26,7 @@ namespace HotUI
         public Shape Shape
         {
             get => _value;
-            private set => this.SetValue(State, ref _value, value, ViewPropertyChanged);
+            private set => this.SetValue(State, ref _value, value);
         }
 
         public Func<Shape> ShapeBinding { get; }
@@ -42,11 +42,20 @@ namespace HotUI
                 var propCount = props.Length;
                 if (propCount > 0)
                 {
-                    State.BindingState.AddViewProperty(props, (s, o) => Shape = ShapeBinding.Invoke());
+                    State.BindingState.AddViewProperty(props, this, nameof(ShapeBinding));
                 }
 
                 Shape = shape;
             }
+        }
+        protected override void ViewPropertyChanged(string property, object value)
+        {
+            if (property == nameof(ShapeBinding))
+            {
+                Shape = ShapeBinding.Invoke();
+                return;
+            }
+            base.ViewPropertyChanged(property, value);
         }
     }
 }

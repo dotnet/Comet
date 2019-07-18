@@ -28,7 +28,7 @@ namespace HotUI
 		public object Data
         {
 			get => context;
-			private set => (this).SetValue(base.State, ref context, value, base.ViewPropertyChanged);
+			private set => (this).SetValue(base.State, ref context, value);
 		}
 
 		public Func<object> DataBinding { get; private set; }
@@ -44,11 +44,20 @@ namespace HotUI
 				var propCount = props.Length;
 				if (propCount > 0)
                 {
-					base.State.BindingState.AddViewProperty (props, (s, o) => Data = DataBinding.Invoke ());
+					base.State.BindingState.AddViewProperty (props, this, nameof(DataBinding));
 				}
 				Data = text;
 			}
 		}
+        protected override void ViewPropertyChanged(string property, object value)
+        {
+            if(property == nameof(DataBinding))
+            {
+                Data = DataBinding.Invoke();
+                return;
+            }
+            base.ViewPropertyChanged(property, value);
+        }
 
-	}
+    }
 }

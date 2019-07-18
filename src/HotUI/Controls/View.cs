@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using HotUI.Helpers;
 using HotUI.Internal;
 //using System.Reflection;
 using HotUI.Reflection;
@@ -11,7 +12,7 @@ namespace HotUI
 
     public class View : ContextualObject, IDisposable
     {
-        internal readonly static List<View> ActiveViews = new List<View>();
+        internal readonly static WeakList<View> ActiveViews = new WeakList<View>();
         HashSet<string> usedEnvironmentData = new HashSet<string>();
 
         public event EventHandler<ViewHandlerChangedEventArgs> ViewHandlerChanged;
@@ -32,7 +33,7 @@ namespace HotUI
             get => tag;
             internal set => tag = value;
         }
-        
+
         public View Parent
         {
             get => parent;
@@ -61,13 +62,10 @@ namespace HotUI
             ActiveViews.Add(this);
             Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
             HotReloadHelper.Register(this);
-            Context.View = this;
             State = StateBuilder.CurrentState ?? new State
             {
                 StateChanged = ResetView
             };
-            State.StartMonitoring(View.Environment);
-            State.StartMonitoring(this.Context);
             SetEnvironmentFields();
             if (!hasConstructors)
                 State.StartBuildingView();
@@ -133,17 +131,17 @@ namespace HotUI
                 return;
             ViewHandler.Remove(this);
             var view = this.GetRenderView();
-            if(oldView != null)
+            if (oldView != null)
                 view = view.Diff(oldView);
             oldView?.Dispose();
             ViewHandler?.SetView(view);
         }
-        
+
         Func<View> body;
         public Func<View> Body
         {
             get => body;
-            set => this.SetValue(State, ref body, value, (s, o) => ResetView());
+            set => this.SetValue(State, ref body, value, ResetPropertyString);
         }
 
         internal View GetView() => GetRenderView();
@@ -178,7 +176,7 @@ namespace HotUI
                 var propCount = props.Length;
                 if (propCount > 0)
                 {
-                    State.BindingState.AddViewProperty(props, (s, o) => ResetView());
+                    State.BindingState.AddViewProperty(props, this, ResetPropertyString);
                 }
                 return builtView = view;
             }
@@ -199,9 +197,31 @@ namespace HotUI
         {
 
         }
+
+        internal void BindingPropertyChanged(string property, object value)
+        {
+
+            ViewPropertyChanged(property, value);
+        }
+        protected const string ResetPropertyString = "ResetPropertyString";
         protected virtual void ViewPropertyChanged(string property, object value)
         {
-            this.SetPropertyValue(property, value);
+            if (property == ResetPropertyString)
+            {
+                ResetView();
+                return;
+            }
+
+            try
+            {
+                this.SetPropertyValue(property, value);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine($"Error setting property:{property} : {value}");
+                Debug.WriteLine(ex);
+            }
+
             ViewHandler?.UpdateValue(property, value);
             replacedView?.ViewPropertyChanged(property, value);
         }
@@ -241,7 +261,7 @@ namespace HotUI
                 if (value == null)
                 {
                     //Check the replaced view
-                    if(viewThatWasReplaced != null)
+                    if (viewThatWasReplaced != null)
                     {
                         value = viewThatWasReplaced.GetEnvironment(key);
                     }
@@ -257,7 +277,7 @@ namespace HotUI
                         }
                     }
                 }
-                if(value == null && viewThatWasReplaced != null)
+                if (value == null && viewThatWasReplaced != null)
                 {
                     value = viewThatWasReplaced.GetEnvironment(key);
                 }
@@ -308,14 +328,14 @@ namespace HotUI
         public Thickness Padding
         {
             get => padding;
-            internal set => this.SetValue(State, ref padding, value, (s, o) => ResetView());
+            internal set => this.SetValue(State, ref padding, value, ResetPropertyString);
         }
-        
+
         FrameConstraints frameConstraints;
         public FrameConstraints FrameConstraints
         {
             get => frameConstraints;
-            internal set => this.SetValue(State, ref frameConstraints, value, (s, o) => ResetView());
+            internal set => this.SetValue(State, ref frameConstraints, value, ResetPropertyString);
         }
 
         private RectangleF frame;
@@ -335,7 +355,7 @@ namespace HotUI
                 }
             }
         }
-        
+
         private bool measurementValid;
         public bool MeasurementValid
         {
@@ -371,7 +391,7 @@ namespace HotUI
                 return new SizeF((float)width, (float)height);
 
             var measuredSize = viewHandler?.Measure(availableSize) ?? availableSize;
-            
+
             // If we have a constraint for just one of the values, then combine the constrained value
             // with the measured value for our size.
             if (width != null || height != null)

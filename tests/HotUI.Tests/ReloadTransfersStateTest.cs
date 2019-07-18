@@ -8,6 +8,7 @@ namespace HotUI.Tests
         [Fact]
         public void StateIsTransferedToReloadedView()
         {
+            ResetHotUI();
             const string textValue = "Hello";
             var orgView = new MyOrgView();
             
@@ -28,6 +29,7 @@ namespace HotUI.Tests
         [Fact]
         public void StateTransfersOnlyChangedValues()
         {
+            ResetHotUI();
             const string textValue = "Hello";
             var orgView = new MyOrgView();
 

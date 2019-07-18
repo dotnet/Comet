@@ -17,6 +17,8 @@ namespace HotUI.Internal
 
         public static void ResetGlobalEnvironment(this View view) => View.Environment.Clear();
 
+        public static void DisposeAllViews(this View view) => View.ActiveViews.Clear();
+
         public static View GetView(this View view) => view.GetView();
 
         public static void UpdateFromOldView(this View view, View newView) => view.UpdateFromOldView(newView);

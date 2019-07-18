@@ -1,4 +1,5 @@
 ﻿using System;
+using HotUI.Internal;
 using Xunit;
 
 [assembly: CollectionBehavior (DisableTestParallelization = true)]
@@ -39,5 +40,14 @@ namespace HotUI.Tests
 			}
 			
 		}
+
+        public static void ResetHotUI()
+        {
+            var v = new View();
+            v.ResetGlobalEnvironment();
+            v.DisposeAllViews();
+            HotReloadHelper.Reset();
+            v?.Dispose();
+        }
 	}
 }
