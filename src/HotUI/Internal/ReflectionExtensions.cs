@@ -13,7 +13,8 @@ namespace HotUI.Reflection
             var info = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
             if (info != null)
             {
-                info.SetValue(obj, value);
+
+                info.SetValue(obj, Convert(value,info.PropertyType));
                 return true;
             }
             else
@@ -22,9 +23,21 @@ namespace HotUI.Reflection
                 var field = type.GetField(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
                 if (field == null)
                     return false;
-                field.SetValue(obj, value);
+                field.SetValue(obj, Convert(value, field.FieldType));
                 return true;
             }
+        }
+
+        static object Convert(object obj, Type type)
+        {
+            if (obj == null)
+                return null;
+            var newType = obj.GetType();
+            if (newType == type)
+                return obj;
+            //if (type == typeof(String))
+            //    return obj.ToString();
+            return System.Convert.ChangeType(obj, type);
         }
 
         public static bool SetDeepPropertyValue(this object obj, string name, object value)

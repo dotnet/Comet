@@ -5,6 +5,10 @@ using System.Linq;
 using HotUI.Reflection;
 namespace HotUI {
 	public static class HotReloadHelper {
+        public static void Reset()
+        {
+            replacedViews.Clear();
+        }
 		public static bool IsEnabled { get; set; } = Debugger.IsAttached;
 
         public static void Register(View view, params object[] parameters)

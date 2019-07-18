@@ -29,7 +29,7 @@ namespace HotUI
 		string placeholder;
 		public string Placeholder {
 			get => placeholder;
-			set => this.SetValue (State, ref placeholder, value, ViewPropertyChanged);
+			set => this.SetValue (State, ref placeholder, value);
 		}
 		
 		public Action<string> OnCommit { get; set; }

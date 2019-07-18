@@ -37,6 +37,7 @@ namespace HotUI {
 	public class StateBuilder : IDisposable {
 		static List<State> currentStates = new List<State> ();
 		public static State CurrentState => currentStates.LastOrDefault ();
+       
 		public StateBuilder (State state)
 		{
 			State = state;

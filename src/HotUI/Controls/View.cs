@@ -12,7 +12,7 @@ namespace HotUI
 
     public class View : ContextualObject, IDisposable
     {
-        internal readonly static WeakReferenceList<View> ActiveViews = new WeakReferenceList<View>();
+        internal readonly static WeakList<View> ActiveViews = new WeakList<View>();
         HashSet<string> usedEnvironmentData = new HashSet<string>();
 
         public event EventHandler<ViewHandlerChangedEventArgs> ViewHandlerChanged;
@@ -144,7 +144,7 @@ namespace HotUI
         public Func<View> Body
         {
             get => body;
-            set => this.SetValue(State, ref body, value, (s, o) => ResetView());
+            set => this.SetValue(State, ref body, value,ResetPropertyString);
         }
 
         internal View GetView() => GetRenderView();
@@ -179,7 +179,7 @@ namespace HotUI
                 var propCount = props.Length;
                 if (propCount > 0)
                 {
-                    State.BindingState.AddViewProperty(props, (s, o) => ResetView());
+                    State.BindingState.AddViewProperty(props,this,ResetPropertyString);
                 }
                 return builtView = view;
             }
@@ -200,9 +200,28 @@ namespace HotUI
         {
 
         }
+
+        internal void BindingPropertyChanged(string property, object value)
+        {
+            try
+            {
+                if(property != ResetPropertyString)
+                    this.SetPropertyValue(property, value);
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
+            ViewPropertyChanged(property, value);
+        }
+        protected const string ResetPropertyString = "ResetPropertyString";
         protected virtual void ViewPropertyChanged(string property, object value)
         {
-            this.SetPropertyValue(property, value);
+            if(property == ResetPropertyString)
+            {
+                ResetView();
+                return;
+            }
             ViewHandler?.UpdateValue(property, value);
             replacedView?.ViewPropertyChanged(property, value);
         }
@@ -309,14 +328,14 @@ namespace HotUI
         public Thickness Padding
         {
             get => padding;
-            internal set => this.SetValue(State, ref padding, value, (s, o) => ResetView());
+            internal set => this.SetValue(State, ref padding, value, ResetPropertyString);
         }
         
         FrameConstraints frameConstraints;
         public FrameConstraints FrameConstraints
         {
             get => frameConstraints;
-            internal set => this.SetValue(State, ref frameConstraints, value, (s, o) => ResetView());
+            internal set => this.SetValue(State, ref frameConstraints, value, ResetPropertyString);
         }
 
         private RectangleF frame;

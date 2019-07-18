@@ -5,7 +5,7 @@ using System.Linq;
 
 namespace HotUI.Helpers
 {
-    public class WeakReferenceList<T> : IList<T>
+    public class WeakList<T> : IList<T>
     {
         List<WeakReference> items = new List<WeakReference>();
         public T this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
@@ -18,6 +18,11 @@ namespace HotUI.Helpers
 
         public void Clear()
         {
+            var views = CleanseItems().ToList();
+            foreach(var item in views)
+            {
+                (item.Target as View)?.Dispose();
+            }
             items.Clear();
         }
 

@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using HotUI.Helpers;
 using HotUI.Reflection;
 
 namespace HotUI
@@ -331,7 +332,7 @@ namespace HotUI
     public class BindingState
     {
         public HashSet<string> GlobalProperties { get; set; } = new HashSet<string>();
-        public Dictionary<string, List<(string PropertyName, Action<string, object> Action)>> ViewUpdateProperties = new Dictionary<string, List<(string PropertyName, Action<string, object> Action)>>();
+        public Dictionary<string, List<(string PropertyName, WeakReference ViewReference)>> ViewUpdateProperties = new Dictionary<string, List<(string PropertyName, WeakReference ViewReference)>>();
         public void AddGlobalProperty(string property)
         {
             if (GlobalProperties.Add(property))
@@ -341,19 +342,19 @@ namespace HotUI
         {
             foreach (var prop in properties)
                 AddGlobalProperty(prop);
-        }
-        public void AddViewProperty(string property, string propertyName, Action<string, object> update)
+        } 
+        public void AddViewProperty(string property, string propertyName, View view)
         {
             if (!ViewUpdateProperties.TryGetValue(property, out var actions))
-                ViewUpdateProperties[property] = actions = new List<(string PropertyName, Action<string, object> Action)>();
-            actions.Add((propertyName, update));
+                ViewUpdateProperties[property] = actions = new List<(string PropertyName, WeakReference ViewReference)>();
+            actions.Add((propertyName, new WeakReference(view)));
         }
 
-        public void AddViewProperty(string[] properties, Action<string, object> update)
+        public void AddViewProperty(string[] properties, View view, string propertyName)
         {
             foreach (var p in properties)
             {
-                AddViewProperty(p, p, update);
+                AddViewProperty(p, propertyName ?? p, view);
             }
         }
         public void Clear()
@@ -380,8 +381,19 @@ namespace HotUI
                     return false;
                 if (ViewUpdateProperties.TryGetValue(update.property, out var actions))
                 {
-                    foreach (var a in actions)
-                        Device.InvokeOnMainThread(() => a.Action.Invoke(a.PropertyName, update.value));
+                    var removed = new List<(string PropertyName, WeakReference ViewReference)> ();
+                    Device.InvokeOnMainThread(() => {
+                        foreach (var a in actions)
+                        {
+                            var view = a.ViewReference.Target as View;
+                            if (view == null)
+                                removed.Add(a);
+                            else
+                                view.BindingPropertyChanged(a.PropertyName, update.value);
+                        }
+                    });
+                    foreach (var r in removed)
+                        actions.Remove(r);
                     didUpdate = true;
                 }
             }
