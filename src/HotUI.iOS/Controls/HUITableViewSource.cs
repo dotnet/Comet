@@ -51,9 +51,7 @@ namespace HotUI.iOS.Controls
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = tableView.DequeueReusableCell(CellType) as HUITableViewCell ?? new HUITableViewCell(UITableViewCellStyle.Default, CellType);
-            var item = _listView?.List[indexPath.Row];
-            var v = _listView?.CellCreator?.Invoke(item);
-            v.Parent = _listView;
+            var v = _listView?.ViewFor(indexPath.Row);
             cell.SetView(v);
             return cell;
         }
@@ -74,32 +72,24 @@ namespace HotUI.iOS.Controls
 
         private float CalculateRowHeight(UITableView tableView, int row)
         {
-            var item = _listView.List[row];
-            
             // todo: we really need a "GetOrCreate" method.
-            var view = _listView?.CellCreator?.Invoke(item);
-            try
+            var view = _listView?.ViewFor(row);
+            if (view != null)
             {
-                if (view != null)
+                if (view is NavigationButton navigationButton)
+                    view = navigationButton.Content;
+
+                if (view.FrameConstraints?.Height != null)
+                    return (float)view.FrameConstraints?.Height;
+
+                // todo: this is really inefficient.
+                if (view.ToView() != null)
                 {
-                    if (view is NavigationButton navigationButton)
-                        view = navigationButton.Content;
-
-                    if (view.FrameConstraints?.Height != null)
-                        return (float)view.FrameConstraints?.Height;
-
-                    // todo: this is really inefficient.
-                    if (view.ToView() != null)
-                    {
-                        var measure = view.Measure(tableView.Bounds.Size.ToSizeF());
-                        return measure.Height;
-                    }
+                    var measure = view.Measure(tableView.Bounds.Size.ToSizeF());
+                    return measure.Height;
                 }
             }
-            finally
-            {
-                view?.Dispose();
-            }
+            
 
             return 44f;
         }

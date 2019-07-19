@@ -108,7 +108,7 @@ namespace HotUI.Forms.Handlers
             }
             public object this[int index]
             {
-                get => new Tuple<object, HotUI.View>(list.List[index], list.CellCreator(list.List[index]));
+                get => new Tuple<object, HotUI.View>(list.List[index], list.ViewFor(index));
                 set => throw new NotImplementedException();
             }
 

@@ -36,14 +36,19 @@ namespace HotUI {
 	}
 
 	public class ListView : View, IEnumerable, IEnumerable<Func<object,View>> {
+
+        //TODO Evaluate if 30 is a good number
+        FixedSizeDictionary<object, View> CurrentViews = new FixedSizeDictionary<object, View>(30);
+
 		public ListView(IList list)
 		{
 			List = list;
+            //Dispose that View!
+            CurrentViews.OnDequeue = (pair) => pair.Value?.Dispose();
 		}
 
 		public IList List { get; }
 		public IEnumerator GetEnumerator () => List.GetEnumerator ();
-
 		public Func<object, View> CellCreator { get; protected set; }
 		public void Add(Func<object,View> viewCreator)
 		{
@@ -57,8 +62,19 @@ namespace HotUI {
 		{
 			throw new NotImplementedException ();
 		}
+
 		public Action<object> ItemSelected { get; set; }
 
+        public View ViewFor(int index)
+        {
+            var item = List[index];
+            if (!CurrentViews.TryGetValue(item, out var view))
+            {
+                CurrentViews[item] = view = CellCreator(item);
+                view.Parent = this;
+            }
+            return view;            
+        }
 
 		public void OnSelected (int index)
 		{
@@ -75,10 +91,20 @@ namespace HotUI {
 
         protected override void Dispose(bool disposing)
         {
+            var currentViews = CurrentViews.ToList();
+            CurrentViews.Clear();
+            currentViews.ForEach(x => x.Value?.Dispose());
+            //TODO: Verify. I don't think we need to check all active views anymore
             var cells = ActiveViews.Where(x => x.Parent == this).ToList();
             foreach (var cell in cells)
                 cell.Dispose();
             base.Dispose(disposing);
+        }
+        protected override void OnParentChange(View parent)
+        {
+            base.OnParentChange(parent);
+            foreach (var pair in CurrentViews)
+                pair.Value.Parent = parent;
         }
     }
 }
