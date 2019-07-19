@@ -15,7 +15,7 @@ namespace HotUI.iOS.Controls
             WeakDelegate = _delegate;
         }
 
-        public ListView ListView
+        public IListView ListView
         {
             get => _delegate.ListView;
             set
@@ -24,9 +24,9 @@ namespace HotUI.iOS.Controls
 
                 // If we have items in the list, we can check to see if there are frame constraints on the root view.  If so,
                 // we can use those as our cell height.
-                if (value?.List.Count > 0)
+                if (value?.Sections() > 0 && value?.Rows(0) > 0)
                 {
-                    var v = value.ViewFor(0);                    
+                    var v = value.ViewFor(0,0);                    
                     if (v.FrameConstraints?.Height != null)
                         RowHeight = (float)v.FrameConstraints.Height;
                     else

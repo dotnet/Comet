@@ -8,11 +8,11 @@ namespace HotUI.iOS.Controls
     {
         private static readonly string CellType = "HUIViewCell";
 
-        private ListView _listView;
+        private IListView _listView;
         private bool _unevenRows;
         private float? _rowHeight;
         
-        public ListView ListView
+        public IListView ListView
         {
             get => _listView;
             set
@@ -32,26 +32,20 @@ namespace HotUI.iOS.Controls
             }
         }
 
-        public override nint NumberOfSections(UITableView tableView)
-        {
-            return 1;
-        }
+        public override nint NumberOfSections(UITableView tableView) => 1;
 
-        public override nint RowsInSection(UITableView tableview, nint section)
-        {
-            return _listView?.List?.Count ?? 0;
-        }
+        public override nint RowsInSection(UITableView tableview, nint section) => _listView?.Rows((int)section) ?? 0;
 
         public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
         {
             tableView.DeselectRow(indexPath, true);
-            _listView?.OnSelected(indexPath.Row);
+            _listView?.OnSelected(indexPath.Section,indexPath.Row);
         }
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
             var cell = tableView.DequeueReusableCell(CellType) as HUITableViewCell ?? new HUITableViewCell(UITableViewCellStyle.Default, CellType);
-            var v = _listView?.ViewFor(indexPath.Row);
+            var v = _listView?.ViewFor(indexPath.Section,indexPath.Row);
             cell.SetView(v);
             return cell;
         }
@@ -62,18 +56,18 @@ namespace HotUI.iOS.Controls
                 return tableView.RowHeight;
 
             if (_unevenRows)
-                return CalculateRowHeight(tableView, indexPath.Row);
+                return CalculateRowHeight(tableView,indexPath.Section, indexPath.Row);
             
             if (_rowHeight == null)
-                _rowHeight = CalculateRowHeight(tableView, indexPath.Row);
+                _rowHeight = CalculateRowHeight(tableView, indexPath.Section, indexPath.Row);
             
             return (float) _rowHeight;
         }
 
-        private float CalculateRowHeight(UITableView tableView, int row)
+        private float CalculateRowHeight(UITableView tableView,int section, int row)
         {
             // todo: we really need a "GetOrCreate" method.
-            var view = _listView?.ViewFor(row);
+            var view = _listView?.ViewFor(section, row);
             if (view != null)
             {
                 if (view is NavigationButton navigationButton)
