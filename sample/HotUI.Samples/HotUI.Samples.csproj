@@ -11,10 +11,14 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\HotUI.Skia\HotUI.Skia.csproj" />
     <ProjectReference Include="..\..\src\HotUI\HotUI.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="ApiAudit\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="1.68.0" />
   </ItemGroup>
 </Project>

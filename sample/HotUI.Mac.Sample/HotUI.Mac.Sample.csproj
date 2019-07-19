@@ -109,11 +109,21 @@
       <Project>{BCAF5569-30DB-4D44-BF46-DFFE93DDCBD0}</Project>
       <Name>HotUI.Mac</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\HotUI.Skia\HotUI.Skia.csproj">
+      <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
+      <Name>HotUI.Skia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\HotUI.Skia.Mac\HotUI.Skia.Mac.csproj">
+      <Project>{00B248D0-382A-4504-A126-76B9C892583E}</Project>
+      <Name>HotUI.Skia.Mac</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\turtlerock.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="1.68.0" />
+    <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="HotUI.Reload">
       <Version>0.0.6-alpha</Version>

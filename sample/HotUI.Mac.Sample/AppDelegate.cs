@@ -26,6 +26,7 @@ namespace HotUI.Mac.Sample
 #if DEBUG
             HotUI.Reload.Init();
 #endif
+            HotUI.Skia.Mac.UI.Init();
         }
 
         public override void WillTerminate(NSNotification notification)

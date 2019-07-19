@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HotUI.Samples.Comparisons;
+using HotUI.Samples.Skia;
 
 namespace HotUI.Samples {
 	public class MainPage : View {
@@ -26,6 +27,10 @@ namespace HotUI.Samples {
             new MenuItem("TextFieldSample2", ()=> new TextFieldSample2()),
             new MenuItem("TextFieldSample3", ()=> new TextFieldSample3()),
             new MenuItem("TextFieldSample4", ()=> new TextFieldSample4()),
+            new MenuItem("SkiaSample1 (FingerPaint)", ()=> new SkiaSample1()),
+            new MenuItem("SkiaSample2 (FingerPaint)", ()=> new SkiaSample2()),
+            new MenuItem("SkiaSample3 (BindableFingerPaint)", ()=> new SkiaSample3()),
+            new MenuItem("SkiaSample4 (BindableFingerPaint)", ()=> new SkiaSample4()),
             new MenuItem("SwiftUI Tutorial Section 1", ()=> new Section1()),
             new MenuItem("SwiftUI Tutorial Section 2", ()=> new Section2()),
             new MenuItem("SwiftUI Tutorial Section 3", ()=> new Section3()),

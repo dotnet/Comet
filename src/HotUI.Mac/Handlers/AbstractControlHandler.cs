@@ -8,18 +8,27 @@ namespace HotUI.Mac.Handlers
         where TVirtualView : View 
         where TNativeView: NSView
     {
-        private readonly PropertyMapper<TVirtualView> _mapper;
+        private PropertyMapper<TVirtualView> _mapper;
         private TVirtualView _virtualView;
         private TNativeView _nativeView;
         private HUIContainerView _containerView;
         
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
+        protected AbstractControlHandler()
+        {
+        }
+        
         protected AbstractControlHandler(PropertyMapper<TVirtualView> mapper)
         {
             _mapper = mapper;
         }
 
+        protected void SetMapper(PropertyMapper<TVirtualView> mapper)
+        {
+            _mapper = mapper;
+        }
+        
         protected abstract TNativeView CreateView();
         
         protected abstract void DisposeView(TNativeView nativeView);
@@ -60,7 +69,7 @@ namespace HotUI.Mac.Handlers
             }
         }
 
-        public SizeF Measure(SizeF availableSize)
+        public virtual SizeF Measure(SizeF availableSize)
         {
             if (_nativeView is NSControl control)
                 return control.SizeThatFits(availableSize.ToCGSize()).ToSizeF();
@@ -90,12 +99,12 @@ namespace HotUI.Mac.Handlers
             _virtualView = view as TVirtualView;
             if (_nativeView == null)
                 _nativeView = CreateView();
-            _mapper.UpdateProperties(this, _virtualView);
+            _mapper?.UpdateProperties(this, _virtualView);
         }
 
         public virtual void UpdateValue(string property, object value)
         {
-            _mapper.UpdateProperty(this, _virtualView, property);
+            _mapper?.UpdateProperty(this, _virtualView, property);
         }
 
 
