@@ -11,6 +11,7 @@ namespace HotUI.WPF.Sample
         public MainWindow()
         {
             InitializeComponent();
+            HotUI.Skia.WPF.UI.Init();
 
             MainFrame.NavigationService.Navigate(new HotUIPage(MainFrame, new MainPage()));
         }
