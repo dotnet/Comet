@@ -110,7 +110,7 @@
       <Name>HotUI.Mac</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\HotUI.Skia\HotUI.Skia.csproj">
-      <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
+      <Project>{9B9BF0E6-C500-4121-8FB6-9DB46D8BA8EC}</Project>
       <Name>HotUI.Skia</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\HotUI.Skia.Mac\HotUI.Skia.Mac.csproj">

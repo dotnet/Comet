@@ -59,6 +59,24 @@ stages:
       inputs:
         solution: 'src/HotUI.Skia/HotUI.Skia.csproj'
         configuration: '$(BuildConfiguration)'
+    
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.Android'
+      inputs:
+        solution: 'src/HotUI.Skia.Android/HotUI.Skia..Android.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.iOS'
+      inputs:
+        solution: 'src/HotUI.Skia.iOS/HotUI.Skia.iOS.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.Mac'
+      inputs:
+        solution: 'src/HotUI.Skia.Mac/HotUI.Skia.Mac.csproj'
+        configuration: '$(BuildConfiguration)'
 
   - job: BuildHotUIWindows
     displayName: Build HoTUI Source

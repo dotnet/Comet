@@ -55,11 +55,11 @@
       <Name>HotUI.iOS</Name>
     </ProjectReference>
     <ProjectReference Include="..\HotUI.Skia\HotUI.Skia.csproj">
-      <Project>{bf15264b-d7c7-4f09-b13b-487d60d649bd}</Project>
+      <Project>{9B9BF0E6-C500-4121-8FB6-9DB46D8BA8EC}</Project>
       <Name>HotUI.Skia</Name>
     </ProjectReference>
     <ProjectReference Include="..\HotUI\HotUI.csproj">
-      <Project>{1817646e-e71e-48cf-80a4-3030ef870d61}</Project>
+      <Project>{1591BF3F-2370-4EB6-9336-F4EED244AB42}</Project>
       <Name>HotUI</Name>
     </ProjectReference>
   </ItemGroup>
