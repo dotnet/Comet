@@ -1,7 +1,7 @@
 stages:
 - stage: BuildSource
   jobs:
-  - job: BuildHotUI
+  - job: BuildHotUIMac
     displayName: Build HoTUI Source
     pool:
       name: Hosted macOS
@@ -27,7 +27,74 @@ stages:
     - task: MSBuild@1
       displayName: 'Build HotUI'
       inputs:
-        solution: 'build/HotUI-Mac.sln'
+        solution: 'src/HotUI/HotUI.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build Xamarin.Forms.Loader.csproj'
+      inputs:
+        solution: 'src/Xamarin.Forms.Loader/Xamarin.Forms.Loader.csproj.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Android'
+      inputs:
+        solution: 'src/HotUI.Android/HotUI.Android.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.iOS'
+      inputs:
+        solution: 'src/HotUI.iOS/HotUI.iOS.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Mac'
+      inputs:
+        solution: 'src/HotUI.Mac/HotUI.Mac.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia'
+      inputs:
+        solution: 'src/HotUI.Skia/HotUI.Skia.csproj'
+        configuration: '$(BuildConfiguration)'
+
+  - job: BuildHotUIWindows
+    displayName: Build HoTUI Source
+    pool:
+      name: Hosted VS2017
+      demands:
+      - MSBuild
+      - Xamarin.Android
+    
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: Use Nuget 5.0.2
+      inputs:
+        versionSpec: '5.0.2'
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: build/HotUI-Windows.sln
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI'
+      inputs:
+        solution: 'src/HotUI/HotUI.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.UWP'
+      inputs:
+        solution: 'src/HotUI.UWP/HotUI.UWP.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.WPF'
+      inputs:
+        solution: 'src/HotUI.WPF/HotUI.WPF.csproj'
         configuration: '$(BuildConfiguration)'
 
 # - stage: RunTests
@@ -68,10 +135,9 @@ stages:
 #           !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
 #         searchFolder: '$(System.DefaultWorkingDirectory)\tests\HotUI.Tests'
 
-- stage: BuildSamplesAndroid
-#   dependsOn: RunTests
+- stage: BuildSamples
   jobs:
-  - job: BuildHotUISamplesAndroid
+  - job: BuildSamplesAndroidMac
     displayName: Build HoTUI Android Samples
     pool:
       name: Hosted macOS
@@ -79,9 +145,8 @@ stages:
       demands:
       - MSBuild
       - Xamarin.Android
-      
-    steps:
 
+    steps:
     - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
       displayName: 'Select the Xamarin SDK version'
 
@@ -93,7 +158,7 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: HotUI.sln
+        restoreSolution: build/HotUI-Mac.sln
 
     - task: XamarinAndroid@1
       displayName: 'Build HotUI.Android.Sample App'
@@ -109,10 +174,7 @@ stages:
         configuration: '$(BuildConfiguration)'
         createAppPackage: false
 
-- stage: BuildSamplesFormsiOS
-#   dependsOn: RunTests
-  jobs:
-  - job: BuildHotUISamplesFormsiOS
+  - job: BuildHotUISamplesiOSMac
     displayName: Build HoTUI iOS and Mac Samples
     pool:
       name: Hosted macOS
@@ -134,21 +196,17 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: HotUI.sln
-
+        restoreSolution: build/HotUI-Mac.sln
 
     - task: MSBuild@1
-      displayName: 'Build iOS and Mac'
+      displayName: 'Build iOS and iOS.Forms'
       inputs:
-        solution: 'HotUI.Mac.sln'
+        solution: 'build/HotUI-Mac.sln'
         platform: iPhoneSimulator
         configuration: '$(BuildConfiguration)'
 
-    # - task: XamariniOS@2
-    #   displayName: 'Build HotUI.Forms.iOS.Sample App'
-    #   inputs:
-    #     solutionFile: 'HotUI.sln'
-    #     configuration: '$(BuildConfiguration)'
-    #     packageApp: false
-    #     buildForSimulator: true
-    #     runNugetRestore: false
+    - task: MSBuild@1
+      displayName: 'Build Mac'
+      inputs:
+        solution: 'sample/HotUI.Mac.Sample/HotUI.Mac.Sample.csproj'
+        configuration: '$(BuildConfiguration)'
