@@ -43,9 +43,9 @@ namespace HotUI.Samples
 						new Text(song.Album),
 					}
 				},
-				Header = group => new VStack
+				Header = new VStack
 				{
-					new Text(group.ToString())
+					new Text("Songs")
 				},
 			}.OnSelected ((song) => { Console.WriteLine ("Song Selected"); });
 		}
