@@ -49,14 +49,14 @@ namespace HotUI.iOS.Handlers
         {
             var nativeView = (UITextField) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
-            nativeView.SizeToFit();
+            virtualView.InvalidateMeasurement();
         }
-        
+
         public static void MapPlaceholderProperty(IViewHandler viewHandler, SecureField virtualView)
         {
             var nativeView = (UITextField) viewHandler.NativeView;
             nativeView.Placeholder = virtualView.Placeholder;
-            nativeView.SizeToFit();
+            virtualView.InvalidateMeasurement();
         }
     }
 }

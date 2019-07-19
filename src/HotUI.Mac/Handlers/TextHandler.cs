@@ -46,15 +46,15 @@ namespace HotUI.Mac.Handlers
         {
             var nativeView = (NSTextField) viewHandler.NativeView;
             nativeView.StringValue = virtualView.Value;
-            nativeView.SizeToFit();
+            virtualView.InvalidateMeasurement();
         }
 
         public static void MapFontProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (NSTextField) viewHandler.NativeView;
             var font = virtualView.GetFont(DefaultFont);
-            nativeView.Font = font.ToUIFont();
-            nativeView.SizeToFit();
+            nativeView.Font = font.ToNSFont();
+            virtualView.InvalidateMeasurement();
         }
 
         public static void MapColorProperty(IViewHandler viewHandler, Text virtualView)

@@ -3,26 +3,26 @@ using AppKit;
 
 namespace HotUI.Mac.Handlers
 {
-    public class TextFieldHandler : AbstractControlHandler<TextField, NSTextField>
+    public class SecureFieldHandler : AbstractControlHandler<TextField, NSSecureTextField>
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
             [nameof(TextField.Text)] = MapTextProperty
         };
 
-        public TextFieldHandler() : base(Mapper)
+        public SecureFieldHandler() : base(Mapper)
         {
         }
 
-        protected override NSTextField CreateView()
+        protected override NSSecureTextField CreateView()
         {
-            var textField = new NSTextField();
+            var textField = new NSSecureTextField();
             textField.EditingEnded += HandleEditingEnded;
             textField.Changed += HandleEditingChanged;
             return textField;
         }
 
-        protected override void DisposeView(NSTextField nativeView)
+        protected override void DisposeView(NSSecureTextField nativeView)
         {
             nativeView.EditingEnded -= HandleEditingEnded;
             nativeView.Changed -= HandleEditingChanged;
@@ -40,8 +40,8 @@ namespace HotUI.Mac.Handlers
 
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
-            var nativeView = (NSTextField) viewHandler.NativeView;
-            nativeView.StringValue = virtualView.Text ?? "";
+            var nativeView = (NSSecureTextField) viewHandler.NativeView;
+            nativeView.StringValue = virtualView.Text;
             virtualView.InvalidateMeasurement();
         }
     }

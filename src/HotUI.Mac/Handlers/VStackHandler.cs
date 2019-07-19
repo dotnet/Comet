@@ -1,6 +1,4 @@
-﻿using AppKit;
-using CoreGraphics;
-using HotUI.Layout;
+﻿using CoreGraphics;
 
 namespace HotUI.Mac.Handlers
 {

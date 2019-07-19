@@ -59,7 +59,7 @@ namespace HotUI.Mac.Extensions
                 : Font.Custom(font.FamilyName, (float)font.PointSize);
         }
 
-        public static NSFont ToUIFont(this Font font)
+        public static NSFont ToNSFont(this Font font)
         {
             if (font == null)
                 return NSFont.SystemFontOfSize(12);

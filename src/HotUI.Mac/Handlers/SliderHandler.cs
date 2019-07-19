@@ -1,12 +1,12 @@
 ﻿using System;
-using UIKit;
+using AppKit;
 
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.iOS.Handlers
+namespace HotUI.Mac.Handlers
 {
-    public class SliderHandler : AbstractControlHandler<Slider, UISlider>
+    public class SliderHandler : AbstractControlHandler<Slider, NSSlider>
     {
         public static readonly PropertyMapper<Slider> Mapper = new PropertyMapper<Slider>(ViewHandler.Mapper)
         {
@@ -20,39 +20,39 @@ namespace HotUI.iOS.Handlers
 
         }
 
-        protected override UISlider CreateView()
+        protected override NSSlider CreateView()
         {
-            var slider = new UISlider();
+            var slider = new NSSlider();
             slider.Continuous = true;
-            slider.ValueChanged += HandleValueChanged;
+            slider.Activated += HandleValueChanged;
             return slider;
         }
 
-        protected override void DisposeView(UISlider nativeView)
+        protected override void DisposeView(NSSlider nativeView)
         {
-            nativeView.ValueChanged -= HandleValueChanged;
+            nativeView.Activated -= HandleValueChanged;
         }
 
         private void HandleValueChanged(object sender, EventArgs e)
         {
-            VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.Value);
+            VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.FloatValue);
         }
         
         public static void MapValueProperty(IViewHandler viewHandler, Slider virtualView)
         {
-            var nativeView = (UISlider) viewHandler.NativeView;
-            nativeView.Value = virtualView.Value;
+            var nativeView = (NSSlider) viewHandler.NativeView;
+            nativeView.FloatValue = virtualView.Value;
         }
-
+        
         public static void MapFromProperty(IViewHandler viewHandler, Slider virtualView)
         {
-            var nativeView = (UISlider) viewHandler.NativeView;
+            var nativeView = (NSSlider) viewHandler.NativeView;
             nativeView.MinValue = virtualView.From;
         }
         
         public static void MapThroughProperty(IViewHandler viewHandler, Slider virtualView)
         {
-            var nativeView = (UISlider) viewHandler.NativeView;
+            var nativeView = (NSSlider) viewHandler.NativeView;
             nativeView.MaxValue = virtualView.Through;
         }
     }

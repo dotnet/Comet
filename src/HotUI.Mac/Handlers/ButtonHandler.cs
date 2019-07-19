@@ -36,11 +36,11 @@ namespace HotUI.Mac.Handlers
 
         private void HandleTouchUpInside(object sender, EventArgs e) => VirtualView?.OnClick();
         
-        public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
+        public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
         {
             var nativeButton = (NSButton) viewHandler.NativeView;
-            nativeButton.Title = virtualButton.Text;
-            nativeButton.SizeToFit();
+            nativeButton.Title = virtualView.Text;
+            virtualView.InvalidateMeasurement();
         }
     }
 }

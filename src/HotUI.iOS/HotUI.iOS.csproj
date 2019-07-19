@@ -83,6 +83,7 @@
     <Compile Include="UIViewRepresentable.cs" />
     <Compile Include="Controls\HUINavigationController.cs" />
     <Compile Include="Controls\HUITableViewSource.cs" />
+    <Compile Include="Handlers\ZStackHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">
