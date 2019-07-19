@@ -1,5 +1,6 @@
 using System.Drawing;
 using System.Numerics;
+using Windows.UI.Input;
 using UWPSize = Windows.Foundation.Size;
 using UWPRect = Windows.Foundation.Rect;
 
@@ -7,6 +8,11 @@ namespace HotUI.UWP
 {
     public static class FoundationExtensions
     {
+        public static PointF ToPointF(this PointerPoint point)
+        {
+            return new PointF((float)point.RawPosition.X, (float)point.RawPosition.Y);
+        }
+
         public static SizeF ToSizeF(this Vector2 size)
         {
             return new SizeF((float)size.X, (float)size.Y);

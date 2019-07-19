@@ -44,7 +44,7 @@ namespace HotUI.UWP.Handlers
 
                 foreach (var subView in _view)
                 {
-                    var nativeView = subView.ToView();
+                    var nativeView = subView.ToView() ?? new Canvas();
                     Children.Add(nativeView);
                 }
 
@@ -75,7 +75,7 @@ namespace HotUI.UWP.Handlers
             {
                 var index = e.Start + i;
                 var view = _view[index];
-                var nativeView = view.ToView();
+                var nativeView = view.ToView() ?? new Canvas();
                 Children.Insert(index, nativeView);
             }
 
@@ -101,7 +101,7 @@ namespace HotUI.UWP.Handlers
                 Children.RemoveAt(index);
 
                 var view = _view[index];
-                var newNativeView = view.ToView();
+                var newNativeView = view.ToView() ?? new Canvas();
                 Children.Insert(index, newNativeView);
             }
 

@@ -53,6 +53,8 @@
     <ProjectReference Include="..\HotUI.iOS\HotUI.iOS.csproj">
       <Project>{9df36dbf-afe6-438d-b7a6-1b5fb3d1d6d1}</Project>
       <Name>HotUI.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\HotUI.Skia\HotUI.Skia.csproj">
       <Project>{bf15264b-d7c7-4f09-b13b-487d60d649bd}</Project>

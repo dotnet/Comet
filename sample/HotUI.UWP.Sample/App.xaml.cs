@@ -34,6 +34,8 @@ namespace HotUI.UWP.Sample
                 Window.Current.Content = rootFrame;
             }
 
+            HotUI.Skia.UWP.UI.Init();
+
             if (e.PrelaunchActivated == false)
             {
                 if (rootFrame.Content == null)
