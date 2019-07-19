@@ -127,6 +127,14 @@
       <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
       <Name>HotUI.Samples</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\HotUI.Skia\HotUI.Skia.csproj">
+      <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
+      <Name>HotUI.Skia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\HotUI.Skia.Android\HotUI.Skia.Android.csproj">
+      <Project>{F5FFBB2C-23BE-4029-BFD1-1028F1461F86}</Project>
+      <Name>HotUI.Skia.Android</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
