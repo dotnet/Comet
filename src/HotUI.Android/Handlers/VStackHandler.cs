@@ -82,9 +82,11 @@ namespace HotUI.Android.Handlers
             foreach (var child in children)
             {
                 var cview = child.ToView();
-                views.Add(cview);
-                //cview.ContentMode = UIViewContentMode.Top;
-                base.AddView(cview);
+                if (cview != null)
+                {
+                    views.Add(cview);
+                    base.AddView(cview);
+                }
             }
         }
     }
