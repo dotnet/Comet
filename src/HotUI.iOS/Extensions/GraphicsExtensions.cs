@@ -6,6 +6,11 @@ namespace HotUI.iOS
 {
     public static class CoreGraphicsExtensions
     {
+        public static PointF ToPointF(this CGPoint size)
+        {
+            return new PointF((float)size.X, (float)size.Y);
+        }
+
         public static SizeF ToSizeF(this CGSize size)
         {
             return new SizeF((float)size.Width, (float)size.Height);

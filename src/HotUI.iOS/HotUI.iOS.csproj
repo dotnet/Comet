@@ -50,6 +50,7 @@
     <Compile Include="Controls\HUITableViewCell.cs" />
     <Compile Include="Controls\SizeChangedEventArgs.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
+    <Compile Include="Extensions\UIViewExtensions.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />

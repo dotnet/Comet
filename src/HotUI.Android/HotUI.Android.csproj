@@ -80,6 +80,7 @@
     <Compile Include="Controls\CustomFrameLayout.cs" />
     <Compile Include="Controls\NavigationViewWrapper.cs" />
     <Compile Include="Controls\ModalManager.cs" />
+    <Compile Include="Handlers\SliderHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

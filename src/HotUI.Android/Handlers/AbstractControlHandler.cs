@@ -10,14 +10,24 @@ namespace HotUI.Android.Handlers
         where TVirtualView : View
         where TNativeView : AView
     {
-        private readonly PropertyMapper<TVirtualView> _mapper;
+        private PropertyMapper<TVirtualView> _mapper;
         private TVirtualView _virtualView;
         private TNativeView _nativeView;
         private HUIContainerView _containerView;
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
+        protected AbstractControlHandler()
+        {
+
+        }
+
         protected AbstractControlHandler(PropertyMapper<TVirtualView> mapper)
+        {
+            _mapper = mapper;
+        }
+
+        protected void SetMapper(PropertyMapper<TVirtualView> mapper)
         {
             _mapper = mapper;
         }
@@ -60,7 +70,7 @@ namespace HotUI.Android.Handlers
             }
         }
 
-        public SizeF Measure(SizeF availableSize)
+        public virtual SizeF Measure(SizeF availableSize)
         {
             var width = AView.MeasureSpec.MakeMeasureSpec((int) availableSize.Width, MeasureSpecMode.AtMost);
             var height = AView.MeasureSpec.MakeMeasureSpec((int) availableSize.Height, MeasureSpecMode.AtMost);
@@ -94,12 +104,12 @@ namespace HotUI.Android.Handlers
             _virtualView = view as TVirtualView;
             if (_nativeView == null)
                 _nativeView = CreateView(AndroidContext.CurrentContext);
-            _mapper.UpdateProperties(this, _virtualView);
+            _mapper?.UpdateProperties(this, _virtualView);
         }
 
         public virtual void UpdateValue(string property, object value)
         {
-            _mapper.UpdateProperty(this, _virtualView, property);
+            _mapper?.UpdateProperty(this, _virtualView, property);
         }
 
         #region IDisposable Support

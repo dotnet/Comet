@@ -8,18 +8,28 @@ namespace HotUI.iOS.Handlers
         where TVirtualView : View 
         where TNativeView: UIView
     {
-        private readonly PropertyMapper<TVirtualView> _mapper;
+        private PropertyMapper<TVirtualView> _mapper;
         private TVirtualView _virtualView;
         private TNativeView _nativeView;
         private HUIContainerView _containerView;
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
+        protected AbstractControlHandler()
+        {
+            
+        }
+        
         protected AbstractControlHandler(PropertyMapper<TVirtualView> mapper)
         {
             _mapper = mapper;
         }
 
+        protected void SetMapper(PropertyMapper<TVirtualView> mapper)
+        {
+            _mapper = mapper;
+        }
+        
         protected abstract TNativeView CreateView();
         
         protected abstract void DisposeView(TNativeView nativeView);
@@ -62,7 +72,7 @@ namespace HotUI.iOS.Handlers
             }
         }
 
-        public SizeF Measure(SizeF availableSize)
+        public virtual SizeF Measure(SizeF availableSize)
         {
             return _nativeView.SizeThatFits(availableSize.ToCGSize()).ToSizeF();
         }
@@ -91,12 +101,13 @@ namespace HotUI.iOS.Handlers
             _virtualView = view as TVirtualView;
             if (_nativeView == null)
                 _nativeView = CreateView();
-            _mapper.UpdateProperties(this, _virtualView);
+            
+            _mapper?.UpdateProperties(this, _virtualView);
         }
 
         public virtual void UpdateValue(string property, object value)
         {
-            _mapper.UpdateProperty(this, _virtualView, property);
+            _mapper?.UpdateProperty(this, _virtualView, property);
         }
 
         #region IDisposable Support

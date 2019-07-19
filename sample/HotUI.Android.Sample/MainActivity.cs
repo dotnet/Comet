@@ -20,6 +20,8 @@ namespace HotUI.Android.Sample
 #if DEBUG
             HotUI.Reload.Init();
 #endif
+            HotUI.Skia.Android.UI.Init();
+
             Page = new MainPage();
         }
     }

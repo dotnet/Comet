@@ -199,6 +199,7 @@ namespace HotUI
             isBuilding = false;
         }
 
+        
         internal void StartProperty()
         {
             isBuilding = true;

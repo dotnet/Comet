@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using CoreLocation;
 using Foundation;
 using HotUI.Samples;
@@ -30,7 +29,9 @@ namespace HotUI.iOS.Sample {
 #if DEBUG
             HotUI.Reload.Init();
 #endif
-            
+			
+            HotUI.Skia.iOS.UI.Init();
+			
             "turtlerock.jpg".LoadImage();
 
 			window = new UIWindow {

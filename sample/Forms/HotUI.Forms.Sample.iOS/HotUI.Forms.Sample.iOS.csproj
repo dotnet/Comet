@@ -61,8 +61,10 @@
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>iPhone Developer</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <MtouchNoSymbolStrip></MtouchNoSymbolStrip>
-    <IOSDebugOverWiFi></IOSDebugOverWiFi>
+    <MtouchNoSymbolStrip>
+    </MtouchNoSymbolStrip>
+    <IOSDebugOverWiFi>
+    </IOSDebugOverWiFi>
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
@@ -126,6 +128,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="SkiaSharp.Views.Forms" Version="1.68.0" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
     <PackageReference Include="Xamarin.Forms">
       <Version>4.1.0.581479</Version>

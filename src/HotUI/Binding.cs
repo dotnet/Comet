@@ -3,25 +3,38 @@ using System.Linq.Expressions;
 
 namespace HotUI
 {
-    public class Binding<T>
+    public class Binding
     {
-        public Binding(Func<T> getValue, Action<T> setValue)
+        public Binding(Func<object> getValue, Action<object> setValue)
+        {
+            GetValue = getValue;
+            SetValue = setValue;
+        }
+        
+        public Func<object> GetValue { get; }
+        public Action<object> SetValue { get;  }
+        
+        public bool IsValue { get; internal set; }
+        public bool IsFunc { get; internal set; }
+    }
+    
+    public class Binding<T> : Binding
+    {
+        public Binding(Func<T> getValue, Action<T> setValue) 
+            : base(ToGenericGetter(getValue),ToGenericSetter(setValue))
         {
             Get = getValue;
             Set = setValue;
         }
-        
+
         public Func<T> Get { get; }
         public Action<T> Set { get; }
-        
-        public bool IsValue { get; private set; }
-        public bool IsFunc { get; internal set; }
         
         public static implicit operator Binding<T>(T value)
         {
             return new Binding<T>(
                 getValue: () => value,
-                setValue: null) {IsValue = true};
+                setValue: null) { IsValue = true };
         }
 
         public static implicit operator Binding<T>(Func<T> value)
@@ -29,6 +42,22 @@ namespace HotUI
             return new Binding<T>(
                 getValue: value,
                 setValue: null) {IsFunc = true};
+        }
+
+        private static Func<object> ToGenericGetter(Func<T> getValue)
+        {
+            if (getValue != null)
+                return () => getValue.Invoke();
+
+            return null;
+        }
+
+        private static Action<object> ToGenericSetter(Action<T> setValue)
+        {
+            if (setValue != null)
+                return (v) => setValue.Invoke((T)v);
+
+            return null;
         }
     }
 

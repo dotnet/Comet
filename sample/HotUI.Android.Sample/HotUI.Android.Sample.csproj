@@ -74,7 +74,7 @@
       <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\layout\content_main.axml">
-          <SubType>Designer</SubType>
+      <SubType>Designer</SubType>
     </AndroidResource>
     <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\values\dimens.xml" />
@@ -101,6 +101,8 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="1.68.0" />
+    <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.1" />
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.1" />
@@ -124,6 +126,14 @@
     <ProjectReference Include="..\HotUI.Samples\HotUI.Samples.csproj">
       <Project>{F6609551-D56D-4737-8326-EFB2A1CADE26}</Project>
       <Name>HotUI.Samples</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\HotUI.Skia\HotUI.Skia.csproj">
+      <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
+      <Name>HotUI.Skia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\HotUI.Skia.Android\HotUI.Skia.Android.csproj">
+      <Project>{F5FFBB2C-23BE-4029-BFD1-1028F1461F86}</Project>
+      <Name>HotUI.Skia.Android</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
