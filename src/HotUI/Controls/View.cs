@@ -360,7 +360,12 @@ namespace HotUI
         public bool MeasurementValid
         {
             get => measurementValid;
-            internal set => measurementValid = value;
+            set
+            {
+                measurementValid = value;
+                if (BuiltView != null)
+                    BuiltView.MeasurementValid = true;
+            }
         }
 
         public void InvalidateMeasurement()
@@ -374,7 +379,12 @@ namespace HotUI
         public SizeF MeasuredSize
         {
             get => measuredSize;
-            internal set => measuredSize = value;
+            set
+            {
+                measuredSize = value;
+                if (BuiltView != null)
+                    BuiltView.MeasuredSize = value;
+            }
         }
 
         public virtual SizeF Measure(SizeF availableSize)

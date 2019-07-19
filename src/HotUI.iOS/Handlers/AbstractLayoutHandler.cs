@@ -16,14 +16,14 @@ namespace HotUI.iOS.Handlers
 
         protected AbstractLayoutHandler(CGRect rect) : base(rect)
         {
-            InitializeDefaults();
+
         }
 
         protected AbstractLayoutHandler()
         {
-            InitializeDefaults();
+
         }
-        
+
         public UIView View => this;
 
         public HUIContainerView ContainerView => null;
@@ -113,11 +113,6 @@ namespace HotUI.iOS.Handlers
         {
         }
 
-        private void InitializeDefaults()
-        {
-            TranslatesAutoresizingMaskIntoConstraints = false;
-        }
-
         private void HandleChildrenAdded(object sender, LayoutEventArgs e)
         {
             for (var i = 0; i < e.Count; i++)
@@ -191,7 +186,7 @@ namespace HotUI.iOS.Handlers
 
         public override CGSize SizeThatFits(CGSize size)
         {
-            _measured = _view.Measure(size.ToSizeF());
+            _measured = _view.Measure(size.ToSizeF());            
             return _measured.ToCGSize();
         }
 
@@ -209,7 +204,10 @@ namespace HotUI.iOS.Handlers
         
         public override void LayoutSubviews()
         {
-            if (Superview == null || Bounds.Size.IsEmpty)
+            if (Superview == null)
+                return;
+
+            if (Bounds.Size.IsEmpty)
                 return;
 
             _view.Frame = Frame.ToRectangleF();

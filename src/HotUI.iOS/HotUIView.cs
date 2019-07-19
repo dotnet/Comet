@@ -13,6 +13,7 @@ namespace HotUI.iOS
         public HotUIView()
         {
             BackgroundColor = UIColor.White;
+            AutosizesSubviews = false;
         }
 
         public HotUIView(CGRect rect) : base(rect)
@@ -125,6 +126,9 @@ namespace HotUI.iOS
                 }
 
                 var sizeThatFits = _virtualView.Measure(bounds.Size.ToSizeF());
+                _virtualView.MeasuredSize = sizeThatFits;
+                _virtualView.MeasurementValid = true;
+                
                 var x = ((bounds.Width - sizeThatFits.Width) / 2) + padding.Left;
                 var y = ((bounds.Height - sizeThatFits.Height) / 2) + padding.Top;
                 _virtualView.Frame = new RectangleF((float)x, (float)y, sizeThatFits.Width, sizeThatFits.Height);

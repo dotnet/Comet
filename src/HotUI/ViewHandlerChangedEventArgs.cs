@@ -1,4 +1,5 @@
 ﻿using System;
+
 namespace HotUI
 {
     public class ViewHandlerChangedEventArgs : EventArgs

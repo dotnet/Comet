@@ -13,5 +13,11 @@ namespace HotUI.iOS.Handlers
         public VStackHandler() : base()
         {
         }
+
+        public override CGRect Frame
+        {
+            get => base.Frame;
+            set => base.Frame = value;
+        }
     }
 }

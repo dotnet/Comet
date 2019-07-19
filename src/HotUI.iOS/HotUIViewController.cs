@@ -1,4 +1,6 @@
-﻿using CoreGraphics;
+﻿using System;
+using System.Threading.Tasks;
+using CoreGraphics;
 using UIKit;
 
 namespace HotUI.iOS
@@ -26,15 +28,9 @@ namespace HotUI.iOS
 
         public override void LoadView()
         {
-            base.LoadView();
-            
-            var containerView = _containerView = new HotUIView(View.Bounds);
+            View = _containerView = new HotUIView(UIScreen.MainScreen.Bounds);
             _containerView.CurrentView = _startingCurrentView;
             _startingCurrentView = null;
-            containerView.AutoresizingMask = UIViewAutoresizing.FlexibleWidth | UIViewAutoresizing.FlexibleHeight;
-            View.AutosizesSubviews = true;
-            
-            View.AddSubview(containerView);
         }
     }
 }
