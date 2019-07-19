@@ -260,7 +260,7 @@ stages:
       inputs:
         restoreSolution: build/HotUI-Windows.sln
     
-     - task: MSBuild@1
+    - task: MSBuild@1
       displayName: 'Build UWP Sample'
       inputs:
         solution: 'sample/HotUI.UWP.Sample/HotUI.UWP.Sample.csproj'
