@@ -74,8 +74,7 @@ namespace HotUI.Mac.Handlers
 		public NSView GetViewForItem (NSTableView tableView, NSTableColumn tableColumn, nint row)
 		{
 			var cell = tableView.MakeView (cellIdentifier, this) as ViewCell ?? new ViewCell ();
-			var item = listView?.List [(int)row];
-			var v = listView?.CellCreator (item);
+            var v = listView?.ViewFor((int)row);
 			v.Parent = listView;
 			cell.SetView (v);
 			return cell;

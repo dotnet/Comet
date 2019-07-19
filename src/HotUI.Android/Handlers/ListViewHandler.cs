@@ -65,8 +65,7 @@ namespace HotUI.Android.Handlers
 
             public override AView GetView(int position, AView convertView, ViewGroup parent)
             {
-                var view = ListView?.CellCreator?.Invoke(ListView.List[position]);
-                view.Parent = ListView;
+                var view = ListView?.ViewFor(position);
                 var cell = view.ToView();
                 return cell;
             }
