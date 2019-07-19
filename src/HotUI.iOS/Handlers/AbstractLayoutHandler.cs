@@ -1,8 +1,6 @@
 using System;
-using System.Collections.Generic;
 using CoreGraphics;
 using HotUI.iOS.Controls;
-using HotUI.Layout;
 using UIKit;
 
 namespace HotUI.iOS.Handlers

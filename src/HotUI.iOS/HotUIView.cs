@@ -13,7 +13,6 @@ namespace HotUI.iOS
         public HotUIView()
         {
             BackgroundColor = UIColor.White;
-            AutosizesSubviews = false;
         }
 
         public HotUIView(CGRect rect) : base(rect)

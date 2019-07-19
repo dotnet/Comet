@@ -15,12 +15,10 @@ namespace HotUI.Mac.Handlers
 
         protected AbstractLayoutHandler(CGRect rect) : base(rect)
         {
-            InitializeDefaults();
         }
 
         protected AbstractLayoutHandler()
         {
-            InitializeDefaults();
         }
         
         public override bool IsFlipped => true;
@@ -44,7 +42,7 @@ namespace HotUI.Mac.Handlers
 
         public void SetFrame(RectangleF frame)
         {
-            View.Frame = frame.ToCGRect();
+            Frame = frame.ToCGRect();
         }
 
         public void SetView(View view)
@@ -52,6 +50,7 @@ namespace HotUI.Mac.Handlers
             _view = view as AbstractLayout;
             if (_view != null)
             {
+                _view.NeedsLayout += HandleNeedsLayout;
                 _view.ChildrenChanged += HandleChildrenChanged;
                 _view.ChildrenAdded += HandleChildrenAdded;
                 _view.ChildrenRemoved += ViewOnChildrenRemoved;
@@ -70,6 +69,11 @@ namespace HotUI.Mac.Handlers
             }
         }
 
+        private void HandleNeedsLayout(object sender, EventArgs e)
+        {
+            SetNeedsLayout();
+        }
+
         public void Remove(View view)
         {
             foreach (var subview in _view)
@@ -84,6 +88,7 @@ namespace HotUI.Mac.Handlers
 
             if (view != null)
             {
+                _view.NeedsLayout -= HandleNeedsLayout;
                 _view.ChildrenChanged -= HandleChildrenChanged;
                 _view.ChildrenAdded -= HandleChildrenAdded;
                 _view.ChildrenRemoved -= ViewOnChildrenRemoved;
@@ -108,11 +113,6 @@ namespace HotUI.Mac.Handlers
 
         public virtual void UpdateValue(string property, object value)
         {
-        }
-
-        private void InitializeDefaults()
-        {
-            TranslatesAutoresizingMaskIntoConstraints = false;
         }
 
         private void HandleChildrenAdded(object sender, LayoutEventArgs e)
@@ -199,7 +199,11 @@ namespace HotUI.Mac.Handlers
 
         public void SizeToFit()
         {
-            _measured = _view.Measure(Superview?.Bounds.Size.ToSizeF() ?? NSScreen.MainScreen.Frame.Size.ToSizeF());
+            var size = Superview?.Bounds.Size;
+            if (size == null || ((CGSize)size).IsEmpty)
+                size = NSScreen.MainScreen.Frame.Size;
+
+            _measured = _view.Measure(((CGSize)size).ToSizeF());
             base.Frame = new CGRect(new CGPoint(0, 0), _measured.ToCGSize());
         }
 
@@ -229,7 +233,10 @@ namespace HotUI.Mac.Handlers
         
         public override void Layout()
         {
-            if (Superview == null || Bounds.Size.IsEmpty)
+            if (Superview == null)
+                return;
+
+            if (Bounds.Size.IsEmpty)
                 return;
 
             _view.Frame = Frame.ToRectangleF();

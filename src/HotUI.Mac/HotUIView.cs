@@ -2,6 +2,7 @@
 using AppKit;
 using HotUI.Mac.Extensions;
 using HotUI.Mac.Handlers;
+using System;
 
 namespace HotUI.Mac
 {
@@ -13,16 +14,11 @@ namespace HotUI.Mac
         
         public HotUIView()
         {
-            TranslatesAutoresizingMaskIntoConstraints = false;
-            AutoresizesSubviews = true;
-            AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable;
         }
 
         public HotUIView(CGRect rect) : base(rect)
         {
-            TranslatesAutoresizingMaskIntoConstraints = false;
-            AutoresizesSubviews = true;
-            AutoresizingMask = NSViewResizingMask.HeightSizable | NSViewResizingMask.WidthSizable;
+
         }
 
         public View CurrentView
@@ -33,12 +29,52 @@ namespace HotUI.Mac
                 if (value == _virtualView)
                     return;
 
-                _virtualView = value;
-                _handler = _virtualView.GetOrCreateViewHandler();
-                if (_handler is ViewHandler viewHandler)
-                    viewHandler.NativeViewChanged += HandleNativeViewChanged;
+                if (_virtualView != null)
+                {
+                    _virtualView.ViewHandlerChanged -= HandleViewHandlerChanged;
+                    _virtualView.NeedsLayout -= HandleNeedsLayout;
+                    if (_handler is MacViewHandler viewHandler)
+                        viewHandler.NativeViewChanged -= HandleNativeViewChanged;
+                }
 
-                HandleNativeViewChanged(this, null);
+                _virtualView = value;
+
+                if (_virtualView != null)
+                {
+                    _handler = _virtualView.GetOrCreateViewHandler();
+
+                    _virtualView.ViewHandlerChanged += HandleViewHandlerChanged;
+                    _virtualView.NeedsLayout += HandleNeedsLayout;
+                    if (_handler is MacViewHandler viewHandler)
+                        viewHandler.NativeViewChanged += HandleNativeViewChanged;
+
+                    HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, null, (NSView)_handler.NativeView));
+                }
+            }
+        }
+
+        private void HandleNeedsLayout(object sender, EventArgs e)
+        {
+            SetNeedsLayout();
+        }
+
+        private void HandleViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
+        {
+            Console.WriteLine($"[{GetType().Name}] HandleViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
+
+            if (e.OldViewHandler is MacViewHandler oldHandler)
+            {
+                oldHandler.NativeViewChanged -= HandleNativeViewChanged;
+                _nativeView?.RemoveFromSuperview();
+                _nativeView = null;
+            }
+
+            if (e.NewViewHandler is MacViewHandler newHandler)
+            {
+                newHandler.NativeViewChanged += HandleNativeViewChanged;
+                _nativeView = newHandler.View ?? new NSView();
+                AddSubview(_nativeView);
+                SetNeedsLayout();
             }
         }
 
@@ -110,19 +146,13 @@ namespace HotUI.Mac
                     bounds.Height -= padding.VerticalThickness;
                 }
 
-                if (_nativeView is NSTableView || _nativeView is ListViewHandler)
-                    _nativeView.Frame = bounds;
-                else
-                {
-                    CGSize sizeThatFits;
-                    if (_nativeView is AbstractLayoutHandler layout)
-                        sizeThatFits = layout.SizeThatFits(bounds.Size);
-                    else
-                        sizeThatFits = bounds.Size;
-                    var x = ((bounds.Width - sizeThatFits.Width) / 2) + padding.Left;
-                    var y = ((bounds.Height - sizeThatFits.Height) / 2) + padding.Top;
-                    _nativeView.Frame = new CGRect(x, y, sizeThatFits.Width, sizeThatFits.Height);
-                }
+                var sizeThatFits = _virtualView.Measure(bounds.Size.ToSizeF());
+                _virtualView.MeasuredSize = sizeThatFits;
+                _virtualView.MeasurementValid = true;
+
+                var x = ((bounds.Width - sizeThatFits.Width) / 2) + padding.Left;
+                var y = ((bounds.Height - sizeThatFits.Height) / 2) + padding.Top;
+                _virtualView.Frame = new RectangleF((float)x, (float)y, sizeThatFits.Width, sizeThatFits.Height);
             }
         }
     }
