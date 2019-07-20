@@ -33,7 +33,7 @@ stages:
     - task: MSBuild@1
       displayName: 'Build Xamarin.Forms.Loader.csproj'
       inputs:
-        solution: 'src/Xamarin.Forms.Loader/Xamarin.Forms.Loader.csproj.csproj'
+        solution: 'src/Xamarin.Forms.Loader/Xamarin.Forms.Loader.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
@@ -63,7 +63,7 @@ stages:
     - task: MSBuild@1
       displayName: 'Build HotUI.Skia.Android'
       inputs:
-        solution: 'src/HotUI.Skia.Android/HotUI.Skia..Android.csproj'
+        solution: 'src/HotUI.Skia.Android/HotUI.Skia.Android.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
