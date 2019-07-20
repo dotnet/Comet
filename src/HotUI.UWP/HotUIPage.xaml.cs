@@ -4,6 +4,7 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
+using WGrid = Windows.UI.Xaml.Controls.Grid;
 
 namespace HotUI.UWP
 {
@@ -36,7 +37,7 @@ namespace HotUI.UWP
                 }
 
                 _view = value;
-                Content = value?.ToEmbeddableView() ?? new Grid();
+                Content = value?.ToEmbeddableView() ?? new WGrid();
 
                 if (_view?.BuiltView is NavigationView nav)
                 {

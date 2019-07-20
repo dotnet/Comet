@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using WGrid = System.Windows.Controls.Grid;
 
 namespace HotUI.WPF
 {
@@ -21,7 +22,7 @@ namespace HotUI.WPF
             private set
             {
                 _view = value;
-                Content = value?.ToEmbeddableView() ?? new Grid();
+                Content = value?.ToEmbeddableView() ?? new WGrid();
 
                 if (_view?.BuiltView is NavigationView nav)
                 {

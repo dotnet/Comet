@@ -2,10 +2,11 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using HotUI.UWP.Handlers;
+using WGrid = Windows.UI.Xaml.Controls.Grid;
 
 namespace HotUI.UWP
 {
-    public class HotUIView : Grid
+    public class HotUIView : WGrid
     {
         private View _view;
         private UIElement _nativeView;
@@ -51,10 +52,10 @@ namespace HotUI.UWP
             {
                 if (_nativeView is FrameworkElement frameworkElement)
                 {
-                    Grid.SetRow(frameworkElement, 0);
-                    Grid.SetColumn(frameworkElement, 0);
-                    Grid.SetColumnSpan(frameworkElement, 1);
-                    Grid.SetRowSpan(frameworkElement, 1);
+                    WGrid.SetRow(frameworkElement, 0);
+                    WGrid.SetColumn(frameworkElement, 0);
+                    WGrid.SetColumnSpan(frameworkElement, 1);
+                    WGrid.SetRowSpan(frameworkElement, 1);
                 }
 
                 Children.Add(_nativeView);

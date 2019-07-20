@@ -1,9 +1,10 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
+using WGrid = System.Windows.Controls.Grid;
 
 namespace HotUI.WPF.Controls
 {
-    public class HUIContainerView : Grid
+    public class HUIContainerView : WGrid
     {
         private FrameworkElement _mainView;
 
@@ -24,10 +25,10 @@ namespace HotUI.WPF.Controls
 
                 if (_mainView != null)
                 {
-                    Grid.SetRow(_mainView, 0);
-                    Grid.SetColumn(_mainView, 0);
-                    Grid.SetRowSpan(_mainView, 1);
-                    Grid.SetColumnSpan(_mainView, 1);
+                    WGrid.SetRow(_mainView, 0);
+                    WGrid.SetColumn(_mainView, 0);
+                    WGrid.SetRowSpan(_mainView, 1);
+                    WGrid.SetColumnSpan(_mainView, 1);
                     Children.Add(_mainView);
                 }
             }
