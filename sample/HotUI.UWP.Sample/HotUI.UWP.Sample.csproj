@@ -153,9 +153,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\src\HotUI.Skia.UWP\HotUI.Skia.UWP.csproj">
+      <Project>{004ef9a7-6ff7-4aca-9416-dcfb84a85b04}</Project>
+      <Name>HotUI.Skia.UWP</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\HotUI.Skia\HotUI.Skia.csproj">
       <Project>{bf15264b-d7c7-4f09-b13b-487d60d649bd}</Project>
       <Name>HotUI.Skia</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\HotUI.UWP\HotUI.UWP.csproj">
+      <Project>{2d337300-b3e9-4a36-8387-76a9a1100c5b}</Project>
+      <Name>HotUI.UWP</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\HotUI\HotUI.csproj">
       <Project>{1817646e-e71e-48cf-80a4-3030ef870d61}</Project>
