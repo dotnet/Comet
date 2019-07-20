@@ -46,7 +46,7 @@ namespace HotUI.iOS.Controls
         {
             var cell = tableView.DequeueReusableCell(CellType) as HUITableViewCell ?? new HUITableViewCell(UITableViewCellStyle.Default, CellType);
             var v = _listView?.ViewFor(indexPath.Section,indexPath.Row);
-            cell.SetView(v);
+            cell.SetView(v, _listView.ShouldDisposeViews);
             return cell;
         }
 

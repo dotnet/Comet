@@ -13,7 +13,9 @@ namespace HotUI {
         View FooterView();
         View HeaderView();
         View ViewFor(int section, int row);
-        View HeaderFor(int section, int row);
+        View HeaderFor(int section);
+        View FooterFor(int section);
+        bool ShouldDisposeViews { get; }
         void OnSelected(int section, int row);
     }
 
@@ -48,10 +50,10 @@ namespace HotUI {
         public Func<T, View> Cell { get; set; }
 	
         protected override int RowCount() => List?.Count ?? 0;
-        public override View ViewFor(int index)
+        protected override View ViewFor(int index)
         {
             var item = List[index];
-            if (!CurrentViews.TryGetValue(item, out var view))
+            if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
                 CurrentViews[item] = view = Cell(item);
                 view.Parent = this;
@@ -62,7 +64,8 @@ namespace HotUI {
         protected override View FooterView() => Footer;
 
         protected override void Dispose(bool disposing)
-        {   if (!disposing)
+        {
+            if (!disposing)
                 return;
             var currentViews = CurrentViews.ToList();
             CurrentViews.Clear();
@@ -76,6 +79,19 @@ namespace HotUI {
             foreach (var pair in CurrentViews)
                 pair.Value.Parent = parent;
         }
+        protected override void OnSelected(int index)
+        {
+            var item = List[index];
+            var view = ViewFor(index);
+            if (view is NavigationButton navigation)
+            {
+                navigation.Parent = this;
+                navigation.Navigate();
+                return;
+            }
+
+            ItemSelected?.Invoke(item);
+        }
 
     }
 
@@ -84,6 +100,7 @@ namespace HotUI {
         List<View> views = new List<View>();
 		public ListView()
 		{
+            ShouldDisposeView = false;
 		}
 
 		public virtual IEnumerator GetEnumerator () => views.GetEnumerator ();
@@ -98,14 +115,17 @@ namespace HotUI {
 
 		public Action<object> ItemSelected { get; set; }
 
-        public virtual View ViewFor(int index) => views[index];
+        protected virtual View ViewFor(int section,int row) => ViewFor(row);
+        protected virtual View ViewFor(int index) => views[index];
 
-        public virtual View HeaderFor() => null;
-
-
-        public virtual void OnSelected (int index)
+        protected virtual void OnSelected(int section, int index) => OnSelected(index);
+        protected virtual void OnSelected (int index)
 		{
             var view = views[index];
+            if(view.IsDisposed)
+            {
+                Console.WriteLine(":(");
+            }
             if(view is NavigationButton navigation)
             {
                 navigation.Parent = this;
@@ -134,9 +154,11 @@ namespace HotUI {
         }
 
 
-        View IListView.ViewFor(int section, int row) => ViewFor(row);
+        View IListView.ViewFor(int section, int row) => ViewFor(section,row);
 
-        View IListView.HeaderFor(int section, int row) => HeaderFor();
+        View IListView.HeaderFor(int section) => HeaderFor(section);
+
+        View IListView.FooterFor(int section) => FooterFor(section);
 
         void IListView.OnSelected(int section, int row) => OnSelected(row);
 
@@ -152,5 +174,10 @@ namespace HotUI {
         protected virtual View FooterView() => null;
 
         protected virtual View HeaderView() => null;
+
+        protected virtual View HeaderFor(int section) => null;
+        protected virtual View FooterFor(int section) => null;
+        protected bool ShouldDisposeView { get; set; }  = true;
+        bool IListView.ShouldDisposeViews { get => ShouldDisposeView; }
     }
 }

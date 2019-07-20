@@ -1,3 +1,4 @@
+using System;
 using UIKit;
 
 namespace HotUI.iOS.Controls
@@ -9,6 +10,7 @@ namespace HotUI.iOS.Controls
 
         public HUITableViewCell(UITableViewCellStyle style, string reuseIdentifier) : base(style, reuseIdentifier)
         {
+
         }
 
         public override void LayoutSubviews()
@@ -20,13 +22,14 @@ namespace HotUI.iOS.Controls
             _currentContent.Frame = ContentView.Bounds;
         }
 
-        public void SetView(View view)
+        public void SetView(View view, bool shouldDispose)
         {
             if (_currentView != null && !_currentView.IsDisposed)
             {
                 view = view.Diff(_currentView);
             }
-            _currentView?.Dispose();
+            if(shouldDispose)
+                _currentView?.Dispose();
             _currentView = view;
             var newView = view.ToView();
             if (_currentContent != newView)
@@ -36,6 +39,10 @@ namespace HotUI.iOS.Controls
                 return;
             if (_currentContent.Superview != ContentView)
                 ContentView.Add(_currentContent);
+            else
+            {
+                Console.WriteLine("Hmmm");
+            }
         }
     }
 }
