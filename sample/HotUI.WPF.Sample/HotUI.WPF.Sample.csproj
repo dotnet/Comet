@@ -103,6 +103,10 @@
       <Project>{bf15264b-d7c7-4f09-b13b-487d60d649bd}</Project>
       <Name>HotUI.Skia</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\src\HotUI.WPF\HotUI.WPF.csproj">
+      <Project>{f8ba5de0-aec0-4423-b036-5f9157e939d0}</Project>
+      <Name>HotUI.WPF</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\src\HotUI\HotUI.csproj">
       <Project>{1817646e-e71e-48cf-80a4-3030ef870d61}</Project>
       <Name>HotUI</Name>

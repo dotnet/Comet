@@ -81,7 +81,7 @@ stages:
   - job: BuildHotUIWindows
     displayName: Build HoTUI Windows
     pool:
-      name: Hosted VS2017
+      vmImage: 'windows-2019'
       demands:
       - MSBuild
     
@@ -95,12 +95,6 @@ stages:
       displayName: 'NuGet restore'
       inputs:
         restoreSolution: build/HotUI-Windows.sln
-
-    # - task: MSBuild@1
-    #   displayName: 'Build HotUI'
-    #   inputs:
-    #     solution: 'src/HotUI/HotUI.csproj'
-    #     configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
       displayName: 'Build HotUI.UWP'
@@ -126,43 +120,44 @@ stages:
         solution: 'src/HotUI.Skia.WPF/HotUI.Skia.WPF.csproj'
         configuration: '$(BuildConfiguration)'
 
-# - stage: RunTests
-#   jobs:
-#   - job: BuildHotUI
-#     displayName: Build HoTUI Source
-#     pool:
-#       name: Hosted VS2017
-#       demands:
-#       - msbuild
-#       - vstest
+- stage: RunTests
+  jobs:
+  - job: RunHOTUITests
+    displayName: Run HoTUI Tests
+    pool:
+      vmImage: 'windows-2019'
+      demands:
+      - MSBuild
+      - vstest
 
-#     steps:
-#     - task: NuGetToolInstaller@1
-#       displayName: Use Nuget 5.0.2
-#       inputs:
-#         versionSpec: '5.0.2'
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: Use Nuget 5.0.2
+      inputs:
+        versionSpec: '5.0.2'
 
-#     - task: NuGetCommand@2
-#       displayName: 'NuGet restore'
-#       inputs:
-#         restoreSolution: HotUI.sln
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: build/HotUI-Tests.sln
 
-#     - task: MSBuild@1
-#       displayName: 'Build Tests'
-#       inputs:
-#         solution: 'tests/HotUI.Tests/HotUI.Tests.csproj'
-#         configuration: '$(BuildConfiguration)'
+    - task: MSBuild@1
+      displayName: 'Build Tests'
+      inputs:
+        solution: 'tests/HotUI.Tests/HotUI.Tests.csproj'
+        configuration: '$(BuildConfiguration)'
 
-#     - task: VSTest@2
-#       inputs:
-#         testSelector: 'testAssemblies'
-#         testAssemblyVer2: '**\bin\$(BuildConfiguration)\**\*test*.dll
-#           !**\obj\**
-#           **\*UnitTests.dll
-#           !**\*TestAdapter.dll
-#           !**\xunit.runner.visualstudio.testadapter.dll
-#           !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll'
-#         searchFolder: '$(System.DefaultWorkingDirectory)\tests\HotUI.Tests'
+    - task: VSTest@2
+      inputs:
+        testSelector: 'testAssemblies'
+        testAssemblyVer2: |
+          **\bin\$(BuildConfiguration)\netcoreapp2.1\HotUI.Tests.dll
+          !**\obj\**
+          !**\xunit.runner.visualstudio.testadapter.dll
+          !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
+        searchFolder: '$(System.DefaultWorkingDirectory)'
+        codeCoverageEnabled: true
+        otherConsoleOptions: '/InIsolation'
 
 - stage: BuildSamples
   jobs:
@@ -243,13 +238,10 @@ stages:
   - job: BuildHotUISamplesWindows
     displayName: Build HoTUI UWP and WPF Samples
     pool:
-      name: Hosted VS2017
+      vmImage: 'windows-2019'
       demands:
       - MSBuild
     steps:
-    # - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
-    #   displayName: 'Select the Xamarin SDK version'
-
     - task: NuGetToolInstaller@1
       displayName: Use Nuget 5.0.2
       inputs:
@@ -265,9 +257,11 @@ stages:
       inputs:
         solution: 'sample/HotUI.UWP.Sample/HotUI.UWP.Sample.csproj'
         configuration: '$(BuildConfiguration)'
+        msbuildArguments: '/p:AppxPackageSigningEnabled=false'
 
     - task: MSBuild@1
       displayName: 'Build WPF Sample'
       inputs:
         solution: 'sample/HotUI.WPF.Sample/HotUI.WPF.Sample.csproj'
         configuration: '$(BuildConfiguration)'
+        msbuildArguments: '/p:AppxPackageSigningEnabled=false'

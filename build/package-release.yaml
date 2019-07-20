@@ -1,0 +1,121 @@
+stages:
+- stage: BuildSource
+  jobs:
+  - job: BuildHotUIMac
+    displayName: Build HoTUI Mac
+    pool:
+      name: Hosted macOS
+      vmImage: 'macOS 10.14'
+      demands:
+      - MSBuild
+      - Xamarin.Android
+      - xcode
+      - Xamarin.iOS
+      - msbuild
+
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: Use Nuget 5.0.2
+      inputs:
+        versionSpec: '5.0.2'
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: build/HotUI-Mac.sln
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI'
+      inputs:
+        solution: 'src/HotUI/HotUI.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build Xamarin.Forms.Loader.csproj'
+      inputs:
+        solution: 'src/Xamarin.Forms.Loader/Xamarin.Forms.Loader.csproj.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Android'
+      inputs:
+        solution: 'src/HotUI.Android/HotUI.Android.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.iOS'
+      inputs:
+        solution: 'src/HotUI.iOS/HotUI.iOS.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Mac'
+      inputs:
+        solution: 'src/HotUI.Mac/HotUI.Mac.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia'
+      inputs:
+        solution: 'src/HotUI.Skia/HotUI.Skia.csproj'
+        configuration: '$(BuildConfiguration)'
+    
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.Android'
+      inputs:
+        solution: 'src/HotUI.Skia.Android/HotUI.Skia..Android.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.iOS'
+      inputs:
+        solution: 'src/HotUI.Skia.iOS/HotUI.Skia.iOS.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.Mac'
+      inputs:
+        solution: 'src/HotUI.Skia.Mac/HotUI.Skia.Mac.csproj'
+        configuration: '$(BuildConfiguration)'
+
+  - job: BuildHotUIWindows
+    displayName: Build HoTUI Windows
+    pool:
+      vmImage: 'windows-2019'
+      demands:
+      - MSBuild
+    
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: Use Nuget 5.0.2
+      inputs:
+        versionSpec: '5.0.2'
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: build/HotUI-Windows.sln
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.UWP'
+      inputs:
+        solution: 'src/HotUI.UWP/HotUI.UWP.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.WPF'
+      inputs:
+        solution: 'src/HotUI.WPF/HotUI.WPF.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.UWP'
+      inputs:
+        solution: 'src/HotUI.Skia.UWP/HotUI.Skia.UWP.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.WPF'
+      inputs:
+        solution: 'src/HotUI.Skia.WPF/HotUI.Skia.WPF.csproj'
+        configuration: '$(BuildConfiguration)'
