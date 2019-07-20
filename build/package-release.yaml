@@ -326,7 +326,7 @@ stages:
 
     - task: GitHubRelease@0
       inputs:
-        gitHubConnection: 'Sweekriti91'
+        gitHubConnection: 'Clancey'
         repositoryName: 'Clancey/HotUI'
         action: 'create'
         target: '$(Build.SourceVersion)'
@@ -338,3 +338,5 @@ stages:
           $(System.ArtifactsDirectory)/**/drop_nuget_windows/*.nupkg
         addChangeLog: false
         isDraft: true
+
+    
