@@ -32,8 +32,10 @@ namespace HotUI.iOS.Controls
             if (_currentContent != newView)
                 _currentContent?.RemoveFromSuperview();
             _currentContent = newView;
-            if (_currentContent.Superview != ContentView)
+            if (_currentContent != null && _currentContent.Superview != ContentView)
                 ContentView.Add(_currentContent);
+            else if (_currentContent == null)
+                Logger.Debug("xxx");
         }
     }
 }

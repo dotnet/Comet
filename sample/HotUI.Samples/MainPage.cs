@@ -18,6 +18,7 @@ namespace HotUI.Samples {
             new MenuItem("ClipSample_AspectFill", ()=> new ClipSample_AspectFill()),
             new MenuItem("ClipSample_Fill", ()=> new ClipSample_Fill()),
             new MenuItem("ClipSample_None", ()=> new ClipSample_None()),
+            new MenuItem("GridSample1", ()=> new GridSample1()),
             new MenuItem("SecureFieldSample1", ()=> new SecureFieldSample1()),
             new MenuItem("SecureFieldSample2", ()=> new SecureFieldSample2()),
             new MenuItem("SecureFieldSample3", ()=> new SecureFieldSample3()),
