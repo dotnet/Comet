@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29001.49
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotUI", "..\..\src\HotUI\HotUI.csproj", "{FACFD61B-9CDE-44F7-A25B-92F3438B089A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HotUI.Tests", "..\..\tests\HotUI.Tests\HotUI.Tests.csproj", "{4DB081F1-174A-40F6-8C6D-E59D72B5CA2E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FACFD61B-9CDE-44F7-A25B-92F3438B089A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FACFD61B-9CDE-44F7-A25B-92F3438B089A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FACFD61B-9CDE-44F7-A25B-92F3438B089A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FACFD61B-9CDE-44F7-A25B-92F3438B089A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4DB081F1-174A-40F6-8C6D-E59D72B5CA2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4DB081F1-174A-40F6-8C6D-E59D72B5CA2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4DB081F1-174A-40F6-8C6D-E59D72B5CA2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4DB081F1-174A-40F6-8C6D-E59D72B5CA2E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5BE226E5-3283-42EA-B36D-68AE06D9DC88}
+	EndGlobalSection
+EndGlobal
