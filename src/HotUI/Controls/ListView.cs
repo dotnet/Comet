@@ -113,14 +113,10 @@ namespace HotUI {
 
         IEnumerator<View> IEnumerable<View>.GetEnumerator() => views.GetEnumerator();
 
-        public override void Add(View view)
-        {
-            throw new NotSupportedException();
-        }
-
         protected virtual View ViewFor(int section,int row) => ViewFor(row);
         protected virtual View ViewFor(int index) => views[index];
 
+        public Action<object> ItemSelected { get; set; }
         protected virtual void OnSelected(int section, int index) => OnSelected(index);
         protected virtual void OnSelected (int index)
 		{
