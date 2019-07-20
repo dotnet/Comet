@@ -84,7 +84,6 @@ stages:
       name: Hosted VS2017
       demands:
       - MSBuild
-      - Xamarin.Android
     
     steps:
     - task: NuGetToolInstaller@1
@@ -113,6 +112,18 @@ stages:
       displayName: 'Build HotUI.WPF'
       inputs:
         solution: 'src/HotUI.WPF/HotUI.WPF.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.UWP'
+      inputs:
+        solution: 'src/HotUI.Skia.UWP/HotUI.Skia.UWP.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.WPF'
+      inputs:
+        solution: 'src/HotUI.Skia.WPF/HotUI.Skia.WPF.csproj'
         configuration: '$(BuildConfiguration)'
 
 # - stage: RunTests
@@ -155,7 +166,7 @@ stages:
 
 - stage: BuildSamples
   jobs:
-  - job: BuildSamplesAndroidMac
+  - job: BuildSamplesAndroid
     displayName: Build HoTUI Android Samples
     pool:
       name: Hosted macOS
@@ -227,4 +238,36 @@ stages:
       displayName: 'Build Mac'
       inputs:
         solution: 'sample/HotUI.Mac.Sample/HotUI.Mac.Sample.csproj'
+        configuration: '$(BuildConfiguration)'
+
+  - job: BuildHotUISamplesWindows
+    displayName: Build HoTUI UWP and WPF Samples
+    pool:
+      name: Hosted VS2017
+      demands:
+      - MSBuild
+    steps:
+    # - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
+    #   displayName: 'Select the Xamarin SDK version'
+
+    - task: NuGetToolInstaller@1
+      displayName: Use Nuget 5.0.2
+      inputs:
+        versionSpec: '5.0.2'
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: build/HotUI-Windows.sln
+    
+    - task: MSBuild@1
+      displayName: 'Build UWP Sample'
+      inputs:
+        solution: 'sample/HotUI.UWP.Sample/HotUI.UWP.Sample.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build WPF Sample'
+      inputs:
+        solution: 'sample/HotUI.WPF.Sample/HotUI.WPF.Sample.csproj'
         configuration: '$(BuildConfiguration)'
