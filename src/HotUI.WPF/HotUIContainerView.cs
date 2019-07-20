@@ -1,10 +1,11 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 using HotUI.WPF.Handlers;
+using WGrid = System.Windows.Controls.Grid;
 
 namespace HotUI.WPF
 {
-    public class HotUIContainerView : Grid
+    public class HotUIContainerView : WGrid
     {
         private View _view;
         private UIElement _nativeView;
@@ -48,10 +49,10 @@ namespace HotUI.WPF
 
             if (_nativeView != null)
             {
-                Grid.SetRow(_nativeView, 0);
-                Grid.SetColumn(_nativeView, 0);
-                Grid.SetColumnSpan(_nativeView, 1);
-                Grid.SetRowSpan(_nativeView, 1);
+                SetRow(_nativeView, 0);
+                SetColumn(_nativeView, 0);
+                SetColumnSpan(_nativeView, 1);
+                SetRowSpan(_nativeView, 1);
 
                 Children.Add(_nativeView);
             }

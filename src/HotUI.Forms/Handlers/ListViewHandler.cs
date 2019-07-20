@@ -26,10 +26,6 @@ namespace HotUI.Forms.Handlers
 
                 currentView = (BindingContext as Tuple<object, HotUI.View>)?.Item2;
 
-                var parent = (this.Parent as ListViewHandler)?.listView;
-                if (parent != null)
-                    currentView.Parent = parent;
-
                 //TODO; implement something smart here to re-use the old view if possible.
                 //View builders really are perfect for this. Maybe cell stuff should be wrapped in ViewBuilder
                 if (View is IViewHandler iview)
@@ -37,16 +33,6 @@ namespace HotUI.Forms.Handlers
                     currentView.ViewHandler = iview;
                 }
                 View = currentView.ToForms();
-            }
-            protected override void OnParentSet()
-            {
-                base.OnParentSet();
-                if (currentView == null)
-                    return;
-
-                var parent = (this.Parent as ListViewHandler)?.listView;
-                if (parent != null)
-                    currentView.Parent = parent;
             }
         }
 
@@ -59,7 +45,7 @@ namespace HotUI.Forms.Handlers
         }
 
         private void ListViewHandler_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
-            => listView?.OnSelected((e.SelectedItem as Tuple<object, HotUI.View>)?.Item1);
+            => listView?.OnSelected(0,(e.SelectedItem as Tuple<int, HotUI.View>).Item1);
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
         public Xamarin.Forms.View View => this;
@@ -76,7 +62,7 @@ namespace HotUI.Forms.Handlers
             // Do nothing
         }
 
-        protected HListView listView;
+        protected IListView listView;
         public void Remove(HView view)
         {
             //throw new NotImplementedException ();
@@ -100,23 +86,23 @@ namespace HotUI.Forms.Handlers
 
         class HotListWrapper : IList, INotifyCollectionChanged
         {
-            private readonly HListView list;
+            private readonly IListView list;
 
-            public HotListWrapper(HListView list)
+            public HotListWrapper(IListView list)
             {
                 this.list = list;
             }
             public object this[int index]
             {
-                get => new Tuple<object, HotUI.View>(list.List[index], list.ViewFor(index));
+                get => new Tuple<int, HotUI.View>(index, list.ViewFor(0,index));
                 set => throw new NotImplementedException();
             }
 
-            public bool IsFixedSize => list.List.IsFixedSize;
+            public bool IsFixedSize => true;
 
             public bool IsReadOnly => true;
 
-            public int Count => list.List.Count;
+            public int Count => list.Rows(0);
 
             public bool IsSynchronized => false;
 
@@ -156,7 +142,8 @@ namespace HotUI.Forms.Handlers
 
             public int IndexOf(object value)
             {
-                return -1;
+                var item = value as Tuple<int, HotUI.View>;
+                return item.Item1;
             }
 
             public void Insert(int index, object value)

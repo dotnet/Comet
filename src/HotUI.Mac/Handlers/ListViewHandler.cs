@@ -52,7 +52,7 @@ namespace HotUI.Mac.Handlers
 			listView = null;
 			TableView.ReloadData ();
 		}
-		ListView listView;
+		IListView listView;
 		public void SetView (View view)
 		{
 			listView = view as ListView;
@@ -74,21 +74,24 @@ namespace HotUI.Mac.Handlers
 		public NSView GetViewForItem (NSTableView tableView, NSTableColumn tableColumn, nint row)
 		{
 			var cell = tableView.MakeView (cellIdentifier, this) as ViewCell ?? new ViewCell ();
-            var v = listView?.ViewFor((int)row);
-			v.Parent = listView;
+
+            //TODO: Account for Sections
+            var v = listView?.ViewFor(0,(int)row);
 			cell.SetView (v);
 			return cell;
 		}
 
 		[Export ("tableView:objectValueForTableColumn:row:")]
 		public Foundation.NSObject GetObjectValue (NSTableView tableView, NSTableColumn tableColumn, nint row)
-		{
-			var item = listView?.List [(int)row];
-			return new NSString (item?.ToString ());
-		}
+        {
+            //TODO: Account for Sections
+            var v = listView?.ViewFor(0, (int)row);
+            return new NSString(v.ToString());
+        }
 
-		[Export ("numberOfRowsInTableView:")]
-		public nint GetRowCount (NSTableView tableView) => listView?.List?.Count ?? 0;
+        //TODO: Account for Sections
+        [Export("numberOfRowsInTableView:")]
+        public nint GetRowCount(NSTableView tableView) => listView?.Rows(0) ?? 0;
 
 		[Export ("tableViewSelectionDidChange:")]
 		public void SelectionDidChange (Foundation.NSNotification notification)
@@ -97,7 +100,8 @@ namespace HotUI.Mac.Handlers
 			if (row < 0)
 				return;
 			TableView.DeselectAll (this);
-			listView?.OnSelected ((int)row);
+            //TODO: Account for Sections
+            listView?.OnSelected (0,(int)row);
 		}
 
 		[Export ("tableView:didAddRowView:forRow:")]

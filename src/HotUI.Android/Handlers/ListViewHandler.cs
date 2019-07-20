@@ -19,12 +19,14 @@ namespace HotUI.Android.Handlers
 
         private void ListViewHandler_ItemClick(object sender, ItemClickEventArgs e)
         {
-            ((ListViewAdapter) this.Adapter).ListView?.OnSelected(e.Position);
+            //TODO: Account for Section
+            ((ListViewAdapter) this.Adapter).ListView?.OnSelected(0,e.Position);
         }
 
         private void ListViewHandler_ItemSelected(object sender, ItemSelectedEventArgs e)
         {
-            ((ListViewAdapter) this.Adapter).ListView?.OnSelected(e.Position);
+            //TODO: Account for Section
+            ((ListViewAdapter) this.Adapter).ListView?.OnSelected(0,e.Position);
         }
         
         public AView View => this;
@@ -56,17 +58,20 @@ namespace HotUI.Android.Handlers
 
         class ListViewAdapter : BaseAdapter<object>
         {
-            public ListView ListView { get; set; }
-            public override object this[int position] => ListView?.List?[position];
+            public IListView ListView { get; set; }
+            //TODO: Account for Section
+            public override object this[int position] => ListView?.ViewFor(0,position);
 
-            public override int Count => ListView?.List?.Count ?? 0;
+            //TODO: Account for Section
+            public override int Count => ListView?.Rows(0) ?? 0;
 
             public override long GetItemId(int position) => position;
 
             public override AView GetView(int position, AView convertView, ViewGroup parent)
             {
-                var view = ListView?.ViewFor(position);
-                var cell = view.ToView();
+                //TODO: Account for Section
+                var view = ListView?.ViewFor(0,position);
+                var cell = view?.ToView();
                 return cell;
             }
         }
