@@ -1,4 +1,5 @@
 ﻿using System;
+using HotUI.Layout;
 
 // ReSharper disable once CheckNamespace
 namespace HotUI
@@ -55,6 +56,21 @@ namespace HotUI
         public static T Frame<T>(this T view, float? width = null, float? height = null, Alignment alignment = null) where T : View
         {
             view.FrameConstraints = new FrameConstraints(width, height, alignment);
+            return view;
+        }
+        
+        public static T Cell<T>(
+            this T view,             
+            int row = 0,
+            int column = 0,
+            int rowSpan = 1,
+            int colSpan = 1,
+            float weightX = 1,
+            float weightY = 1,
+            float positionX = 0,
+            float positionY = 0) where T : View
+        {
+            view.LayoutConstraints = new GridConstraints(row, column, rowSpan, colSpan, weightX, weightY, positionX, positionY);
             return view;
         }
     }

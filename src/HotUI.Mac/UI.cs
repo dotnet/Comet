@@ -37,6 +37,7 @@ namespace HotUI.Mac
             Registrar.Handlers.Register<VStack, VStackHandler>();
             Registrar.Handlers.Register<ZStack, ZStackHandler>();
             Registrar.Handlers.Register<Spacer, SpacerHandler>();
+            Registrar.Handlers.Register<Grid, GridHandler>();
 
             // Device Features
             Device.PerformInvokeOnMainThread = _invoker.BeginInvokeOnMainThread;
