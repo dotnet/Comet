@@ -45,7 +45,7 @@ namespace HotUI.Layout
                 var maxRow = 0;
                 var maxColumn = 0;
                 
-                for (var index = 0; index < _constraints.Count; index++)
+                for (var index = 0; index < layout.Count; index++)
                 {
                     var view = layout[index];
                     var constraint = view.LayoutConstraints as GridConstraints ?? GridConstraints.Default;
@@ -55,10 +55,10 @@ namespace HotUI.Layout
                     maxColumn = Math.Max(maxColumn, constraint.Column + constraint.ColumnSpan - 1);
                 }
                 
-                while (maxRow > _definedRows.Count)
+                while (maxRow >= _definedRows.Count)
                     _definedRows.Add(DefaultRowHeight);
                 
-                while (maxColumn > _definedColumns.Count)
+                while (maxColumn >= _definedColumns.Count)
                     _definedColumns.Add(DefaultColumnWidth);
             }
             
