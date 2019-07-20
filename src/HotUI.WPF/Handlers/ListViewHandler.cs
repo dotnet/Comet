@@ -8,7 +8,7 @@ namespace HotUI.WPF.Handlers
     {
         public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>()
         {
-            [nameof(HotUI.ListView.List)] = MapListProperty
+            ["List)"] = MapListProperty
         };
 
         public ListViewHandler() : base(Mapper)
@@ -16,7 +16,7 @@ namespace HotUI.WPF.Handlers
 
         }
 
-        public ListView ListView => VirtualView;
+        public IListView ListView => VirtualView;
 
         protected override WPFListView CreateView()
         {
@@ -30,12 +30,25 @@ namespace HotUI.WPF.Handlers
             listView.SelectionChanged -= HandleSelectionChanged;
         }
 
-        public static void MapListProperty(IViewHandler viewHandler, ListView virtualView)
+        public static void MapListProperty(IViewHandler viewHandler, IListView virtualView)
         {
             var nativeView = (WPFListView) viewHandler.NativeView;
-            foreach (var item in virtualView.List)
+            var sections = virtualView?.Sections() ?? 0;
+            for(var s = 0; s < sections; s++)
             {
-                nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler) viewHandler, item));
+                var section = virtualView?.HeaderFor(s);
+                if(section != null)
+                    nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler)viewHandler, section));
+
+                var rows = virtualView.Rows(s);
+                for(var r = 0; r < rows; r++)
+                {
+                    var v = virtualView.ViewFor(s, r);
+                    nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler)viewHandler, v));
+                }
+                var footer = virtualView?.FooterFor(s);
+                if(footer != null)
+                    nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler)viewHandler, footer));
             }
         }
 
@@ -46,12 +59,8 @@ namespace HotUI.WPF.Handlers
 
         public class ListViewHandlerItem : ListViewItem
         {
-            public ListViewHandlerItem(ListViewHandler handler, object value)
+            public ListViewHandlerItem(ListViewHandler handler,View view)
             {
-                var listView = handler.TypedNativeView;
-                var view = handler.ListView?.CellCreator?.Invoke(value);
-                if (view != null)
-                    view.Parent = handler.ListView;
                 Content = view?.ToView();
             }
         }
