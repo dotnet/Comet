@@ -265,9 +265,11 @@ stages:
       inputs:
         solution: 'sample/HotUI.UWP.Sample/HotUI.UWP.Sample.csproj'
         configuration: '$(BuildConfiguration)'
+        msbuildArguments: '/p:AppxPackageSigningEnabled=false'
 
     - task: MSBuild@1
       displayName: 'Build WPF Sample'
       inputs:
         solution: 'sample/HotUI.WPF.Sample/HotUI.WPF.Sample.csproj'
         configuration: '$(BuildConfiguration)'
+        msbuildArguments: '/p:AppxPackageSigningEnabled=false'
