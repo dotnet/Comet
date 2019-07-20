@@ -43,7 +43,7 @@ namespace HotUI.Samples.Skia
                     },
                 //},
                 new BindableFingerPaint(
-                    strokeSize:_strokeSize, 
+                    strokeSize:_strokeSize,
                     strokeColor:_strokeColor).ToView().Frame(height:400)
             },
         };

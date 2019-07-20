@@ -1,0 +1,342 @@
+stages:
+- stage: BuildPackSource
+  jobs:
+  - job: BuildHotUIMac
+    displayName: Build HoTUI Mac
+    pool:
+      name: Hosted macOS
+      vmImage: 'macOS 10.14'
+      demands:
+      - MSBuild
+      - Xamarin.Android
+      - xcode
+      - Xamarin.iOS
+      - msbuild
+
+    steps:
+    - task: Bash@3
+      displayName: 'Version Script'
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo '$(Build_BuildID)' $BUILD_BUILDID
+                  BUILDNUMBER=$BUILD_BUILDID
+                  VERSION=1.0.$BUILDNUMBER
+                  echo 'VERSION ' $VERSION
+                  
+                  #if ! [ $BRANCH = master ]; then
+                  #   VERSION=1.0.$BUILDNUMBER
+                  #    echo "##vso[build.updatebuildnumber]$VERSION"
+                  #fi;
+                  
+                  echo "##vso[task.setvariable variable=Version]$VERSION"
+
+    - task: NuGetToolInstaller@1
+      displayName: Use Nuget 5.0.2
+      inputs:
+        versionSpec: '5.0.2'
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: build/HotUI-Mac.sln
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI'
+      inputs:
+        solution: 'src/HotUI/HotUI.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build Xamarin.Forms.Loader.csproj'
+      inputs:
+        solution: 'src/Xamarin.Forms.Loader/Xamarin.Forms.Loader.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Android'
+      inputs:
+        solution: 'src/HotUI.Android/HotUI.Android.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.iOS'
+      inputs:
+        solution: 'src/HotUI.iOS/HotUI.iOS.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Mac'
+      inputs:
+        solution: 'src/HotUI.Mac/HotUI.Mac.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia'
+      inputs:
+        solution: 'src/HotUI.Skia/HotUI.Skia.csproj'
+        configuration: '$(BuildConfiguration)'
+    
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.Android'
+      inputs:
+        solution: 'src/HotUI.Skia.Android/HotUI.Skia.Android.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.iOS'
+      inputs:
+        solution: 'src/HotUI.Skia.iOS/HotUI.Skia.iOS.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.Mac'
+      inputs:
+        solution: 'src/HotUI.Skia.Mac/HotUI.Skia.Mac.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack HotUI'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI/HotUI.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack Xamarin.Forms.Loader'
+      inputs:
+        command: pack
+        packagesToPack: 'src/Xamarin.Forms.Loader/Xamarin.Forms.Loader.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: NuGetCommand@2
+      displayName: 'dotnet pack HotUI.Android'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.Android/HotUI.Android.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: NuGetCommand@2
+      displayName: 'dotnet pack HotUI.iOS'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.iOS/HotUI.iOS.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: NuGetCommand@2
+      displayName: 'dotnet pack HotUI.Mac'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.Mac/HotUI.Mac.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack HotUI.Skia'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.Skia/HotUI.Skia.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: NuGetCommand@2
+      displayName: 'dotnet pack HotUI.Skia.Android'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.Skia.Android/HotUI.Skia.Android.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: NuGetCommand@2
+      displayName: 'dotnet pack HotUI.Skia.iOS'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.Skia.iOS/HotUI.Skia.iOS.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: NuGetCommand@2
+      displayName: 'dotnet pack HotUI.Skia.Mac'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.Skia.Mac/HotUI.Skia.Mac.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'
+        Contents: '**\*.nupkg'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop_nuget_mac'
+        publishLocation: 'Container'
+
+  - job: BuildHotUIWindows
+    displayName: Build HoTUI Windows
+    pool:
+      vmImage: 'windows-2019'
+      demands:
+      - MSBuild
+    
+    steps:
+    - task: NuGetToolInstaller@1
+      displayName: Use Nuget 5.0.2
+      inputs:
+        versionSpec: '5.0.2'
+
+    - task: NuGetCommand@2
+      displayName: 'NuGet restore'
+      inputs:
+        restoreSolution: build/HotUI-Windows.sln
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.UWP'
+      inputs:
+        solution: 'src/HotUI.UWP/HotUI.UWP.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.WPF'
+      inputs:
+        solution: 'src/HotUI.WPF/HotUI.WPF.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.UWP'
+      inputs:
+        solution: 'src/HotUI.Skia.UWP/HotUI.Skia.UWP.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: MSBuild@1
+      displayName: 'Build HotUI.Skia.WPF'
+      inputs:
+        solution: 'src/HotUI.Skia.WPF/HotUI.Skia.WPF.csproj'
+        configuration: '$(BuildConfiguration)'
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack HotUI'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI/HotUI.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack HotUI.UWP'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.UWP/HotUI.UWP.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack HotUI.WPF'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.WPF/HotUI.WPF.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack HotUI.Skia'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.Skia/HotUI.Skia.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack HotUI.Skia.UWP'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.Skia.UWP/HotUI.Skia.UWP.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: DotNetCoreCLI@2
+      displayName: 'dotnet pack HotUI.Skia.WPF'
+      inputs:
+        command: pack
+        packagesToPack: 'src/HotUI.Skia.WPF/HotUI.Skia.WPF.csproj'
+        versioningScheme: byEnvVar
+        versionEnvVar: VERSION
+
+    - task: CopyFiles@2
+      inputs:
+        SourceFolder: '$(Build.SourcesDirectory)'
+        Contents: '**\*.nupkg'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop_nuget_windows'
+        publishLocation: 'Container'
+
+- stage: PublishNuget
+  jobs:
+  - job: PublishNuget
+    pool:
+        name: Hosted VS2017
+        demans: msbuild
+
+    steps:
+    - script: echo Publish Nuget Github the code!
+
+    - task: Bash@3
+      displayName: 'Version Script'
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo '$(Build_BuildID)' $BUILD_BUILDID
+                  BUILDNUMBER=$BUILD_BUILDID
+                  VERSION=1.0.$BUILDNUMBER
+                  echo 'VERSION ' $VERSION
+                  
+                  #if ! [ $BRANCH = master ]; then
+                  #   VERSION=1.0.$BUILDNUMBER
+                  #    echo "##vso[build.updatebuildnumber]$VERSION"
+                  #fi;
+                  
+                  echo "##vso[task.setvariable variable=Version]$VERSION"
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download mac artifacts'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'drop_nuget_mac'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - task: DownloadBuildArtifacts@0
+      displayName: 'Download windows artifacts'
+      inputs:
+        buildType: 'current'
+        downloadType: 'single'
+        artifactName: 'drop_nuget_windows'
+        downloadPath: '$(System.ArtifactsDirectory)'
+
+    - task: GitHubRelease@0
+      inputs:
+        gitHubConnection: 'GitHubRelease'
+        repositoryName: 'Clancey/HotUI'
+        action: 'create'
+        target: '$(Build.SourceVersion)'
+        tagSource: 'manual'
+        tag: 'v$(VERSION)-beta'
+        title: 'v$(VERSION)-beta'
+        assets: |
+          $(System.ArtifactsDirectory)/**/drop_nuget_mac/*.nupkg
+          $(System.ArtifactsDirectory)/**/drop_nuget_windows/*.nupkg
+        addChangeLog: false
+        isDraft: true
+
+    
