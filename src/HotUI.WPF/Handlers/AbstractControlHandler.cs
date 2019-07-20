@@ -9,23 +9,14 @@ namespace HotUI.WPF.Handlers
         where TVirtualView : View
         where TNativeView : UIElement
     {
-        private PropertyMapper<TVirtualView> _mapper;
+        private readonly PropertyMapper<TVirtualView> _mapper;
         private TVirtualView _virtualView;
         private TNativeView _nativeView;
         private HUIContainerView _containerView;
 
         public EventHandler ViewChanged { get; set; }
 
-        protected AbstractControlHandler()
-        {
-        }
-
         protected AbstractControlHandler(PropertyMapper<TVirtualView> mapper)
-        {
-            _mapper = mapper;
-        }
-
-        protected void SetMapper(PropertyMapper<TVirtualView> mapper)
         {
             _mapper = mapper;
         }
@@ -68,7 +59,7 @@ namespace HotUI.WPF.Handlers
             }
         }
 
-        public virtual SizeF Measure(SizeF availableSize)
+        public SizeF Measure(SizeF availableSize)
         {
             _nativeView.Measure(availableSize.ToSize());
             return _nativeView.DesiredSize.ToSizeF();
@@ -96,12 +87,12 @@ namespace HotUI.WPF.Handlers
             _virtualView = view as TVirtualView;
             if (_nativeView == null)
                 _nativeView = CreateView();
-            _mapper?.UpdateProperties(this, _virtualView);
+            _mapper.UpdateProperties(this, _virtualView);
         }
 
         public virtual void UpdateValue(string property, object value)
         {
-            _mapper?.UpdateProperty(this, _virtualView, property);
+            _mapper.UpdateProperty(this, _virtualView, property);
         }
 
         #region IDisposable Support
