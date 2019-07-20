@@ -326,7 +326,7 @@ stages:
 
     - task: GitHubRelease@0
       inputs:
-        gitHubConnection: 'Clancey'
+        gitHubConnection: 'GitHubRelease'
         repositoryName: 'Clancey/HotUI'
         action: 'create'
         target: '$(Build.SourceVersion)'
