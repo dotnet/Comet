@@ -81,7 +81,7 @@ stages:
   - job: BuildHotUIWindows
     displayName: Build HoTUI Windows
     pool:
-      name: Hosted VS2017
+      vmImage: 'windows-2019'
       demands:
       - MSBuild
     
@@ -243,7 +243,7 @@ stages:
   - job: BuildHotUISamplesWindows
     displayName: Build HoTUI UWP and WPF Samples
     pool:
-      name: Hosted VS2017
+      vmImage: 'windows-2019'
       demands:
       - MSBuild
     steps:
