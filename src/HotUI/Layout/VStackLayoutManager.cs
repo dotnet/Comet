@@ -16,6 +16,11 @@ namespace HotUI.Layout
             _spacing = spacing ?? 4;
         }
 
+        public void Invalidate()
+        {
+            
+        }
+
         public SizeF Measure(AbstractLayout layout, SizeF available)
         {
             var index = 0;
@@ -32,6 +37,12 @@ namespace HotUI.Layout
                 {
                     spacerCount++;
                     isSpacer = true;
+                    
+                    if (!view.MeasurementValid)
+                    {
+                        view.MeasuredSize = new SizeF(-1, -1);
+                        view.MeasurementValid = true;
+                    }
                 }
                 else
                 {

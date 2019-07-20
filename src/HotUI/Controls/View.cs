@@ -337,6 +337,13 @@ namespace HotUI
             get => frameConstraints;
             internal set => this.SetValue(State, ref frameConstraints, value, ResetPropertyString);
         }
+        
+        object layoutConstraints;
+        public object LayoutConstraints
+        {
+            get => layoutConstraints;
+            internal set => this.SetValue(State, ref layoutConstraints, value, ResetPropertyString);
+        }
 
         private RectangleF frame;
         public virtual RectangleF Frame
@@ -347,11 +354,8 @@ namespace HotUI
                 if (!frame.Equals(value))
                 {
                     frame = value;
-
-                    if (BuiltView != null)
-                        BuiltView.Frame = value;
-                    else
-                        ViewHandler?.SetFrame(value);
+                    ViewHandler?.SetFrame(value);
+                    RequestLayout();
                 }
             }
         }
@@ -408,6 +412,82 @@ namespace HotUI
                 return new SizeF(width ?? measuredSize.Width, height ?? measuredSize.Height);
 
             return measuredSize;
+        }
+        
+        protected virtual void RequestLayout()
+        {
+            var width = FrameConstraints?.Width ?? Frame.Width;
+            var height = FrameConstraints?.Height ?? Frame.Height;
+
+            if (width > 0 && height > 0)
+            {
+                var padding = BuiltView?.GetPadding();
+                if (padding != null)
+                {
+                    width -= ((Thickness) padding).HorizontalThickness;
+                    height -= ((Thickness) padding).VerticalThickness;
+                }
+                
+                if (!MeasurementValid)
+                {
+                    MeasuredSize = Measure(new SizeF(width, height));
+                    MeasurementValid = true;
+                }
+
+                Layout();
+            }
+        }
+
+        private void Layout()
+        {
+            var width = Frame.Width;
+            var height = Frame.Height;
+
+            var x = (width - MeasuredSize.Width);
+            var y = (height - MeasuredSize.Height);
+
+            var alignment = FrameConstraints?.Alignment ?? Alignment.Center;
+
+            switch (alignment.Horizontal)
+            {
+                case HorizontalAlignment.Center:
+                    x *= .5f;
+                    break;
+                case HorizontalAlignment.Leading:
+                    x = 0;
+                    break;
+                case HorizontalAlignment.Trailing:
+                    x *= 1;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            switch (alignment.Vertical)
+            {
+                case VerticalAlignment.Center:
+                    y *= .5f;
+                    break;
+                case VerticalAlignment.Bottom:
+                    y *= 1;
+                    break;
+                case VerticalAlignment.Top:
+                    y = 0;
+                    break;
+                case VerticalAlignment.FirstTextBaseline:
+                    throw new NotSupportedException("Not yet supported");
+                case VerticalAlignment.LastTextBaseline:
+                    throw new NotSupportedException("Not yet supported");
+                default:
+                    throw new ArgumentOutOfRangeException();
+            }
+            
+            LayoutSubviews(new RectangleF(Frame.X + x,Frame.Y+y,MeasuredSize.Width,MeasuredSize.Height));
+        }
+
+        public virtual void LayoutSubviews(RectangleF bounds)
+        {
+            BuiltView.Frame = bounds;
         }
     }
 }

@@ -40,6 +40,7 @@ namespace HotUI.iOS
             Registrar.Handlers.Register<HStack, HStackHandler>();
             Registrar.Handlers.Register<VStack, VStackHandler>();
             Registrar.Handlers.Register<ZStack, ZStackHandler>();
+            Registrar.Handlers.Register<Grid, GridHandler>();
             Registrar.Handlers.Register<Spacer, SpacerHandler>();
 
             // Device Features

@@ -18,6 +18,8 @@ namespace HotUI
 		{
 			_layout = layoutManager;
 		}
+
+		public ILayoutManager LayoutManager => _layout;
 		
 		public void Add (View view)
 		{
@@ -26,6 +28,8 @@ namespace HotUI
 			view.Parent = this;
             view.Navigation = Parent as NavigationView ?? Parent?.Navigation;
             _views.Add (view);
+            _layout.Invalidate();
+
 			ChildrenChanged?.Invoke (this, new LayoutEventArgs (_views.Count - 1, 1));
 		}
 
@@ -36,6 +40,7 @@ namespace HotUI
             {
                 var removed = new List<View>(_views);
                 _views.Clear ();
+                _layout.Invalidate();
 				ChildrenRemoved?.Invoke (this, new LayoutEventArgs (0, count, removed));
 			}
 		}
@@ -45,6 +50,8 @@ namespace HotUI
 		public void CopyTo (View [] array, int arrayIndex)
 		{
 			_views.CopyTo (array, arrayIndex);
+			_layout.Invalidate();
+
 			ChildrenAdded?.Invoke (this, new LayoutEventArgs (arrayIndex, array.Length));
 		}
 
@@ -60,6 +67,7 @@ namespace HotUI
 
                 var removed = new List<View> { item };
                 _views.Remove (item);
+                _layout.Invalidate();
 				ChildrenRemoved?.Invoke (this, new LayoutEventArgs (index, 1, removed));
 				return true;
 			}
@@ -85,6 +93,8 @@ namespace HotUI
                 return;
 
 			_views.Insert (index, item);
+			_layout.Invalidate();
+
             item.Parent = this;
             item.Navigation = Parent as NavigationView ?? Parent?.Navigation;
             ChildrenAdded?.Invoke (this, new LayoutEventArgs (index, 1));
@@ -100,6 +110,8 @@ namespace HotUI
 
                 var removed = new List<View> { item };
                 _views.RemoveAt(index);
+                _layout.Invalidate();
+
                 ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1, removed));
             }
         }
@@ -150,77 +162,6 @@ namespace HotUI
 			}
 		}
 		
-		private void RequestLayout()
-        {
-            var width = FrameConstraints?.Width ?? Frame.Width;
-            var height = FrameConstraints?.Height ?? Frame.Height;
-
-            if (width > 0 && height > 0)
-            {
-                var padding = BuiltView?.GetPadding();
-                if (padding != null)
-                {
-                    width -= ((Thickness) padding).HorizontalThickness;
-                    height -= ((Thickness) padding).VerticalThickness;
-                }
-                
-                if (!MeasurementValid)
-                {
-                    MeasuredSize = Measure(new SizeF(width, height));
-                    MeasurementValid = true;
-                }
-
-                Layout();
-            }
-        }
-
-        private void Layout()
-        {
-            var width = Frame.Width;
-            var height = Frame.Height;
-
-            var x = width - MeasuredSize.Width;
-            var y = height - MeasuredSize.Height;
-
-            var alignment = FrameConstraints?.Alignment ?? Alignment.Center;
-
-            switch (alignment.Horizontal)
-            {
-                case HorizontalAlignment.Center:
-                    x *= .5f;
-                    break;
-                case HorizontalAlignment.Leading:
-                    x = 0;
-                    break;
-                case HorizontalAlignment.Trailing:
-                    x *= 1;
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            
-            switch (alignment.Vertical)
-            {
-                case VerticalAlignment.Center:
-                    y *= .5f;
-                    break;
-                case VerticalAlignment.Bottom:
-                    y *= 1;
-                    break;
-                case VerticalAlignment.Top:
-                    y = 0;
-                    break;
-                case VerticalAlignment.FirstTextBaseline:
-                    throw new NotSupportedException("Not yet supported");
-                case VerticalAlignment.LastTextBaseline:
-                    throw new NotSupportedException("Not yet supported");
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
-            
-            LayoutSubviews(new RectangleF(x,y,MeasuredSize.Width,MeasuredSize.Height));
-        }
-		
         public override SizeF Measure(SizeF availableSize)
         {
 	        var width = FrameConstraints?.Width;
@@ -241,7 +182,7 @@ namespace HotUI
 	        return measuredSize;
         }
         
-        public virtual void LayoutSubviews(RectangleF bounds)
+        public override void LayoutSubviews(RectangleF bounds)
         {
 	        _layout?.Layout(this, bounds.Size);
         }
@@ -253,6 +194,8 @@ namespace HotUI
                 view.Dispose();
             }
             _views.Clear();
+            _layout.Invalidate();
+
             base.Dispose(disposing);
         }
 	}

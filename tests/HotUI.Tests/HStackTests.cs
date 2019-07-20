@@ -46,7 +46,7 @@ namespace HotUI.Tests
 			Assert.Equal(new RectangleF(0,0,40,12), textField.Frame);
 
 			Assert.True(spacer.MeasurementValid);
-			Assert.Equal(new SizeF(240, 12), spacer.MeasuredSize);
+			Assert.Equal(new SizeF(-1, -1), spacer.MeasuredSize);
 			Assert.Equal(new RectangleF(40,0,240,12), spacer.Frame);
 
 			Assert.True(text.MeasurementValid);
@@ -80,7 +80,7 @@ namespace HotUI.Tests
 			Assert.Equal(new RectangleF(0,0,40,12), textField.Frame);
 
 			Assert.True(spacer.MeasurementValid);
-			Assert.Equal(new SizeF(240, 12), spacer.MeasuredSize);
+			Assert.Equal(new SizeF(-1, -1), spacer.MeasuredSize);
 			Assert.Equal(new RectangleF(40,0,240,12), spacer.Frame);
 
 			Assert.True(text.MeasurementValid);
@@ -114,7 +114,7 @@ namespace HotUI.Tests
 			Assert.Equal(new RectangleF(0,0,40,12), textField.Frame);
 
 			Assert.True(spacer.MeasurementValid);
-			Assert.Equal(new SizeF(220, 12), spacer.MeasuredSize);
+			Assert.Equal(new SizeF(-1, -1), spacer.MeasuredSize);
 			Assert.Equal(new RectangleF(40,0,220,12), spacer.Frame);
 
 			Assert.True(text.MeasurementValid);
@@ -148,7 +148,7 @@ namespace HotUI.Tests
 			Assert.Equal(new RectangleF(0,4,40,12), textField.Frame);
 
 			Assert.True(spacer.MeasurementValid);
-			Assert.Equal(new SizeF(220, 12), spacer.MeasuredSize);
+			Assert.Equal(new SizeF(-1, -1), spacer.MeasuredSize);
 			Assert.Equal(new RectangleF(40,4,220,12), spacer.Frame);
 
 			Assert.True(text.MeasurementValid);
@@ -182,7 +182,7 @@ namespace HotUI.Tests
 			Assert.Equal(new RectangleF(0,0,40,12), textField.Frame);
 
 			Assert.True(spacer.MeasurementValid);
-			Assert.Equal(new SizeF(220, 12), spacer.MeasuredSize);
+			Assert.Equal(new SizeF(-1, -1), spacer.MeasuredSize);
 			Assert.Equal(new RectangleF(40,4,220,12), spacer.Frame);
 
 			Assert.True(text.MeasurementValid);
@@ -216,7 +216,7 @@ namespace HotUI.Tests
 			Assert.Equal(new RectangleF(0,0,40,22), textField.Frame);
 
 			Assert.True(spacer.MeasurementValid);
-			Assert.Equal(new SizeF(220, 22), spacer.MeasuredSize);
+			Assert.Equal(new SizeF(-1, -1), spacer.MeasuredSize);
 			Assert.Equal(new RectangleF(40,0,220,22), spacer.Frame);
 
 			Assert.True(text.MeasurementValid);
@@ -250,7 +250,7 @@ namespace HotUI.Tests
 			Assert.Equal(new RectangleF(10,10,40,22), textField.Frame);
 
 			Assert.True(spacer.MeasurementValid);
-			Assert.Equal(new SizeF(200, 22), spacer.MeasuredSize);
+			Assert.Equal(new SizeF(-1, -1), spacer.MeasuredSize);
 			Assert.Equal(new RectangleF(60,10,200,22), spacer.Frame);
 
 			Assert.True(text.MeasurementValid);

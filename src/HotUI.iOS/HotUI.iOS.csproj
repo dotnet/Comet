@@ -53,6 +53,7 @@
     <Compile Include="Extensions\UIViewExtensions.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
+    <Compile Include="Handlers\GridHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />
     <Compile Include="Handlers\SecureFieldHandler.cs" />
     <Compile Include="Handlers\SliderHandler.cs" />

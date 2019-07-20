@@ -9,5 +9,10 @@ namespace HotUI
         protected Control()
         {
         }
+
+        protected override void RequestLayout()
+        {
+            // Do nothing
+        }
     }
 }
