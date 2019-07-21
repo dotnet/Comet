@@ -37,7 +37,8 @@ namespace HotUI {
 
         public override void LayoutSubviews(RectangleF bounds)
         {
-	        Content.Frame = bounds;
+            if (Content != null)
+	             Content.Frame = bounds;
         }
 	}
 }
