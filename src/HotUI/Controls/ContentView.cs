@@ -11,7 +11,7 @@ namespace HotUI {
 			if (view == null)
 				return;
 			view.Parent = this;
-			view.Navigation = this.Parent?.Navigation;
+			view.Navigation = Parent?.Navigation;
 			Content = view;
 		}
 		protected override void OnParentChange (View parent)
@@ -21,6 +21,7 @@ namespace HotUI {
 				Content.Parent = this;
 			}
 		}
+		
 		internal override void ContextPropertyChanged (string property, object value)
 		{
 			base.ContextPropertyChanged (property, value);
@@ -34,5 +35,9 @@ namespace HotUI {
             base.Dispose(disposing);
         }
 
-    }
+        public override void LayoutSubviews(RectangleF bounds)
+        {
+	        Content.Frame = bounds;
+        }
+	}
 }
