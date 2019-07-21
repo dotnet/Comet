@@ -90,6 +90,11 @@ namespace HotUI
             {
                 if (viewHandler == value)
                     return;
+
+                measurementValid = false;
+                measuredSize = SizeF.Zero;
+                frame = RectangleF.Zero;
+                
                 var oldViewHandler = viewHandler;
                 viewHandler?.Remove(this);
                 viewHandler = value;
