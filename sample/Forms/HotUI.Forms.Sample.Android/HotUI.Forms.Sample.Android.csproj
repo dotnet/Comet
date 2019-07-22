@@ -101,11 +101,5 @@
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HotUI.Forms.Sample\HotUI.Forms.Sample.csproj">
-      <Project>{618C336D-1E53-49B9-A554-7D2B9671DEC5}</Project>
-      <Name>HotUI.Forms.Sample</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
