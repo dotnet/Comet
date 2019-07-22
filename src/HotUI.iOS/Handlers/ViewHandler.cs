@@ -137,7 +137,10 @@ namespace HotUI.iOS.Handlers
                 
                 var viewHandler = handler as iOSViewHandler;
                 if (viewHandler?.ContainerView != null)
+                {
                     viewHandler.ContainerView.MaskLayer = layer;
+                    viewHandler.ContainerView.ClipShape = clipShape;
+                }
 
                 var shadow = virtualView.GetShadow();
                 if (shadow != null)
@@ -149,7 +152,7 @@ namespace HotUI.iOS.Handlers
                     shadowLayer.Frame = layer.Frame;
         
                     ApplyShadowToLayer(shadow, shadowLayer);
-                    
+
                     if (viewHandler?.ContainerView != null)
                         viewHandler.ContainerView.ShadowLayer = shadowLayer;
                 }

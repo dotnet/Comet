@@ -63,5 +63,7 @@ namespace HotUI.Mac.Controls
             get => _delegate.UnevenRows;
             set => _delegate.UnevenRows = value;
         }
+
+        public void ReloadData() => _tableView?.ReloadData();
     }
 }

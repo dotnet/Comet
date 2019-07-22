@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\HUIContainerView.cs" />
+    <Compile Include="Controls\HUIListCell.cs" />
     <Compile Include="DrawingExtensions.cs" />
     <Compile Include="GraphicsExtensions.cs" />
+    <Compile Include="Graphics\WPFBitmap.cs" />
     <Compile Include="Handlers\AbstractControlHandler.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\AbstractStackLayoutHandler.cs" />
@@ -72,6 +74,7 @@
     <Compile Include="HotUIPage.xaml.cs">
       <DependentUpon>HotUIPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\WPFBitmapService.cs" />
     <Compile Include="ViewChangedEventArgs.cs" />
     <Compile Include="WPFViewHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -89,6 +92,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

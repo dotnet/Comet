@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
 using HotUI.UWP.Handlers;
+using HotUI.UWP.Services;
 
 namespace HotUI.UWP
 {
@@ -40,9 +41,13 @@ namespace HotUI.UWP
             Registrar.Handlers.Register<VStack, ManagedVStackHandler>();
             Registrar.Handlers.Register<HStack, ManagedHStackHandler>();
             Registrar.Handlers.Register<ZStack, ManagedZStackHandler>();
+            Registrar.Handlers.Register<Grid, ManagedGridHandler>();
 
             Device.PerformInvokeOnMainThread = async a => await GetDispatcher().RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => a());
 
+            Device.BitmapService = new UWPBitmapService();
+
+            ListView.HandlerSupportsVirtualization = false;
         }
 
         public static CoreDispatcher GetDispatcher()
