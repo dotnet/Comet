@@ -41,8 +41,11 @@ namespace HotUI.Samples {
             new MenuItem("SwiftUI Tutorial Section 4d", ()=> new Section4c()),
             new MenuItem("AuditReportPage",()=> new AuditReportPage()),
         };
+
 		public MainPage (List<MenuItem> additionalPage = null)
 		{
+            Title = "HotUI Samples";
+            
             //This is only required since there is a parameter for the view
             HotReloadHelper.Register(this, additionalPage);
             if (additionalPage != null)

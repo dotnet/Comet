@@ -23,6 +23,8 @@ namespace HotUI.iOS
                     _containerView.CurrentView = value;
                 else
                     _startingCurrentView = value;
+
+                Title = value?.Title ?? "";
             }
         }
 
