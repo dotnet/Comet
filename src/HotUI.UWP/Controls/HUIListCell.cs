@@ -57,9 +57,12 @@ namespace HotUI.UWP
                     WGrid.SetColumn(frameworkElement, 0);
                     WGrid.SetColumnSpan(frameworkElement, 1);
                     WGrid.SetRowSpan(frameworkElement, 1);
+<<<<<<< HEAD
 
                     if (frameworkElement.Parent != null)
                         frameworkElement.Parent.RemoveChild(_nativeView);
+=======
+>>>>>>> UWP bitmap and listview fixes.
                 }
 
                 Children.Add(_nativeView);
