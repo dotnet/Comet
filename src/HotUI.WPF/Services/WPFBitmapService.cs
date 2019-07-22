@@ -1,21 +1,39 @@
-﻿//using FFImageLoading;
-using HotUI.Graphics;
+﻿using HotUI.Graphics;
 using HotUI.Services;
 using HotUI.WPF.Graphics;
+using System;
+using System.Net.Cache;
 using System.Threading.Tasks;
+using System.Windows.Media.Imaging;
 
 namespace HotUI.WPF.Services
 {
-    class UWPBitmapService : AbstractBitmapService
+    class WPFBitmapService : AbstractBitmapService
     {
-        public override async Task<Bitmap> LoadBitmapFromUrlAsync(string url)
+        public override Task<Bitmap> LoadBitmapFromUrlAsync(string url)
+            => LoadBitmapAsync(new Uri(url, UriKind.Absolute));
+
+        public override Task<Bitmap> LoadBitmapFromFileAsync(string file)
         {
-            return new WPFBitmap(null);
+            var fullPath = System.IO.Path.GetFullPath(file);
+            return LoadBitmapAsync(new Uri(fullPath));
         }
 
-        public override async Task<Bitmap> LoadBitmapFromFileAsync(string file)
+        private static Task<Bitmap> LoadBitmapAsync(Uri location)
         {
-            return new WPFBitmap(null);
+            var bitmap = new BitmapImage(location, new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable));
+            var wrapper = new WPFBitmap(bitmap);
+            if (!bitmap.IsDownloading)
+            {
+                return Task.FromResult<Bitmap>(wrapper);
+            }
+
+            TaskCompletionSource<Bitmap> completionSource = new TaskCompletionSource<Bitmap>();
+            bitmap.DownloadCompleted += (_, __) => completionSource.SetResult(wrapper);
+            bitmap.DownloadFailed += (_, args) => completionSource.SetException(args.ErrorException);
+            bitmap.DecodeFailed += (_, args) => completionSource.SetException(args.ErrorException);
+            return completionSource.Task;
         }
+
     }
 }

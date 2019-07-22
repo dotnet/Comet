@@ -94,9 +94,17 @@ namespace HotUI.WPF.Handlers
         public virtual void SetView(View view)
         {
             _virtualView = view as TVirtualView;
+            _virtualView.NeedsLayout += NeedsLayout;
+
             if (_nativeView == null)
                 _nativeView = CreateView();
             _mapper?.UpdateProperties(this, _virtualView);
+        }
+
+        private void NeedsLayout(object sender, EventArgs e)
+        {
+            _nativeView.InvalidateMeasure();
+            _nativeView.InvalidateArrange();
         }
 
         public virtual void UpdateValue(string property, object value)
