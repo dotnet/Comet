@@ -35,6 +35,7 @@ namespace HotUI.Samples {
             new MenuItem("SkiaSample1 (FingerPaint)", ()=> new SkiaSample1()),
             new MenuItem("SkiaSample2 (FingerPaint)", ()=> new SkiaSample2()),
             new MenuItem("SkiaSample3 (BindableFingerPaint)", ()=> new SkiaSample3()),
+            new MenuItem("SkiaSample3WithScrollView (BindableFingerPaint)", ()=> new SkiaSample3WithScrollView()),
             new MenuItem("SkiaSample4 (BindableFingerPaint)", ()=> new SkiaSample4()),
             new MenuItem("SwiftUI Tutorial Section 1", ()=> new Section1()),
             new MenuItem("SwiftUI Tutorial Section 2", ()=> new Section2()),
@@ -53,8 +54,6 @@ namespace HotUI.Samples {
 
 		public MainPage (List<MenuItem> additionalPage = null)
 		{
-            Title = "HotUI Samples";
-
             //This is only required since there is a parameter for the view
             HotReloadHelper.Register(this, additionalPage);
             if (additionalPage != null)
