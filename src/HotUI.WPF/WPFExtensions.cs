@@ -18,7 +18,7 @@ namespace HotUI.WPF
             var handler = view.ViewHandler;
             if (handler == null)
             {
-                handler = Registrar.Handlers.GetRenderer(view.GetType());
+                handler = Registrar.Handlers.GetHandler(view.GetType());
                 view.ViewHandler = handler;
             }
 
