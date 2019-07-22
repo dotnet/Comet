@@ -34,13 +34,6 @@ namespace HotUI
             internal set => tag = value;
         }
 
-        string title;
-        public string Title
-        {
-            get => title ?? parent?.Title;
-            protected set => title = value;
-        }
-
         public View Parent
         {
             get => parent;
@@ -348,7 +341,7 @@ namespace HotUI
         FrameConstraints frameConstraints;
         public FrameConstraints FrameConstraints
         {
-            get => frameConstraints;
+            get => BuiltView?.FrameConstraints ?? frameConstraints;
             internal set => this.SetValue(State, ref frameConstraints, value, ResetPropertyString);
         }
         
@@ -389,6 +382,10 @@ namespace HotUI
         public void InvalidateMeasurement()
         {
             MeasurementValid = false;
+
+            // TODO We should "invalidate" layout here. Close enough for now?
+            frame = RectangleF.Zero;
+
             Parent?.InvalidateMeasurement();
             NeedsLayout?.Invoke(this, EventArgs.Empty);
         }
@@ -465,7 +462,7 @@ namespace HotUI
                     xFactor = 0;
                     break;
                 case HorizontalAlignment.Trailing:
-                    xFactor *= 1;
+                    xFactor = 1;
                     break;
             }
 
@@ -473,7 +470,7 @@ namespace HotUI
             switch (alignment.Vertical)
             {            
                 case VerticalAlignment.Bottom:
-                    yFactor *= 1;
+                    yFactor = 1;
                     break;
                 case VerticalAlignment.Top:
                     yFactor = 0;

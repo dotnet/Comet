@@ -6,12 +6,12 @@
     <DebugType>pdbonly</DebugType>
     <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
     <DebugSymbols>true</DebugSymbols>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType></DebugType>
     <DefineConstants>TRACE;RELEASE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <ProjectExtensions>
     <MonoDevelop>

@@ -56,5 +56,8 @@ namespace HotUI
             var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).Where(x => Attribute.IsDefined(x, attribute)).ToList();
             return fields;
         }
+
+        public static T Title<T>(this T view, string title) where T : View =>
+            view.SetEnvironment(EnvironmentKeys.View.Title, title);
     }
 }

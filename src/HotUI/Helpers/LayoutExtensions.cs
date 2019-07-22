@@ -31,8 +31,7 @@ namespace HotUI
         
         public static Thickness GetPadding(this View view)
         {
-            return view.Padding;
-            ;
+            return view?.Padding ?? Thickness.Empty;
         }
 
         public static T Overlay<T>(this T view, View overlayView) where T : View
@@ -111,7 +110,7 @@ namespace HotUI
                     xFactor = 0;
                     break;
                 case HorizontalAlignment.Trailing:
-                    xFactor *= 1;
+                    xFactor = 1;
                     break;
             }
 
@@ -119,7 +118,7 @@ namespace HotUI
             switch (alignment.Vertical)
             {
                 case VerticalAlignment.Bottom:
-                    yFactor *= 1;
+                    yFactor = 1;
                     break;
                 case VerticalAlignment.Top:
                     yFactor = 0;

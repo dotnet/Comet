@@ -59,6 +59,7 @@ namespace HotUI.iOS.Handlers
 
                     _nativeView.Layer.Mask = null;
                     _nativeView.RemoveFromSuperview();
+                    _nativeView.Frame = previousContainerView.Frame;
                     NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, previousContainerView, _nativeView));
                     return;
                 }
@@ -71,6 +72,8 @@ namespace HotUI.iOS.Handlers
                 }
             }
         }
+
+        public bool AutoSafeArea => true;
 
         public virtual SizeF Measure(SizeF availableSize)
         {

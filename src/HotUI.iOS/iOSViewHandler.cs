@@ -10,5 +10,7 @@ namespace HotUI.iOS
         UIView View { get; }
 
         HUIContainerView ContainerView { get; }
+
+        bool AutoSafeArea { get; }
     }
 }
