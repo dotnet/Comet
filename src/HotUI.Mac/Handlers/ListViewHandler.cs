@@ -11,7 +11,8 @@ namespace HotUI.Mac.Handlers
     {
         public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>(ViewHandler.Mapper)
         {
-            ["ListView"] = MapListViewProperty
+            ["ListView"] = MapListViewProperty,
+            [nameof(ListView.ReloadData)] = MapReloadData
         };
 
         public ListViewHandler() : base(Mapper)
@@ -35,5 +36,11 @@ namespace HotUI.Mac.Handlers
             var nativeView = (HUITableView)viewHandler.NativeView;
             nativeView.ListView = virtualView;
         }
-	}
+
+        public static void MapReloadData(IViewHandler viewHandler, ListView virtualView)
+        {
+            var nativeView = (HUITableView)viewHandler.NativeView;
+            nativeView?.ReloadData();
+        }
+    }
 }
