@@ -134,11 +134,5 @@
       <Version>4.1.0.581479</Version>
     </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\HotUI.Forms.Sample\HotUI.Forms.Sample.csproj">
-      <Project>{6E908009-ED09-46E2-9C6E-5DDEA385B29F}</Project>
-      <Name>HotUI.Forms.Sample</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
