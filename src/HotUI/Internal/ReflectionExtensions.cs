@@ -33,7 +33,7 @@ namespace HotUI.Reflection
             if (obj == null)
                 return null;
             var newType = obj.GetType();
-            if (newType == type)
+            if (type.IsAssignableFrom(newType))
                 return obj;
             //if (type == typeof(String))
             //    return obj.ToString();

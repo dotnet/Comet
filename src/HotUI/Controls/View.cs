@@ -382,6 +382,10 @@ namespace HotUI
         public void InvalidateMeasurement()
         {
             MeasurementValid = false;
+
+            // TODO We should "invalidate" layout here. Close enough for now?
+            frame = RectangleF.Zero;
+
             Parent?.InvalidateMeasurement();
             NeedsLayout?.Invoke(this, EventArgs.Empty);
         }
