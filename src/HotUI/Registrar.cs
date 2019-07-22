@@ -24,15 +24,15 @@ namespace HotUI {
         {
             Handler[view] = handler;
         }
-        public TTypeRender GetRenderer<T> ()
+        public TTypeRender GetHandler<T> ()
 		{
-			return GetRenderer (typeof (T));
+			return GetHandler (typeof (T));
 		}
 
         internal List<Type> GetViewType(Type type) => Handler.Where(x => x.Value == type).Select(x=> x.Key).ToList();
 
 
-		public TTypeRender GetRenderer (Type type)
+		public TTypeRender GetHandler (Type type)
 		{
 			List<Type> types = new List<Type> { type };
 			Type baseType = type.BaseType;
