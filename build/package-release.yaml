@@ -167,6 +167,13 @@ stages:
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'HotUI.nuspec'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'v$(VERSION)-beta'
+
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
@@ -269,6 +276,13 @@ stages:
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'HotUI.nuspec'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'v$(VERSION)-beta'
+
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
@@ -324,6 +338,13 @@ stages:
         artifactName: 'drop_nuget_windows'
         downloadPath: '$(System.ArtifactsDirectory)'
 
+    - task: NuGetCommand@2
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+        nuGetFeedType: 'external'
+        publishFeedCredentials: 'ClanceyNugetFeed'
+
     - task: GitHubRelease@0
       inputs:
         gitHubConnection: 'GitHubRelease'
@@ -338,5 +359,3 @@ stages:
           $(System.ArtifactsDirectory)/**/drop_nuget_windows/*.nupkg
         addChangeLog: false
         isDraft: true
-
-    

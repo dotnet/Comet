@@ -52,5 +52,30 @@
     <file src="src/HotUI.WPF/bin/Debug/HotUI.pdb" target="lib/net45/HotUI.pdb" />
     <file src="src/HotUI.WPF/bin/Debug/HotUI.WPF.dll" target="lib/net45/HotUI.WPF.dll" />
     <file src="src/HotUI.WPF/bin/Debug/HotUI.WPF.pdb" target="lib/net45/HotUI.WPF.pdb" />
+
+    <file src="src/HotUI.Skia/bin/Debug/HotUI.Skia.dll" target="lib/net45/HotUI.Skia.dll" />
+    <file src="src/HotUI.Skia/bin/Debug/HotUI.Skia.pdb" target="lib/net45/HotUI.Skia.pdb" />
+    <file src="src/HotUI.Skia.iOS/bin/Debug/HotUI.Skia.iOS.dll" target="lib/net45/HotUI.Skia.iOS.dll" />
+    <file src="src/HotUI.Skia.iOS/bin/Debug/HotUI.Skia.iOS.pdb" target="lib/net45/HotUI.Skia.iOS.pdb" />
+
+    <file src="src/HotUI.Skia/bin/Debug/HotUI.Skia.dll" target="lib/net45/HotUI.Skia.dll" />
+    <file src="src/HotUI.Skia/bin/Debug/HotUI.Skia.pdb" target="lib/net45/HotUI.Skia.pdb" />
+    <file src="src/HotUI.Skia.Android/bin/Debug/HotUI.Skia.Android.dll" target="lib/net45/HotUI.Skia.Android.dll" />
+    <file src="src/HotUI.Skia.Android/bin/Debug/HotUI.Skia.Android.pdb" target="lib/net45/HotUI.Skia.Android.pdb" />
+
+    <file src="src/HotUI.Skia/bin/Debug/HotUI.Skia.dll" target="lib/net45/HotUI.Skia.dll" />
+    <file src="src/HotUI.Skia/bin/Debug/HotUI.Skia.pdb" target="lib/net45/HotUI.Skia.pdb" />
+    <file src="src/HotUI.Skia.Mac/bin/Debug/HotUI.Skia.Mac.dll" target="lib/net45/HotUI.Skia.Mac.dll" />
+    <file src="src/HotUI.Skia.Mac/bin/Debug/HotUI.Skia.Mac.pdb" target="lib/net45/HotUI.Skia.Mac.pdb" />
+
+    <file src="src/HotUI.Skia/bin/Debug/HotUI.Skia.dll" target="lib/net45/HotUI.Skia.dll" />
+    <file src="src/HotUI.Skia/bin/Debug/HotUI.Skia.pdb" target="lib/net45/HotUI.Skia.pdb" />
+    <file src="src/HotUI.Skia.UWP/bin/Debug/HotUI.Skia.UWP.dll" target="lib/net45/HotUI.Skia.UWP.dll" />
+    <file src="src/HotUI.Skia.UWP/bin/Debug/HotUI.Skia.UWP.pdb" target="lib/net45/HotUI.Skia.UWP.pdb" />
+
+    <file src="src/HotUI.Skia/bin/Debug/HotUI.Skia.dll" target="lib/net45/HotUI.Skia.dll" />
+    <file src="src/HotUI.Skia/bin/Debug/HotUI.Skia.pdb" target="lib/net45/HotUI.Skia.pdb" />
+    <file src="src/HotUI.Skia.WPF/bin/Debug/HotUI.Skia.WPF.dll" target="lib/net45/HotUI.Skia.WPF.dll" />
+    <file src="src/HotUI.Skia.WPF/bin/Debug/HotUI.Skia.WPF.pdb" target="lib/net45/HotUI.Skia.WPF.pdb" />
   </files>
 </package>
