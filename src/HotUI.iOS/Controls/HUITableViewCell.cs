@@ -26,9 +26,14 @@ namespace HotUI.iOS.Controls
         }
 
         public void SetView(View view, bool shouldDispose)
-        {
-            if (_virtualView != null && !_virtualView.IsDisposed)
+        { 
+            var oldView = _virtualView;
+            var isFromThisCell = oldView?.ToView() == _currentContent;
+            //Apple bug, somehow the view be a weird recycle... So only re-use if the view still matches
+            if (isFromThisCell && _virtualView != null && !_virtualView.IsDisposed)
+            {
                 view = view.Diff(_virtualView);
+            }
 
             if (shouldDispose)
                 _virtualView?.Dispose();
