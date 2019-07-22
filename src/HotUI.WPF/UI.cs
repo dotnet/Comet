@@ -39,6 +39,8 @@ namespace HotUI.WPF
             Registrar.Handlers.Register<ZStack, ManagedZStackHandler>();
 
             Device.PerformInvokeOnMainThread = a => Application.Current.Dispatcher.Invoke(a);
+
+            ListView.HandlerSupportsVirtualization = false;
         }
     }
 }

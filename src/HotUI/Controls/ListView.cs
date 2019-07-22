@@ -13,6 +13,7 @@ namespace HotUI
         int Rows(int section);
         View FooterView();
         View HeaderView();
+        object ItemAt(int section, int row);
         View ViewFor(int section, int row);
         View HeaderFor(int section);
         View FooterFor(int section);
@@ -23,12 +24,22 @@ namespace HotUI
     public class ListView<T> : ListView
     {
         //TODO Evaluate if 30 is a good number
-        FixedSizeDictionary<object, View> CurrentViews = new FixedSizeDictionary<object, View>(30);
+        IDictionary<object, View> CurrentViews { get; }
         public readonly IList<T> List;
+
         public ListView(IList<T> list) : base()
         {
+            if (HandlerSupportsVirtualization)
+            {
+                CurrentViews = new FixedSizeDictionary<object, View>(30)
+                {
+                    OnDequeue = (pair) => pair.Value?.Dispose()
+                };
+            }
+            else
+                CurrentViews = new Dictionary<object, View>();
+
             List = list;
-            CurrentViews.OnDequeue = (pair) => pair.Value?.Dispose();
         }
 
         public void Add(Func<T, View> cell)
@@ -61,6 +72,12 @@ namespace HotUI
             }
             return view;
         }
+
+        public override object ItemAt(int section, int row)
+        {
+            return List[row];
+        }
+
         protected override View HeaderView() => Header;
         protected override View FooterView() => Footer;
 
@@ -98,6 +115,7 @@ namespace HotUI
 
     public class ListView : View, IEnumerable, IEnumerable<View>, IListView
     {
+        public static bool HandlerSupportsVirtualization { get; set; } = true;
 
         List<View> views = new List<View>();
         public ListView()
@@ -178,6 +196,12 @@ namespace HotUI
 
         protected virtual View HeaderFor(int section) => null;
         protected virtual View FooterFor(int section) => null;
+
+        public virtual object ItemAt(int section, int row)
+        {
+            return views[row];
+        }
+
         protected bool ShouldDisposeView { get; set; } = true;
         bool IListView.ShouldDisposeViews { get => ShouldDisposeView; }
     }

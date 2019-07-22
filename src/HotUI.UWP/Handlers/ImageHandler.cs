@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using UWPImage = Windows.UI.Xaml.Controls.Image;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
@@ -10,7 +12,7 @@ namespace HotUI.UWP.Handlers
     {
         public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>()
         {
-            [nameof(Image.Source)] = MapSourceProperty
+            [nameof(Image.Bitmap)] = MapBitmapProperty
         };
 
         internal string CurrentSource;
@@ -30,28 +32,20 @@ namespace HotUI.UWP.Handlers
 
         }
 
-        public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)
+        public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
         {
             var imageHandler = (ImageHandler)viewHandler;
-            UpdateSource(imageHandler, virtualView.Source);
-        }
-
-        public static async void UpdateSource(ImageHandler imageView, string source)
-        {
-            if (source == imageView.CurrentSource)
-                return;
-
-            imageView.CurrentSource = source;
             try
             {
-                var image = await source.LoadImage();
-                if (source == imageView.CurrentSource)
-                    imageView.TypedNativeView.Source = image;
+                var bitmap = virtualView.Bitmap;
+                var source = 
+                imageHandler.TypedNativeView.Source = bitmap.NativeBitmap as ImageSource;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e);
             }
+            virtualView.InvalidateMeasurement();
         }
     }
 }
