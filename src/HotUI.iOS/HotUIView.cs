@@ -100,8 +100,11 @@ namespace HotUI.iOS
         {
             if (Bounds.IsEmpty || _nativeView == null)
                 return;
+            var iOSHandler = _virtualView?.BuiltView?.ViewHandler as iOSViewHandler;
 
-            if (_nativeView is UIScrollView sv)
+            bool autoAdjust = iOSHandler?.AutoSafeArea ?? true ;
+
+            if (!autoAdjust || _nativeView is UIScrollView)
             {
                 _nativeView.Frame = Bounds;
             }

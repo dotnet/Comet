@@ -88,6 +88,8 @@
     <Compile Include="Controls\HUINavigationController.cs" />
     <Compile Include="Controls\HUITableViewSource.cs" />
     <Compile Include="Handlers\ZStackHandler.cs" />
+    <Compile Include="Handlers\TabViewHandler.cs" />
+    <Compile Include="Controls\HUITabView.cs" />
     <Compile Include="Graphics\UIImageBitmap.cs" />
   </ItemGroup>
   <ItemGroup>

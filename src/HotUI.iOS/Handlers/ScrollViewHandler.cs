@@ -9,7 +9,8 @@ namespace HotUI.iOS.Handlers
     public class ScrollViewHandler : AbstractHandler<ScrollView, UIScrollView>
     {
         private UIView _content;
-        
+
+        public override bool AutoSafeArea => false;
         protected override UIScrollView CreateView()
         {
             var scrollView = new UIScrollView()

@@ -38,6 +38,12 @@ namespace HotUI {
             public const string LineWidth = "Shape.LineWidth";
             public const string Color = "Shape.Color";
         }
+
+        public static class TabView
+        {
+            public const string Image = "TabView.Item.Image";
+            public const string Title = "TabView.Item.Title";
+        }
     }
 
 	[AttributeUsage (AttributeTargets.Field)]
