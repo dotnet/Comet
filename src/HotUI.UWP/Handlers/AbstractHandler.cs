@@ -71,7 +71,8 @@ namespace HotUI.UWP.Handlers
         
         public virtual SizeF Measure(SizeF availableSize)
         {
-            return availableSize;
+            _nativeView.Measure(availableSize.ToSize());
+            return _nativeView.DesiredSize.ToSizeF();
         }
 
         public void SetFrame(RectangleF frame)
