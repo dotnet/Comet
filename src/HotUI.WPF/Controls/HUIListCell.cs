@@ -1,11 +1,10 @@
-﻿using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using HotUI.UWP.Handlers;
-using WGrid = Windows.UI.Xaml.Controls.Grid;
-using UwpSize = Windows.Foundation.Size;
+﻿using HotUI.WPF.Handlers;
+using System.Windows;
+using System.Windows.Controls;
+using WGrid = System.Windows.Controls.Grid;
+using WPFSize = System.Windows.Size;
 
-namespace HotUI.UWP
+namespace HotUI.WPF
 {
     public class HUIListCell : WGrid
     {
@@ -63,13 +62,17 @@ namespace HotUI.UWP
             }
         }
 
-        protected override UwpSize MeasureOverride(UwpSize availableSize)
+        protected override WPFSize MeasureOverride(WPFSize availableSize)
         {
+            // todo: this is a hack for now to avoid an infinite width
+            if (double.IsInfinity(availableSize.Width))
+                availableSize.Width = 800;
+
             var measuredSize = _view?.Measure(availableSize.ToSizeF()).ToSize();
             return measuredSize ?? availableSize;
         }
 
-        protected override UwpSize ArrangeOverride(UwpSize finalSize)
+        protected override WPFSize ArrangeOverride(WPFSize finalSize)
         {
             if (finalSize.Width > 0 && finalSize.Height > 0 && _view != null)
                 _view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
