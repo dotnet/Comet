@@ -7,7 +7,7 @@ namespace HotUI.Forms.Handlers
     {
         public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>(ViewHandler.Mapper)
         {
-            [nameof(Image.Source)] = MapSourceProperty
+            [nameof(Image.Bitmap)] = MapBitmapProperty
         };
 
         public ImageHandler() : base(Mapper)
@@ -23,10 +23,10 @@ namespace HotUI.Forms.Handlers
             
         }
 
-        public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)
+        public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
         {
             var nativeView = (FImage)viewHandler.NativeView;
-            nativeView.Source = virtualView.Source?.ToImageSource();
+            nativeView.Source = virtualView.Bitmap?.ToImageSource();
         }
     }
 }

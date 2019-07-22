@@ -54,6 +54,7 @@
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\AndroidExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
+    <Compile Include="Graphics\AndroidBitmap.cs" />
     <Compile Include="Handlers\AbstractControlHandler.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\ButtonHandler.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AndroidGraphicsService.cs" />
+    <Compile Include="Services\AndroidBitmapService.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="Handlers\ListViewHandler.cs" />
     <Compile Include="Handlers\ViewHandler.cs" />

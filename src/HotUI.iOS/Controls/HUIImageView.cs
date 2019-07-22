@@ -1,48 +1,30 @@
 using System;
 using System.Diagnostics;
 using CoreGraphics;
+using HotUI.Graphics;
 using UIKit;
 
 namespace HotUI.iOS.Controls
 {
     public class HUIImageView : UIImageView
     {
-        private string _source;
+        private Bitmap _bitmap;
         
         public HUIImageView(CGRect frame) : base(frame)
         {
             
         }
 
-        public string Source
+        public Bitmap Bitmap
         {
-            get => _source;
-            set => UpdateSource(value);
-        }
-        
-        private async void UpdateSource(string source)
-        {
-            if (source == _source)
-                return;
-            
-            _source = source;
-            try
+            get => _bitmap;
+            set
             {
-                var image = await source.LoadImage();
-                if (source == _source)
-                {
-                    Console.WriteLine(Bounds);
-                    Image = image;
-                    SizeToFit();
-                    Console.WriteLine(Bounds);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
+                _bitmap = value;
+                Image = _bitmap?.NativeBitmap as UIImage;
             }
         }
-
+ 
         public override CGSize SizeThatFits(CGSize size)
         {
             if (Image != null)
@@ -72,7 +54,6 @@ namespace HotUI.iOS.Controls
             {
                 base.SizeToFit();
             }
-            
         }
     }
 }

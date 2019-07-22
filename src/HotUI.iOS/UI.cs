@@ -53,6 +53,7 @@ namespace HotUI.iOS
             Device.PerformInvokeOnMainThread = _invoker.BeginInvokeOnMainThread;
 			Device.FontService = new iOSFontService();
 			Device.GraphicsService = new iOSGraphicsService();
+			Device.BitmapService = new iOSBitmapService();
 		}
 
 		internal static UIViewController PresentingViewController {

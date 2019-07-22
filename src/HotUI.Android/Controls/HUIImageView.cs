@@ -3,6 +3,7 @@ using FFImageLoading;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Android.Content;
+using Android.Graphics;
 using Android.Widget;
 using FFImageLoading.Drawables;
 using AView = Android.Views.View;
@@ -12,33 +13,19 @@ namespace HotUI.Android.Controls
     public class HUIImageView : ImageView
     {
         private Image _image;
-        private string _source;
+        private HotUI.Graphics.Bitmap _bitmap;
 
         public HUIImageView(Context context) : base(context)
         {
         }
         
-        public string Source
+        public HotUI.Graphics.Bitmap Bitmap
         {
-            get => _source;
-            set => UpdateSource(value);
-        }
-
-        public async void UpdateSource(string source)
-        {
-            if (source == _source)
-                return;
-            
-            _source = source;
-            try
+            get => _bitmap;
+            set
             {
-                var image = await source.LoadImage();
-                if (source == _source)
-                    SetImageBitmap(image.Bitmap);
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
+                _bitmap = value;
+                SetImageBitmap(_bitmap.NativeBitmap as Bitmap);
             }
         }
     }
