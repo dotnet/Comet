@@ -44,11 +44,17 @@ namespace HotUI.iOS.Controls
             if (_currentContent != null && _currentContent != newView)
             {
                 if (_currentContent is UIButton button)
-                    Logger.Debug($"Removing button: {button.Title(UIControlState.Normal)}");
+                    Logger.Debug($"[{ContentView.Tag}] Removing button: {button.Title(UIControlState.Normal)}");
                 _currentContent.RemoveFromSuperview();
                 if (newView is UIButton newButton)
-                    Logger.Debug($"Replaced with button: {newButton.Title(UIControlState.Normal)}");
+                    Logger.Debug($"[{ContentView.Tag}] Replaced with button: {newButton.Title(UIControlState.Normal)}");
             }
+            else
+            {
+                if (newView is UIButton newButton)
+                    Logger.Debug($"[{ContentView.Tag}] Rendering button: {newButton.Title(UIControlState.Normal)}");
+            }
+
             _currentContent = newView;
             if (_currentContent != null && _currentContent.Superview != ContentView)
                 ContentView.Add(_currentContent);
