@@ -72,6 +72,8 @@ namespace HotUI.iOS.Handlers
             }
         }
 
+        public bool AutoSafeArea => true;
+
         public virtual SizeF Measure(SizeF availableSize)
         {
             return _nativeView.SizeThatFits(availableSize.ToCGSize()).ToSizeF();

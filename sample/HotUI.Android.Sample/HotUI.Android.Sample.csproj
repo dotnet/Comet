@@ -116,7 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\HotUI\HotUI.csproj">
-      <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
+      <Project>{1591BF3F-2370-4EB6-9336-F4EED244AB42}</Project>
       <Name>HotUI</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\HotUI.Android\HotUI.Android.csproj">
@@ -124,11 +124,11 @@
       <Name>HotUI.Android</Name>
     </ProjectReference>
     <ProjectReference Include="..\HotUI.Samples\HotUI.Samples.csproj">
-      <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
+      <Project>{F6609551-D56D-4737-8326-EFB2A1CADE26}</Project>
       <Name>HotUI.Samples</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\HotUI.Skia\HotUI.Skia.csproj">
-      <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
+      <Project>{9B9BF0E6-C500-4121-8FB6-9DB46D8BA8EC}</Project>
       <Name>HotUI.Skia</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\HotUI.Skia.Android\HotUI.Skia.Android.csproj">

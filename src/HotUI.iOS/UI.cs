@@ -35,6 +35,7 @@ namespace HotUI.iOS
             Registrar.Handlers.Register<ScrollView, ScrollViewHandler> ();
 			Registrar.Handlers.Register<View, ViewHandler> ();
             Registrar.Handlers.Register<ViewRepresentable, ViewRepresentableHandler>();
+            Registrar.Handlers.Register<TabView, TabViewHandler>();
 
             // Managed Layout
             Registrar.Handlers.Register<HStack, HStackHandler>();

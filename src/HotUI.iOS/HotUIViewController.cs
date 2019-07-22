@@ -24,7 +24,7 @@ namespace HotUI.iOS
                 else
                     _startingCurrentView = value;
 
-                Title = value?.Title ?? "";
+                Title = value?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
             }
         }
 

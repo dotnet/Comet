@@ -31,12 +31,19 @@ namespace HotUI {
 	        public const string ClipShape = "ClipShape";
             public const string Shadow = "Shadow";
             public const string Overlay = "Overlay";
+            public const string Title = "Title";
         }
 
         public static class Shape
         {
             public const string LineWidth = "Shape.LineWidth";
             public const string Color = "Shape.Color";
+        }
+
+        public static class TabView
+        {
+            public const string Image = "TabView.Item.Image";
+            public const string Title = "TabView.Item.Title";
         }
     }
 

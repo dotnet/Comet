@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using HotUI.Samples.Comparisons;
+using HotUI.Samples.LiveStreamIssues;
 using HotUI.Samples.Skia;
 
 namespace HotUI.Samples {
 	public class MainPage : View {
 		List<MenuItem> pages = new List<MenuItem> {
 			new MenuItem("Binding Sample!",()=> new BindingSample()),
+            new MenuItem("TabView",()=> new TabViewSample()),
             new MenuItem("BasicTestView",()=> new BasicTestView()),
             new MenuItem("ListViewSample1", ()=> new ListViewSample1()),
             new MenuItem("ListViewSample2", ()=> new ListViewSample2()),
@@ -40,12 +42,16 @@ namespace HotUI.Samples {
             new MenuItem("SwiftUI Tutorial Section 4c", ()=> new Section4c()),
             new MenuItem("SwiftUI Tutorial Section 4d", ()=> new Section4c()),
             new MenuItem("AuditReportPage",()=> new AuditReportPage()),
+            new MenuItem("DavidSample1",()=> new DavidSample1()),
+            new MenuItem("DavidSample1a",()=> new DavidSample1a()),
+            new MenuItem("DavidSample1b",()=> new DavidSample1b()),
+            new MenuItem("DavidSample1c",()=> new DavidSample1c()),
+            new MenuItem("DavidSample2",()=> new DavidSample2()),
         };
 
 		public MainPage (List<MenuItem> additionalPage = null)
 		{
-            Title = "HotUI Samples";
-            
+            this.Title("Main Page");
             //This is only required since there is a parameter for the view
             HotReloadHelper.Register(this, additionalPage);
             if (additionalPage != null)
@@ -60,7 +66,7 @@ namespace HotUI.Samples {
                         new Text(page.Title),
                         new Spacer()
                     }.Frame(height:44).Padding(left:10),
-				}.OnSelected(page => Navigation.PerformNavigate(page.Page?.Invoke()))
+				}.OnSelected(page => Navigation.PerformNavigate(page.Page?.Invoke()?.Title(page.Title)))
 			};
             
         }
