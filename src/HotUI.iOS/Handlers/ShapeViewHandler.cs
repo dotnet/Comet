@@ -22,7 +22,7 @@ namespace HotUI.iOS.Handlers
 
         protected override void DisposeView(HUIShapeView nativeView)
         {
-            
+                
         }
 
         public static void MapShapeProperty(IViewHandler viewHandler, ShapeView virtualView)
