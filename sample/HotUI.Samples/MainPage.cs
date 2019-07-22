@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using HotUI.Samples.Comparisons;
+using HotUI.Samples.LiveStreamIssues;
 using HotUI.Samples.Skia;
 
 namespace HotUI.Samples {
@@ -40,6 +41,7 @@ namespace HotUI.Samples {
             new MenuItem("SwiftUI Tutorial Section 4c", ()=> new Section4c()),
             new MenuItem("SwiftUI Tutorial Section 4d", ()=> new Section4c()),
             new MenuItem("AuditReportPage",()=> new AuditReportPage()),
+            new MenuItem("DavidSample1",()=> new DavidSample1()),
         };
 
 		public MainPage (List<MenuItem> additionalPage = null)
