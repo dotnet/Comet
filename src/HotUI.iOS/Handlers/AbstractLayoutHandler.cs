@@ -82,9 +82,6 @@ namespace HotUI.iOS.Handlers
                     handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
             }
 
-            foreach (var subview in Subviews)
-                subview.RemoveFromSuperview();
-
             _view.NeedsLayout -= HandleNeedsLayout;
             _view.ChildrenChanged -= HandleChildrenChanged;
             _view.ChildrenAdded -= HandleChildrenAdded;

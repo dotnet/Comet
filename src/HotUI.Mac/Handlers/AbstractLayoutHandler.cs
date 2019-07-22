@@ -82,9 +82,6 @@ namespace HotUI.Mac.Handlers
                 if (subview.ViewHandler is MacViewHandler handler)
                     handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
             }
-            
-            foreach (var subview in Subviews)
-                subview.RemoveFromSuperview();
 
             if (view != null)
             {

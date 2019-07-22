@@ -27,7 +27,7 @@ namespace HotUI {
         public ListView (IList<T> list) : base()
 		{
             List = list;
-            CurrentViews.OnDequeue = (pair) => pair.Value?.Dispose();
+                CurrentViews.OnDequeue = (pair) => pair.Value?.Dispose();
         }
 
         public void Add(Func<T, View> cell)
