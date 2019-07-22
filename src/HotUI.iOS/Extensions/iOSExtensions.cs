@@ -121,5 +121,14 @@ namespace HotUI.iOS {
             return null;
         }
 
+
+        public static UIGestureRecognizer ToGestureRecognizer(this Gesture gesture)
+        {
+            if (gesture is TapGesture tapGesture)
+            {
+                return new HUITapGesture (tapGesture);
+            }
+            throw new NotImplementedException();
+        }
     }
 }

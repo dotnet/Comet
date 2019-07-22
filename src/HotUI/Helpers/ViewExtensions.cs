@@ -25,7 +25,7 @@ namespace HotUI
             }
 
             if (view.GetType() == typeof(ContentView))
-                return ((ContentView) view).Content.GetViewWithTag(tag);
+                return ((ContentView)view).Content.GetViewWithTag(tag);
 
             return view.BuiltView.GetViewWithTag(tag);
         }
@@ -43,9 +43,9 @@ namespace HotUI
 
         public static ListView<T> OnSelected<T>(this ListView<T> listview, Action<T> selected)
         {
-            listview.ItemSelected = (o) => 
+            listview.ItemSelected = (o) =>
             {
-                selected?.Invoke((T)o); 
+                selected?.Invoke((T)o);
             };
             return listview;
         }
@@ -59,5 +59,27 @@ namespace HotUI
 
         public static T Title<T>(this T view, string title) where T : View =>
             view.SetEnvironment(EnvironmentKeys.View.Title, title);
+
+        public static T AddGesture<T>(this T view, Gesture gesture) where T : View
+        {
+            view.gestures.Add(gesture);
+            view?.ViewHandler?.UpdateValue(HotUI.Gesture.AddGestureProperty, gesture);
+            return view;
+        }
+        public static T RemoveGesture<T>(this T view, Gesture gesture) where T : View
+        {
+            view.gestures.Remove(gesture);
+            view?.ViewHandler?.UpdateValue(HotUI.Gesture.RemoveGestureProperty, gesture);
+            return view;
+        }
+
+        public static T OnTap<T>(this T view, Action<T> action) where T: View
+            => view.AddGesture(new TapGesture((g)=> action?.Invoke(view)));
+
+        public static T Navigate<T>(this T view, Func<View> destination) where T : View
+            => view.OnTap((v) => NavigationView.Navigate(view, destination.Invoke()));
+
+        public static ListView<T> Navigate<T>(this ListView<T> view, Func<T,View> destination)
+            => view.OnSelected((v) => NavigationView.Navigate(view, destination?.Invoke(v)));
     }
 }
