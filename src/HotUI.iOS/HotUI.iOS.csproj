@@ -86,6 +86,8 @@
     <Compile Include="Controls\HUINavigationController.cs" />
     <Compile Include="Controls\HUITableViewSource.cs" />
     <Compile Include="Handlers\ZStackHandler.cs" />
+    <Compile Include="Handlers\TabViewHandler.cs" />
+    <Compile Include="Controls\HUITabView.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">

@@ -7,6 +7,7 @@ namespace HotUI.Samples {
 	public class MainPage : View {
 		List<MenuItem> pages = new List<MenuItem> {
 			new MenuItem("Binding Sample!",()=> new BindingSample()),
+            new MenuItem("TabView",()=> new TabViewSample()),
             new MenuItem("BasicTestView",()=> new BasicTestView()),
             new MenuItem("ListViewSample1", ()=> new ListViewSample1()),
             new MenuItem("ListViewSample2", ()=> new ListViewSample2()),
