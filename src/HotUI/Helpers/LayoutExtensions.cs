@@ -73,5 +73,62 @@ namespace HotUI
             view.LayoutConstraints = new GridConstraints(row, column, rowSpan, colSpan, weightX, weightY, positionX, positionY);
             return view;
         }
+
+        public static void SetFrameFromNativeView(
+            this View view,
+            RectangleF frame)
+        {
+            var padding = view.GetPadding();
+            if (!padding.IsEmpty)   
+            {
+                frame.X += padding.Left;
+                frame.Y += padding.Top;
+                frame.Width -= padding.HorizontalThickness;
+                frame.Height -= padding.VerticalThickness;
+            }
+
+            var sizeThatFits = view.Measure(frame.Size);
+            view.MeasuredSize = sizeThatFits;
+            view.MeasurementValid = true;
+
+            var width = sizeThatFits.Width;
+            var height = sizeThatFits.Height;
+
+            var frameConstraints = view.FrameConstraints;
+
+            if (frameConstraints?.Width != null)
+                width = (float)frameConstraints.Width;
+
+            if (frameConstraints?.Height != null)
+                height = (float)frameConstraints.Height;
+
+            var alignment = frameConstraints?.Alignment ?? Alignment.Center;
+
+            var xFactor = .5f;
+            switch (alignment.Horizontal)
+            {
+                case HorizontalAlignment.Leading:
+                    xFactor = 0;
+                    break;
+                case HorizontalAlignment.Trailing:
+                    xFactor *= 1;
+                    break;
+            }
+
+            var yFactor = .5f;
+            switch (alignment.Vertical)
+            {
+                case VerticalAlignment.Bottom:
+                    yFactor *= 1;
+                    break;
+                case VerticalAlignment.Top:
+                    yFactor = 0;
+                    break;
+            }
+
+            var x = frame.X + ((frame.Width - width) * xFactor);
+            var y = frame.Y + ((frame.Height - height) * yFactor);
+            view.Frame = new RectangleF((float)x, (float)y, width, height);
+        }
     }
 }

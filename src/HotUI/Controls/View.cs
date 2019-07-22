@@ -457,45 +457,32 @@ namespace HotUI
             var width = Frame.Width;
             var height = Frame.Height;
 
-            var x = (width - MeasuredSize.Width);
-            var y = (height - MeasuredSize.Height);
-
             var alignment = FrameConstraints?.Alignment ?? Alignment.Center;
-
+            var xFactor = .5f;
             switch (alignment.Horizontal)
             {
-                case HorizontalAlignment.Center:
-                    x *= .5f;
-                    break;
                 case HorizontalAlignment.Leading:
-                    x = 0;
+                    xFactor = 0;
                     break;
                 case HorizontalAlignment.Trailing:
-                    x *= 1;
+                    xFactor *= 1;
                     break;
-                default:
-                    throw new ArgumentOutOfRangeException();
             }
-            
+
+            var yFactor = .5f;
             switch (alignment.Vertical)
-            {
-                case VerticalAlignment.Center:
-                    y *= .5f;
-                    break;
+            {            
                 case VerticalAlignment.Bottom:
-                    y *= 1;
+                    yFactor *= 1;
                     break;
                 case VerticalAlignment.Top:
-                    y = 0;
-                    break;
-                case VerticalAlignment.FirstTextBaseline:
-                    throw new NotSupportedException("Not yet supported");
-                case VerticalAlignment.LastTextBaseline:
-                    throw new NotSupportedException("Not yet supported");
-                default:
-                    throw new ArgumentOutOfRangeException();
+                    yFactor = 0;
+                    break;                
             }
-            
+
+            var x = (width - MeasuredSize.Width) * xFactor;
+            var y = (height - MeasuredSize.Height) * yFactor;
+
             LayoutSubviews(new RectangleF(Frame.X + x,Frame.Y+y,MeasuredSize.Width,MeasuredSize.Height));
         }
 

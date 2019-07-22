@@ -51,23 +51,18 @@ namespace HotUI.Samples {
             if (additionalPage != null)
                 pages.AddRange(additionalPage);
 
-            /*Body = () => new NavigationView
+            Body = () => new NavigationView
             {
 				new ListView<MenuItem> (pages)
                 {
 					Cell = (page) =>  new HStack()
                     {
-                        new Text(page.Title)
+                        new Text(page.Title),
+                        new Spacer()
                     }.Frame(height:44).Padding(left:10),
 				}.OnSelected(page => Navigation.PerformNavigate(page.Page?.Invoke()))
-			};*/
-            Body = () => new NavigationView
-            {
-				new ListView<MenuItem> (pages)
-                {
-					Cell = (page) => new Text(page.Title).Frame(height:44).Padding(left:10),
-				}.OnSelected(page => Navigation.PerformNavigate(page.Page?.Invoke()))
 			};
+            
         }
 
     }
