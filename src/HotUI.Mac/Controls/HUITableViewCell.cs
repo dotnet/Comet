@@ -6,26 +6,38 @@ namespace HotUI.Mac.Controls
 {
     public class HUITableViewCell : NSTableCellView
     {
-        private NSView currentContent;
-        private View currentView;
+        private NSView _nativeView;
+        private View _virtualView;
 
         public void SetView(View view)
         {
-            //TODO:We should do View Compare
-            //view.Diff (view);
-            currentContent?.RemoveFromSuperview();
-            currentContent = view.ToView();
-            currentView = view;
-            Console.WriteLine(currentContent.FittingSize);
-            this.AddSubview(currentContent);
+            var oldView = _virtualView;
+            var isFromThisCell = oldView?.ToView() == _nativeView;
+            //Apple bug, somehow the view be a weird recycle... So only re-use if the view still matches
+            if (isFromThisCell && _virtualView != null && !_virtualView.IsDisposed)
+            {
+                view = view.Diff(_virtualView);
+            }
+
+            _virtualView = view;
+            var newView = view.ToView();
+
+            if (_nativeView != null && _nativeView != newView)
+            {
+                _nativeView.RemoveFromSuperview();
+            }
+
+            _nativeView = newView;
+            if (_nativeView != null && _nativeView.Superview != this)
+                AddSubview(_nativeView);
         }
 
         public override void Layout()
         {
             base.Layout();
-            if (currentContent == null)
-                return;
-            currentContent.Frame = Bounds;
+            if (_nativeView == null) return;
+
+            _nativeView.Frame = Bounds;
         }
     }
 }

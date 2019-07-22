@@ -33,9 +33,9 @@ namespace HotUI
 		{
 			base.WillUpdateView ();
 			
-			if (_binding?.Get != null) 
+			if (_binding?.Get != null && State != null) 
 			{
-				State.StartProperty ();
+                State.StartProperty();
 				var value = _binding.Get.Invoke ();
 				var props = State.EndProperty ();
 				var propCount = props.Length;

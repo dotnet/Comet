@@ -44,7 +44,8 @@ namespace HotUI.iOS.Controls
 
         public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
         {
-            var cell = tableView.DequeueReusableCell(CellType) as HUITableViewCell ?? new HUITableViewCell(UITableViewCellStyle.Default, CellType);
+            var cellIdentifier = CellType;
+            var cell = tableView.DequeueReusableCell(cellIdentifier) as HUITableViewCell ?? new HUITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
             var v = _listView?.ViewFor(indexPath.Section,indexPath.Row);
             cell.SetView(v, _listView.ShouldDisposeViews);
             return cell;

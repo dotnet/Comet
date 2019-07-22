@@ -67,7 +67,12 @@ namespace HotUI.Mac.Controls
 
         public override NSView GetViewForItem(NSTableView tableView, NSTableColumn tableColumn, nint row)
         {
-            var cell = tableView.MakeView(CellType, this) as HUITableViewCell ?? new HUITableViewCell();
+            var cell = tableView.MakeView(CellType, this) as HUITableViewCell;
+            if (cell == null)
+			{
+				cell = new HUITableViewCell();
+				cell.Identifier = CellType;
+			}
 
             //TODO: Account for Sections
             var v = _listView?.ViewFor(0, (int)row);
