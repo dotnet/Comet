@@ -66,8 +66,17 @@ namespace HotUI.UWP.Handlers
     {
         public ListViewHandlerItem(ListViewHandler handler, View view)
         {
+            RemoveViewHandlers(view);
             var nativeView = new HUIListCell(view);
             Content = nativeView;
+        }
+
+        private void RemoveViewHandlers(View view)
+        {
+            view.ViewHandler = null;
+            if (view is AbstractLayout layout)
+                foreach (var subview in layout)
+                    RemoveViewHandlers(subview);
         }
     }
 }

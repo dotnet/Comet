@@ -57,6 +57,9 @@ namespace HotUI.UWP
                     WGrid.SetColumn(frameworkElement, 0);
                     WGrid.SetColumnSpan(frameworkElement, 1);
                     WGrid.SetRowSpan(frameworkElement, 1);
+
+                    if (frameworkElement.Parent != null)
+                        frameworkElement.Parent.RemoveChild(_nativeView);
                 }
 
                 Children.Add(_nativeView);
