@@ -184,6 +184,8 @@ namespace HotUI
                 State.StartProperty();
                 var view = Body.Invoke();
                 view.Parent = this;
+                if (view is NavigationView navigationView)
+                    Navigation = navigationView;
                 var props = State.EndProperty();
                 var propCount = props.Length;
                 if (propCount > 0)
