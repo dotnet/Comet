@@ -30,23 +30,19 @@ namespace HotUI.Samples
                    });
             return new ListView<ApiAuditManager.AuditReport>(reports.Value)
             {
-                Cell = (report) => new NavigationButton(
-                    () => new AuditReportPageDetails().SetEnvironment("report", report))
-                {
-                    new HStack()
+                Cell = (report) => new HStack()
                     {
-                        new VStack(HorizontalAlignment.Leading) 
+                        new VStack(HorizontalAlignment.Leading)
                         {
-                            new Text (report.View) 
+                            new Text (report.View)
                                 .Font(Font.System(20)),
                             new Text ($"Handler: {report.Handler}"),
                             new Text ($"Has Map? : {!report.MissingMapper}").Color(report.MissingMapper ? Color.Red : Color.Green),
                             new Text ($"Handled Properties: {report.HandledProperties.Count}").Color(report.HandledProperties.Count == 0 ? Color.Red : Color.Green),
                             new Text ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Color.Green : Color.Red),
-                        }.Padding().Font(Font.System(10))
-                    }
+                        }.Padding().Font(Font.System(10)).Navigate(()=>new AuditReportPageDetails().SetEnvironment("report", report))
                  },
-            };
+            }.Navigate((report) => new AuditReportPageDetails().SetEnvironment("report", report)); ;
         }
     }
     public class AuditReportPageDetails : View
@@ -60,15 +56,15 @@ namespace HotUI.Samples
             {
 
             };//.Frame(alignment:Alignment.Top);
-            if(report.HandledProperties.Count > 0)
+            if (report.HandledProperties.Count > 0)
             {
                 stack.Add(new Text("Handled Properties").FontSize(30));
-                foreach(var prop in report.HandledProperties)
+                foreach (var prop in report.HandledProperties)
                 {
                     stack.Add(new Text(prop).Color(Color.Green));
                 }
             }
-            if(report.UnHandledProperties.Count > 0)
+            if (report.UnHandledProperties.Count > 0)
             {
                 stack.Add(new Text("UnHandled Properties!").FontSize(30));
                 foreach (var prop in report.UnHandledProperties)
