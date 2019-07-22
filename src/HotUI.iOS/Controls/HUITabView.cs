@@ -42,7 +42,7 @@ namespace HotUI.iOS
         {
             base.MovedToSuperview();
             var vc = this.GetViewController();
-            vc.AddChildViewController(tabViewController);
+            vc?.AddChildViewController(tabViewController);
         }
         public override void RemoveFromSuperview()
         {

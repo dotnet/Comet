@@ -45,8 +45,7 @@ namespace HotUI.Samples {
 
 		public MainPage (List<MenuItem> additionalPage = null)
 		{
-            Title = "HotUI Samples";
-            
+            this.Title("Main Page");
             //This is only required since there is a parameter for the view
             HotReloadHelper.Register(this, additionalPage);
             if (additionalPage != null)
@@ -61,7 +60,7 @@ namespace HotUI.Samples {
                         new Text(page.Title),
                         new Spacer()
                     }.Frame(height:44).Padding(left:10),
-				}.OnSelected(page => Navigation.PerformNavigate(page.Page?.Invoke()))
+				}.OnSelected(page => Navigation.PerformNavigate(page.Page?.Invoke()?.Title(page.Title)))
 			};
             
         }
