@@ -115,22 +115,7 @@ namespace HotUI.iOS
                 bounds.Height -= safe.Top + safe.Bottom;
                 bounds.Width -= safe.Left + safe.Right;
 
-                var padding = _virtualView.GetPadding();
-                if (!padding.IsEmpty)
-                {
-                    bounds.X += padding.Left;
-                    bounds.Y += padding.Top;
-                    bounds.Width -= padding.HorizontalThickness;
-                    bounds.Height -= padding.VerticalThickness;
-                }
-
-                var sizeThatFits = _virtualView.Measure(bounds.Size.ToSizeF());
-                _virtualView.MeasuredSize = sizeThatFits;
-                _virtualView.MeasurementValid = true;
-                
-                var x = bounds.X + ((bounds.Width - sizeThatFits.Width) / 2) + padding.Left;
-                var y = bounds.Y + ((bounds.Height - sizeThatFits.Height) / 2) + padding.Top;
-                _virtualView.Frame = new RectangleF((float)x, (float)y, sizeThatFits.Width, sizeThatFits.Height);
+                _virtualView.SetFrameFromNativeView(bounds.ToRectangleF());
             }
         }
     }

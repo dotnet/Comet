@@ -100,6 +100,13 @@ namespace HotUI.Layout
                 else
                 {
                     var size = view.MeasuredSize;
+
+                    if (view.FrameConstraints?.Width != null)
+                        size.Width = Math.Min((float)view.FrameConstraints.Width, measured.Width);
+                    
+                    if (view.FrameConstraints?.Height != null)
+                        size.Height = Math.Min((float)view.FrameConstraints.Height, measured.Height);
+
                     sizes.Add(size);
                     height = Math.Max(size.Height, height);
                     nonSpacerWidth += size.Width + view.Padding.HorizontalThickness;
@@ -138,7 +145,7 @@ namespace HotUI.Layout
                 {
                     size = sizes[index];
                 }
-
+                
                 var alignment = view.FrameConstraints?.Alignment?.Vertical ?? _defaultAlignment;
                 var alignedY = y;
 

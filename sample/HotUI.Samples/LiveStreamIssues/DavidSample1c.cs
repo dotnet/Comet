@@ -1,6 +1,6 @@
 namespace HotUI.Samples.LiveStreamIssues
 {
-    public class DavidSample1 : View
+    public class DavidSample1c : View
     {
         [Body]
         View body() =>
@@ -10,7 +10,7 @@ namespace HotUI.Samples.LiveStreamIssues
                 {
                     new ShapeView(new Circle().Stroke(Color.Black, 2f))
                         .Frame(44,44)
-                }.Frame(44,44)
+                }
             };
     }
 }
