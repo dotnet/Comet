@@ -341,7 +341,7 @@ namespace HotUI
         FrameConstraints frameConstraints;
         public FrameConstraints FrameConstraints
         {
-            get => frameConstraints;
+            get => BuiltView?.FrameConstraints ?? frameConstraints;
             internal set => this.SetValue(State, ref frameConstraints, value, ResetPropertyString);
         }
         
@@ -458,7 +458,7 @@ namespace HotUI
                     xFactor = 0;
                     break;
                 case HorizontalAlignment.Trailing:
-                    xFactor *= 1;
+                    xFactor = 1;
                     break;
             }
 
@@ -466,7 +466,7 @@ namespace HotUI
             switch (alignment.Vertical)
             {            
                 case VerticalAlignment.Bottom:
-                    yFactor *= 1;
+                    yFactor = 1;
                     break;
                 case VerticalAlignment.Top:
                     yFactor = 0;
