@@ -208,7 +208,8 @@ namespace HotUI.iOS.Handlers
             if (Bounds.Size.IsEmpty)
                 return;
 
-            _view.Frame = Frame.ToRectangleF();
+            if (_view != null)
+                _view.Frame = Frame.ToRectangleF();
         }
     }
 }

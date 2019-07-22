@@ -29,7 +29,7 @@ namespace HotUI.Mac
             Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();
 			Registrar.Handlers.Register<View, ViewHandler> ();
 			Registrar.Handlers.Register<ContentView, ContentViewHandler> ();
-            Registrar.Handlers.Register<ListView, ListViewHandler>();
+            Registrar.Handlers.Register<ListView, ListViewHandler2>();
             Registrar.Handlers.Register<ViewRepresentable, ViewRepresentableHandler>();
 
             // Managed Layout
