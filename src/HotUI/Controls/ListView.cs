@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 
@@ -28,9 +29,28 @@ namespace HotUI
         public ListView(IList<T> list) : base()
         {
             List = list;
+            SetupObservable();
             CurrentViews.OnDequeue = (pair) => pair.Value?.Dispose();
         }
+        void SetupObservable()
+        {
+            if (!(List is ObservableCollection<T> observable))
+                return;
+            observable.CollectionChanged += Observable_CollectionChanged;
+        }
 
+        private void Observable_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ReloadData();
+        }
+
+        void DisposeObservable()
+        {
+            if (!(List is ObservableCollection<T> observable))
+                return;
+
+            observable.CollectionChanged -= Observable_CollectionChanged;
+        }
         public void Add(Func<T, View> cell)
         {
             if (Cell != null)
@@ -68,6 +88,7 @@ namespace HotUI
         {
             if (!disposing)
                 return;
+            DisposeObservable();
             var currentViews = CurrentViews.ToList();
             CurrentViews.Clear();
             currentViews.ForEach(x => x.Value?.Dispose());
@@ -154,6 +175,10 @@ namespace HotUI
             views.ForEach(v => v.Parent = parent);
         }
 
+        public void ReloadData()
+        {
+            ViewHandler?.UpdateValue(nameof(ReloadData), null);
+        }
 
         View IListView.ViewFor(int section, int row) => ViewFor(section, row);
 
