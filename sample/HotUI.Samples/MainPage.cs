@@ -21,6 +21,8 @@ namespace HotUI.Samples {
             new MenuItem("ClipSample_Fill", ()=> new ClipSample_Fill()),
             new MenuItem("ClipSample_None", ()=> new ClipSample_None()),
             new MenuItem("GridSample1", ()=> new GridSample1()),
+            new MenuItem("ProgressBarSample1", ()=> new ProgressBarSample1()),
+            new MenuItem("ProgressBarSample2", ()=> new ProgressBarSample2()),
             new MenuItem("SecureFieldSample1", ()=> new SecureFieldSample1()),
             new MenuItem("SecureFieldSample2", ()=> new SecureFieldSample2()),
             new MenuItem("SecureFieldSample3", ()=> new SecureFieldSample3()),
@@ -51,7 +53,8 @@ namespace HotUI.Samples {
 
 		public MainPage (List<MenuItem> additionalPage = null)
 		{
-            this.Title("Main Page");
+            Title = "HotUI Samples";
+
             //This is only required since there is a parameter for the view
             HotReloadHelper.Register(this, additionalPage);
             if (additionalPage != null)
@@ -68,7 +71,7 @@ namespace HotUI.Samples {
                     }.Frame(height:44).Padding(left:10),
 				}.OnSelected(page => Navigation.PerformNavigate(page.Page?.Invoke()?.Title(page.Title)))
 			};
-            
+
         }
 
     }
