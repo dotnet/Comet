@@ -196,7 +196,9 @@ namespace HotUI.iOS.Handlers
         }
 
         public override CGSize IntrinsicContentSize => _measured.ToCGSize();
-        
+
+        public bool AutoSafeArea => true;
+
         public override void LayoutSubviews()
         {
             if (Superview == null)

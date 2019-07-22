@@ -66,7 +66,9 @@ namespace HotUI.iOS.Handlers
             get => false;
             set { }
         }
-        
+
+        public virtual bool AutoSafeArea => true;
+
         public virtual SizeF Measure(SizeF availableSize)
         {
             return availableSize;

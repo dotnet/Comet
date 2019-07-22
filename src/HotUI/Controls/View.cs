@@ -34,13 +34,6 @@ namespace HotUI
             internal set => tag = value;
         }
 
-        string title;
-        public string Title
-        {
-            get => title ?? parent?.Title;
-            protected set => title = value;
-        }
-
         public View Parent
         {
             get => parent;
