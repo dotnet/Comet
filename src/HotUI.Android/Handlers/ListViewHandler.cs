@@ -70,8 +70,20 @@ namespace HotUI.Android.Handlers
             public override AView GetView(int position, AView convertView, ViewGroup parent)
             {
                 //TODO: Account for Section
-                var view = ListView?.ViewFor(0,position);
+                var view = ListView?.ViewFor(0,position);                
                 var cell = view?.ToView();
+
+                var displayMetrics = parent.Context.Resources.DisplayMetrics;
+                var density = displayMetrics.Density;
+              
+                var scaledSize = new SizeF(parent.Width / density, parent.Height / density);
+                var measuredSize = view.Measure(scaledSize);
+                view.MeasuredSize = measuredSize;
+                view.MeasurementValid = true;
+
+                cell.LayoutParameters = new ViewGroup.LayoutParams(parent.Width, (int)(measuredSize.Height* density));
+                cell.SetMinimumHeight((int)(measuredSize.Height * density));
+
                 return cell;
             }
         }

@@ -33,6 +33,12 @@ namespace HotUI.Android
             Registrar.Handlers.Register<HStack, HStackHandler>();
             Registrar.Handlers.Register<VStack, VStackHandler>();
 
+            // Managed Layouts
+            //Registrar.Handlers.Register<HStack, ManagedHStackHandler>();
+            //Registrar.Handlers.Register<VStack, ManagedVStackHandler>();
+            //Registrar.Handlers.Register<ZStack, ManagedZStackHandler>();
+            //Registrar.Handlers.Register<Grid, ManagedGridHandler>();
+
             // Modal SUpport
             ModalView.PerformPresent = ModalManager.ShowModal;
             ModalView.PerformDismiss = ModalManager.DismisModal;
