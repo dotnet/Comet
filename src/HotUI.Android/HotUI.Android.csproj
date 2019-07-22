@@ -81,6 +81,11 @@
     <Compile Include="Controls\NavigationViewWrapper.cs" />
     <Compile Include="Controls\ModalManager.cs" />
     <Compile Include="Handlers\SliderHandler.cs" />
+    <Compile Include="Handlers\AbstractLayoutHandler.cs" />
+    <Compile Include="Handlers\ManagedHStackHandler.cs" />
+    <Compile Include="Handlers\ManagedVStackHandler.cs" />
+    <Compile Include="Handlers\ManagedZStackHandler.cs" />
+    <Compile Include="Handlers\ManagedGridHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
