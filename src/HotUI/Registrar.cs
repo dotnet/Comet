@@ -17,13 +17,22 @@ namespace HotUI {
 			where TView : TType
 				where TRender : TTypeRender
 		{
-            Handler[typeof(TView)] = typeof(TRender);
+            Register(typeof(TView), typeof(TRender));
 		}
-		public TTypeRender GetRenderer<T> ()
+
+        public void Register(Type view, Type handler)
+        {
+            Handler[view] = handler;
+        }
+        public TTypeRender GetHandler<T> ()
 		{
-			return GetRenderer (typeof (T));
+			return GetHandler (typeof (T));
 		}
-		public TTypeRender GetRenderer (Type type)
+
+        internal List<Type> GetViewType(Type type) => Handler.Where(x => x.Value == type).Select(x=> x.Key).ToList();
+
+
+		public TTypeRender GetHandler (Type type)
 		{
 			List<Type> types = new List<Type> { type };
 			Type baseType = type.BaseType;

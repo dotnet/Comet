@@ -4,7 +4,8 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 
-namespace HotUI {
+namespace HotUI
+{
 
     public interface IListView
     {
@@ -19,15 +20,15 @@ namespace HotUI {
         void OnSelected(int section, int row);
     }
 
-	public class ListView<T> : ListView
+    public class ListView<T> : ListView
     {
         //TODO Evaluate if 30 is a good number
         FixedSizeDictionary<object, View> CurrentViews = new FixedSizeDictionary<object, View>(30);
         public readonly IList<T> List;
-        public ListView (IList<T> list) : base()
-		{
+        public ListView(IList<T> list) : base()
+        {
             List = list;
-                CurrentViews.OnDequeue = (pair) => pair.Value?.Dispose();
+            CurrentViews.OnDequeue = (pair) => pair.Value?.Dispose();
         }
 
         public void Add(Func<T, View> cell)
@@ -48,7 +49,7 @@ namespace HotUI {
         }
 
         public Func<T, View> Cell { get; set; }
-	
+
         protected override int RowCount() => List?.Count ?? 0;
         protected override View ViewFor(int index)
         {
@@ -95,47 +96,48 @@ namespace HotUI {
 
     }
 
-    public class ListView : View, IEnumerable, IEnumerable<View>, IListView {
+    public class ListView : View, IEnumerable, IEnumerable<View>, IListView
+    {
 
         List<View> views = new List<View>();
-		public ListView()
-		{
+        public ListView()
+        {
             ShouldDisposeView = false;
-		}
+        }
 
-		public virtual IEnumerator GetEnumerator () => views.GetEnumerator ();
+        public virtual IEnumerator GetEnumerator() => views.GetEnumerator();
 
-		public virtual void Add(View view)
-		{
+        public virtual void Add(View view)
+        {
             views.Add(view);
-		}
-        
+        }
+
 
         IEnumerator<View> IEnumerable<View>.GetEnumerator() => views.GetEnumerator();
 
-        protected virtual View ViewFor(int section,int row) => ViewFor(row);
+        protected virtual View ViewFor(int section, int row) => ViewFor(row);
         protected virtual View ViewFor(int index) => views[index];
 
         public Action<object> ItemSelected { get; set; }
         protected virtual void OnSelected(int section, int index) => OnSelected(index);
-        protected virtual void OnSelected (int index)
-		{
+        protected virtual void OnSelected(int index)
+        {
             var view = views[index];
-            if(view.IsDisposed)
+            if (view.IsDisposed)
             {
                 Console.WriteLine(":(");
             }
-            if(view is NavigationButton navigation)
+            if (view is NavigationButton navigation)
             {
                 navigation.Parent = this;
                 navigation.Navigate();
                 return;
             }
-           
-			ItemSelected?.Invoke (view);
-		}
+
+            ItemSelected?.Invoke(view);
+        }
         protected virtual int RowCount() => views.Count;
-		public void OnSelected (object item) => ItemSelected?.Invoke (item);
+        public void OnSelected(object item) => ItemSelected?.Invoke(item);
 
         protected override void Dispose(bool disposing)
         {
@@ -153,7 +155,7 @@ namespace HotUI {
         }
 
 
-        View IListView.ViewFor(int section, int row) => ViewFor(section,row);
+        View IListView.ViewFor(int section, int row) => ViewFor(section, row);
 
         View IListView.HeaderFor(int section) => HeaderFor(section);
 
@@ -176,7 +178,7 @@ namespace HotUI {
 
         protected virtual View HeaderFor(int section) => null;
         protected virtual View FooterFor(int section) => null;
-        protected bool ShouldDisposeView { get; set; }  = true;
+        protected bool ShouldDisposeView { get; set; } = true;
         bool IListView.ShouldDisposeViews { get => ShouldDisposeView; }
     }
 }

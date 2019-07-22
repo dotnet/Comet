@@ -69,12 +69,42 @@ namespace HotUI {
 
 		static Dictionary<string, Type> replacedViews = new Dictionary<string, Type> ();
 		static Dictionary<View, object []> currentViews = new Dictionary<View, object []> ();
+        static Dictionary<string, List<Type>> replacedHandlers = new Dictionary<string, List<Type>>();
 		public static void RegisterReplacedView(string oldViewType, Type newViewType)
 		{
 			if (!IsEnabled)
 				return;
-			replacedViews [oldViewType] = newViewType;
+            Console.WriteLine($"{oldViewType} - {newViewType}");
+            if(newViewType.IsSubclassOf(typeof(View)))
+			    replacedViews [oldViewType] = newViewType;
+            else if(typeof(IViewHandler).IsAssignableFrom(newViewType))
+            {
+
+                if(replacedHandlers.TryGetValue(oldViewType,out var vTypes))
+                {
+                    foreach(var vType in vTypes)
+                        Registrar.Handlers.Register(vType, newViewType);
+                    return;
+                }
+
+                var assemblies = System.AppDomain.CurrentDomain.GetAssemblies();
+                var t = assemblies.Select(x => x.GetType(oldViewType)).FirstOrDefault(x=> x != null);
+                var views = Registrar.Handlers.GetViewType(t);
+                if (views.Count == 0)
+                {
+                    var staticInit = newViewType.GetMethod("Init", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+
+                    staticInit.Invoke(null, null);
+                    views = Registrar.Handlers.GetViewType(t);
+                }
+                replacedHandlers[oldViewType] = views;
+                foreach (var h in views)
+                {
+                    Registrar.Handlers.Register(h, newViewType);
+                }
+            }
 		}
+       
 		public static void TriggerReload()
 		{
 			var roots = View.ActiveViews.Where (x => x.Parent == null).ToList();

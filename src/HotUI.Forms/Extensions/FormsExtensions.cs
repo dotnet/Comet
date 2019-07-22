@@ -45,7 +45,7 @@ namespace HotUI.Forms {
 			var handler = view.ViewHandler;
 			if (handler == null) {
 
-				handler = Registrar.Handlers.GetRenderer (view.GetType ()) as IViewHandler;
+				handler = Registrar.Handlers.GetHandler (view.GetType ()) as IViewHandler;
 				view.ViewHandler = handler;
 			}
 			return handler as FormsViewHandler;

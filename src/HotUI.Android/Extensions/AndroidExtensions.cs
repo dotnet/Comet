@@ -18,7 +18,7 @@ namespace HotUI.Android
             var handler = hotPage.ViewHandler;
             if (handler == null)
             {
-                handler = Registrar.Pages.GetRenderer(hotPage.GetType()) as IViewContainer;
+                handler = Registrar.Pages.GetHandler(hotPage.GetType()) as IViewContainer;
                 hotPage.ViewHandler = handler;
                 hotPage.ReBuildView();
             }
@@ -36,7 +36,7 @@ namespace HotUI.Android
             var handler = view.ViewHandler;
             if (handler == null)
             {
-                handler = Registrar.Handlers.GetRenderer(view.GetType()) as IViewHandler;
+                handler = Registrar.Handlers.GetHandler(view.GetType()) as IViewHandler;
                 view.ViewHandler = handler;
             }
 
