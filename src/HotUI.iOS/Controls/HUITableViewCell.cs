@@ -22,7 +22,7 @@ namespace HotUI.iOS.Controls
             if (_currentContent == null)
                 return;
 
-            _virtualView.Frame = ContentView.Bounds.ToRectangleF();
+            _virtualView.SetFrameFromNativeView(ContentView.Bounds.ToRectangleF());
         }
 
         public void SetView(View view, bool shouldDispose)

@@ -37,7 +37,7 @@ namespace HotUI.Mac.Controls
             base.Layout();
             if (_nativeView == null) return;
 
-            _nativeView.Frame = Bounds;
+            _virtualView.SetFrameFromNativeView(Bounds.ToRectangleF());
         }
     }
 }
