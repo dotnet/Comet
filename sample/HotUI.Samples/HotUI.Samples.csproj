@@ -20,5 +20,6 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="1.68.0" />
+    <PackageReference Include="HotUI.Reload" Version="0.0.7-alpha" />
   </ItemGroup>
 </Project>
