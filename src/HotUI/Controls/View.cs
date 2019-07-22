@@ -501,7 +501,8 @@ namespace HotUI
 
         public virtual void LayoutSubviews(RectangleF bounds)
         {
-            BuiltView.Frame = bounds;
+            if (BuiltView != null)
+                BuiltView.Frame = bounds;
         }
     }
 }

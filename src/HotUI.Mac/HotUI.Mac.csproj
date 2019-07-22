@@ -88,7 +88,6 @@
     <Compile Include="Controls\NSNavigationController.cs" />
     <Compile Include="Controls\NSColorView.cs" />
     <Compile Include="Handlers\ContentViewHandler.cs" />
-    <Compile Include="Handlers\ListViewHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />
     <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Services\MacFontService.cs" />
@@ -103,7 +102,7 @@
     <Compile Include="Controls\HUIShapeView.cs" />
     <Compile Include="Controls\HUITableView.cs" />
     <Compile Include="Controls\HUITableViewSource.cs" />
-    <Compile Include="Handlers\ListViewHandler2.cs" />
+    <Compile Include="Handlers\ListViewHandler.cs" />
     <Compile Include="Controls\HUITableViewCell.cs" />
   </ItemGroup>
   <ItemGroup>
