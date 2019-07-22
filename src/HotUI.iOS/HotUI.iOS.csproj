@@ -91,6 +91,7 @@
     <Compile Include="Handlers\TabViewHandler.cs" />
     <Compile Include="Controls\HUITabView.cs" />
     <Compile Include="Graphics\UIImageBitmap.cs" />
+    <Compile Include="Controls\HUITapGestures.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">
