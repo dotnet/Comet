@@ -1,4 +1,5 @@
 # HotUI
+[![Gitter](https://badges.gitter.im/Clancey-HotUI/community.svg)](https://gitter.im/Clancey-HotUI/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 What is HotUI? HotUI is a prototype for a new UI Framework/Pattern to write app UI.  It follows the Model View Update (MVU) pattern. It magically databinds for you!  
 
