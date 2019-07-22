@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 
@@ -40,6 +41,7 @@ namespace HotUI
                 CurrentViews = new Dictionary<object, View>();
 
             List = list;
+            SetupObservable();
         }
 
         public void Add(Func<T, View> cell)
@@ -81,10 +83,34 @@ namespace HotUI
         protected override View HeaderView() => Header;
         protected override View FooterView() => Footer;
 
+        void SetupObservable()
+        {
+            if (!(List is ObservableCollection<T> observable))
+                return;
+            observable.CollectionChanged += Observable_CollectionChanged;
+        }
+	
+        private void Observable_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ReloadData();
+        }
+        
+        void DisposeObservable()
+        {
+            if (!(List is ObservableCollection<T> observable))
+                return;
+	
+            observable.CollectionChanged -= Observable_CollectionChanged;
+        }
+
+        
         protected override void Dispose(bool disposing)
         {
             if (!disposing)
                 return;
+            
+            DisposeObservable();
+            
             var currentViews = CurrentViews.ToList();
             CurrentViews.Clear();
             currentViews.ForEach(x => x.Value?.Dispose());
@@ -157,6 +183,7 @@ namespace HotUI
         protected virtual int RowCount() => views.Count;
         public void OnSelected(object item) => ItemSelected?.Invoke(item);
 
+        
         protected override void Dispose(bool disposing)
         {
             views.ForEach(v => v.Dispose());
@@ -172,6 +199,10 @@ namespace HotUI
             views.ForEach(v => v.Parent = parent);
         }
 
+        public void ReloadData()
+        {
+            ViewHandler?.UpdateValue(nameof(ReloadData), null);
+        }
 
         View IListView.ViewFor(int section, int row) => ViewFor(section, row);
 
