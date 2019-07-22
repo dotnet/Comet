@@ -57,7 +57,8 @@ namespace HotUI.UWP.Handlers
 
         private void HandleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            VirtualView?.OnSelected(TypedNativeView.SelectedIndex);
+            var item = VirtualView.ItemAt(0,TypedNativeView.SelectedIndex);
+            VirtualView?.OnSelected(item);
         }
     }
 
@@ -65,7 +66,17 @@ namespace HotUI.UWP.Handlers
     {
         public ListViewHandlerItem(ListViewHandler handler, View view)
         {
-            Content = view?.ToView();
+            RemoveViewHandlers(view);
+            var nativeView = new HUIListCell(view);
+            Content = nativeView;
+        }
+
+        private void RemoveViewHandlers(View view)
+        {
+            view.ViewHandler = null;
+            if (view is AbstractLayout layout)
+                foreach (var subview in layout)
+                    RemoveViewHandlers(subview);
         }
     }
 }

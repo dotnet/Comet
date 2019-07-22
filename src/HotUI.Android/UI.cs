@@ -46,6 +46,7 @@ namespace HotUI.Android
             // Device Services
             Device.PerformInvokeOnMainThread = (a) => AndroidContext.CurrentContext.RunOnUiThread(a);
             Device.GraphicsService = new AndroidGraphicsService();
+            Device.BitmapService = new AndroidBitmapService();
         }
     }
 }

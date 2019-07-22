@@ -1,45 +1,26 @@
 using System;
-using System.Diagnostics;
 using CoreGraphics;
 using AppKit;
+using HotUI.Graphics;
 
 namespace HotUI.Mac.Controls
 {
     public class HUIImageView : NSImageView
     {
-        private string _source;
+        private Bitmap _bitmap;
         
         public HUIImageView(CGRect frame) : base(frame)
         {
             
         }
 
-        public string Source
+        public Bitmap Bitmap
         {
-            get => _source;
-            set => UpdateSource(value);
-        }
-        
-        private async void UpdateSource(string source)
-        {
-            if (source == _source)
-                return;
-            
-            _source = source;
-            try
+            get => _bitmap;
+            set
             {
-                var image = await source.LoadImage();
-                if (source == _source)
-                {
-                    Console.WriteLine(Bounds);
-                    Image = image;
-                    SizeToFit();
-                    Console.WriteLine(Bounds);
-                }
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
+                _bitmap = value;
+                Image = _bitmap?.NativeBitmap as NSImage;
             }
         }
 

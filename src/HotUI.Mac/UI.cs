@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using HotUI.iOS.Services;
 using HotUI.Mac.Handlers;
 using HotUI.Mac.Services;
 
@@ -43,6 +44,7 @@ namespace HotUI.Mac
             Device.PerformInvokeOnMainThread = _invoker.BeginInvokeOnMainThread;
             Device.FontService = new MacFontService();
             Device.GraphicsService = new MacGraphicsService();
+            Device.BitmapService = new MacBitmapService();
         }
     }
 }
