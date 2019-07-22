@@ -3,10 +3,6 @@ namespace HotUI.Samples
 {
     public class TabViewSample : View
     {
-        public TabViewSample()
-        {
-            this.Title = "TabView sample";
-        }
 
         [Body]
         View body() => new TabView
