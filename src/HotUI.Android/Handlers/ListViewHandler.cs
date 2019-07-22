@@ -54,6 +54,10 @@ namespace HotUI.Android.Handlers
 
         public void UpdateValue(string property, object value)
         {
+            if(nameof(ListView.ReloadData) == property)
+            {
+                (this.Adapter as ListViewAdapter)?.NotifyDataSetChanged();
+            }
         }
 
         class ListViewAdapter : BaseAdapter<object>

@@ -13,6 +13,7 @@ namespace HotUI.iOS.Controls
         private CAShapeLayer _maskLayer;
         private CGSize _size;
         private CGSize _intrinsicContentSize;
+        private Shape _clipShape;
         
         public HUIContainerView()
         {
@@ -30,16 +31,28 @@ namespace HotUI.iOS.Controls
                 {
                     if (!_size.Equals(value.Size))
                     {
-                        var fx = value.Size.Width / _size.Width;
-                        var fy = value.Size.Height / _size.Height;
-                        var transform = CGAffineTransform.MakeScale(fx, fy);
-                        var path = _shadowLayer?.Path ?? _maskLayer?.Path;
-                        var transformedPath = path?.CopyByTransformingPath(transform);
-                        if (_shadowLayer != null)
-                            _shadowLayer.Path = transformedPath;
+                        if (_clipShape != null)
+                        {
+                            var path = _clipShape.PathForBounds(value.ToRectangleF());
+                            if (_shadowLayer != null)
+                                _shadowLayer.Path = path.ToCGPath();
 
-                        if (_maskLayer != null)
-                            _maskLayer.Path = transformedPath;
+                            if (_maskLayer != null)
+                                _maskLayer.Path = path.ToCGPath();
+                        }
+                        else
+                        {
+                            var fx = value.Size.Width / _size.Width;
+                            var fy = value.Size.Height / _size.Height;
+                            var transform = CGAffineTransform.MakeScale(fx, fy);
+                            var path = _shadowLayer?.Path ?? _maskLayer?.Path;
+                            var transformedPath = path?.CopyByTransformingPath(transform);
+                            if (_shadowLayer != null)
+                                _shadowLayer.Path = transformedPath;
+
+                            if (_maskLayer != null)
+                                _maskLayer.Path = transformedPath;
+                        }
                     }
                 }
 
@@ -56,6 +69,7 @@ namespace HotUI.iOS.Controls
                 {
                     ShadowLayer = null;
                     MaskLayer = null;
+                    ClipShape = null;
                     _mainView.RemoveFromSuperview();
                 }
 
@@ -146,6 +160,12 @@ namespace HotUI.iOS.Controls
                 if (_mainView != null)
                     _mainView.Layer.Mask = value;
             }
+        }
+        
+        public Shape ClipShape
+        {
+            get => _clipShape;
+            set { _clipShape = value; }
         }
     }
 }

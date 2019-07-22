@@ -1,5 +1,6 @@
 ﻿using System;
 using HotUI;
+using HotUI.Graphics;
 using fLayoutOptions = Xamarin.Forms.LayoutOptions;
 namespace HotUI.Forms {
 	public static class ControlsExtensions {
@@ -43,27 +44,24 @@ namespace HotUI.Forms {
 		public static void UpdateProperties (this Xamarin.Forms.Image fView, Image view)
 		{
 			fView.UpdateBaseProperties (view);
-			fView.Source = view.Source.ToImageSource ();
+			fView.Source = view.Bitmap.ToImageSource ();
 		}
 
 		public static bool UpdateProperty (this Xamarin.Forms.Image fView, string property, object value)
 		{
 			switch (property) {
-			case nameof (Image.Source):
-				fView.Source = (value as string).ToImageSource ();
+			case nameof (Image.Bitmap):
+				fView.Source = (value as Bitmap).ToImageSource ();
 				return true;
 			}
 			return fView.UpdateBaseProperty (property, value);
 		}
 
-		public static Xamarin.Forms.ImageSource ToImageSource (this string source)
+		public static Xamarin.Forms.ImageSource ToImageSource (this Bitmap bitmap)
 		{
-			if (string.IsNullOrWhiteSpace (source)) {
-				return null;
-			}
-			object s = source;
-			var successs = HotUI.Internal.BindingExpression.TryConvert (ref s, Xamarin.Forms.Image.SourceProperty, typeof (Xamarin.Forms.ImageSource), true);
-			if (successs)
+			object s = bitmap;
+			var success = HotUI.Internal.BindingExpression.TryConvert (ref s, Xamarin.Forms.Image.SourceProperty, typeof (Xamarin.Forms.ImageSource), true);
+			if (success)
 				return (Xamarin.Forms.ImageSource)s;
 			else
 				throw new Exception ("Source cannot be converted to an ImageSource");

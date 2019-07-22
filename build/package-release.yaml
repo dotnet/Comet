@@ -167,6 +167,13 @@ stages:
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'HotUI.nuspec'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'v$(VERSION)-beta'
+
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
@@ -196,6 +203,23 @@ stages:
       displayName: 'NuGet restore'
       inputs:
         restoreSolution: build/HotUI-Windows.sln
+
+    - task: Bash@3
+      displayName: 'Version Script'
+      inputs:
+        targetType: 'inline'
+        script: |
+          echo '$(Build_BuildID)' $BUILD_BUILDID
+                  BUILDNUMBER=$BUILD_BUILDID
+                  VERSION=1.0.$BUILDNUMBER
+                  echo 'VERSION ' $VERSION
+                  
+                  #if ! [ $BRANCH = master ]; then
+                  #   VERSION=1.0.$BUILDNUMBER
+                  #    echo "##vso[build.updatebuildnumber]$VERSION"
+                  #fi;
+                  
+                  echo "##vso[task.setvariable variable=Version]$VERSION"
 
     - task: MSBuild@1
       displayName: 'Build HotUI.UWP'
@@ -269,6 +293,13 @@ stages:
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
+    - task: NuGetCommand@2
+      inputs:
+        command: 'pack'
+        packagesToPack: 'HotUI.nuspec'
+        versioningScheme: 'byEnvVar'
+        versionEnvVar: 'v$(VERSION)-beta'
+
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
@@ -324,6 +355,13 @@ stages:
         artifactName: 'drop_nuget_windows'
         downloadPath: '$(System.ArtifactsDirectory)'
 
+    - task: NuGetCommand@2
+      inputs:
+        command: 'push'
+        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+        nuGetFeedType: 'external'
+        publishFeedCredentials: 'ClanceyNugetFeed'
+
     - task: GitHubRelease@0
       inputs:
         gitHubConnection: 'GitHubRelease'
@@ -338,5 +376,3 @@ stages:
           $(System.ArtifactsDirectory)/**/drop_nuget_windows/*.nupkg
         addChangeLog: false
         isDraft: true
-
-    

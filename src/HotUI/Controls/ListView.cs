@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 
@@ -13,6 +14,7 @@ namespace HotUI
         int Rows(int section);
         View FooterView();
         View HeaderView();
+        object ItemAt(int section, int row);
         View ViewFor(int section, int row);
         View HeaderFor(int section);
         View FooterFor(int section);
@@ -23,12 +25,23 @@ namespace HotUI
     public class ListView<T> : ListView
     {
         //TODO Evaluate if 30 is a good number
-        FixedSizeDictionary<object, View> CurrentViews = new FixedSizeDictionary<object, View>(30);
+        IDictionary<object, View> CurrentViews { get; }
         public readonly IList<T> List;
+
         public ListView(IList<T> list) : base()
         {
+            if (HandlerSupportsVirtualization)
+            {
+                CurrentViews = new FixedSizeDictionary<object, View>(30)
+                {
+                    OnDequeue = (pair) => pair.Value?.Dispose()
+                };
+            }
+            else
+                CurrentViews = new Dictionary<object, View>();
+
             List = list;
-            CurrentViews.OnDequeue = (pair) => pair.Value?.Dispose();
+            SetupObservable();
         }
 
         public void Add(Func<T, View> cell)
@@ -61,13 +74,43 @@ namespace HotUI
             }
             return view;
         }
+
+        public override object ItemAt(int section, int row)
+        {
+            return List[row];
+        }
+
         protected override View HeaderView() => Header;
         protected override View FooterView() => Footer;
 
+        void SetupObservable()
+        {
+            if (!(List is ObservableCollection<T> observable))
+                return;
+            observable.CollectionChanged += Observable_CollectionChanged;
+        }
+	
+        private void Observable_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            ReloadData();
+        }
+        
+        void DisposeObservable()
+        {
+            if (!(List is ObservableCollection<T> observable))
+                return;
+	
+            observable.CollectionChanged -= Observable_CollectionChanged;
+        }
+
+        
         protected override void Dispose(bool disposing)
         {
             if (!disposing)
                 return;
+            
+            DisposeObservable();
+            
             var currentViews = CurrentViews.ToList();
             CurrentViews.Clear();
             currentViews.ForEach(x => x.Value?.Dispose());
@@ -98,6 +141,7 @@ namespace HotUI
 
     public class ListView : View, IEnumerable, IEnumerable<View>, IListView
     {
+        public static bool HandlerSupportsVirtualization { get; set; } = true;
 
         List<View> views = new List<View>();
         public ListView()
@@ -139,6 +183,7 @@ namespace HotUI
         protected virtual int RowCount() => views.Count;
         public void OnSelected(object item) => ItemSelected?.Invoke(item);
 
+        
         protected override void Dispose(bool disposing)
         {
             views.ForEach(v => v.Dispose());
@@ -154,6 +199,10 @@ namespace HotUI
             views.ForEach(v => v.Parent = parent);
         }
 
+        public void ReloadData()
+        {
+            ViewHandler?.UpdateValue(nameof(ReloadData), null);
+        }
 
         View IListView.ViewFor(int section, int row) => ViewFor(section, row);
 
@@ -178,6 +227,12 @@ namespace HotUI
 
         protected virtual View HeaderFor(int section) => null;
         protected virtual View FooterFor(int section) => null;
+
+        public virtual object ItemAt(int section, int row)
+        {
+            return views[row];
+        }
+
         protected bool ShouldDisposeView { get; set; } = true;
         bool IListView.ShouldDisposeViews { get => ShouldDisposeView; }
     }

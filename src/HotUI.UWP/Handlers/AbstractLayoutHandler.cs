@@ -110,12 +110,12 @@ namespace HotUI.UWP.Handlers
 
         protected override UwpSize MeasureOverride(UwpSize availableSize)
         {
-            return _view.Measure(availableSize.ToSizeF()).ToSize();
+            return _view?.Measure(availableSize.ToSizeF()).ToSize() ?? availableSize;
         }
 
         protected override UwpSize ArrangeOverride(UwpSize finalSize)
         {
-            if (finalSize.Width > 0 && finalSize.Height > 0)
+            if (finalSize.Width > 0 && finalSize.Height > 0 && _view != null)
                 _view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
 
             return finalSize;

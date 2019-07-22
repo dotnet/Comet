@@ -12,7 +12,7 @@ namespace HotUI.Mac.Handlers
     {
         public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>(ViewHandler.Mapper)
         {
-            [nameof(Image.Source)] = MapSourceProperty
+            [nameof(Image.Bitmap)] = MapBitmapProperty
         };
         
         public ImageHandler() : base(Mapper)
@@ -30,10 +30,11 @@ namespace HotUI.Mac.Handlers
             
         }
 
-        public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)
+        public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
         {
             var nativeView = (HUIImageView) viewHandler.NativeView;
-            nativeView.Source = virtualView.Source;
+            nativeView.Bitmap = virtualView.Bitmap;
+            virtualView.InvalidateMeasurement();
         }
     }
 }

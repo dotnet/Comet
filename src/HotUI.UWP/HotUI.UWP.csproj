@@ -120,6 +120,8 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls\HUIListCell.cs" />
+    <Compile Include="Graphics\UWPBitmap.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Controls\HUIContainerView.cs" />
     <Compile Include="GraphicsExtensions.cs" />
@@ -129,6 +131,7 @@
     <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />
     <Compile Include="Handlers\ManagedVStackHandler.cs" />
+    <Compile Include="Handlers\ManagedGridHandler.cs" />
     <Compile Include="HotUIPage.xaml.cs">
       <DependentUpon>HotUIPage.xaml</DependentUpon>
     </Compile>
@@ -146,6 +149,7 @@
     <Compile Include="Handlers\ViewHandler.cs" />
     <Compile Include="Handlers\VStackHandler.cs" />
     <Compile Include="HotUIView.cs" />
+    <Compile Include="Services\UWPBitmapService.cs" />
     <Compile Include="UWPViewHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.cs" />
@@ -156,6 +160,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.8</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading">
+      <Version>2.4.11.982</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
