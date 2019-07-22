@@ -82,9 +82,6 @@ namespace HotUI.Mac.Handlers
                 if (subview.ViewHandler is MacViewHandler handler)
                     handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
             }
-            
-            foreach (var subview in Subviews)
-                subview.RemoveFromSuperview();
 
             if (view != null)
             {
@@ -239,7 +236,8 @@ namespace HotUI.Mac.Handlers
             if (Bounds.Size.IsEmpty)
                 return;
 
-            _view.Frame = Frame.ToRectangleF();
+            if (_view != null)
+                _view.Frame = Frame.ToRectangleF();
         }
     }
 }

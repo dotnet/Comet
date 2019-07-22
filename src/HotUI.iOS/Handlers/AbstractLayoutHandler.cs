@@ -82,9 +82,6 @@ namespace HotUI.iOS.Handlers
                     handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
             }
 
-            foreach (var subview in Subviews)
-                subview.RemoveFromSuperview();
-
             _view.NeedsLayout -= HandleNeedsLayout;
             _view.ChildrenChanged -= HandleChildrenChanged;
             _view.ChildrenAdded -= HandleChildrenAdded;
@@ -208,7 +205,8 @@ namespace HotUI.iOS.Handlers
             if (Bounds.Size.IsEmpty)
                 return;
 
-            _view.Frame = Frame.ToRectangleF();
+            if (_view != null)
+                _view.Frame = Frame.ToRectangleF();
         }
     }
 }
