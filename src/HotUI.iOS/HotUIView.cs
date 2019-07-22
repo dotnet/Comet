@@ -86,11 +86,14 @@ namespace HotUI.iOS
             if (newNativeView == _nativeView)
                 return;
 
+            var _previousFrame = _nativeView?.Frame;
             _nativeView?.RemoveFromSuperview();
             _nativeView = newNativeView;
 
             if (newNativeView != null)
             {
+                if (_previousFrame != null)
+                    newNativeView.Frame =  (CGRect)_previousFrame;
                 AddSubview(newNativeView);
                 SetNeedsLayout();
             }

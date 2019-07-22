@@ -31,8 +31,7 @@ namespace HotUI
         
         public static Thickness GetPadding(this View view)
         {
-            return view.Padding;
-            ;
+            return view?.Padding ?? Thickness.Empty;
         }
 
         public static T Overlay<T>(this T view, View overlayView) where T : View
