@@ -46,7 +46,7 @@ namespace HotUI.Samples
 
 
         [Body]
-        View body() => new VStack(sizing: Sizing.Fill)
+        View body() => new VStack()
         {
             new Spacer(),
             TitleText("Card Number"),
@@ -69,7 +69,7 @@ namespace HotUI.Samples
             HRule(),
             new Button("Purchase for $200"),
             new Spacer(),
-        };
+        }.FillHorizontal();
 
         View HRule()
         {
