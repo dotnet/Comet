@@ -321,7 +321,7 @@ namespace HotUI
             builtView?.Dispose();
             builtView = null;
             Body = null;
-            Context.Clear();
+            Context(false)?.Clear();
             State?.DisposingObject(this);
             State = null;
 
