@@ -9,7 +9,7 @@ namespace HotUI.Samples
         readonly State<string> name2 = "";
 
         [Body]
-        View body() => new VStack
+        View body() => new VStack(sizing:Sizing.Fill)
         {
             new TextField(null, "Name", name1, name2),
             new HStack()

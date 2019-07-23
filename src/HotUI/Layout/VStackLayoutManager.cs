@@ -7,13 +7,16 @@ namespace HotUI.Layout
     {
         private readonly HorizontalAlignment _defaultAlignment;
         private readonly float _spacing;
+        private readonly Sizing _sizing;
         
         public VStackLayoutManager(
             HorizontalAlignment alignment = HorizontalAlignment.Center, 
-            float? spacing = null)
+            float? spacing = null,
+            Sizing sizing = Sizing.Fit)
         {
             _defaultAlignment = alignment;
             _spacing = spacing ?? 4;
+            _sizing = sizing;
         }
 
         public void Invalidate()
@@ -75,6 +78,9 @@ namespace HotUI.Layout
             if (spacerCount > 0)
                 height = available.Height;
 
+            if (_sizing == Sizing.Fill)
+                width = available.Width;
+            
             return new SizeF(width, height);
         }
 
@@ -171,6 +177,12 @@ namespace HotUI.Layout
                     y += _spacing;
                 
                 y += padding.Top;
+
+                if (_sizing == Sizing.Fill)
+                {
+                    alignedX = padding.Left;
+                    size.Width = measured.Width - padding.HorizontalThickness;
+                }
 
                 view.Frame = new RectangleF(alignedX, y, size.Width, size.Height);
                 

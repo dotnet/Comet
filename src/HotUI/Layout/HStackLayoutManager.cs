@@ -7,13 +7,16 @@ namespace HotUI.Layout
     {
         private readonly VerticalAlignment _defaultAlignment;
         private readonly float _spacing;
+        private readonly Sizing _sizing;
 
         public HStackLayoutManager(
             VerticalAlignment alignment, 
-            float? spacing)
+            float? spacing,
+            Sizing sizing = Sizing.Fit)
         {
             _defaultAlignment = alignment;
             _spacing = spacing ?? 4;
+            _sizing = sizing;
         }
 
         public void Invalidate()
@@ -74,6 +77,9 @@ namespace HotUI.Layout
             if (spacerCount > 0)
                 width = available.Width;
 
+            if (_sizing == Sizing.Fill)
+                height = available.Height;
+            
             return new SizeF(width, height);
         }
 

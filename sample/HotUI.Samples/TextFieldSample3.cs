@@ -17,7 +17,7 @@ namespace HotUI.Samples
         [State] private readonly MyBindingObject _state = new MyBindingObject {Text = "Edit Me"};
 
         [Body]
-        View Build() => new VStack
+        View Build() => new VStack(sizing:Sizing.Fill)
         {
             new TextField(_state.BindingFor(v => v.Text), "Name"),
             new HStack()

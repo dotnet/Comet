@@ -8,7 +8,7 @@ namespace HotUI.Samples
         readonly State<string> _textValue = "Edit Me";
 
         [Body]
-        View body() => new VStack
+        View body() => new VStack(sizing:Sizing.Fill)
         {
             new TextField(_textValue, "Name"),
             new HStack()
