@@ -6,6 +6,8 @@ namespace HotUI.iOS
 {
     public class HUIShapeView : UIView
     {
+        private Shape _shape;
+        
         public HUIShapeView()
         {
             BackgroundColor = UIColor.Clear;
@@ -13,8 +15,12 @@ namespace HotUI.iOS
 
         public Shape Shape
         {
-            get;
-            internal set;
+            get => _shape;
+            internal set
+            {
+                _shape = value;
+                SetNeedsDisplay();
+            }
         }
 
         public override void Draw(CGRect rect)

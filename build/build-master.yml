@@ -191,12 +191,12 @@ stages:
         configuration: '$(BuildConfiguration)'
         createAppPackage: false
 
-    - task: XamarinAndroid@1
-      displayName: 'Build HotUI.Forms.Android.Sample App'
-      inputs:
-        projectFile: sample/Forms/HotUI.Forms.Sample.Android/HotUI.Forms.Sample.Android.csproj
-        configuration: '$(BuildConfiguration)'
-        createAppPackage: false
+    # - task: XamarinAndroid@1
+    #   displayName: 'Build HotUI.Forms.Android.Sample App'
+    #   inputs:
+    #     projectFile: sample/Forms/HotUI.Forms.Sample.Android/HotUI.Forms.Sample.Android.csproj
+    #     configuration: '$(BuildConfiguration)'
+    #     createAppPackage: false
 
   - job: BuildHotUISamplesiOSMac
     displayName: Build HoTUI iOS and Mac Samples

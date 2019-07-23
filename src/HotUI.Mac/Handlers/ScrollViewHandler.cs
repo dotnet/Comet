@@ -29,7 +29,12 @@ namespace HotUI.Mac.Handlers
 
         public override void Remove(View view)
         {
+            if (VirtualView?.View != null)
+                VirtualView.View.NeedsLayout -= HandleViewNeedsLayout;
+
             _content?.RemoveFromSuperview();
+            _content = null;
+
             base.Remove(view);
         }
         
@@ -41,13 +46,32 @@ namespace HotUI.Mac.Handlers
             _content = scroll?.View?.ToView();
             if (_content != null)
             {
-                //todo: fix this.  This is a hack to get the content to show up in the scrollview
-                if (_content.Bounds.Width <= 0 && _content.Bounds.Height <= 0)
-                    _content.Frame = new CoreGraphics.CGRect(0,0,800,600);
+                if (VirtualView?.View != null)
+                    VirtualView.View.NeedsLayout += HandleViewNeedsLayout;
 
-                var scrollView = (NSScrollView) NativeView;
-                scrollView.DocumentView = _content;
+                var measuredSize = VirtualView.View.Measure(new SizeF(float.PositiveInfinity, float.PositiveInfinity));
+                if (_content.Bounds.Width <= 0 && _content.Bounds.Height <= 0)
+                    _content.Frame = new CoreGraphics.CGRect(0,0,measuredSize.Width,measuredSize.Height);
+
+                TypedNativeView.DocumentView = _content;
             }
+
+            if (VirtualView.Orientation == Orientation.Horizontal)
+            {
+                TypedNativeView.HasVerticalScroller = false;
+                TypedNativeView.HasHorizontalScroller = true;
+                TypedNativeView.HorizontalScrollElasticity = NSScrollElasticity.Automatic;
+            }
+            else
+            {
+                TypedNativeView.HasVerticalScroller = true;
+                TypedNativeView.HasHorizontalScroller = false;
+            }
+        }
+        
+        private void HandleViewNeedsLayout(object sender, EventArgs e)
+        {
+            _content.NeedsLayout = true;
         }
     }
 }

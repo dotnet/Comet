@@ -96,11 +96,18 @@ namespace HotUI.Layout
                 {
                     spacerCount++;
                     isSpacer = true;
-                    sizes.Add(new SizeF());
+                    sizes.Add(new SizeF());    
                 }
                 else
                 {
                     var size = view.MeasuredSize;
+                    
+                    if (view.FrameConstraints?.Width != null)
+                        size.Width = Math.Min((float)view.FrameConstraints.Width, measured.Width);
+                    
+                    if (view.FrameConstraints?.Height != null)
+                        size.Height = Math.Min((float)view.FrameConstraints.Height, measured.Height);
+                    
                     sizes.Add(size);
                     width = Math.Max(size.Width, width);
                     nonSpacerHeight += size.Height + view.Padding.VerticalThickness;

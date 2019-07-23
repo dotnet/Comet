@@ -12,10 +12,9 @@ namespace HotUI.Samples
         [Body]
         View body()
         {
-            if (isLoading)
-                return new Text(() => "Loading...");
-            if (reports.Value.Count == 0)
-                return new Button(() => "Generate Report", async () =>
+            if (isLoading) return new Text(() => "Loading...");
+            
+            if (reports.Value.Count == 0) return new Button(() => "Generate Report", async () =>
                    {
                        isLoading.Value = true;
                        try
@@ -28,6 +27,7 @@ namespace HotUI.Samples
                            isLoading.Value = false;
                        }
                    });
+            
             return new ListView<ApiAuditManager.AuditReport>(reports.Value)
             {
                 Cell = (report) => new HStack()

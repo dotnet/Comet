@@ -29,14 +29,26 @@ namespace HotUI.UWP
                 if (_handler is ViewHandler oldViewHandler)
                     oldViewHandler.NativeViewChanged -= HandleNativeViewChanged;
 
+                if (_view != null)
+                    _view.NeedsLayout -= LayoutChanged;
+
                 _view = value;
                 _handler = _view?.ViewHandler;
+
+                if (_view != null)
+                    _view.NeedsLayout += LayoutChanged;
 
                 if (_handler is ViewHandler newViewHandler)
                     newViewHandler.NativeViewChanged += HandleNativeViewChanged;
 
                 HandleNativeViewChanged(this, null);
             }
+        }
+
+        private void LayoutChanged(object sender, EventArgs e)
+        {
+            InvalidateMeasure();
+            InvalidateArrange();
         }
 
         private void HandleNativeViewChanged(object sender, ViewChangedEventArgs e)

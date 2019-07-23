@@ -1,0 +1,36 @@
+﻿using System.Threading;
+
+namespace HotUI.Samples
+{
+    public class ProgressBarSample1 : View
+    {
+        readonly State<double> percentage = new State<double>(10);
+        private readonly Timer _timer;
+
+        public ProgressBarSample1()
+        {
+            _timer = new Timer(state =>
+            {
+                var p = (State<double>)state;
+                Device.InvokeOnMainThread(() =>
+                {
+                    var current = p.Value;
+                    var value = current < 101 ? current + 1 : 0;
+
+                    p.Value = value;
+                });
+            }, percentage, 100, 100);
+        }
+
+        [Body]
+        View body() => new ProgressBar(percentage);
+
+        protected override void Dispose(bool disposing)
+        {
+            base.Dispose(disposing);
+
+            // TODO: Stop when lifecycle events for views are available
+            _timer.Dispose();
+        }
+    }
+}

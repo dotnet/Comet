@@ -33,7 +33,7 @@ namespace HotUI.iOS.Controls
                     {
                         if (_clipShape != null)
                         {
-                            var path = _clipShape.PathForBounds(value.ToRectangleF());
+                            var path = _clipShape.PathForBounds(new RectangleF(0,0,(float)value.Width, (float)value.Height));
                             if (_shadowLayer != null)
                                 _shadowLayer.Path = path.ToCGPath();
 
@@ -55,7 +55,7 @@ namespace HotUI.iOS.Controls
                         }
                     }
                 }
-
+                
                 _size = value.Size;
             }
         }
@@ -165,7 +165,7 @@ namespace HotUI.iOS.Controls
         public Shape ClipShape
         {
             get => _clipShape;
-            set { _clipShape = value; }
+            set => _clipShape = value;
         }
     }
 }
