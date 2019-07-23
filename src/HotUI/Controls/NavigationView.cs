@@ -17,5 +17,21 @@ namespace HotUI {
 				view.Parent = this;
 			}
 		}
-	}
+
+        public static void Navigate(View fromView, View view)
+        {
+            if (view is ModalView modal)
+            {
+                ModalView.Present(modal.Content);
+            }
+            else if (fromView.Navigation != null)
+            {
+                fromView.Navigation.Navigate(view);
+            }
+            else
+            {
+                ModalView.Present(view);
+            }
+        }
+    }
 }

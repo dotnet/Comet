@@ -88,6 +88,7 @@
     <Compile Include="Handlers\ManagedVStackHandler.cs" />
     <Compile Include="Handlers\ManagedZStackHandler.cs" />
     <Compile Include="Handlers\ManagedGridHandler.cs" />
+    <Compile Include="Controls\HUITouchGesterListener.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

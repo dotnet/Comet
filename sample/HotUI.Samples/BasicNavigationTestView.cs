@@ -10,7 +10,9 @@ namespace HotUI.Samples
         {
             new VStack()
             {
-                new NavigationButton("Navigate!", () => new BasicTestView()),
+                new Button("Navigate!",()=>{
+                    Navigation.Navigate(new BasicTestView());
+                })
             }
         };
     }

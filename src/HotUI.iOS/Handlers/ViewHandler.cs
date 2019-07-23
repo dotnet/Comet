@@ -16,7 +16,7 @@ namespace HotUI.iOS.Handlers
             [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
             [nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
             [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
-            [nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty
+            [nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty,
         };
         
         protected override UIView CreateView()
@@ -37,6 +37,42 @@ namespace HotUI.iOS.Handlers
             var previousView = TypedNativeView;
             base.SetView(view);
             BroadcastNativeViewChanged(previousView, TypedNativeView);
+            
+        }
+        public override void Remove(View view)
+        {
+            base.Remove(view);
+        }
+
+        public override void UpdateValue(string property, object value)
+        {
+           base.UpdateValue(property, value);
+        }
+
+        public static void AddGestures(IViewHandler handler, View view)
+        {
+            foreach (var g in view.Gestures)
+                AddGesture(handler, g);
+        }
+
+        public static void AddGesture(IViewHandler handler, Gesture gesture)
+        {
+            var nativeView = (UIView)handler.NativeView;
+            nativeView.AddGestureRecognizer(gesture.ToGestureRecognizer());
+        }
+
+        public static void RemoveGestures(IViewHandler handler, View view)
+        {
+            foreach (var g in view.Gestures)
+                RemoveGesture(handler, g);
+        }
+
+        public static void RemoveGesture(IViewHandler handler, Gesture gesture)
+        {
+            var nativeView = (UIView)handler.NativeView;
+            var nativeGesture = gesture.NativeGesture as UIGestureRecognizer;
+            if(nativeGesture != null)
+                nativeView.RemoveGestureRecognizer(nativeGesture);
         }
 
         public static void MapBackgroundColorProperty(IViewHandler handler, View virtualView)
