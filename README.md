@@ -11,7 +11,7 @@ HotUI is an MVU style pattern.
 `View` is a screen. Views have a `Body` method that you can assign either by an attribute `[Body]`:
 
 ``` cs
-public class MyPage : View{
+public class MyPage : View {
 	[Body]
 	View body () => new Text("Hello World");
 }
@@ -20,8 +20,8 @@ public class MyPage : View{
 or:
 
 ``` cs
-public class MyPage : View{
-	public MyPage(){
+public class MyPage : View {
+	public MyPage() {
 		Body = body;
 	}
 	View body () => new Text("Hello World");
@@ -94,19 +94,17 @@ Simply update the stateful value and the framework handles the rest.
 ``` cs
 public class MyPage : View {
 
-		readonly State<int> clickCount = 1;
-		readonly State<string> text = "Hello World";
+	readonly State<int> clickCount = 1;
+	readonly State<string> text = "Hello World";
 
-		public MyPage() {
-			Body = () => new VStack {
-				new Text (text),			
-				new Button("Update Text",
-	                        () => state.Text = $"Click Count: {clickCount.Value++}" )
-				}
-			};
+	public MyPage() {
+		Body = () => new VStack {
+			new Text (text),			
+			new Button("Update Text", () => state.Text = $"Click Count: {clickCount.Value++}")
+		};
 
-		}
 	}
+}
 ```
 
 That is all!, now when the Text Changes everything updates. 
@@ -120,17 +118,17 @@ Instead, use `new Text(()=> $"Click Count: {clickCount}")`.
 ``` cs
 public class MyPage : View {
 
-		readonly State<int> clickCount = new State<int> (1);
+	readonly State<int> clickCount = new State<int> (1);
 
-		public MyPage() {
-			Body = () => new VStack {
-				new Text (()=> $"Click Count: {clickCount}"),
-				new Button("Update Text", ()=>{
-					clickCount.Value++;
-				}
-			};
-		}
+	public MyPage() {
+		Body = () => new VStack {
+			new Text (() => $"Click Count: {clickCount}"),
+			new Button("Update Text", () => {
+				clickCount.Value++;
+			}
+		};
 	}
+}
 
 ```
 
