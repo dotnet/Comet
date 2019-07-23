@@ -12,6 +12,9 @@ namespace HotUI.Skia
         IDrawableControl NativeDrawableControl { get; set; }
         void Invalidate();
         void Draw(SKCanvas canvas, RectangleF dirtyRect);
+        void StartHoverInteraction(PointF[] points);
+        void HoverInteraction(PointF[] points);
+        void EndHoverInteraction();
         bool StartInteraction(PointF[] points);
         void DragInteraction(PointF[] points);
         void EndInteraction(PointF[] points);

@@ -22,10 +22,10 @@ namespace HotUI.Samples
         readonly State<string> password = "";
 
         [Body]
-        View body() => new VStack(sizing:Sizing.Fill)
+        View body() => new VStack()
         {
             new SecureField(password, "Enter a password"),
             new Text(password)
-        };
+        }.FillHorizontal();
     }
 }

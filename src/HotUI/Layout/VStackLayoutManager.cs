@@ -7,16 +7,13 @@ namespace HotUI.Layout
     {
         private readonly HorizontalAlignment _defaultAlignment;
         private readonly float _spacing;
-        private readonly Sizing _sizing;
         
         public VStackLayoutManager(
             HorizontalAlignment alignment = HorizontalAlignment.Center, 
-            float? spacing = null,
-            Sizing sizing = Sizing.Fit)
+            float? spacing = null)
         {
             _defaultAlignment = alignment;
             _spacing = spacing ?? 4;
-            _sizing = sizing;
         }
 
         public void Invalidate()
@@ -31,6 +28,8 @@ namespace HotUI.Layout
             var height = 0f;
             var spacerCount = 0;
             var lastWasSpacer = false;
+
+            var _sizing = layout.GetHorizontalSizing();
             
             foreach (var view in layout)
             {
@@ -93,6 +92,8 @@ namespace HotUI.Layout
             var spacerCount = 0;
             var sizes = new List<SizeF>();
             var lastWasSpacer = false;
+
+            var _sizing = layout.GetHorizontalSizing();
 
             foreach (var view in layout)
             {
