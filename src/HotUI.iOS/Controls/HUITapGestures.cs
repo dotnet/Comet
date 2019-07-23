@@ -4,7 +4,7 @@ namespace HotUI.iOS
 {
     public class HUITapGesture : UITapGestureRecognizer
     {
-        public HUITapGesture(TapGesture gesture) : base (()=> gesture.Action(gesture))
+        public HUITapGesture(TapGesture gesture) : base (()=> gesture.Invoke())
         {
             gesture.NativeGesture = this;
         }

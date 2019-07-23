@@ -2,7 +2,10 @@
 using System.Threading.Tasks;
 using FFImageLoading;
 using FFImageLoading.Drawables;
+using HotUI.Android.Controls;
 using AView = Android.Views.View;
+using MotionEvent = Android.Views.MotionEvent;
+using MotionEventActions = Android.Views.MotionEventActions;
 
 namespace HotUI.Android
 {
@@ -28,6 +31,23 @@ namespace HotUI.Android
             return ImageService.Instance
                 .LoadFile(filePath)
                 .AsBitmapDrawableAsync();
+        }
+
+        public static HUITouchGestureListener GetGestureListener(this AndroidViewHandler handler)
+            => handler.GestureListener ?? (handler.GestureListener = new HUITouchGestureListener(handler.View));
+
+        public static bool IsComplete(this MotionEvent e)
+        {
+            switch(e.Action)
+            {
+                case MotionEventActions.Cancel:
+                case MotionEventActions.Outside:
+                case MotionEventActions.PointerUp:
+                case MotionEventActions.Up:
+                    return true;
+                default:
+                    return false;
+            }
         }
     }
 }

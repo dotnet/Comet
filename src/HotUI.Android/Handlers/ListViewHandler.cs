@@ -3,6 +3,7 @@ using Android.Views;
 using Android.Widget;
 using AView = Android.Views.View;
 using AListView = Android.Widget.ListView;
+using HotUI.Android.Controls;
 
 namespace HotUI.Android.Handlers
 {
@@ -32,7 +33,9 @@ namespace HotUI.Android.Handlers
         public AView View => this;
         public object NativeView => View;
         public bool HasContainer { get; set; } = false;
-        
+
+        public HUITouchGestureListener GestureListener { get; set; }
+
         public SizeF Measure(SizeF availableSize)
         {
             return availableSize;
@@ -45,11 +48,13 @@ namespace HotUI.Android.Handlers
 
         public void Remove(View view)
         {
+            ViewHandler.RemoveGestures(this, view);
         }
 
         public void SetView(View view)
         {
             ((ListViewAdapter) this.Adapter).ListView = view as ListView;
+            ViewHandler.AddGestures(this, view);
         }
 
         public void UpdateValue(string property, object value)
@@ -57,6 +62,14 @@ namespace HotUI.Android.Handlers
             if(nameof(ListView.ReloadData) == property)
             {
                 (this.Adapter as ListViewAdapter)?.NotifyDataSetChanged();
+            }
+            else if (property == Gesture.AddGestureProperty)
+            {
+                ViewHandler.AddGesture(this, (Gesture)value);
+            }
+            else if (property == Gesture.RemoveGestureProperty)
+            {
+                ViewHandler.RemoveGesture(this, (Gesture)value);
             }
         }
 
