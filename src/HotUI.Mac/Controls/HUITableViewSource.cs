@@ -97,9 +97,6 @@ namespace HotUI.Mac.Controls
             var view = _listView?.ViewFor(section, row);
             if (view != null)
             {
-                if (view is NavigationButton navigationButton)
-                    view = navigationButton.Content;
-
                 if (view.FrameConstraints?.Height != null)
                     return (float)view.FrameConstraints?.Height;
 
