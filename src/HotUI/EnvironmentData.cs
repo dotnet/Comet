@@ -37,7 +37,9 @@ namespace HotUI {
         public static class Shape
         {
             public const string LineWidth = "Shape.LineWidth";
-            public const string Color = "Shape.Color";
+            public const string StrokeColor = "Shape.StrokeColor";
+            public const string Fill = "Shape.Fill";
+            public const string DrawingStyle = "Shape.Style";
         }
 
         public static class TabView

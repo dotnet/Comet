@@ -27,6 +27,7 @@ namespace HotUI.Samples {
             new MenuItem("SecureFieldSample2", ()=> new SecureFieldSample2()),
             new MenuItem("SecureFieldSample3", ()=> new SecureFieldSample3()),
             new MenuItem("ShapeSample1", ()=> new ShapeSample1()),
+            new MenuItem("ShapeSample2", ()=> new ShapeSample2()),
             new MenuItem("SliderSample1", ()=> new SliderSample1()),
             new MenuItem("TextFieldSample1", ()=> new TextFieldSample1()),
             new MenuItem("TextFieldSample2", ()=> new TextFieldSample2()),
