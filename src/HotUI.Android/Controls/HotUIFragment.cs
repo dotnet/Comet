@@ -9,10 +9,12 @@ namespace HotUI.Android.Controls
     public class HotUIFragment : Fragment
     {
         private readonly View view;
+        public string Title { get; }
+
         public HotUIFragment(View view)
         {
             this.view = view;
-            
+            this.Title = view?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
         }
         AView currentBuiltView;
         public override AView OnCreateView(LayoutInflater inflater,
@@ -20,7 +22,7 @@ namespace HotUI.Android.Controls
             Bundle savedInstanceState) => currentBuiltView = view.ToView(false);
         public override void OnDestroy()
         {
-            if(view  != null)
+            if (view != null)
             {
                 view.ViewHandler = null;
             }
