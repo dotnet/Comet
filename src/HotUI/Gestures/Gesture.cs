@@ -9,6 +9,7 @@ namespace HotUI
         }
 
         public Action<T> Action { get; }
+        public override void Invoke() => Action?.Invoke((T)Convert.ChangeType(this, typeof(T)));
     }
     public class Gesture
     {
@@ -16,6 +17,11 @@ namespace HotUI
         public const string RemoveGestureProperty = "RemoveGesture";
 
         public object NativeGesture { get; set; }
+
+        public virtual void Invoke()
+        {
+
+        }
 
     }
 }

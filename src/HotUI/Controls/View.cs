@@ -116,10 +116,10 @@ namespace HotUI
                 ((NavigationView)this).PerformNavigate = nav.PerformNavigate;
             }
             var oldView = view.ViewHandler;
-            view.ViewHandler = null;
-            view.replacedView?.Dispose();
             this.gestures = view.gestures;
             view.gestures = new List<Gesture>();
+            view.ViewHandler = null;
+            view.replacedView?.Dispose();
             this.ViewHandler = oldView;
         }
         View builtView;
