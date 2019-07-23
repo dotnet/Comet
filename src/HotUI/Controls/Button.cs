@@ -2,7 +2,7 @@
 
 namespace HotUI 
 {
-	public class Button : BoundControl<string> 
+	public class Button : BoundControl<string>, ITextView
 	{
 		public Button (
 			Binding<string> value = null, 	
@@ -17,11 +17,8 @@ namespace HotUI
 		{
 		}
 		
-		public string Text {
-			get => BoundValue;
-			private set => BoundValue = value;
-		}
-		
 		public Action OnClick { get; private set; }
-	}
+
+        public string TextValue => BoundValue;
+    }
 }

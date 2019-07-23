@@ -33,6 +33,7 @@ namespace HotUI.Samples {
             new MenuItem("TextFieldSample2", ()=> new TextFieldSample2()),
             new MenuItem("TextFieldSample3", ()=> new TextFieldSample3()),
             new MenuItem("TextFieldSample4", ()=> new TextFieldSample4()),
+            new MenuItem("SkiaControlSample", ()=> new SkiaControlSample()),
             new MenuItem("SkiaSample1 (FingerPaint)", ()=> new SkiaSample1()),
             new MenuItem("SkiaSample2 (FingerPaint)", ()=> new SkiaSample2()),
             new MenuItem("SkiaSample3 (BindableFingerPaint)", ()=> new SkiaSample3()),
@@ -59,6 +60,8 @@ namespace HotUI.Samples {
             HotReloadHelper.Register(this, additionalPage);
             if (additionalPage != null)
                 pages.AddRange(additionalPage);
+
+            this.Title("UI Samples");
 
             Body = () => new NavigationView
             {

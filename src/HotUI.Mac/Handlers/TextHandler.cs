@@ -7,7 +7,7 @@ namespace HotUI.Mac.Handlers
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
-            [nameof(Text.Value)] = MapValueProperty,
+            [nameof(Text.TextValue)] = MapValueProperty,
             [EnvironmentKeys.Fonts.Font] = MapFontProperty,
             [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
@@ -45,7 +45,7 @@ namespace HotUI.Mac.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (NSTextField) viewHandler.NativeView;
-            nativeView.StringValue = virtualView.Value;
+            nativeView.StringValue = virtualView.TextValue;
             virtualView.InvalidateMeasurement();
         }
 

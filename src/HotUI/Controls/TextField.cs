@@ -2,7 +2,7 @@
 
 namespace HotUI 
 {
-	public class TextField : BoundControl<string>
+	public class TextField : BoundControl<string>, ITextView
 	{
 		public TextField (
 			Binding<string> value = null, 	
@@ -23,11 +23,6 @@ namespace HotUI
 		{
 
 		}
-		
-		public string Text {
-			get => BoundValue;
-			private set => BoundValue = value;
-		}
 
 		string placeholder;
 		public string Placeholder {
@@ -39,5 +34,7 @@ namespace HotUI
 		public Action<TextField> Unfocused { get; private set; }
 		public Action<string> OnEditingChanged { get; private set; }
 		public Action<string> OnCommit { get; private set; }
-	}
+
+        public string TextValue => BoundValue;
+    }
 }
