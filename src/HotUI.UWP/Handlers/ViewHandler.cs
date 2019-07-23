@@ -8,6 +8,14 @@ namespace HotUI.UWP.Handlers
 {
     public class ViewHandler : AbstractHandler<View, UIElement>
     {
+        public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
+        {
+            [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
+            [nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
+            [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
+            [nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty,
+        };
+
         protected override UIElement CreateView()
         {
             var viewHandler = VirtualView?.GetOrCreateViewHandler();
@@ -18,6 +26,22 @@ namespace HotUI.UWP.Handlers
             }
 
             return viewHandler?.View;
+        }
+
+        private static void MapOverlayProperty(IViewHandler arg1, View arg2)
+        {
+        }
+
+        private static void MapClipShapeProperty(IViewHandler arg1, View arg2)
+        {
+        }
+
+        private static void MapShadowProperty(IViewHandler arg1, View arg2)
+        {
+        }
+
+        private static void MapBackgroundColorProperty(IViewHandler arg1, View arg2)
+        {
         }
     }
 }
