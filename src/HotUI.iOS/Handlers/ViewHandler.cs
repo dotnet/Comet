@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Threading;
 using CoreAnimation;
 using CoreGraphics;
 using HotUI.Graphics;
@@ -17,6 +18,7 @@ namespace HotUI.iOS.Handlers
             [nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
             [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
             [nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty,
+            [nameof(EnvironmentKeys.Animations.Animation)] = MapAnimationProperty,
         };
         
         protected override UIView CreateView()
@@ -200,6 +202,50 @@ namespace HotUI.iOS.Handlers
                     ClearShadowFromLayer(nativeView.Layer);
                 nativeView.Layer.Mask = null;
                 handler.HasContainer = NeedsContainer(virtualView);
+            }
+        }
+
+        public static void MapAnimationProperty(IViewHandler handler, View virtualView)
+        {
+            var nativeView = (UIView)handler.NativeView;
+            var animation = virtualView.GetAnimation();
+            if (animation != null)
+            {
+                Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} | Starting animation [{animation}] on [{virtualView.GetType().Name}/{nativeView.GetType().Name}]...");
+
+                var duration = (animation.Duration ?? 1000.0) / 1000.0;
+                var delay = (animation.Delay ?? 0.0) / 1000.0;
+                var options = animation.Options.ToAnimationOptions();
+
+                UIView.Animate(
+                    duration,
+                    delay,
+                    options,
+                    () =>
+                    {
+                        Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} | Animation [{animation}] has been started");
+
+                        CGAffineTransform? transform = null;
+                        if (animation.TranslateTo != null)
+                        {
+                            transform = CGAffineTransform.MakeTranslation(animation.TranslateTo.Value.X, animation.TranslateTo.Value.Y);
+                        }
+                        if(animation.RotateTo != null)
+                        {
+                            var angle = Convert.ToSingle(animation.RotateTo.Value * Math.PI / 180);
+                            transform = CGAffineTransform.MakeRotation(angle);
+                        }
+                        // TODO: implement other animations
+                        // TODO: implement support for multiple transformations simultaneously
+
+                        if (transform != null)
+                            nativeView.Transform = transform.Value;
+                    },
+                    () =>
+                    {
+                        Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} | Animation [{animation}] has been completed");
+                        // Do nothing
+                    });
             }
         }
     }

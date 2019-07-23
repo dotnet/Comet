@@ -21,6 +21,11 @@ namespace HotUI {
             public const string BackgroundColor = "BackgroundColor";
         }
 
+        public static class Animations
+        {
+            public const string Animation = "Animation";
+        }
+
         public static class Layout
         {
             public const string Padding = "Padding";

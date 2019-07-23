@@ -46,7 +46,7 @@ namespace HotUI.Samples
 
 
         [Body]
-        View body() => new VStack(sizing: Sizing.Fill)
+        View body() => new VStack()
         {
             new Spacer(),
             TitleText("Card Number"),
@@ -67,7 +67,16 @@ namespace HotUI.Samples
             new Button("Or Pay with PayPal"),
             new Spacer(),
             HRule(),
-            new Button("Purchase for $200"),
+            new Button("Purchase for $200")
+                .Background(Color.Red)
+                .Animation(new Animation
+                {
+                    Duration = 2000,
+                    Delay = 500,
+                    Options = AnimationOptions.CurveEaseOut | AnimationOptions.Repeat,
+                    TranslateTo = new PointF(100,50),
+                    //RotateTo = 90,
+                }),
             new Spacer(),
         };
 
