@@ -76,7 +76,7 @@ namespace HotUI
         public static T OnTap<T>(this T view, Action<T> action) where T: View
             => view.AddGesture(new TapGesture((g)=> action?.Invoke(view)));
 
-        public static T Navigate<T>(this T view, Func<View> destination) where T : View
+        public static T OnTapNavigate<T>(this T view, Func<View> destination) where T : View
             => view.OnTap((v) => NavigationView.Navigate(view, destination.Invoke()));
 
         public static ListView<T> OnSelectedNavigate<T>(this ListView<T> view, Func<T, View> destination)
@@ -84,4 +84,4 @@ namespace HotUI
             return view.OnSelected(v => NavigationView.Navigate(view, destination?.Invoke(v)));
         }
     }
-}
+}s

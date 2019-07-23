@@ -40,7 +40,7 @@ namespace HotUI.Samples
                             new Text ($"Has Map? : {!report.MissingMapper}").Color(report.MissingMapper ? Color.Red : Color.Green),
                             new Text ($"Handled Properties: {report.HandledProperties.Count}").Color(report.HandledProperties.Count == 0 ? Color.Red : Color.Green),
                             new Text ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Color.Green : Color.Red),
-                        }.Padding().Font(Font.System(10)).Navigate(()=>new AuditReportPageDetails().SetEnvironment("report", report))
+                        }.Padding().Font(Font.System(10)).OnTapNavigate(()=>new AuditReportPageDetails().SetEnvironment("report", report))
                  },
             }.OnSelectedNavigate((report) => new AuditReportPageDetails().SetEnvironment("report", report)); ;
         }
