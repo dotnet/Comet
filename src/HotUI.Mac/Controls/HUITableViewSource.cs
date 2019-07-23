@@ -46,9 +46,6 @@ namespace HotUI.Mac.Controls
 
         public override nfloat GetRowHeight(NSTableView tableView, nint row)
         {
-            if (tableView.RowHeight > 0)
-                return tableView.RowHeight;
-
             if (_unevenRows)
                 return CalculateRowHeight(0, (int)row);
 
