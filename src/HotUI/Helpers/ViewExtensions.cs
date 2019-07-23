@@ -84,4 +84,4 @@ namespace HotUI
             return view.OnSelected(v => NavigationView.Navigate(view, destination?.Invoke(v)));
         }
     }
-}s
+}
