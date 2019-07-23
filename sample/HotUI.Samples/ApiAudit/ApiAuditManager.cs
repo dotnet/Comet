@@ -22,7 +22,7 @@ namespace HotUI.Samples
 
         static string[] FontProperties =
         {
-            EnvironmentKeys.Fonts.Font,
+            //EnvironmentKeys.Fonts,
             EnvironmentKeys.Colors.Color
         };
 

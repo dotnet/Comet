@@ -46,11 +46,9 @@ namespace HotUI.Samples {
 							() => state.Text = $"Click Count: {clickCount.Value++}"),
 						new Button("Update FontSize",
 							() => {
-
-								var font = View.GetGlobalEnvironment<Font>(EnvironmentKeys.Fonts.Font) ?? Font.System(14);
-								var size = font.Attributes.Size + 5;
-								var newFont = Font.System(size);
-								View.SetGlobalEnvironment (EnvironmentKeys.Fonts.Font, newFont);
+                                var font = View.GetGlobalEnvironment<float?>(EnvironmentKeys.Fonts.Size) ?? 14;
+                                var size = font + 5;
+								View.SetGlobalEnvironment (EnvironmentKeys.Fonts.Size, size);
 							}),
 					},
 					new Toggle(state.CanEdit, e => state.CanEdit = e)
