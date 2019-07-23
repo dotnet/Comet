@@ -61,6 +61,8 @@ namespace HotUI.Samples {
             if (additionalPage != null)
                 pages.AddRange(additionalPage);
 
+            this.Title("UI Samples");
+
             Body = () => new NavigationView
             {
                 new ListView<MenuItem> (pages)

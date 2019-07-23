@@ -10,7 +10,7 @@ using HotUI.Samples;
 
 namespace HotUI.Android.Sample
 {
-    [Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+    [Activity(Label = "@string/app_name", MainLauncher = true)]
     public class MainActivity : HotUIActivity
     {
 
