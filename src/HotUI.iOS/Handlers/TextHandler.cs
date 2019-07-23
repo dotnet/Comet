@@ -9,7 +9,7 @@ namespace HotUI.iOS.Handlers
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
-            [nameof(HotUI.Text.Value)] = MapValueProperty,
+            [nameof(HotUI.ITextView.TextValue)] = MapValueProperty,
             [EnvironmentKeys.Fonts.Font] = MapFontProperty,
             [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
@@ -44,7 +44,7 @@ namespace HotUI.iOS.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (UILabel) viewHandler.NativeView;
-            nativeView.Text = virtualView.Value;
+            nativeView.Text = virtualView.TextValue;
             virtualView.InvalidateMeasurement();
         }
 

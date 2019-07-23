@@ -9,7 +9,7 @@ namespace HotUI.Android.Handlers
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
-            [nameof(HotUI.Text.Value)] = MapValueProperty,
+            [nameof(HotUI.Text.TextValue)] = MapValueProperty,
             [EnvironmentKeys.Fonts.Font] = MapFontProperty,
             [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
@@ -30,7 +30,7 @@ namespace HotUI.Android.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (TextView) viewHandler.NativeView;
-            nativeView.Text = virtualView.Value;
+            nativeView.Text = virtualView.TextValue;
         }
 
         public static void MapFontProperty(IViewHandler viewHandler, Text virtualView)

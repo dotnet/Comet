@@ -8,7 +8,7 @@ namespace HotUI.WPF.Handlers
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>()
         {
-            [nameof(Button.Text)] = MapTextProperty
+            [nameof(Button.TextValue)] = MapTextProperty
         };
         
 
@@ -33,7 +33,7 @@ namespace HotUI.WPF.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
         {
             var nativeButton = (WPFButton)viewHandler.NativeView;
-            nativeButton.Content = virtualButton.Text;
+            nativeButton.Content = virtualButton.TextValue;
         }
     }
 }

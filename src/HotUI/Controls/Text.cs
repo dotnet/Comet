@@ -2,13 +2,19 @@
 
 namespace HotUI
 {
+
+    public interface ITextView
+    {
+        string TextValue { get; }
+    }
+
     /// <summary>
     /// A view that displays one or more lines of read-only text.
     /// </summary>
-    public class Text : BoundControl<string>
+    public class Text : BoundControl<string>, ITextView
     {
         public Text (
-            Binding<string> value = null) : base(value, nameof(Value))
+            Binding<string> value = null) : base(value, nameof(TextValue))
         {
 
         }
@@ -18,11 +24,7 @@ namespace HotUI
         {
 
         }
-        
-        public string Value
-        {
-            get => BoundValue;
-            private set => BoundValue = value;
-        }
+
+        public string TextValue => BoundValue;
     }
 }

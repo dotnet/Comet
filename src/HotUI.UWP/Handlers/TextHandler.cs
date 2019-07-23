@@ -8,7 +8,7 @@ namespace HotUI.UWP.Handlers
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>()
             {
-                [nameof(Text.Value)] = MapValueProperty
+                [nameof(Text.TextValue)] = MapValueProperty
             };
 
         public TextHandler() : base(Mapper)
@@ -25,7 +25,7 @@ namespace HotUI.UWP.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (UWPLabel)viewHandler.NativeView;
-            nativeView.Text = virtualView.Value;
+            nativeView.Text = virtualView.TextValue;
         }
     }
 }
