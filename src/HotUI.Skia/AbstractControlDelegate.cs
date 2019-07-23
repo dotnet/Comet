@@ -43,6 +43,18 @@ namespace HotUI.Skia
 
         public abstract void Draw(SKCanvas canvas, RectangleF dirtyRect);
 
+        public virtual void StartHoverInteraction(PointF[] points)
+        {
+        }
+
+        public virtual void HoverInteraction(PointF[] points)
+        {
+        }
+
+        public virtual void EndHoverInteraction()
+        {
+        }
+
         public virtual bool StartInteraction(PointF[] points)
         {
             return false;
