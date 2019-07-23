@@ -25,9 +25,9 @@ namespace HotUI.Samples.Skia
                     new Text("Stroke Color!:"),
                     new TextField(_strokeColor),
                 },
-                new ScrollView
+                new ScrollView(Orientation.Horizontal)
                 {
-                    new HStack
+                    new HStack(spacing:8)
                     {
                         new Button("Black", () =>
                         {
@@ -40,6 +40,30 @@ namespace HotUI.Samples.Skia
                         new Button("Red", () =>
                         {
                             _strokeColor.Value = Color.Red.ToHexString();
+                        }),
+                        new Button("Green", () =>
+                        {
+                            _strokeColor.Value = Color.Green.ToHexString();
+                        }),
+                        new Button("Orange", () =>
+                        {
+                            _strokeColor.Value = Color.Orange.ToHexString();
+                        }),
+                        new Button("Yellow", () =>
+                        {
+                            _strokeColor.Value = Color.Yellow.ToHexString();
+                        }),
+                        new Button("Brown", () =>
+                        {
+                            _strokeColor.Value = Color.Brown.ToHexString();
+                        }),
+                        new Button("Salmon", () =>
+                        {
+                            _strokeColor.Value = Color.Salmon.ToHexString();
+                        }),
+                        new Button("Magenta", () =>
+                        {
+                            _strokeColor.Value = Color.Magenta.ToHexString();
                         })
                     },
                 },

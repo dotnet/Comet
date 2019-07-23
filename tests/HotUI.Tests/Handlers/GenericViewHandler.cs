@@ -17,7 +17,7 @@ namespace HotUI.Tests.Handlers
         
         public SizeF Measure(SizeF availableSize)
         {
-	        return OnMeasure?.Invoke(availableSize) ?? availableSize;
+	        return OnMeasure?.Invoke(availableSize) ?? View.IllTakeWhatYouCanGive;
         }
 
         public void SetFrame(RectangleF frame)

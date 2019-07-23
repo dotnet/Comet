@@ -27,16 +27,16 @@ namespace HotUI.Samples
         {
             Cell = (song) => new NavigationButton(() => new ListViewDetails(song))
             {
-                        new HStack {
-                            new Image (song.ArtworkUrl).Frame(52, 52).Padding(4),
-                            new VStack(HorizontalAlignment.Leading, spacing:2) 
-                            {
-                                new Text (song.Title).Font(Font.System(17)),
-                                new Text (song.Artist).Color(Color.Grey),
-                                new Text (song.Album).Color(Color.Grey),
-                            }.Font(Font.System(12))
-                        }
-             }.Frame(height:60),
+                new HStack {
+                    new Image (song.ArtworkUrl).Frame(52, 52).Padding(4),
+                    new VStack(HorizontalAlignment.Leading, spacing:2) 
+                    {
+                        new Text (song.Title).Font(Font.System(17)),
+                        new Text (song.Artist).Color(Color.Grey),
+                        new Text (song.Album).Color(Color.Grey),
+                    }.Font(Font.System(12)),
+                }
+             }.Frame(height:60, alignment:Alignment.Leading),
         }.OnSelected((song) =>
         {
             Console.WriteLine("Song Selected");

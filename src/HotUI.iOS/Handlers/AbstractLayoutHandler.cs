@@ -36,7 +36,7 @@ namespace HotUI.iOS.Handlers
 
         public SizeF Measure(SizeF availableSize)
         {
-            return availableSize;
+            return HotUI.View.IllTakeWhatYouCanGive;
         }
 
         public void SetFrame(RectangleF frame)
@@ -184,7 +184,7 @@ namespace HotUI.iOS.Handlers
             _measured = _view.Measure(size.ToSizeF());            
             return _measured.ToCGSize();
         }
-
+        
         public override void SizeToFit()
         {
             var size = Superview?.Bounds.Size;

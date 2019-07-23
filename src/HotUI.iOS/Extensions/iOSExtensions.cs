@@ -30,6 +30,7 @@ namespace HotUI.iOS {
 							newNav.PerformNavigate = nav.PerformNavigate;
 						}
 
+						toView.Navigation = nav;
 						navController.PushViewController(toView.ToViewController(false), true);
 					};
 					navController.PushViewController(vc, false);

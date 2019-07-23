@@ -12,10 +12,9 @@ namespace HotUI.Samples
         [Body]
         View body()
         {
-            if (isLoading)
-                return new Text(() => "Loading...");
-            if (reports.Value.Count == 0)
-                return new Button(() => "Generate Report", async () =>
+            if (isLoading) return new Text(() => "Loading...");
+            
+            if (reports.Value.Count == 0) return new Button(() => "Generate Report", async () =>
                    {
                        isLoading.Value = true;
                        try
@@ -28,24 +27,18 @@ namespace HotUI.Samples
                            isLoading.Value = false;
                        }
                    });
+            
             return new ListView<ApiAuditManager.AuditReport>(reports.Value)
             {
-                Cell = (report) => new NavigationButton(
-                    () => new AuditReportPageDetails().SetEnvironment("report", report))
+                Cell = (report) => new VStack(HorizontalAlignment.Leading) 
                 {
-                    new HStack()
-                    {
-                        new VStack(HorizontalAlignment.Leading) 
-                        {
-                            new Text (report.View) 
-                                .Font(Font.System(20)),
-                            new Text ($"Handler: {report.Handler}"),
-                            new Text ($"Has Map? : {!report.MissingMapper}").Color(report.MissingMapper ? Color.Red : Color.Green),
-                            new Text ($"Handled Properties: {report.HandledProperties.Count}").Color(report.HandledProperties.Count == 0 ? Color.Red : Color.Green),
-                            new Text ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Color.Green : Color.Red),
-                        }.Padding().Font(Font.System(10))
-                    }
-                 },
+                    new Text (report.View).Font(Font.System(20)),
+                    new Text ($"Handler: {report.Handler}"),
+                    new Text ($"Has Map? : {!report.MissingMapper}").Color(report.MissingMapper ? Color.Red : Color.Green),
+                    new Text ($"Handled Properties: {report.HandledProperties.Count}").Color(report.HandledProperties.Count == 0 ? Color.Red : Color.Green),
+                    new Text ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Color.Green : Color.Red),
+                }.Frame(alignment:Alignment.Leading).Padding().Font(Font.System(10)),
+                ItemSelected = item => Navigation.Navigate(new AuditReportPageDetails().SetEnvironment("report", item))
             };
         }
     }

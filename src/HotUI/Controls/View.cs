@@ -12,6 +12,8 @@ namespace HotUI
 
     public class View : ContextualObject, IDisposable
     {
+        public static readonly SizeF IllTakeWhatYouCanGive = new SizeF(-1, -1);
+
         internal readonly static WeakList<View> ActiveViews = new WeakList<View>();
         HashSet<string> usedEnvironmentData = new HashSet<string>();
 
@@ -415,7 +417,7 @@ namespace HotUI
             if (width != null && height != null)
                 return new SizeF((float)width, (float)height);
 
-            var measuredSize = viewHandler?.Measure(availableSize) ?? availableSize;
+            var measuredSize = viewHandler?.Measure(availableSize) ?? IllTakeWhatYouCanGive;
 
             // If we have a constraint for just one of the values, then combine the constrained value
             // with the measured value for our size.
