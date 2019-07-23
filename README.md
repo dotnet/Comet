@@ -140,9 +140,10 @@ public class MyPage : View {
 * iOS
 * Android
 * UWP
+* WPF
 * Mac OS
 * Xamarin.Forms
-
+* Blazor
 
 # Disclaimer
 
