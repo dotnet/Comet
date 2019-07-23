@@ -34,13 +34,12 @@ namespace HotUI.Samples
                     {
                         new VStack(HorizontalAlignment.Leading)
                         {
-                            new Text (report.View)
-                                .Font(Font.System(20)),
+                            new Text (report.View).FontSize(20),
                             new Text ($"Handler: {report.Handler}"),
                             new Text ($"Has Map? : {!report.MissingMapper}").Color(report.MissingMapper ? Color.Red : Color.Green),
                             new Text ($"Handled Properties: {report.HandledProperties.Count}").Color(report.HandledProperties.Count == 0 ? Color.Red : Color.Green),
                             new Text ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Color.Green : Color.Red),
-                        }.Padding().Font(Font.System(10)).OnTapNavigate(()=>new AuditReportPageDetails().SetEnvironment("report", report))
+                        }.Padding().FontSize(10).OnTapNavigate(()=>new AuditReportPageDetails().SetEnvironment("report", report))
                  },
             }.OnSelectedNavigate((report) => new AuditReportPageDetails().SetEnvironment("report", report)); ;
         }

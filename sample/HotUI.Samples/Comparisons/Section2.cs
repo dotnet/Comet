@@ -24,7 +24,6 @@ namespace HotUI.Samples.Comparisons
         [Body]
         View body() =>
                  new Text("Turtle Rock")
-                     .Font(Font.Title)
                      .Color(Color.Green);
     }
 
