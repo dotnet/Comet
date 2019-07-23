@@ -6,7 +6,7 @@ namespace HotUI
 {
     public static class DrawingExtensions
     {
-        public static T Shadow<T>(this T view, Color color = null, float? radius = null, float? x = null, float? y = null) where T : View
+        public static T Shadow<T>(this T view, Color color = null, float? radius = null, float? x = null, float? y = null, bool cascades = false) where T : View
         {
             var shadow = view.GetShadow() ?? new Shadow();
 
@@ -33,9 +33,9 @@ namespace HotUI
             return shadow ?? defaultShadow;
         }
 
-        public static T ClipShape<T>(this T view, Shape shape) where T : View
+        public static T ClipShape<T>(this T view, Shape shape, bool cascades = false) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.View.ClipShape, shape);
+            view.SetEnvironment(EnvironmentKeys.View.ClipShape, shape, cascades);
             return view;
         }
 
