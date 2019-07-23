@@ -43,7 +43,7 @@ namespace HotUI.WPF.Handlers
 
                 foreach (var subView in _view)
                 {
-                    var nativeView = subView.ToView();
+                    var nativeView = subView.ToView() ?? new Canvas();
                     InternalChildren.Add(nativeView);
                 }
 

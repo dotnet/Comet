@@ -1,5 +1,6 @@
 using Windows.UI.Xaml.Controls;
 // ReSharper disable ClassNeverInstantiated.Global
+using UWPOrientation = Windows.UI.Xaml.Controls.Orientation;
 
 namespace HotUI.UWP.Handlers
 {
@@ -7,7 +8,7 @@ namespace HotUI.UWP.Handlers
     {
         public VStackHandler()
         {
-            Orientation = Orientation.Vertical;
+            Orientation = UWPOrientation.Vertical;
         }
     }
 }

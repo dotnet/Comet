@@ -74,7 +74,7 @@ namespace HotUI.Mac.Handlers
             if (_nativeView is NSControl control)
                 return control.SizeThatFits(availableSize.ToCGSize()).ToSizeF();
 
-            return availableSize;
+            return HotUI.View.IllTakeWhatYouCanGive;
         }
 
         public void SetFrame(RectangleF frame)

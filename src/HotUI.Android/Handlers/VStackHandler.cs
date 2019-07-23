@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Android.Widget;
 using HotUI.Android.Controls;
 using AView = Android.Views.View;
+using AOrientation = Android.Widget.Orientation;
 
 namespace HotUI.Android.Handlers
 {
@@ -12,7 +13,7 @@ namespace HotUI.Android.Handlers
 
         public VStackHandler() : base(AndroidContext.CurrentContext)
         {
-            Orientation = Orientation.Vertical;
+            Orientation = AOrientation.Vertical;
         }
 
         public AView View => this;

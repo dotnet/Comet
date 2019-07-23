@@ -12,6 +12,8 @@ namespace HotUI
 
     public class View : ContextualObject, IDisposable
     {
+        public static readonly SizeF IllTakeWhatYouCanGive = new SizeF(-1, -1);
+
         internal readonly static WeakList<View> ActiveViews = new WeakList<View>();
         HashSet<string> usedEnvironmentData = new HashSet<string>();
 
@@ -348,7 +350,7 @@ namespace HotUI
         FrameConstraints frameConstraints;
         public FrameConstraints FrameConstraints
         {
-            get => frameConstraints;
+            get => BuiltView?.FrameConstraints ?? frameConstraints;
             internal set => this.SetValue(State, ref frameConstraints, value, ResetPropertyString);
         }
         
@@ -389,6 +391,10 @@ namespace HotUI
         public void InvalidateMeasurement()
         {
             MeasurementValid = false;
+
+            // TODO We should "invalidate" layout here. Close enough for now?
+            frame = RectangleF.Zero;
+
             Parent?.InvalidateMeasurement();
             NeedsLayout?.Invoke(this, EventArgs.Empty);
         }
@@ -418,7 +424,7 @@ namespace HotUI
             if (width != null && height != null)
                 return new SizeF((float)width, (float)height);
 
-            var measuredSize = viewHandler?.Measure(availableSize) ?? availableSize;
+            var measuredSize = viewHandler?.Measure(availableSize) ?? IllTakeWhatYouCanGive;
 
             // If we have a constraint for just one of the values, then combine the constrained value
             // with the measured value for our size.
@@ -465,7 +471,7 @@ namespace HotUI
                     xFactor = 0;
                     break;
                 case HorizontalAlignment.Trailing:
-                    xFactor *= 1;
+                    xFactor = 1;
                     break;
             }
 
@@ -473,7 +479,7 @@ namespace HotUI
             switch (alignment.Vertical)
             {            
                 case VerticalAlignment.Bottom:
-                    yFactor *= 1;
+                    yFactor = 1;
                     break;
                 case VerticalAlignment.Top:
                     yFactor = 0;

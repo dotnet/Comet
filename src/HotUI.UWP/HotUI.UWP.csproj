@@ -128,6 +128,7 @@
     <Compile Include="Handlers\AbstractControlHandler.cs" />
     <Compile Include="Handlers\ManagedZStackHandler.cs" />
     <Compile Include="Handlers\ManagedHStackHandler.cs" />
+    <Compile Include="Handlers\ProgressBarHandler.cs" />
     <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />
     <Compile Include="Handlers\ManagedVStackHandler.cs" />

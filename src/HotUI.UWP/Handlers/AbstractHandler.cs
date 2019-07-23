@@ -71,12 +71,13 @@ namespace HotUI.UWP.Handlers
         
         public virtual SizeF Measure(SizeF availableSize)
         {
-            return availableSize;
+            _nativeView?.Measure(availableSize.ToSize());
+            return _nativeView?.DesiredSize.ToSizeF() ?? availableSize;
         }
 
         public void SetFrame(RectangleF frame)
         {
-            _nativeView.Arrange(frame.ToRect());
+            _nativeView?.Arrange(frame.ToRect());
         }
 
         protected void BroadcastNativeViewChanged(UIElement previousView, UIElement newView)

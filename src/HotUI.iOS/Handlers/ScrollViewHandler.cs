@@ -13,27 +13,41 @@ namespace HotUI.iOS.Handlers
         public override bool AutoSafeArea => false;
         protected override UIScrollView CreateView()
         {
-            var scrollView = new UIScrollView()
+            var scrollView = new UIScrollView
             {
-                ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always
+                ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always,
             };
+
+            return scrollView;
+        }
+
+        public override void SetView(View view)
+        {
+            base.SetView(view);
 
             _content = VirtualView?.View?.ToView();
             if (_content != null)
             {
                 if (VirtualView?.View != null)
                     VirtualView.View.NeedsLayout += HandleViewNeedsLayout;
-                
+
                 _content.SizeToFit();
-                scrollView.Add(_content);
+                TypedNativeView.Add(_content);
+
+                var measuredSize = VirtualView.View.Measure(new SizeF(float.PositiveInfinity, float.PositiveInfinity));   
+                TypedNativeView.ContentSize = measuredSize.ToCGSize();
             }
 
-            return scrollView;
-        }
-
-        private void HandleViewNeedsLayout(object sender, EventArgs e)
-        {
-            _content.SetNeedsLayout();
+            if (VirtualView.Orientation == Orientation.Horizontal)
+            {
+                TypedNativeView.ShowsVerticalScrollIndicator = false;
+                TypedNativeView.ShowsHorizontalScrollIndicator = true;
+            }
+            else
+            {
+                TypedNativeView.ShowsVerticalScrollIndicator = true;
+                TypedNativeView.ShowsHorizontalScrollIndicator = false;
+            }
         }
 
         public override void Remove(View view)
@@ -45,6 +59,11 @@ namespace HotUI.iOS.Handlers
             _content = null;
             
             base.Remove(view);
+        }
+
+        private void HandleViewNeedsLayout(object sender, EventArgs e)
+        {
+            _content.SetNeedsLayout();
         }
     }
 }

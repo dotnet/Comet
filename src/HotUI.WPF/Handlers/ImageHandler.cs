@@ -1,5 +1,4 @@
-﻿using System;
-using System.Diagnostics;
+﻿using System.Windows.Media.Imaging;
 using WPFImage = System.Windows.Controls.Image;
 // ReSharper disable ClassNeverInstantiated.Global
 
@@ -9,10 +8,8 @@ namespace HotUI.WPF.Handlers
     {
         public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>()
         {
-            [nameof(Image.Source)] = MapSourceProperty
+            [nameof(Image.Bitmap)] = MapBitmapProperty
         };
-        
-        internal string CurrentSource;
 
         public ImageHandler() : base(Mapper)
         {
@@ -25,28 +22,12 @@ namespace HotUI.WPF.Handlers
 
         }
 
-        public static void MapSourceProperty(IViewHandler viewHandler, Image virtualView)
+        public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
         {
             var imageHandler = (ImageHandler)viewHandler;
-            UpdateSource(imageHandler, virtualView.Source);
-        }
-
-        public static async void UpdateSource(ImageHandler imageView, string source)
-        {
-            if (source == imageView.CurrentSource)
-                return;
-
-            imageView.CurrentSource = source;
-            try
-            {
-                var image = await source.LoadImage();
-                if (source == imageView.CurrentSource)
-                    imageView.TypedNativeView.Source = image;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e);
-            }
+            var bitmap = (BitmapImage)virtualView.Bitmap?.NativeBitmap;
+            imageHandler.TypedNativeView.Source = bitmap;
+            imageHandler.VirtualView.InvalidateMeasurement();
         }
     }
 }
