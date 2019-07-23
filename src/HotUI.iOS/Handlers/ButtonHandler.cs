@@ -37,7 +37,7 @@ namespace HotUI.iOS.Handlers
 
         private void HandleTouchUpInside(object sender, EventArgs e)
         {
-            VirtualView?.OnClick();
+            VirtualView?.OnClick?.Invoke();
         }
 
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
