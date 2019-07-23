@@ -70,6 +70,8 @@ namespace HotUI.Android.Handlers
             }
         }
 
+        public HUITouchGestureListener GestureListener { get; set; }
+
         public virtual SizeF Measure(SizeF availableSize)
         {
             var width = AView.MeasureSpec.MakeMeasureSpec((int) availableSize.Width, MeasureSpecMode.AtMost);
@@ -89,6 +91,7 @@ namespace HotUI.Android.Handlers
 
         public virtual void Remove(View view)
         {
+            ViewHandler.RemoveGestures(this, view);
             _virtualView = null;
 
             // If a container view is being used, then remove the native view from it and get rid of it.
@@ -105,11 +108,20 @@ namespace HotUI.Android.Handlers
             if (_nativeView == null)
                 _nativeView = CreateView(AndroidContext.CurrentContext);
             _mapper?.UpdateProperties(this, _virtualView);
+            ViewHandler.AddGestures(this, view);
         }
 
         public virtual void UpdateValue(string property, object value)
         {
             _mapper?.UpdateProperty(this, _virtualView, property);
+            if (property == Gesture.AddGestureProperty)
+            {
+                ViewHandler.AddGesture(this, (Gesture)value);
+            }
+            else if (property == Gesture.RemoveGestureProperty)
+            {
+                ViewHandler.RemoveGesture(this, (Gesture)value);
+            }
         }
 
         #region IDisposable Support

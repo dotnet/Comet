@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Android.Content;
 using AView = Android.Views.View;
 
@@ -39,5 +40,42 @@ namespace HotUI.Android.Handlers
         {
             Console.WriteLine("ClipShape not yet supported on Android");
         }
+
+        public static void AddGestures(AndroidViewHandler handler, View view)
+        {
+            var gestures = view.Gestures;
+            if (!gestures.Any())
+                return;
+            var listner = handler.GetGestureListener();
+            foreach(var gesture in view.Gestures)
+                listner.AddGesture(gesture);
+        }
+
+        public static void AddGesture(AndroidViewHandler handler, Gesture gesture)
+        {
+            var listner = handler.GetGestureListener();
+            listner.AddGesture(gesture);
+
+        }
+
+        public static void RemoveGestures(AndroidViewHandler handler, View view)
+        {
+            var gestures = view.Gestures;
+            if (!gestures.Any())
+                return;
+            var listner = handler.GetGestureListener();
+            foreach (var gesture in view.Gestures)
+                listner.RemoveGesture(gesture);
+            listner.Dispose();
+
+        }
+
+        public static void RemoveGesture(AndroidViewHandler handler, Gesture gesture)
+        {
+            var listner = handler.GetGestureListener();
+            listner.RemoveGesture(gesture);
+        }
+
+
     }
 }

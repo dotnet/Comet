@@ -1,6 +1,7 @@
 using System;
 using Android.Content;
 using Android.Views;
+using HotUI.Android.Controls;
 using AView = Android.Views.View;
 
 namespace HotUI.Android.Handlers
@@ -41,11 +42,15 @@ namespace HotUI.Android.Handlers
         {
             _virtualView = view as TVirtualView;
             _nativeView = CreateView(AndroidContext.CurrentContext);
+            //_nativeView.list
+
             mapper?.UpdateProperties(this, _virtualView);
+            ViewHandler.AddGestures(this, view);
         }
 
         public virtual void Remove(View view)
         {
+            ViewHandler.RemoveGestures(this, view);
             _virtualView = null;
             _nativeView = null;
         }
@@ -57,6 +62,14 @@ namespace HotUI.Android.Handlers
         public virtual void UpdateValue(string property, object value)
         {
             mapper?.UpdateProperty(this, _virtualView, property);
+            if (property == Gesture.AddGestureProperty)
+            {
+                ViewHandler.AddGesture(this, (Gesture)value);
+            }
+            else if (property == Gesture.RemoveGestureProperty)
+            {
+                ViewHandler.RemoveGesture(this, (Gesture)value);
+            }
         }
 
         public bool HasContainer
@@ -64,6 +77,8 @@ namespace HotUI.Android.Handlers
             get => false;
             set { }
         }
+
+        public HUITouchGestureListener GestureListener { get; set; }
 
         public virtual SizeF Measure(SizeF availableSize)
         {

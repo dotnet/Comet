@@ -20,6 +20,9 @@ namespace HotUI
         public event EventHandler<ViewHandlerChangedEventArgs> ViewHandlerChanged;
         public event EventHandler<EventArgs> NeedsLayout;
 
+        internal List<Gesture> gestures = new List<Gesture>();
+        public IReadOnlyList<Gesture> Gestures => gestures;
+
         View parent;
         string id;
 
@@ -115,6 +118,8 @@ namespace HotUI
                 ((NavigationView)this).PerformNavigate = nav.PerformNavigate;
             }
             var oldView = view.ViewHandler;
+            this.gestures = view.gestures;
+            view.gestures = new List<Gesture>();
             view.ViewHandler = null;
             view.replacedView?.Dispose();
             this.ViewHandler = oldView;
@@ -303,6 +308,8 @@ namespace HotUI
                 return;
 
             ActiveViews.Remove(this);
+            foreach (var g in gestures)
+                ViewHandler?.UpdateValue(Gesture.RemoveGestureProperty, g);
             Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
             HotReloadHelper.UnRegister(this);
             var vh = ViewHandler;

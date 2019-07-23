@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Android.Widget;
+using HotUI.Android.Controls;
 using AView = Android.Views.View;
 using AOrientation = Android.Widget.Orientation;
 
@@ -18,7 +19,7 @@ namespace HotUI.Android.Handlers
         public AView View => this;
         public object NativeView => View;
         public bool HasContainer { get; set; } = false;
-
+        public HUITouchGestureListener GestureListener { get; set; }
         public SizeF Measure(SizeF availableSize)
         {
             return availableSize;

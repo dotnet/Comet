@@ -66,6 +66,7 @@ namespace HotUI.iOS.Handlers
 
                 SetNeedsLayout();
             }
+            ViewHandler.AddGestures(this, view);
         }
 
         private void HandleNeedsLayout(object sender, EventArgs e)
@@ -75,6 +76,7 @@ namespace HotUI.iOS.Handlers
 
         public void Remove(View view)
         {
+            ViewHandler.RemoveGestures(this, view);
             foreach (var subview in _view)
             {
                 subview.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
@@ -106,6 +108,14 @@ namespace HotUI.iOS.Handlers
         
         public virtual void UpdateValue(string property, object value)
         {
+            if (property == Gesture.AddGestureProperty)
+            {
+                ViewHandler.AddGesture(this, (Gesture)value);
+            }
+            else if (property == Gesture.RemoveGestureProperty)
+            {
+                ViewHandler.RemoveGesture(this, (Gesture)value);
+            }
         }
 
         private void HandleChildrenAdded(object sender, LayoutEventArgs e)
