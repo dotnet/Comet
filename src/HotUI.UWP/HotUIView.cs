@@ -1,6 +1,5 @@
 ﻿using System;
 using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using HotUI.UWP.Handlers;
 using WGrid = Windows.UI.Xaml.Controls.Grid;
 
