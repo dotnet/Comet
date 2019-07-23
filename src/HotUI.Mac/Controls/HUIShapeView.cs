@@ -7,11 +7,7 @@ namespace HotUI.Mac
 {
     public class HUIShapeView : NSView
     {
-        public HUIShapeView()
-        {
-
-        }
-
+        public View View { get; internal set; }
         public Shape Shape
         {
             get;
@@ -24,8 +20,8 @@ namespace HotUI.Mac
 
             if (Shape != null)
             { 
-                var stroke = Shape.GetStroke(1);
-                var color = Shape.GetColor(Color.Black);
+                var stroke = Shape.GetStroke(View, 1);
+                var color = Shape.GetColor(View, Color.Black);
 
                 context.SetLineWidth(stroke);
                 context.SetStrokeColor(color.ToCGColor());

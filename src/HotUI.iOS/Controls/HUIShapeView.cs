@@ -16,20 +16,22 @@ namespace HotUI.iOS
         public Shape Shape
         {
             get => _shape;
-            internal set
+            set
             {
                 _shape = value;
                 SetNeedsDisplay();
             }
         }
 
+        public View View { get; set;}
+
         public override void Draw(CGRect rect)
         {
             var context = UIGraphics.GetCurrentContext();
             if (Shape != null)
             { 
-                var stroke = Shape.GetStroke(1);
-                var color = Shape.GetColor(Color.Black);
+                var stroke = Shape.GetStroke(View,1);
+                var color = Shape.GetColor(View,Color.Black);
 
                 context.SetLineWidth(stroke);
                 context.SetStrokeColor(color.ToCGColor());

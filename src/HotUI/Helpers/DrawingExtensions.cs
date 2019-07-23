@@ -52,15 +52,15 @@ namespace HotUI
             return shape;
         }
 
-        public static float GetStroke(this Shape shape, float defaultStroke)
+        public static float GetStroke(this Shape shape,View view, float defaultStroke)
         {
-            var stroke = shape.GetEnvironment<float?>(EnvironmentKeys.Shape.LineWidth);
+            var stroke = shape.GetEnvironment<float?>(view,EnvironmentKeys.Shape.LineWidth);
             return stroke ?? defaultStroke;
         }
 
-        public static Color GetColor(this Shape shape, Color defaultColor)
+        public static Color GetColor(this Shape shape,View view, Color defaultColor)
         {
-            var color = shape.GetEnvironment<Color>(EnvironmentKeys.Shape.Color);
+            var color = shape.GetEnvironment<Color>(view, EnvironmentKeys.Shape.Color);
             return color ?? defaultColor;
         }
     }

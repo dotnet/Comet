@@ -5,7 +5,8 @@
 
 namespace HotUI.Mac.Handlers
 {
-    public class ShapeViewHandler : AbstractControlHandler<ShapeView, HUIShapeView>
+    public class ShapeViewHandler : AbstractControlHandler<ShapeView,
+        HUIShapeView>
     {
         public static readonly PropertyMapper<ShapeView> Mapper = new PropertyMapper<ShapeView>(ViewHandler.Mapper)
         {
@@ -29,6 +30,8 @@ namespace HotUI.Mac.Handlers
         {
             var nativeView = (HUIShapeView) viewHandler.NativeView;
             nativeView.Shape = virtualView.Shape;
+            nativeView.View = virtualView;
+
         }
     }
 }
