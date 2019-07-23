@@ -4,38 +4,36 @@
 namespace HotUI
 {
     public static class FontExtensions
-    {
-        /// <summary>
-        /// Set the font size.
-        /// </summary>
-        /// <param name="view"></param>
-        /// <param name="fontSize"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T Font<T>(this T view, Font font) where T : View
+    {        
+        public static FontAttributes GetFont(this View view, FontAttributes defaultFont)
         {
-            view.SetEnvironment(EnvironmentKeys.Fonts.Font, font);
-            return view;
+            var size = view.GetEnvironment<float?>(EnvironmentKeys.Fonts.Size) ?? defaultFont.Size;
+            var name = view.GetEnvironment<string>(EnvironmentKeys.Fonts.Family) ?? defaultFont.Family;
+            var weight = view.GetEnvironment<Weight?>(EnvironmentKeys.Fonts.Weight) ?? defaultFont.Weight;
+            var italic = view.GetEnvironment<bool?>(EnvironmentKeys.Fonts.Italic) ?? defaultFont.Italic;
+            return new FontAttributes
+            {
+                Size = size,
+                Family = name,
+                Italic = italic,
+                Weight = weight,
+            };
         }
 
-        public static Font GetFont(this View view, Font defaultFont)
-        {
-            var font = view.GetEnvironment<Font>(EnvironmentKeys.Fonts.Font);
-            return font ?? defaultFont;
-        }
+        public static T Font<T>(this T view, FontAttributes value) where T : View
+            => view.FontFamily(value.Family)
+            .FontSize(value.Size)
+            .FontItalic(value.Italic)
+            .FontWeight(value.Weight);
 
-        /// <summary>
-        /// Set the font size.
-        /// </summary>
-        /// <param name="view"></param>
-        /// <param name="fontSize"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static T FontSize<T>(this T view, float fontSize) where T : View
-        {
-            var font = HotUI.Font.System(fontSize);
-            view.SetEnvironment(EnvironmentKeys.Fonts.Font, font);
-            return view;
-        }
+        public static T FontSize<T>(this T view, float value) where T : View
+            => view.SetEnvironment(EnvironmentKeys.Fonts.Size, value);
+        public static T FontFamily<T>(this T view, string value) where T : View
+            => view.SetEnvironment(EnvironmentKeys.Fonts.Family, value);
+        public static T FontItalic<T>(this T view, bool value) where T : View
+            => view.SetEnvironment(EnvironmentKeys.Fonts.Italic, value);
+        public static T FontWeight<T>(this T view, Weight value) where T : View
+            => view.SetEnvironment(EnvironmentKeys.Fonts.Weight, value);
+
     }
 }
