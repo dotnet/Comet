@@ -42,7 +42,7 @@ namespace HotUI.Samples
                             new Text ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Color.Green : Color.Red),
                         }.Padding().Font(Font.System(10)).Navigate(()=>new AuditReportPageDetails().SetEnvironment("report", report))
                  },
-            }.Navigate((report) => new AuditReportPageDetails().SetEnvironment("report", report)); ;
+            }.OnSelectedNavigate((report) => new AuditReportPageDetails().SetEnvironment("report", report)); ;
         }
     }
     public class AuditReportPageDetails : View

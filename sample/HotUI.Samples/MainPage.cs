@@ -67,11 +67,9 @@ namespace HotUI.Samples {
                     {
                         new Text(page.Title),
                         new Spacer() 
-                    }.Frame(height:44).Padding(left:10).Navigate(()=> page.Page().Title(page.Title)),
-                }//.Navigate(x=> x.Page?.Invoke()?.Title(x.Title))
+                    }.Frame(height:44).Padding(left:10),
+                }.OnSelectedNavigate( page => page.Page().Title(page.Title))
 			};
-
         }
-
     }
 }

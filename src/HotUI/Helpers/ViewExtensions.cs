@@ -79,7 +79,9 @@ namespace HotUI
         public static T Navigate<T>(this T view, Func<View> destination) where T : View
             => view.OnTap((v) => NavigationView.Navigate(view, destination.Invoke()));
 
-        public static ListView<T> Navigate<T>(this ListView<T> view, Func<T,View> destination)
-            => view.OnSelected((v) => NavigationView.Navigate(view, destination?.Invoke(v)));
+        public static ListView<T> OnSelectedNavigate<T>(this ListView<T> view, Func<T, View> destination)
+        {
+            return view.OnSelected(v => NavigationView.Navigate(view, destination?.Invoke(v)));
+        }
     }
 }

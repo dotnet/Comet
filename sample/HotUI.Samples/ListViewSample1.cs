@@ -35,6 +35,6 @@ namespace HotUI.Samples
                             }.Font(Font.System(12))
 
              }.Frame(height: 60),
-        }.Navigate((song) => new ListViewDetails(song));
+        }.OnSelectedNavigate((song) => new ListViewDetails(song));
     }
 }
