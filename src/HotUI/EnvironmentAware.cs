@@ -9,6 +9,8 @@ namespace HotUI
         internal EnvironmentData _context;
         internal EnvironmentData Context(bool shouldCreate) => _context ?? (shouldCreate ? (_context = new EnvironmentData(this)) : null);
 
+        internal EnvironmentData _localContext;
+        internal EnvironmentData LocalContext(bool shouldCreate) => _localContext ?? (shouldCreate ? (_localContext = new EnvironmentData(this)) : null);
 
 
         protected ContextualObject()
@@ -18,16 +20,22 @@ namespace HotUI
 
         internal abstract void ContextPropertyChanged(string property, object value);
 
-        public object GetValue(string key, View view)
+        internal object GetValue(string key, ContextualObject current, View view)
         {
             try
             {
-                var value =  Context(false)?.GetValueInternal(key);
+                //Check the local context
+                var value = current == this ? LocalContext(false)?.GetValueInternal(key) : null; ;
+                //Check the cascading context
+                if (value == null)
+                    value = Context(false)?.GetValueInternal(key);
+                //Check the parent
                 if (value == null)
                 {
+                    //If no more parents, check the environment
                     if (view == null)
                         return View.Environment.GetValueInternal(key);
-                    value = view.GetValue(key,view.Parent);
+                    value = view.GetValue(key,current,view.Parent);
                 }
                 return value;
             }
@@ -36,11 +44,11 @@ namespace HotUI
                 return null;
             }
         }
-        public T GetValue<T>(string key, View view)
+        internal T GetValue<T>(string key, ContextualObject current, View view)
         {
             try
             {
-                var value = GetValue(key, view);
+                var value = GetValue(key, current, view);
                 return (T)value;
             }
             catch (Exception ex)
@@ -49,10 +57,14 @@ namespace HotUI
             }
         }
 
-        public void SetValue(string key, object value)
+        internal void SetValue(string key, object value, bool cascades)
         {
-            Context(true).SetValue(key, value);
+            if (cascades)
+                Context(true)?.SetValue(key, value);
+            else
+                LocalContext(true).SetValue(key, value);
         }
+        
         
         //protected ICollection<string> GetAllKeys()
         //{
@@ -77,25 +89,25 @@ namespace HotUI
 
     public static class ContextualObjectExtensions
     {
-        public static T SetEnvironment<T>(this T contextualObject, string key, object value) where T : ContextualObject
+        public static T SetEnvironment<T>(this T contextualObject, string key, object value, bool cascades = true) where T : ContextualObject
         {
-            contextualObject.SetValue(key, value);
+            contextualObject.SetValue(key, value, cascades);
             Device.InvokeOnMainThread(() => {
                 contextualObject.ContextPropertyChanged(key, value);
             });
             return contextualObject;
         }
 
-        public static T SetEnvironment<T>(this T contextualObject, IDictionary<string, object> data) where T : ContextualObject
+        public static T SetEnvironment<T>(this T contextualObject, IDictionary<string, object> data, bool cascades = true) where T : ContextualObject
         {
             foreach (var pair in data)
-                contextualObject.SetValue(pair.Key, pair.Value);
+                contextualObject.SetValue(pair.Key, pair.Value,cascades);
 
             return contextualObject;
         }
-        public static T GetEnvironment<T>(this ContextualObject contextualObject, View view, string key) => contextualObject.GetValue<T>(key, view);
-        public static object GetEnvironment(this ContextualObject contextualObject, View view, string key) => contextualObject.GetValue(key, view);
-        public static T GetEnvironment<T>(this View view, string key) => view.GetValue<T>(key, view.Parent);
-        public static object GetEnvironment(this View view, string key) => view.GetValue(key, view.Parent);
+        public static T GetEnvironment<T>(this ContextualObject contextualObject, View view, string key) => contextualObject.GetValue<T>(key, contextualObject, view);
+        public static object GetEnvironment(this ContextualObject contextualObject, View view, string key) => contextualObject.GetValue(key, contextualObject, view);
+        public static T GetEnvironment<T>(this View view, string key) => view.GetValue<T>(key,view, view.Parent);
+        public static object GetEnvironment(this View view, string key) => view.GetValue(key, view, view.Parent);
     }
 }
