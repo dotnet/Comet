@@ -8,7 +8,7 @@ namespace HotUI.Android.Handlers
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
-            [nameof(TextField.TextValue)] = MapTextProperty
+            [nameof(TextField.Text)] = MapTextProperty
         };
 
         public TextFieldHandler() : base(Mapper)
@@ -35,7 +35,7 @@ namespace HotUI.Android.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (EditText) viewHandler.NativeView;
-            nativeView.Text = virtualView.TextValue;
+            nativeView.Text = virtualView.Text;
         }
     }
 }

@@ -7,7 +7,7 @@ namespace HotUI.Mac.Handlers
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
-            [nameof(TextField.TextValue)] = MapTextProperty
+            [nameof(TextField.Text)] = MapTextProperty
         };
 
         public SecureFieldHandler() : base(Mapper)
@@ -41,7 +41,7 @@ namespace HotUI.Mac.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (NSSecureTextField) viewHandler.NativeView;
-            nativeView.StringValue = virtualView.TextValue;
+            nativeView.StringValue = virtualView.Text;
             virtualView.InvalidateMeasurement();
         }
     }

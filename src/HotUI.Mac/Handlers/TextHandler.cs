@@ -7,12 +7,15 @@ namespace HotUI.Mac.Handlers
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
-            [nameof(Text.TextValue)] = MapValueProperty,
-            [EnvironmentKeys.Fonts.Font] = MapFontProperty,
+            [nameof(Text.Value)] = MapValueProperty,
+            [EnvironmentKeys.Fonts.Family] = MapFontProperty,
+            [EnvironmentKeys.Fonts.Italic] = MapFontProperty,
+            [EnvironmentKeys.Fonts.Size] = MapFontProperty,
+            [EnvironmentKeys.Fonts.Weight] = MapFontProperty,
             [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
         
-        private static Font DefaultFont;
+        private static FontAttributes DefaultFont;
         private static Color DefaultColor;
 
         public TextHandler() : base(Mapper)
@@ -45,7 +48,7 @@ namespace HotUI.Mac.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (NSTextField) viewHandler.NativeView;
-            nativeView.StringValue = virtualView.TextValue;
+            nativeView.StringValue = virtualView.Value;
             virtualView.InvalidateMeasurement();
         }
 

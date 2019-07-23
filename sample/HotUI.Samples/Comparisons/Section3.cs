@@ -33,15 +33,12 @@ namespace HotUI.Samples.Comparisons
         [Body]
         View body() =>
                  new VStack(alignment: HorizontalAlignment.Leading){
-                    new Text("Turtle Rock")
-                        .Font(Font.Title),
+                    new Text("Turtle Rock"),
                     new HStack {
                         new Text("Joshua Tree National Park")
-                            .Font(Font.SubHeadline)
                             .Background(Color.Salmon),
                         new Spacer(),
                         new Text("California")
-                            .Font(Font.SubHeadline)
                             .Background(Color.Green),
                     }
                  }.Padding();

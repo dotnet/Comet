@@ -9,7 +9,7 @@ namespace HotUI.WPF.Handlers
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>()
         {
-            [nameof(TextField.TextValue)] = MapTextProperty
+            [nameof(TextField.Text)] = MapTextProperty
         };
         
         public TextFieldHandler() : base(Mapper)
@@ -37,7 +37,7 @@ namespace HotUI.WPF.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (WPFTextField)viewHandler.NativeView;
-            nativeView.Text = virtualView.TextValue;
+            nativeView.Text = virtualView.Text;
             //nativeView.Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
             //var desiredSize = nativeView.DesiredSize;
         }

@@ -129,5 +129,41 @@ namespace HotUI
             var y = frame.Y + ((frame.Height - height) * yFactor);
             view.Frame = new RectangleF((float)x, (float)y, width, height);
         }
+        
+        public static T FillHorizontal<T>(this T view) where T : View
+        {
+            view.SetEnvironment(EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+            return view;
+        }
+        
+        public static T FillVertical<T>(this T view) where T : View
+        {
+            view.SetEnvironment(EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
+            return view;
+        }
+        
+        public static T FitHorizontal<T>(this T view) where T : View
+        {
+            view.SetEnvironment(EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fit);
+            return view;
+        }
+        
+        public static T FitVertical<T>(this T view) where T : View
+        {
+            view.SetEnvironment(EnvironmentKeys.Layout.VerticalSizing, Sizing.Fit);
+            return view;
+        }
+        
+        public static Sizing GetHorizontalSizing(this View view, Sizing defaultSizing = Sizing.Fit)
+        {
+            var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.HorizontalSizing);
+            return sizing ?? defaultSizing;
+        }
+        
+        public static Sizing GetVerticalSizing(this View view, Sizing defaultSizing = Sizing.Fit)
+        {
+            var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.VerticalSizing);
+            return sizing ?? defaultSizing;
+        }
     }
 }

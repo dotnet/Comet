@@ -29,6 +29,8 @@ namespace HotUI.Layout
             var spacerCount = 0;
             var lastWasSpacer = false;
 
+            var _sizing = layout.GetVerticalSizing();
+            
             foreach (var view in layout)
             {
                 var isSpacer = false;
@@ -74,6 +76,9 @@ namespace HotUI.Layout
             if (spacerCount > 0)
                 width = available.Width;
 
+            if (_sizing == Sizing.Fill)
+                height = available.Height;
+            
             return new SizeF(width, height);
         }
 

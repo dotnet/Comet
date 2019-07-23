@@ -12,8 +12,14 @@ namespace HotUI {
 
 		public static class Fonts
         {
-			public const string Font = "Font";
-		}
+			//public const string Font = "Font";
+            public const string Size = "Font.Size";
+            public const string Family = "Font.Family";
+            public const string Weight = "Font.Weight";
+            public const string Italic = "Font.Italic";
+
+
+        }
 
         public static class Colors
         {
@@ -24,6 +30,8 @@ namespace HotUI {
         public static class Layout
         {
             public const string Padding = "Padding";
+            public const string HorizontalSizing = "Layout.HorizontalSizing";
+            public const string VerticalSizing = "Layout.VerticalSizing";
         }
         
         public static class View
@@ -37,7 +45,9 @@ namespace HotUI {
         public static class Shape
         {
             public const string LineWidth = "Shape.LineWidth";
-            public const string Color = "Shape.Color";
+            public const string StrokeColor = "Shape.StrokeColor";
+            public const string Fill = "Shape.Fill";
+            public const string DrawingStyle = "Shape.Style";
         }
 
         public static class TabView

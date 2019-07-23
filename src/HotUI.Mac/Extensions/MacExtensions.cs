@@ -48,24 +48,24 @@ namespace HotUI.Mac.Extensions
 			return handler as MacViewHandler;
 		}
 
-        public static Font ToFont(this NSFont font)
+        public static FontAttributes ToFont(this NSFont font)
         {
             if (font == null)
-                return Font.System(12);
+                throw new System.ArgumentNullException("Font");
 
-            // todo: implement support for attributes other than name and size.
-            return font.FamilyName == Device.FontService.SystemFontName
-                ? Font.System((float)font.PointSize)
-                : Font.Custom(font.FamilyName, (float)font.PointSize);
+            return new FontAttributes
+            {
+                Family = font.FamilyName,
+                Size = (float)font.PointSize,
+            };
         }
 
-        public static NSFont ToNSFont(this Font font)
+        public static NSFont ToNSFont(this FontAttributes attributes)
         {
-            if (font == null)
+            if (attributes == null)
                 return NSFont.SystemFontOfSize(12);
 
-            var attributes = font.Attributes;
-            if (attributes.Name == Device.FontService.SystemFontName)
+            if (attributes.Family == Device.FontService.SystemFontName)
             {
                 var weight = (int)attributes.Weight;
                 if (weight > (int)Weight.Regular)
@@ -74,7 +74,7 @@ namespace HotUI.Mac.Extensions
                 return NSFont.SystemFontOfSize(attributes.Size);
             }
 
-            return NSFont.FromFontName(attributes.Name, attributes.Size);
+            return NSFont.FromFontName(attributes.Family, attributes.Size);
         }
         
         public static CGColor ToCGColor(this Color color)

@@ -9,12 +9,15 @@ namespace HotUI.iOS.Handlers
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
-            [nameof(HotUI.ITextView.TextValue)] = MapValueProperty,
-            [EnvironmentKeys.Fonts.Font] = MapFontProperty,
+            [nameof(HotUI.Text.Value)] = MapValueProperty,
+            [EnvironmentKeys.Fonts.Family] = MapFontProperty,
+            [EnvironmentKeys.Fonts.Italic] = MapFontProperty,
+            [EnvironmentKeys.Fonts.Size] = MapFontProperty,
+            [EnvironmentKeys.Fonts.Weight] = MapFontProperty,
             [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
 
-        private static Font DefaultFont;
+        private static FontAttributes DefaultFont;
         private static Color DefaultColor;
         
 		public TextHandler () : base(Mapper)
@@ -44,7 +47,7 @@ namespace HotUI.iOS.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (UILabel) viewHandler.NativeView;
-            nativeView.Text = virtualView.TextValue;
+            nativeView.Text = virtualView.Value;
             virtualView.InvalidateMeasurement();
         }
 
