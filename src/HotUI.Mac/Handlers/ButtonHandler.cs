@@ -8,7 +8,7 @@ namespace HotUI.Mac.Handlers
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
-            [nameof(Button.TextValue)] = MapTextProperty
+            [nameof(Button.Text)] = MapTextProperty
         };
         
         public ButtonHandler() : base(Mapper)
@@ -39,7 +39,7 @@ namespace HotUI.Mac.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
         {
             var nativeButton = (NSButton) viewHandler.NativeView;
-            nativeButton.Title = virtualView.TextValue;
+            nativeButton.Title = virtualView.Text;
             virtualView.InvalidateMeasurement();
         }
     }

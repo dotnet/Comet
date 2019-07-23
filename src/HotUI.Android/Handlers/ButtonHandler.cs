@@ -10,7 +10,7 @@ namespace HotUI.Android.Handlers
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
-            [nameof(Button.TextValue)] = MapTextProperty
+            [nameof(Button.Text)] = MapTextProperty
         };
 
         public ButtonHandler() : base(Mapper)
@@ -34,7 +34,7 @@ namespace HotUI.Android.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
         {
             var nativeView = (AButton) viewHandler.NativeView;
-            nativeView.Text = virtualView.TextValue;
+            nativeView.Text = virtualView.Text;
         }
     }
 }
