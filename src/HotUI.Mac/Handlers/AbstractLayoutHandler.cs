@@ -37,7 +37,7 @@ namespace HotUI.Mac.Handlers
         
         public SizeF Measure(SizeF available)
         {
-            return available;
+            return HotUI.View.IllTakeWhatYouCanGive;
         }
 
         public void SetFrame(RectangleF frame)
