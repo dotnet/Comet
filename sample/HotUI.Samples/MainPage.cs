@@ -61,14 +61,14 @@ namespace HotUI.Samples {
 
             Body = () => new NavigationView
             {
-				new ListView<MenuItem> (pages)
+                new ListView<MenuItem> (pages)
                 {
-					Cell = (page) =>  new HStack()
+                    Cell = (page) =>  new HStack()
                     {
                         new Text(page.Title),
-                        new Spacer()
-                    }.Frame(height:44).Padding(left:10),
-				}.OnSelected(page => Navigation.PerformNavigate(page.Page?.Invoke()?.Title(page.Title)))
+                        new Spacer() 
+                    }.Frame(height:44).Padding(left:10).Navigate(()=> page.Page().Title(page.Title)),
+                }//.Navigate(x=> x.Page?.Invoke()?.Title(x.Title))
 			};
 
         }

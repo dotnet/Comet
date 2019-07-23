@@ -53,13 +53,6 @@ namespace HotUI
         protected override void OnSelected(int section, int index)
         {
             var view = ViewFor(section,index);
-            if (view is NavigationButton navigation)
-            {
-                navigation.Parent = this;
-                navigation.Navigate();
-                return;
-            }
-
             ItemSelected?.Invoke(section, index);
         }
         public Action<int, int> ItemSelected;

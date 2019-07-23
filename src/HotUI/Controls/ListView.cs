@@ -127,13 +127,6 @@ namespace HotUI
         {
             var item = List[index];
             var view = ViewFor(index);
-            if (view is NavigationButton navigation)
-            {
-                navigation.Parent = this;
-                navigation.Navigate();
-                return;
-            }
-
             ItemSelected?.Invoke(item);
         }
 
@@ -171,13 +164,6 @@ namespace HotUI
             {
                 Console.WriteLine(":(");
             }
-            if (view is NavigationButton navigation)
-            {
-                navigation.Parent = this;
-                navigation.Navigate();
-                return;
-            }
-
             ItemSelected?.Invoke(view);
         }
         protected virtual int RowCount() => views.Count;
