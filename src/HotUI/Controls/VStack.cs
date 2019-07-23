@@ -6,8 +6,7 @@
 	{
         public VStack(
             HorizontalAlignment alignment = HorizontalAlignment.Center,
-            float? spacing = null,
-            Sizing sizing = Sizing.Fit) : base(new VStackLayoutManager(alignment, spacing, sizing))
+            float? spacing = null) : base(new VStackLayoutManager(alignment, spacing))
         {
 
         }

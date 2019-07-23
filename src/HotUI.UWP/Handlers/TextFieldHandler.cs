@@ -9,7 +9,7 @@ namespace HotUI.UWP.Handlers
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>()
         {
-            [nameof(TextField.Text)] = MapTextProperty
+            [nameof(TextField.TextValue)] = MapTextProperty
         };
 
         public TextFieldHandler() : base(Mapper)
@@ -37,7 +37,7 @@ namespace HotUI.UWP.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (UWPTextField)viewHandler.NativeView;
-            nativeView.Text = virtualView.Text ?? "";
+            nativeView.Text = virtualView.TextValue ?? "";
         }
     }
 }

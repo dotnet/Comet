@@ -52,8 +52,8 @@ namespace HotUI.UWP.Controls
                 _path = new WPath()
                 {
                     Data = path.AsPathGeometry(),
-                    Stroke = new SolidColorBrush(_shape.GetColor(View, Color.Black).ToColor()),
-                    StrokeThickness = _shape.GetStroke(View,1)
+                    Stroke = new SolidColorBrush(_shape.GetStrokeColor(View, Color.Black).ToColor()),
+                    StrokeThickness = _shape.GetLineWidth(View,1)
                 };
                 Children.Add(_path);
             }
