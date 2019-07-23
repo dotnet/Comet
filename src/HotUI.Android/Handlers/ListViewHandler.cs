@@ -49,17 +49,17 @@ namespace HotUI.Android.Handlers
 
         public void UpdateValue(string property, object value)
         {
-            if (nameof(ListView.ReloadData) == property)
+            switch (property)
             {
-                (this.Adapter as ListViewAdapter)?.NotifyDataSetChanged();
-            }
-            else if (property == Gesture.AddGestureProperty)
-            {
-                ViewHandler.AddGesture(this, (Gesture)value);
-            }
-            else if (property == Gesture.RemoveGestureProperty)
-            {
-                ViewHandler.RemoveGesture(this, (Gesture)value);
+                case nameof(ListView.ReloadData):
+                    ((RecyclerViewAdapter)this.GetAdapter()).NotifyDataSetChanged();
+                    break;
+                case Gesture.AddGestureProperty:
+                    ViewHandler.AddGesture(this, (Gesture)value);
+                    break;
+                case Gesture.RemoveGestureProperty:
+                    ViewHandler.RemoveGesture(this, (Gesture)value);
+                    break;
             }
         }
 
