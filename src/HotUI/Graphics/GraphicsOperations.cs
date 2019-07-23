@@ -465,5 +465,26 @@ namespace HotUI.Graphics
             var dy = oppositePoint.Y - pivot.Y;
             return new PointF(pivot.X - dx, pivot.Y - dy);
         }
+
+        public static PointF PolarToPoint(float aAngleInRadians, float fx, float fy)
+        {
+            var sin = (float)Math.Sin(aAngleInRadians);
+            var cos = (float)Math.Cos(aAngleInRadians);
+            return new PointF(fx * cos, fy * sin);
+        }
+
+        public static PointF OvalAngleToPoint(float x, float y, float width, float height, float aAngleInDegrees)
+        {
+            float vAngle = DegreesToRadians(aAngleInDegrees);
+
+            float cx = x + width / 2;
+            float cy = y + height / 2;
+
+            PointF vPoint = PolarToPoint(vAngle, width / 2, height / 2);
+
+            vPoint.X += cx;
+            vPoint.Y += cy;
+            return vPoint;
+        }
     }
 }

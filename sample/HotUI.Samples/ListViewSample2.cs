@@ -42,8 +42,7 @@ namespace HotUI.Samples
 						new Text(song.Artist),
 						new Text(song.Album),
 					},
-					new Spacer()
-				},
+				}.Frame(alignment:Alignment.Leading),
 				Header = new VStack
 				{
 					new Text("Songs")

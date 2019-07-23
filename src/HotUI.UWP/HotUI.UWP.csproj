@@ -121,6 +121,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls\HUIListCell.cs" />
+    <Compile Include="Controls\HUIShapeView.cs" />
     <Compile Include="Graphics\UWPBitmap.cs" />
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Controls\HUIContainerView.cs" />
@@ -129,6 +130,7 @@
     <Compile Include="Handlers\ManagedZStackHandler.cs" />
     <Compile Include="Handlers\ManagedHStackHandler.cs" />
     <Compile Include="Handlers\ProgressBarHandler.cs" />
+    <Compile Include="Handlers\ShapeViewHandler.cs" />
     <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />
     <Compile Include="Handlers\ManagedVStackHandler.cs" />
