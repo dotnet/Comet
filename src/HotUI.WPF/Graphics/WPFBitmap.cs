@@ -1,18 +1,18 @@
 ﻿using HotUI.Graphics;
+using System.Windows.Media.Imaging;
 
 namespace HotUI.WPF.Graphics
 {
     public class WPFBitmap : Bitmap
     {
-        private object _image;
+        private BitmapImage _image;
 
-        public WPFBitmap(object image)
+        public WPFBitmap(BitmapImage image)
         {
             _image = image;
         }
 
-        //public override SizeF Size => _image != null ? new SizeF(_image.PixelWidth, _image.PixelHeight) : SizeF.Zero;
-        public override SizeF Size => SizeF.Zero;
+        public override SizeF Size => new SizeF(_image.PixelWidth, _image.PixelHeight);
 
         public override object NativeBitmap => _image;
 

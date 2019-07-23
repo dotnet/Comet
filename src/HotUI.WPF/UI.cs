@@ -1,5 +1,6 @@
-﻿using System.Windows;
-using HotUI.WPF.Handlers;
+﻿using HotUI.WPF.Handlers;
+using HotUI.WPF.Services;
+using System.Windows;
 
 namespace HotUI.WPF
 {
@@ -37,6 +38,8 @@ namespace HotUI.WPF
             Registrar.Handlers.Register<VStack, ManagedVStackHandler>();
             Registrar.Handlers.Register<HStack, ManagedHStackHandler>();
             Registrar.Handlers.Register<ZStack, ManagedZStackHandler>();
+
+            Device.BitmapService = new WPFBitmapService();
 
             Device.PerformInvokeOnMainThread = a => Application.Current.Dispatcher.Invoke(a);
 
