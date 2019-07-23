@@ -24,6 +24,8 @@ namespace HotUI {
         public static class Layout
         {
             public const string Padding = "Padding";
+            public const string HorizontalSizing = "Layout.HorizontalSizing";
+            public const string VerticalSizing = "Layout.VerticalSizing";
         }
         
         public static class View
