@@ -7,7 +7,8 @@ using HotUI.Samples.Skia;
 namespace HotUI.Samples {
 	public class MainPage : View {
 		List<MenuItem> pages = new List<MenuItem> {
-			new MenuItem("Binding Sample!",()=> new BindingSample()),
+            new MenuItem("Demo Credit Card",()=> new DemoCreditCardView()),
+            new MenuItem("Binding Sample!",()=> new BindingSample()),
             new MenuItem("TabView",()=> new TabViewSample()),
             new MenuItem("BasicTestView",()=> new BasicTestView()),
             new MenuItem("ListViewSample1", ()=> new ListViewSample1()),
