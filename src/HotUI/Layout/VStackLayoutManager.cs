@@ -28,6 +28,8 @@ namespace HotUI.Layout
             var height = 0f;
             var spacerCount = 0;
             var lastWasSpacer = false;
+
+            var _sizing = layout.GetHorizontalSizing();
             
             foreach (var view in layout)
             {
@@ -75,6 +77,9 @@ namespace HotUI.Layout
             if (spacerCount > 0)
                 height = available.Height;
 
+            if (_sizing == Sizing.Fill)
+                width = available.Width;
+            
             return new SizeF(width, height);
         }
 
@@ -87,6 +92,8 @@ namespace HotUI.Layout
             var spacerCount = 0;
             var sizes = new List<SizeF>();
             var lastWasSpacer = false;
+
+            var _sizing = layout.GetHorizontalSizing();
 
             foreach (var view in layout)
             {
@@ -171,6 +178,12 @@ namespace HotUI.Layout
                     y += _spacing;
                 
                 y += padding.Top;
+
+                if (_sizing == Sizing.Fill)
+                {
+                    alignedX = padding.Left;
+                    size.Width = measured.Width - padding.HorizontalThickness;
+                }
 
                 view.Frame = new RectangleF(alignedX, y, size.Width, size.Height);
                 

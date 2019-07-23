@@ -23,6 +23,7 @@ namespace HotUI.UWP
             Registrar.Handlers.Register<TextField, TextFieldHandler>();
             Registrar.Handlers.Register<Toggle, ToggleHandler>();
             Registrar.Handlers.Register<ProgressBar, ProgressBarHandler>();
+            Registrar.Handlers.Register<ShapeView, ShapeViewHandler>();
             //Registrar.Handlers.Register<WebView, WebViewHandler> ();
 
             // Containers

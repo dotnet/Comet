@@ -22,6 +22,8 @@ namespace HotUI.Skia.UWP
             PointerCanceled += OnPointerCanceled;
             PointerMoved += OnPointerMoved;
             PointerReleased += OnPointerReleased;
+            PointerEntered += OnPointerEntered;
+            PointerExited += OnPointerExited;
 
             SizeChanged += HandleSizeChanged;
         }
@@ -98,6 +100,17 @@ namespace HotUI.Skia.UWP
             return _touchPoints.ToArray();
         }
 
+        private void OnPointerEntered(object sender, PointerRoutedEventArgs e)
+        {
+            var viewPoints = GetPointsInView(e);
+            _controlDelegate?.StartHoverInteraction(viewPoints);
+        }
+
+        private void OnPointerExited(object sender, PointerRoutedEventArgs e)
+        {
+            _controlDelegate?.EndHoverInteraction();
+        }
+
         protected void OnPointerPressed(
             object source,
             PointerRoutedEventArgs evt)
@@ -110,6 +123,11 @@ namespace HotUI.Skia.UWP
             {
                 var viewPoints = GetPointsInView(evt);
                 _inTouch = _controlDelegate?.StartInteraction(viewPoints) ?? false;
+                if (_inTouch)
+                {
+                    evt.Handled = true;
+                    ((UIElement)source).CapturePointer(evt.Pointer);
+                }
             }
             catch (Exception exc)
             {
@@ -121,17 +139,18 @@ namespace HotUI.Skia.UWP
             object source,
             PointerRoutedEventArgs evt)
         {
-            if (!_inTouch)
-                return;
-
-            // Ignore right clicks
-            if (evt.GetCurrentPoint(this).Properties.IsRightButtonPressed)
-                return;
-
             try
             {
                 var viewPoints = GetPointsInView(evt);
-                _controlDelegate?.DragInteraction(viewPoints);
+
+                if (_inTouch)
+                {
+                    _controlDelegate?.DragInteraction(viewPoints);
+                }
+                else
+                {
+                    _controlDelegate?.HoverInteraction(viewPoints);
+                }
             }
             catch (Exception exc)
             {

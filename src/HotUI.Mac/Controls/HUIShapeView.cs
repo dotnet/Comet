@@ -20,8 +20,8 @@ namespace HotUI.Mac
 
             if (Shape != null)
             { 
-                var stroke = Shape.GetStroke(View, 1);
-                var color = Shape.GetColor(View, Color.Black);
+                var stroke = Shape.GetLineWidth(View, 1);
+                var color = Shape.GetStrokeColor(View, Color.Black);
 
                 context.SetLineWidth(stroke);
                 context.SetStrokeColor(color.ToCGColor());

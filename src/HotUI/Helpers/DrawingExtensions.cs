@@ -48,20 +48,50 @@ namespace HotUI
         public static T Stroke<T>(this T shape, Color color, float lineWidth) where T : Shape
         {
             shape.SetEnvironment(EnvironmentKeys.Shape.LineWidth, lineWidth);
-            shape.SetEnvironment(EnvironmentKeys.Shape.Color, color);
+            shape.SetEnvironment(EnvironmentKeys.Shape.StrokeColor, color);
+            return shape;
+        }
+        
+        public static T Fill<T>(this T shape, Color color) where T : Shape
+        {
+            shape.SetEnvironment(EnvironmentKeys.Shape.Fill, color);
+            return shape;
+        }
+        
+        public static T Fill<T>(this T shape, Gradient gradient) where T : Shape
+        {
+            shape.SetEnvironment(EnvironmentKeys.Shape.Fill, gradient);
+            return shape;
+        }
+        
+        public static T Style<T>(this T shape, DrawingStyle drawingStyle) where T : Shape
+        {
+            shape.SetEnvironment(EnvironmentKeys.Shape.DrawingStyle, drawingStyle);
             return shape;
         }
 
-        public static float GetStroke(this Shape shape,View view, float defaultStroke)
+        public static float GetLineWidth(this Shape shape,View view, float defaultStroke)
         {
             var stroke = shape.GetEnvironment<float?>(view,EnvironmentKeys.Shape.LineWidth);
             return stroke ?? defaultStroke;
         }
 
-        public static Color GetColor(this Shape shape,View view, Color defaultColor)
+        public static Color GetStrokeColor(this Shape shape,View view, Color defaultColor)
         {
-            var color = shape.GetEnvironment<Color>(view, EnvironmentKeys.Shape.Color);
+            var color = shape.GetEnvironment<Color>(view, EnvironmentKeys.Shape.StrokeColor);
             return color ?? defaultColor;
+        }
+        
+        public static object GetFill(this Shape shape,View view, object defaultFill = null)
+        {
+            var fill = shape.GetEnvironment<object>(view, EnvironmentKeys.Shape.Fill);
+            return fill ?? defaultFill;
+        }
+        
+        public static DrawingStyle GetDrawingStyle(this Shape shape,View view, DrawingStyle defaultDrawingStyle = DrawingStyle.StrokeFill)
+        {
+            var drawingStyle = shape.GetEnvironment<DrawingStyle?>(view, EnvironmentKeys.Shape.DrawingStyle);
+            return drawingStyle ?? defaultDrawingStyle;
         }
     }
 }

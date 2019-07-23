@@ -9,7 +9,7 @@ namespace HotUI.Samples
         readonly State<string> name2 = "";
 
         [Body]
-        View body() => new VStack
+        View body() => new VStack()
         {
             new TextField(null, "Name", name1, name2),
             new HStack()
@@ -24,7 +24,7 @@ namespace HotUI.Samples
                 new Text(name2),
                 new Spacer()
             },
-        };
+        }.FillHorizontal();
     }
 
 }

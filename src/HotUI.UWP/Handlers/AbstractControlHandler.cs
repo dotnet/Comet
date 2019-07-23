@@ -1,8 +1,6 @@
 ﻿using System;
-using Windows.Foundation;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 using HotUI.UWP.Controls;
+using Windows.UI.Xaml;
 
 namespace HotUI.UWP.Handlers
 {
