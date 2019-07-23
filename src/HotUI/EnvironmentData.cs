@@ -76,25 +76,25 @@ namespace HotUI {
             private set => _viewRef = new WeakReference(value);
         }
 
-		protected ICollection<string> GetAllKeys ()
-		{
-			//This is the global Environment
-			if (View?.Parent == null)
-				return dictionary.Keys;
+		//protected ICollection<string> GetAllKeys ()
+		//{
+		//	//This is the global Environment
+		//	if (View?.Parent == null)
+		//		return dictionary.Keys;
 
-			//TODO: we need a fancy way of collapsing this. This may be too slow
-			var keys = new HashSet<string> ();
-			var localKeys = dictionary?.Keys;
-			if (localKeys != null)
-				foreach (var k in localKeys)
-					keys.Add (k);
+		//	//TODO: we need a fancy way of collapsing this. This may be too slow
+		//	var keys = new HashSet<string> ();
+		//	var localKeys = dictionary?.Keys;
+		//	if (localKeys != null)
+		//		foreach (var k in localKeys)
+		//			keys.Add (k);
 
-			var parentKeys = View?.Parent?.Context?.GetAllKeys () ?? View.Environment.GetAllKeys ();
-			if (parentKeys != null)
-				foreach (var k in parentKeys)
-					keys.Add (k);
-			return keys;
-		}
+		//	var parentKeys = View?.Parent?.Context?.GetAllKeys () ?? View.Environment.GetAllKeys ();
+		//	if (parentKeys != null)
+		//		foreach (var k in parentKeys)
+		//			keys.Add (k);
+		//	return keys;
+		//}
 
 		public T GetValue<T> (string key)
 		{
@@ -110,11 +110,6 @@ namespace HotUI {
 		{
 			try {
 				var value = GetValueInternal (key);
-				if (value == null) {
-					if (View?.Parent == null)
-						return View.Environment.GetValueInternal (key);
-					value = View?.Parent?.Context?.GetValue (key);
-				}
 				return value;
 			} catch (Exception ex) {
 				return null;

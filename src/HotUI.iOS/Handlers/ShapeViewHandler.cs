@@ -28,6 +28,7 @@ namespace HotUI.iOS.Handlers
         public static void MapShapeProperty(IViewHandler viewHandler, ShapeView virtualView)
         {
             var nativeView = (HUIShapeView) viewHandler.NativeView;
+            nativeView.View = virtualView;
             nativeView.Shape = virtualView.Shape;
         }
     }
