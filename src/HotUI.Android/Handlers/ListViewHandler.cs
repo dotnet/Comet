@@ -1,35 +1,25 @@
 ﻿using System;
 using Android.Views;
 using Android.Widget;
+using Android.Support.V7.Widget;
 using AView = Android.Views.View;
-using AListView = Android.Widget.ListView;
 using HotUI.Android.Controls;
 
 namespace HotUI.Android.Handlers
 {
-    public class ListViewHandler : AListView, AndroidViewHandler
+    public class ListViewHandler : RecyclerView, AndroidViewHandler
     {
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
         public ListViewHandler() : base(AndroidContext.CurrentContext)
         {
-            this.Adapter = new ListViewAdapter();
-            this.ItemSelected += ListViewHandler_ItemSelected;
-            this.ItemClick += ListViewHandler_ItemClick;
+            var layoutManager = new LinearLayoutManager(this.Context);
+
+            SetLayoutManager(layoutManager);
+            this.SetAdapter(new RecyclerViewAdapter());
+            this.AddItemDecoration(new DividerItemDecoration(Context, layoutManager.Orientation));
         }
 
-        private void ListViewHandler_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            //TODO: Account for Section
-            ((ListViewAdapter) this.Adapter).ListView?.OnSelected(0,e.Position);
-        }
-
-        private void ListViewHandler_ItemSelected(object sender, ItemSelectedEventArgs e)
-        {
-            //TODO: Account for Section
-            ((ListViewAdapter) this.Adapter).ListView?.OnSelected(0,e.Position);
-        }
-        
         public AView View => this;
         public object NativeView => View;
         public bool HasContainer { get; set; } = false;
@@ -53,13 +43,13 @@ namespace HotUI.Android.Handlers
 
         public void SetView(View view)
         {
-            ((ListViewAdapter) this.Adapter).ListView = view as ListView;
+            ((RecyclerViewAdapter)this.GetAdapter()).ListView = view as ListView;
             ViewHandler.AddGestures(this, view);
         }
 
         public void UpdateValue(string property, object value)
         {
-            if(nameof(ListView.ReloadData) == property)
+            if (nameof(ListView.ReloadData) == property)
             {
                 (this.Adapter as ListViewAdapter)?.NotifyDataSetChanged();
             }
@@ -73,45 +63,70 @@ namespace HotUI.Android.Handlers
             }
         }
 
-        class ListViewAdapter : BaseAdapter<object>
+        class RecyclerViewAdapter : Adapter
         {
             public IListView ListView { get; set; }
-            //TODO: Account for Section
-            public override object this[int position] => ListView?.ViewFor(0,position);
 
             //TODO: Account for Section
-            public override int Count => ListView?.Rows(0) ?? 0;
+            public override int ItemCount => ListView?.Rows(0) ?? 0;
 
-            public override long GetItemId(int position) => position;
-
-            public override AView GetView(int position, AView convertView, ViewGroup parent)
+            public override void OnBindViewHolder(ViewHolder holder, int position)
             {
+                var rvh = holder as RecyclerViewHolder;
+
                 //TODO: Account for Section
-                var view = ListView?.ViewFor(0,position);                
+                var view = ListView?.ViewFor(0, position);
                 var cell = view?.ToView();
 
-                var displayMetrics = parent.Context.Resources.DisplayMetrics;
-                var density = displayMetrics.Density;
-              
-                var scaledSize = new SizeF(parent.Width / density, parent.Height / density);
-                var measuredSize = view.Measure(scaledSize);
-                view.MeasuredSize = measuredSize;
-                view.MeasurementValid = true;
+                if (rvh != null && cell != null)
+                {
+                    var parent = rvh.Parent;
 
-                cell.LayoutParameters = new ViewGroup.LayoutParams(parent.Width, (int)(measuredSize.Height* density));
-                cell.SetMinimumHeight((int)(measuredSize.Height * density));
+                    var displayMetrics = parent.Context.Resources.DisplayMetrics;
+                    var density = displayMetrics.Density;
 
-                return cell;
+                    var scaledSize = new SizeF(parent.Width / density, parent.Height / density);
+                    var measuredSize = view.Measure(scaledSize);
+                    view.MeasuredSize = measuredSize;
+                    view.MeasurementValid = true;
+
+                    cell.LayoutParameters = new ViewGroup.LayoutParams(parent.Width, (int)(measuredSize.Height * density));
+                    cell.SetMinimumHeight((int)(measuredSize.Height * density));
+
+                    rvh.Container.RemoveAllViews();
+                    // cell may sometimes have a parent already
+                    (cell.Parent as FrameLayout)?.RemoveView(cell);
+                    rvh.Container.AddView(cell);
+                }
+            }
+
+            public override ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
+            {
+                return new RecyclerViewHolder(new FrameLayout(parent.Context), parent, ListView);
             }
         }
 
-        protected override void Dispose(bool disposing)
+        public class RecyclerViewHolder : ViewHolder
         {
-            if (!disposing)
-                return;
-            this.ItemSelected -= ListViewHandler_ItemSelected;
-            this.ItemClick -= ListViewHandler_ItemClick;
-            base.Dispose(disposing);
+            private readonly IListView listView;
+
+            public FrameLayout Container { get; }
+            public ViewGroup Parent { get; }
+
+            public RecyclerViewHolder(FrameLayout itemView, ViewGroup parent, IListView listView)
+                : base(itemView)
+            {
+                Container = itemView;
+                Parent = parent;
+                this.listView = listView;
+
+                Container.Click += HandleClick;
+            }
+
+            private void HandleClick(object sender, EventArgs e)
+            {
+                listView?.OnSelected(0, this.AdapterPosition);
+            }
         }
     }
 }
