@@ -32,7 +32,7 @@ namespace HotUI.iOS.Handlers
 
         protected override void DisposeView(UIButton button)
         {
-            button.TouchUpInside += HandleTouchUpInside;
+            button.TouchUpInside -= HandleTouchUpInside;
         }
 
         private void HandleTouchUpInside(object sender, EventArgs e)
