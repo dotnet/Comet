@@ -59,10 +59,10 @@ namespace HotUI.Android
 
         public static Color ToColor(this global::Android.Graphics.Color color)
         {
-            var r = (int)(color.R / 255f);
-            var g = (int)(color.G / 255f);
-            var b = (int)(color.B / 255f);
-            var a = (int)(color.A / 255f);
+            var r = color.R / 255f;
+            var g = color.G / 255f;
+            var b = color.B / 255f;
+            var a = color.A / 255f;
             return new Color(r, g, b, a);
         }
 
