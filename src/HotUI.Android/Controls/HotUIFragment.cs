@@ -16,10 +16,12 @@ namespace HotUI.Android.Controls
             this.view = view;
             this.Title = view?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
         }
+
         AView currentBuiltView;
         public override AView OnCreateView(LayoutInflater inflater,
             ViewGroup container,
-            Bundle savedInstanceState) => currentBuiltView = view.ToView(false);
+            Bundle savedInstanceState) => currentBuiltView = view.ToView();
+
         public override void OnDestroy()
         {
             if (view != null)

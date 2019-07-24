@@ -72,13 +72,11 @@ namespace HotUI.Android.Handlers
 
             public override void OnBindViewHolder(ViewHolder holder, int position)
             {
-                var rvh = holder as RecyclerViewHolder;
-
                 //TODO: Account for Section
                 var view = ListView?.ViewFor(0, position);
                 var cell = view?.ToView();
 
-                if (rvh != null && cell != null)
+                if (holder is RecyclerViewHolder rvh && cell != null)
                 {
                     var parent = rvh.Parent;
 

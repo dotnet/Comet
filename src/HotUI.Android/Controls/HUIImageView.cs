@@ -25,7 +25,7 @@ namespace HotUI.Android.Controls
             set
             {
                 _bitmap = value;
-                SetImageBitmap(_bitmap.NativeBitmap as Bitmap);
+                SetImageBitmap(_bitmap?.NativeBitmap as Bitmap);
             }
         }
     }
