@@ -123,9 +123,9 @@ namespace HotUI.Samples
                 rows: new object[] { 40, 20, 40, 20, 40, 20, 44, 20, 1, 20, 44 },
                 columns: new object[] { "2*", 20, "*" })
             {
-                EntryContainer(Card.BindingFor(x => x.Number), "Enter CC Number", "\uf09d").Cell(row:0, column: 0, colSpan: 3),  
-                EntryContainer(Card.BindingFor(x => x.Expiration), "MM/YYYY", "\uf783").Cell(row:2, column: 0),
-                EntryContainer(Card.BindingFor(x => x.CVV), "CVV", "\uf023").Cell(row:2, column: 2),
+                EntryContainer(Card.TwoWayBinding(x => x.Number), "Enter CC Number", "\uf09d").Cell(row:0, column: 0, colSpan: 3),  
+                EntryContainer(Card.TwoWayBinding(x => x.Expiration), "MM/YYYY", "\uf783").Cell(row:2, column: 0),
+                EntryContainer(Card.TwoWayBinding(x => x.CVV), "CVV", "\uf023").Cell(row:2, column: 2),
                 new HStack
                 {
                     new Toggle(remember),

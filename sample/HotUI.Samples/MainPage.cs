@@ -10,6 +10,7 @@ namespace HotUI.Samples {
             new MenuItem("Demo Credit Card",()=> new DemoCreditCardView()),
             new MenuItem("Demo Credit Card 2",()=> new DemoCreditCardView2()),
             new MenuItem("Binding Sample!",()=> new BindingSample()),
+            new MenuItem("Animation Sample",()=> new AnimationSample()),
             new MenuItem("TabView",()=> new TabViewSample()),
             new MenuItem("BasicTestView",()=> new BasicTestView()),
             new MenuItem("ListViewSample1", ()=> new ListViewSample1()),

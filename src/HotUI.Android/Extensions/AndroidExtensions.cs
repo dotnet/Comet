@@ -28,7 +28,7 @@ namespace HotUI.Android
         }*/
 		public static HotUIFragment ToFragment(this View view) => new HotUIFragment(view);
 
-		public static AView ToView(this View view, bool allowNav = true)
+        public static AView ToView(this View view)
         {
             if (view == null)
                 return null;
@@ -40,23 +40,10 @@ namespace HotUI.Android
                 view.ViewHandler = handler;
             }
 
-            if (view.BuiltView is NavigationView nav && allowNav)
-            {
-                var navController = new NavigationViewWrapper(view);
-                nav.PerformNavigate = (toView) => {
-                    if (toView is NavigationView newNav)
-                    {
-                        newNav.PerformNavigate = nav.PerformNavigate;
-                    }
-                    navController.Push(toView);
-                };
-                return navController;
-            }
-            
             var page = handler as AndroidViewHandler;
             return page.View;
         }
-        
+
         public static global::Android.Graphics.Color ToColor(this Color color)
         {
             if (color == null)
@@ -72,10 +59,10 @@ namespace HotUI.Android
 
         public static Color ToColor(this global::Android.Graphics.Color color)
         {
-            var r = (int)(color.R / 255f);
-            var g = (int)(color.G / 255f);
-            var b = (int)(color.B / 255f);
-            var a = (int)(color.A / 255f);
+            var r = color.R / 255f;
+            var g = color.G / 255f;
+            var b = color.B / 255f;
+            var a = color.A / 255f;
             return new Color(r, g, b, a);
         }
 

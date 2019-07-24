@@ -68,7 +68,7 @@ namespace HotUI.Android.Controls
             AView currentBuiltView;
             public override AView OnCreateView(LayoutInflater inflater,
                 ViewGroup container,
-                Bundle savedInstanceState) => currentBuiltView = HView.ToView(false);
+                Bundle savedInstanceState) => currentBuiltView = HView.ToView();
 
             public override void OnDestroy()
             {
