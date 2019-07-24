@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using CoreGraphics;
+using CoreText;
 using UIKit;
 namespace HotUI.iOS {
 	public static partial class iOSExtensions {
@@ -84,24 +85,26 @@ namespace HotUI.iOS {
 	        return new CGColor(color.R, color.G, color.B, color.A);
         }
         
-        public static Font ToFont(this UIFont font)
+        public static FontAttributes ToFont(this UIFont font)
         {
-	        if (font == null)
-		        return Font.System(12);
+            //TODO: Add set a default;
+            if (font == null)
+                throw new ArgumentNullException("font");
 
-	        // todo: implement support for attributes other than name and size.
-	        return font.Name == Device.FontService.SystemFontName 
-		        ? Font.System((float)font.PointSize) 
-		        : Font.Custom(font.Name, (float) font.PointSize);
+            // todo: implement support for attributes other than name and size.
+            return new FontAttributes
+            {
+                Family = font.Name,
+                Size = (float)font.PointSize,
+            };
         }
 
-        public static UIFont ToUIFont(this Font font)
+        public static UIFont ToUIFont(this FontAttributes attributes)
         {
-			if (font == null)
+			if (attributes == null)
 				return UIFont.SystemFontOfSize(12);
 
-			var attributes = font.Attributes;
-			if (attributes.Name == Device.FontService.SystemFontName)
+			if (attributes.Family == Device.FontService.SystemFontName)
 			{
 				var weight = (int) attributes.Weight;
 				if (weight > (int)Weight.Regular)
@@ -110,7 +113,7 @@ namespace HotUI.iOS {
 				return UIFont.SystemFontOfSize(attributes.Size);
 			}
 			
-			return UIFont.FromName(attributes.Name, attributes.Size);
+			return UIFont.FromName(attributes.Family, attributes.Size);
         }
         
         public static UIViewController GetViewController( this UIView view)

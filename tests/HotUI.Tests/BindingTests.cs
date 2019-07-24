@@ -10,6 +10,25 @@ namespace HotUI.Tests {
 			public readonly State<bool> boolState = new State<bool> ();
 		}
 
+        public class BadStateView : View
+        {
+            public State<int> badState = 1;
+            [Body]
+            View body() => new Text(() => $"badState: {badState}");
+        }
+
+        [Fact]
+        public void  StateTRequiresReadonly()
+        {
+            Assert.Throws<ReadonlyRequiresException>(() =>
+            {
+                var view = new BadStateView();
+
+                var viewHandler = new GenericViewHandler();
+                view.ViewHandler = viewHandler;
+            });
+        }
+
 		[Fact]
 		public void LabelTextDirectBinding ()
 		{

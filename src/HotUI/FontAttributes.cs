@@ -1,11 +1,10 @@
 namespace HotUI
 {
-    public struct FontAttributes
+    public class FontAttributes
     {
-        public string Name { get; internal set; }
-        public bool Italic { get; internal set; }
-        public bool Smallcaps { get; internal set; }
-        public float Size { get; internal set; }
-        public Weight Weight { get; internal set; }
+        public string Family { get; set; }
+        public bool Italic { get; set; }
+        public float Size { get; set; }
+        public Weight Weight { get; set; }
     }    
 }
