@@ -5,7 +5,7 @@ namespace HotUI.iOS.Handlers
 {
     public class ProgressBarHandler : AbstractControlHandler<ProgressBar, UIProgressView>
     {
-        public static readonly PropertyMapper<ProgressBar> Mapper = new PropertyMapper<ProgressBar>()
+        public static readonly PropertyMapper<ProgressBar> Mapper = new PropertyMapper<ProgressBar>(ViewHandler.Mapper)
         {
             [nameof(ProgressBar.Value)] = MapValueProperty,
             [nameof(ProgressBar.IsIndeterminate)] = MapIsIndeterminateProperty,
@@ -27,7 +27,7 @@ namespace HotUI.iOS.Handlers
         {
            var nativeView = (UIProgressView)viewHandler.NativeView;
 
-           nativeView.Progress = (float)virtualView.Value;
+           nativeView.Progress = (float)virtualView.Value * 0.01f;
         }
 
         public static void MapIsIndeterminateProperty(IViewHandler viewHandler, ProgressBar virtualView)
