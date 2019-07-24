@@ -28,6 +28,8 @@ namespace HotUI.Android
 			Registrar.Handlers.Register<View, ViewHandler>();
             Registrar.Handlers.Register<ContentView, ContentViewHandler>();
             Registrar.Handlers.Register<ViewRepresentable, ViewRepresentableHandler>();
+            Registrar.Handlers.Register<TabView, TabViewHandler>();
+            Registrar.Handlers.Register<NavigationView, NavigationViewHandler>();
 
             // Native Layouts
             Registrar.Handlers.Register<HStack, HStackHandler>();
