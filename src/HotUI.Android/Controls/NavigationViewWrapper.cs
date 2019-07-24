@@ -1,5 +1,6 @@
-﻿using System;
+using System;
 using Android.Support.V4.App;
+using HotUI.Android.Extensions;
 using PopBackStackFlags = Android.App.PopBackStackFlags;
 
 namespace HotUI.Android.Controls
@@ -28,11 +29,7 @@ namespace HotUI.Android.Controls
             }
 
             var fragment = new HotUIFragment(view);
-            view.ToView(false);
-            if (view.BuiltView is NavigationView nav)
-            {
-                nav.PerformNavigate = Navigate;
-            }
+
             var transaction = manager.BeginTransaction();
 
             if (animate)
@@ -41,6 +38,13 @@ namespace HotUI.Android.Controls
                 transaction.AddToBackStack(view.Id);
             transaction.Replace(this.Id, fragment);
             transaction.CommitAllowingStateLoss();
+
+            manager.ExecutePendingTransactions();
+
+            if (view.BuiltView is NavigationView nav)
+            {
+                nav.PerformNavigate = Navigate;
+            }
 
         }
     }

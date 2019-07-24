@@ -20,7 +20,7 @@ namespace HotUI.iOS {
 			
 			if (vc.View != null)
 			{
-				if (view.BuiltView is NavigationView nav && allowNav)
+				if ((view.BuiltView ?? view) is NavigationView nav && allowNav)
 				{
 					var navController = new HUINavigationController();
 					nav.PerformNavigate = (toView) =>

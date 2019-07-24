@@ -3,23 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using Android.Content;
 using Android.Support.Design.Widget;
+using Android.Support.V4.App;
 using Android.Util;
 using Android.Views;
 using Android.Widget;
 
 namespace HotUI.Android.Controls
 {
-    public class HUITabView : FrameLayout
+    public class HUITabView : CustomFrameLayout
     {
-        private BottomNavigationView _bottomNavigationView;
+        private readonly BottomNavigationView _bottomNavigationView;
         private List<HotUIFragment> _fragments;
 
         public HUITabView(Context context) : base(context)
         {
-            Id = GenerateViewId();
-
-            LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent);
-
             _bottomNavigationView = new BottomNavigationView(context)
             {
                 LayoutParameters = new LayoutParams(LayoutParams.MatchParent, LayoutParams.WrapContent)
@@ -52,7 +49,7 @@ namespace HotUI.Android.Controls
                 var view = views[i];
                 var fragment = view.ToFragment();
 
-                var title = view.GetEnvironment<string>(EnvironmentKeys.View.Title);
+                var title = view.GetEnvironment<string>(EnvironmentKeys.TabView.Title);
                 var imagePath = view.GetEnvironment<string>(EnvironmentKeys.TabView.Image);
 
                 _bottomNavigationView.Menu.Add(0, i, i, title);

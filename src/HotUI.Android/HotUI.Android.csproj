@@ -77,7 +77,6 @@
     <Compile Include="Handlers\ViewRepresentableHandler.cs" />
     <Compile Include="Controls\HotUIFragment.cs" />
     <Compile Include="Controls\CustomFrameLayout.cs" />
-    <Compile Include="Controls\NavigationViewWrapper.cs" />
     <Compile Include="Controls\ModalManager.cs" />
     <Compile Include="Handlers\SliderHandler.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
@@ -88,6 +87,8 @@
     <Compile Include="Controls\HUITouchGesterListener.cs" />
     <Compile Include="Handlers\TabViewHandler.cs" />
     <Compile Include="Controls\HUITabView.cs" />
+    <Compile Include="Controls\HUINavigationView.cs" />
+    <Compile Include="Handlers\NavigationViewHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
