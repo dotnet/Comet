@@ -49,6 +49,19 @@ namespace HotUI
         }
 
         /// <summary>
+        /// Set the background color by hex value
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="color"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T Background<T>(this T view, string color) where T : View
+        {
+            view.SetEnvironment(EnvironmentKeys.Colors.BackgroundColor, new Color(color), false);
+            return view;
+        }
+
+        /// <summary>
         /// Set the background color
         /// </summary>
         /// <param name="view"></param>

@@ -180,6 +180,15 @@ namespace HotUI.Layout
                     }
                 }
 
+                var padding = view.Padding;
+                if (!padding.IsEmpty)
+                {
+                    x += padding.Left;
+                    y += padding.Top;
+                    w -= padding.HorizontalThickness;
+                    h -= padding.VerticalThickness;
+                }
+
                 view.Frame = new RectangleF(x, y, w, h);
             }
         }

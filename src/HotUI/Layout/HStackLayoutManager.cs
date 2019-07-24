@@ -109,6 +109,11 @@ namespace HotUI.Layout
                 else
                 {
                     var size = view.MeasuredSize;
+                    if (!view.MeasurementValid)
+                    {
+                        view.MeasuredSize = size = view.Measure(measured);
+                        view.MeasurementValid = true;
+                    }
 
                     if (view.FrameConstraints?.Width != null)
                         size.Width = Math.Min((float)view.FrameConstraints.Width, measured.Width);

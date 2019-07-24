@@ -1,5 +1,4 @@
-﻿using System;
-using HotUI.Layout;
+﻿using HotUI.Layout;
 
 // ReSharper disable once CheckNamespace
 namespace HotUI
@@ -26,6 +25,12 @@ namespace HotUI
                 top ?? 0,
                 right ?? 0,
                 bottom ?? 0);
+            return view;
+        }
+        
+        public static T Padding<T>(this T view, float value) where T : View
+        {
+            view.Padding = new Thickness(value);
             return view;
         }
         

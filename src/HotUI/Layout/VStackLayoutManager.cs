@@ -167,7 +167,7 @@ namespace HotUI.Layout
                         alignedX += (measured.Width - size.Width - padding.Left + padding.Right) / 2;
                         break;
                     case HorizontalAlignment.Trailing:
-                        alignedX += measured.Width - size.Width - padding.Right;
+                        alignedX = layout.Frame.Width - size.Width - padding.Right;
                         break;
                     case HorizontalAlignment.Leading:
                         alignedX = padding.Left;
