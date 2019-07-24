@@ -100,7 +100,7 @@ namespace HotUI
         public static T SetEnvironment<T>(this T contextualObject, Type type, string key, object value, bool cascades = true)
             where T : ContextualObject
         {
-            var typedKey = ContextualObject.GetTypedKey(type, key);
+            var typedKey = ContextualObject.GetTypedKey(type ?? contextualObject.GetType(), key);
             contextualObject.SetValue(typedKey, value, cascades);
             //TODO: Verify this is needed 
             Device.InvokeOnMainThread(() => {
@@ -129,14 +129,14 @@ namespace HotUI
         //}
 
         public static T GetEnvironment<T>(this ContextualObject contextualObject, View view, string key) => contextualObject.GetEnvironment<T>(view, contextualObject.GetType(),key);
-        public static T GetEnvironment<T>(this ContextualObject contextualObject, View view, Type type, string key) => contextualObject.GetValue<T>(key, contextualObject, view, ContextualObject.GetTypedKey(type,key));
+        public static T GetEnvironment<T>(this ContextualObject contextualObject, View view, Type type, string key) => contextualObject.GetValue<T>(key, contextualObject, view, ContextualObject.GetTypedKey(type ?? contextualObject.GetType(),key));
         public static object GetEnvironment(this ContextualObject contextualObject, View view, string key) => contextualObject.GetValue(key, contextualObject, view, ContextualObject.GetTypedKey(contextualObject, key));
-        public static object GetEnvironment(this ContextualObject contextualObject, View view,Type type, string key) => contextualObject.GetValue(key, contextualObject, view, ContextualObject.GetTypedKey(type, key));
+        public static object GetEnvironment(this ContextualObject contextualObject, View view,Type type, string key) => contextualObject.GetValue(key, contextualObject, view, ContextualObject.GetTypedKey(type ?? contextualObject.GetType(), key));
 
         public static T GetEnvironment<T>(this View view, string key) => view.GetEnvironment<T>(view, view.GetType(), key);
-        public static T GetEnvironment<T>(this View view, Type type, string key) => view.GetValue<T>(key, view, view.Parent,ContextualObject.GetTypedKey(type, key));
+        public static T GetEnvironment<T>(this View view, Type type, string key) => view.GetValue<T>(key, view, view.Parent,ContextualObject.GetTypedKey(type ?? view.GetType(), key));
 
         public static object GetEnvironment(this View view, string key) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedKey(view, key));
-        public static object GetEnvironment(this View view, Type type, string key) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedKey(type, key));
+        public static object GetEnvironment(this View view, Type type, string key) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedKey(type ?? view.GetType(), key));
     }
 }
