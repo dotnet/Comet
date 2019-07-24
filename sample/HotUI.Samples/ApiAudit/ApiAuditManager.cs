@@ -22,8 +22,10 @@ namespace HotUI.Samples
 
         static string[] FontProperties =
         {
-            //EnvironmentKeys.Fonts,
-            EnvironmentKeys.Colors.Color
+            EnvironmentKeys.Fonts.Family,
+            EnvironmentKeys.Fonts.Italic,
+            EnvironmentKeys.Fonts.Size,
+            EnvironmentKeys.Fonts.Weight,
         };
 
         static string[] ViewProperties =
@@ -37,8 +39,12 @@ namespace HotUI.Samples
         static ApiAuditManager()
         {
             Register<View>(ViewProperties);
+
             Register<Text>(FontProperties);
+            Register<Text>(EnvironmentKeys.Text.Color);
+
             Register<Button>(FontProperties);
+            Register<Button>(EnvironmentKeys.Text.Color);
         }
 
         static Dictionary<Type, HashSet<string>> WatchedProperties = new Dictionary<Type, HashSet<string>>();

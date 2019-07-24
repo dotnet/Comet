@@ -14,7 +14,7 @@ namespace HotUI.iOS.Handlers
             [EnvironmentKeys.Fonts.Italic] = MapFontProperty,
             [EnvironmentKeys.Fonts.Size] = MapFontProperty,
             [EnvironmentKeys.Fonts.Weight] = MapFontProperty,
-            [EnvironmentKeys.Colors.Color] = MapColorProperty,
+            [EnvironmentKeys.Text.Color] = MapColorProperty,
         };
 
         private static FontAttributes DefaultFont;
@@ -63,9 +63,7 @@ namespace HotUI.iOS.Handlers
         {
             var nativeView = (UILabel) viewHandler.NativeView;
             var color = virtualView.GetColor(DefaultColor);
-            var nativeColor = nativeView.TextColor.ToColor();
-            if (!color.Equals(nativeColor))
-                nativeView.TextColor = color.ToUIColor();
+            nativeView.TextColor = color.ToUIColor();
         }
     }
 }

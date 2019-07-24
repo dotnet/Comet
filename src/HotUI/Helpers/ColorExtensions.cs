@@ -12,16 +12,62 @@ namespace HotUI
         /// <param name="color"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Color<T>(this T view, Color color) where T : View
+        public static Text Color (this Text view, Color color)
         {
-            view.SetEnvironment(EnvironmentKeys.Colors.Color, color);
+            view.SetEnvironment(EnvironmentKeys.Text.Color, color);
             return view;
         }
 
-        public static Color GetColor(this View view, Color defaultColor)
+        public static Color GetColor(this Text view, Color defaultColor)
         {
-            var color = view.GetEnvironment<Color>(EnvironmentKeys.Colors.Color);
+            var color = view.GetEnvironment<Color>(EnvironmentKeys.Text.Color);
             return color ?? defaultColor;
+        }
+        /// <summary>
+        /// Set the color
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="color"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static TextField Color (this TextField view, Color color)
+        {
+            view.SetEnvironment(EnvironmentKeys.TextField.Color, color);
+            return view;
+        }
+
+        public static Color GetColor(this TextField view, Color defaultColor)
+        {
+            var color = view.GetEnvironment<Color>(EnvironmentKeys.TextField.Color);
+            return color ?? defaultColor;
+        }
+
+        /// <summary>
+        /// Set the color
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="color"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static Button TextColor(this Button view, Color color)
+        {
+            view.SetEnvironment(EnvironmentKeys.Button.TextColor, color);
+            return view;
+        }
+
+        public static Color GetTextColor(this Button view, Color defaultColor)
+        {
+            var color = view.GetEnvironment<Color>(EnvironmentKeys.Button.TextColor);
+            return color ?? defaultColor;
+        }
+
+
+        public static T TextColor<T>(this T view, Color color) where T: View
+        {
+            view.SetEnvironment(EnvironmentKeys.Button.TextColor, color);
+            view.SetEnvironment(EnvironmentKeys.Text.Color, color);
+            view.SetEnvironment(EnvironmentKeys.TextField.Color, color);
+            return view;
         }
 
         /// <summary>

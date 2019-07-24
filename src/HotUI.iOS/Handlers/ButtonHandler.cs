@@ -10,7 +10,8 @@ namespace HotUI.iOS.Handlers
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
-            [nameof(Button.Text)] = MapTextProperty
+            [nameof(Button.Text)] = MapTextProperty,
+            [EnvironmentKeys.Text.Color] = MapColorProperty,
         };
         
         public ButtonHandler() : base(Mapper)
@@ -18,9 +19,18 @@ namespace HotUI.iOS.Handlers
 
         }
 
+        private static FontAttributes DefaultFont;
+        private static Color DefaultColor;
         protected override UIButton CreateView()
         {
-            var button = new UIButton();
+            var button = new UIButton(UIButtonType.System);
+
+            if (DefaultColor == null)
+            {
+                DefaultFont = button.Font.ToFont();
+                DefaultColor = button.TitleColor(UIControlState.Normal).ToColor() ;
+            }
+
             button.TouchUpInside += HandleTouchUpInside;
             button.SetTitleColor(UIColor.Blue, UIControlState.Normal);
             /*Layer.BorderColor = UIColor.Blue.CGColor;
@@ -45,6 +55,12 @@ namespace HotUI.iOS.Handlers
             var nativeView = (UIButton) viewHandler.NativeView;
             nativeView.SetTitle(virtualView.Text, UIControlState.Normal);
             virtualView.InvalidateMeasurement();
+        }
+
+        public static void MapColorProperty(IViewHandler viewHandler, Button virtualView)
+        {
+            var nativeView = (UIButton)viewHandler.NativeView;
+            nativeView.SetTitleColor(virtualView.GetTextColor(DefaultColor).ToUIColor(), UIControlState.Normal);
         }
     }
 }

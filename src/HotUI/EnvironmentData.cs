@@ -5,14 +5,14 @@ using System.Linq;
 
 namespace HotUI {
 
-	public static class EnvironmentKeys {
-		public const string DocumentsFolder = "DocumentsFolder";
-		public const string UserFolder = "UserFolder";
-		public const string OS = "OS";
+    public static class EnvironmentKeys {
+        public const string DocumentsFolder = "DocumentsFolder";
+        public const string UserFolder = "UserFolder";
+        public const string OS = "OS";
 
-		public static class Fonts
+        public static class Fonts
         {
-			//public const string Font = "Font";
+            //public const string Font = "Font";
             public const string Size = "Font.Size";
             public const string Family = "Font.Family";
             public const string Weight = "Font.Weight";
@@ -21,9 +21,22 @@ namespace HotUI {
 
         }
 
+        public static class Text
+        {
+            public const string Color = "Text.Color";
+        }
+        public static class TextField
+        {
+            public const string Color = "TextField.Color";
+        }
+        public static class Button
+        {
+            public const string TextColor = "Button.TextColor";
+        }
+
         public static class Colors
         {
-            public const string Color = "Color";
+           // public const string Color = "Color";
             public const string BackgroundColor = "BackgroundColor";
         }
 
