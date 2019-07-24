@@ -23,7 +23,11 @@ namespace HotUI.Samples
         }
 
         [Body]
-        View body() => new ProgressBar(percentage);
+        View body() => new VStack()
+        {
+            new ProgressBar(percentage),
+            new Text(()=>$"{percentage.Value} %"),
+        };
 
         protected override void Dispose(bool disposing)
         {
