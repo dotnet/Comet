@@ -69,7 +69,7 @@ namespace HotUI.Samples
             HRule(),
             new Button("Purchase for $200"),
             new Spacer(),
-        };
+        }.FillHorizontal();
 
         View HRule()
         {
