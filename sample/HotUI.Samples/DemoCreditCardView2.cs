@@ -1,20 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 
-/*
-
-struct ContentView : View {
-    @State private var password: String = ""
-
-    var body: some View {
-        VStack {
-            SecureField("Enter a password", text: $password)
-            Text("You entered: \(password)")    
-        }
-    }
-}
-
-*/
 namespace HotUI.Samples
 {
     public class DemoCreditCardView2 : View
@@ -22,16 +7,13 @@ namespace HotUI.Samples
         [State]
         readonly CreditCard Card;
 
-        readonly State<string> number = "";
         readonly State<bool> remember = false;
-
-        readonly Color titleColor = new Color("#1d1d1d");
-        readonly Color ccColor = new Color("#999999");
 
         public DemoCreditCardView2()
         {
             Card = new CreditCard();
         }
+
 
         [Body]
         View body() => new VStack(spacing: 20)
@@ -84,18 +66,18 @@ namespace HotUI.Samples
                 }.RoundedBorder(radius: 8, color: "#3177CB", filled: true).Padding(30)
             }.Background("#f6f6f6"),
 
-            new BorderedEntry(Card.BindingFor(x => x.Number),"Enter CC Number", "\uf09d")
+            new BorderedEntry(Card.TwoWayBinding(x => x.Number),"Enter CC Number", "\uf09d")
                 .Padding(left:20, right: 20),
 
             new HStack(spacing:20)
             {
-                new BorderedEntry(Card.BindingFor(x => x.Expiration), "MM/YYYY", "\uf783")
+                new BorderedEntry(Card.TwoWayBinding(x => x.Expiration), "MM/YYYY", "\uf783")
                     .Frame(height: 40, width: 200)
                     .Padding(left:20),
 
                 new Spacer(),
 
-                new BorderedEntry(Card.BindingFor(x => x.CVV), "CVV", "\uf023")
+                new BorderedEntry(Card.TwoWayBinding(x => x.CVV), "CVV", "\uf023")
                     .Frame( height: 40, width: 100)
                     .Padding(right:20),
             },

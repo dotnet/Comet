@@ -1,23 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 
-/*
-
-struct ContentView : View {
-    @State private var password: String = ""
-
-    var body: some View {
-        VStack {
-            SecureField("Enter a password", text: $password)
-            Text("You entered: \(password)")    
-        }
-    }
-}
-
-*/
 namespace HotUI.Samples
 {
-
     class CreditCard : BindingObject
     {
         public string Number
