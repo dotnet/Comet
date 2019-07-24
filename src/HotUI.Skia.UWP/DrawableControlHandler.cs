@@ -32,6 +32,7 @@ namespace HotUI.Skia.UWP
             SetMapper(null);
             
             base.Remove(view);
+            ReleaseNativeView();
         }
 
         public override SizeF Measure(SizeF availableSize)
