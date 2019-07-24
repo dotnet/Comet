@@ -69,7 +69,7 @@ namespace HotUI
             HotReloadHelper.Register(this);
             State = StateBuilder.CurrentState ?? new State
             {
-                StateChanged = ResetView
+                StateChanged = Device.OnStateChanged(this)
             };
             SetEnvironmentFields();
             if (!hasConstructors)

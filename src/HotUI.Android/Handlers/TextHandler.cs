@@ -16,6 +16,7 @@ namespace HotUI.Android.Handlers
             [EnvironmentKeys.Fonts.Italic] = MapFontProperty,
             [EnvironmentKeys.Fonts.Size] = MapFontProperty,
             [EnvironmentKeys.Fonts.Weight] = MapFontProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
 
         public TextHandler() : base(Mapper)
