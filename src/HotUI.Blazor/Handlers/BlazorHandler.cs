@@ -7,7 +7,15 @@ namespace HotUI.Blazor.Handlers
       where TVirtualView : View
       where TNativeView : HotUIComponentBase
     {
+        private static readonly PropertyMapper<TVirtualView> _empty = new PropertyMapper<TVirtualView>();
+
         private readonly PropertyMapper<TVirtualView> _mapper;
+
+
+        public BlazorHandler()
+            : this(_empty)
+        {
+        }
 
         public BlazorHandler(PropertyMapper<TVirtualView> mapper)
         {

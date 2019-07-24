@@ -2,8 +2,12 @@
 
 namespace HotUI.Blazor.Components
 {
-    public class HotUIComponentBase : ComponentBase
+    public abstract class HotUIComponentBase : ComponentBase
     {
+        private protected HotUIComponentBase()
+        {
+        }
+
         internal void NotifyUpdate() => base.StateHasChanged();
     }
 }

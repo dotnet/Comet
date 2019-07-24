@@ -7,7 +7,8 @@ namespace HotUI {
 			view.UpdateNavigation ();
 			PerformNavigate (view);
 		}
-		public Action<View> PerformNavigate;
+
+		public Action<View> PerformNavigate { get; set; }
 
 		public override void Add (View view)
 		{
