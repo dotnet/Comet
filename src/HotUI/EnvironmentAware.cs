@@ -100,7 +100,7 @@ namespace HotUI
         public static T SetEnvironment<T>(this T contextualObject, Type type, string key, object value, bool cascades = true)
             where T : ContextualObject
         {
-            var typedKey = ContextualObject.GetTypedKey(type ?? contextualObject.GetType(), key);
+            var typedKey = ContextualObject.GetTypedKey(type, key);
             contextualObject.SetValue(typedKey, value, cascades);
             //TODO: Verify this is needed 
             Device.InvokeOnMainThread(() => {
