@@ -130,27 +130,27 @@ namespace HotUI
             view.Frame = new RectangleF((float)x, (float)y, width, height);
         }
         
-        public static T FillHorizontal<T>(this T view) where T : View
+        public static T FillHorizontal<T>(this T view, bool cascades = true) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+            view.SetEnvironment(EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill,cascades);
             return view;
         }
         
-        public static T FillVertical<T>(this T view) where T : View
+        public static T FillVertical<T>(this T view, bool cascades = true) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
+            view.SetEnvironment(EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill,cascades);
             return view;
         }
         
-        public static T FitHorizontal<T>(this T view) where T : View
+        public static T FitHorizontal<T>(this T view, bool cascades = true) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fit);
+            view.SetEnvironment(EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fit,cascades);
             return view;
         }
         
-        public static T FitVertical<T>(this T view) where T : View
+        public static T FitVertical<T>(this T view, bool cascades = true) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.Layout.VerticalSizing, Sizing.Fit);
+            view.SetEnvironment(EnvironmentKeys.Layout.VerticalSizing, Sizing.Fit,cascades);
             return view;
         }
         

@@ -63,9 +63,7 @@ namespace HotUI.iOS.Handlers
         {
             var nativeView = (UILabel) viewHandler.NativeView;
             var color = virtualView.GetColor(DefaultColor);
-            var nativeColor = nativeView.TextColor.ToColor();
-            if (!color.Equals(nativeColor))
-                nativeView.TextColor = color.ToUIColor();
+            nativeView.TextColor = color.ToUIColor();
         }
     }
 }

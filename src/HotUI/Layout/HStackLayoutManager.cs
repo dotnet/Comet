@@ -29,7 +29,6 @@ namespace HotUI.Layout
             var spacerCount = 0;
             var lastWasSpacer = false;
 
-            var _sizing = layout.GetVerticalSizing();
             
             foreach (var view in layout)
             {
@@ -62,6 +61,10 @@ namespace HotUI.Layout
                     finalHeight += padding.VerticalThickness;
                     finalWidth += padding.HorizontalThickness;
 
+                    var sizing = view.GetVerticalSizing();
+                    if (sizing == Sizing.Fill)
+                        height = available.Height;
+
                     height = Math.Max(finalHeight, height);
                     width += finalWidth;
                 }
@@ -76,7 +79,8 @@ namespace HotUI.Layout
             if (spacerCount > 0)
                 width = available.Width;
 
-            if (_sizing == Sizing.Fill)
+            var layoutSizing = layout.GetVerticalSizing();
+            if (layoutSizing == Sizing.Fill)
                 height = available.Height;
             
             return new SizeF(width, height);

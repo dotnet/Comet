@@ -180,7 +180,55 @@ namespace HotUI.Tests {
 
 			Assert.Equal ("3", text.Value);
 
-
 		}
-	}
+
+        [Fact]
+        public void LocalContextOverridesCascaded()
+        {
+            ResetHotUI();
+            const string myStringKey = "myString";
+            const string globalValue = "globalValue";
+            const string localValue = "localValue";
+            const string cascadedValue = "casadedValue";
+            const string secondCascadedValue = "secondCascadedValue";
+
+            View.SetGlobalEnvironment(myStringKey, globalValue);
+
+            VStack rootStack = null;
+            VStack stack1 = null;
+            VStack stack2 = null;
+            Text text1 = null;
+            Text text2 = null;
+
+            var view = new View
+            {
+                Body = () => rootStack = new VStack {
+                    (stack1 = new VStack {
+                        (text1 = new Text())
+                    }).SetEnvironment(myStringKey, cascadedValue),
+                    (stack2 = new VStack {
+                        (text2 = new Text()).SetEnvironment(myStringKey, secondCascadedValue),
+                    })
+                }.SetEnvironment(myStringKey, localValue, false)
+            };
+
+
+            var viewHandler = new GenericViewHandler();
+            view.ViewHandler = viewHandler;
+
+
+            void CheckView(View v, string expectedValue)
+            {
+                var value = v.GetEnvironment<string>(myStringKey);
+                Assert.Equal(expectedValue, value);
+            }
+
+            CheckView(stack2, globalValue);
+            CheckView(rootStack, localValue);
+            CheckView(stack1, cascadedValue);
+            CheckView(text1, cascadedValue);
+            CheckView(text2, secondCascadedValue);
+
+        }
+    }
 }

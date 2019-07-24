@@ -1,5 +1,6 @@
 ﻿using Android.Content;
 using Android.Widget;
+using HotUI.Android;
 
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -15,16 +16,21 @@ namespace HotUI.Android.Handlers
             [EnvironmentKeys.Fonts.Italic] = MapFontProperty,
             [EnvironmentKeys.Fonts.Size] = MapFontProperty,
             [EnvironmentKeys.Fonts.Weight] = MapFontProperty,
-            [EnvironmentKeys.Colors.Color] = MapColorProperty,
+            [EnvironmentKeys.Text.Color] = MapColorProperty,
         };
 
         public TextHandler() : base(Mapper)
         {
         }
-
+        static Color DefaultColor;
         protected override TextView CreateView(Context context)
         {
-            return new TextView(context);
+            var textView = new TextView(context);
+            if(DefaultColor == null)
+            {
+                DefaultColor = textView.CurrentTextColor.ToColor();
+            }
+            return textView;
         }
 
         protected override void DisposeView(TextView nativeView)
@@ -43,6 +49,10 @@ namespace HotUI.Android.Handlers
 
         public static void MapColorProperty(IViewHandler viewHandler, Text virtualView)
         {
+            var textView = viewHandler.NativeView as TextView;
+            var color = virtualView.GetColor(DefaultColor).ToColor();
+            textView.SetTextColor(color);
+
         }
     }
 }
