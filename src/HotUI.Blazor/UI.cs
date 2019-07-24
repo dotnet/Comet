@@ -21,6 +21,8 @@ namespace HotUI.Blazor
             Registrar.Handlers.Register<ContentView, ContentViewHandler>();
             Registrar.Handlers.Register<View, ViewHandler>();
             Registrar.Handlers.Register<ListView, ListViewHandler>();
+            Registrar.Handlers.Register<Spacer, SpacerHandler>();
+            Registrar.Handlers.Register<TextField, TextFieldHandler>();
 
             Device.PerformInvokeOnMainThread = a => a();
             ListView.HandlerSupportsVirtualization = false;

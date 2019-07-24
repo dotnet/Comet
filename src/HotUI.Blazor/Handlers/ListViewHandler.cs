@@ -1,13 +1,14 @@
 ﻿using HotUI.Blazor.Components;
+using System;
 using System.Collections.Generic;
 
 namespace HotUI.Blazor.Handlers
 {
-    internal class ListViewHandler : BlazorHandler<ListView, BContainerView>
+    internal class ListViewHandler : BlazorHandler<ListView, BListView>
     {
         public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>
         {
-            { "List", MapListProperty }
+            { "List", MapListProperty },
         };
 
         public ListViewHandler()
@@ -17,20 +18,9 @@ namespace HotUI.Blazor.Handlers
 
         public static void MapListProperty(IViewHandler viewHandler, ListView virtualView)
         {
-            var nativeView = (BContainerView)viewHandler.NativeView;
+            var nativeView = (BListView)viewHandler.NativeView;
 
-            nativeView.Views = Flatten(virtualView);
-        }
-
-        private static IEnumerable<View> Flatten(IListView list)
-        {
-            for (int section = 0; section < list.Sections(); section++)
-            {
-                for (int row = 0; row < list.Rows(section); row++)
-                {
-                    yield return list.ViewFor(section, row);
-                }
-            }
+            nativeView.List = virtualView;
         }
     }
 }

@@ -1,0 +1,27 @@
+@inherits HotUIComponentBase
+
+<div class="container">
+    @if (List != null)
+    {
+        var sections = List.Sections();
+        for (int section = 0; section < sections; section++)
+        {
+            var tmpSection = section;
+            var rows = List.Rows(section);
+            for (int row = 0; row < rows; row++)
+            {
+                var tmpRow = row;
+                var view = List.ViewFor(tmpSection, tmpRow);
+
+                <div @onclick="@(()=> List.OnSelected(tmpSection, tmpRow))">                    
+                    <BView @key="@view" View="@view" />
+                </div>
+            }
+        }
+    }
+</div>
+
+@code {
+    [Parameter]
+    public IListView List { get; set; }
+}
