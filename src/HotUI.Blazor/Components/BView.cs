@@ -8,17 +8,24 @@ namespace HotUI.Blazor.Components
     {
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
+            base.BuildRenderTree(builder);
+
+            builder.OpenElement(0, "div");
+            builder.AddAttribute(1, "class", "hotui-view");
+
             if (View?.GetOrCreateViewHandler() is IBlazorViewHandler handler)
             {
-                builder.OpenComponent(0, handler.Component);
+                builder.OpenComponent(2, handler.Component);
                 builder.SetKey(handler);
-                builder.AddComponentReferenceCapture(1, handler.SetNativeView);
+                builder.AddComponentReferenceCapture(3, handler.OnComponentLoad);
                 builder.CloseComponent();
             }
             else
             {
-                builder.AddContent(2, "Error: No view");
+                builder.AddContent(4, "Error: No view");
             }
+
+            builder.CloseElement();
         }
 
         [Parameter]

@@ -6,6 +6,6 @@ namespace HotUI.Blazor.Handlers
     {
         Type Component { get; }
 
-        void SetNativeView(object nativeView);
+        void OnComponentLoad(object nativeView);
     }
 }

@@ -1,6 +1,10 @@
 @inherits HotUIComponentBase
 
-<input type="text" value="@Text" onchange="@OnChange" />
+<div class="form-group">
+    <div class="hotui-textfield">
+        <input class="form-control" type="text" value="@Text" onchange="@OnChange" />
+    </div>
+</div>
 
 @code {
     [Parameter]
