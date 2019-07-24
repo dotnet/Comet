@@ -42,9 +42,9 @@ namespace HotUI
         /// <param name="color"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Background<T>(this T view, Color color, bool cascades = false) where T : View
+        public static T Background<T>(this T view, Color color) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.Colors.BackgroundColor, color,cascades);
+            view.SetEnvironment(EnvironmentKeys.Colors.BackgroundColor, color,false);
             return view;
         }
 
@@ -55,9 +55,9 @@ namespace HotUI
         /// <param name="color"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Background<T>(this T view, Type type, Color color, bool cascades = false) where T : View
+        public static T Background<T>(this T view, Type type, Color color) where T : View
         {
-            view.SetEnvironment(type, EnvironmentKeys.Colors.BackgroundColor, color, cascades);
+            view.SetEnvironment(type, EnvironmentKeys.Colors.BackgroundColor, color, true);
             return view;
         }
 
