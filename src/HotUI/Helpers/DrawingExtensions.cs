@@ -123,5 +123,29 @@ namespace HotUI
             var drawingStyle = shape.GetEnvironment<DrawingStyle?>(view, type, EnvironmentKeys.Shape.DrawingStyle);
             return drawingStyle ?? defaultDrawingStyle;
         }
+
+        public static T Border<T>(this T view, Shape shape, Type type = null) where T : View
+        {
+            view.SetEnvironment(type, EnvironmentKeys.View.Border, shape, type != null);
+            return view;
+        }
+
+        public static Shape GetBorder(this View view, Shape defaultShape = null, Type type = null)
+        { 
+            var shape = view.GetEnvironment<Shape>(type, EnvironmentKeys.View.Border);
+            return shape ?? defaultShape;
+        }
+
+        public static T RoundedBorder<T>(this T view, float radius = 4, Color color = null, float strokeSize = 1, Type type = null) where T : View
+        {
+            var finalColor = color ?? Color.Black;
+            view.Border(new RoundedRectangle(radius).Stroke(finalColor, strokeSize));
+            return view;
+        }
+        
+
+
+
+
     }
 }
