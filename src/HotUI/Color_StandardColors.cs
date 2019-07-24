@@ -142,5 +142,6 @@
         public static readonly Color LightYellow = new Color("#FFFFE0");
         public static readonly Color Ivory = new Color("#FFFFF0");
         public static readonly Color White = new Color("#FFFFFF");
+        public static readonly Color Transparent = new Color("#00000000");
     }
 }
