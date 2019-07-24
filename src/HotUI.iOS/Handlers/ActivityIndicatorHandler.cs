@@ -22,6 +22,10 @@ namespace HotUI.iOS
                 var activityIndicator = new UIActivityIndicatorView();
                 activityIndicator.StartAnimating();
 
+            if(DefaultColor == null)
+            {
+                DefaultColor = activityIndicator.Color.ToColor();
+            }
             return activityIndicator;
         }
 

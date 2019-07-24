@@ -12,7 +12,8 @@ namespace HotUI.Samples
         [Body]
         View body()
         {
-            if (isLoading) return new Text(() => "Loading...");
+            //if (isLoading) return new Text(() => "Loading...");
+            if (isLoading) return new ActivityIndicator().Color(Color.Fuchsia);
             
             if (reports.Value.Count == 0) return new Button(() => "Generate Report", async () =>
                    {
