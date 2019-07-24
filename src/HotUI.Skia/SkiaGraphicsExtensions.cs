@@ -20,82 +20,72 @@ namespace HotUI.Skia
         public static SizeF ToSizeF(this SKSize size)
             => new SizeF(size.Width, size.Height);
 
-        public static SKPath ToSKPath(this PathF target)
+         public static SKPath ToSKPath(
+            this PathF path)
         {
-            var path = new SKPath();
+            var nativePath = new SKPath();
+            
+            var pointIndex = 0;
+            var arcAngleIndex = 0;
+            var arcClockwiseIndex = 0;
 
-            int pointIndex = 0;
-            int arcAngleIndex = 0;
-            int arcClockwiseIndex = 0;
-
-            foreach(var operation in target.PathOperations)
+            foreach (var operation in path.PathOperations)
             {
-                if(operation == PathOperation.MoveTo)
+                if (operation == PathOperation.MoveTo)
                 {
-                    var point = target[pointIndex++];
-                    path.MoveTo(point.X, point.Y);
+                    var point = path[pointIndex++];
+                    nativePath.MoveTo(point.X, point.Y);
                 }
-                else if(operation == PathOperation.Line)
+                else if (operation == PathOperation.Line)
                 {
-                    var endPoint = target[pointIndex++];
-                    path.LineTo(endPoint.X, endPoint.Y);
+                    var point = path[pointIndex++];
+                    nativePath.LineTo(point.X, point.Y);
                 }
-                else if(operation == PathOperation.Quad)
-                {
-                    var controlPoint = target[pointIndex++];
-                    var endPoint = target[pointIndex++];
-                    path.QuadTo(controlPoint.X, controlPoint.Y, endPoint.X, endPoint.Y);
-                }
-                else if(operation == PathOperation.Cubic)
-                {
-                    var controlPoint1 = target[pointIndex++];
-                    var controlPoint2 = target[pointIndex++];
-                    var endpoint = target[pointIndex++];
-                    path.CubicTo(
-                        controlPoint1.X,
-                        controlPoint1.Y,
-                        controlPoint2.X,
-                        controlPoint2.Y,
-                        endpoint.X,
-                        endpoint.Y
-                        );
-                }
-                else if(operation == PathOperation.Arc)
-                {
-                    var topLeft = target[pointIndex++];
-                    var bottomRight = target[pointIndex++];
-                    float startAngle = target.GetArcAngle(arcAngleIndex++);
-                    float endAngle = target.GetArcAngle(arcAngleIndex++);
-                    var clockwise = target.IsArcClockwise(arcClockwiseIndex++);
 
-                    //error math
+                else if (operation == PathOperation.Quad)
+                {
+                    var controlPoint = path[pointIndex++];
+                    var point = path[pointIndex++];
+                    nativePath.QuadTo(controlPoint.X, controlPoint.Y, point.X, point.Y);
+                }
+                else if (operation == PathOperation.Cubic)
+                {
+                    var controlPoint1 = path[pointIndex++];
+                    var controlPoint2 = path[pointIndex++];
+                    var point = path[pointIndex++];
+                    nativePath.CubicTo(controlPoint1.X, controlPoint1.Y, controlPoint2.X, controlPoint2.Y, point.X,
+                        point.Y);
+                }
+                else if (operation == PathOperation.Arc)
+                {
+                    var topLeft = path[pointIndex++];
+                    var bottomRight = path[pointIndex++];
+                    var startAngle = path.GetArcAngle(arcAngleIndex++);
+                    var endAngle = path.GetArcAngle(arcAngleIndex++);
+                    var clockwise = path.IsArcClockwise(arcClockwiseIndex++);
+
                     while (startAngle < 0)
-                    {
                         startAngle += 360;
-                    }
 
-                     while(endAngle < 0)
-                    {
+                    while (endAngle < 0)
                         endAngle += 360;
-                    }
 
-                    // sweep, in degrees. Positive is clockwise; Negative for anticlockwise
-                    var sweepAngle = GraphicsOperations.GetSweep(startAngle, endAngle, clockwise);
+                    var rect = new SKRect(topLeft.X, topLeft.Y, bottomRight.X, bottomRight.Y);
+                    var sweep = GraphicsOperations.GetSweep(startAngle, endAngle, clockwise);
 
                     startAngle *= -1;
                     if (!clockwise)
-                        sweepAngle *= -1;
+                        sweep *= -1;
 
-                    path.ArcTo(new SKRect(topLeft.X, topLeft.Y, bottomRight.X, bottomRight.Y), startAngle, sweepAngle, false);
-
+                    nativePath.AddArc(rect, startAngle, sweep);
                 }
-                else if(operation == PathOperation.Close)
+                else if (operation == PathOperation.Close)
                 {
-                    path.Close();
+                    nativePath.Close();
                 }
             }
 
-            return path;
+            return nativePath;
         }
     }
 }
