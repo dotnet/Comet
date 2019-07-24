@@ -10,8 +10,7 @@ namespace HotUI.Android.Handlers
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
-            [nameof(Button.Text)] = MapTextProperty,
-            [EnvironmentKeys.Text.Color] = MapColorProperty,
+            [nameof(Button.Text)] = MapTextProperty
         };
 
         static Color DefaultColor;
