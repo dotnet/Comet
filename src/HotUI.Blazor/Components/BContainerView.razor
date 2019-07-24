@@ -1,19 +1,13 @@
 @inherits HotUIComponentBase
 
 <div class="container">
-    @foreach (var view in _views)
+    @foreach (var view in Views)
     {
         <BView @key="@view" View="@view" />
     }
 </div>
 
 @code {
-    private IEnumerable<View> _views;
-
     [Parameter]
-    public IEnumerable<View> Views
-    {
-        get => _views ?? Enumerable.Empty<View>();
-        set => _views = value;
-    }
+    public IList<View> Views { get; set; }
 }
