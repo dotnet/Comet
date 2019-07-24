@@ -93,6 +93,7 @@
     <Compile Include="Graphics\UIImageBitmap.cs" />
     <Compile Include="Controls\HUITapGestures.cs" />
     <Compile Include="Handlers\ProgressBarHandler.cs" />
+    <Compile Include="Extensions\AnimationExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\HotUI\HotUI.csproj">
