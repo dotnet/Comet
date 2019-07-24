@@ -53,7 +53,7 @@ namespace HotUI.Samples {
             new MenuItem("DavidSample1b",()=> new DavidSample1b()),
             new MenuItem("DavidSample1c",()=> new DavidSample1c()),
             new MenuItem("DavidSample2",()=> new DavidSample2()),
-            new MenuItem("Continuous Sweeky",() => new ContinuosSample())
+            new MenuItem("SkiaShapeView ",() => new SkiaSample5())
         };
 
 		public MainPage (List<MenuItem> additionalPage = null)
