@@ -18,11 +18,6 @@ namespace HotUI.Blazor.Handlers
         {
             var nativeView = (BLabel)viewHandler.NativeView;
 
-            if (nativeView is null)
-            {
-                return;
-            }
-
             nativeView.Value = virtualView.Value;
         }
     }

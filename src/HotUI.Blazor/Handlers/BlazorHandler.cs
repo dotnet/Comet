@@ -37,7 +37,11 @@ namespace HotUI.Blazor.Handlers
         public virtual void SetView(View view)
         {
             VirtualView = view as TVirtualView;
-            _mapper?.UpdateProperties(this, VirtualView);
+
+            if (NativeView != null)
+            {
+                _mapper?.UpdateProperties(this, VirtualView);
+            }
         }
 
         public virtual void UpdateValue(string property, object value)

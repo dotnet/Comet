@@ -2,7 +2,7 @@
 
 namespace HotUI.Blazor
 {
-    public static class UI
+    internal static class UI
     {
         private static bool _hasInitialized;
 
@@ -18,7 +18,9 @@ namespace HotUI.Blazor
             Registrar.Handlers.Register<Text, TextHandler>();
             Registrar.Handlers.Register<ContainerView, ContainerViewHandler>();
             Registrar.Handlers.Register<Button, ButtonHandler>();
+            Registrar.Handlers.Register<ContentView, ContentViewHandler>();
             Registrar.Handlers.Register<View, ViewHandler>();
+            Registrar.Handlers.Register<ListView, ListViewHandler>();
 
             Device.PerformInvokeOnMainThread = a => a();
             ListView.HandlerSupportsVirtualization = false;
