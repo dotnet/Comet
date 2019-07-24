@@ -1,0 +1,11 @@
+@inherits HotUIComponentBase
+
+<button class="btn btn-primary" @onclick="@OnClick">@Text</button>
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public Action OnClick { get; set; }
+}
