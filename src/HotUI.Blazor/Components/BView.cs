@@ -8,7 +8,18 @@ namespace HotUI.Blazor.Components
         {
             base.BuildRenderTree(builder);
 
-            builder.AddView(0, View);
+            if (View is null)
+            {
+                builder.AddContent(0, $"Empty view");
+            }
+            else if (View.ViewHandler is null)
+            {
+                builder.AddView(0, View);
+            }
+            else
+            {
+                builder.AddContent(0, $"Unknown component: {View.GetType()}");
+            }
         }
 
         public View View { get; set; }
