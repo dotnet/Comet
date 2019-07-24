@@ -1,4 +1,5 @@
-﻿using HotUI.Blazor.Handlers;
+﻿using HotUI.Blazor.Components;
+using HotUI.Blazor.Handlers;
 
 namespace HotUI.Blazor
 {
@@ -25,6 +26,10 @@ namespace HotUI.Blazor
             Registrar.Handlers.Register<TextField, TextFieldHandler>();
 
             Device.PerformInvokeOnMainThread = a => a();
+            Device.OnStateChanged = view => () =>
+            {
+                view.ViewHandler.SetView(view.Body());
+            };
             ListView.HandlerSupportsVirtualization = false;
         }
     }

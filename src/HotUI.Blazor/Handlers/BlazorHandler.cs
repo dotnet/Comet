@@ -49,24 +49,26 @@ namespace HotUI.Blazor.Handlers
             if (NativeView != null)
             {
                 _mapper?.UpdateProperties(this, VirtualView);
+                NativeView.NotifyUpdate();
             }
         }
 
         public virtual void UpdateValue(string property, object value)
         {
-            NativeView?.NotifyUpdate();
             _mapper?.UpdateProperty(this, VirtualView, property);
+            NativeView?.NotifyUpdate();
         }
 
         protected virtual void NativeViewUpdated()
         {
-            _mapper?.UpdateProperties(this, VirtualView);
         }
 
         void IBlazorViewHandler.SetNativeView(object nativeView)
         {
             NativeView = (TNativeView)nativeView;
             NativeViewUpdated();
+            _mapper?.UpdateProperties(this, VirtualView);
+            NativeView.NotifyUpdate();
         }
     }
 }
