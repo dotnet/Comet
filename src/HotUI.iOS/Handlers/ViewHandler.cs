@@ -25,7 +25,7 @@ namespace HotUI.iOS.Handlers
             if (viewHandler?.GetType() == typeof(ViewHandler) && NativeView == null)
             {
                 // this is recursive.
-                Debug.WriteLine($"There is no ViewHandler for {VirtualView.GetType()}");
+                System.Diagnostics.Debug.WriteLine($"There is no ViewHandler for {VirtualView.GetType()}");
                 return null;
             }
 

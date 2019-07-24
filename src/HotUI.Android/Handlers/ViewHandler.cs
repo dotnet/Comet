@@ -18,7 +18,7 @@ namespace HotUI.Android.Handlers
         public ViewHandler() : base(Mapper)
         {
         }
-        
+
         protected override AView CreateView(Context context)
         {
             return VirtualView.ToView();
@@ -26,7 +26,7 @@ namespace HotUI.Android.Handlers
 
         public static void MapBackgroundColorProperty(IViewHandler handler, View virtualView)
         {
-            var nativeView = (AView) handler.NativeView;
+            var nativeView = (AView)handler.NativeView;
             var color = virtualView.GetBackgroundColor();
             if (color != null)
                 nativeView.SetBackgroundColor(color.ToColor());
@@ -48,7 +48,7 @@ namespace HotUI.Android.Handlers
             if (!gestures.Any())
                 return;
             var listner = handler.GetGestureListener();
-            foreach(var gesture in view.Gestures)
+            foreach (var gesture in view.Gestures)
                 listner.AddGesture(gesture);
         }
 
@@ -87,20 +87,31 @@ namespace HotUI.Android.Handlers
 
                 var duration = Convert.ToInt64(animation.Duration ?? 1000);
                 var delay = Convert.ToInt64(animation.Delay ?? 0);
-                //var options = animation.Options.ToAnimationOptions();
-
                 var animator = nativeView.Animate();
                 animator.SetStartDelay(delay);
                 animator.SetDuration(duration);
+
                 if (animation.TranslateTo != null)
                 {
                     animator.TranslationX(animation.TranslateTo.Value.X);
                     animator.TranslationY(animation.TranslateTo.Value.Y);
                 }
 
+                if (animation.RotateTo != null)
+                {
+                    var angle = Convert.ToInt16(animation.RotateTo.Value);
+                    animator.Rotation(angle);
+                }
+
+                if(animation.ScaleTo != null)
+                {
+                    animator.ScaleX(animation.ScaleTo.Value.X);
+                    animator.ScaleY(animation.ScaleTo.Value.Y);
+                }
+
                 animator.Start();
 
-               // TODO: implement other properties
+                // TODO: implement other properties
             }
         }
     }
