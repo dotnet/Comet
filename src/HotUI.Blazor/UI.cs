@@ -1,8 +1,9 @@
-﻿using HotUI.Blazor.Handlers;
+﻿using HotUI.Blazor.Components;
+using HotUI.Blazor.Handlers;
 
 namespace HotUI.Blazor
 {
-    public static class UI
+    internal static class UI
     {
         private static bool _hasInitialized;
 
@@ -18,9 +19,17 @@ namespace HotUI.Blazor
             Registrar.Handlers.Register<Text, TextHandler>();
             Registrar.Handlers.Register<ContainerView, ContainerViewHandler>();
             Registrar.Handlers.Register<Button, ButtonHandler>();
+            Registrar.Handlers.Register<ContentView, ContentViewHandler>();
             Registrar.Handlers.Register<View, ViewHandler>();
+            Registrar.Handlers.Register<ListView, ListViewHandler>();
+            Registrar.Handlers.Register<Spacer, SpacerHandler>();
+            Registrar.Handlers.Register<TextField, TextFieldHandler>();
 
             Device.PerformInvokeOnMainThread = a => a();
+            Device.OnStateChanged = view => () =>
+            {
+                view.ViewHandler.SetView(view.Body());
+            };
             ListView.HandlerSupportsVirtualization = false;
         }
     }

@@ -13,6 +13,7 @@ namespace HotUI.iOS.Handlers
         public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
             [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
+            [nameof(EnvironmentKeys.View.Border)] = MapBorderProperty,
             [nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
             [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
             [nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty,
@@ -81,6 +82,40 @@ namespace HotUI.iOS.Handlers
             var color = virtualView.GetBackgroundColor();
             if (color != null)
                 nativeView.BackgroundColor = color.ToUIColor();
+        }
+
+        public static void MapBorderProperty(IViewHandler handler, View virtualView)
+        {
+            var nativeView = (UIView)handler.NativeView;
+            var borderShape = virtualView.GetBorder();
+            if (borderShape != null)
+            {
+                var layer = nativeView.Layer;
+                var color = borderShape.GetStrokeColor(virtualView, Color.Black);
+                var lineWidth = borderShape.GetLineWidth(virtualView, 1);
+                var style = borderShape.GetDrawingStyle(virtualView);
+
+                if (style == DrawingStyle.Stroke || style == DrawingStyle.StrokeFill)
+                {
+                    layer.BorderColor = color.ToCGColor();
+                    layer.BorderWidth = lineWidth;
+
+                    if (borderShape is RoundedRectangle roundedRectangle)
+                    {
+                        var cornerRadius = roundedRectangle.CornerRadius;
+                        layer.CornerRadius = cornerRadius;
+                    }
+                    else if (borderShape is Capsule)
+                    {
+                        var size = Math.Min(virtualView.Frame.Height, virtualView.Frame.Width);
+                        layer.CornerRadius = size / 2;
+                    }
+                    else if (borderShape is Rectangle)
+                    {
+                        layer.CornerRadius = 0;
+                    }
+                }
+            }
         }
 
         public static bool NeedsContainer(View virtualView)

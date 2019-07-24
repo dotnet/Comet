@@ -20,8 +20,8 @@ namespace HotUI.Skia
         void EndInteraction(PointF[] points);
         void CancelInteraction();
         void Resized(RectangleF bounds);
-        void AddedToView(object view, RectangleF bounds);
-        void RemovedFromView(object view);
+        void AddedToView(object nativeView, RectangleF bounds);
+        void RemovedFromView(object nativeView);
         SizeF Measure(SizeF availableSize);
     }
 }

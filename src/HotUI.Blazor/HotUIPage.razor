@@ -1,0 +1,30 @@
+@using HotUI.Blazor.Components
+
+<BView @key="@View" View="@View" />
+
+@code {
+    private View _view;
+
+    [Parameter]
+    public View View
+    {
+        get => _view;
+        set
+        {
+            _view = value;
+
+            _view.GetOrCreateViewHandler();
+
+            if (_view?.BuiltView is NavigationView nav)
+            {
+                nav.PerformNavigate = toView =>
+                {
+                    View = toView;
+                    base.StateHasChanged();
+                };
+            }
+        }
+    }
+
+
+}

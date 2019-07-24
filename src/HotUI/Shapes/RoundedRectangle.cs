@@ -11,6 +11,8 @@ namespace HotUI
             _cornerRadius = cornerRadius;
         }
 
+        public float CornerRadius => _cornerRadius;
+
         public override PathF PathForBounds(RectangleF rect)
         {
             var path = new PathF();

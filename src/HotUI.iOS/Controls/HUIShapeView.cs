@@ -39,8 +39,6 @@ namespace HotUI.iOS
                 var strokeColor = Color.Black;
                 object fill = null;
                 
-
-
                 if (drawingStyle == DrawingStyle.Fill || drawingStyle == DrawingStyle.StrokeFill)
                 {
                     fill = Shape.GetFill(View);

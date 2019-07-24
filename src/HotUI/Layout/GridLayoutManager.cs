@@ -67,16 +67,60 @@ namespace HotUI.Layout
                 ComputeGrid(available.Width, available.Height);
                 _lastSize = available;
             }
-            
+
             for (var index = 0; index < _constraints.Count; index++)
             {
+                var position = _constraints[index];
                 var view = layout[index];
-                
-                if (!view.MeasurementValid)
+
+                var x = _gridX[position.Column];
+                var y = _gridY[position.Row];
+
+                var w = 0f;
+                for (var i = 0; i < position.ColumnSpan; i++)
+                    w += GetColumnWidth(position.Column + i);
+
+                var h = 0f;
+                for (var i = 0; i < position.RowSpan; i++)
+                    h += GetRowHeight(position.Row + i);
+
+                if (position.WeightX < 1 || position.WeightY < 1)
                 {
-                    view.MeasuredSize = view.Measure(available);
+                    var viewSize = view.MeasuredSize;
+
+                    if (!view.MeasurementValid)
+                        viewSize = view.Measure(available);
+
+                    var cellWidth = w;
+                    var cellHeight = h;
+
+                    if (position.WeightX <= 0)
+                        w = viewSize.Width;
+                    else
+                        w *= position.WeightX;
+
+                    if (position.WeightY <= 0)
+                        h = viewSize.Height;
+                    else
+                        h *= position.WeightY;
+
+                    if (position.PositionX > 0)
+                    {
+                        var availWidth = cellWidth - w;
+                        x += (float)Math.Round(availWidth * position.PositionX);
+                    }
+
+                    if (position.PositionY > 0)
+                    {
+                        var availHeight = cellHeight - h;
+                        y += (float)Math.Round(availHeight * position.PositionY);
+                    }
+
+                    view.MeasuredSize = new SizeF(w, h);
                     view.MeasurementValid = true;
                 }
+
+                view.Frame = new RectangleF(x, y, w, h);
             }
 
             return new SizeF(_width, _height);

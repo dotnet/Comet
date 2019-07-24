@@ -10,9 +10,11 @@ namespace HotUI.Android.Handlers
     {
         public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
         {
-            [nameof(Button.Text)] = MapTextProperty
+            [nameof(Button.Text)] = MapTextProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
 
+        static Color DefaultColor;
         public ButtonHandler() : base(Mapper)
         {
         }
@@ -20,6 +22,10 @@ namespace HotUI.Android.Handlers
         protected override AButton CreateView(Context context)
         {
             var button = new AButton(context);
+            if (DefaultColor == null)
+            {
+                DefaultColor = button.CurrentTextColor.ToColor();
+            }
             button.Click += HandleClick;
             return button;
         }
@@ -35,6 +41,13 @@ namespace HotUI.Android.Handlers
         {
             var nativeView = (AButton) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
+        }
+        public static void MapColorProperty(IViewHandler viewHandler, Button virtualView)
+        {
+            var textView = viewHandler.NativeView as AButton;
+            var color = virtualView.GetColor(DefaultColor).ToColor();
+            textView.SetTextColor(color);
+
         }
     }
 }

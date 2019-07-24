@@ -4,25 +4,30 @@ using System.Threading;
 using System.Threading.Tasks;
 using HotUI.Services;
 
-namespace HotUI{
-	public static class Device {
+namespace HotUI
+{
+    public static class Device
+    {
 
-		static Device()
-		{
-			mainThread = Thread.CurrentThread;
-		}
-		public static Action<Action> PerformInvokeOnMainThread;
-		internal static Thread mainThread;
-		public static void InvokeOnMainThread (Action action)
-		{
-			if (mainThread == Thread.CurrentThread)
-				action ();
-			else
-				PerformInvokeOnMainThread (action);
-		}
+        static Device()
+        {
+            mainThread = Thread.CurrentThread;
+        }
 
-		public static IFontService FontService = new FallbackFontService();
-		public static IGraphicsService GraphicsService;
-		public static IBitmapService BitmapService;
-	}
+        public static Func<View, Action> OnStateChanged { get; set; } = v => v.Reload;
+
+        public static Action<Action> PerformInvokeOnMainThread;
+        internal static Thread mainThread;
+        public static void InvokeOnMainThread(Action action)
+        {
+            if (mainThread == Thread.CurrentThread)
+                action();
+            else
+                PerformInvokeOnMainThread(action);
+        }
+
+        public static IFontService FontService = new FallbackFontService();
+        public static IGraphicsService GraphicsService;
+        public static IBitmapService BitmapService;
+    }
 }

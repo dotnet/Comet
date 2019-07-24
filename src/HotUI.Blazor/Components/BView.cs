@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Components.RenderTree;
+﻿using HotUI.Blazor.Handlers;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.RenderTree;
 
 namespace HotUI.Blazor.Components
 {
@@ -6,11 +8,20 @@ namespace HotUI.Blazor.Components
     {
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
-            base.BuildRenderTree(builder);
-
-            builder.AddView(0, View);
+            if (View?.GetOrCreateViewHandler() is IBlazorViewHandler handler)
+            {
+                builder.OpenComponent(0, handler.Component);
+                builder.SetKey(handler);
+                builder.AddComponentReferenceCapture(1, handler.SetNativeView);
+                builder.CloseComponent();
+            }
+            else
+            {
+                builder.AddContent(2, "Error: No view");
+            }
         }
 
+        [Parameter]
         public View View { get; set; }
     }
 }

@@ -41,6 +41,8 @@ namespace HotUI.Samples {
             new MenuItem("SkiaSample3 (BindableFingerPaint)", ()=> new SkiaSample3()),
             new MenuItem("SkiaSample3WithScrollView (BindableFingerPaint)", ()=> new SkiaSample3WithScrollView()),
             new MenuItem("SkiaSample4 (BindableFingerPaint)", ()=> new SkiaSample4()),
+            new MenuItem("SkiaSample5 (Shapes) ",() => new SkiaSample5()),
+            new MenuItem("SkiaSample6 (Shapes w/ Gradient) ",() => new SkiaSample6()),
             new MenuItem("SwiftUI Tutorial Section 1", ()=> new Section1()),
             new MenuItem("SwiftUI Tutorial Section 2", ()=> new Section2()),
             new MenuItem("SwiftUI Tutorial Section 3", ()=> new Section3()),

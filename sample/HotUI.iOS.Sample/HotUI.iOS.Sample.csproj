@@ -172,6 +172,7 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\turtlerock.jpg" />
+    <BundleResource Include="Resources\fa-solid-900.ttf" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

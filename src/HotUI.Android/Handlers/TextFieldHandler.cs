@@ -8,16 +8,21 @@ namespace HotUI.Android.Handlers
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
-            [nameof(TextField.Text)] = MapTextProperty
+            [nameof(TextField.Text)] = MapTextProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
 
         public TextFieldHandler() : base(Mapper)
         {
         }
-
+        static Color DefaultColor;
         protected override EditText CreateView(Context context)
         {
             var editText = new EditText(context);
+            if (DefaultColor == null)
+            {
+                DefaultColor = editText.CurrentTextColor.ToColor();
+            }
             editText.TextChanged += HandleTextChanged;
             return editText;
         }
@@ -36,6 +41,14 @@ namespace HotUI.Android.Handlers
         {
             var nativeView = (EditText) viewHandler.NativeView;
             nativeView.Text = virtualView.Text;
+        }
+
+        public static void MapColorProperty(IViewHandler viewHandler, TextField virtualView)
+        {
+            var textView = viewHandler.NativeView as EditText;
+            var color = virtualView.GetColor(DefaultColor).ToColor();
+            textView.SetTextColor(color);
+
         }
     }
 }
