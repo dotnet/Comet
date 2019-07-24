@@ -45,7 +45,7 @@ namespace HotUI.Samples
     public class DemoCreditCardView : View
     {
         [State]
-        CreditCard Card;
+        readonly CreditCard Card;
 
         readonly State<bool> remember = false;
 
@@ -63,7 +63,7 @@ namespace HotUI.Samples
             columns: new object[] { "*", "5*", "5*" }
             )
         {
-            new Grid(){
+            new Grid(){ // thecredit card display at the top
                 new ShapeView(
                     new RoundedRectangle(8)
                         .Stroke(Color.Black, 2.0f)
