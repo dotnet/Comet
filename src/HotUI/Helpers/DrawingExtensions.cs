@@ -6,7 +6,7 @@ namespace HotUI
 {
     public static class DrawingExtensions
     {
-        public static T Shadow<T>(this T view, Color color = null, float? radius = null, float? x = null, float? y = null, bool cascades = false) where T : View
+        public static T Shadow<T>(this T view, Color color = null, float? radius = null, float? x = null, float? y = null) where T : View
         {
             var shadow = view.GetShadow() ?? new Shadow();
 
@@ -33,9 +33,9 @@ namespace HotUI
             return shadow ?? defaultShadow;
         }
 
-        public static T ClipShape<T>(this T view, Shape shape, bool cascades = false) where T : View
+        public static T ClipShape<T>(this T view, Shape shape) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.View.ClipShape, shape, cascades);
+            view.SetEnvironment(EnvironmentKeys.View.ClipShape, shape, false);
             return view;
         }
 
@@ -45,28 +45,28 @@ namespace HotUI
             return shape ?? defaultShape;
         }
 
-        public static T Stroke<T>(this T shape, Color color, float lineWidth) where T : Shape
+        public static T Stroke<T>(this T shape, Color color, float lineWidth, bool cascades = true) where T : Shape
         {
-            shape.SetEnvironment(EnvironmentKeys.Shape.LineWidth, lineWidth);
-            shape.SetEnvironment(EnvironmentKeys.Shape.StrokeColor, color);
+            shape.SetEnvironment(EnvironmentKeys.Shape.LineWidth, lineWidth, cascades);
+            shape.SetEnvironment(EnvironmentKeys.Shape.StrokeColor, color, cascades);
             return shape;
         }
         
-        public static T Fill<T>(this T shape, Color color) where T : Shape
+        public static T Fill<T>(this T shape, Color color, bool cascades = true) where T : Shape
         {
-            shape.SetEnvironment(EnvironmentKeys.Shape.Fill, color);
+            shape.SetEnvironment(EnvironmentKeys.Shape.Fill, color,cascades);
             return shape;
         }
         
-        public static T Fill<T>(this T shape, Gradient gradient) where T : Shape
+        public static T Fill<T>(this T shape, Gradient gradient, bool cascades = true) where T : Shape
         {
-            shape.SetEnvironment(EnvironmentKeys.Shape.Fill, gradient);
+            shape.SetEnvironment(EnvironmentKeys.Shape.Fill, gradient,cascades);
             return shape;
         }
         
-        public static T Style<T>(this T shape, DrawingStyle drawingStyle) where T : Shape
+        public static T Style<T>(this T shape, DrawingStyle drawingStyle, bool cascades = true) where T : Shape
         {
-            shape.SetEnvironment(EnvironmentKeys.Shape.DrawingStyle, drawingStyle);
+            shape.SetEnvironment(EnvironmentKeys.Shape.DrawingStyle, drawingStyle,cascades);
             return shape;
         }
 

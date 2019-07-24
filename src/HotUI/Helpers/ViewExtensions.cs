@@ -57,8 +57,8 @@ namespace HotUI
             return fields;
         }
 
-        public static T Title<T>(this T view, string title) where T : View =>
-            view.SetEnvironment(EnvironmentKeys.View.Title, title);
+        public static T Title<T>(this T view, string title, bool cascades = true) where T : View =>
+            view.SetEnvironment(EnvironmentKeys.View.Title, title,cascades);
 
         public static T AddGesture<T>(this T view, Gesture gesture) where T : View
         {
