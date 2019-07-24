@@ -31,15 +31,15 @@ namespace HotUI.Samples.Skia
                         new Button("Black", () =>
                         {
                             _strokeColor.Value = Color.Black.ToHexString();
-                        }),
+                        }).Color(Color.Black),
                         new Button("Blue", () =>
                         {
                             _strokeColor.Value = Color.Blue.ToHexString();
-                        }),
+                        }).Color(Color.Blue),
                         new Button("Red", () =>
                         {
                             _strokeColor.Value = Color.Red.ToHexString();
-                        })
+                        }).Color(Color.Red),
                     },
                 //},
                 new BindableFingerPaint(

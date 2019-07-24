@@ -22,8 +22,11 @@ namespace HotUI.Samples
 
         static string[] FontProperties =
         {
-            //EnvironmentKeys.Fonts,
-            EnvironmentKeys.Colors.Color
+            EnvironmentKeys.Fonts.Family,
+            EnvironmentKeys.Fonts.Italic,
+            EnvironmentKeys.Fonts.Size,
+            EnvironmentKeys.Fonts.Weight,
+            EnvironmentKeys.Colors.Color,
         };
 
         static string[] ViewProperties =

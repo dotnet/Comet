@@ -203,13 +203,13 @@ namespace HotUI.Tests {
             var view = new View
             {
                 Body = () => rootStack = new VStack {
-                    (stack1 = new VStack{
-                        (text1 = new Text ())
-                    }).SetEnvironment(myStringKey,cascadedValue),  
-                    (stack2 = new VStack{
-                        (text2 = new Text ()).SetEnvironment(myStringKey,secondCascadedValue),
+                    (stack1 = new VStack {
+                        (text1 = new Text())
+                    }).SetEnvironment(myStringKey, cascadedValue),
+                    (stack2 = new VStack {
+                        (text2 = new Text()).SetEnvironment(myStringKey, secondCascadedValue),
                     })
-                }.SetEnvironment(myStringKey, localValue,false),
+                }.SetEnvironment(myStringKey, localValue, false)
             };
 
 

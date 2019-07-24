@@ -11,9 +11,13 @@ namespace HotUI.iOS.Handlers
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
             [nameof(TextField.Text)] = MapTextProperty,
-            [nameof(SecureField.Placeholder)] = MapPlaceholderProperty
+            [nameof(SecureField.Placeholder)] = MapPlaceholderProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
-        
+
+
+        private static FontAttributes DefaultFont;
+        private static Color DefaultColor;
         public TextFieldHandler() : base(Mapper)
         {
 
@@ -22,6 +26,12 @@ namespace HotUI.iOS.Handlers
         protected override UITextField CreateView()
         {
             var textField = new UITextField();
+            if (DefaultColor == null)
+            {
+                DefaultFont = textField.Font.ToFont();
+                DefaultColor = textField.TextColor.ToColor();
+            }
+
             textField.EditingDidEnd += HandleEditingDidEnd;
             textField.EditingChanged += HandleEditingChanged;
             
@@ -63,6 +73,12 @@ namespace HotUI.iOS.Handlers
             var nativeView = (UITextField) viewHandler.NativeView;
             nativeView.Placeholder = virtualView.Placeholder;
             virtualView.InvalidateMeasurement();
+        }
+        public static void MapColorProperty(IViewHandler viewHandler, TextField virtualView)
+        {
+            var nativeView = (UITextField)viewHandler.NativeView;
+            var color = virtualView.GetColor(DefaultColor);
+            nativeView.TextColor = color.ToUIColor();
         }
     }
 }
