@@ -91,6 +91,14 @@ namespace HotUI.UWP.Handlers
             }
         }
 
+        protected void ReleaseNativeView()
+        {
+            if (_nativeView is IDisposable disposable)
+                disposable.Dispose();
+
+            _nativeView = null;
+        }
+
         public virtual void SetView(View view)
         {
             _virtualView = view as TVirtualView;

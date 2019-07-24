@@ -19,5 +19,15 @@ namespace HotUI.Blazor.Handlers
 
             NativeView.View = VirtualView;
         }
+
+        public override void SetView(View view)
+        {
+            if (NativeView != null)
+            {
+                NativeView.View = view;
+            }
+
+            base.SetView(view);
+        }
     }
 }

@@ -1,0 +1,11 @@
+@inherits HotUIComponentBase
+
+<input type="text" value="@Text" onchange="@OnChange" />
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public Action<string> OnChange { get; set; }
+}

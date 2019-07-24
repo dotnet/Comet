@@ -4,6 +4,8 @@ namespace HotUI.Graphics
 {
     public class Gradient
     {
+        private Stop[] _sortedStops;
+        
         /// <summary>
         /// The gradient synthesizes its location values to evenly space the colors along the gradient.
         /// </summary>
@@ -32,5 +34,17 @@ namespace HotUI.Graphics
         }
 
         public Stop[] Stops { get; }
+        
+        public Stop[] GetSortedStops()
+        {
+            if (_sortedStops == null)
+            {
+                _sortedStops = new Stop[Stops.Length];
+                Array.Copy(Stops, _sortedStops, Stops.Length);
+                Array.Sort(_sortedStops);
+            }
+
+            return _sortedStops;
+        }
     }
 }

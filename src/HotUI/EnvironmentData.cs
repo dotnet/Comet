@@ -38,6 +38,7 @@ namespace HotUI {
             public const string Shadow = "Shadow";
             public const string Overlay = "Overlay";
             public const string Title = "Title";
+            public const string Border = "Border";
         }
 
         public static class Shape

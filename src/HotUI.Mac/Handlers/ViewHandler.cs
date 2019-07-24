@@ -6,14 +6,15 @@ using CoreGraphics;
 using HotUI.Mac.Extensions;
 
 namespace HotUI.Mac.Handlers
-{
+{   
 	public class ViewHandler : AbstractHandler<View, NSView>
     {
         public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>()
         {
             [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
             [nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
-            [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty
+            [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
+            [nameof(EnvironmentKeys.View.Border)] = MapBorderProperty
         };
         
         protected override NSView CreateView()
@@ -128,6 +129,11 @@ namespace HotUI.Mac.Handlers
             {
                 handler.HasContainer = false;
             }
+        }
+
+        public static void MapBorderProperty(IViewHandler viewHandler, View virtualView)
+        {
+            
         }
     }
 }

@@ -22,7 +22,10 @@ namespace HotUI
                 var newY = y ?? shadow.Offset.Height;
                 shadow = shadow.WithOffset(new SizeF(newX, newY));
             }
-            view.SetEnvironment(type,EnvironmentKeys.View.Shadow, shadow, type != null);
+            if(type != null)
+                view.SetEnvironment(type,EnvironmentKeys.View.Shadow, shadow, true);
+            else
+                view.SetEnvironment(type, EnvironmentKeys.View.Shadow, shadow,false);
             return view;
         }
 
@@ -33,7 +36,10 @@ namespace HotUI
         }
         public static T ClipShape<T>(this T view, Shape shape, Type type = null) where T : View
         {
-            view.SetEnvironment(type,EnvironmentKeys.View.ClipShape, shape, type != null);
+            if(type != null)
+                view.SetEnvironment(type,EnvironmentKeys.View.ClipShape, shape, true);
+            else
+                view.SetEnvironment( EnvironmentKeys.View.ClipShape, shape, false);
             return view;
         }
 
@@ -47,8 +53,16 @@ namespace HotUI
         {
             if (type != null && !cascades)
                 Logger.Fatal($"Setting a type, and cascades = false does nothing!");
-            shape.SetEnvironment(type, EnvironmentKeys.Shape.LineWidth, lineWidth, cascades);
-            shape.SetEnvironment(type, EnvironmentKeys.Shape.StrokeColor, color, cascades);
+            if (type != null)
+            {
+                shape.SetEnvironment(type, EnvironmentKeys.Shape.LineWidth, lineWidth, true);
+                shape.SetEnvironment(type, EnvironmentKeys.Shape.StrokeColor, color, true);
+            }
+            else
+            {
+                shape.SetEnvironment(EnvironmentKeys.Shape.LineWidth, lineWidth, cascades);
+                shape.SetEnvironment(EnvironmentKeys.Shape.StrokeColor, color, cascades);
+            }
             return shape;
         }
         
@@ -56,7 +70,11 @@ namespace HotUI
         {
             if (type != null && !cascades)
                 Logger.Fatal($"Setting a type, and cascades = false does nothing!");
-            shape.SetEnvironment(type, EnvironmentKeys.Shape.Fill, color,cascades);
+            if (type != null)
+                shape.SetEnvironment(type, EnvironmentKeys.Shape.Fill, color,true);
+            else
+                shape.SetEnvironment(EnvironmentKeys.Shape.Fill, color, cascades);
+
             return shape;
         }
         
@@ -64,7 +82,10 @@ namespace HotUI
         {
             if (type != null && !cascades)
                 Logger.Fatal($"Setting a type, and cascades = false does nothing!");
-            shape.SetEnvironment(type, EnvironmentKeys.Shape.Fill, gradient,cascades);
+            if(type != null)
+                shape.SetEnvironment(type, EnvironmentKeys.Shape.Fill, gradient,true);
+            else
+                shape.SetEnvironment(EnvironmentKeys.Shape.Fill, gradient, cascades);
             return shape;
         }
         
@@ -72,7 +93,10 @@ namespace HotUI
         {
             if (type != null && !cascades)
                 Logger.Fatal($"Setting a type, and cascades = false does nothing!");
-            shape.SetEnvironment(type, EnvironmentKeys.Shape.DrawingStyle, drawingStyle, cascades);
+            if(type != null)
+                shape.SetEnvironment(type, EnvironmentKeys.Shape.DrawingStyle, drawingStyle, true);
+            else
+                shape.SetEnvironment(EnvironmentKeys.Shape.DrawingStyle, drawingStyle, cascades);
             return shape;
         }
 
@@ -99,5 +123,29 @@ namespace HotUI
             var drawingStyle = shape.GetEnvironment<DrawingStyle?>(view, type, EnvironmentKeys.Shape.DrawingStyle);
             return drawingStyle ?? defaultDrawingStyle;
         }
+
+        public static T Border<T>(this T view, Shape shape, Type type = null) where T : View
+        {
+            view.SetEnvironment(type, EnvironmentKeys.View.Border, shape, type != null);
+            return view;
+        }
+
+        public static Shape GetBorder(this View view, Shape defaultShape = null, Type type = null)
+        { 
+            var shape = view.GetEnvironment<Shape>(type, EnvironmentKeys.View.Border);
+            return shape ?? defaultShape;
+        }
+
+        public static T RoundedBorder<T>(this T view, float radius = 4, Color color = null, float strokeSize = 1, Type type = null) where T : View
+        {
+            var finalColor = color ?? Color.Black;
+            view.Border(new RoundedRectangle(radius).Stroke(finalColor, strokeSize));
+            return view;
+        }
+        
+
+
+
+
     }
 }

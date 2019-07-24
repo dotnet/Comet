@@ -23,7 +23,7 @@ namespace HotUI
         public static string GetTypedKey(ContextualObject obj, string key)
             => GetTypedKey(obj.GetType(), key);
         public static string GetTypedKey(Type type, string key)
-            => $"{type.Name}.{key}";
+            => type == null ? key : $"{type.Name}.{key}";
 
 
         internal object GetValue(string key, ContextualObject current, View view,string typedKey)
@@ -100,7 +100,7 @@ namespace HotUI
         public static T SetEnvironment<T>(this T contextualObject, Type type, string key, object value, bool cascades = true)
             where T : ContextualObject
         {
-            var typedKey = ContextualObject.GetTypedKey(type ?? contextualObject.GetType(), key);
+            var typedKey = ContextualObject.GetTypedKey(type, key);
             contextualObject.SetValue(typedKey, value, cascades);
             //TODO: Verify this is needed 
             Device.InvokeOnMainThread(() => {
