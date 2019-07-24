@@ -9,7 +9,7 @@ namespace HotUI.Android.Handlers
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
             [nameof(TextField.Text)] = MapTextProperty,
-            [EnvironmentKeys.Text.Color] = MapColorProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
 
         public TextFieldHandler() : base(Mapper)
