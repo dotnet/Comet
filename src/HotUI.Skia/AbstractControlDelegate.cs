@@ -80,7 +80,7 @@ namespace HotUI.Skia
             Bounds = bounds;
         }
 
-        public virtual void AddedToView(object view, RectangleF bounds)
+        public virtual void AddedToView(object nativeView, RectangleF bounds)
         {
             Bounds = bounds;
         }
