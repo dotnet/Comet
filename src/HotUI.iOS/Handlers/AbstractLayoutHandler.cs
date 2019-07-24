@@ -7,6 +7,8 @@ namespace HotUI.iOS.Handlers
 {
     public class AbstractLayoutHandler : UIView, iOSViewHandler
     {
+        public static readonly PropertyMapper<AbstractLayout> Mapper = new PropertyMapper<AbstractLayout>(ViewHandler.Mapper);
+
         private AbstractLayout _view;
         private SizeF _measured;
 
@@ -14,7 +16,6 @@ namespace HotUI.iOS.Handlers
 
         protected AbstractLayoutHandler(CGRect rect) : base(rect)
         {
-
         }
 
         protected AbstractLayoutHandler()
@@ -66,6 +67,8 @@ namespace HotUI.iOS.Handlers
 
                 SetNeedsLayout();
             }
+
+            Mapper?.UpdateProperties(this, _view);
             ViewHandler.AddGestures(this, view);
         }
 
@@ -116,6 +119,8 @@ namespace HotUI.iOS.Handlers
             {
                 ViewHandler.RemoveGesture(this, (Gesture)value);
             }
+
+            Mapper?.UpdateProperty(this, _view, property);
         }
 
         private void HandleChildrenAdded(object sender, LayoutEventArgs e)

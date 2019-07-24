@@ -18,64 +18,89 @@ struct ContentView : View {
 namespace HotUI.Samples
 {
 
-    //class MyBindingObject : BindingObject
-    //{
-    //    public bool CanEdit
-    //    {
-    //        get => GetProperty<bool>();
-    //        set => SetProperty(value);
-    //    }
-    //    public string Text
-    //    {
-    //        get => GetProperty<string>();
-    //        set => SetProperty(value);
-    //    }
-    //}
+    class CreditCard : BindingObject
+    {
+        public string Number
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+        public string Expiration
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+        public string CVV
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+        public string Name
+        {
+            get => GetProperty<string>();
+            set => SetProperty(value);
+        }
+    }
 
     public class DemoCreditCardView : View
     {
-        readonly State<string> password = "";
-        readonly State<string> ccnumber = "";
-        readonly State<string> ccexpiration = "";
-        readonly State<string> cccvv = "";
+        [State]
+        readonly CreditCard Card;
+
         readonly State<bool> remember = false;
 
         Color titleColor = new Color("#1d1d1d");
         Color ccColor = new Color("#999999");
 
-
+        public DemoCreditCardView()
+        {
+            Card = new CreditCard();
+        }
 
         [Body]
-        View body() => new VStack()
+        View body() => new Grid(
+            rows: new object[] { "250", 20, 160, 20, 44, 20, 1, 20, 44, "*" },
+            columns: new object[] { 20, "*", 20 }
+            )
         {
-            new Spacer(),
-            TitleText("Card Number"),
-            CCText(ccnumber),
-            TitleText("Expiration"),
-            CCText(ccexpiration),
-            TitleText("CVV"),
-            CCText(cccvv),
-            HRule(),
-            new Spacer(),
-            new TextField(ccnumber, "Enter a CC Number"),
-            new TextField(ccexpiration, "MM/YY"),
-            new TextField(cccvv, "CVV"),
-            new HStack{
-                new Toggle(remember),
-                new Text("Remember Me")
-            },
-            new Button("Or Pay with PayPal"),
-            new Spacer(),
-            HRule(),
-            new Button("Purchase for $200"),
-            new Spacer(),
-        }.FillHorizontal();
+            new Grid(
+                rows: new object[] { 30,"*",30},
+                columns: new object[] { 30, "*", 30 })
+            {
+                // thecredit card display at the top
+                new ShapeView(
+                    new RoundedRectangle(8)
+                        .Fill(Color.CornflowerBlue)
+                        .Style(Graphics.DrawingStyle.Fill) 
+                ).Cell(row:1, column:1)
+            }.Cell(row:0, column:0, colSpan:3).Background(new Color("#f6f6f6")).Frame(height:250),
+            new Grid(
+                rows: new object[] { 40, 20, 40, 20, 40, 20, 44 },
+                columns: new object[] { "2*", 20, "*" })
+            {
+                new ShapeView(new RoundedRectangle(4).Stroke(Color.Grey, 1)).Cell(row:0, column: 0, colSpan: 3),
+                new ShapeView(new RoundedRectangle(4).Stroke(Color.Grey, 1)).Cell(row:2, column: 0),
+                new ShapeView(new RoundedRectangle(4).Stroke(Color.Grey, 1) ).Cell(row:2, column: 2),
+                EntryContainer(Card.Number, "Enter CC Number").Cell(row:0, column: 0, colSpan: 3),  
+                EntryContainer(Card.Expiration, "MM/YYYY").Cell(row:2, column: 0),
+                EntryContainer(Card.CVV, "CVV").Cell(row:2, column: 2),
+                new HStack
+                {
+                    new Toggle(remember),
+                    new Text("  Remember Me")
+                }.Cell(row:4,column:0, colSpan: 3)
+            }.Cell(row:2, column:1),
+            
+            new Button("Or Pay with PayPal").Cell(row:4, column:0, colSpan:3),
+            HRule().Cell(row:6,column:0,colSpan:3),
+            new Button("Purchase for $200").Cell(row:8,column:0,colSpan:3)
+        };
 
         View HRule()
         {
             return new ShapeView(
                 new Rectangle()
-                    .Stroke(Color.Black, 2)
+                    .Stroke(Color.Grey, 2)
                 )
                 .Frame(100, 1);
         }
@@ -95,6 +120,16 @@ namespace HotUI.Samples
                 .Color(titleColor);
         }
 
+        HStack EntryContainer(Binding<String> val, string placeholder)
+        {
+            return new HStack(spacing:10)
+            {
+                    new Text("").Frame(width:5),
+                    new TextField(val, placeholder).Padding(top:9)
+                
+            }.FillHorizontal();
+        }
+
         //class CCText : Text
         //{
         //    public CCText(Binding<string> val) : base(val)
@@ -103,4 +138,6 @@ namespace HotUI.Samples
 
         //}
     }
+
+    
 }
