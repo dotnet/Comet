@@ -9,5 +9,6 @@ namespace HotUI
         public AnimationOptions? Options { get; set; }
         public PointF? TranslateTo { get; set; }
         public double? RotateTo { get; set; }
+        public PointF? ScaleTo { get; set; }
     }
 }

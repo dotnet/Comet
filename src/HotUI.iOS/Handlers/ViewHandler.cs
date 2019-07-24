@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Threading;
 using CoreAnimation;
 using CoreGraphics;
 using HotUI.Graphics;
@@ -20,7 +19,7 @@ namespace HotUI.iOS.Handlers
             [nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty,
             [nameof(EnvironmentKeys.Animations.Animation)] = MapAnimationProperty,
         };
-        
+
         protected override UIView CreateView()
         {
             var viewHandler = VirtualView?.GetOrCreateViewHandler();
@@ -39,7 +38,7 @@ namespace HotUI.iOS.Handlers
             var previousView = TypedNativeView;
             base.SetView(view);
             BroadcastNativeViewChanged(previousView, TypedNativeView);
-            
+
         }
         public override void Remove(View view)
         {
@@ -48,7 +47,7 @@ namespace HotUI.iOS.Handlers
 
         public override void UpdateValue(string property, object value)
         {
-           base.UpdateValue(property, value);
+            base.UpdateValue(property, value);
         }
 
         public static void AddGestures(IViewHandler handler, View view)
@@ -73,13 +72,13 @@ namespace HotUI.iOS.Handlers
         {
             var nativeView = (UIView)handler.NativeView;
             var nativeGesture = gesture.NativeGesture as UIGestureRecognizer;
-            if(nativeGesture != null)
+            if (nativeGesture != null)
                 nativeView.RemoveGestureRecognizer(nativeGesture);
         }
 
         public static void MapBackgroundColorProperty(IViewHandler handler, View virtualView)
         {
-            var nativeView = (UIView) handler.NativeView;
+            var nativeView = (UIView)handler.NativeView;
             var color = virtualView.GetBackgroundColor();
             if (color != null)
                 nativeView.BackgroundColor = color.ToUIColor();
@@ -100,7 +99,7 @@ namespace HotUI.iOS.Handlers
 
         public static void MapShadowProperty(IViewHandler handler, View virtualView)
         {
-            var nativeView = (UIView) handler.NativeView;
+            var nativeView = (UIView)handler.NativeView;
             var shadow = virtualView.GetShadow();
             var clipShape = virtualView.GetClipShape();
 
@@ -143,14 +142,14 @@ namespace HotUI.iOS.Handlers
         private static void ApplyShadowToLayer(Shadow shadow, CALayer layer)
         {
             layer.ShadowColor = shadow.Color.ToCGColor();
-            layer.ShadowRadius = (nfloat) shadow.Radius;
+            layer.ShadowRadius = (nfloat)shadow.Radius;
             layer.ShadowOffset = shadow.Offset.ToCGSize();
             layer.ShadowOpacity = shadow.Opacity;
         }
 
         private static void ClearShadowFromLayer(CALayer layer)
         {
-            layer.ShadowColor = new CGColor(0,0,0,0);
+            layer.ShadowColor = new CGColor(0, 0, 0, 0);
             layer.ShadowRadius = 0;
             layer.ShadowOffset = new CGSize();
             layer.ShadowOpacity = 0;
@@ -158,13 +157,13 @@ namespace HotUI.iOS.Handlers
 
         public static void MapClipShapeProperty(IViewHandler handler, View virtualView)
         {
-            var nativeView = (UIView) handler.NativeView;
+            var nativeView = (UIView)handler.NativeView;
             var clipShape = virtualView.GetClipShape();
             if (clipShape != null)
             {
                 handler.HasContainer = true;
                 var bounds = nativeView.Bounds;
-                
+
                 var layer = new CAShapeLayer
                 {
                     Frame = bounds
@@ -172,7 +171,7 @@ namespace HotUI.iOS.Handlers
 
                 var path = clipShape.PathForBounds(bounds.ToRectangleF());
                 layer.Path = path.ToCGPath();
-                
+
                 var viewHandler = handler as iOSViewHandler;
                 if (viewHandler?.ContainerView != null)
                 {
@@ -185,10 +184,10 @@ namespace HotUI.iOS.Handlers
                 {
                     var shadowLayer = new CAShapeLayer();
                     shadowLayer.Name = "shadow";
-                    shadowLayer.FillColor = new CGColor(0,0,0,1);
+                    shadowLayer.FillColor = new CGColor(0, 0, 0, 1);
                     shadowLayer.Path = layer.Path;
                     shadowLayer.Frame = layer.Frame;
-        
+
                     ApplyShadowToLayer(shadow, shadowLayer);
 
                     if (viewHandler?.ContainerView != null)
@@ -211,7 +210,7 @@ namespace HotUI.iOS.Handlers
             var animation = virtualView.GetAnimation();
             if (animation != null)
             {
-                Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} | Starting animation [{animation}] on [{virtualView.GetType().Name}/{nativeView.GetType().Name}]...");
+                Debug.WriteLine($"Starting animation [{animation}] on [{virtualView.GetType().Name}/{nativeView.GetType().Name}]. Current state = [{nativeView.Transform}]");
 
                 var duration = (animation.Duration ?? 1000.0) / 1000.0;
                 var delay = (animation.Delay ?? 0.0) / 1000.0;
@@ -223,27 +222,33 @@ namespace HotUI.iOS.Handlers
                     options,
                     () =>
                     {
-                        Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} | Animation [{animation}] has been started");
+                        Debug.WriteLine($"Animation [{animation}] has been started");
 
-                        CGAffineTransform? transform = null;
+                        var transform = CGAffineTransform.MakeIdentity();
+
                         if (animation.TranslateTo != null)
                         {
-                            transform = CGAffineTransform.MakeTranslation(animation.TranslateTo.Value.X, animation.TranslateTo.Value.Y);
+                            var translateTransform = CGAffineTransform.MakeTranslation(animation.TranslateTo.Value.X, animation.TranslateTo.Value.Y);
+                            transform = CGAffineTransform.Multiply(transform, translateTransform);
                         }
-                        if(animation.RotateTo != null)
+                        if (animation.RotateTo != null)
                         {
                             var angle = Convert.ToSingle(animation.RotateTo.Value * Math.PI / 180);
-                            transform = CGAffineTransform.MakeRotation(angle);
+                            var rotateTransform = CGAffineTransform.MakeRotation(angle);
+                            transform = CGAffineTransform.Multiply(transform, rotateTransform);
+                        }
+                        if (animation.ScaleTo != null)
+                        {
+                            var scaleTransform = CGAffineTransform.MakeScale(animation.ScaleTo.Value.X, animation.ScaleTo.Value.Y);
+                            transform = CGAffineTransform.Multiply(transform, scaleTransform);
                         }
                         // TODO: implement other animations
-                        // TODO: implement support for multiple transformations simultaneously
 
-                        if (transform != null)
-                            nativeView.Transform = transform.Value;
+                        nativeView.Transform = transform;
                     },
                     () =>
                     {
-                        Debug.WriteLine($"{Thread.CurrentThread.ManagedThreadId} | Animation [{animation}] has been completed");
+                        Debug.WriteLine($"Animation [{animation}] has been completed");
                         // Do nothing
                     });
             }

@@ -14,9 +14,10 @@
                 {
                     Duration = 2000,
                     Delay = 500,
-                    Options = AnimationOptions.CurveEaseOut,// | AnimationOptions.Repeat,
-                    TranslateTo = new PointF(100, 100),
-                    //RotateTo = 90,
+                    Options = AnimationOptions.CurveEaseOut | AnimationOptions.Repeat,
+                    TranslateTo = new PointF(10, 10),
+                    RotateTo = 30,
+                    ScaleTo = new PointF(2f, 2f),
                 });
     }
 }
