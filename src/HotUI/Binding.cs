@@ -71,7 +71,7 @@ namespace HotUI
             return binding.Get.Invoke();
         }
         
-        public static Binding<T> BindingFor<TBindingObject, T>(this TBindingObject binding, Expression<Func<TBindingObject, T>> expression) where TBindingObject:BindingObject
+        public static Binding<T> TwoWayBinding<TBindingObject, T>(this TBindingObject binding, Expression<Func<TBindingObject, T>> expression) where TBindingObject:BindingObject
         {
             if (expression.Body is MemberExpression member)
             {
