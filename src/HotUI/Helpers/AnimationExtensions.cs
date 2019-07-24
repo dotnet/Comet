@@ -11,7 +11,7 @@ namespace HotUI
         /// <param name="view"></param>
         /// <param name="animation"></param>
         /// <returns></returns>
-        public static T Animation<T>(this T view, Animation animation) where T : View
+        public static T Animate<T>(this T view, Animation animation) where T : View
         {
             view.SetEnvironment(EnvironmentKeys.Animations.Animation, animation);
             return view;
