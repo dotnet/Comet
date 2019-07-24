@@ -36,8 +36,6 @@ namespace HotUI
             _layout?.Invalidate();
         }
         
-
-
         public override SizeF Measure(SizeF availableSize)
         {
 	        var width = FrameConstraints?.Width;

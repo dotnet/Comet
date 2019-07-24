@@ -59,71 +59,48 @@ namespace HotUI.Samples
 
         [Body]
         View body() => new Grid(
-            rows: new object[] { "300", "*", "*", "*", "*", "*", "*" },
-            columns: new object[] { "*", "5*", "5*" }
+            rows: new object[] { "250", 20, 160, 20, 44, 20, 1, 20, 44, "*" },
+            columns: new object[] { 20, "*", 20 }
             )
         {
-            new Grid(){ // thecredit card display at the top
+            new Grid(
+                rows: new object[] { 30,"*",30},
+                columns: new object[] { 30, "*", 30 })
+            {
+                // thecredit card display at the top
                 new ShapeView(
                     new RoundedRectangle(8)
-                        .Stroke(Color.Black, 2.0f)
-                        .Fill(Color.Red)
-                )
-                .Frame(300,100)
-                .FillHorizontal()
-                .FillHorizontal()
-            }
-            .Cell(row:0, column:0, colSpan:3),
-            EntryContainer(Card.Number, "Enter CC Number")
-                .Cell(row:1,column:0,colSpan:3),
-            EntryContainer(Card.Expiration, "MM/YYYY").Cell(row:2,column:0,colSpan:2),
-            EntryContainer(Card.CVV, "CVV").Cell(row:2,column:2),
-            new HStack{
-                new Toggle(remember),
-                new Text("Remember Me")
-            }.Cell(row:3,column:0),
+                        .Fill(Color.CornflowerBlue)
+                        .Style(Graphics.DrawingStyle.Fill) 
+                ).Cell(row:1, column:1)
+            }.Cell(row:0, column:0, colSpan:3).Background(new Color("#f6f6f6")).Frame(height:250),
+            new Grid(
+                rows: new object[] { 40, 20, 40, 20, 40, 20, 44 },
+                columns: new object[] { "2*", 20, "*" })
+            {
+                new ShapeView(new RoundedRectangle(4).Stroke(Color.Grey, 1)).Cell(row:0, column: 0, colSpan: 3),
+                new ShapeView(new RoundedRectangle(4).Stroke(Color.Grey, 1)).Cell(row:2, column: 0),
+                new ShapeView(new RoundedRectangle(4).Stroke(Color.Grey, 1) ).Cell(row:2, column: 2),
+                EntryContainer(Card.Number, "Enter CC Number").Cell(row:0, column: 0, colSpan: 3),  
+                EntryContainer(Card.Expiration, "MM/YYYY").Cell(row:2, column: 0),
+                EntryContainer(Card.CVV, "CVV").Cell(row:2, column: 2),
+                new HStack
+                {
+                    new Toggle(remember),
+                    new Text("  Remember Me")
+                }.Cell(row:4,column:0, colSpan: 3)
+            }.Cell(row:2, column:1),
+            
             new Button("Or Pay with PayPal").Cell(row:4, column:0, colSpan:3),
-            HRule().Cell(row:5,column:0,colSpan:3),
-            new Button("Purchase for $200").Cell(row:6,column:0,colSpan:3)
-
-
-
-        }.FillVertical();
-
-        //View body() => new VStack(spacing:10)
-        //{
-        //    //new Spacer(),
-        //    TitleText("Card Number"),
-        //    CCText(Card. Number),
-        //    TitleText("Expiration"),
-        //    CCText(Card.Expiration),
-        //    TitleText("CVV"),
-        //    CCText(Card.CVV),
-        //    HRule(),
-        //    //new Spacer(),
-        //    new TextField(Card.Number, "Enter a CC Number"),
-        //    new TextField(Card.Expiration, "MM/YY"),
-        //    new TextField(Card.CVV, "CVV"),
-        //    new HStack{
-        //        new Toggle(remember),
-        //        new Text("Remember Me")
-        //    },
-        //    new Button("Or Pay with PayPal"),
-        //    //new Spacer(),
-        //    HRule(),
-        //    new Button("Purchase for $200"),
-        //    //new Spacer(),
-        //}
-        //.FillHorizontal()
-        //.FillVertical()
-
-        //    ;
+            HRule().Cell(row:6,column:0,colSpan:3),
+            new Button("Purchase for $200").Cell(row:8,column:0,colSpan:3)
+        };
 
         View HRule()
         {
             return new ShapeView(
                 new Rectangle()
-                    .Stroke(Color.Black, 2)
+                    .Stroke(Color.Grey, 2)
                 )
                 .Frame(100, 1);
         }
@@ -145,12 +122,12 @@ namespace HotUI.Samples
 
         HStack EntryContainer(Binding<String> val, string placeholder)
         {
-            return new HStack(spacing:20)
-                {
-                    new Image(""),
-                    new TextField(val, placeholder)
+            return new HStack(spacing:10)
+            {
+                    new Text("").Frame(width:5),
+                    new TextField(val, placeholder).Padding(top:9)
                 
-            };
+            }.FillHorizontal();
         }
 
         //class CCText : Text

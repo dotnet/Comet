@@ -51,7 +51,7 @@ namespace HotUI.Skia.Fluent
                 normal: new ButtonContent(text, backgroundNormal, font),
                 pressed: new ButtonContent(text, backgroundPressed, font),
                 hover: new ButtonContent(text, backgroundNormal, font, borderHover),
-                onClick)
+                onClick: onClick)
         {
         }
 
