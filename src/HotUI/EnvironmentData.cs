@@ -31,7 +31,7 @@ namespace HotUI {
         }
         public static class Button
         {
-            public const string TextColor = "Button.TextColor";
+            public const string Color = "Button.Color";
         }
 
         public static class Colors

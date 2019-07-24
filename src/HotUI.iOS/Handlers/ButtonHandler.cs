@@ -60,7 +60,7 @@ namespace HotUI.iOS.Handlers
         public static void MapColorProperty(IViewHandler viewHandler, Button virtualView)
         {
             var nativeView = (UIButton)viewHandler.NativeView;
-            nativeView.SetTitleColor(virtualView.GetTextColor(DefaultColor).ToUIColor(), UIControlState.Normal);
+            nativeView.SetTitleColor(virtualView.GetColor(DefaultColor).ToUIColor(), UIControlState.Normal);
         }
     }
 }

@@ -49,22 +49,22 @@ namespace HotUI
         /// <param name="color"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static Button TextColor(this Button view, Color color)
+        public static Button Color(this Button view, Color color)
         {
-            view.SetEnvironment(EnvironmentKeys.Button.TextColor, color);
+            view.SetEnvironment(EnvironmentKeys.Button.Color, color);
             return view;
         }
 
-        public static Color GetTextColor(this Button view, Color defaultColor)
+        public static Color GetColor(this Button view, Color defaultColor)
         {
-            var color = view.GetEnvironment<Color>(EnvironmentKeys.Button.TextColor);
+            var color = view.GetEnvironment<Color>(EnvironmentKeys.Button.Color);
             return color ?? defaultColor;
         }
 
 
         public static T TextColor<T>(this T view, Color color) where T: View
         {
-            view.SetEnvironment(EnvironmentKeys.Button.TextColor, color);
+            view.SetEnvironment(EnvironmentKeys.Button.Color, color);
             view.SetEnvironment(EnvironmentKeys.Text.Color, color);
             view.SetEnvironment(EnvironmentKeys.TextField.Color, color);
             return view;
