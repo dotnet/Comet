@@ -17,26 +17,11 @@ namespace HotUI {
             public const string Family = "Font.Family";
             public const string Weight = "Font.Weight";
             public const string Italic = "Font.Italic";
-
-
-        }
-
-        public static class Text
-        {
-            public const string Color = "Text.Color";
-        }
-        public static class TextField
-        {
-            public const string Color = "TextField.Color";
-        }
-        public static class Button
-        {
-            public const string Color = "Button.Color";
         }
 
         public static class Colors
         {
-           // public const string Color = "Color";
+            public const string Color = "Color";
             public const string BackgroundColor = "BackgroundColor";
         }
 

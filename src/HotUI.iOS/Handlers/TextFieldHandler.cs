@@ -12,7 +12,7 @@ namespace HotUI.iOS.Handlers
         {
             [nameof(TextField.Text)] = MapTextProperty,
             [nameof(SecureField.Placeholder)] = MapPlaceholderProperty,
-            [EnvironmentKeys.Text.Color] = MapColorProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
 
 

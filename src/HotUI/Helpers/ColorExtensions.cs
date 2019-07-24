@@ -12,62 +12,27 @@ namespace HotUI
         /// <param name="color"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static Text Color (this Text view, Color color)
+        public static T Color<T> (this T view, Color color) where T: View
         {
-            view.SetEnvironment(EnvironmentKeys.Text.Color, color);
+            view.SetEnvironment(EnvironmentKeys.Colors.Color, color);
+            return view;
+        }
+        public static T Color<T>(this T view, Type type, Color color) where T : View
+        {
+            view.SetEnvironment(type,EnvironmentKeys.Colors.Color, color,true);
             return view;
         }
 
-        public static Color GetColor(this Text view, Color defaultColor)
+        public static Color GetColor<T>(this T view, Color defaultColor) where T : View
         {
-            var color = view.GetEnvironment<Color>(EnvironmentKeys.Text.Color);
-            return color ?? defaultColor;
-        }
-        /// <summary>
-        /// Set the color
-        /// </summary>
-        /// <param name="view"></param>
-        /// <param name="color"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static TextField Color (this TextField view, Color color)
-        {
-            view.SetEnvironment(EnvironmentKeys.TextField.Color, color);
-            return view;
-        }
-
-        public static Color GetColor(this TextField view, Color defaultColor)
-        {
-            var color = view.GetEnvironment<Color>(EnvironmentKeys.TextField.Color);
+            var color = view.GetEnvironment<Color>(EnvironmentKeys.Colors.Color);
             return color ?? defaultColor;
         }
 
-        /// <summary>
-        /// Set the color
-        /// </summary>
-        /// <param name="view"></param>
-        /// <param name="color"></param>
-        /// <typeparam name="T"></typeparam>
-        /// <returns></returns>
-        public static Button Color(this Button view, Color color)
+        public static Color GetColor<T>(this T view, Type type, Color defaultColor) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.Button.Color, color);
-            return view;
-        }
-
-        public static Color GetColor(this Button view, Color defaultColor)
-        {
-            var color = view.GetEnvironment<Color>(EnvironmentKeys.Button.Color);
+            var color = view.GetEnvironment<Color>(type,EnvironmentKeys.Colors.Color);
             return color ?? defaultColor;
-        }
-
-
-        public static T TextColor<T>(this T view, Color color) where T: View
-        {
-            view.SetEnvironment(EnvironmentKeys.Button.Color, color);
-            view.SetEnvironment(EnvironmentKeys.Text.Color, color);
-            view.SetEnvironment(EnvironmentKeys.TextField.Color, color);
-            return view;
         }
 
         /// <summary>
@@ -81,6 +46,25 @@ namespace HotUI
         {
             view.SetEnvironment(EnvironmentKeys.Colors.BackgroundColor, color,cascades);
             return view;
+        }
+
+        /// <summary>
+        /// Set the background color
+        /// </summary>
+        /// <param name="view"></param>
+        /// <param name="color"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public static T Background<T>(this T view, Type type, Color color, bool cascades = false) where T : View
+        {
+            view.SetEnvironment(type, EnvironmentKeys.Colors.BackgroundColor, color, cascades);
+            return view;
+        }
+
+        public static Color GetBackgroundColor(this View view,Type type, Color defaultColor = null)
+        {
+            var color = view.GetEnvironment<Color>(type,EnvironmentKeys.Colors.BackgroundColor);
+            return color ?? defaultColor;
         }
 
         public static Color GetBackgroundColor(this View view, Color defaultColor = null)

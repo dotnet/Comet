@@ -14,7 +14,7 @@ namespace HotUI.iOS.Handlers
             [EnvironmentKeys.Fonts.Italic] = MapFontProperty,
             [EnvironmentKeys.Fonts.Size] = MapFontProperty,
             [EnvironmentKeys.Fonts.Weight] = MapFontProperty,
-            [EnvironmentKeys.Text.Color] = MapColorProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
 
         private static FontAttributes DefaultFont;
