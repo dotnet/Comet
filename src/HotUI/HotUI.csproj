@@ -15,6 +15,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="Gestures\" />
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

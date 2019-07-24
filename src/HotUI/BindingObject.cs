@@ -295,6 +295,10 @@ namespace HotUI
             {
                 foreach (var field in fields)
                 {
+                    if(!field.IsInitOnly)
+                    {
+                        throw new ReadonlyRequiresException(field.DeclaringType?.FullName,field.Name);
+                    }
                     var child = field.GetValue(obj) as INotifyPropertyRead;
                     if (child != null)
                     {
