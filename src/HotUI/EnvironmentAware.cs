@@ -23,7 +23,7 @@ namespace HotUI
         public static string GetTypedKey(ContextualObject obj, string key)
             => GetTypedKey(obj.GetType(), key);
         public static string GetTypedKey(Type type, string key)
-            => $"{type.Name}.{key}";
+            => type == null ? key : $"{type.Name}.{key}";
 
 
         internal object GetValue(string key, ContextualObject current, View view,string typedKey)
