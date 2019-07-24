@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using CoreAnimation;
 using CoreGraphics;
 using HotUI.Graphics;
@@ -210,7 +209,7 @@ namespace HotUI.iOS.Handlers
             var animation = virtualView.GetAnimation();
             if (animation != null)
             {
-                Debug.WriteLine($"Starting animation [{animation}] on [{virtualView.GetType().Name}/{nativeView.GetType().Name}]. Current state = [{nativeView.Transform}]");
+                System.Diagnostics.Debug.WriteLine($"Starting animation [{animation}] on [{virtualView.GetType().Name}/{nativeView.GetType().Name}]");
 
                 var duration = (animation.Duration ?? 1000.0) / 1000.0;
                 var delay = (animation.Delay ?? 0.0) / 1000.0;
@@ -222,7 +221,7 @@ namespace HotUI.iOS.Handlers
                     options,
                     () =>
                     {
-                        Debug.WriteLine($"Animation [{animation}] has been started");
+                        System.Diagnostics.Debug.WriteLine($"Animation [{animation}] has been started");
 
                         var transform = CGAffineTransform.MakeIdentity();
 
@@ -248,7 +247,7 @@ namespace HotUI.iOS.Handlers
                     },
                     () =>
                     {
-                        Debug.WriteLine($"Animation [{animation}] has been completed");
+                        System.Diagnostics.Debug.WriteLine($"Animation [{animation}] has been completed");
                         // Do nothing
                     });
             }

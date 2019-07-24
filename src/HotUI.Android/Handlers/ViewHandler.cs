@@ -11,7 +11,8 @@ namespace HotUI.Android.Handlers
         {
             [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
             [nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
-            [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty
+            [nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
+            [nameof(EnvironmentKeys.Animations.Animation)] = MapAnimationProperty,
         };
 
         public ViewHandler() : base(Mapper)
@@ -76,6 +77,31 @@ namespace HotUI.Android.Handlers
             listner.RemoveGesture(gesture);
         }
 
+        public static void MapAnimationProperty(IViewHandler handler, View virtualView)
+        {
+            var nativeView = (AView)handler.NativeView;
+            var animation = virtualView.GetAnimation();
+            if (animation != null)
+            {
+                System.Diagnostics.Debug.WriteLine($"Starting animation [{animation}] on [{virtualView.GetType().Name}/{nativeView.GetType().Name}]");
 
+                var duration = Convert.ToInt64(animation.Duration ?? 1000);
+                var delay = Convert.ToInt64(animation.Delay ?? 0);
+                //var options = animation.Options.ToAnimationOptions();
+
+                var animator = nativeView.Animate();
+                animator.SetStartDelay(delay);
+                animator.SetDuration(duration);
+                if (animation.TranslateTo != null)
+                {
+                    animator.TranslationX(animation.TranslateTo.Value.X);
+                    animator.TranslationY(animation.TranslateTo.Value.Y);
+                }
+
+                animator.Start();
+
+               // TODO: implement other properties
+            }
+        }
     }
 }
