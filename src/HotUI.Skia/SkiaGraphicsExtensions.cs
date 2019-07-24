@@ -13,6 +13,9 @@ namespace HotUI.Skia
             return new SKColor(r, g, b, a);
         }
 
+        public static SKSize ToSKSize(this SizeF size)
+            => new SKSize(size.Width, size.Height);
+
         public static SizeF ToSizeF(this SKSize size)
             => new SizeF(size.Width, size.Height);
     }
