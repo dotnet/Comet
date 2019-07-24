@@ -51,6 +51,7 @@ namespace HotUI.iOS
                 {
                     var endPoint = target[pointIndex++];
                     path.AddLineToPoint(endPoint.X, endPoint.Y);
+
                 }
 
                 else if (operation == PathOperation.Quad)
