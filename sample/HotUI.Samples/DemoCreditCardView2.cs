@@ -23,7 +23,8 @@ namespace HotUI.Samples
                 new VStack()
                 {
                     new ShapeView(new RoundedRectangle(4.0f)
-                        .Fill(Color.Black))
+                        .Style(Graphics.DrawingStyle.Fill)
+                        .Fill(Color.Grey))
                         .Frame(40,30,alignment: Alignment.Trailing)
                         .Padding(top: 30, right: 30)
                         .FitHorizontal(),
@@ -103,6 +104,7 @@ namespace HotUI.Samples
                 .Frame(height: 44)
                 .Padding(left:20, right:20),
 
+
         }.FillHorizontal().Frame(alignment: Alignment.Top);
 
         public class Separator : ShapeView
@@ -125,7 +127,7 @@ namespace HotUI.Samples
                 Add(new TextField(val, placeholder));
 
                 this.Frame(height: 40).RoundedBorder(color: Color.Grey);
-              
+
             }
         }
     }
