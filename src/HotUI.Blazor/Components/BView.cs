@@ -16,18 +16,26 @@ namespace HotUI.Blazor.Components
             // Check if unsupported as this can cause infinite recursion if not checked
             if (View.IsIUnsupportednternalView())
             {
-                builder.AddContent(2, $"Unsupported view: {View.GetType()}");
+                builder.OpenElement(2, "div");
+                builder.AddAttribute(3, "class", "alert alert-warning");
+                builder.AddAttribute(4, "role", "alert");
+                builder.AddMarkupContent(5, $"Unsupported view: <b>{View.GetType()}</b>");
+                builder.CloseElement();
             }
             else if (View?.GetOrCreateViewHandler() is IBlazorViewHandler handler)
             {
-                builder.OpenComponent(3, handler.Component);
+                builder.OpenComponent(6, handler.Component);
                 builder.SetKey(handler);
                 builder.AddComponentReferenceCapture(4, handler.OnComponentLoad);
                 builder.CloseComponent();
             }
             else
             {
-                builder.AddContent(5, "Error: No view");
+                builder.OpenElement(7, "div");
+                builder.AddAttribute(8, "class", "alert alert-danger");
+                builder.AddAttribute(9, "role", "alert");
+                builder.AddMarkupContent(10, $"Invalid view handler: <b>{View.GetType()}</b>");
+                builder.CloseElement();
             }
 
             builder.CloseElement();
