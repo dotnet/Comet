@@ -3,6 +3,8 @@
 <ui class="hotui-listview list-group">
     @if (List != null)
     {
+        var cursor = HasOnSelected ? "Pointer" : "Default";
+
         var sections = List.Sections();
         for (int section = 0; section < sections; section++)
         {
@@ -14,7 +16,7 @@
                 var view = List.ViewFor(tmpSection, tmpRow);
 
                 <li class="list-group-item list-group-item-action">
-                    <div @onclick="@(()=> List.OnSelected(tmpSection, tmpRow))">
+                    <div style="cursor:@cursor" @onclick="@(()=> List.OnSelected(tmpSection, tmpRow))">
                         <BView @key="@view" View="@view" />
                     </div>
                 </li>
@@ -24,6 +26,9 @@
 </ui>
 
 @code {
+    [Parameter]
+    public bool HasOnSelected { get; set; }
+
     [Parameter]
     public IListView List { get; set; }
 }

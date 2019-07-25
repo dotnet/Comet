@@ -7,13 +7,12 @@ namespace HotUI.Blazor
     {
         public static void AddHotUI(this IServiceCollection services)
         {
-            UI.Init();
-
             services.AddImages();
         }
 
         public static void UseHotUI(this IApplicationBuilder app)
         {
+            UI.Init();
             app.UseImages();
         }
     }

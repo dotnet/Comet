@@ -1,6 +1,4 @@
 ﻿using HotUI.Blazor.Components;
-using System;
-using System.Collections.Generic;
 
 namespace HotUI.Blazor.Handlers
 {
@@ -9,6 +7,7 @@ namespace HotUI.Blazor.Handlers
         public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>
         {
             { "List", MapListProperty },
+            { nameof(ListView.ItemSelected), MapItemSelectedProperty },
         };
 
         public ListViewHandler()
@@ -21,6 +20,13 @@ namespace HotUI.Blazor.Handlers
             var nativeView = (BListView)viewHandler.NativeView;
 
             nativeView.List = virtualView;
+        }
+
+        public static void MapItemSelectedProperty(IViewHandler viewHandler, ListView virtualView)
+        {
+            var nativeView = (BListView)viewHandler.NativeView;
+
+            nativeView.HasOnSelected = virtualView.ItemSelected != null;
         }
     }
 }
