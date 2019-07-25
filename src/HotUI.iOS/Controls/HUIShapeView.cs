@@ -35,7 +35,7 @@ namespace HotUI.iOS
             {
                 var drawingStyle = Shape.GetDrawingStyle(View, DrawingStyle.StrokeFill);
 
-                var lineWidth = 1f;
+                var lineWidth = Shape.GetLineWidth(View, 1);
                 var strokeColor = Color.Black;
                 object fill = null;
                 
@@ -123,7 +123,6 @@ namespace HotUI.iOS
 
                 if (drawingStyle == DrawingStyle.Stroke || drawingStyle == DrawingStyle.StrokeFill)
                 {
-                    lineWidth = Shape.GetLineWidth(View, 1);
                     strokeColor = Shape.GetStrokeColor(View, Color.Black);
 
                     context.SetLineWidth(lineWidth);

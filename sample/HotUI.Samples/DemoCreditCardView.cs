@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace HotUI.Samples
 {
-    class CreditCard : BindingObject
+    public class CreditCard : BindingObject
     {
         public string Number
         {
