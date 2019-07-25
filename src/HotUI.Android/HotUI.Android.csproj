@@ -85,6 +85,7 @@
     <Compile Include="Handlers\ManagedZStackHandler.cs" />
     <Compile Include="Handlers\ManagedGridHandler.cs" />
     <Compile Include="Controls\HUITouchGesterListener.cs" />
+    <Compile Include="Handlers\ActivityIndicatorHandler.cs" />
     <Compile Include="Handlers\TabViewHandler.cs" />
     <Compile Include="Controls\HUITabView.cs" />
     <Compile Include="Controls\HUINavigationView.cs" />
