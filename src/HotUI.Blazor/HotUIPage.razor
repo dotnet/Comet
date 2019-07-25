@@ -1,20 +1,24 @@
 @using HotUI.Blazor.Components
 
-    <div class="hotui-page">
-        @if (_views.Any())
-        {
-            <button class="btn btn-link" @onclick="@Back">Back</button>
-        }
-        else
-        {
-            <button class="btn btn-link" @onclick="@Back" disabled>Back</button>
-        }
-        <br />
-        <BView @key="@View" View="@View" />
-    </div>
+<div class="hotui-page">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @foreach (var view in _navigationStack.Reverse())
+            {
+                <li class="breadcrumb-item" aria-current="page">
+                    <a href="#" @onclick="@(()=>Back(view))">@GetTitle(view)</a>
+                </li>
+            }
+
+            <li class="breadcrumb-item active" aria-current="page">@GetTitle(View)</li>
+        </ol>
+    </nav>
+    <br />
+    <BView @key="@View" View="@View" />
+</div>
 
 @code {
-    private Stack<View> _views = new Stack<View>();
+    private readonly Stack<View> _navigationStack = new Stack<View>();
     private View _view;
 
     [Parameter]
@@ -31,7 +35,7 @@
             {
                 nav.PerformNavigate = toView =>
                 {
-                    _views.Push(View);
+                    _navigationStack.Push(View);
                     View = toView;
                     StateHasChanged();
                 };
@@ -39,9 +43,22 @@
         }
     }
 
-    private void Back()
+    private string GetTitle(View view)
     {
-        View = _views.Pop();
-        StateHasChanged();
+        return view.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "Unnamed page";
+    }
+
+    private void Back(View view)
+    {
+        while (_navigationStack.Any())
+        {
+            View = _navigationStack.Pop();
+
+            if (View == view)
+            {
+                StateHasChanged();
+                return;
+            }
+        }
     }
 }
