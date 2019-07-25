@@ -2,9 +2,11 @@
 
 namespace HotUI.Blazor.Handlers
 {
-    internal interface IBlazorViewHandler : IViewHandler
+    public interface IBlazorViewHandler : IViewHandler
     {
-        Type Component { get; }
+        Type VirtualType { get; }
+
+        Type ComponentType { get; }
 
         void OnComponentLoad(object nativeView);
     }

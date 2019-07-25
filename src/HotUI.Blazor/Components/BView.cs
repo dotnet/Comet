@@ -24,7 +24,7 @@ namespace HotUI.Blazor.Components
             }
             else if (View?.GetOrCreateViewHandler() is IBlazorViewHandler handler)
             {
-                builder.OpenComponent(6, handler.Component);
+                builder.OpenComponent(6, handler.ComponentType);
                 builder.SetKey(handler);
                 builder.AddComponentReferenceCapture(4, handler.OnComponentLoad);
                 builder.CloseComponent();

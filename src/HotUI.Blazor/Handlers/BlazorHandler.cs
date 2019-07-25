@@ -28,7 +28,9 @@ namespace HotUI.Blazor.Handlers
 
         public TVirtualView VirtualView { get; private set; }
 
-        public Type Component => typeof(TNativeView);
+        public Type VirtualType => typeof(TVirtualView);
+
+        public Type ComponentType => typeof(TNativeView);
 
         public virtual bool HasContainer { get; set; }
 
