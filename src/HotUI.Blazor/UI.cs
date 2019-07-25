@@ -1,5 +1,4 @@
-﻿using HotUI.Blazor.Components;
-using HotUI.Blazor.Handlers;
+﻿using HotUI.Blazor.Handlers;
 
 namespace HotUI.Blazor
 {
@@ -25,6 +24,7 @@ namespace HotUI.Blazor
             Registrar.Handlers.Register<Spacer, SpacerHandler>();
             Registrar.Handlers.Register<TextField, TextFieldHandler>();
             Registrar.Handlers.Register<ProgressBar, ProgressBarHandler>();
+            Registrar.Handlers.Register<Image, ImageHandler>();
 
             Device.PerformInvokeOnMainThread = a => a();
             Device.OnStateChanged = view => () =>
