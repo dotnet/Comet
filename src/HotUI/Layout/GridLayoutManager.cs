@@ -140,6 +140,13 @@ namespace HotUI.Layout
                 var position = _constraints[index];
                 var view = layout[index];
 
+                var viewSize = view.MeasuredSize;
+                if (!view.MeasurementValid)
+                {
+                    view.MeasuredSize = viewSize = view.Measure(measured);
+                    view.MeasurementValid = true;
+                }
+
                 var x = _gridX[position.Column];
                 var y = _gridY[position.Row];
 
@@ -150,10 +157,9 @@ namespace HotUI.Layout
                 var h = 0f;
                 for (var i = 0; i < position.RowSpan; i++)
                     h += GetRowHeight(position.Row + i);
-
+                
                 if (position.WeightX < 1 || position.WeightY < 1)
                 {
-                    var viewSize = view.MeasuredSize;
                     var cellWidth = w;
                     var cellHeight = h;
 
