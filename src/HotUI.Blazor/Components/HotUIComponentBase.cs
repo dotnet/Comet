@@ -8,6 +8,6 @@ namespace HotUI.Blazor.Components
         {
         }
 
-        internal void NotifyUpdate() => base.StateHasChanged();
+        internal void NotifyUpdate() => Invoke(StateHasChanged);
     }
 }
