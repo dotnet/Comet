@@ -15,23 +15,22 @@ stages:
           installationPath: $(Agent.ToolsDirectory)/dotnet
       - task: DotNetCoreCLI@2
         inputs:
+          displayName: 'Build Blazor'
           command: 'build'
           projects: 'HotUI.Blazor.sln'
           arguments: '-c $(BuildConfiguration)'
       - task: DotNetCoreCLI@2
         inputs:
+          displayName: 'Test Blazor'
           command: 'test'
           projects: 'HotUI.Blazor.sln'
           arguments: '-c $(BuildConfiguration)'
       - task: DotNetCoreCLI@2
         inputs:
+          displayName: 'Pack Blazor'
           command: 'pack'
-          projects: 'HotUI.Blazor.sln'
+          packagesToPack: 'src/HotUI.Blazor/HotUI.Blazor.csproj'
           arguments: '-c $(BuildConfiguration)'
-      - task: CopyFiles@2
-        inputs:
-          sourceFolder: '$(Build.SourcesDirectory)'
-          contents: '**/$(BuildConfiguration)/**/*.nupkg'
       - task: PublishBuildArtifacts@1
         inputs:
           pathtoPublish: '$(Build.ArtifactStagingDirectory)'
