@@ -25,6 +25,7 @@ namespace HotUI.Blazor
             Registrar.Handlers.Register<TextField, TextFieldHandler>();
             Registrar.Handlers.Register<ProgressBar, ProgressBarHandler>();
             Registrar.Handlers.Register<Image, ImageHandler>();
+            Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();
 
             Device.PerformInvokeOnMainThread = a => a();
             Device.OnStateChanged = view => () =>
