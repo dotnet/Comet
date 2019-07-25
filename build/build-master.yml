@@ -13,21 +13,29 @@ stages:
           version: 3.0.100-preview7-012821
           includePreviewVersions: true
           installationPath: $(Agent.ToolsDirectory)/dotnet
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'build'
-        projects: 'HotUI.Blazor.sln'
-        arguments: '-c $(BuildConfiguration)'
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'test'
-        projects: 'HotUI.Blazor.sln'
-        arguments: '-c $(BuildConfiguration)'
-    - task: DotNetCoreCLI@2
-      inputs:
-        command: 'pack'
-        projects: 'HotUI.Blazor.sln'
-        arguments: '-c $(BuildConfiguration)'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'build'
+          projects: 'HotUI.Blazor.sln'
+          arguments: '-c $(BuildConfiguration)'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'test'
+          projects: 'HotUI.Blazor.sln'
+          arguments: '-c $(BuildConfiguration)'
+      - task: DotNetCoreCLI@2
+        inputs:
+          command: 'pack'
+          projects: 'HotUI.Blazor.sln'
+          arguments: '-c $(BuildConfiguration)'
+      - task: CopyFiles@2
+        inputs:
+          sourceFolder: '$(Build.SourcesDirectory)'
+          contents: '**/$(BuildConfiguration)/**/*.nupkg'
+      - task: PublishBuildArtifacts@1
+        inputs:
+          pathtoPublish: '$(Build.ArtifactStagingDirectory)'
+          artifactName: drop
 
   - job: BuildHotUIMac
     displayName: Build HotUI Mac
