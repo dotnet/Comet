@@ -45,14 +45,12 @@ namespace HotUI.Blazor.Handlers
         {
             VirtualView = view as TVirtualView;
 
-            if (NativeView == null)
-                NativeView = CreateView();
-
-            _mapper?.UpdateProperties(this, VirtualView);
-            //NativeView?.NotifyUpdate();
+            if (NativeView != null)
+            {
+                _mapper?.UpdateProperties(this, VirtualView);
+                NativeView?.NotifyUpdate();
+            }
         }
-
-        protected abstract TNativeView CreateView();
 
         public virtual void UpdateValue(string property, object value)
         {

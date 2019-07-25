@@ -16,8 +16,6 @@ namespace HotUI.Blazor.Handlers
             
         }
 
-        protected override BTextField CreateView() => new BTextField();
-
         protected override void InitializeView()
         {
             NativeView.TextChanged = HandleOnChange;
