@@ -1,6 +1,6 @@
 @inherits HotUIComponentBase
 
-<div class="container">
+<ui class="hotui-listview list-group">
     @if (List != null)
     {
         var sections = List.Sections();
@@ -13,13 +13,15 @@
                 var tmpRow = row;
                 var view = List.ViewFor(tmpSection, tmpRow);
 
-                <div @onclick="@(()=> List.OnSelected(tmpSection, tmpRow))">                    
-                    <BView @key="@view" View="@view" />
-                </div>
+                <li class="list-group-item list-group-item-action">
+                    <div @onclick="@(()=> List.OnSelected(tmpSection, tmpRow))">
+                        <BView @key="@view" View="@view" />
+                    </div>
+                </li>
             }
         }
     }
-</div>
+</ui>
 
 @code {
     [Parameter]

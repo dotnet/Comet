@@ -27,5 +27,14 @@ namespace HotUI.Blazor
             return handler as IBlazorViewHandler;
         }
 
+        /// <summary>
+        /// Checks if an internal type of <see cref="View"/> has a defined handler.
+        /// </summary>
+        public static bool IsIUnsupportednternalView(this View view)
+        {
+            var handler = view.GetOrCreateViewHandler();
+
+            return handler is ViewHandler && view.GetType().Assembly == typeof(View).Assembly;
+        }
     }
 }

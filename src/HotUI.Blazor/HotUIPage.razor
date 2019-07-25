@@ -1,8 +1,20 @@
 @using HotUI.Blazor.Components
 
-<BView @key="@View" View="@View" />
+    <div class="hotui-page">
+        @if (_views.Any())
+        {
+            <button class="btn btn-link" @onclick="@Back">Back</button>
+        }
+        else
+        {
+            <button class="btn btn-link" @onclick="@Back" disabled>Back</button>
+        }
+        <br />
+        <BView @key="@View" View="@View" />
+    </div>
 
 @code {
+    private Stack<View> _views = new Stack<View>();
     private View _view;
 
     [Parameter]
@@ -19,12 +31,17 @@
             {
                 nav.PerformNavigate = toView =>
                 {
+                    _views.Push(View);
                     View = toView;
-                    base.StateHasChanged();
+                    StateHasChanged();
                 };
             }
         }
     }
 
-
+    private void Back()
+    {
+        View = _views.Pop();
+        StateHasChanged();
+    }
 }

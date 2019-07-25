@@ -63,7 +63,7 @@ namespace HotUI.Blazor.Handlers
         {
         }
 
-        void IBlazorViewHandler.SetNativeView(object nativeView)
+        void IBlazorViewHandler.OnComponentLoad(object nativeView)
         {
             NativeView = (TNativeView)nativeView;
             NativeViewUpdated();
