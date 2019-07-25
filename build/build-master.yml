@@ -14,20 +14,20 @@ stages:
           includePreviewVersions: true
           installationPath: $(Agent.ToolsDirectory)/dotnet
       - task: DotNetCoreCLI@2
+        displayName: 'Build Blazor'
         inputs:
-          displayName: 'Build Blazor'
           command: 'build'
           projects: 'HotUI.Blazor.sln'
           arguments: '-c $(BuildConfiguration)'
       - task: DotNetCoreCLI@2
+        displayName: 'Test Blazor'
         inputs:
-          displayName: 'Test Blazor'
           command: 'test'
           projects: 'HotUI.Blazor.sln'
           arguments: '-c $(BuildConfiguration)'
       - task: DotNetCoreCLI@2
+        displayName: 'Pack Blazor'
         inputs:
-          displayName: 'Pack Blazor'
           command: 'pack'
           packagesToPack: 'src/HotUI.Blazor/HotUI.Blazor.csproj'
           arguments: '-c $(BuildConfiguration)'
