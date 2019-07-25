@@ -13,16 +13,21 @@ namespace HotUI.Blazor.Components
             builder.OpenElement(0, "div");
             builder.AddAttribute(1, "class", "hotui-view");
 
-            if (View?.GetOrCreateViewHandler() is IBlazorViewHandler handler)
+            // Check if unsupported as this can cause infinite recursion if not checked
+            if (View.IsIUnsupportednternalView())
             {
-                builder.OpenComponent(2, handler.Component);
+                builder.AddContent(2, $"Unsupported view: {View.GetType()}");
+            }
+            else if (View?.GetOrCreateViewHandler() is IBlazorViewHandler handler)
+            {
+                builder.OpenComponent(3, handler.Component);
                 builder.SetKey(handler);
-                builder.AddComponentReferenceCapture(3, handler.OnComponentLoad);
+                builder.AddComponentReferenceCapture(4, handler.OnComponentLoad);
                 builder.CloseComponent();
             }
             else
             {
-                builder.AddContent(4, "Error: No view");
+                builder.AddContent(5, "Error: No view");
             }
 
             builder.CloseElement();
