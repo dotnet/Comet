@@ -14,8 +14,6 @@ namespace HotUI
             mainThread = Thread.CurrentThread;
         }
 
-        public static Func<View, Action> OnStateChanged { get; set; } = v => v.Reload;
-
         public static Action<Action> PerformInvokeOnMainThread;
         internal static Thread mainThread;
         public static void InvokeOnMainThread(Action action)

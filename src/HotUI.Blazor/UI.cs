@@ -28,10 +28,6 @@ namespace HotUI.Blazor
             Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();
 
             Device.PerformInvokeOnMainThread = a => a();
-            Device.OnStateChanged = view => () =>
-            {
-                view.ViewHandler.SetView(view.Body());
-            };
             ListView.HandlerSupportsVirtualization = false;
         }
     }
