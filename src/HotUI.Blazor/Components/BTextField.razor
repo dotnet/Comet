@@ -2,11 +2,19 @@
 
 <div class="form-group">
     <div class="hotui-textfield">
-        <input class="form-control" type="text" value="@Text" onchange="@OnChange" />
+        <input class="form-control" type="text" value="@Text" @oninput="@OnInput" />
     </div>
 </div>
 
 @code {
+    private void OnInput(UIChangeEventArgs ui)
+    {
+        if (ui.Value is string value)
+        {
+            OnChange?.Invoke(value);
+        }
+    }
+
     [Parameter]
     public string Text { get; set; }
 
