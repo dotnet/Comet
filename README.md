@@ -3,6 +3,8 @@
 
 What is HotUI? HotUI is a prototype for a new UI Framework/Pattern to write app UI.  It follows the Model View Update (MVU) pattern. It magically databinds for you!  
 
+Video Preview:
+[![Video Demo](http://img.youtube.com/vi/-Ieg9UadN8s/0.jpg)](http://www.youtube.com/watch?v=-Ieg9UadN8s)
 
 ## Key Concepts
 
