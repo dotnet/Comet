@@ -6,7 +6,7 @@ namespace HotUI
     {
         private readonly Action<T>[] _actions;
         
-        public MulticastAction(Binding<T> binding, Action<T>  action) : this(binding?.Set, action)
+        public MulticastAction(Binding<T> binding, Action<T>  action) : this((v)=> binding?.Set(v), action)
         {
         }
         

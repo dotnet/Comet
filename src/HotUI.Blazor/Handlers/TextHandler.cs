@@ -17,7 +17,6 @@ namespace HotUI.Blazor.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (BText)viewHandler.NativeView;
-
             nativeView.Value = virtualView.Value;
         }
     }

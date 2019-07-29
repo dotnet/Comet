@@ -16,6 +16,7 @@ namespace HotUI.Android
             // Controls
             Registrar.Handlers.Register<Button, ButtonHandler>();
             Registrar.Handlers.Register<Image, ImageHandler>();
+            Registrar.Handlers.Register<ProgressBar, ProgressBarHandler>();
             Registrar.Handlers.Register<Slider, SliderHandler>();
             Registrar.Handlers.Register<TextField, TextFieldHandler>();
             Registrar.Handlers.Register<Text, TextHandler>();
