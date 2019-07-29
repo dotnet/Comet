@@ -1,0 +1,37 @@
+@inherits HotUIComponentBase
+
+<div class="hotui-tabview">
+    <div class="nav nav-tabs" role="tablist">
+        @foreach (var view in Views)
+        {
+            var isActive = view == Current;
+            var active = isActive ? "active" : string.Empty;
+
+            <a class="nav-item nav-link @active" href="#" role="tab" aria-selected="@isActive" @onclick="@(() => ChangeView(view))">@GetTitle(view)</a>
+        }
+    </div>
+
+    <br />
+
+    <BView @key="@Current" View="@Current" />
+</div>
+
+@code {
+    private View _current;
+
+    [Parameter]
+    public IList<View> Views { get; set; }
+
+    public View Current => _current ?? Views[0];
+
+    private void ChangeView(View view)
+    {
+        _current = view;
+        StateHasChanged();
+    }
+
+    private string GetTitle(View view)
+    {
+        return view.GetEnvironment<string>(EnvironmentKeys.TabView.Title) ?? "Unnamed Tab";
+    }
+}

@@ -2,7 +2,7 @@
 
 namespace HotUI.Blazor.Handlers
 {
-    internal class TextHandler : AbstractControlHandler<Text, BLabel>
+    internal class TextHandler : BlazorHandler<Text, BText>
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>
         {
@@ -16,7 +16,7 @@ namespace HotUI.Blazor.Handlers
 
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
-            var nativeView = (BLabel)viewHandler.NativeView;
+            var nativeView = (BText)viewHandler.NativeView;
             nativeView.Value = virtualView.Value;
         }
     }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using NSubstitute;
 using System;
 using System.Linq;
+using System.Reflection;
 using Xunit;
 
 namespace HotUI.Blazor.Tests
@@ -17,7 +18,7 @@ namespace HotUI.Blazor.Tests
             appBuilder.UseHotUI();
 
             var types = typeof(IBlazorViewHandler).Assembly.GetTypes()
-                .Where(t => !t.IsAbstract && typeof(IBlazorViewHandler).IsAssignableFrom(t));
+                .Where(t => !t.IsAbstract && !t.ContainsGenericParameters && typeof(IBlazorViewHandler).IsAssignableFrom(t));
 
             foreach (var type in types)
             {
@@ -26,6 +27,38 @@ namespace HotUI.Blazor.Tests
                 var actualHandler = Registrar.Handlers.GetHandler(expectedHandler.VirtualType);
 
                 Assert.IsType(expectedHandler.GetType(), actualHandler);
+            }
+        }
+
+        [Fact]
+        public void AllHotUIHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(View).Assembly);
+
+        [Fact]
+        public void AllHotUISkiaHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(Skia.SkiaShapeView).Assembly);
+
+        private void AllInternalHandlersAreRegistered(Assembly assembly)
+        {
+            var appBuilder = GetAppBuilder();
+
+            appBuilder.UseHotUI();
+
+            var types = assembly.GetTypes()
+                .Where(t => !t.IsAbstract && typeof(View).IsAssignableFrom(t));
+
+            foreach (var type in types)
+            {
+                var handler = Registrar.Handlers.GetHandler(type);
+
+                Assert.NotNull(handler);
+
+                if (type == typeof(View))
+                {
+                    Assert.IsType<ViewHandler>(handler);
+                }
+                else
+                {
+                    Assert.IsNotType<ViewHandler>(handler);
+                }
             }
         }
 
