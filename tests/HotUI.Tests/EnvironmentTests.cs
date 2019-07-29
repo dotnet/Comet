@@ -101,7 +101,7 @@ namespace HotUI.Tests {
 
 			var view = new View {
 				Body = () => (text = new Text ())
-			}.SetEnvironment(myStringKey, parentStringValue);
+			}.SetEnvironment(myStringKey, parentStringValue,true);
 
 			var viewHandler = new GenericViewHandler ();
 			view.ViewHandler = viewHandler;
@@ -132,7 +132,7 @@ namespace HotUI.Tests {
 				Body = () => new VStack {
 					(text1 = new Text ().SetEnvironment(myStringKey,testStringValue)),
 					(text2 = new Text ())
-				}.SetEnvironment (myStringKey, parentStringValue)
+				}.SetEnvironment (myStringKey, parentStringValue,true)
 			};
 
 			var viewHandler = new GenericViewHandler ();
@@ -205,9 +205,9 @@ namespace HotUI.Tests {
                 Body = () => rootStack = new VStack {
                     (stack1 = new VStack {
                         (text1 = new Text())
-                    }).SetEnvironment(myStringKey, cascadedValue),
+                    }).SetEnvironment(myStringKey, cascadedValue,true),
                     (stack2 = new VStack {
-                        (text2 = new Text()).SetEnvironment(myStringKey, secondCascadedValue),
+                        (text2 = new Text()).SetEnvironment(myStringKey, secondCascadedValue,true),
                     })
                 }.SetEnvironment(myStringKey, localValue, false)
             };
