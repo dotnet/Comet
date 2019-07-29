@@ -1,6 +1,4 @@
-﻿using System;
-using Android.Content;
-using Android.Widget;
+﻿using Android.Content;
 using AProgressBar = Android.Widget.ProgressBar;
 using AAttribute = Android.Resource.Attribute;
 
@@ -40,9 +38,6 @@ namespace HotUI.Android.Handlers
 
         protected override void DisposeView(AProgressBar nativeView)
         {
-            throw new NotImplementedException();
         }
-
-  
     }
 }
