@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
+using HotUI.Reflection;
 
 namespace HotUI 
 {
@@ -9,19 +12,39 @@ namespace HotUI
 		private readonly string _propertyName;
 		
 		protected BoundControl (Binding<T> binding, string propertyName) : base(binding?.IsValue ?? false)
-		{
-			_binding = binding;
-			_propertyName = propertyName;
+        {
+            _propertyName = propertyName;
+            _binding = binding;
+            if (_binding != null)
+            {
+                BoundValue = _binding.CurrentValue;
+                _binding.View = this;
+                if(_binding.BoundProperties?.Length > 0)
+                    _binding.BindToProperty(State, this, propertyName);
+            }
 
-			if (binding?.IsValue ?? false)
-				BoundValue = binding.Get.Invoke();
 		}
 		
 		T _boundValue;
 		protected T BoundValue 
 		{
 			get => _boundValue;
-			set => SetValue (ref _boundValue, value, _propertyName);
+			set
+            {
+                if (EqualityComparer<T>.Default.Equals(_boundValue, value))
+                    return;
+                _boundValue = value;
+
+                try
+                {
+                    this.SetPropertyValue(_propertyName, value);
+                }
+                catch (Exception ex)
+                {
+                    Debug.WriteLine($"Error setting property:{_propertyName} : {value}");
+                    Debug.WriteLine(ex);
+                }
+            }
 		}
 		
 		protected void SetValue<T> (ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")
@@ -29,28 +52,11 @@ namespace HotUI
 			State.SetValue (ref currentValue, newValue, this , propertyName);
 		}
 		
-		protected override void WillUpdateView ()
-		{
-			base.WillUpdateView ();
-			
-			if (_binding?.Get != null && State != null) 
-			{
-                State.StartProperty();
-				var value = _binding.Get.Invoke ();
-				var props = State.EndProperty ();
-				var propCount = props.Length;
-                if (propCount > 0)
-                    State.BindingState.AddViewProperty(props,this,nameof(BoundValue)) ;
-
-				BoundValue = value;
-			}
-		}
         protected override void ViewPropertyChanged(string property, object value)
         {
-            if(property == nameof(BoundValue))
+            if(property == nameof(BoundValue) || property == _propertyName)
             {
                 BoundValue = _binding.Get.Invoke();
-                return;
             }
             base.ViewPropertyChanged(property, value);
         }
