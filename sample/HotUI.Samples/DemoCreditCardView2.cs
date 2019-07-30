@@ -67,18 +67,18 @@ namespace HotUI.Samples
                 }.RoundedBorder(radius: 8, color: "#3177CB", filled: true).Padding(30)
             }.Background("#f6f6f6"),
 
-            new BorderedEntry(Card.Number,"Enter CC Number", "\uf09d")
+            new BorderedEntry(Card.TwoWayBinding(x => x.Number),"Enter CC Number", "\uf09d")
                 .Padding(left:20, right: 20),
 
             new HStack(spacing:20)
             {
-                new BorderedEntry(Card.Expiration, "MM/YYYY", "\uf783")
+                new BorderedEntry(Card.TwoWayBinding(x => x.Expiration), "MM/YYYY", "\uf783")
                     .Frame(height: 40, width: 200)
                     .Padding(left:20),
 
                 new Spacer(),
 
-                new BorderedEntry(Card.CVV, "CVV", "\uf023")
+                new BorderedEntry(Card.TwoWayBinding(x => x.CVV), "CVV", "\uf023")
                     .Frame( height: 40, width: 100)
                     .Padding(right:20),
             },

@@ -16,24 +16,6 @@ namespace HotUI.Tests {
             [Body]
             View body() => new Text(() => $"badState: {badState}");
         }
-        [Fact]
-        public void MagicDatabinding()
-        {
-            var view = new StatePage();
-            TextField textField = null;
-            Text text = null;
-            view.Body = () => new VStack
-            {
-                (textField = new TextField(view.text)),
-                (text = new Text(view.text)),
-            };
-            view.ViewHandler = new GenericViewHandler();
-
-            textField.OnEditingChanged("Test");
-            Assert.Equal(textField.Text, "Test");
-            Assert.Equal(text.Value, "Test");
-
-        }
 
         [Fact]
         public void  StateTRequiresReadonly()
