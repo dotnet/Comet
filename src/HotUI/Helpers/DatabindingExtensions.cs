@@ -10,6 +10,12 @@ namespace HotUI
 {
     public static class DatabindingExtensions
     {
+        public static void SetBindingValue<T>(this View view, ref Binding<T> currentValue, Binding<T> newValue, [CallerMemberName] string propertyName = "")
+        {
+            currentValue = newValue;
+            newValue.BindToProperty(view.GetState(), view, propertyName);
+        }
+
         public static void SetValue<T>(this State state, ref T currentValue, T newValue, View view, [CallerMemberName] string propertyName = "")
         {
             if (state?.IsBuilding ?? false)

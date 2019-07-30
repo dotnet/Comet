@@ -5,24 +5,19 @@ namespace HotUI
     /// <summary>
     /// A view that displays one or more lines of read-only text.
     /// </summary>
-    public class Text : BoundControl<string>
+    public class Text : View
     {
         public Text (
-            Binding<string> value = null) : base(value, nameof(Value))
+            Binding<string> value = null)
         {
-
+            Value = value;
         }
-        
-        public Text (
-            Func<string> value) : this((Binding<string>)value)
-        {
 
-        }
-        
-        public string Value
+        Binding<string> _value;
+        public Binding<string> Value
         {
-            get => BoundValue;
-            private set => BoundValue = value;
+            get => _value;
+            private set => this.SetBindingValue(ref _value, value);
         }
     }
 }

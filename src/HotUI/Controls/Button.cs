@@ -2,24 +2,21 @@
 
 namespace HotUI 
 {
-	public class Button : BoundControl<string> 
+	public class Button : View
 	{
 		public Button (
-			Binding<string> value = null, 	
-			Action action = null) : base(value, nameof(Text))
+			Binding<string> text = null, 	
+			Action action = null) : base(false)
 		{
+            Text = text;
 			OnClick = action;
 		}
-		
-		public Button(
-			Func<string> value,
-			Action action = null) : this((Binding<string>)value, action)
-		{
-		}
-		
-		public string Text {
-			get => BoundValue;
-			private set => BoundValue = value;
+
+
+        Binding<string> _text;
+        public Binding<string> Text {
+			get => _text;
+            private set => this.SetBindingValue(ref _text, value);
 		}
 		
 		public Action OnClick { get; private set; }
