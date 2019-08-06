@@ -31,7 +31,7 @@ namespace HotUI.iOS.Handlers
         public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
         {
             var nativeView = (HUIImageView) viewHandler.NativeView;
-            nativeView.Bitmap = virtualView.Bitmap;
+            nativeView.Bitmap = virtualView.Bitmap.Get();
             virtualView.InvalidateMeasurement();
         }
     }

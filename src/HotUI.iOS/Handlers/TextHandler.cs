@@ -47,7 +47,7 @@ namespace HotUI.iOS.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (UILabel) viewHandler.NativeView;
-            nativeView.Text = virtualView.Value;
+            nativeView.Text = virtualView.Value.Get();
             virtualView.InvalidateMeasurement();
         }
 

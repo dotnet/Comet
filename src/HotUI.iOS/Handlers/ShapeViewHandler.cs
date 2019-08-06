@@ -29,7 +29,7 @@ namespace HotUI.iOS.Handlers
         {
             var nativeView = (HUIShapeView) viewHandler.NativeView;
             nativeView.View = virtualView;
-            nativeView.Shape = virtualView.Shape;
+            nativeView.Shape = virtualView.Shape.Get();
         }
     }
 }

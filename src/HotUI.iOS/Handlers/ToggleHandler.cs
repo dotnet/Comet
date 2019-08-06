@@ -33,7 +33,7 @@ namespace HotUI.iOS.Handlers
         public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (UISwitch) viewHandler.NativeView;
-            nativeView.On = virtualView.IsOn;
+            nativeView.On = virtualView.IsOn.Get();
         }
     }
 }

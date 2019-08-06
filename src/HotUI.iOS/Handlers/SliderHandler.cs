@@ -41,19 +41,19 @@ namespace HotUI.iOS.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Slider virtualView)
         {
             var nativeView = (UISlider) viewHandler.NativeView;
-            nativeView.Value = virtualView.Value;
+            nativeView.Value = virtualView.Value.Get();
         }
 
         public static void MapFromProperty(IViewHandler viewHandler, Slider virtualView)
         {
             var nativeView = (UISlider) viewHandler.NativeView;
-            nativeView.MinValue = virtualView.From;
+            nativeView.MinValue = virtualView.From.Get();
         }
         
         public static void MapThroughProperty(IViewHandler viewHandler, Slider virtualView)
         {
             var nativeView = (UISlider) viewHandler.NativeView;
-            nativeView.MaxValue = virtualView.Through;
+            nativeView.MaxValue = virtualView.Through.Get();
         }
     }
 }
