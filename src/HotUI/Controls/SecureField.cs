@@ -2,35 +2,31 @@
 
 namespace HotUI
 {
-	public class SecureField : BoundControl<string> 
+	public class SecureField : View
 	{
         public SecureField(
             Binding<string> value = null,
             string placeholder = null,
-            Action<string> onCommit = null) : base(value, nameof(Text))
+            Action<string> onCommit = null)
         {
+            Text = value;
             Placeholder = placeholder;
             OnCommit = onCommit;
         }
 
-        public SecureField(
-            Func<string> value = null,
-            string placeholder = null,
-            Action<string> onCommit = null) : this((Binding<string>)value, placeholder, onCommit)
+        Binding<string> _text;
+        public Binding<string> Text
         {
-
+            get => _text;
+            private set => this.SetBindingValue(ref _text, value);
         }
 
-		public string Text {
-			get => BoundValue;
-			private set => BoundValue = value;
-		}
-		
-		string placeholder;
-		public string Placeholder {
-			get => placeholder;
-			set => this.SetValue (State, ref placeholder, value);
-		}
+
+        Binding<string> _placeholder;
+		public Binding<string> Placeholder {
+			get => _placeholder;
+            private set => this.SetBindingValue(ref _placeholder, value);
+        }
 		
 		public Action<string> OnCommit { get; set; }
 	}

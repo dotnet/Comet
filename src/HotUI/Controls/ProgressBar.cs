@@ -2,34 +2,28 @@
 
 namespace HotUI
 {
-    public class ProgressBar : BoundControl<double>
+    public class ProgressBar : View
     {
         public ProgressBar(
             Binding<double> value = null,
             bool isIndeterminate = false)
-            : base(value, nameof(Value))
         {
+            Value = value;
             IsIndeterminate = isIndeterminate;
         }
 
-        public ProgressBar(
-            Func<double> value,
-            bool isIndeterminate = false)
-            : this((Binding<double>)value, isIndeterminate)
-        {
-        }
-
-        bool _isIndeterminate;
-        public bool IsIndeterminate
+        Binding<bool> _isIndeterminate;
+        public Binding<bool> IsIndeterminate
         {
             get => _isIndeterminate;
-            set => SetValue(ref _isIndeterminate, value);
+            set => this.SetBindingValue(ref _isIndeterminate, value);
         }
 
-        public double Value
+        Binding<double> _value;
+        public Binding<double> Value
         {
-            get => BoundValue;
-            private set => BoundValue = value;
+            get => _value;
+            set => this.SetBindingValue(ref _value, value);
         }
     }
 }

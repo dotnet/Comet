@@ -6,7 +6,7 @@ namespace HotUI
 	{
 		public Button (
 			Binding<string> text = null, 	
-			Action action = null) : base(false)
+			Action action = null)
 		{
             Text = text;
 			OnClick = action;

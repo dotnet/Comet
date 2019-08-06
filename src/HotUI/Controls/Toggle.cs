@@ -2,25 +2,21 @@
 
 namespace HotUI
 {
-    public class Toggle : BoundControl<bool>
+    public class Toggle : View
     {
         public Toggle (
             Binding<bool> value = null,
-            Action<bool> onChanged = null) : base(value, nameof(IsOn))
+            Action<bool> onChanged = null)
         {
+            IsOn = value;
             IsOnChanged = new MulticastAction<bool>(value, onChanged);
         }
-        
-        public Toggle (
-            Func<bool> value = null,
-            Action<bool> onChanged = null) : this((Binding<bool>)value, onChanged)
+
+        Binding<bool> _isOn;
+        public Binding<bool> IsOn
         {
-        }
-        
-        public bool IsOn
-        {
-            get => BoundValue;
-            set => BoundValue = value;
+            get => _isOn;
+            private set => this.SetBindingValue(ref _isOn, value);
         }
         
         public Action<bool> IsOnChanged { get; private set; }

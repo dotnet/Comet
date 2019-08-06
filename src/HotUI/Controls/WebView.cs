@@ -1,17 +1,17 @@
 ﻿using System;
 namespace HotUI {
-	public class WebView : Control {
-		string html;
-		public string Html {
+	public class WebView : View {
+		Binding<string> html;
+		public Binding<string> Html {
 			get => html;
-			set => this.SetValue (State, ref html, value);
+            set => this.SetBindingValue(ref html, value);
 		}
 
-		string source;
-		public string Source {
+        Binding<string> source;
+		public Binding<string> Source {
 			get => source;
-			set => this.SetValue (State, ref source, value);
-		}
+            set => this.SetBindingValue(ref source, value);
+        }
 
 		
 	}

@@ -2,40 +2,37 @@
 
 namespace HotUI 
 {
-	public class TextField : BoundControl<string>
+	public class TextField : View
 	{
 		public TextField (
 			Binding<string> value = null, 	
 			string placeholder = null,
 			Action<string> onEditingChanged = null,
-			Action<string> onCommit = null) : base(value, nameof(Text))
+			Action<string> onCommit = null)
 		{
+            Text = value;
 			Placeholder = placeholder;
 			OnEditingChanged = new MulticastAction<string>(value, onEditingChanged);
 			OnCommit = onCommit;
 		}
 
-		public TextField(
-			Func<string> value = null,
-			string placeholder = null,
-			Action<string> onEditingChanged = null,
-			Action<string> onCommit = null) : this((Binding<string>)value, placeholder, onEditingChanged, onCommit)
-		{
 
-		}
-		
-		public string Text {
-			get => BoundValue;
-			private set => BoundValue = value;
-		}
 
-		string placeholder;
-		public string Placeholder {
-			get => placeholder;
-			set => SetValue ( ref placeholder, value);
-		}
+        Binding<string> _text;
+        public Binding<string> Text
+        {
+            get => _text;
+            private set => this.SetBindingValue(ref _text, value);
+        }
 
-		public Action<TextField> Focused { get; private set; }
+        Binding<string> _placeholder;
+        public Binding<string> Placeholder
+        {
+            get => _placeholder;
+            private set => this.SetBindingValue(ref _placeholder, value);
+        }
+
+        public Action<TextField> Focused { get; private set; }
 		public Action<TextField> Unfocused { get; private set; }
 		public Action<string> OnEditingChanged { get; private set; }
 		public Action<string> OnCommit { get; private set; }

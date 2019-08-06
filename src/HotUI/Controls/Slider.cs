@@ -2,53 +2,49 @@
 
 namespace HotUI 
 {
-	public class Slider : BoundControl<float>
+	public class Slider : View
 	{
 		public Slider (
 			Binding<float> value = null, 	
 			float from = 0, 
 			float through = 100, 
 			float by = 1,
-			Action<float> onEditingChanged = null) : base(value, nameof(Value))
+			Action<float> onEditingChanged = null)
 		{
+            Value = value;
 			From = from;
 			Through = through;
 			By = by;
 			OnEditingChanged = new MulticastAction<float>(value, onEditingChanged);
 		}
 		
-		public Slider (
-			Func<float> value, 	
-			float from = 0, 
-			float through = 100, 
-			float by = 1,
-			Action<float> onEditingChanged = null) : this((Binding<float>)value, from, through, by, onEditingChanged)
-		{
-
-		}
 		
-		public float Value {
-			get => BoundValue;
-			private set => BoundValue = value;
-		}
 
-		float _from;
-		public float From {
+
+        Binding<float> _value;
+        public Binding<float> Value
+        {
+            get => _value;
+            private set => this.SetBindingValue(ref _value, value);
+        }
+
+        Binding<float> _from;
+		public Binding<float> From {
 			get => _from;
-			private set => SetValue ( ref _from, value);
-		}
-		
-		float _through;
-		public float Through {
-			get => _through;
-			private set => SetValue ( ref _through, value);
-		}
+            private set => this.SetBindingValue(ref _from, value);
+        }
 
-		float _by;
-		public float By {
+        Binding<float> _through;
+		public Binding<float> Through {
+			get => _through;
+            private set => this.SetBindingValue(ref _through, value);
+        }
+
+        Binding<float> _by;
+		public Binding<float> By {
 			get => _by;
-			private set => SetValue ( ref _by, value);
-		}
+            private set => this.SetBindingValue(ref _by, value);
+        }
 		
 		public Action<float> OnEditingChanged { get; private set; }
 	}
