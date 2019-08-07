@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq.Expressions;
 
 namespace HotUI
@@ -58,15 +56,9 @@ namespace HotUI
 
         public static implicit operator Binding<T>(T value)
         {
-            var state = StateBuilder.CurrentState;
-            var props = state?.EndProperty();
             return new Binding<T>(
                 getValue: () => value,
-                setValue: null) {
-                IsValue = true,
-                CurrentValue = value,
-                BoundProperties = props,
-            };
+                setValue: null) { IsValue = true };
         }
 
         public static implicit operator Binding<T>(Func<T> value)
@@ -77,34 +69,7 @@ namespace HotUI
             var props = state?.EndProperty();
             return new Binding<T>(
                 getValue: value,
-                setValue: null) {
-                IsFunc = true,
-                CurrentValue = result,
-                BoundProperties = props,
-            };
-        }
-
-
-        public static implicit operator Binding<T>(State<T> state)
-        {
-
-            var bindingState = StateBuilder.CurrentState;
-            bindingState?.StartProperty();
-            var result = state.Value;
-            var props = bindingState?.EndProperty();
-
-
-            var binding = new Binding<T>(
-                getValue: () => state.Value,
-                setValue: (v) => {
-                    state.Value = v;
-                })
-            {
-                CurrentValue = result,
-                BoundProperties = props,
-                IsFunc = true,
-            };
-            return binding;
+                setValue: null) {IsFunc = true};
         }
 
         public static implicit operator T (Binding<T> value)
@@ -210,7 +175,7 @@ namespace HotUI
             return binding.Get.Invoke();
         }
         
-        internal static Binding<T> TwoWayBinding<TBindingObject, T>(this TBindingObject binding, Expression<Func<TBindingObject, T>> expression) where TBindingObject:BindingObject
+        public static Binding<T> TwoWayBinding<TBindingObject, T>(this TBindingObject binding, Expression<Func<TBindingObject, T>> expression) where TBindingObject:BindingObject
         {
             if (expression.Body is MemberExpression member)
             {

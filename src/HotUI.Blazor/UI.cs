@@ -26,12 +26,14 @@ namespace HotUI.Blazor
             Registrar.Handlers.Register<ProgressBar, ProgressBarHandler>();
             Registrar.Handlers.Register<Image, ImageHandler>();
             Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();
+            Registrar.Handlers.Register<TabView, TabViewHandler>();
+            Registrar.Handlers.Register<ShapeView, ShapeViewHandler>();
+
+            // Unsupported views. Without registering these, it cause an infinite recursion on derived views
+            Registrar.Handlers.Register<ActivityIndicator, UnsupportedHandler<ActivityIndicator>>();
+            Registrar.Handlers.Register<Control, UnsupportedHandler<Control>>();
 
             Device.PerformInvokeOnMainThread = a => a();
-            Device.OnStateChanged = view => () =>
-            {
-                view.ViewHandler.SetView(view.Body());
-            };
             ListView.HandlerSupportsVirtualization = false;
         }
     }

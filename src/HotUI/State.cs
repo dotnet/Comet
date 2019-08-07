@@ -29,6 +29,9 @@ namespace HotUI {
 		public static implicit operator Action<T>(State<T> state) => value => state.Value = value;
 		public static implicit operator State<T>(T value) => new State<T>(value);
 
+		public static implicit operator Binding<T>(State<T> state) => new Binding<T>(
+			getValue: () => state.Value,
+			setValue: state);
 	}
 	
 	public class StateBuilder : IDisposable {
@@ -62,11 +65,5 @@ namespace HotUI {
 		{
 			return parent?.GetPropertyValue(property) ?? this.GetPropertyValue (property);
 		}
-
-        internal void SetChildrenValue<T>(string property, T value)
-        {
-            parent?.SetDeepPropertyValue(property, value);
-            parent?.BindingPropertyChanged(property, value);
-        }
-    }
+	}
 }
