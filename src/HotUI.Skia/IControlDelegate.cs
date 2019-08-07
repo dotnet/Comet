@@ -23,5 +23,6 @@ namespace HotUI.Skia
         void AddedToView(object nativeView, RectangleF bounds);
         void RemovedFromView(object nativeView);
         SizeF Measure(SizeF availableSize);
+        void ViewPropertyChanged(string property, object value);
     }
 }
