@@ -12,8 +12,13 @@ namespace HotUI
         {
             Value = value;
         }
+        public Text(
+            Func<string> value) : this((Binding<string>)value)
+        {
 
-        Binding<string> _value;
+        }
+
+            Binding<string> _value;
         public Binding<string> Value
         {
             get => _value;

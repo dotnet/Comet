@@ -30,12 +30,12 @@ namespace HotUI.Tests {
 		{
 			var orgView = new MyOrgView ();
 			var orgText = orgView.GetView () as Text;
-			Assert.Equal (MyOrgView.TextValue, orgText.Value);
+			Assert.Equal (MyOrgView.TextValue, orgText.Value.Get());
 
 			HotReloadHelper.RegisterReplacedView (typeof (MyOrgView).FullName, typeof (MyNewView));
 			var newText = orgView.GetView () as Text;
 
-			Assert.Equal (MyNewView.TextValue, newText.Value);
+			Assert.Equal (MyNewView.TextValue, newText.Value.Get());
 
 		}
 	}

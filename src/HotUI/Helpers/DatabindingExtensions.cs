@@ -13,14 +13,14 @@ namespace HotUI
         public static void SetBindingValue<T>(this View view, ref Binding<T> currentValue, Binding<T> newValue, [CallerMemberName] string propertyName = "")
         {
             currentValue = newValue;
-            newValue.BindToProperty(view.GetState(), view, propertyName);
+            newValue?.BindToProperty(view.GetState(), view, propertyName);
         }
 
         public static void SetValue<T>(this State state, ref T currentValue, T newValue, View view, [CallerMemberName] string propertyName = "")
         {
             if (state?.IsBuilding ?? false)
             {
-                var props = state.EndProperty(false);
+                var props = state.EndProperty();
                 var propCount = props.Length;
                 //This is databound!
                 if (propCount > 0)
@@ -31,7 +31,7 @@ namespace HotUI
                         var prop = props[0];
 
                         var stateValue = state.GetValue(prop).Cast<T>();
-                        var old = state.EndProperty(false);
+                        var old = state.EndProperty();
                         //1 to 1 binding!
                         if (EqualityComparer<T>.Default.Equals(stateValue, newValue))
                         {

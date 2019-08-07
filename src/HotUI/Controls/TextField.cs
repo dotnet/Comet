@@ -15,6 +15,14 @@ namespace HotUI
 			OnEditingChanged = new MulticastAction<string>(value, onEditingChanged);
 			OnCommit = onCommit;
 		}
+        public TextField(
+            Func<string> value,
+            string placeholder = null,
+            Action<string> onEditingChanged = null,
+            Action<string> onCommit = null) : this((Binding<string>)value, placeholder, onEditingChanged, onCommit)
+        {
+
+        }
 
 
 

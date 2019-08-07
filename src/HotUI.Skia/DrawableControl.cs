@@ -4,7 +4,7 @@ using HotUI.Skia;
 
 namespace HotUI 
 {
-	public class DrawableControl : BoundControl, IDrawableControl
+	public class DrawableControl : View, IDrawableControl
 	{
 		public IControlDelegate ControlDelegate { get; set; }
 		

@@ -4,7 +4,7 @@ namespace HotUI
 {
 	public class Image : View
     {
-        public Image(Binding<Bitmap> bitmap) 
+        public Image(Binding<Bitmap> bitmap = null) 
         {
             Bitmap = bitmap;
         }
@@ -13,6 +13,10 @@ namespace HotUI
         {
             Source = source;
         }
+
+        public Image(Func<Bitmap> bitmap) : this((Binding<Bitmap>)bitmap) { }
+
+        public Image(Func<string> source) : this((Binding<string>)source) { }
 
         private Binding<Bitmap> _bitmap;
 		public Binding<Bitmap> Bitmap {

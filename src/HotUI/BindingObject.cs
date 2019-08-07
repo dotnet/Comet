@@ -102,6 +102,8 @@ namespace HotUI
         public BindingState BindingState { get; set; } = new BindingState();
         internal Action StateChanged;
 
+
+        int isBuildingCount = 0;
         bool isBuilding;
         public bool IsBuilding => isBuilding;
 
@@ -210,10 +212,8 @@ namespace HotUI
             listProperties.Clear();
         }
 
-        internal string[] EndProperty(bool endIsBuilding = true)
+        internal string[] EndProperty()
         {
-            if (endIsBuilding)
-                isBuilding = false;
             var changed = listProperties.Distinct().ToArray();
             listProperties.Clear();
             return changed;
@@ -223,12 +223,17 @@ namespace HotUI
         bool isUpdating;
         public void StartUpdate()
         {
+            isBuildingCount++;
             isUpdating = true;
         }
 
         public void EndUpdate()
         {
-            isUpdating = false;
+            if (isBuildingCount-- <= 0)
+            {
+                isBuildingCount = 0;
+                isUpdating = false;
+            }
             if (pendingUpdates.Any())
             {
                 if (!BindingState.UpdateValues(pendingUpdates))

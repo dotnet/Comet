@@ -6,13 +6,19 @@ namespace HotUI
 	{
         public SecureField(
             Binding<string> value = null,
-            string placeholder = null,
+            Binding<string> placeholder = null,
             Action<string> onCommit = null)
         {
             Text = value;
             Placeholder = placeholder;
             OnCommit = onCommit;
         }
+
+        public SecureField(
+            Func<string> value,
+            Func<string> placeholder = null,
+            Action<string> onCommit = null) : this((Binding<string>)value, (Binding<string>)placeholder,onCommit)
+        { }
 
         Binding<string> _text;
         public Binding<string> Text

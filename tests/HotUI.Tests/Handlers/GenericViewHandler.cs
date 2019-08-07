@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using HotUI.Reflection;
 
 namespace HotUI.Tests.Handlers 
 {
@@ -48,7 +49,13 @@ namespace HotUI.Tests.Handlers
 		public void UpdateValue (string property, object value)
 		{
 			ChangedProperties [property] = value;
-		}
+
+            var val = CurrentView.GetPropertyValue(property) as Binding;
+            if (val != null)
+                val.GetValue();
+
+
+        }
 
         public void Dispose()
         {

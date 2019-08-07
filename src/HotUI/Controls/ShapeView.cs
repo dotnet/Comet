@@ -11,6 +11,10 @@ namespace HotUI
         {
             Shape = value;
         }
+        public ShapeView(Func<Shape> value)
+        {
+            Shape = value;
+        }
 
         Binding<Shape> _shape;
         public Binding<Shape> Shape

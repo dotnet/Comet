@@ -238,10 +238,13 @@ namespace HotUI.Tests {
 
 			view.Body = () => {
 				buildCount++;
+                textField = new TextField(view.text, "Placeholder");
+                text = new Text(view.text.Value);
 				stack = new VStack {
-					(textField = new TextField (view.text,"Placeholder")),
-					(text = new Text (view.text.Value)),
-				};
+                    textField,
+                    text
+
+                };
 				//text = new Text ($"{view.text.Value} - {view.clickCount.Value}");
 				return stack;
 			};

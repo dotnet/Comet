@@ -18,6 +18,19 @@ namespace HotUI
         
         public bool IsValue { get; internal set; }
         public bool IsFunc { get; internal set; }
+        WeakReference _view;
+        internal View View
+        {
+            get => _view?.Target as View;
+            set => _view = new WeakReference(value);
+        }
+
+        internal void SetInternalValue(string key, object value)
+        {
+            //View.SetValue()
+            Console.Write("Test");
+        }
+
     }
     
     public class Binding<T> : Binding
@@ -36,14 +49,12 @@ namespace HotUI
         }
         public T CurrentValue { get; private set; }
 
-        WeakReference _view;
-        internal View View
-        {
-            get => _view?.Target as View;
-            set => _view = new WeakReference(value);
-        }
+       
 
         public string[] BoundProperties { get; private set; }
+
+       
+
 
         public static implicit operator Binding<T>(T value)
         {
@@ -58,12 +69,11 @@ namespace HotUI
             };
         }
 
-
         public static implicit operator Binding<T>(Func<T> value)
         {
             var state = StateBuilder.CurrentState;
             state?.StartProperty();
-            var result = value.Invoke();
+            var result = value == null ? default : value.Invoke();
             var props = state?.EndProperty();
             return new Binding<T>(
                 getValue: value,
@@ -96,6 +106,11 @@ namespace HotUI
             };
             return binding;
         }
+
+        public static implicit operator T (Binding<T> value)
+            => value == null || value.Get == null
+            ? default : value.Get.Invoke();
+            
 
 
         private static Func<object> ToGenericGetter(Func<T> getValue)
@@ -137,12 +152,15 @@ namespace HotUI
 
                     var stateValue = state.GetValue(prop).Cast<T>();
                     var newValue = Get.Invoke();
-                    var old = state.EndProperty(false);
+                    var old = state.EndProperty();
                     //1 to 1 binding!
                     if (EqualityComparer<T>.Default.Equals(stateValue, newValue))
                     {
                         Get = () => state.GetValue(prop).Cast<T>();
-                        Set = (v) => state.SetChildrenValue(property, v);
+                        Set = (v) =>
+                        {
+                            state.SetChildrenValue(property, v);
+                        };
                         CurrentValue = newValue;
                         IsValue = false;
                         IsFunc = true;
@@ -201,7 +219,10 @@ namespace HotUI
 
                 return new Binding<T>(
                     getValue: () => getValue.Invoke(binding),
-                    setValue: value => binding.SetPropertyInternal(value, memberName));
+                    setValue: value =>
+                    {
+                        binding.SetPropertyInternal(value, memberName);
+                    });
             }
             else
             {

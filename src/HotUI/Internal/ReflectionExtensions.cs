@@ -13,8 +13,15 @@ namespace HotUI.Reflection
             var info = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
             if (info != null)
             {
-
-                info.SetValue(obj, Convert(value,info.PropertyType));
+                if(info.PropertyType.IsDeepSubclass(typeof(Binding)))
+                {
+                    Console.WriteLine("Hello");
+                    var v = info.GetValue(obj);
+                    var binding = v as Binding;
+                    binding.SetValue(value);
+                }
+                else
+                    info.SetValue(obj, Convert(value,info.PropertyType));
                 return true;
             }
             else
@@ -153,6 +160,13 @@ namespace HotUI.Reflection
             if (retval == null)
                 return default;
             return (T)retval;
+        }
+
+        public static bool IsDeepSubclass(this Type type, Type subclass)
+        {
+            if (type.IsSubclassOf(subclass))
+                return true;
+            return type?.BaseType?.IsDeepSubclass(subclass) ?? false;
         }
     }
 }

@@ -12,6 +12,12 @@ namespace HotUI
 			OnClick = action;
 		}
 
+        public Button(
+            Func<string> text,
+            Action action = null) : this((Binding<string>)text, action)
+        {
+
+        }
 
         Binding<string> _text;
         public Binding<string> Text {

@@ -12,6 +12,11 @@ namespace HotUI
             IsIndeterminate = isIndeterminate;
         }
 
+        public ProgressBar(
+            Func<double> value,
+            bool isIndeterminate = false) : this((Binding<double>)value,isIndeterminate)
+        { }
+
         Binding<bool> _isIndeterminate;
         public Binding<bool> IsIndeterminate
         {
