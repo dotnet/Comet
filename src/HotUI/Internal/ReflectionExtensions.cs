@@ -15,10 +15,12 @@ namespace HotUI.Reflection
             {
                 if(info.PropertyType.IsDeepSubclass(typeof(Binding)))
                 {
-                    Console.WriteLine("Hello");
-                    var v = info.GetValue(obj);
-                    var binding = v as Binding;
-                    binding.SetValue(value);
+                    //I used to set this but I don't think it is needed now.
+
+                    //Console.WriteLine("Hello");
+                    //var v = info.GetValue(obj);
+                    //var binding = v as Binding;
+                    //binding.SetValue(value);
                 }
                 else
                     info.SetValue(obj, Convert(value,info.PropertyType));

@@ -163,7 +163,7 @@ namespace HotUI
                         Get = () => state.GetValue(prop).Cast<T>();
                         Set = (v) =>
                         {
-                            state.SetChildrenValue(property, v);
+                            state.SetChildrenValue(prop, v);
                         };
                         CurrentValue = newValue;
                         IsValue = false;
