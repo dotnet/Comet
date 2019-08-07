@@ -10,7 +10,7 @@ namespace HotUI.Samples
         [Body]
         View body() => new VStack
         {
-            new Button("Increment Value", () => count.Value = count + 1),
+            new Button("Increment Value", () => count.Value ++ ),
             new Text(() => $"Value: {count.Value}"),
         };
 
