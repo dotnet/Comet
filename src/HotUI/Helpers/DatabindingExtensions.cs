@@ -75,7 +75,7 @@ namespace HotUI
             view.BindingPropertyChanged(propertyName, newValue);
         }
 
-        static T Cast<T>(this object val)
+        public static T Cast<T>(this object val)
         {
             if (val == null)
                 return default;
