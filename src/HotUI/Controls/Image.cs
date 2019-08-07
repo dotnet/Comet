@@ -1,43 +1,36 @@
 ﻿using System;
 using HotUI.Graphics;
-
 namespace HotUI 
 {
-	public class Image : BoundControl
+	public class Image : View
     {
-        public Image(Binding<Bitmap> bitmap) : base(bitmap)
+        public Image(Binding<Bitmap> bitmap = null) 
         {
-            Bind(bitmap, nameof(Bitmap), value => Bitmap = (Bitmap)value);
+            Bitmap = bitmap;
         }
 
-        public Image(Binding<string> source) : base(source)
+        public Image(Binding<string> source)
         {
-            Bind(source, nameof(Source), value => Source = (string)value);
-        }
-        
-        public Image(Func<Bitmap> bitmap) : this ((Binding<Bitmap>)bitmap)
-		{
-            
-		}
-        
-        public Image(Func<string> source) : this ((Binding<string>)source)
-        {
-            
+            Source = source;
         }
 
-        private Bitmap _bitmap;
-		public Bitmap Bitmap {
+        public Image(Func<Bitmap> bitmap) : this((Binding<Bitmap>)bitmap) { }
+
+        public Image(Func<string> source) : this((Binding<string>)source) { }
+
+        private Binding<Bitmap> _bitmap;
+		public Binding<Bitmap> Bitmap {
 			get => _bitmap;
-            private set => SetValue(ref _bitmap, value);
+            private set => this.SetBindingValue(ref _bitmap, value);
         }
 
-        private string _source;
-        public string Source {
+        private Binding<string> _source;
+        public Binding<string> Source {
             get => _source;
             private set
             {
-                SetValue(ref _source, value);
-                LoadBitmapFromSource(_source);
+                this.SetBindingValue(ref _source, value);
+                LoadBitmapFromSource(_source.CurrentValue);
             }
         }
         

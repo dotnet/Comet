@@ -3,14 +3,14 @@ namespace HotUI
 {
     public delegate void UpdateView(object view, object state);
 
-	public class ViewRepresentable : Control
+	public class ViewRepresentable : View
     {
         public ViewRepresentable()
         {
 
         }
 
-        public ViewRepresentable(object data) : base (true)
+        public ViewRepresentable(object data)
 		{
             Data = data;
 		}

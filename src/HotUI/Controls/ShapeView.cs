@@ -5,20 +5,22 @@ namespace HotUI
     /// <summary>
     /// A view that displays a shape.
     /// </summary>
-    public class ShapeView : BoundControl<Shape>
+    public class ShapeView : View
     {
-        public ShapeView(Binding<Shape> value) : base(value, nameof(Shape))
+        public ShapeView(Binding<Shape> value)
         {
+            Shape = value;
+        }
+        public ShapeView(Func<Shape> value)
+        {
+            Shape = value;
         }
 
-        public ShapeView(Func<Shape> valueBuilder) : this((Binding<Shape>)valueBuilder)
+        Binding<Shape> _shape;
+        public Binding<Shape> Shape
         {
-        }
-        
-        public Shape Shape
-        {
-            get => BoundValue;
-            private set => BoundValue = value;
+            get => _shape;
+            private set => this.SetBindingValue(ref _shape, value);
         }
     }
 }

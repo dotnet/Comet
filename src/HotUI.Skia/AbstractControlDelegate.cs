@@ -7,10 +7,13 @@ namespace HotUI.Skia
 {
     public abstract class AbstractControlDelegate : IControlDelegate
     {
+        private DrawableControl _drawableControl;
+        
         public event Action Invalidated;
         
-        private readonly Dictionary<string, BindingDefinition> _bindings = new Dictionary<string, BindingDefinition>();
-
+        private readonly List<Action> _bindingInitializers = new List<Action>();
+        private readonly List<string> _boundProperties = new List<string>();
+        
         protected AbstractControlDelegate()
         {
             Mapper = new PropertyMapper<DrawableControl>();
@@ -19,17 +22,6 @@ namespace HotUI.Skia
         protected AbstractControlDelegate(PropertyMapper<DrawableControl> mapper)
         {
             Mapper = mapper ?? new PropertyMapper<DrawableControl>();
-        }
-
-        public IReadOnlyDictionary<string, BindingDefinition> Bindings => _bindings;
-        
-        protected void Bind<T>(
-            Binding<T> binding, 
-            string propertyName,
-            Action<T> updater)
-        {
-            if (binding == null) return;
-            _bindings[propertyName] = new BindingDefinition(binding, propertyName, v => updater.Invoke((T)v));
         }
         
         public PropertyMapper<DrawableControl> Mapper { get; }
@@ -90,7 +82,21 @@ namespace HotUI.Skia
             
         }
 
-        public DrawableControl VirtualDrawableControl { get; set; }
+        public DrawableControl VirtualDrawableControl
+        {
+            get => _drawableControl;
+            set
+            {
+                _drawableControl = value;
+                if (_drawableControl != null)
+                {
+                    foreach (var initializer in _bindingInitializers)
+                        initializer?.Invoke();
+                    
+                    _bindingInitializers.Clear();
+                }
+            }
+        }
             
         public IDrawableControl NativeDrawableControl { get; set; }
         
@@ -99,14 +105,32 @@ namespace HotUI.Skia
             return availableSize;
         }
 
+        public virtual void ViewPropertyChanged(string property, object value)
+        {
+            if (_boundProperties.Contains(property))
+                Invalidate();
+        }
+
         public static implicit operator View(AbstractControlDelegate controlDelegate)
         {
             return new DrawableControl(controlDelegate);
         }
         
-        protected void SetValue<T> (ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")
+        protected void SetBindingValue<T>(ref Binding<T> currentValue, Binding<T> newValue, [CallerMemberName] string propertyName = "")
         {
-            VirtualDrawableControl.SetStateValue (ref currentValue, newValue , propertyName);
+            currentValue = newValue;
+            if (VirtualDrawableControl != null)
+            {
+                newValue?.BindToProperty(VirtualDrawableControl.GetState(), (View) VirtualDrawableControl, propertyName);
+                _boundProperties.Add(propertyName);
+            }
+            else
+                _bindingInitializers.Add(
+                    () =>
+                    {
+                        newValue?.BindToProperty(VirtualDrawableControl.GetState(), (View)VirtualDrawableControl, propertyName);
+                        _boundProperties.Add(propertyName);
+                    });
         }
     }
 }

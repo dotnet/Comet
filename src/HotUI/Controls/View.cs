@@ -62,7 +62,7 @@ namespace HotUI
         protected State State { get; set; }
         internal State GetState() => State;
 
-        public View(bool hasConstructors)
+        public View()
         {
             ActiveViews.Add(this);
             Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
@@ -72,14 +72,10 @@ namespace HotUI
                 StateChanged = Reload
             };
             SetEnvironmentFields();
-            if (!hasConstructors)
-                State.StartBuildingView();
+            State.StartBuildingView();
 
         }
-        public View() : this(false)
-        {
 
-        }
         WeakReference __viewThatWasReplaced;
         View viewThatWasReplaced
         {

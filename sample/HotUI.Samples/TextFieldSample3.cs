@@ -19,7 +19,7 @@ namespace HotUI.Samples
         [Body]
         View Build() => new VStack()
         {
-            new TextField(_state.TwoWayBinding(v => v.Text), "Name"),
+            new TextField(_state.Text, "Name"),
             new HStack()
             {
                 new Text("Current Value:")

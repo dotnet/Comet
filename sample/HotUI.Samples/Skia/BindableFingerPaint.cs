@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using HotUI.Skia;
 using SkiaSharp;
@@ -8,35 +7,27 @@ namespace HotUI.Samples.Skia
     public class BindableFingerPaint : SimpleFingerPaint
     {
         private readonly List<List<PointF>> _pointsLists = new List<List<PointF>>();
-        private float _strokeWidth = 2;
-        private string _strokeColor = "#00FF00";
+        private Binding<float> _strokeWidth = 2f;
+        private Binding<string> _strokeColor = "#00FF00";
         
         public BindableFingerPaint (
             Binding<float> strokeSize = null,
             Binding<string> strokeColor = null)
         {
-            Bind(strokeSize, nameof(StrokeWidth), value => StrokeWidth = value);
-            Bind(strokeColor, nameof(StrokeColor), value => StrokeColor = value);
+            StrokeWidth = strokeSize;
+            StrokeColor = strokeColor;
         }
         
-        public float StrokeWidth
+        public Binding<float> StrokeWidth
         {
             get => _strokeWidth;
-            private set
-            {
-                SetValue(ref _strokeWidth, value); 
-                Invalidate();
-            }
+            private set => SetBindingValue(ref _strokeWidth, value);
         }
         
-        public string StrokeColor
+        public Binding<string> StrokeColor
         {
             get => _strokeColor;
-            private set
-            {
-                SetValue(ref _strokeColor, value); 
-                Invalidate();
-            }
+            private set => SetBindingValue(ref _strokeColor, value);
         }
         
         public override void Draw(SKCanvas canvas, RectangleF dirtyRect)

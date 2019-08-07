@@ -1,10 +1,8 @@
-﻿using System;
-using System.Runtime.CompilerServices;
-using HotUI.Skia;
+﻿using HotUI.Skia;
 
 namespace HotUI 
 {
-	public class DrawableControl : BoundControl, IDrawableControl
+	public class DrawableControl : View, IDrawableControl
 	{
 		public IControlDelegate ControlDelegate { get; set; }
 		
@@ -12,14 +10,14 @@ namespace HotUI
 		{
 			ControlDelegate = controlDelegate;
 			controlDelegate.VirtualDrawableControl = this;
-
-			if (controlDelegate is AbstractControlDelegate abstractControlDelegate)
-				AddBindings(abstractControlDelegate.Bindings);
 		}
 		
-		public void SetStateValue<T> (ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")
+		internal State GetState() => State;
+
+		protected override void ViewPropertyChanged(string property, object value)
 		{
-			State.SetValue (ref currentValue, newValue, this , propertyName);
+			ControlDelegate?.ViewPropertyChanged(property, value);
+			base.ViewPropertyChanged(property, value);
 		}
 	}
 }

@@ -55,9 +55,9 @@ namespace HotUI
         /// <param name="color"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Background<T>(this T view, string color) where T : View
+        public static T Background<T>(this T view, string color, bool cascades = false) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.Colors.BackgroundColor, new Color(color), false);
+            view.SetEnvironment(EnvironmentKeys.Colors.BackgroundColor, new Color(color), cascades);
             return view;
         }
 
