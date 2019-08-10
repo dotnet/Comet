@@ -15,12 +15,14 @@ namespace HotUI.iOS.Handlers
             [EnvironmentKeys.Fonts.Size] = MapFontProperty,
             [EnvironmentKeys.Fonts.Weight] = MapFontProperty,
             [EnvironmentKeys.Colors.Color] = MapColorProperty,
+            [EnvironmentKeys.LineBreakMode.Mode] = MapLineBreakModeProperty,
         };
 
         private static FontAttributes DefaultFont;
         private static Color DefaultColor;
-        
-		public TextHandler () : base(Mapper)
+        private static LineBreakMode DefaultLineBreakMode;
+
+        public TextHandler () : base(Mapper)
 		{
 
         }
@@ -34,6 +36,11 @@ namespace HotUI.iOS.Handlers
             {
                 DefaultFont = label.Font.ToFont();
                 DefaultColor = label.TextColor.ToColor();
+            }
+
+            if(DefaultLineBreakMode == null)
+            {
+                DefaultLineBreakMode = LineBreakMode.NoWrap;
             }
 
             return label;
@@ -64,6 +71,16 @@ namespace HotUI.iOS.Handlers
             var nativeView = (UILabel) viewHandler.NativeView;
             var color = virtualView.GetColor(DefaultColor);
             nativeView.TextColor = color.ToUIColor();
+        }
+
+        public static void MapLineBreakModeProperty(IViewHandler viewHandler, Text virtualView)
+        {
+            var nativeView = (UILabel)viewHandler.NativeView;
+            var mode = virtualView.GetLineBreakMode(DefaultLineBreakMode);
+            nativeView.LineBreakMode = mode.ToUILineBreakMode();
+            if(mode == LineBreakMode.WordWrap || mode == LineBreakMode.CharacterWrap)
+                nativeView.Lines = 0;
+            virtualView.InvalidateMeasurement();
         }
     }
 }
