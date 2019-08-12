@@ -31,7 +31,7 @@ namespace HotUI.UWP.Handlers
         {
             var imageHandler = (ImageHandler)viewHandler;
             var bitmap = virtualView.Bitmap;
-            var nativeBitmap = (ImageSource)bitmap?.NativeBitmap;
+            var nativeBitmap = (ImageSource)bitmap?.Get()?.NativeBitmap;
             imageHandler.TypedNativeView.Source = nativeBitmap;
             virtualView.InvalidateMeasurement();
         }

@@ -25,7 +25,7 @@ namespace HotUI.WPF.Handlers
         public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
         {
             var imageHandler = (ImageHandler)viewHandler;
-            var bitmap = (BitmapImage)virtualView.Bitmap?.NativeBitmap;
+            var bitmap = (BitmapImage)virtualView.Bitmap?.Get()?.NativeBitmap;
             imageHandler.TypedNativeView.Source = bitmap;
             imageHandler.VirtualView.InvalidateMeasurement();
         }
