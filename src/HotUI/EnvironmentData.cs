@@ -19,6 +19,11 @@ namespace HotUI {
             public const string Italic = "Font.Italic";
         }
 
+        public static class LineBreakMode
+        {
+            public const string Mode = "Mode";
+        }
+
         public static class Colors
         {
             public const string Color = "Color";
