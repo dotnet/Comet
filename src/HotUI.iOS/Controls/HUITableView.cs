@@ -26,9 +26,12 @@ namespace HotUI.iOS.Controls
                 // we can use those as our cell height.
                 if (value?.Sections() > 0 && value?.Rows(0) > 0)
                 {
-                    var v = value.ViewFor(0,0);                    
-                    if (v.FrameConstraints?.Height != null)
-                        RowHeight = (float)v.FrameConstraints.Height;
+
+                    var v = value.ViewFor(0,0);
+                    var constraints = v.GetFrameConstraints();
+
+                    if (constraints?.Height != null)
+                        RowHeight = (float)constraints.Height;
                     else
                         RowHeight = -1;
                 }

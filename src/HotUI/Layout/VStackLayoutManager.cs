@@ -58,7 +58,7 @@ namespace HotUI.Layout
                     var finalHeight = size.Height;
                     var finalWidth = size.Width;
                     
-                    var padding = view.Padding;
+                    var padding = view.GetPadding();
                     finalHeight += padding.VerticalThickness;
                     finalWidth += padding.HorizontalThickness;
 
@@ -110,16 +110,18 @@ namespace HotUI.Layout
                 else
                 {
                     var size = view.MeasuredSize;
+                    var constraints = view.GetFrameConstraints();
+                    var padding = view.GetPadding();
+
+                    if (constraints?.Width != null)
+                        size.Width = Math.Min((float)constraints.Width, measured.Width);
                     
-                    if (view.FrameConstraints?.Width != null)
-                        size.Width = Math.Min((float)view.FrameConstraints.Width, measured.Width);
-                    
-                    if (view.FrameConstraints?.Height != null)
-                        size.Height = Math.Min((float)view.FrameConstraints.Height, measured.Height);
+                    if (constraints?.Height != null)
+                        size.Height = Math.Min((float)constraints.Height, measured.Height);
                     
                     sizes.Add(size);
                     width = Math.Max(size.Width, width);
-                    nonSpacerHeight += size.Height + view.Padding.VerticalThickness;
+                    nonSpacerHeight += size.Height + padding.VerticalThickness;
                 }
                 
                 if (index > 0 && !lastWasSpacer && !isSpacer)
@@ -156,7 +158,8 @@ namespace HotUI.Layout
                     size = sizes[index];
                 }
 
-                var alignment = view.FrameConstraints?.Alignment?.Horizontal ?? _defaultAlignment;
+                var constraints = view.GetFrameConstraints();
+                var alignment = constraints?.Alignment?.Horizontal ?? _defaultAlignment;
                 var alignedX = x;
 
                 var padding = view.GetPadding();

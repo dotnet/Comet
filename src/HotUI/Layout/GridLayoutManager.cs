@@ -48,7 +48,7 @@ namespace HotUI.Layout
                 for (var index = 0; index < layout.Count; index++)
                 {
                     var view = layout[index];
-                    var constraint = view.LayoutConstraints as GridConstraints ?? GridConstraints.Default;
+                    var constraint = view.GetLayoutConstraints() as GridConstraints ?? GridConstraints.Default;
                     _constraints.Add(constraint);
                     
                     maxRow = Math.Max(maxRow, constraint.Row + constraint.RowSpan - 1);
@@ -186,7 +186,7 @@ namespace HotUI.Layout
                     }
                 }
 
-                var padding = view.Padding;
+                var padding = view.GetPadding();
                 if (!padding.IsEmpty)
                 {
                     x += padding.Left;

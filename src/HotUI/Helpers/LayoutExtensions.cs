@@ -14,31 +14,26 @@ namespace HotUI
         public static T Padding<T>(this T view) where T : View
         {
             var defaultThickness = new Thickness(10);
-            view.Padding = defaultThickness;
+            view.Padding(defaultThickness);
             return view;
         }
         
         public static T Padding<T>(this T view, float? left = null, float? top= null, float? right= null, float? bottom = null) where T : View
         {
-            view.Padding = new Thickness(
+            view.Padding(new Thickness(
                 left ?? 0,
                 top ?? 0,
                 right ?? 0,
-                bottom ?? 0);
+                bottom ?? 0));
             return view;
         }
         
         public static T Padding<T>(this T view, float value) where T : View
         {
-            view.Padding = new Thickness(value);
+            view.Padding(new Thickness(value));
             return view;
         }
         
-        public static Thickness GetPadding(this View view)
-        {
-            return view?.Padding ?? Thickness.Empty;
-        }
-
         public static T Overlay<T>(this T view, View overlayView) where T : View
         {
             view.SetEnvironment(EnvironmentKeys.View.Overlay, overlayView);
@@ -59,7 +54,8 @@ namespace HotUI
 
         public static T Frame<T>(this T view, float? width = null, float? height = null, Alignment alignment = null) where T : View
         {
-            view.FrameConstraints = new FrameConstraints(width, height, alignment);
+            var target = view.BuiltView ?? view;
+            target.FrameConstraints(new FrameConstraints(width, height, alignment));
             return view;
         }
         
@@ -74,7 +70,7 @@ namespace HotUI
             float positionX = 0,
             float positionY = 0) where T : View
         {
-            view.LayoutConstraints = new GridConstraints(row, column, rowSpan, colSpan, weightX, weightY, positionX, positionY);
+            view.LayoutConstraints(new GridConstraints(row, column, rowSpan, colSpan, weightX, weightY, positionX, positionY));
             return view;
         }
 
@@ -98,7 +94,7 @@ namespace HotUI
             var width = sizeThatFits.Width;
             var height = sizeThatFits.Height;
 
-            var frameConstraints = view.FrameConstraints;
+            var frameConstraints = view.GetFrameConstraints();
 
             if (frameConstraints?.Width != null)
                 width = (float)frameConstraints.Width;
@@ -169,6 +165,42 @@ namespace HotUI
         {
             var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.VerticalSizing);
             return sizing ?? defaultSizing;
+        }
+
+        public static T FrameConstraints<T>(this T view, FrameConstraints constraints, bool cascades = false) where T : View
+        {
+            view.SetEnvironment(EnvironmentKeys.Layout.FrameConstraints, constraints, cascades);
+            return view;
+        }
+
+        public static FrameConstraints GetFrameConstraints(this View view, FrameConstraints defaultContraints = null)
+        {
+            var constraints = view.GetEnvironment<FrameConstraints>(view, EnvironmentKeys.Layout.FrameConstraints);
+            return constraints ?? defaultContraints;
+        }
+
+        public static T Padding<T>(this T view, Thickness padding, bool cascades = false) where T : View
+        {
+            view.SetEnvironment(EnvironmentKeys.Layout.Padding, padding, cascades);
+            return view;
+        }
+
+        public static Thickness GetPadding(this View view, Thickness? defaultValue = null)
+        {
+            var padding = view.GetEnvironment<Thickness?>(view, EnvironmentKeys.Layout.Padding);
+            return padding ?? defaultValue ?? Thickness.Empty;
+        }
+
+        public static T LayoutConstraints<T>(this T view, object contraints, bool cascades = false) where T : View
+        {
+            view.SetEnvironment(EnvironmentKeys.Layout.Constraints, contraints, cascades);
+            return view;
+        }
+
+        public static object GetLayoutConstraints(this View view, object defaultValue = null)
+        {
+            var constraints = view.GetEnvironment<object>(view, EnvironmentKeys.Layout.Constraints);
+            return constraints ?? defaultValue;
         }
     }
 }

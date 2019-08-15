@@ -38,8 +38,9 @@ namespace HotUI
         
         public override SizeF Measure(SizeF availableSize)
         {
-	        var width = FrameConstraints?.Width;
-	        var height = FrameConstraints?.Height;
+            var constraints = this.GetFrameConstraints();
+	        var width = constraints?.Width;
+	        var height = constraints?.Height;
 
 	        // If we have both width and height constraints, we can skip measuring the control and
 	        // return the constrained values.
