@@ -1,8 +1,8 @@
 stages:
 - stage: BuildPackSource
   jobs:
-  - job: BuildHotUIMac
-    displayName: Build HoTUI Mac
+  - job: BuildCometMac
+    displayName: Build Comet Mac
     pool:
       name: Hosted macOS
       vmImage: 'macOS 10.14'
@@ -39,12 +39,12 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/HotUI-Mac.sln
+        restoreSolution: build/Comet-Mac.sln
 
     - task: MSBuild@1
-      displayName: 'Build HotUI'
+      displayName: 'Build Comet'
       inputs:
-        solution: 'src/HotUI/HotUI.csproj'
+        solution: 'src/Comet/Comet.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
@@ -54,52 +54,52 @@ stages:
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Android'
+      displayName: 'Build Comet.Android'
       inputs:
-        solution: 'src/HotUI.Android/HotUI.Android.csproj'
+        solution: 'src/Comet.Android/Comet.Android.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.iOS'
+      displayName: 'Build Comet.iOS'
       inputs:
-        solution: 'src/HotUI.iOS/HotUI.iOS.csproj'
+        solution: 'src/Comet.iOS/Comet.iOS.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Mac'
+      displayName: 'Build Comet.Mac'
       inputs:
-        solution: 'src/HotUI.Mac/HotUI.Mac.csproj'
+        solution: 'src/Comet.Mac/Comet.Mac.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia'
+      displayName: 'Build Comet.Skia'
       inputs:
-        solution: 'src/HotUI.Skia/HotUI.Skia.csproj'
+        solution: 'src/Comet.Skia/Comet.Skia.csproj'
         configuration: '$(BuildConfiguration)'
     
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia.Android'
+      displayName: 'Build Comet.Skia.Android'
       inputs:
-        solution: 'src/HotUI.Skia.Android/HotUI.Skia.Android.csproj'
+        solution: 'src/Comet.Skia.Android/Comet.Skia.Android.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia.iOS'
+      displayName: 'Build Comet.Skia.iOS'
       inputs:
-        solution: 'src/HotUI.Skia.iOS/HotUI.Skia.iOS.csproj'
+        solution: 'src/Comet.Skia.iOS/Comet.Skia.iOS.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia.Mac'
+      displayName: 'Build Comet.Skia.Mac'
       inputs:
-        solution: 'src/HotUI.Skia.Mac/HotUI.Skia.Mac.csproj'
+        solution: 'src/Comet.Skia.Mac/Comet.Skia.Mac.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack HotUI'
+      displayName: 'dotnet pack Comet'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI/HotUI.csproj'
+        packagesToPack: 'src/Comet/Comet.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
@@ -112,65 +112,65 @@ stages:
         versionEnvVar: VERSION
 
     - task: NuGetCommand@2
-      displayName: 'dotnet pack HotUI.Android'
+      displayName: 'dotnet pack Comet.Android'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.Android/HotUI.Android.csproj'
+        packagesToPack: 'src/Comet.Android/Comet.Android.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: NuGetCommand@2
-      displayName: 'dotnet pack HotUI.iOS'
+      displayName: 'dotnet pack Comet.iOS'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.iOS/HotUI.iOS.csproj'
+        packagesToPack: 'src/Comet.iOS/Comet.iOS.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: NuGetCommand@2
-      displayName: 'dotnet pack HotUI.Mac'
+      displayName: 'dotnet pack Comet.Mac'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.Mac/HotUI.Mac.csproj'
+        packagesToPack: 'src/Comet.Mac/Comet.Mac.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack HotUI.Skia'
+      displayName: 'dotnet pack Comet.Skia'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.Skia/HotUI.Skia.csproj'
+        packagesToPack: 'src/Comet.Skia/Comet.Skia.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: NuGetCommand@2
-      displayName: 'dotnet pack HotUI.Skia.Android'
+      displayName: 'dotnet pack Comet.Skia.Android'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.Skia.Android/HotUI.Skia.Android.csproj'
+        packagesToPack: 'src/Comet.Skia.Android/Comet.Skia.Android.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: NuGetCommand@2
-      displayName: 'dotnet pack HotUI.Skia.iOS'
+      displayName: 'dotnet pack Comet.Skia.iOS'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.Skia.iOS/HotUI.Skia.iOS.csproj'
+        packagesToPack: 'src/Comet.Skia.iOS/Comet.Skia.iOS.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: NuGetCommand@2
-      displayName: 'dotnet pack HotUI.Skia.Mac'
+      displayName: 'dotnet pack Comet.Skia.Mac'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.Skia.Mac/HotUI.Skia.Mac.csproj'
+        packagesToPack: 'src/Comet.Skia.Mac/Comet.Skia.Mac.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: NuGetCommand@2
       inputs:
         command: 'pack'
-        packagesToPack: 'HotUI.nuspec'
+        packagesToPack: 'Comet.nuspec'
         versioningScheme: 'byEnvVar'
         versionEnvVar: 'v$(VERSION)-beta'
 
@@ -186,8 +186,8 @@ stages:
         ArtifactName: 'drop_nuget_mac'
         publishLocation: 'Container'
 
-  - job: BuildHotUIWindows
-    displayName: Build HoTUI Windows
+  - job: BuildCometWindows
+    displayName: Build Comet Windows
     pool:
       vmImage: 'windows-2019'
       demands:
@@ -202,7 +202,7 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/HotUI-Windows.sln
+        restoreSolution: build/Comet-Windows.sln
 
     - task: Bash@3
       displayName: 'Version Script'
@@ -222,81 +222,81 @@ stages:
                   echo "##vso[task.setvariable variable=Version]$VERSION"
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.UWP'
+      displayName: 'Build Comet.UWP'
       inputs:
-        solution: 'src/HotUI.UWP/HotUI.UWP.csproj'
+        solution: 'src/Comet.UWP/Comet.UWP.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.WPF'
+      displayName: 'Build Comet.WPF'
       inputs:
-        solution: 'src/HotUI.WPF/HotUI.WPF.csproj'
+        solution: 'src/Comet.WPF/Comet.WPF.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia.UWP'
+      displayName: 'Build Comet.Skia.UWP'
       inputs:
-        solution: 'src/HotUI.Skia.UWP/HotUI.Skia.UWP.csproj'
+        solution: 'src/Comet.Skia.UWP/Comet.Skia.UWP.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia.WPF'
+      displayName: 'Build Comet.Skia.WPF'
       inputs:
-        solution: 'src/HotUI.Skia.WPF/HotUI.Skia.WPF.csproj'
+        solution: 'src/Comet.Skia.WPF/Comet.Skia.WPF.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack HotUI'
+      displayName: 'dotnet pack Comet'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI/HotUI.csproj'
+        packagesToPack: 'src/Comet/Comet.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack HotUI.UWP'
+      displayName: 'dotnet pack Comet.UWP'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.UWP/HotUI.UWP.csproj'
+        packagesToPack: 'src/Comet.UWP/Comet.UWP.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack HotUI.WPF'
+      displayName: 'dotnet pack Comet.WPF'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.WPF/HotUI.WPF.csproj'
+        packagesToPack: 'src/Comet.WPF/Comet.WPF.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack HotUI.Skia'
+      displayName: 'dotnet pack Comet.Skia'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.Skia/HotUI.Skia.csproj'
+        packagesToPack: 'src/Comet.Skia/Comet.Skia.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack HotUI.Skia.UWP'
+      displayName: 'dotnet pack Comet.Skia.UWP'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.Skia.UWP/HotUI.Skia.UWP.csproj'
+        packagesToPack: 'src/Comet.Skia.UWP/Comet.Skia.UWP.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack HotUI.Skia.WPF'
+      displayName: 'dotnet pack Comet.Skia.WPF'
       inputs:
         command: pack
-        packagesToPack: 'src/HotUI.Skia.WPF/HotUI.Skia.WPF.csproj'
+        packagesToPack: 'src/Comet.Skia.WPF/Comet.Skia.WPF.csproj'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: NuGetCommand@2
       inputs:
         command: 'pack'
-        packagesToPack: 'HotUI.nuspec'
+        packagesToPack: 'Comet.nuspec'
         versioningScheme: 'byEnvVar'
         versionEnvVar: 'v$(VERSION)-beta'
 
@@ -365,7 +365,7 @@ stages:
     - task: GitHubRelease@0
       inputs:
         gitHubConnection: 'GitHubRelease'
-        repositoryName: 'Clancey/HotUI'
+        repositoryName: 'Clancey/Comet'
         action: 'create'
         target: '$(Build.SourceVersion)'
         tagSource: 'manual'

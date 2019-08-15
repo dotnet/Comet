@@ -1,7 +1,7 @@
-# HotUI
-[![Gitter](https://badges.gitter.im/Clancey-HotUI/community.svg)](https://gitter.im/Clancey-HotUI/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# Comet
+[![Gitter](https://badges.gitter.im/Clancey-Comet/community.svg)](https://gitter.im/Clancey-Comet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
-What is HotUI? HotUI is a prototype for a new UI Framework/Pattern to write app UI.  It follows the Model View Update (MVU) pattern. It magically databinds for you!  
+What is Comet? Comet is a prototype for a new UI Framework/Pattern to write app UI.  It follows the Model View Update (MVU) pattern. It magically databinds for you!  
 
 Video Preview:
 
@@ -9,7 +9,7 @@ Video Preview:
 
 ## Key Concepts
 
-HotUI is an MVU style pattern.
+Comet is an MVU style pattern.
 
 `View` is a screen. Views have a `Body` method that you can assign either by an attribute `[Body]`:
 
@@ -33,15 +33,15 @@ public class MyPage : View {
 
 ## Hot Reload
 
-Hot Reload is included by default! The setup is very easy: a Visual Studio extension and a NuGet. Download both from [Releases](https://github.com/Clancey/HotUI/releases) here on GitHub.
+Hot Reload is included by default! The setup is very easy: a Visual Studio extension and a NuGet. Download both from [Releases](https://github.com/Clancey/Comet/releases) here on GitHub.
 
-Download and install the VS extension from the [Releases](https://github.com/Clancey/HotUI/releases/)
+Download and install the VS extension from the [Releases](https://github.com/Clancey/Comet/releases/)
 
 Then add to your `AppDelegate.cs` and/or `MainActivity.cs`, or similar. See the sample projects here for examples.
 
 ``` cs
  #if DEBUG
-            HotUI.Reload.Init();
+            Comet.Reload.Init();
  #endif
 ```
 
@@ -64,7 +64,7 @@ class MyPage : View {
 
 ### 2. Do you want to use more complex data types?
 
-You can either implement [INotifyPropertyRead](https://github.com/Clancey/HotUI/blob/master/src/HotUI/BindingObject.cs#L13) or you can use [BindingObject](https://github.com/Clancey/HotUI/blob/master/src/HotUI/BindingObject.cs) to make it even simpler.
+You can either implement [INotifyPropertyRead](https://github.com/Clancey/Comet/blob/master/src/Comet/BindingObject.cs#L13) or you can use [BindingObject](https://github.com/Clancey/Comet/blob/master/src/Comet/BindingObject.cs) to make it even simpler.
 
 Add it as a Field/Property, and add the `[State]` attribute!
 
@@ -148,4 +148,4 @@ public class MyPage : View {
 
 # Disclaimer
 
-HotUI is a **proof of concept**. There is **no** official support. Use at your own Risk.
+Comet is a **proof of concept**. There is **no** official support. Use at your own Risk.
