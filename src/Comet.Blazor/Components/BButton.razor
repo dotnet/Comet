@@ -1,0 +1,13 @@
+@inherits CometComponentBase
+
+<span class="Comet-button">
+    <button class="btn btn-primary" @onclick="@OnClick">@Text</button>
+</span>
+
+@code {
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public Action OnClick { get; set; }
+}

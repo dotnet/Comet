@@ -1,0 +1,13 @@
+@inherits CometComponentBase
+
+<div class="container-fluid Comet-containerview">
+    @foreach (var view in Views)
+    {
+        <BView @key="@view" View="@view" />
+    }
+</div>
+
+@code {
+    [Parameter]
+    public IList<View> Views { get; set; }
+}
