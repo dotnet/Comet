@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotUI.Samples
+namespace Comet.Samples
 {
     public class DemoCreditCardView3 : View
     {

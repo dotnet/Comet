@@ -97,8 +97,9 @@ namespace Comet.Mac.Controls
             var view = _listView?.ViewFor(section, row);
             if (view != null)
             {
-                if (view.FrameConstraints?.Height != null)
-                    return (float)view.FrameConstraints?.Height;
+                var constraints = view.GetFrameConstraints();
+                if (constraints?.Height != null)
+                    return (float)constraints?.Height;
 
                 // todo: this is really inefficient.
                 if (view.ToView() != null)
