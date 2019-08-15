@@ -157,7 +157,11 @@ namespace Comet
 
         public static Dictionary<string, object> DebugGetEnvironment(this View view)
         {
-            var parentDictionary = view.Parent.DebugGetEnvironment() ?? new Dictionary<string, object>();
+            var parentDictionary = view.Parent?.DebugGetEnvironment();
+            if (parentDictionary == null)
+            {
+                parentDictionary = new Dictionary<string, object>(ContextualObject.Environment.dictionary);
+            }
             if (view._context != null)
                 foreach (var pair in view._context.dictionary)
                     parentDictionary[pair.Key] = pair.Value;
