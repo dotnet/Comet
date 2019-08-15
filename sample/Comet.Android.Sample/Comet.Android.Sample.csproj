@@ -110,7 +110,7 @@
     <PackageReference Include="Xamarin.FFImageLoading">
       <Version>2.4.11.982</Version>
     </PackageReference>
-    <PackageReference Include="Comet.Reload">
+    <PackageReference Include="Clancey.Comet.Reload">
       <Version>0.0.7-alpha</Version>
     </PackageReference>
   </ItemGroup>

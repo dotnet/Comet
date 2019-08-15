@@ -125,7 +125,7 @@
     <PackageReference Include="SkiaSharp" Version="1.68.0" />
     <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
-    <PackageReference Include="Comet.Reload">
+    <PackageReference Include="Clancey.Comet.Reload">
       <Version>0.0.7-alpha</Version>
     </PackageReference>
   </ItemGroup>
