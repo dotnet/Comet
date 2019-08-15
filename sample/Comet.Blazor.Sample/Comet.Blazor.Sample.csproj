@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Comet.Blazor\Comet.Blazor.csproj" />
+    <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
+    <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj" />
+  </ItemGroup>
+
+</Project>
