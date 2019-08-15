@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>Comet</id>
+    <id>Clancey.Comet</id>
     <version>0.0.1-alpha</version>
     <title>Comet</title>
     <authors>James Clancey</authors>
@@ -15,7 +15,7 @@
     <language>C#</language>
     <dependencies>
       <group>
-        <dependency id="Comet.Reload" version="0.0.6-alpha" />
+        <dependency id="Clancey.Comet.Reload" version="0.0.6-alpha" />
       </group>
     </dependencies>
   </metadata>
