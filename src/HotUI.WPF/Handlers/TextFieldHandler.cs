@@ -3,7 +3,7 @@ using WPFTextField = System.Windows.Controls.TextBox;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public class TextFieldHandler : AbstractControlHandler<TextField, WPFTextField>
     {

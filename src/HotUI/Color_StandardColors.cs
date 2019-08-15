@@ -1,4 +1,4 @@
-﻿namespace HotUI
+﻿namespace Comet
 {
     public partial class Color
     {

@@ -3,7 +3,7 @@ using System.Windows;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public class ViewHandler : AbstractHandler<View, UIElement>
     {

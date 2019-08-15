@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
-using HotUI.Tests.Handlers;
+using Comet.Tests.Handlers;
 
-namespace HotUI.Tests {
+namespace Comet.Tests {
 	public static class UI {
 		static bool hasInit;
 		public static void Init ()

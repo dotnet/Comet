@@ -2,7 +2,7 @@
 using System.Linq;
 using SkiaSharp;
 
-namespace HotUI.Skia.Controls
+namespace Comet.Skia.Controls
 {
     public class ButtonBase : AbstractControlDelegate
     {

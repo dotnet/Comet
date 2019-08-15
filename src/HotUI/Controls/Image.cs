@@ -1,6 +1,6 @@
 ﻿using System;
-using HotUI.Graphics;
-namespace HotUI 
+using Comet.Graphics;
+namespace Comet 
 {
 	public class Image : View
     {

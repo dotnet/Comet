@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
-using HotUI.UWP;
+using Comet.UWP;
 using SkiaSharp.Views.UWP;
 
-namespace HotUI.Skia.UWP
+namespace Comet.Skia.UWP
 {
     public class UWPDrawableControl : global::SkiaSharp.Views.UWP.SKXamlCanvas, IDrawableControl
     {

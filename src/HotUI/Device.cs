@@ -2,9 +2,9 @@
 using System.Runtime.CompilerServices;
 using System.Threading;
 using System.Threading.Tasks;
-using HotUI.Services;
+using Comet.Services;
 
-namespace HotUI
+namespace Comet
 {
     public static class Device
     {

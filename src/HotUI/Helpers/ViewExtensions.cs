@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace HotUI
+namespace Comet
 {
     public static class ViewExtensions
     {
@@ -63,13 +63,13 @@ namespace HotUI
         public static T AddGesture<T>(this T view, Gesture gesture) where T : View
         {
             view.gestures.Add(gesture);
-            view?.ViewHandler?.UpdateValue(HotUI.Gesture.AddGestureProperty, gesture);
+            view?.ViewHandler?.UpdateValue(Comet.Gesture.AddGestureProperty, gesture);
             return view;
         }
         public static T RemoveGesture<T>(this T view, Gesture gesture) where T : View
         {
             view.gestures.Remove(gesture);
-            view?.ViewHandler?.UpdateValue(HotUI.Gesture.RemoveGestureProperty, gesture);
+            view?.ViewHandler?.UpdateValue(Comet.Gesture.RemoveGestureProperty, gesture);
             return view;
         }
 

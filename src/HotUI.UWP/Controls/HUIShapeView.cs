@@ -3,7 +3,7 @@ using Windows.UI.Xaml.Media;
 using WCanvas = Windows.UI.Xaml.Controls.Canvas;
 using WPath = Windows.UI.Xaml.Shapes.Path;
 
-namespace HotUI.UWP.Controls
+namespace Comet.UWP.Controls
 {
     public class HUIShapeView : WCanvas
     {

@@ -1,7 +1,7 @@
 using System;
 using SkiaSharp;
 
-namespace HotUI.Skia
+namespace Comet.Skia
 {
     public interface IControlDelegate
     {

@@ -2,7 +2,7 @@
 using AView = global::Android.Views.View;
 using LP = Android.Views.ViewGroup.LayoutParams;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ContentViewHandler : AbstractHandler<ContentView, HUIContentView>
     {

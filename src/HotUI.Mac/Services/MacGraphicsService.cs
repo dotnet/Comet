@@ -1,8 +1,8 @@
 using CoreGraphics;
-using HotUI.Graphics;
-using HotUI.Services;
+using Comet.Graphics;
+using Comet.Services;
 
-namespace HotUI.Mac.Services
+namespace Comet.Mac.Services
 {
     public class MacGraphicsService : IGraphicsService
     {

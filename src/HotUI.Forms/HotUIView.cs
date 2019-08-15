@@ -1,14 +1,14 @@
-﻿using HotUI.Forms.Handlers;
+﻿using Comet.Forms.Handlers;
 
-namespace HotUI.Forms
+namespace Comet.Forms
 {
-    public class HotUIContainerView : Xamarin.Forms.ContentView
+    public class CometContainerView : Xamarin.Forms.ContentView
     {
         private View _view;
         private Xamarin.Forms.View _nativeView;
         private IViewHandler _handler;
 
-        public HotUIContainerView(View view = null)
+        public CometContainerView(View view = null)
         {
             View = view;
         }

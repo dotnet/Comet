@@ -1,7 +1,7 @@
-using HotUI.Services;
+using Comet.Services;
 using AppKit;
 
-namespace HotUI.Mac.Services
+namespace Comet.Mac.Services
 {
     public class MacFontService : IFontService
     {

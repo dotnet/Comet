@@ -3,14 +3,14 @@ using System.Threading.Tasks;
 using CoreGraphics;
 using UIKit;
 
-namespace HotUI.iOS
+namespace Comet.iOS
 {
-    public class HotUIViewController : UIViewController
+    public class CometViewController : UIViewController
     {
-        private HotUIView _containerView;
+        private CometView _containerView;
         private View _startingCurrentView;
         
-        public HotUIViewController()
+        public CometViewController()
         {
         }
 
@@ -30,7 +30,7 @@ namespace HotUI.iOS
 
         public override void LoadView()
         {
-            View = _containerView = new HotUIView(UIScreen.MainScreen.Bounds);
+            View = _containerView = new CometView(UIScreen.MainScreen.Bounds);
             _containerView.CurrentView = _startingCurrentView;
             _startingCurrentView = null;
         }

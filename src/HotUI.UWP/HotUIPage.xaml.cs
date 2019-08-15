@@ -6,20 +6,20 @@ using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 using WGrid = Windows.UI.Xaml.Controls.Grid;
 
-namespace HotUI.UWP
+namespace Comet.UWP
 {
-    public sealed partial class HotUIPage : Page
+    public sealed partial class CometPage : Page
     {
         private View _view;
         private static bool _initializedBack;
 
-        public HotUIPage()
+        public CometPage()
         {
             this.InitializeComponent();
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
         }
 
-        public HotUIPage(View view)
+        public CometPage(View view)
         {
             this.InitializeComponent();
             this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
@@ -50,7 +50,7 @@ namespace HotUI.UWP
                     nav.PerformNavigate = toView =>
                     {
                         SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-                        this.Frame.Navigate(typeof(HotUIPage), toView);
+                        this.Frame.Navigate(typeof(CometPage), toView);
                         DiscardHandlers(_view);
                     };
                 }

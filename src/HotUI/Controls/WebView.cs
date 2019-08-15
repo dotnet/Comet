@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotUI {
+namespace Comet {
 	public class WebView : View {
 		Binding<string> html;
 		public Binding<string> Html {

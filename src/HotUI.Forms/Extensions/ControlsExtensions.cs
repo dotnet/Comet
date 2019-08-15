@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI;
-using HotUI.Graphics;
+using Comet;
+using Comet.Graphics;
 using fLayoutOptions = Xamarin.Forms.LayoutOptions;
-namespace HotUI.Forms {
+namespace Comet.Forms {
 	public static class ControlsExtensions {
 
 		public static void UpdateProperties (this Xamarin.Forms.WebView fView, WebView view)
@@ -33,7 +33,7 @@ namespace HotUI.Forms {
 				return null;
 			}
 			object s = source;
-			var successs = HotUI.Internal.BindingExpression.TryConvert (ref s, Xamarin.Forms.WebView.SourceProperty, typeof (Xamarin.Forms.WebViewSource), true);
+			var successs = Comet.Internal.BindingExpression.TryConvert (ref s, Xamarin.Forms.WebView.SourceProperty, typeof (Xamarin.Forms.WebViewSource), true);
 			if (successs)
 				return (Xamarin.Forms.WebViewSource)s;
 			else
@@ -60,7 +60,7 @@ namespace HotUI.Forms {
 		public static Xamarin.Forms.ImageSource ToImageSource (this Bitmap bitmap)
 		{
 			object s = bitmap;
-			var success = HotUI.Internal.BindingExpression.TryConvert (ref s, Xamarin.Forms.Image.SourceProperty, typeof (Xamarin.Forms.ImageSource), true);
+			var success = Comet.Internal.BindingExpression.TryConvert (ref s, Xamarin.Forms.Image.SourceProperty, typeof (Xamarin.Forms.ImageSource), true);
 			if (success)
 				return (Xamarin.Forms.ImageSource)s;
 			else

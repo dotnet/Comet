@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HotUI.Helpers
+namespace Comet.Helpers
 {
     public class WeakList<T> : IList<T>
     {

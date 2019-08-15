@@ -1,8 +1,8 @@
 using Android.Graphics;
-using HotUI.Graphics;
+using Comet.Graphics;
 using APath = Android.Graphics.Path;
 
-namespace HotUI.Androids
+namespace Comet.Androids
 {
     public static class GraphicsExtensions
     {

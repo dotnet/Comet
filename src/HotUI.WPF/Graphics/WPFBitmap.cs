@@ -1,7 +1,7 @@
-﻿using HotUI.Graphics;
+﻿using Comet.Graphics;
 using System.Windows.Media.Imaging;
 
-namespace HotUI.WPF.Graphics
+namespace Comet.WPF.Graphics
 {
     public class WPFBitmap : Bitmap
     {

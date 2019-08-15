@@ -1,4 +1,4 @@
-﻿var hotui = (function () {
+﻿var Comet = (function () {
     return {
         canvas: (function () {
             return {

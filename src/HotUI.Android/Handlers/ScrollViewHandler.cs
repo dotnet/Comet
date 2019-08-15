@@ -2,7 +2,7 @@
 using AView = Android.Views.View;
 using AScrollView = Android.Widget.ScrollView;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ScrollViewHandler : AbstractControlHandler<ScrollView, AScrollView>
     {

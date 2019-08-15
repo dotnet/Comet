@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using HotUI.iOS.Handlers;
+using Comet.iOS.Handlers;
 
-namespace HotUI.iOS
+namespace Comet.iOS
 {
     public class TabViewHandler : AbstractHandler<TabView,HUITabView>
     {

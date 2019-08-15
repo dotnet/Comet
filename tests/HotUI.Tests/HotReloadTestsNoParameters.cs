@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI.Internal;
+using Comet.Internal;
 using Xunit;
 
-namespace HotUI.Tests {
+namespace Comet.Tests {
 	public class HotReloadTests : TestBase{
 
 		public class MyOrgView : View {

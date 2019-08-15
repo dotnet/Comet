@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.Threading.Tasks;
 using AppKit;
 using CoreGraphics;
-using HotUI.Mac.Controls;
-using HotUI.Mac.Extensions;
+using Comet.Mac.Controls;
+using Comet.Mac.Extensions;
 
-namespace HotUI.Mac.Handlers
+namespace Comet.Mac.Handlers
 {
     public class ImageHandler : AbstractControlHandler<Image, HUIImageView>
     {

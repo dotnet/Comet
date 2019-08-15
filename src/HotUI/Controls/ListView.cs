@@ -5,7 +5,7 @@ using System.Collections.ObjectModel;
 using System.Drawing;
 using System.Linq;
 
-namespace HotUI
+namespace Comet
 {
 
     public interface IListView

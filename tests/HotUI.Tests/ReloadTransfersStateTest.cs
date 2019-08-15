@@ -1,14 +1,14 @@
 ﻿using System;
-using HotUI.Internal;
+using Comet.Internal;
 using Xunit;
-namespace HotUI.Tests
+namespace Comet.Tests
 {
     public class ReloadTransfersStateTest : TestBase
     {
         [Fact]
         public void StateIsTransferedToReloadedView()
         {
-            ResetHotUI();
+            ResetComet();
             const string textValue = "Hello";
             var orgView = new MyOrgView();
             
@@ -29,7 +29,7 @@ namespace HotUI.Tests
         [Fact]
         public void StateTransfersOnlyChangedValues()
         {
-            ResetHotUI();
+            ResetComet();
             const string textValue = "Hello";
             var orgView = new MyOrgView();
 

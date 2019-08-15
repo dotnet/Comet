@@ -3,15 +3,15 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-using HotUI.UWP.Controls;
+using Comet.UWP.Controls;
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
     public class ShapeViewHandler : AbstractControlHandler<ShapeView, HUIShapeView>
     {
         public static readonly PropertyMapper<ShapeView> Mapper = new PropertyMapper<ShapeView>(ViewHandler.Mapper)
         {
-            [nameof(HotUI.ShapeView.Shape)] = MapShapeProperty,
+            [nameof(Comet.ShapeView.Shape)] = MapShapeProperty,
         };
 
         

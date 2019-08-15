@@ -1,7 +1,7 @@
-﻿using HotUI.Graphics;
+﻿using Comet.Graphics;
 using UIKit;
 
-namespace HotUI.iOS.Graphics
+namespace Comet.iOS.Graphics
 {
     public class UIImageBitmap : Bitmap
     {

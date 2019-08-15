@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI.Tests.Handlers;
+using Comet.Tests.Handlers;
 using Xunit;
 
-namespace HotUI.Tests {
+namespace Comet.Tests {
 	public class ViewTests : TestBase {
 
 		public class StatePage : View {

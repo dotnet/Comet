@@ -1,14 +1,14 @@
 ﻿using Android.App;
-using HotUI.Android.Controls;
+using Comet.Android.Controls;
 using AView = Android.Views.View;
 
-namespace HotUI.Android
+namespace Comet.Android
 {
     public static partial class AndroidExtensions
     {
         static AndroidExtensions()
         {
-            HotUI.Android.UI.Init();
+            Comet.Android.UI.Init();
         }
 
 		/*public static Activity ToActivity(this HotPage hotPage)
@@ -26,7 +26,7 @@ namespace HotUI.Android
             var page = handler as IViewContainer;
             return page.Activity;
         }*/
-		public static HotUIFragment ToFragment(this View view) => new HotUIFragment(view);
+		public static CometFragment ToFragment(this View view) => new CometFragment(view);
 
         public static AView ToView(this View view)
         {

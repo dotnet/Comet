@@ -1,7 +1,7 @@
 ﻿using AppKit;
 using CoreGraphics;
 
-namespace HotUI.Mac.Extensions
+namespace Comet.Mac.Extensions
 {
     public static class MacExtensions
     {
@@ -14,7 +14,7 @@ namespace HotUI.Mac.Extensions
 		{
 			var handler = view.GetOrCreateViewHandler ();
 
-			var vc = new HotUIViewController 
+			var vc = new CometViewController 
 			{
 				CurrentView = view,
 			};

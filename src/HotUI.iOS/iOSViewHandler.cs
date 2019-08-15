@@ -1,7 +1,7 @@
 ﻿using System;
-using HotUI.iOS.Controls;
+using Comet.iOS.Controls;
 using UIKit;
-namespace HotUI.iOS 
+namespace Comet.iOS 
 {
 	public interface iOSViewHandler : IViewHandler 
 	{

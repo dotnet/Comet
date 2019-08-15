@@ -1,10 +1,10 @@
 ﻿using System;
 using Android.Content;
 using Android.Views;
-using HotUI.Android.Controls;
+using Comet.Android.Controls;
 using AView = Android.Views.View;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public abstract class AbstractControlHandler<TVirtualView, TNativeView> : AndroidViewHandler
         where TVirtualView : View

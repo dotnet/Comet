@@ -2,7 +2,7 @@
 using FGrid = Xamarin.Forms.Grid; 
 using FView = Xamarin.Forms.View;
 
-namespace HotUI.Forms
+namespace Comet.Forms
 {
     public class HUIContainerView : FGrid
     {

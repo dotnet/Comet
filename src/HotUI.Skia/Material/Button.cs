@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI.Skia.Controls;
+using Comet.Skia.Controls;
 using SkiaSharp;
 
-namespace HotUI.Skia.Material
+namespace Comet.Skia.Material
 {
     public class Button : ButtonBase
     {

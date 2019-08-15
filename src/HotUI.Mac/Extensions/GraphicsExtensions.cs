@@ -1,8 +1,8 @@
 using System;
 using CoreGraphics;
-using HotUI.Graphics;
+using Comet.Graphics;
 
-namespace HotUI.Mac
+namespace Comet.Mac
 {
     public static class CoreGraphicsExtensions
     {

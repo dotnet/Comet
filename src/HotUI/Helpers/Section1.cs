@@ -15,7 +15,7 @@ struct ContentView: View {
 
  */
 
-namespace HotUI.Samples.Comparisons
+namespace Comet.Samples.Comparisons
 {
     public class Section1 : View
     {

@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace HotUI {
+namespace Comet {
 	public class ContentView : View, IEnumerable {
 		IEnumerator IEnumerable.GetEnumerator () => new [] { Content }.GetEnumerator ();
 		public View Content { get; set; }

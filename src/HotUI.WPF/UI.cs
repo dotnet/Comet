@@ -1,8 +1,8 @@
-﻿using HotUI.WPF.Handlers;
-using HotUI.WPF.Services;
+﻿using Comet.WPF.Handlers;
+using Comet.WPF.Services;
 using System.Windows;
 
-namespace HotUI.WPF
+namespace Comet.WPF
 {
     public static class UI
     {

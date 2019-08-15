@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using HotUI.Layout;
+using Comet.Layout;
 
-namespace HotUI
+namespace Comet
 {
 	public abstract class AbstractLayout : ContainerView
     {

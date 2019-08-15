@@ -1,26 +1,26 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HotUI.Blazor
+namespace Comet.Blazor
 {
-    public static class HotUIExtensions
+    public static class CometExtensions
     {
-        public static void AddHotUI(this IServiceCollection services)
+        public static void AddComet(this IServiceCollection services)
         {
             services.AddScoped<CanvasWriter>();
             services.AddImages();
         }
 
-        public static void UseHotUI(this IApplicationBuilder app)
+        public static void UseComet(this IApplicationBuilder app)
         {
             UI.Init();
 
             app.UseImages();
-            app.Map("/_hotui/hotui.js", app2 =>
+            app.Map("/_Comet/Comet.js", app2 =>
             {
                 app2.Run(async ctx =>
                 {
-                    using (var stream = typeof(HotUIExtensions).Assembly.GetManifestResourceStream(typeof(HotUIExtensions), "Scripts.hotui.js"))
+                    using (var stream = typeof(CometExtensions).Assembly.GetManifestResourceStream(typeof(CometExtensions), "Scripts.Comet.js"))
                     {
                         ctx.Response.StatusCode = 200;
                         ctx.Response.ContentType = "application/javascript";

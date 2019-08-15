@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\HotUI\HotUI.csproj" />
+    <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

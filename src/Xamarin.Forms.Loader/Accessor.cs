@@ -11,7 +11,7 @@ using Xamarin.Forms.StyleSheets;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms;
 
-namespace HotUI.Internal {
+namespace Comet.Internal {
 
 	public static class BindingExpression {
 		public static bool TryConvert (ref object value, BindableProperty targetProperty, Type convertTo, bool toTarget)

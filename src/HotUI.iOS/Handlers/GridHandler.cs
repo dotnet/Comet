@@ -1,8 +1,8 @@
 using CoreGraphics;
-using HotUI.Layout;
+using Comet.Layout;
 using UIKit;
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class GridHandler : AbstractLayoutHandler
     {

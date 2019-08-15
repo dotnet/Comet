@@ -4,7 +4,7 @@ using AButton = Android.Widget.Button;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ButtonHandler : AbstractControlHandler<Button, AButton>
     {

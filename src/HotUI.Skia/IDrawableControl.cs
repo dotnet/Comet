@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotUI.Skia
+namespace Comet.Skia
 {
     public interface IDrawableControl
     {

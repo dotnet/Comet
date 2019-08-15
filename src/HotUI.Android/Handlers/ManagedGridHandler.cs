@@ -1,7 +1,7 @@
 ﻿using System;
 using Android.Runtime;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ManagedGridHandler : AbstractLayoutHandler
     {

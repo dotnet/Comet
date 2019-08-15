@@ -1,7 +1,7 @@
 ﻿using System;
 using FView = Xamarin.Forms.View;
 
-namespace HotUI.Forms.Handlers
+namespace Comet.Forms.Handlers
 {
     public abstract class AbstractControlHandler<TVirtualView, TNativeView> : FormsViewHandler 
         where TVirtualView : View 

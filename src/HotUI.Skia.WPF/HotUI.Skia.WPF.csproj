@@ -7,8 +7,8 @@
     <ProjectGuid>{E7FA15FC-418F-4FFE-9DC1-CF68AFA860AA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HotUI.Skia.WPF</RootNamespace>
-    <AssemblyName>HotUI.Skia.WPF</AssemblyName>
+    <RootNamespace>Comet.Skia.WPF</RootNamespace>
+    <AssemblyName>Comet.Skia.WPF</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -51,17 +51,17 @@
     <Compile Include="WPFDrawableControl.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotUI.Skia\HotUI.Skia.csproj">
+    <ProjectReference Include="..\Comet.Skia\Comet.Skia.csproj">
       <Project>{bf15264b-d7c7-4f09-b13b-487d60d649bd}</Project>
-      <Name>HotUI.Skia</Name>
+      <Name>Comet.Skia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotUI.WPF\HotUI.WPF.csproj">
+    <ProjectReference Include="..\Comet.WPF\Comet.WPF.csproj">
       <Project>{f8ba5de0-aec0-4423-b036-5f9157e939d0}</Project>
-      <Name>HotUI.WPF</Name>
+      <Name>Comet.WPF</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotUI\HotUI.csproj">
+    <ProjectReference Include="..\Comet\Comet.csproj">
       <Project>{1817646e-e71e-48cf-80a4-3030ef870d61}</Project>
-      <Name>HotUI</Name>
+      <Name>Comet</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

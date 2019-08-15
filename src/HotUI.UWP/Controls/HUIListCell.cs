@@ -1,11 +1,11 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using HotUI.UWP.Handlers;
+using Comet.UWP.Handlers;
 using WGrid = Windows.UI.Xaml.Controls.Grid;
 using UwpSize = Windows.Foundation.Size;
 
-namespace HotUI.UWP
+namespace Comet.UWP
 {
     public class HUIListCell : WGrid
     {

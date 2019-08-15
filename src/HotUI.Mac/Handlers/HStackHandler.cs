@@ -1,6 +1,6 @@
 ﻿using CoreGraphics;
 
-namespace HotUI.Mac.Handlers
+namespace Comet.Mac.Handlers
 {
     public class HStackHandler : AbstractLayoutHandler
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using FView = Xamarin.Forms.View;
 
-namespace HotUI.Forms
+namespace Comet.Forms
 {
     public class ViewChangedEventArgs : EventArgs
     {

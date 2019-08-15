@@ -3,13 +3,13 @@ using FLabel = Xamarin.Forms.Label;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Forms.Handlers
+namespace Comet.Forms.Handlers
 {
     public class TextHandler : AbstractControlHandler<Text, FLabel>
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
-            [nameof(HotUI.Text.Value)] = MapValueProperty,
+            [nameof(Comet.Text.Value)] = MapValueProperty,
             [EnvironmentKeys.Fonts.Font] = MapFontProperty,
             [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };

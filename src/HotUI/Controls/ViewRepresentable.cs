@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotUI
+namespace Comet
 {
     public delegate void UpdateView(object view, object state);
 

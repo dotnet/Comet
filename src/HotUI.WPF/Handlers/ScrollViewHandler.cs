@@ -1,7 +1,7 @@
 ﻿using WPFScrollView = System.Windows.Controls.ScrollViewer;
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public class ScrollViewHandler : AbstractHandler<ScrollView, WPFScrollView>
     {

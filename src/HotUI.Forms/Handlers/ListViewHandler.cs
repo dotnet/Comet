@@ -2,9 +2,9 @@
 using System.Collections;
 using System.Collections.Specialized;
 using FListView = Xamarin.Forms.ListView;
-using HListView = HotUI.ListView;
-using HView = HotUI.View;
-namespace HotUI.Forms.Handlers
+using HListView = Comet.ListView;
+using HView = Comet.View;
+namespace Comet.Forms.Handlers
 {
     public class ListViewHandler : FListView, FormsViewHandler
     {
@@ -24,7 +24,7 @@ namespace HotUI.Forms.Handlers
                     View = new Xamarin.Forms.BoxView();
                 }
 
-                currentView = (BindingContext as Tuple<object, HotUI.View>)?.Item2;
+                currentView = (BindingContext as Tuple<object, Comet.View>)?.Item2;
 
                 //TODO; implement something smart here to re-use the old view if possible.
                 //View builders really are perfect for this. Maybe cell stuff should be wrapped in ViewBuilder
@@ -45,7 +45,7 @@ namespace HotUI.Forms.Handlers
         }
 
         private void ListViewHandler_ItemSelected(object sender, Xamarin.Forms.SelectedItemChangedEventArgs e)
-            => listView?.OnSelected(0,(e.SelectedItem as Tuple<int, HotUI.View>).Item1);
+            => listView?.OnSelected(0,(e.SelectedItem as Tuple<int, Comet.View>).Item1);
 
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
         public Xamarin.Forms.View View => this;
@@ -94,7 +94,7 @@ namespace HotUI.Forms.Handlers
             }
             public object this[int index]
             {
-                get => new Tuple<int, HotUI.View>(index, list.ViewFor(0,index));
+                get => new Tuple<int, Comet.View>(index, list.ViewFor(0,index));
                 set => throw new NotImplementedException();
             }
 
@@ -142,7 +142,7 @@ namespace HotUI.Forms.Handlers
 
             public int IndexOf(object value)
             {
-                var item = value as Tuple<int, HotUI.View>;
+                var item = value as Tuple<int, Comet.View>;
                 return item.Item1;
             }
 

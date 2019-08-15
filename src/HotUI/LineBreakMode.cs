@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotUI
+namespace Comet
 {
     /// <summary>
     /// Truncation or wrapping used on Text

@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Globalization;
 
-namespace HotUI
+namespace Comet
 {
     [DebuggerDisplay("X={X}, Y={Y}, Width={Width}, Height={Height}")]
     public struct RectangleF

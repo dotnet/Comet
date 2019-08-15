@@ -1,8 +1,8 @@
 ﻿using System;
 using AppKit;
-using HotUI.Mac.Controls;
+using Comet.Mac.Controls;
 
-namespace HotUI.Mac
+namespace Comet.Mac
 {
     public interface MacViewHandler : IViewHandler
     {

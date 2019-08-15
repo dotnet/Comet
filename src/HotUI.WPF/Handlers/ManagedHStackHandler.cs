@@ -1,6 +1,6 @@
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public class ManagedHStackHandler : AbstractLayoutHandler
     {

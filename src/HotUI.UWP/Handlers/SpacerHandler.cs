@@ -3,7 +3,7 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
     public class SpacerHandler : AbstractHandler<Spacer, Canvas>
     {

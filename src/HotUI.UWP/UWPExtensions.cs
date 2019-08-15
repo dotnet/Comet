@@ -2,7 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
-namespace HotUI.UWP
+namespace Comet.UWP
 {
     public static class UWPExtensions
     {
@@ -40,11 +40,11 @@ namespace HotUI.UWP
 
             if (handler is FrameworkElement element)
             {
-                if (element.Parent is HotUIView container)
+                if (element.Parent is CometView container)
                     return container;
             }
             
-            return new HotUIView(view);
+            return new CometView(view);
         }
 
         public static void RemoveChild(this DependencyObject parent, UIElement child)

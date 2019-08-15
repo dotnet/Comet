@@ -1,7 +1,7 @@
 using System;
 using AppKit;
 
-namespace HotUI.Mac
+namespace Comet.Mac
 {
     public class ViewChangedEventArgs : EventArgs
     {

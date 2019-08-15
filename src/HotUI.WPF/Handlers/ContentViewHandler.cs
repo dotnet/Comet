@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
 	public class ContentViewHandler : AbstractHandler<ContentView, UIElement>
     {

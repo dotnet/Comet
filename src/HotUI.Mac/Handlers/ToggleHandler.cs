@@ -3,7 +3,7 @@ using AppKit;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Mac.Handlers
+namespace Comet.Mac.Handlers
 {
     public class ToggleHandler : AbstractControlHandler<Toggle, NSButton>
     {

@@ -1,6 +1,6 @@
-﻿using HotUI.Layout;
+﻿using Comet.Layout;
 
-namespace HotUI 
+namespace Comet 
 {
 	public class Grid : AbstractLayout 
 	{

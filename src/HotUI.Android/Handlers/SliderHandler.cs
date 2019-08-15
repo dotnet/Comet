@@ -5,7 +5,7 @@ using Android.Widget;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class SliderHandler : AbstractControlHandler<Slider, SeekBar>
     {

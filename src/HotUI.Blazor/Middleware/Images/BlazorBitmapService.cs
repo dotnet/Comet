@@ -1,8 +1,8 @@
-﻿using HotUI.Graphics;
-using HotUI.Services;
+﻿using Comet.Graphics;
+using Comet.Services;
 using System.Threading.Tasks;
 
-namespace HotUI.Blazor.Middleware.Images
+namespace Comet.Blazor.Middleware.Images
 {
     internal class BlazorBitmapService : IBitmapService
     {

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HotUI
+namespace Comet
 {
     public abstract class ContextualObject
     {

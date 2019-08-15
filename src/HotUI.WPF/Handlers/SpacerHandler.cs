@@ -4,7 +4,7 @@
 
 using System.Windows.Controls;
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public class SpacerHandler : AbstractHandler<Spacer, Canvas>
     {

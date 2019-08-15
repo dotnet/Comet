@@ -5,7 +5,7 @@ using System.Linq;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedMethodReturnValue.Global
 
-namespace HotUI.Graphics
+namespace Comet.Graphics
 {
     public class PathF : IDisposable
     {

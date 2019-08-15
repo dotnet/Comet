@@ -7,8 +7,8 @@
     <ProjectGuid>{004EF9A7-6FF7-4ACA-9416-DCFB84A85B04}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HotUI.Skia.UWP</RootNamespace>
-    <AssemblyName>HotUI.Skia.UWP</AssemblyName>
+    <RootNamespace>Comet.Skia.UWP</RootNamespace>
+    <AssemblyName>Comet.Skia.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
@@ -124,7 +124,7 @@
     <Compile Include="UWPDrawableControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.cs" />
-    <EmbeddedResource Include="Properties\HotUI.Skia.UWP.rd.xml" />
+    <EmbeddedResource Include="Properties\Comet.Skia.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -135,17 +135,17 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotUI.Skia\HotUI.Skia.csproj">
+    <ProjectReference Include="..\Comet.Skia\Comet.Skia.csproj">
       <Project>{bf15264b-d7c7-4f09-b13b-487d60d649bd}</Project>
-      <Name>HotUI.Skia</Name>
+      <Name>Comet.Skia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotUI.UWP\HotUI.UWP.csproj">
+    <ProjectReference Include="..\Comet.UWP\Comet.UWP.csproj">
       <Project>{2d337300-b3e9-4a36-8387-76a9a1100c5b}</Project>
-      <Name>HotUI.UWP</Name>
+      <Name>Comet.UWP</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotUI\HotUI.csproj">
+    <ProjectReference Include="..\Comet\Comet.csproj">
       <Project>{1817646e-e71e-48cf-80a4-3030ef870d61}</Project>
-      <Name>HotUI</Name>
+      <Name>Comet</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">

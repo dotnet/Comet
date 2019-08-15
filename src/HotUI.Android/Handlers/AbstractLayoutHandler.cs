@@ -1,10 +1,10 @@
 using System;
 using Android.Runtime;
-using HotUI.Android.Controls;
+using Comet.Android.Controls;
 using AView = Android.Views.View;
 using AViewGroup = Android.Views.ViewGroup;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class AbstractLayoutHandler : AViewGroup, AndroidViewHandler
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Collections.Concurrent;
 using System.Threading;
 
-namespace HotUI
+namespace Comet
 {
     /// <summary>
     /// A simple service container implementation, singleton only

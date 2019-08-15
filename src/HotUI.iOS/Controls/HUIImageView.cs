@@ -1,10 +1,10 @@
 using System;
 using System.Diagnostics;
 using CoreGraphics;
-using HotUI.Graphics;
+using Comet.Graphics;
 using UIKit;
 
-namespace HotUI.iOS.Controls
+namespace Comet.iOS.Controls
 {
     public class HUIImageView : UIImageView
     {

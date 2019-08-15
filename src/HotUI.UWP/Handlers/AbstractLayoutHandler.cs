@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
 using UwpSize = Windows.Foundation.Size;
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
     public abstract class AbstractLayoutHandler : Panel, UWPViewHandler
     {

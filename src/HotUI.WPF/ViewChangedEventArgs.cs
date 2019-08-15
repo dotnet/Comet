@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows;
 
-namespace HotUI.WPF
+namespace Comet.WPF
 {
     public class ViewChangedEventArgs : EventArgs
     {

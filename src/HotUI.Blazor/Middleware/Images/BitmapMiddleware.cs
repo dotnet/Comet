@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace HotUI.Blazor.Middleware.Images
+namespace Comet.Blazor.Middleware.Images
 {
     internal class BitmapMiddleware : IMiddleware
     {

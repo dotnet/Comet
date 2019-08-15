@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotUI
+namespace Comet
 {
     /// <summary>
     /// A design to use for fonts.

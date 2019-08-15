@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI.UWP.Controls;
+using Comet.UWP.Controls;
 using Windows.UI.Xaml;
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
     public abstract class AbstractControlHandler<TVirtualView, TNativeView> : UWPViewHandler
         where TVirtualView : View

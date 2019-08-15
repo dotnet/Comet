@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using FFImageLoading;
-using HotUI.Graphics;
-using HotUI.iOS.Graphics;
-using HotUI.Services;
+using Comet.Graphics;
+using Comet.iOS.Graphics;
+using Comet.Services;
 
-namespace HotUI.iOS.Services
+namespace Comet.iOS.Services
 {
     public class iOSBitmapService : AbstractBitmapService
     {

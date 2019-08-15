@@ -3,7 +3,7 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Forms.Handlers
+namespace Comet.Forms.Handlers
 {
     public class ViewRepresentableHandler : AbstractControlHandler<ViewRepresentable, FView>
     {

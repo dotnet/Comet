@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 
-namespace HotUI.WPF
+namespace Comet.WPF
 {
     public static class WPFExtensions
     {
@@ -38,7 +38,7 @@ namespace HotUI.WPF
             if (handler == null)
                 throw new Exception("Unable to build handler for view");
 
-            return new HotUIContainerView(view);
+            return new CometContainerView(view);
         }
 
         public static void RemoveChild(this DependencyObject parent, UIElement child)

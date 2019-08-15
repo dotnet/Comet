@@ -1,9 +1,9 @@
 using System;
 using CoreGraphics;
 using AppKit;
-using HotUI.Graphics;
+using Comet.Graphics;
 
-namespace HotUI.Mac.Controls
+namespace Comet.Mac.Controls
 {
     public class HUIImageView : NSImageView
     {

@@ -1,9 +1,9 @@
 ﻿using System;
-using HotUI.Internal;
+using Comet.Internal;
 using Xunit;
 
 [assembly: CollectionBehavior (DisableTestParallelization = true)]
-namespace HotUI.Tests 
+namespace Comet.Tests 
 {
 	public class TestBase 
 	{
@@ -41,7 +41,7 @@ namespace HotUI.Tests
 			
 		}
 
-        public static void ResetHotUI()
+        public static void ResetComet()
         {
             var v = new View();
             v.ResetGlobalEnvironment();

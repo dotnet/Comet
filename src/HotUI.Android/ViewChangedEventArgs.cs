@@ -1,7 +1,7 @@
 ﻿using System;
 using AView = Android.Views.View;
 
-namespace HotUI.Android
+namespace Comet.Android
 {
     public class ViewChangedEventArgs : EventArgs
     {

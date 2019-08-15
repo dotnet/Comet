@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI.iOS.Controls;
+using Comet.iOS.Controls;
 using UIKit;
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public abstract class AbstractControlHandler<TVirtualView, TNativeView> : iOSViewHandler 
         where TVirtualView : View 

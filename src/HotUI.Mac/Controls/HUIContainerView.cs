@@ -3,7 +3,7 @@ using CoreAnimation;
 using CoreGraphics;
 using AppKit;
 
-namespace HotUI.Mac.Controls
+namespace Comet.Mac.Controls
 {
     public class HUIContainerView : NSView
     {

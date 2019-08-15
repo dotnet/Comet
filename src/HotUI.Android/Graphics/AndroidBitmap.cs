@@ -1,8 +1,8 @@
 ﻿using ABitmap = Android.Graphics.Bitmap;
 
-namespace HotUI.Android.Graphics
+namespace Comet.Android.Graphics
 {
-    public class AndroidBitmap : HotUI.Graphics.Bitmap
+    public class AndroidBitmap : Comet.Graphics.Bitmap
     {
         private ABitmap _bitmap;
 

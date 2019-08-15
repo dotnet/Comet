@@ -15,7 +15,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       }
     },
-    "HotUI.Blazor": {
+    "Comet.Blazor": {
       "commandName": "Project",
       "launchBrowser": true,
       "environmentVariables": {

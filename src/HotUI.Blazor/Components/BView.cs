@@ -1,11 +1,11 @@
-﻿using HotUI.Blazor.Handlers;
+﻿using Comet.Blazor.Handlers;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.RenderTree;
 using System.Diagnostics;
 
-namespace HotUI.Blazor.Components
+namespace Comet.Blazor.Components
 {
-    public class BView : HotUIComponentBase
+    public class BView : CometComponentBase
     {
         protected override void BuildRenderTree(RenderTreeBuilder builder)
         {
@@ -13,7 +13,7 @@ namespace HotUI.Blazor.Components
 
             var name = View?.GetType().Name ?? "null";
             builder.OpenElement(0, "div");
-            builder.AddAttribute(1, "class", $"hotui-view hotui-view-{name}");
+            builder.AddAttribute(1, "class", $"Comet-view Comet-view-{name}");
 
             if (View is null)
             {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Android.Content;
-using HotUI.Android.Controls;
+using Comet.Android.Controls;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class NavigationViewHandler : AbstractHandler<NavigationView, HUINavigationView>
     {

@@ -3,9 +3,9 @@ using Android.Views;
 using Android.Widget;
 using Android.Support.V7.Widget;
 using AView = Android.Views.View;
-using HotUI.Android.Controls;
+using Comet.Android.Controls;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ListViewHandler : RecyclerView, AndroidViewHandler
     {

@@ -1,6 +1,6 @@
 using System;
 
-namespace HotUI.Services
+namespace Comet.Services
 {
     public enum LogType
     {

@@ -2,7 +2,7 @@
 using AProgressBar = Android.Widget.ProgressBar;
 using AAttribute = Android.Resource.Attribute;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ProgressBarHandler : AbstractControlHandler<ProgressBar, AProgressBar>
     {

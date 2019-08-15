@@ -1,10 +1,10 @@
 using System;
 using System.Windows;
 using System.Windows.Controls;
-using HotUI.WPF.Controls;
+using Comet.WPF.Controls;
 
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public abstract class AbstractHandler<TVirtualView, TNativeView> : WPFViewHandler 
         where TVirtualView : View 

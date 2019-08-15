@@ -1,7 +1,7 @@
 using WPFSize = System.Windows.Size;
 using WPFRect = System.Windows.Rect;
 
-namespace HotUI.WPF
+namespace Comet.WPF
 {
     public static class DrawingExtensions
     {

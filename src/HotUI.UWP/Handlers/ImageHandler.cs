@@ -3,7 +3,7 @@ using UWPImage = Windows.UI.Xaml.Controls.Image;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
     public class ImageHandler : AbstractHandler<Image, UWPImage>
     {

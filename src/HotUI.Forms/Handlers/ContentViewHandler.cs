@@ -1,6 +1,6 @@
 ﻿using FView = Xamarin.Forms.View;
 
-namespace HotUI.Forms.Handlers
+namespace Comet.Forms.Handlers
 {
     public class ContentViewHandler : AbstractHandler<ContentView, FView>
     {

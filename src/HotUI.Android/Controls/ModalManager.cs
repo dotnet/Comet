@@ -6,7 +6,7 @@ using Android.Support.V4.App;
 using Android.Views;
 using AView = Android.Views.View;
 
-namespace HotUI.Android.Controls
+namespace Comet.Android.Controls
 {
     public class ModalManager
     {

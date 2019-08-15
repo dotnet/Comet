@@ -1,17 +1,17 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
-using HotUI.WPF.Handlers;
+using Comet.WPF.Handlers;
 using WGrid = System.Windows.Controls.Grid;
 
-namespace HotUI.WPF
+namespace Comet.WPF
 {
-    public class HotUIContainerView : WGrid
+    public class CometContainerView : WGrid
     {
         private View _view;
         private UIElement _nativeView;
         private IViewHandler _handler;
 
-        public HotUIContainerView(View view = null)
+        public CometContainerView(View view = null)
         {
             View = view;
         }

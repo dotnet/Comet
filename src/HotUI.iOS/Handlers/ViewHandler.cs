@@ -1,12 +1,12 @@
 ﻿using System;
 using CoreAnimation;
 using CoreGraphics;
-using HotUI.Graphics;
+using Comet.Graphics;
 using UIKit;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class ViewHandler : AbstractHandler<View, UIView>
     {

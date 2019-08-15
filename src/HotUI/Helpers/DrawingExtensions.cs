@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI.Graphics;
+using Comet.Graphics;
 
 // ReSharper disable once CheckNamespace
-namespace HotUI
+namespace Comet
 {
     public static class DrawingExtensions
     {

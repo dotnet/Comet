@@ -8,12 +8,12 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 
-namespace HotUI.Android.Controls
+namespace Comet.Android.Controls
 {
     public class HUITabView : CustomFrameLayout
     {
         private readonly BottomNavigationView _bottomNavigationView;
-        private List<HotUIFragment> _fragments;
+        private List<CometFragment> _fragments;
 
         public HUITabView(Context context) : base(context)
         {

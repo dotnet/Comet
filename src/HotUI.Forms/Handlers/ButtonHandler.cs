@@ -1,9 +1,9 @@
 ﻿using Xamarin.Forms;
 using FButton = Xamarin.Forms.Button;
-using HButton = HotUI.Button;
+using HButton = Comet.Button;
 
 // ReSharper disable MemberCanBePrivate.Global
-namespace HotUI.Forms.Handlers
+namespace Comet.Forms.Handlers
 {
     public class ButtonHandler : AbstractControlHandler<HButton, FButton>
     {

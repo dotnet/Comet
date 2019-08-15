@@ -1,7 +1,7 @@
-﻿using HotUI.Blazor.Components;
+﻿using Comet.Blazor.Components;
 using System;
 
-namespace HotUI.Blazor.Handlers
+namespace Comet.Blazor.Handlers
 {
     internal class TextFieldHandler : AbstractControlHandler<TextField, BTextField>
     {

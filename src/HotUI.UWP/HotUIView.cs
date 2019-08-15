@@ -1,17 +1,17 @@
 ﻿using System;
 using Windows.UI.Xaml;
-using HotUI.UWP.Handlers;
+using Comet.UWP.Handlers;
 using WGrid = Windows.UI.Xaml.Controls.Grid;
 
-namespace HotUI.UWP
+namespace Comet.UWP
 {
-    public class HotUIView : WGrid
+    public class CometView : WGrid
     {
         private View _view;
         private UIElement _nativeView;
         private IViewHandler _handler;
 
-        public HotUIView(View view = null)
+        public CometView(View view = null)
         {
             View = view;
         }

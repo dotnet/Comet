@@ -5,7 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\HotUI\HotUI.csproj" />
+      <ProjectReference Include="..\Comet\Comet.csproj" />
     </ItemGroup>
 
     <ItemGroup>

@@ -1,11 +1,11 @@
 ﻿using System;
 using Foundation;
-using HotUI.iOS.Controls;
+using Comet.iOS.Controls;
 using UIKit;
 
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class ListViewHandler : AbstractHandler<ListView, HUITableView>
     {

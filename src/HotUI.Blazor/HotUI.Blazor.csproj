@@ -8,11 +8,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="hotui.js" />
+    <None Remove="Comet.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\hotui.js">
+    <EmbeddedResource Include="Scripts\Comet.js">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
     </EmbeddedResource>
   </ItemGroup>
@@ -22,8 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HotUI.Skia\HotUI.Skia.csproj" />
-    <ProjectReference Include="..\HotUI\HotUI.csproj" />
+    <ProjectReference Include="..\Comet.Skia\Comet.Skia.csproj" />
+    <ProjectReference Include="..\Comet\Comet.csproj" />
   </ItemGroup>
 
 </Project>

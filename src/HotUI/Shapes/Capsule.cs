@@ -1,7 +1,7 @@
 using System;
-using HotUI.Graphics;
+using Comet.Graphics;
 
-namespace HotUI
+namespace Comet
 {
     /// <summary>
     /// A capsule shape is equivalent to a rounded rectangle where the corner radius is chosen

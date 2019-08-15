@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace HotUI
+namespace Comet
 {
     public partial class Color
     {

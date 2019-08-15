@@ -1,7 +1,7 @@
-﻿using HotUI.Graphics;
+﻿using Comet.Graphics;
 using Windows.UI.Xaml.Media.Imaging;
 
-namespace HotUI.UWP.Graphics
+namespace Comet.UWP.Graphics
 {
     public class UWPBitmap : Bitmap
     {

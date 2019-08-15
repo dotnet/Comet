@@ -4,7 +4,7 @@ using System;
 using System.Windows;
 using System.Windows.Input;
 
-namespace HotUI.Skia.WPF
+namespace Comet.Skia.WPF
 {
     public class WPFDrawableControl : SKElement, IDrawableControl
     {

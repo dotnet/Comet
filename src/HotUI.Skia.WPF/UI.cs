@@ -1,4 +1,4 @@
-﻿namespace HotUI.Skia.WPF
+﻿namespace Comet.Skia.WPF
 {
 	public static class UI
     {

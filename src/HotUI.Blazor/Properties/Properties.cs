@@ -1,3 +1,3 @@
 ﻿using System.Runtime.CompilerServices;
 
-[assembly: InternalsVisibleTo("HotUI.Blazor.Tests")]
+[assembly: InternalsVisibleTo("Comet.Blazor.Tests")]

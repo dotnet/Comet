@@ -1,9 +1,9 @@
 using System;
 using Android.Support.V4.App;
-using HotUI.Android.Extensions;
+using Comet.Android.Extensions;
 using PopBackStackFlags = Android.App.PopBackStackFlags;
 
-namespace HotUI.Android.Controls
+namespace Comet.Android.Controls
 {
     public class NavigationViewWrapper : CustomFrameLayout
     {
@@ -28,7 +28,7 @@ namespace HotUI.Android.Controls
                 manager.PopBackStack(0, (int)PopBackStackFlags.Inclusive);
             }
 
-            var fragment = new HotUIFragment(view);
+            var fragment = new CometFragment(view);
 
             var transaction = manager.BeginTransaction();
 

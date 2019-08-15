@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI.Android.Controls;
+using Comet.Android.Controls;
 using AView = Android.Views.View;
 
-namespace HotUI.Android
+namespace Comet.Android
 {
     public interface AndroidViewHandler : IViewHandler
     {

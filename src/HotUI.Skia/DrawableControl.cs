@@ -1,6 +1,6 @@
-﻿using HotUI.Skia;
+﻿using Comet.Skia;
 
-namespace HotUI 
+namespace Comet 
 {
 	public class DrawableControl : View, IDrawableControl
 	{

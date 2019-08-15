@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Android.Views;
 using AView = Android.Views.View;
-namespace HotUI.Android.Controls
+namespace Comet.Android.Controls
 {
     public class HUITouchGestureListener : Java.Lang.Object, AView.IOnTouchListener
     {

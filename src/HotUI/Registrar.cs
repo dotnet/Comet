@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Diagnostics;
-namespace HotUI {
+namespace Comet {
 	public static class Registrar {
 		public static Registrar<View, IViewHandler> Handlers { get; private set; }
 		static Registrar ()

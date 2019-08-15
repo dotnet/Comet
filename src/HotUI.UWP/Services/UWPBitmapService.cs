@@ -1,10 +1,10 @@
 ﻿using FFImageLoading;
-using HotUI.Graphics;
-using HotUI.Services;
-using HotUI.UWP.Graphics;
+using Comet.Graphics;
+using Comet.Services;
+using Comet.UWP.Graphics;
 using System.Threading.Tasks;
 
-namespace HotUI.UWP.Services
+namespace Comet.UWP.Services
 {
     class UWPBitmapService : AbstractBitmapService
     {

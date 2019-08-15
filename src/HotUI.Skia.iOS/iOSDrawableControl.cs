@@ -2,10 +2,10 @@
 using CoreGraphics;
 using Foundation;
 using SkiaSharp.Views.iOS;
-using HotUI.iOS;
+using Comet.iOS;
 using UIKit;
 
-namespace HotUI.Skia.iOS
+namespace Comet.Skia.iOS
 {
     public class iOSDrawableControl : SKCanvasView, IDrawableControl
     {

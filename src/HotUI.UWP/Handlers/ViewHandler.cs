@@ -4,7 +4,7 @@ using System.Diagnostics;
 using Windows.UI.Xaml;
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
     public class ViewHandler : AbstractHandler<View, UIElement>
     {

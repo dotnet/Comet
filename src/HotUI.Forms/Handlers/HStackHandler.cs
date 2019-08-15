@@ -1,6 +1,6 @@
 ﻿using Xamarin.Forms;
 
-namespace HotUI.Forms.Handlers
+namespace Comet.Forms.Handlers
 {
     public class HStackHandler : AbstractFormsLayoutHandler, FormsViewHandler
     {

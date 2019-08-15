@@ -1,7 +1,7 @@
-using HotUI.Services;
+using Comet.Services;
 using UIKit;
 
-namespace HotUI.iOS.Services
+namespace Comet.iOS.Services
 {
     public class iOSFontService : IFontService
     {

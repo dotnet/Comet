@@ -2,7 +2,7 @@
 using WPFButton = System.Windows.Controls.Button;
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public class ButtonHandler : AbstractControlHandler<Button, WPFButton>
     {

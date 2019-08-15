@@ -1,4 +1,4 @@
-namespace HotUI.Services
+namespace Comet.Services
 {
     public interface IFontService
     {

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace HotUI.Blazor.Components
+namespace Comet.Blazor.Components
 {
-    public abstract class HotUIComponentBase : ComponentBase
+    public abstract class CometComponentBase : ComponentBase
     {
-        private protected HotUIComponentBase()
+        private protected CometComponentBase()
         {
         }
 

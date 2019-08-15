@@ -1,7 +1,7 @@
-﻿using HotUI.Layout;
+﻿using Comet.Layout;
 
 // ReSharper disable once CheckNamespace
-namespace HotUI
+namespace Comet
 {
     public static class LayoutExtensions
     {

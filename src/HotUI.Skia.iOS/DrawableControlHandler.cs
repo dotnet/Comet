@@ -1,9 +1,9 @@
-﻿using HotUI.iOS.Handlers;
+﻿using Comet.iOS.Handlers;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Skia.iOS
+namespace Comet.Skia.iOS
 {
     public class DrawableControlHandler : AbstractControlHandler<DrawableControl, iOSDrawableControl>
     {

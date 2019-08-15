@@ -1,14 +1,14 @@
 ﻿using System.Windows.Controls;
 using WGrid = System.Windows.Controls.Grid;
 
-namespace HotUI.WPF
+namespace Comet.WPF
 {
-    public sealed partial class HotUIPage : Page
+    public sealed partial class CometPage : Page
     {
         private View _view;
         private readonly Frame _frame;
 
-        public HotUIPage(Frame frame, View view)
+        public CometPage(Frame frame, View view)
         {
             InitializeComponent();
 
@@ -28,7 +28,7 @@ namespace HotUI.WPF
                 {
                     nav.PerformNavigate = toView =>
                     {
-                        _frame.NavigationService.Navigate(new HotUIPage(_frame, toView));
+                        _frame.NavigationService.Navigate(new CometPage(_frame, toView));
                     };
                 }
             }

@@ -5,7 +5,7 @@ using Android.Util;
 using Android.Views;
 using Android.Widget;
 using LP = Android.Views.ViewGroup.LayoutParams;
-namespace HotUI.Android.Controls
+namespace Comet.Android.Controls
 {
     public class CustomFrameLayout : FrameLayout
     {

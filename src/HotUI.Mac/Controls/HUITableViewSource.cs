@@ -1,9 +1,9 @@
 ﻿using System;
 using AppKit;
 using Foundation;
-using HotUI.Mac.Extensions;
+using Comet.Mac.Extensions;
 
-namespace HotUI.Mac.Controls
+namespace Comet.Mac.Controls
 {
     public class HUITableViewSource : NSTableViewSource
     {

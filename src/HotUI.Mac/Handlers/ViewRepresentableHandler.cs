@@ -3,7 +3,7 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Mac.Handlers
+namespace Comet.Mac.Handlers
 {
     public class ViewRepresentableHandler : AbstractControlHandler<ViewRepresentable, NSView>
     {

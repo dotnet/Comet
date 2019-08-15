@@ -1,7 +1,7 @@
-using HotUI.Graphics;
-using HotUI.Services;
+using Comet.Graphics;
+using Comet.Services;
 
-namespace HotUI.Android.Services
+namespace Comet.Android.Services
 {
     public class AndroidGraphicsService : IGraphicsService
     {

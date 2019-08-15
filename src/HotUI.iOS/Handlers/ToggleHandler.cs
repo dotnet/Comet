@@ -3,7 +3,7 @@ using UIKit;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class ToggleHandler : AbstractControlHandler<Toggle, UISwitch>
     {

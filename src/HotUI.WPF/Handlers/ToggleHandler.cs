@@ -1,7 +1,7 @@
 ﻿using System.Windows;
 using System.Windows.Controls;
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public class ToggleHandler :  AbstractControlHandler<Toggle, CheckBox>
     {

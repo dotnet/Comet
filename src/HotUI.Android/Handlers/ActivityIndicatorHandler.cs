@@ -2,7 +2,7 @@
 using Android.Content;
 using AndroidApp = Android.Widget;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ActivityIndicatorHandler : AbstractControlHandler<ActivityIndicator, AndroidApp.ProgressBar>
     {

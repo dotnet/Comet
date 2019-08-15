@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
 
-namespace HotUI
+namespace Comet
 {
     public class Binding
     {

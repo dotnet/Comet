@@ -1,7 +1,7 @@
 ﻿using AppKit;
-using HotUI.Mac.Extensions;
+using Comet.Mac.Extensions;
 
-namespace HotUI.Mac.Handlers
+namespace Comet.Mac.Handlers
 {
     public class TextHandler : AbstractControlHandler<Text,NSTextField>
     {

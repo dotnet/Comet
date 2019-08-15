@@ -1,8 +1,8 @@
 using System;
-using HotUI.Mac.Controls;
+using Comet.Mac.Controls;
 using AppKit;
 
-namespace HotUI.Mac.Handlers
+namespace Comet.Mac.Handlers
 {
     public abstract class AbstractHandler<TVirtualView, TNativeView> : MacViewHandler 
         where TVirtualView : View 
@@ -69,7 +69,7 @@ namespace HotUI.Mac.Handlers
         
         public virtual SizeF Measure(SizeF availableSize)
         {
-            return HotUI.View.IllTakeWhatYouCanGive;
+            return Comet.View.IllTakeWhatYouCanGive;
         }
 
         public void SetFrame(RectangleF frame)

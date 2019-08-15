@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace HotUI
+namespace Comet
 {
     public static class StringExtensions
     {

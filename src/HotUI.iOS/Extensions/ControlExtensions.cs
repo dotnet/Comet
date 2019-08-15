@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using FFImageLoading;
 using UIKit;
 
-namespace HotUI.iOS {
+namespace Comet.iOS {
 	public static partial class ControlExtensions {
 		public static Task<UIImage> LoadImage(this string source)
 		{

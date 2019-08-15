@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Core;
 using Windows.UI.Core;
-using HotUI.UWP.Handlers;
-using HotUI.UWP.Services;
+using Comet.UWP.Handlers;
+using Comet.UWP.Services;
 
-namespace HotUI.UWP
+namespace Comet.UWP
 {
     public static class UI
     {

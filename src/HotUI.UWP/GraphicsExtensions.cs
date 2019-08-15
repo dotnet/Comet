@@ -1,10 +1,10 @@
-﻿using HotUI.Graphics;
+﻿using Comet.Graphics;
 using System;
 using Windows.UI.Xaml.Media;
 using UWPSize = Windows.Foundation.Size;
 using UWPColor = Windows.UI.Color;
 
-namespace HotUI.UWP
+namespace Comet.UWP
 {
     public static class GraphicsExtensions
     { 

@@ -1,9 +1,9 @@
 ﻿using System;
 using CoreGraphics;
-using HotUI.Graphics;
+using Comet.Graphics;
 using UIKit;
 
-namespace HotUI.iOS
+namespace Comet.iOS
 {
     public class HUIShapeView : UIView
     {

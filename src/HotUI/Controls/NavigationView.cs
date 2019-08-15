@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotUI {
+namespace Comet {
 	public class NavigationView : ContentView {
 		public void Navigate (View view)
 		{

@@ -1,9 +1,9 @@
 ﻿using System;
 using Xamarin.Forms;
 
-namespace HotUI.Forms {
-	public class HotUIPage : ContentPage{
-		public HotUIPage ()
+namespace Comet.Forms {
+	public class CometPage : ContentPage{
+		public CometPage ()
 		{
 		}
 	}

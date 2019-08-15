@@ -2,7 +2,7 @@
 using System.Windows.Controls;
 using WGrid = System.Windows.Controls.Grid;
 
-namespace HotUI.WPF.Controls
+namespace Comet.WPF.Controls
 {
     public class HUIContainerView : WGrid
     {

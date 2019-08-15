@@ -1,6 +1,6 @@
 ﻿using SkiaSharp;
 
-namespace HotUI.Skia.Controls
+namespace Comet.Skia.Controls
 {
     public interface IMeasurable
     {

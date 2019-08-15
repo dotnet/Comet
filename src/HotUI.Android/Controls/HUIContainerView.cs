@@ -4,7 +4,7 @@ using Android.Views;
 using Android.Widget;
 using AView = Android.Views.View;
 
-namespace HotUI.Android.Controls
+namespace Comet.Android.Controls
 {
     public class HUIContainerView : LinearLayout
     {

@@ -1,12 +1,12 @@
 ﻿
 using System;
 using Foundation;
-using HotUI;
-using HotUI.iOS.Handlers;
-using HotUI.iOS.Services;
+using Comet;
+using Comet.iOS.Handlers;
+using Comet.iOS.Services;
 using UIKit;
 
-namespace HotUI.iOS
+namespace Comet.iOS
 {
 	public static class UI
     {

@@ -7,9 +7,9 @@ using FEntry = Xamarin.Forms.Entry;
 using FWebview = Xamarin.Forms.WebView;
 using FView = Xamarin.Forms.View;
 using FPage = Xamarin.Forms.Page;
-using HotUI;
+using Comet;
 
-namespace HotUI.Forms {
+namespace Comet.Forms {
 	public static class FormsExtensions {
 		static FormsExtensions()
 		{
@@ -19,8 +19,8 @@ namespace HotUI.Forms {
 		{
 			var handler = view.GetOrCreateViewHandler ();
 
-			var vc = new HotUIPage {
-				Content = new HotUIContainerView(view),
+			var vc = new CometPage {
+				Content = new CometContainerView(view),
 			};
 			if (view.BuiltView is NavigationView nav && allowNav) {
 				var navController = new Xamarin.Forms.NavigationPage (vc);

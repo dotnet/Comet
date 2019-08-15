@@ -2,7 +2,7 @@
 using AppKit;
 using CoreGraphics;
 
-namespace HotUI.Mac.Controls
+namespace Comet.Mac.Controls
 {
     public class HUITableView : NSScrollView
     {

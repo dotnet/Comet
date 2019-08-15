@@ -1,22 +1,22 @@
 ﻿using CoreGraphics;
 using AppKit;
-using HotUI.Mac.Extensions;
-using HotUI.Mac.Handlers;
+using Comet.Mac.Extensions;
+using Comet.Mac.Handlers;
 using System;
 
-namespace HotUI.Mac
+namespace Comet.Mac
 {
-    public class HotUIView : NSColorView
+    public class CometView : NSColorView
     {
         private View _virtualView;
         private MacViewHandler _handler;
         private NSView _nativeView;
         
-        public HotUIView()
+        public CometView()
         {
         }
 
-        public HotUIView(CGRect rect) : base(rect)
+        public CometView(CGRect rect) : base(rect)
         {
 
         }

@@ -1,12 +1,12 @@
-﻿using HotUI.Graphics;
-using HotUI.Services;
-using HotUI.WPF.Graphics;
+﻿using Comet.Graphics;
+using Comet.Services;
+using Comet.WPF.Graphics;
 using System;
 using System.Net.Cache;
 using System.Threading.Tasks;
 using System.Windows.Media.Imaging;
 
-namespace HotUI.WPF.Services
+namespace Comet.WPF.Services
 {
     class WPFBitmapService : AbstractBitmapService
     {

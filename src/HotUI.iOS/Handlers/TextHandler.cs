@@ -3,13 +3,13 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class TextHandler : AbstractControlHandler<Text, UILabel>
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
-            [nameof(HotUI.Text.Value)] = MapValueProperty,
+            [nameof(Comet.Text.Value)] = MapValueProperty,
             [EnvironmentKeys.Fonts.Family] = MapFontProperty,
             [EnvironmentKeys.Fonts.Italic] = MapFontProperty,
             [EnvironmentKeys.Fonts.Size] = MapFontProperty,

@@ -1,7 +1,7 @@
 using System;
 using CoreGraphics;
 
-namespace HotUI.iOS.Controls
+namespace Comet.iOS.Controls
 {
     public class SizeChangedEventArgs : EventArgs
     {

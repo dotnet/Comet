@@ -1,9 +1,9 @@
 ﻿using System;
-using HotUI.Internal;
-using HotUI.Tests.Handlers;
+using Comet.Internal;
+using Comet.Tests.Handlers;
 using Xunit;
 
-namespace HotUI.Tests {
+namespace Comet.Tests {
 	public class EnvironmentTests : TestBase {
 
 		public class MyBindingObject : BindingObject {
@@ -32,7 +32,7 @@ namespace HotUI.Tests {
 		[Fact]
 		public void CanSetAndReadGlobalEnvironment()
 		{
-            ResetHotUI();
+            ResetComet();
 
 			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
@@ -54,7 +54,7 @@ namespace HotUI.Tests {
 		[Fact]
 		public void CanSetAndReadGlobalEnvironmentFromView ()
 		{
-            ResetHotUI();
+            ResetComet();
             const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 
@@ -71,7 +71,7 @@ namespace HotUI.Tests {
 		[Fact]
 		public void ViewEnvironmentOverwritesGlobal ()
 		{
-            ResetHotUI();
+            ResetComet();
             const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
@@ -90,7 +90,7 @@ namespace HotUI.Tests {
 		[Fact]
 		public void NestedViewGetsValueFromParent ()
 		{
-            ResetHotUI();
+            ResetComet();
             const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
@@ -117,7 +117,7 @@ namespace HotUI.Tests {
 		[Fact]
 		public void NestedViewGetsItsVariablesFromItself ()
 		{
-            ResetHotUI();
+            ResetComet();
             const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
@@ -148,7 +148,7 @@ namespace HotUI.Tests {
 		[Fact]
 		public void FieldsWithAttributesPopulateFromEnvironment ()
 		{
-            ResetHotUI();
+            ResetComet();
             View.SetGlobalEnvironment (nameof (StatePage.clickCount), new State<int> (1));
 
 			Text text = null;
@@ -185,7 +185,7 @@ namespace HotUI.Tests {
         [Fact]
         public void LocalContextOverridesCascaded()
         {
-            ResetHotUI();
+            ResetComet();
             const string myStringKey = "myString";
             const string globalValue = "globalValue";
             const string localValue = "localValue";

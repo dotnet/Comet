@@ -3,7 +3,7 @@ using Android.Content;
 using Android.Views;
 using Android.Widget;
 
-namespace HotUI.Android.Controls
+namespace Comet.Android.Controls
 {
     public class HUINavigationView : CustomFrameLayout
     {
@@ -15,7 +15,7 @@ namespace HotUI.Android.Controls
         {
             AndroidContext.AppCompatActivity.SupportFragmentManager
                 .BeginTransaction()
-                .Replace(Id, new HotUIFragment(view))
+                .Replace(Id, new CometFragment(view))
                 .CommitAllowingStateLoss();
         }
 
@@ -24,7 +24,7 @@ namespace HotUI.Android.Controls
             AndroidContext.AppCompatActivity.SupportFragmentManager.BeginTransaction()
                 .SetTransition((int)global::Android.App.FragmentTransit.FragmentFade)
                 .AddToBackStack(view.Id)
-                .Replace(Id, new HotUIFragment(view))
+                .Replace(Id, new CometFragment(view))
                 .CommitAllowingStateLoss();
         }
     }

@@ -2,7 +2,7 @@ using System;
 using Foundation;
 using UIKit;
 
-namespace HotUI.iOS.Controls
+namespace Comet.iOS.Controls
 {
     public class HUITableView : UITableView
     {

@@ -6,8 +6,8 @@
     <ProjectGuid>{00B248D0-382A-4504-A126-76B9C892583E}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>HotUI.Skia.Mac</RootNamespace>
-    <AssemblyName>HotUI.Skia.Mac</AssemblyName>
+    <RootNamespace>Comet.Skia.Mac</RootNamespace>
+    <AssemblyName>Comet.Skia.Mac</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
@@ -67,17 +67,17 @@
     <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotUI.Mac\HotUI.Mac.csproj">
+    <ProjectReference Include="..\Comet.Mac\Comet.Mac.csproj">
       <Project>{bcaf5569-30db-4d44-bf46-dffe93ddcbd0}</Project>
-      <Name>HotUI.Mac</Name>
+      <Name>Comet.Mac</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotUI\HotUI.csproj">
+    <ProjectReference Include="..\Comet\Comet.csproj">
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
-      <Name>HotUI</Name>
+      <Name>Comet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotUI.Skia\HotUI.Skia.csproj">
+    <ProjectReference Include="..\Comet.Skia\Comet.Skia.csproj">
       <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
-      <Name>HotUI.Skia</Name>
+      <Name>Comet.Skia</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />

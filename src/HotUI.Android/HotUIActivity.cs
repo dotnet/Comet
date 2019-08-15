@@ -2,12 +2,12 @@
 using Android.OS;
 using Android.Runtime;
 using Android.Support.V7.App;
-using HotUI.Android.Controls;
+using Comet.Android.Controls;
 using static Android.Support.V4.App.FragmentManager;
 
-namespace HotUI.Android
+namespace Comet.Android
 {
-    public abstract class HotUIActivity : AppCompatActivity, IOnBackStackChangedListener
+    public abstract class CometActivity : AppCompatActivity, IOnBackStackChangedListener
 
     {
         private View _page;
@@ -56,7 +56,7 @@ namespace HotUI.Android
         {
             SupportActionBar?.SetDisplayHomeAsUpEnabled(SupportFragmentManager.BackStackEntryCount > 0);
 
-            if (SupportFragmentManager.Fragments.Last() is HotUIFragment fragment && SupportActionBar != null)
+            if (SupportFragmentManager.Fragments.Last() is CometFragment fragment && SupportActionBar != null)
             {
                 SupportActionBar.Title = fragment.Title;
             }

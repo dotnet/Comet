@@ -1,7 +1,7 @@
 using System;
-using HotUI.Graphics;
+using Comet.Graphics;
 
-namespace HotUI
+namespace Comet
 {
     public class Path : Shape
     {

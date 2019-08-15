@@ -2,10 +2,10 @@
 using AppKit;
 using CoreGraphics;
 using Foundation;
-using HotUI.Mac.Controls;
-using HotUI.Mac.Extensions;
+using Comet.Mac.Controls;
+using Comet.Mac.Extensions;
 
-namespace HotUI.Mac.Handlers 
+namespace Comet.Mac.Handlers 
 {
 	public class ListViewHandler : AbstractHandler<ListView, HUITableView>
     {

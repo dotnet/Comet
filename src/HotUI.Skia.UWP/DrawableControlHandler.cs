@@ -1,9 +1,9 @@
-﻿using HotUI.UWP.Handlers;
+﻿using Comet.UWP.Handlers;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Skia.UWP
+namespace Comet.Skia.UWP
 {
     public class DrawableControlHandler : AbstractControlHandler<DrawableControl, UWPDrawableControl>
     {

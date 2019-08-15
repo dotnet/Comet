@@ -1,6 +1,6 @@
-using HotUI.Graphics;
+using Comet.Graphics;
 
-namespace HotUI
+namespace Comet
 {
     public class Ellipse : Shape
     {

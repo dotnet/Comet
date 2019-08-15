@@ -1,7 +1,7 @@
 ﻿using System;
-using HotUI.Blazor.Components;
+using Comet.Blazor.Components;
 
-namespace HotUI.Blazor.Handlers
+namespace Comet.Blazor.Handlers
 {
     internal class ProgressBarHandler : BlazorHandler<ProgressBar, BProgressBar>
     {

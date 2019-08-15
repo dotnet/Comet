@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotUI
+namespace Comet
 {
     /// <summary>
     /// A view that displays a shape.

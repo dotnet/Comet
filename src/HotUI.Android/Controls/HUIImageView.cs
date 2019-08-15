@@ -8,18 +8,18 @@ using Android.Widget;
 using FFImageLoading.Drawables;
 using AView = Android.Views.View;
 
-namespace HotUI.Android.Controls
+namespace Comet.Android.Controls
 {
     public class HUIImageView : ImageView
     {
         private Image _image;
-        private HotUI.Graphics.Bitmap _bitmap;
+        private Comet.Graphics.Bitmap _bitmap;
 
         public HUIImageView(Context context) : base(context)
         {
         }
         
-        public HotUI.Graphics.Bitmap Bitmap
+        public Comet.Graphics.Bitmap Bitmap
         {
             get => _bitmap;
             set

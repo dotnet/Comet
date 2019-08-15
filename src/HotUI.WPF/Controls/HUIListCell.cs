@@ -1,10 +1,10 @@
-﻿using HotUI.WPF.Handlers;
+﻿using Comet.WPF.Handlers;
 using System.Windows;
 using System.Windows.Controls;
 using WGrid = System.Windows.Controls.Grid;
 using WPFSize = System.Windows.Size;
 
-namespace HotUI.WPF
+namespace Comet.WPF
 {
     public class HUIListCell : WGrid
     {

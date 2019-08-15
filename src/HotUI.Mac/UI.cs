@@ -1,9 +1,9 @@
 ﻿using Foundation;
-using HotUI.iOS.Services;
-using HotUI.Mac.Handlers;
-using HotUI.Mac.Services;
+using Comet.iOS.Services;
+using Comet.Mac.Handlers;
+using Comet.Mac.Services;
 
-namespace HotUI.Mac
+namespace Comet.Mac
 {
     public static class UI
     {

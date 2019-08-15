@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Media;
 
-namespace HotUI.WPF
+namespace Comet.WPF
 {
     public static class GraphicsExtensions
     {

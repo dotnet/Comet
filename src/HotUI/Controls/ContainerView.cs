@@ -2,7 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-namespace HotUI
+namespace Comet
 {
     public class ContainerView : View, IList<View>, IContainerView
     {

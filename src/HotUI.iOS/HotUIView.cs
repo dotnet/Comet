@@ -2,20 +2,20 @@
 using CoreGraphics;
 using UIKit;
 
-namespace HotUI.iOS
+namespace Comet.iOS
 {
-    public class HotUIView : UIView
+    public class CometView : UIView
     {
         private View _virtualView;
         private iOSViewHandler _handler;
         private UIView _nativeView;
 
-        public HotUIView()
+        public CometView()
         {
             BackgroundColor = UIColor.White;
         }
 
-        public HotUIView(CGRect rect) : base(rect)
+        public CometView(CGRect rect) : base(rect)
         {
             BackgroundColor = UIColor.White;
         }

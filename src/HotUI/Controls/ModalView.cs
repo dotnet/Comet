@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotUI {
+namespace Comet {
 	public class ModalView : ContentView {
 
 		public static void Dismiss () => PerformDismiss?.Invoke ();

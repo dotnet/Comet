@@ -1,7 +1,7 @@
 using Android.App;
 using Android.Support.V7.App;
 
-namespace HotUI.Android
+namespace Comet.Android
 {
     public delegate void ContextChanged(Activity activity);
 

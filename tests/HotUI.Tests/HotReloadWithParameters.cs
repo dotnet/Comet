@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI.Internal;
+using Comet.Internal;
 using Xunit;
 
-namespace HotUI.Tests {
+namespace Comet.Tests {
 	public class HotReloadWithParameters : TestBase {
 		public class MyOrgView : View {
 			public const string TextValue = "Hello!";

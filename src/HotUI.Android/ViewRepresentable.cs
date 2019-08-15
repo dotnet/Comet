@@ -2,7 +2,7 @@
 using Android.Content;
 using AView = Android.Views.View;
 
-namespace HotUI.Android
+namespace Comet.Android
 {
     public class ViewRepresentable<T> : ViewRepresentable where T: AView
     {

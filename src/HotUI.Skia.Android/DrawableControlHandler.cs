@@ -1,10 +1,10 @@
 ﻿using Android.Content;
-using HotUI.Android.Handlers;
+using Comet.Android.Handlers;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Skia.Android
+namespace Comet.Skia.Android
 {
     public class DrawableControlHandler : AbstractControlHandler<DrawableControl, AndroidDrawableControl>
     {

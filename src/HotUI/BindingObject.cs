@@ -5,10 +5,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using HotUI.Helpers;
-using HotUI.Reflection;
+using Comet.Helpers;
+using Comet.Reflection;
 
-namespace HotUI
+namespace Comet
 {
 
 
@@ -275,7 +275,7 @@ namespace HotUI
 
 
         bool hasChecked;
-        static Assembly HotUIAssembly = typeof(BindingObject).Assembly;
+        static Assembly CometAssembly = typeof(BindingObject).Assembly;
         void CheckForStateAttributes(object obj)
         {
             if (hasChecked && obj == this)
@@ -286,7 +286,7 @@ namespace HotUI
             //	Where (x => Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
             var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
                 //ToList ();
-                Where(x => (x.FieldType.Assembly == HotUIAssembly && x.FieldType.Name == "State`1") || Attribute.IsDefined(x, typeof(StateAttribute))).ToList();
+                Where(x => (x.FieldType.Assembly == CometAssembly && x.FieldType.Name == "State`1") || Attribute.IsDefined(x, typeof(StateAttribute))).ToList();
             //if (properties.Any()) {
             //	foreach(var prop in properties) {
             //		var child = prop.GetValue (this) as BindingObject;
@@ -324,7 +324,7 @@ namespace HotUI
             //	Where (x => Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
             var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
                 //ToList ();
-                Where(x => (x.FieldType.Assembly == HotUIAssembly && x.FieldType.Name == "State`1") || Attribute.IsDefined(x, typeof(StateAttribute))).ToList();
+                Where(x => (x.FieldType.Assembly == CometAssembly && x.FieldType.Name == "State`1") || Attribute.IsDefined(x, typeof(StateAttribute))).ToList();
             //if (properties.Any()) {
             //	foreach(var prop in properties) {
             //		var child = prop.GetValue (this) as BindingObject;

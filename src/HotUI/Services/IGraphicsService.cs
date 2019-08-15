@@ -1,6 +1,6 @@
-using HotUI.Graphics;
+using Comet.Graphics;
 
-namespace HotUI.Services
+namespace Comet.Services
 {
     public interface IGraphicsService
     {

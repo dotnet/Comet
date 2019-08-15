@@ -1,8 +1,8 @@
 ﻿using System;
 using AppKit;
-using HotUI.Mac.Extensions;
+using Comet.Mac.Extensions;
 
-namespace HotUI.Mac.Controls
+namespace Comet.Mac.Controls
 {
     public class HUITableViewCell : NSTableCellView
     {

@@ -1,9 +1,9 @@
 ﻿using FWebView = Xamarin.Forms.WebView;
-using HWebView = HotUI.WebView;
+using HWebView = Comet.WebView;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Forms.Handlers
+namespace Comet.Forms.Handlers
 {
     public class WebViewHandler : AbstractControlHandler<HWebView, FWebView>
     {

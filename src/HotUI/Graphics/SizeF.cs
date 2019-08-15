@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Globalization;
 
-namespace HotUI
+namespace Comet
 {
     [DebuggerDisplay("Width={Width}, Height={Height}")]
     public struct SizeF

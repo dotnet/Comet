@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotUI.Forms 
+namespace Comet.Forms 
 {
 	public interface FormsViewHandler  : IViewHandler
 	{

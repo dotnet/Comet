@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UIKit;
-namespace HotUI.iOS
+namespace Comet.iOS
 {
     public class HUITabView : UIView
     {

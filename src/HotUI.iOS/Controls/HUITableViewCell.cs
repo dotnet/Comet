@@ -1,7 +1,7 @@
 using System;
 using UIKit;
 
-namespace HotUI.iOS.Controls
+namespace Comet.iOS.Controls
 {
     public class HUITableViewCell : UITableViewCell
     {

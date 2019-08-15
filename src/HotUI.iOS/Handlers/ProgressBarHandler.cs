@@ -1,7 +1,7 @@
 ﻿using System;
 using UIKit;
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class ProgressBarHandler : AbstractControlHandler<ProgressBar, UIProgressView>
     {

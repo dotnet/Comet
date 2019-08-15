@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 
 // ReSharper disable once CheckNamespace
-namespace HotUI
+namespace Comet
 {
     public static class DatabindingExtensions
     {

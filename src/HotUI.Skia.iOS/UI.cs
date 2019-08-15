@@ -1,4 +1,4 @@
-﻿namespace HotUI.Skia.iOS
+﻿namespace Comet.Skia.iOS
 {
 	public static class UI
     {

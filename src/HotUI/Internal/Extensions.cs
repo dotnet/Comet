@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using HotUI.Reflection;
+using Comet.Reflection;
 
-namespace HotUI.Internal
+namespace Comet.Internal
 {
     public static class Extensions
     {

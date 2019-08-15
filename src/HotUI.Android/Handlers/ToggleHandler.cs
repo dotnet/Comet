@@ -4,7 +4,7 @@ using AToggle = Android.Widget.ToggleButton;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ToggleHandler : AbstractControlHandler<Toggle, AToggle>
     {

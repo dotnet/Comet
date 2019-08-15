@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using WPFSize = System.Windows.Size;
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public abstract class AbstractLayoutHandler : Panel, WPFViewHandler
     {

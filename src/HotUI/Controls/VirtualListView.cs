@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HotUI
+namespace Comet
 {
     public class VirtualListView : ListView
     {

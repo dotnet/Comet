@@ -1,8 +1,8 @@
-﻿using HotUI.Android.Controls;
-using HotUI.Android.Handlers;
-using HotUI.Android.Services;
+﻿using Comet.Android.Controls;
+using Comet.Android.Handlers;
+using Comet.Android.Services;
 
-namespace HotUI.Android
+namespace Comet.Android
 {
     public static class UI
     {

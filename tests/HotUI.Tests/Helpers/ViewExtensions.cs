@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace HotUI.Tests
+namespace Comet.Tests
 {
     public static class ViewExtensions
     {

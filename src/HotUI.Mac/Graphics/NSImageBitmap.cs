@@ -1,8 +1,8 @@
-﻿using HotUI.Graphics;
+﻿using Comet.Graphics;
 using AppKit;
-using HotUI.Mac;
+using Comet.Mac;
 
-namespace HotUI.Map.Graphics
+namespace Comet.Map.Graphics
 {
     public class NSImageBitmap : Bitmap
     {

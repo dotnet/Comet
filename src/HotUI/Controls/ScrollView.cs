@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-namespace HotUI
+namespace Comet
 {
     public class ScrollView : View, IEnumerable
     {

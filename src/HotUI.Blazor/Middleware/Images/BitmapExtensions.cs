@@ -1,9 +1,9 @@
-﻿using HotUI.Blazor.Middleware.Images;
-using HotUI.Services;
+﻿using Comet.Blazor.Middleware.Images;
+using Comet.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace HotUI.Blazor
+namespace Comet.Blazor
 {
     internal static class BitmapExtensions
     {

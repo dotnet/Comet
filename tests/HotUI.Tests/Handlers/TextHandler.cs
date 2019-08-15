@@ -1,4 +1,4 @@
-﻿namespace HotUI.Tests.Handlers 
+﻿namespace Comet.Tests.Handlers 
 {
 	public class TextHandler: GenericViewHandler 
 	{

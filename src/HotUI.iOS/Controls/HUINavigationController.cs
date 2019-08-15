@@ -1,7 +1,7 @@
 ﻿using System;
 using UIKit;
 
-namespace HotUI.iOS
+namespace Comet.iOS
 {
     public class HUINavigationController : UINavigationController
     {
@@ -15,7 +15,7 @@ namespace HotUI.iOS
         public override UIViewController PopViewController(bool animated)
         {
             var vc = base.PopViewController(animated);
-            var hotVC = vc as HotUIViewController;
+            var hotVC = vc as CometViewController;
             if (hotVC?.CurrentView != null) {
                 hotVC?.CurrentView?.Dispose();
                 hotVC.CurrentView = null;

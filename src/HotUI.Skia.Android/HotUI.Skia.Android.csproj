@@ -10,8 +10,8 @@
     <TemplateGuid>{9ef11e43-1701-4396-8835-8392d57abb70}</TemplateGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HotUI.Skia.Android</RootNamespace>
-    <AssemblyName>HotUI.Skia.Android</AssemblyName>
+    <RootNamespace>Comet.Skia.Android</RootNamespace>
+    <AssemblyName>Comet.Skia.Android</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
@@ -69,17 +69,17 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotUI\HotUI.csproj">
+    <ProjectReference Include="..\Comet\Comet.csproj">
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
-      <Name>HotUI</Name>
+      <Name>Comet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotUI.Android\HotUI.Android.csproj">
+    <ProjectReference Include="..\Comet.Android\Comet.Android.csproj">
       <Project>{1E8FBBC2-9E06-4960-A116-65CDEFEFE11D}</Project>
-      <Name>HotUI.Android</Name>
+      <Name>Comet.Android</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotUI.Skia\HotUI.Skia.csproj">
+    <ProjectReference Include="..\Comet.Skia\Comet.Skia.csproj">
       <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
-      <Name>HotUI.Skia</Name>
+      <Name>Comet.Skia</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />

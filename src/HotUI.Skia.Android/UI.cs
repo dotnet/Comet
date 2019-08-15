@@ -1,4 +1,4 @@
-﻿namespace HotUI.Skia.Android
+﻿namespace Comet.Skia.Android
 {
 	public static class UI
     {

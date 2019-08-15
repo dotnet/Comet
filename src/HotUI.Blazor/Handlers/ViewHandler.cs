@@ -1,6 +1,6 @@
-﻿using HotUI.Blazor.Components;
+﻿using Comet.Blazor.Components;
 
-namespace HotUI.Blazor.Handlers
+namespace Comet.Blazor.Handlers
 {
     internal class ViewHandler : BlazorHandler<View, BView>
     {

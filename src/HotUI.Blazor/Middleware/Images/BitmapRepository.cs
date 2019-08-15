@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Concurrent;
 
-namespace HotUI.Blazor.Middleware.Images
+namespace Comet.Blazor.Middleware.Images
 {
     internal class BitmapRepository
     {

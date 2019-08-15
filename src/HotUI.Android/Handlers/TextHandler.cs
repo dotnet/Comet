@@ -1,10 +1,10 @@
 ﻿using Android.Content;
 using Android.Widget;
-using HotUI.Android;
+using Comet.Android;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class TextHandler : AbstractControlHandler<Text, TextView>
     {

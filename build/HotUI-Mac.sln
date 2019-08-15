@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI", "..\src\HotUI\HotUI.csproj", "{1591BF3F-2370-4EB6-9336-F4EED244AB42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet", "..\src\Comet\Comet.csproj", "{1591BF3F-2370-4EB6-9336-F4EED244AB42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Android", "..\src\HotUI.Android\HotUI.Android.csproj", "{1E8FBBC2-9E06-4960-A116-65CDEFEFE11D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Android", "..\src\Comet.Android\Comet.Android.csproj", "{1E8FBBC2-9E06-4960-A116-65CDEFEFE11D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.iOS", "..\src\HotUI.iOS\HotUI.iOS.csproj", "{9DF36DBF-AFE6-438D-B7A6-1B5FB3D1D6D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.iOS", "..\src\Comet.iOS\Comet.iOS.csproj", "{9DF36DBF-AFE6-438D-B7A6-1B5FB3D1D6D1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Mac", "..\src\HotUI.Mac\HotUI.Mac.csproj", "{BCAF5569-30DB-4D44-BF46-DFFE93DDCBD0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Mac", "..\src\Comet.Mac\Comet.Mac.csproj", "{BCAF5569-30DB-4D44-BF46-DFFE93DDCBD0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Loader", "..\src\Xamarin.Forms.Loader\Xamarin.Forms.Loader.csproj", "{D4420A5B-F81A-4289-990F-743AC7B29051}"
 EndProject
@@ -15,29 +15,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{F90AD9E2-9679-4B6A-A13B-7F949465FA9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Android.Sample", "..\sample\HotUI.Android.Sample\HotUI.Android.Sample.csproj", "{1B3F8AD2-4252-44CA-8DD6-A7702C46A25D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Android.Sample", "..\sample\Comet.Android.Sample\Comet.Android.Sample.csproj", "{1B3F8AD2-4252-44CA-8DD6-A7702C46A25D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.iOS.Sample", "..\sample\HotUI.iOS.Sample\HotUI.iOS.Sample.csproj", "{12BE5947-A64A-4968-96A6-5CA3CE36C244}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.iOS.Sample", "..\sample\Comet.iOS.Sample\Comet.iOS.Sample.csproj", "{12BE5947-A64A-4968-96A6-5CA3CE36C244}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Mac.Sample", "..\sample\HotUI.Mac.Sample\HotUI.Mac.Sample.csproj", "{6F6832FA-2E11-4324-B336-5673DFE15862}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Mac.Sample", "..\sample\Comet.Mac.Sample\Comet.Mac.Sample.csproj", "{6F6832FA-2E11-4324-B336-5673DFE15862}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Samples", "..\sample\HotUI.Samples\HotUI.Samples.csproj", "{F6609551-D56D-4737-8326-EFB2A1CADE26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Samples", "..\sample\Comet.Samples\Comet.Samples.csproj", "{F6609551-D56D-4737-8326-EFB2A1CADE26}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E116F98C-AA6F-4C00-B8D0-DC6D2FECC7B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Tests", "..\tests\HotUI.Tests\HotUI.Tests.csproj", "{7F1483A8-0FC2-4187-9453-9E412E41E3D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Tests", "..\tests\Comet.Tests\Comet.Tests.csproj", "{7F1483A8-0FC2-4187-9453-9E412E41E3D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Forms", "Forms", "{AAC4616D-CE78-4BBB-8155-C55F22AB7DCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Skia", "..\src\HotUI.Skia\HotUI.Skia.csproj", "{9B9BF0E6-C500-4121-8FB6-9DB46D8BA8EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Skia", "..\src\Comet.Skia\Comet.Skia.csproj", "{9B9BF0E6-C500-4121-8FB6-9DB46D8BA8EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Skia", "Skia", "{8F240B92-7D40-4AEF-8B6A-B58CD1912706}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Skia.iOS", "..\src\HotUI.Skia.iOS\HotUI.Skia.iOS.csproj", "{9ACC68A5-5A5C-409D-A379-D62220A9F49F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Skia.iOS", "..\src\Comet.Skia.iOS\Comet.Skia.iOS.csproj", "{9ACC68A5-5A5C-409D-A379-D62220A9F49F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Skia.Android", "..\src\HotUI.Skia.Android\HotUI.Skia.Android.csproj", "{F5FFBB2C-23BE-4029-BFD1-1028F1461F86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Skia.Android", "..\src\Comet.Skia.Android\Comet.Skia.Android.csproj", "{F5FFBB2C-23BE-4029-BFD1-1028F1461F86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HotUI.Skia.Mac", "..\src\HotUI.Skia.Mac\HotUI.Skia.Mac.csproj", "{00B248D0-382A-4504-A126-76B9C892583E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Skia.Mac", "..\src\Comet.Skia.Mac\Comet.Skia.Mac.csproj", "{00B248D0-382A-4504-A126-76B9C892583E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

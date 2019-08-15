@@ -2,7 +2,7 @@
 using Android.Content;
 using Android.Widget;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class TextFieldHandler : AbstractControlHandler<TextField, EditText>
     {

@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 using UWPListView = Windows.UI.Xaml.Controls.ListView;
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
     public class ListViewHandler : AbstractHandler<ListView, UWPListView>
     {

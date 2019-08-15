@@ -6,8 +6,8 @@
     <ProjectGuid>{BCAF5569-30DB-4D44-BF46-DFFE93DDCBD0}</ProjectGuid>
     <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>HotUI.Mac</RootNamespace>
-    <AssemblyName>HotUI.Mac</AssemblyName>
+    <RootNamespace>Comet.Mac</RootNamespace>
+    <AssemblyName>Comet.Mac</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
     <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
@@ -72,7 +72,7 @@
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="Handlers\GridHandler.cs" />
-    <Compile Include="HotUIView.cs" />
+    <Compile Include="CometView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Extensions\MacExtensions.cs" />
     <Compile Include="Handlers\ButtonHandler.cs" />
@@ -85,7 +85,7 @@
     <Compile Include="Services\MacBitmapService.cs" />
     <Compile Include="Services\MacGraphicsService.cs" />
     <Compile Include="UI.cs" />
-    <Compile Include="HotUIViewController.cs" />
+    <Compile Include="CometViewController.cs" />
     <Compile Include="Handlers\ViewHandler.cs" />
     <Compile Include="Controls\NSNavigationController.cs" />
     <Compile Include="Controls\NSColorView.cs" />
@@ -108,9 +108,9 @@
     <Compile Include="Controls\HUITableViewCell.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotUI\HotUI.csproj">
+    <ProjectReference Include="..\Comet\Comet.csproj">
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
-      <Name>HotUI</Name>
+      <Name>Comet</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

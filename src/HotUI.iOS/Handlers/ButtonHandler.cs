@@ -4,7 +4,7 @@ using UIKit;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class ButtonHandler : AbstractControlHandler<Button, UIButton>
     {

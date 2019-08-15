@@ -1,7 +1,7 @@
 ﻿using FImage = Xamarin.Forms.Image;
-using HImage = HotUI.Image;
+using HImage = Comet.Image;
 
-namespace HotUI.Forms.Handlers
+namespace Comet.Forms.Handlers
 {
     public class ImageHandler : AbstractControlHandler<HImage, FImage>
     {

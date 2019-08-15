@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
-namespace HotUI.Reflection
+namespace Comet.Reflection
 {
     public static class ReflectionExtensions
     {

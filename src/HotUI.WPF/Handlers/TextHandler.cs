@@ -1,7 +1,7 @@
 ﻿using WPFLabel = System.Windows.Controls.Label;
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public class TextHandler : AbstractControlHandler<Text, WPFLabel>
     {

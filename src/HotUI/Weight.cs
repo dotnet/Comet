@@ -1,5 +1,5 @@
 ﻿using System;
-namespace HotUI
+namespace Comet
 {
     /// <summary>
     /// A weight to use for fonts.

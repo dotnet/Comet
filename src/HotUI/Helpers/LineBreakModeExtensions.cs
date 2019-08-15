@@ -1,7 +1,7 @@
 ﻿using System;
-using static HotUI.EnvironmentKeys;
+using static Comet.EnvironmentKeys;
 
-namespace HotUI
+namespace Comet
 {
     public static class LineBreakModeExtensions
     {

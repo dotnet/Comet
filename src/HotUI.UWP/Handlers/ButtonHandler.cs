@@ -5,7 +5,7 @@ using UWPButton = Windows.UI.Xaml.Controls.Button;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
     public class ButtonHandler : AbstractControlHandler<Button,UWPButton>
     {

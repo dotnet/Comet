@@ -4,7 +4,7 @@ using AppKit;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.Mac.Handlers
+namespace Comet.Mac.Handlers
 {
     public class SliderHandler : AbstractControlHandler<Slider, NSSlider>
     {

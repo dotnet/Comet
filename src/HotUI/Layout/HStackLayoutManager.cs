@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HotUI.Layout
+namespace Comet.Layout
 {
     public class HStackLayoutManager : ILayoutManager
     {

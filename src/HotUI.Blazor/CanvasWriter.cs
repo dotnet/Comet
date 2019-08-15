@@ -1,7 +1,7 @@
 ﻿using Microsoft.JSInterop;
 using System.Threading.Tasks;
 
-namespace HotUI.Blazor
+namespace Comet.Blazor
 {
     internal class CanvasWriter
     {
@@ -12,8 +12,8 @@ namespace HotUI.Blazor
             _jsRuntime = jsRuntime;
         }
 
-        public Task<SizeF> GetSizeAsync(object canvas) => _jsRuntime.InvokeAsync<SizeF>("hotui.canvas.getSize", new[] { canvas });
+        public Task<SizeF> GetSizeAsync(object canvas) => _jsRuntime.InvokeAsync<SizeF>("Comet.canvas.getSize", new[] { canvas });
 
-        public Task DrawImageAsync(object canvas, byte[] bytes) => _jsRuntime.InvokeAsync<object>("hotui.canvas.drawImage", new[] { canvas, bytes });
+        public Task DrawImageAsync(object canvas, byte[] bytes) => _jsRuntime.InvokeAsync<object>("Comet.canvas.drawImage", new[] { canvas, bytes });
     }
 }

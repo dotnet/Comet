@@ -1,13 +1,13 @@
-﻿using HotUI.Graphics;
+﻿using Comet.Graphics;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Diagnostics;
 
-namespace HotUI.Blazor
+namespace Comet.Blazor
 {
     internal class BlazorBitmap : Bitmap
     {
-        public static readonly PathString Prefix = "/hotui/blazor/image";
+        public static readonly PathString Prefix = "/Comet/blazor/image";
 
         private readonly Action<BlazorBitmap> _remove;
 

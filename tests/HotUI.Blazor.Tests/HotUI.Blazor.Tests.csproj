@@ -15,7 +15,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\HotUI.Blazor\HotUI.Blazor.csproj" />
+    <ProjectReference Include="..\..\src\Comet.Blazor\Comet.Blazor.csproj" />
   </ItemGroup>
 
 </Project>

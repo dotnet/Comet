@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using FFImageLoading;
 using FFImageLoading.Drawables;
-using HotUI.Android.Controls;
+using Comet.Android.Controls;
 using AView = Android.Views.View;
 using MotionEvent = Android.Views.MotionEvent;
 using MotionEventActions = Android.Views.MotionEventActions;
 
-namespace HotUI.Android
+namespace Comet.Android
 {
     public static partial class ControlExtensions
     {

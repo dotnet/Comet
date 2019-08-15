@@ -1,4 +1,4 @@
-﻿namespace HotUI.Skia.Mac
+﻿namespace Comet.Skia.Mac
 {
 	public static class UI
     {

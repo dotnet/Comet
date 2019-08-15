@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI;
-using HotUI.Forms.Handlers;
+using Comet;
+using Comet.Forms.Handlers;
 
-namespace HotUI.Forms {
+namespace Comet.Forms {
 	public static class UI {
 		static bool didInit;
 		public static void Init ()

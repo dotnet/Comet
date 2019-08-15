@@ -1,8 +1,8 @@
 ﻿using System;
 using AppKit;
-using HotUI.Mac.Controls;
+using Comet.Mac.Controls;
 
-namespace HotUI.Mac.Handlers
+namespace Comet.Mac.Handlers
 {
     public abstract class AbstractControlHandler<TVirtualView, TNativeView> : MacViewHandler 
         where TVirtualView : View 
@@ -74,7 +74,7 @@ namespace HotUI.Mac.Handlers
             if (_nativeView is NSControl control)
                 return control.SizeThatFits(availableSize.ToCGSize()).ToSizeF();
 
-            return HotUI.View.IllTakeWhatYouCanGive;
+            return Comet.View.IllTakeWhatYouCanGive;
         }
 
         public void SetFrame(RectangleF frame)

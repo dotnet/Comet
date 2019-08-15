@@ -2,7 +2,7 @@
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
     public class TextHandler : AbstractControlHandler<Text, UWPLabel>
     {

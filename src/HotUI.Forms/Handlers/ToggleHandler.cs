@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using FToggle = Xamarin.Forms.Switch;
 
-namespace HotUI.Forms.Handlers
+namespace Comet.Forms.Handlers
 {
     public class ToggleHandler : AbstractControlHandler<Toggle, FToggle>
     {

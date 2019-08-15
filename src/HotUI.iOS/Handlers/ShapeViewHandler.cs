@@ -3,13 +3,13 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class ShapeViewHandler : AbstractControlHandler<ShapeView, HUIShapeView>
     {
         public static readonly PropertyMapper<ShapeView> Mapper = new PropertyMapper<ShapeView>(ViewHandler.Mapper)
         {
-            [nameof(HotUI.ShapeView.Shape)] = MapShapeProperty,
+            [nameof(Comet.ShapeView.Shape)] = MapShapeProperty,
         };
 
         

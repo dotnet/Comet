@@ -1,6 +1,6 @@
 ﻿using System;
 using UIKit;
-namespace HotUI.iOS
+namespace Comet.iOS
 {
     public class HUITapGesture : UITapGestureRecognizer
     {

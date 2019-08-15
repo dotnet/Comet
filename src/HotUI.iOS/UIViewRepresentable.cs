@@ -1,7 +1,7 @@
 ﻿using System;
 using UIKit;
 
-namespace HotUI.iOS
+namespace Comet.iOS
 {
     public class UIViewRepresentable<T> : ViewRepresentable where T:UIView
     {

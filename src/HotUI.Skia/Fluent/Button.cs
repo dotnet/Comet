@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using HotUI.Skia.Controls;
+using Comet.Skia.Controls;
 using SkiaSharp;
 
-namespace HotUI.Skia.Fluent
+namespace Comet.Skia.Fluent
 {
     /// <summary>
     /// Initial "Fluent" button.

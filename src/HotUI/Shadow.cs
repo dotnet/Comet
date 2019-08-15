@@ -1,4 +1,4 @@
-namespace HotUI.Graphics
+namespace Comet.Graphics
 {
     public class Shadow
     {

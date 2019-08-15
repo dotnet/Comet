@@ -1,10 +1,10 @@
 using System.Threading.Tasks;
 using FFImageLoading;
-using HotUI.Android.Graphics;
-using HotUI.Graphics;
-using HotUI.Services;
+using Comet.Android.Graphics;
+using Comet.Graphics;
+using Comet.Services;
 
-namespace HotUI.Android.Services
+namespace Comet.Android.Services
 {
     public class AndroidBitmapService : AbstractBitmapService
     {

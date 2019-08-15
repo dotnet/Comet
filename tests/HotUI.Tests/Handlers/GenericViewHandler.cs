@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using HotUI.Reflection;
+using Comet.Reflection;
 
-namespace HotUI.Tests.Handlers 
+namespace Comet.Tests.Handlers 
 {
 	public class GenericViewHandler: IViewHandler 
 	{

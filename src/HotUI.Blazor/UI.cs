@@ -1,6 +1,6 @@
-﻿using HotUI.Blazor.Handlers;
+﻿using Comet.Blazor.Handlers;
 
-namespace HotUI.Blazor
+namespace Comet.Blazor
 {
     internal static class UI
     {

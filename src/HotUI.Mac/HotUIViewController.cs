@@ -1,14 +1,14 @@
 ﻿using System;
 using AppKit;
-using HotUI.Mac.Extensions;
+using Comet.Mac.Extensions;
 
-namespace HotUI.Mac
+namespace Comet.Mac
 {
-    public class HotUIViewController : NSViewController
+    public class CometViewController : NSViewController
     {
-        private HotUIView _containerView;
+        private CometView _containerView;
 
-        public HotUIViewController()
+        public CometViewController()
         {
         }
         
@@ -23,12 +23,12 @@ namespace HotUI.Mac
             View = ContainerView;
         }
         
-        private HotUIView ContainerView
+        private CometView ContainerView
         {
             get
             {
                 if (_containerView == null)
-                    _containerView = new HotUIView(NSScreen.MainScreen.Frame);
+                    _containerView = new CometView(NSScreen.MainScreen.Frame);
 
                 return _containerView;
             }

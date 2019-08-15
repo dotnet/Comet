@@ -7,8 +7,8 @@
     <ProjectGuid>{2D337300-B3E9-4A36-8387-76A9A1100C5B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HotUI.UWP</RootNamespace>
-    <AssemblyName>HotUI.UWP</AssemblyName>
+    <RootNamespace>Comet.UWP</RootNamespace>
+    <AssemblyName>Comet.UWP</AssemblyName>
     <DefaultLanguage>en-US</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
     <TargetPlatformVersion Condition=" '$(TargetPlatformVersion)' == '' ">10.0.18362.0</TargetPlatformVersion>
@@ -135,8 +135,8 @@
     <Compile Include="Handlers\ToggleHandler.cs" />
     <Compile Include="Handlers\ManagedVStackHandler.cs" />
     <Compile Include="Handlers\ManagedGridHandler.cs" />
-    <Compile Include="HotUIPage.xaml.cs">
-      <DependentUpon>HotUIPage.xaml</DependentUpon>
+    <Compile Include="CometPage.xaml.cs">
+      <DependentUpon>CometPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="FoundationExtensions.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
@@ -151,14 +151,14 @@
     <Compile Include="Handlers\TextHandler.cs" />
     <Compile Include="Handlers\ViewHandler.cs" />
     <Compile Include="Handlers\VStackHandler.cs" />
-    <Compile Include="HotUIView.cs" />
+    <Compile Include="CometView.cs" />
     <Compile Include="Services\UWPBitmapService.cs" />
     <Compile Include="UWPViewHandler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="UWPExtensions.cs" />
     <Compile Include="ViewChangedEventArgs.cs" />
-    <EmbeddedResource Include="Properties\HotUI.UWP.rd.xml" />
+    <EmbeddedResource Include="Properties\Comet.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
@@ -169,13 +169,13 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotUI\HotUI.csproj">
+    <ProjectReference Include="..\Comet\Comet.csproj">
       <Project>{1817646e-e71e-48cf-80a4-3030ef870d61}</Project>
-      <Name>HotUI</Name>
+      <Name>Comet</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="HotUIPage.xaml">
+    <Page Include="CometPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

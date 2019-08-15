@@ -1,7 +1,7 @@
 using System;
 using System.IO;
 
-namespace HotUI.Services
+namespace Comet.Services
 {
     public class ConsoleLoggingService : ILoggingService
     {

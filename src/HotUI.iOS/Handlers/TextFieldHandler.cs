@@ -4,7 +4,7 @@ using UIKit;
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class TextFieldHandler : AbstractControlHandler<TextField, UITextField>
     {

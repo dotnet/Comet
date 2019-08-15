@@ -1,9 +1,9 @@
 ﻿using System;
 using CoreGraphics;
 using AppKit;
-using HotUI.Mac.Extensions;
+using Comet.Mac.Extensions;
 
-namespace HotUI.Mac
+namespace Comet.Mac
 {
     public class HUIShapeView : NSView
     {

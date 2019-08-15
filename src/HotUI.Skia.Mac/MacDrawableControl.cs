@@ -1,10 +1,10 @@
 ﻿using System;
 using CoreGraphics;
 using SkiaSharp.Views.Mac;
-using HotUI.Mac;
+using Comet.Mac;
 using AppKit;
 
-namespace HotUI.Skia.Mac
+namespace Comet.Skia.Mac
 {
     public class MacDrawableControl : SKCanvasView, IDrawableControl
     {

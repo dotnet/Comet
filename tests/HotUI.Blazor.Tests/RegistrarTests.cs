@@ -1,4 +1,4 @@
-using HotUI.Blazor.Handlers;
+using Comet.Blazor.Handlers;
 using Microsoft.AspNetCore.Builder;
 using NSubstitute;
 using System;
@@ -6,7 +6,7 @@ using System.Linq;
 using System.Reflection;
 using Xunit;
 
-namespace HotUI.Blazor.Tests
+namespace Comet.Blazor.Tests
 {
     public class RegistrarTests
     {
@@ -15,7 +15,7 @@ namespace HotUI.Blazor.Tests
         {
             var appBuilder = GetAppBuilder();
 
-            appBuilder.UseHotUI();
+            appBuilder.UseComet();
 
             var types = typeof(IBlazorViewHandler).Assembly.GetTypes()
                 .Where(t => !t.IsAbstract && !t.ContainsGenericParameters && typeof(IBlazorViewHandler).IsAssignableFrom(t));
@@ -31,16 +31,16 @@ namespace HotUI.Blazor.Tests
         }
 
         [Fact]
-        public void AllHotUIHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(View).Assembly);
+        public void AllCometHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(View).Assembly);
 
         [Fact]
-        public void AllHotUISkiaHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(Skia.SkiaShapeView).Assembly);
+        public void AllCometSkiaHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(Skia.SkiaShapeView).Assembly);
 
         private void AllInternalHandlersAreRegistered(Assembly assembly)
         {
             var appBuilder = GetAppBuilder();
 
-            appBuilder.UseHotUI();
+            appBuilder.UseComet();
 
             var types = assembly.GetTypes()
                 .Where(t => !t.IsAbstract && typeof(View).IsAssignableFrom(t));

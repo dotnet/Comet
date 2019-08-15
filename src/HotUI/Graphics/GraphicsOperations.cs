@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HotUI.Graphics
+namespace Comet.Graphics
 {
     public static class GraphicsOperations
     {

@@ -1,9 +1,9 @@
 using System;
 using CoreGraphics;
-using HotUI.iOS.Controls;
+using Comet.iOS.Controls;
 using UIKit;
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class AbstractLayoutHandler : UIView, iOSViewHandler
     {
@@ -37,7 +37,7 @@ namespace HotUI.iOS.Handlers
 
         public SizeF Measure(SizeF availableSize)
         {
-            return HotUI.View.IllTakeWhatYouCanGive;
+            return Comet.View.IllTakeWhatYouCanGive;
         }
 
         public void SetFrame(RectangleF frame)

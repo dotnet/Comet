@@ -1,6 +1,6 @@
 ﻿using Windows.UI.Xaml;
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
 	public class ContentViewHandler : AbstractHandler<ContentView, UIElement>
     {

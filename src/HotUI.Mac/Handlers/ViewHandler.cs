@@ -3,9 +3,9 @@ using System.Diagnostics;
 using AppKit;
 using CoreAnimation;
 using CoreGraphics;
-using HotUI.Mac.Extensions;
+using Comet.Mac.Extensions;
 
-namespace HotUI.Mac.Handlers
+namespace Comet.Mac.Handlers
 {   
 	public class ViewHandler : AbstractHandler<View, NSView>
     {

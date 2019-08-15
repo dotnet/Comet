@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotUI
+namespace Comet
 {
     [Flags]
     public enum AnimationOptions

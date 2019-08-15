@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Android.Widget;
-using HotUI.Android.Controls;
+using Comet.Android.Controls;
 using AView = Android.Views.View;
 using AOrientation = Android.Widget.Orientation;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class VStackHandler : LinearLayout, AndroidViewHandler
     {

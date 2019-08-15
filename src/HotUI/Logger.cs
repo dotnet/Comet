@@ -1,7 +1,7 @@
 using System;
-using HotUI.Services;
+using Comet.Services;
 
-namespace HotUI
+namespace Comet
 {
     public static class Logger
     {

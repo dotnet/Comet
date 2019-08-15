@@ -8,9 +8,9 @@
     <ProjectGuid>{9ACC68A5-5A5C-409D-A379-D62220A9F49F}</ProjectGuid>
     <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
-    <RootNamespace>HotUI.Skia.iOS</RootNamespace>
+    <RootNamespace>Comet.Skia.iOS</RootNamespace>
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
-    <AssemblyName>HotUI.Skia.iOS</AssemblyName>
+    <AssemblyName>Comet.Skia.iOS</AssemblyName>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,19 +50,19 @@
     <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HotUI.iOS\HotUI.iOS.csproj">
+    <ProjectReference Include="..\Comet.iOS\Comet.iOS.csproj">
       <Project>{9df36dbf-afe6-438d-b7a6-1b5fb3d1d6d1}</Project>
-      <Name>HotUI.iOS</Name>
+      <Name>Comet.iOS</Name>
       <IsAppExtension>false</IsAppExtension>
       <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
-    <ProjectReference Include="..\HotUI.Skia\HotUI.Skia.csproj">
+    <ProjectReference Include="..\Comet.Skia\Comet.Skia.csproj">
       <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
-      <Name>HotUI.Skia</Name>
+      <Name>Comet.Skia</Name>
     </ProjectReference>
-    <ProjectReference Include="..\HotUI\HotUI.csproj">
+    <ProjectReference Include="..\Comet\Comet.csproj">
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
-      <Name>HotUI</Name>
+      <Name>Comet</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />

@@ -1,6 +1,6 @@
 using AppKit;
 
-namespace HotUI.Mac.Extensions
+namespace Comet.Mac.Extensions
 {
     public static class NSViewExtensions
     {

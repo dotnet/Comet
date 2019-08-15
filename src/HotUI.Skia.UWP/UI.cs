@@ -1,4 +1,4 @@
-﻿namespace HotUI.Skia.UWP
+﻿namespace Comet.Skia.UWP
 {
 	public static class UI
     {

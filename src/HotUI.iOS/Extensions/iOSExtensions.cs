@@ -3,17 +3,17 @@ using System.Linq;
 using CoreGraphics;
 using CoreText;
 using UIKit;
-namespace HotUI.iOS {
+namespace Comet.iOS {
 	public static partial class iOSExtensions {
 
 
 		static iOSExtensions()
 		{
-			HotUI.iOS.UI.Init ();
+			Comet.iOS.UI.Init ();
 		}
 		public static UIViewController ToViewController (this View view, bool allowNav = true)
 		{
-			var vc = new HotUIViewController 
+			var vc = new CometViewController 
 			{
 				CurrentView = view,
 			};

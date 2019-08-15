@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Runtime.CompilerServices;
-using HotUI.Reflection;
+using Comet.Reflection;
 
-namespace HotUI {
+namespace Comet {
 
 	public class State<T> : BindingObject 
 	{

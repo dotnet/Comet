@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using AppKit;
 using CoreGraphics;
 
-namespace HotUI.Mac {
+namespace Comet.Mac {
 	public class NSNavigationController : NSViewController {
 		TitleBar Toolbar;
 		NSView MainContentView;

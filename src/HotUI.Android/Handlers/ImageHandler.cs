@@ -1,9 +1,9 @@
 ﻿using Android.Content;
-using HotUI.Android.Controls;
+using Comet.Android.Controls;
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ImageHandler : AbstractControlHandler<Image, HUIImageView>
     {

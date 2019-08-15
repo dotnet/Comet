@@ -1,10 +1,10 @@
 using CoreGraphics;
-using HotUI.Layout;
+using Comet.Layout;
 using UIKit;
 
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public class HStackHandler : AbstractLayoutHandler
     {

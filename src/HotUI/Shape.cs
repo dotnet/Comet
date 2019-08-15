@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using HotUI.Graphics;
+using Comet.Graphics;
 
-namespace HotUI
+namespace Comet
 {
     public abstract class Shape : ContextualObject
     {        

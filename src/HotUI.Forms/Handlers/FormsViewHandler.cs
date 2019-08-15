@@ -1,4 +1,4 @@
-﻿namespace HotUI.Forms.Handlers
+﻿namespace Comet.Forms.Handlers
 {
     public abstract class AbstractViewHandler : ContentView
     {

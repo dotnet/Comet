@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace HotUI {
+namespace Comet {
 
     public static class EnvironmentKeys {
         public const string DocumentsFolder = "DocumentsFolder";

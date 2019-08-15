@@ -5,7 +5,7 @@ using UWPSize = Windows.Foundation.Size;
 using UWPRect = Windows.Foundation.Rect;
 using UWPPoint = Windows.Foundation.Point;
 
-namespace HotUI.UWP
+namespace Comet.UWP
 {
     public static class FoundationExtensions
     {

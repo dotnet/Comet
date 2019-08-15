@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using FEntry = Xamarin.Forms.Entry;
 
-namespace HotUI.Forms.Handlers
+namespace Comet.Forms.Handlers
 {
     public class TextFieldHandler : AbstractControlHandler<TextField, FEntry>
     {

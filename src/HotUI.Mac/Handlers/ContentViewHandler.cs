@@ -1,8 +1,8 @@
 ﻿using AppKit;
-using HotUI.Mac.Extensions;
+using Comet.Mac.Extensions;
 
 // ReSharper disable ClassNeverInstantiated.Global
-namespace HotUI.Mac.Handlers 
+namespace Comet.Mac.Handlers 
 {
 	public class ContentViewHandler : AbstractHandler<ContentView, NSView>
 	{

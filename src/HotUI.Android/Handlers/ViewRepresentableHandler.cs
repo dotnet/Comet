@@ -4,7 +4,7 @@ using AView = Android.Views.View;
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ViewRepresentableHandler : AbstractControlHandler<ViewRepresentable, AView>
     {

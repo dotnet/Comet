@@ -1,7 +1,7 @@
-using HotUI.Graphics;
+using Comet.Graphics;
 using SkiaSharp;
 
-namespace HotUI.Skia
+namespace Comet.Skia
 {
     public static class SkiaGraphicsExtensions
     {

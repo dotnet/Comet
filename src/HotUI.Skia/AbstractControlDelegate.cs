@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using SkiaSharp;
 
-namespace HotUI.Skia
+namespace Comet.Skia
 {
     public abstract class AbstractControlDelegate : IControlDelegate
     {

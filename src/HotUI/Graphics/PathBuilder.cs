@@ -4,7 +4,7 @@ using System.Text.RegularExpressions;
 using System.Text;
 using System.Globalization;
 
-namespace HotUI.Graphics
+namespace Comet.Graphics
 {
     public class PathBuilder
     {

@@ -3,7 +3,7 @@ using System.Linq;
 using Android.Content;
 using AView = Android.Views.View;
 
-namespace HotUI.Android.Handlers
+namespace Comet.Android.Handlers
 {
     public class ViewHandler : AbstractHandler<View, AView>
     {

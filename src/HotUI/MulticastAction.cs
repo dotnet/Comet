@@ -1,6 +1,6 @@
 using System;
 
-namespace HotUI
+namespace Comet
 {
     internal class MulticastAction<T>
     {

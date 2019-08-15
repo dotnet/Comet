@@ -1,7 +1,7 @@
 using CoreGraphics;
 using UIKit;
 
-namespace HotUI
+namespace Comet
 {
     public static class UIViewExtensions
     {

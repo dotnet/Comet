@@ -1,8 +1,8 @@
 using System;
 using System.Threading.Tasks;
-using HotUI.Graphics;
+using Comet.Graphics;
 
-namespace HotUI.Services
+namespace Comet.Services
 {
     public interface IBitmapService
     {

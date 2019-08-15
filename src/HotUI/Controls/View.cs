@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using HotUI.Helpers;
-using HotUI.Internal;
+using Comet.Helpers;
+using Comet.Internal;
 //using System.Reflection;
-using HotUI.Reflection;
+using Comet.Reflection;
 
-namespace HotUI
+namespace Comet
 {
 
     public class View : ContextualObject, IDisposable

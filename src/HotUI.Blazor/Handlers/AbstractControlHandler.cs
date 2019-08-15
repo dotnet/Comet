@@ -1,11 +1,11 @@
-﻿using HotUI.Blazor.Components;
+﻿using Comet.Blazor.Components;
 using System;
 
-namespace HotUI.Blazor.Handlers
+namespace Comet.Blazor.Handlers
 {
     public abstract class AbstractControlHandler<TVirtualView, TNativeView> : IBlazorViewHandler
       where TVirtualView : View
-      where TNativeView : HotUIComponentBase
+      where TNativeView : CometComponentBase
     {
         private readonly PropertyMapper<TVirtualView> _mapper;
 

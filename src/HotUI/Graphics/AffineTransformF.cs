@@ -2,7 +2,7 @@
 // ReSharper disable CompareOfFloatsByEqualityOperator
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace HotUI.Graphics
+namespace Comet.Graphics
 {
     public class AffineTransformF
     {

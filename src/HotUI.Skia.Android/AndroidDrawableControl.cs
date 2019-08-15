@@ -3,7 +3,7 @@ using SkiaSharp.Views.Android;
 using Android.Content;
 using Android.Views;
 
-namespace HotUI.Skia.Android
+namespace Comet.Skia.Android
 {
     public class AndroidDrawableControl : SKCanvasView, IDrawableControl
     {

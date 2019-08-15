@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HotUI
+namespace Comet
 {
     public enum VerticalAlignment
     {

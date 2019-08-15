@@ -1,8 +1,8 @@
 using System;
-using HotUI.iOS.Controls;
+using Comet.iOS.Controls;
 using UIKit;
 
-namespace HotUI.iOS.Handlers
+namespace Comet.iOS.Handlers
 {
     public abstract class AbstractHandler<TVirtualView, TNativeView> : iOSViewHandler 
         where TVirtualView : View 
@@ -81,7 +81,7 @@ namespace HotUI.iOS.Handlers
 
         public virtual SizeF Measure(SizeF availableSize)
         {
-            return HotUI.View.IllTakeWhatYouCanGive;
+            return Comet.View.IllTakeWhatYouCanGive;
         }
 
         public void SetFrame(RectangleF frame)

@@ -1,4 +1,4 @@
-namespace HotUI.Layout
+namespace Comet.Layout
 {
     public interface ILayoutManager
     {

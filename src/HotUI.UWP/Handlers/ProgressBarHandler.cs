@@ -5,7 +5,7 @@ using Windows.UI.Xaml.Controls;
 
 using UWPProgressBar = Windows.UI.Xaml.Controls.ProgressBar;
 
-namespace HotUI.UWP.Handlers
+namespace Comet.UWP.Handlers
 {
     public class ProgressBarHandler : AbstractHandler<ProgressBar, UWPProgressBar>
     {

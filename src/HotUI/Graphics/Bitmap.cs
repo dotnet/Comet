@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotUI.Graphics
+namespace Comet.Graphics
 {
     public abstract class Bitmap : IDisposable
     {

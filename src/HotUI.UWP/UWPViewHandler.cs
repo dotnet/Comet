@@ -1,7 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml;
 
-namespace HotUI.UWP
+namespace Comet.UWP
 {
     public interface UWPViewHandler : IViewHandler
     {

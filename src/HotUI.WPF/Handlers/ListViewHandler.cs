@@ -2,7 +2,7 @@
 using WPFListView = System.Windows.Controls.ListView;
 // ReSharper disable ClassNeverInstantiated.Global
 
-namespace HotUI.WPF.Handlers
+namespace Comet.WPF.Handlers
 {
     public class ListViewHandler : AbstractControlHandler<ListView, WPFListView>
     {

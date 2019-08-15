@@ -1,8 +1,8 @@
 ﻿using System;
 using FScrollView = Xamarin.Forms.ScrollView;
-using HScrollView = HotUI.ScrollView;
-using HView = HotUI.View;
-namespace HotUI.Forms.Handlers
+using HScrollView = Comet.ScrollView;
+using HView = Comet.View;
+namespace Comet.Forms.Handlers
 {
     public class ScrollViewHandler : FScrollView, FormsViewHandler
     {

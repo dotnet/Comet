@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HotUI.Blazor.Handlers
+namespace Comet.Blazor.Handlers
 {
     public interface IBlazorViewHandler : IViewHandler
     {

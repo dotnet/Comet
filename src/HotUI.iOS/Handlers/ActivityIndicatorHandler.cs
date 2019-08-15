@@ -1,8 +1,8 @@
 ﻿using System;
-using HotUI.iOS.Handlers;
+using Comet.iOS.Handlers;
 using UIKit;
 
-namespace HotUI.iOS
+namespace Comet.iOS
 {
     public class ActivityIndicatorHandler : AbstractControlHandler<ActivityIndicator,UIActivityIndicatorView>
     {

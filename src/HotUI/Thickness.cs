@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace HotUI
+namespace Comet
 {
     [DebuggerDisplay("Left={Left}, Top={Top}, Right={Right}, Bottom={Bottom}, HorizontalThickness={HorizontalThickness}, VerticalThickness={VerticalThickness}")]
     public struct Thickness
