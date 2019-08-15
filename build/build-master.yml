@@ -1,8 +1,8 @@
 stages:
 - stage: BuildSource
   jobs:
-  - job: BuildHotUIBlazor
-    displayName: Build HotUI Blazor
+  - job: BuildCometBlazor
+    displayName: Build Comet Blazor
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -17,27 +17,27 @@ stages:
         displayName: 'Build Blazor'
         inputs:
           command: 'build'
-          projects: 'HotUI.Blazor.sln'
+          projects: 'Comet.Blazor.sln'
           arguments: '-c $(BuildConfiguration)'
       - task: DotNetCoreCLI@2
         displayName: 'Test Blazor'
         inputs:
           command: 'test'
-          projects: 'HotUI.Blazor.sln'
+          projects: 'Comet.Blazor.sln'
           arguments: '-c $(BuildConfiguration)'
       - task: DotNetCoreCLI@2
         displayName: 'Pack Blazor'
         inputs:
           command: 'pack'
-          packagesToPack: 'src/HotUI.Blazor/HotUI.Blazor.csproj'
+          packagesToPack: 'src/Comet.Blazor/Comet.Blazor.csproj'
           arguments: '-c $(BuildConfiguration)'
       - task: PublishBuildArtifacts@1
         inputs:
           pathtoPublish: '$(Build.ArtifactStagingDirectory)'
           artifactName: drop
 
-  - job: BuildHotUIMac
-    displayName: Build HotUI Mac
+  - job: BuildCometMac
+    displayName: Build Comet Mac
     pool:
       name: Hosted macOS
       vmImage: 'macOS 10.14'
@@ -57,12 +57,12 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/HotUI-Mac.sln
+        restoreSolution: build/Comet-Mac.sln
 
     - task: MSBuild@1
-      displayName: 'Build HotUI'
+      displayName: 'Build Comet'
       inputs:
-        solution: 'src/HotUI/HotUI.csproj'
+        solution: 'src/Comet/Comet.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
@@ -72,49 +72,49 @@ stages:
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Android'
+      displayName: 'Build Comet.Android'
       inputs:
-        solution: 'src/HotUI.Android/HotUI.Android.csproj'
+        solution: 'src/Comet.Android/Comet.Android.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.iOS'
+      displayName: 'Build Comet.iOS'
       inputs:
-        solution: 'src/HotUI.iOS/HotUI.iOS.csproj'
+        solution: 'src/Comet.iOS/Comet.iOS.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Mac'
+      displayName: 'Build Comet.Mac'
       inputs:
-        solution: 'src/HotUI.Mac/HotUI.Mac.csproj'
+        solution: 'src/Comet.Mac/Comet.Mac.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia'
+      displayName: 'Build Comet.Skia'
       inputs:
-        solution: 'src/HotUI.Skia/HotUI.Skia.csproj'
+        solution: 'src/Comet.Skia/Comet.Skia.csproj'
         configuration: '$(BuildConfiguration)'
     
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia.Android'
+      displayName: 'Build Comet.Skia.Android'
       inputs:
-        solution: 'src/HotUI.Skia.Android/HotUI.Skia.Android.csproj'
+        solution: 'src/Comet.Skia.Android/Comet.Skia.Android.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia.iOS'
+      displayName: 'Build Comet.Skia.iOS'
       inputs:
-        solution: 'src/HotUI.Skia.iOS/HotUI.Skia.iOS.csproj'
+        solution: 'src/Comet.Skia.iOS/Comet.Skia.iOS.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia.Mac'
+      displayName: 'Build Comet.Skia.Mac'
       inputs:
-        solution: 'src/HotUI.Skia.Mac/HotUI.Skia.Mac.csproj'
+        solution: 'src/Comet.Skia.Mac/Comet.Skia.Mac.csproj'
         configuration: '$(BuildConfiguration)'
 
-  - job: BuildHotUIWindows
-    displayName: Build HoTUI Windows
+  - job: BuildCometWindows
+    displayName: Build Comet Windows
     pool:
       vmImage: 'windows-2019'
       demands:
@@ -129,36 +129,36 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/HotUI-Windows.sln
+        restoreSolution: build/Comet-Windows.sln
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.UWP'
+      displayName: 'Build Comet.UWP'
       inputs:
-        solution: 'src/HotUI.UWP/HotUI.UWP.csproj'
+        solution: 'src/Comet.UWP/Comet.UWP.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.WPF'
+      displayName: 'Build Comet.WPF'
       inputs:
-        solution: 'src/HotUI.WPF/HotUI.WPF.csproj'
+        solution: 'src/Comet.WPF/Comet.WPF.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia.UWP'
+      displayName: 'Build Comet.Skia.UWP'
       inputs:
-        solution: 'src/HotUI.Skia.UWP/HotUI.Skia.UWP.csproj'
+        solution: 'src/Comet.Skia.UWP/Comet.Skia.UWP.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build HotUI.Skia.WPF'
+      displayName: 'Build Comet.Skia.WPF'
       inputs:
-        solution: 'src/HotUI.Skia.WPF/HotUI.Skia.WPF.csproj'
+        solution: 'src/Comet.Skia.WPF/Comet.Skia.WPF.csproj'
         configuration: '$(BuildConfiguration)'
 
 - stage: RunTests
   jobs:
-  - job: RunHOTUITests
-    displayName: Run HoTUI Tests
+  - job: RunCometTests
+    displayName: Run Comet Tests
     pool:
       vmImage: 'windows-2019'
       demands:
@@ -174,19 +174,19 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/HotUI-Tests.sln
+        restoreSolution: build/Comet-Tests.sln
 
     - task: MSBuild@1
       displayName: 'Build Tests'
       inputs:
-        solution: 'tests/HotUI.Tests/HotUI.Tests.csproj'
+        solution: 'tests/Comet.Tests/Comet.Tests.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: VSTest@2
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
-          **\bin\$(BuildConfiguration)\netcoreapp2.1\HotUI.Tests.dll
+          **\bin\$(BuildConfiguration)\netcoreapp2.1\Comet.Tests.dll
           !**\obj\**
           !**\xunit.runner.visualstudio.testadapter.dll
           !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
@@ -197,7 +197,7 @@ stages:
 - stage: BuildSamples
   jobs:
   - job: BuildSamplesAndroid
-    displayName: Build HoTUI Android Samples
+    displayName: Build Comet Android Samples
     pool:
       name: Hosted macOS
       vmImage: 'macOS 10.14'
@@ -217,24 +217,24 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/HotUI-Mac.sln
+        restoreSolution: build/Comet-Mac.sln
 
     - task: XamarinAndroid@1
-      displayName: 'Build HotUI.Android.Sample App'
+      displayName: 'Build Comet.Android.Sample App'
       inputs:
-        projectFile: sample/HotUI.Android.Sample/HotUI.Android.Sample.csproj
+        projectFile: sample/Comet.Android.Sample/Comet.Android.Sample.csproj
         configuration: '$(BuildConfiguration)'
         createAppPackage: false
 
     # - task: XamarinAndroid@1
-    #   displayName: 'Build HotUI.Forms.Android.Sample App'
+    #   displayName: 'Build Comet.Forms.Android.Sample App'
     #   inputs:
-    #     projectFile: sample/Forms/HotUI.Forms.Sample.Android/HotUI.Forms.Sample.Android.csproj
+    #     projectFile: sample/Forms/Comet.Forms.Sample.Android/Comet.Forms.Sample.Android.csproj
     #     configuration: '$(BuildConfiguration)'
     #     createAppPackage: false
 
-  - job: BuildHotUISamplesiOSMac
-    displayName: Build HoTUI iOS and Mac Samples
+  - job: BuildCometSamplesiOSMac
+    displayName: Build Comet iOS and Mac Samples
     pool:
       name: Hosted macOS
       vmImage: 'macOS 10.14'
@@ -255,23 +255,23 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/HotUI-Mac.sln
+        restoreSolution: build/Comet-Mac.sln
 
     - task: MSBuild@1
       displayName: 'Build iOS and iOS.Forms'
       inputs:
-        solution: 'build/HotUI-Mac.sln'
+        solution: 'build/Comet-Mac.sln'
         platform: iPhoneSimulator
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
       displayName: 'Build Mac'
       inputs:
-        solution: 'sample/HotUI.Mac.Sample/HotUI.Mac.Sample.csproj'
+        solution: 'sample/Comet.Mac.Sample/Comet.Mac.Sample.csproj'
         configuration: '$(BuildConfiguration)'
 
-  - job: BuildHotUISamplesWindows
-    displayName: Build HoTUI UWP and WPF Samples
+  - job: BuildCometSamplesWindows
+    displayName: Build Comet UWP and WPF Samples
     pool:
       vmImage: 'windows-2019'
       demands:
@@ -285,18 +285,18 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/HotUI-Windows.sln
+        restoreSolution: build/Comet-Windows.sln
     
     - task: MSBuild@1
       displayName: 'Build UWP Sample'
       inputs:
-        solution: 'sample/HotUI.UWP.Sample/HotUI.UWP.Sample.csproj'
+        solution: 'sample/Comet.UWP.Sample/Comet.UWP.Sample.csproj'
         configuration: '$(BuildConfiguration)'
         msbuildArguments: '/p:AppxPackageSigningEnabled=false'
 
     - task: MSBuild@1
       displayName: 'Build WPF Sample'
       inputs:
-        solution: 'sample/HotUI.WPF.Sample/HotUI.WPF.Sample.csproj'
+        solution: 'sample/Comet.WPF.Sample/Comet.WPF.Sample.csproj'
         configuration: '$(BuildConfiguration)'
         msbuildArguments: '/p:AppxPackageSigningEnabled=false'
