@@ -18,6 +18,21 @@ namespace Comet
 
         }
 
+        internal void UpdateBuiltViewContext(View builtView)
+        {
+            MergeEnvironmentData(_context, builtView.Context(_context != null));
+            MergeEnvironmentData(_localContext, builtView.LocalContext(_localContext != null));
+        }
+
+        void MergeEnvironmentData(EnvironmentData parent,EnvironmentData child)
+        {
+            if (parent == null)
+                return;
+            foreach (var pair in parent.dictionary)
+                child.dictionary[pair.Key] = pair.Value;
+        }
+
+
         internal abstract void ContextPropertyChanged(string property, object value);
 
         public static string GetTypedKey(ContextualObject obj, string key)

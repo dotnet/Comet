@@ -188,6 +188,7 @@ namespace Comet
                 {
                     State.BindingState.AddViewProperty(props, this, ResetPropertyString);
                 }
+                UpdateBuiltViewContext(view);
                 return builtView = view;
             }
         }
