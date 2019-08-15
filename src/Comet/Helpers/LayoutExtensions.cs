@@ -54,8 +54,7 @@ namespace Comet
 
         public static T Frame<T>(this T view, float? width = null, float? height = null, Alignment alignment = null) where T : View
         {
-            var target = view.BuiltView ?? view;
-            target.FrameConstraints(new FrameConstraints(width, height, alignment));
+            view.FrameConstraints(new FrameConstraints(width, height, alignment));
             return view;
         }
         

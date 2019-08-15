@@ -51,7 +51,6 @@ namespace Comet.Layout
                     if (!view.MeasurementValid)
                     {
                         view.MeasuredSize = size = view.Measure(available);
-                        Console.WriteLine($"{view.GetType().Name}: {size}");
                         view.MeasurementValid = true;
                     }
 
@@ -80,9 +79,15 @@ namespace Comet.Layout
             if (spacerCount > 0)
                 height = available.Height;
 
-            var layoutSizing = layout.GetHorizontalSizing();
-            if (layoutSizing == Sizing.Fill)
+            var layoutPadding = layout.GetPadding();
+
+            var layoutHorizontalSizing = layout.GetHorizontalSizing();
+            if (layoutHorizontalSizing == Sizing.Fill)
                 width = available.Width;
+            
+            var layoutVerticalSizing = layout.GetVerticalSizing();
+            if (layoutVerticalSizing == Sizing.Fill)
+                height = available.Height - layoutPadding.VerticalThickness;
             
             return new SizeF(width, height);
         }
@@ -112,12 +117,16 @@ namespace Comet.Layout
                     var size = view.MeasuredSize;
                     var constraints = view.GetFrameConstraints();
                     var padding = view.GetPadding();
+                    var sizing = view.GetHorizontalSizing();
 
                     if (constraints?.Width != null)
                         size.Width = Math.Min((float)constraints.Width, measured.Width);
                     
                     if (constraints?.Height != null)
                         size.Height = Math.Min((float)constraints.Height, measured.Height);
+
+                    if (sizing == Sizing.Fill)
+                        size.Width = measured.Width - padding.HorizontalThickness;
                     
                     sizes.Add(size);
                     width = Math.Max(size.Width, width);
