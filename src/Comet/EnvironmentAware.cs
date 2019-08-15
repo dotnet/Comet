@@ -153,5 +153,19 @@ namespace Comet
 
         public static object GetEnvironment(this View view, string key) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedKey(view, key));
         public static object GetEnvironment(this View view, Type type, string key) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedKey(type ?? view.GetType(), key));
+
+
+        public static Dictionary<string, object> DebugGetEnvironment(this View view)
+        {
+            var parentDictionary = view.Parent.DebugGetEnvironment() ?? new Dictionary<string, object>();
+            if (view._context != null)
+                foreach (var pair in view._context.dictionary)
+                    parentDictionary[pair.Key] = pair.Value;
+
+            if (view._localContext != null)
+                foreach (var pair in view._localContext.dictionary)
+                    parentDictionary[pair.Key] = pair.Value;
+            return parentDictionary;
+        }
     }
 }
