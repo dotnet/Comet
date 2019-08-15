@@ -126,7 +126,7 @@
     <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="Clancey.Comet.Reload">
-      <Version>0.0.7-alpha</Version>
+      <Version>0.0.8-alpha</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
