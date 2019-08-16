@@ -40,7 +40,7 @@ namespace Comet.Android.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (TextView) viewHandler.NativeView;
-            nativeView.Text = virtualView.Value;
+            nativeView.Text = virtualView.Value?.Get() ?? string.Empty;
         }
 
         public static void MapFontProperty(IViewHandler viewHandler, Text virtualView)
