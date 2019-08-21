@@ -142,5 +142,8 @@
         <Name>NewApp</Name>
       </ProjectReference>
     </ItemGroup>
+    <ItemGroup>
+    <BundleResource Include="Resources\fa-solid-900.ttf" />
+  </ItemGroup>
     <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>
