@@ -125,13 +125,13 @@
             "type": "parameter",
             "dataType": "string",
             "replaces": "XamarinEssentialsSdk",
-            "defaultValue": "1.2.0"
+            "defaultValue": "1.3.0-pre"
         },
         "CometSdk": {
             "type": "parameter",
             "dataType": "string",
             "replaces": "CometSdk",
-            "defaultValue": "0.0.9-alpha"
+            "defaultValue": "0.1.7352-beta"
         },
         "CometReloadSdk": {
             "type": "parameter",

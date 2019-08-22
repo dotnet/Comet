@@ -70,13 +70,9 @@
         <Reference Include="System.Numerics.Vectors" />
     </ItemGroup>
     <ItemGroup>
-      <PackageReference Include="Xamarin.Essentials" Version="1.3.0-pre" />
-      <PackageReference Include="Clancey.Comet.Reload">
-        <Version>CometReloadSdk</Version>
-      </PackageReference>
-      <PackageReference Include="Clancey.Comet">
-        <Version>CometSdk</Version>
-      </PackageReference>
+      <PackageReference Include="Xamarin.Essentials" Version="XamarinEssentialsSdk" />
+      <PackageReference Include="Clancey.Comet.Reload" Version="CometReloadSdk"/>
+      <PackageReference Include="Clancey.Comet" Version="CometSdk"/>
     </ItemGroup>
     <ItemGroup>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
