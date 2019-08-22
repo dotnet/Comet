@@ -62,30 +62,5 @@
     <file src="src/Comet.WPF/bin/Debug/Comet.pdb" target="lib/net45/Comet.pdb" />
     <file src="src/Comet.WPF/bin/Debug/Comet.WPF.dll" target="lib/net45/Comet.WPF.dll" />
     <file src="src/Comet.WPF/bin/Debug/Comet.WPF.pdb" target="lib/net45/Comet.WPF.pdb" />
-
-    <file src="src/Comet.Skia/bin/Debug/netstandard2.0/Comet.Skia.dll" target="lib/net45/Comet.Skia.dll" />
-    <file src="src/Comet.Skia/bin/Debug/netstandard2.0/Comet.Skia.pdb" target="lib/net45/Comet.Skia.pdb" />
-    <file src="src/Comet.Skia.iOS/bin/Debug/Comet.Skia.iOS.dll" target="lib/net45/Comet.Skia.iOS.dll" />
-    <file src="src/Comet.Skia.iOS/bin/Debug/Comet.Skia.iOS.pdb" target="lib/net45/Comet.Skia.iOS.pdb" />
-
-    <file src="src/Comet.Skia/bin/Debug/netstandard2.0/Comet.Skia.dll" target="lib/net45/Comet.Skia.dll" />
-    <file src="src/Comet.Skia/bin/Debug/netstandard2.0/Comet.Skia.pdb" target="lib/net45/Comet.Skia.pdb" />
-    <file src="src/Comet.Skia.Android/bin/Debug/Comet.Skia.Android.dll" target="lib/net45/Comet.Skia.Android.dll" />
-    <file src="src/Comet.Skia.Android/bin/Debug/Comet.Skia.Android.pdb" target="lib/net45/Comet.Skia.Android.pdb" />
-
-    <file src="src/Comet.Skia/bin/Debug/netstandard2.0/Comet.Skia.dll" target="lib/net45/Comet.Skia.dll" />
-    <file src="src/Comet.Skia/bin/Debug/netstandard2.0/Comet.Skia.pdb" target="lib/net45/Comet.Skia.pdb" />
-    <file src="src/Comet.Skia.Mac/bin/Debug/Comet.Skia.Mac.dll" target="lib/net45/Comet.Skia.Mac.dll" />
-    <file src="src/Comet.Skia.Mac/bin/Debug/Comet.Skia.Mac.pdb" target="lib/net45/Comet.Skia.Mac.pdb" />
-
-    <file src="src/Comet.Skia/bin/Debug/netstandard2.0/Comet.Skia.dll" target="lib/net45/Comet.Skia.dll" />
-    <file src="src/Comet.Skia/bin/Debug/netstandard2.0/Comet.Skia.pdb" target="lib/net45/Comet.Skia.pdb" />
-    <file src="src/Comet.Skia.UWP/bin/Debug/Comet.Skia.UWP.dll" target="lib/net45/Comet.Skia.UWP.dll" />
-    <file src="src/Comet.Skia.UWP/bin/Debug/Comet.Skia.UWP.pdb" target="lib/net45/Comet.Skia.UWP.pdb" />
-
-    <file src="src/Comet.Skia/bin/Debug/netstandard2.0/Comet.Skia.dll" target="lib/net45/Comet.Skia.dll" />
-    <file src="src/Comet.Skia/bin/Debug/netstandard2.0/Comet.Skia.pdb" target="lib/net45/Comet.Skia.pdb" />
-    <file src="src/Comet.Skia.WPF/bin/Debug/Comet.Skia.WPF.dll" target="lib/net45/Comet.Skia.WPF.dll" />
-    <file src="src/Comet.Skia.WPF/bin/Debug/Comet.Skia.WPF.pdb" target="lib/net45/Comet.Skia.WPF.pdb" />
   </files>
 </package>
