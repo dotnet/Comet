@@ -41,7 +41,7 @@ namespace Comet.Mac.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (NSTextField) viewHandler.NativeView;
-            nativeView.StringValue = virtualView.Text ?? "";
+            nativeView.StringValue = virtualView.Text?.Get() ?? string.Empty;
             virtualView.InvalidateMeasurement();
         }
     }

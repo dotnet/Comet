@@ -93,7 +93,7 @@ namespace Comet
                     return;
 
                 measurementValid = false;
-                measuredSize = SizeF.Zero;
+                _measuredSize = SizeF.Zero;
                 frame = RectangleF.Zero;
                 
                 var oldViewHandler = viewHandler;
@@ -188,6 +188,7 @@ namespace Comet
                 {
                     State.BindingState.AddViewProperty(props, this, ResetPropertyString);
                 }
+                UpdateBuiltViewContext(view);
                 return builtView = view;
             }
         }
@@ -336,27 +337,6 @@ namespace Comet
             OnDispose(true);
         }
 
-        Thickness padding = Thickness.Empty;
-        public Thickness Padding
-        {
-            get => padding;
-            internal set => this.SetValue(State, ref padding, value, ResetPropertyString);
-        }
-
-        FrameConstraints frameConstraints;
-        public FrameConstraints FrameConstraints
-        {
-            get => BuiltView?.FrameConstraints ?? frameConstraints;
-            internal set => this.SetValue(State, ref frameConstraints, value, ResetPropertyString);
-        }
-        
-        object layoutConstraints;
-        public object LayoutConstraints
-        {
-            get => layoutConstraints;
-            internal set => this.SetValue(State, ref layoutConstraints, value, ResetPropertyString);
-        }
-
         private RectangleF frame;
         public virtual RectangleF Frame
         {
@@ -395,13 +375,13 @@ namespace Comet
             NeedsLayout?.Invoke(this, EventArgs.Empty);
         }
 
-        private SizeF measuredSize;
+        private SizeF _measuredSize;
         public SizeF MeasuredSize
         {
-            get => measuredSize;
+            get => _measuredSize;
             set
             {
-                measuredSize = value;
+                _measuredSize = value;
                 if (BuiltView != null)
                     BuiltView.MeasuredSize = value;
             }
@@ -412,8 +392,9 @@ namespace Comet
             if (BuiltView != null)
                 return BuiltView.Measure(availableSize);
 
-            var width = frameConstraints?.Width;
-            var height = frameConstraints?.Height;
+            var constraints = this.GetFrameConstraints();
+            var width = constraints?.Width;
+            var height = constraints?.Height;
 
             // If we have both width and height constraints, we can skip measuring the control and
             // return the constrained values.
@@ -432,8 +413,9 @@ namespace Comet
         
         protected virtual void RequestLayout()
         {
-            var width = FrameConstraints?.Width ?? Frame.Width;
-            var height = FrameConstraints?.Height ?? Frame.Height;
+            var constraints = this.GetFrameConstraints();
+            var width = constraints?.Width ?? Frame.Width;
+            var height = constraints?.Height ?? Frame.Height;
 
             if (width > 0 && height > 0)
             {
@@ -459,7 +441,8 @@ namespace Comet
             var width = Frame.Width;
             var height = Frame.Height;
 
-            var alignment = FrameConstraints?.Alignment ?? Alignment.Center;
+            var constraints = this.GetFrameConstraints();
+            var alignment = constraints?.Alignment ?? Alignment.Center;
             var xFactor = .5f;
             switch (alignment.Horizontal)
             {

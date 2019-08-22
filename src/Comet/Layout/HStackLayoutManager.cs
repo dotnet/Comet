@@ -57,12 +57,12 @@ namespace Comet.Layout
                     var finalHeight = size.Height;
                     var finalWidth = size.Width;
                     
-                    var padding = view.Padding;
+                    var padding = view.GetPadding();
                     finalHeight += padding.VerticalThickness;
                     finalWidth += padding.HorizontalThickness;
 
-                    var sizing = view.GetVerticalSizing();
-                    if (sizing == Sizing.Fill)
+                    var verticalSizing = view.GetVerticalSizing();
+                    if (verticalSizing == Sizing.Fill)
                         height = available.Height;
 
                     height = Math.Max(finalHeight, height);
@@ -79,9 +79,15 @@ namespace Comet.Layout
             if (spacerCount > 0)
                 width = available.Width;
 
-            var layoutSizing = layout.GetVerticalSizing();
-            if (layoutSizing == Sizing.Fill)
+            var layoutPadding = layout.GetPadding();
+            
+            var layoutVerticalSizing = layout.GetVerticalSizing();
+            if (layoutVerticalSizing == Sizing.Fill)
                 height = available.Height;
+            
+            var layoutHorizontalSizing = layout.GetHorizontalSizing();
+            if (layoutHorizontalSizing == Sizing.Fill)
+                width = available.Width - layoutPadding.HorizontalThickness;
             
             return new SizeF(width, height);
         }
@@ -109,21 +115,28 @@ namespace Comet.Layout
                 else
                 {
                     var size = view.MeasuredSize;
+                    var constraints = view.GetFrameConstraints();
+                    var padding = view.GetPadding();
+                    var sizing = view.GetVerticalSizing();
+
                     if (!view.MeasurementValid)
                     {
                         view.MeasuredSize = size = view.Measure(measured);
                         view.MeasurementValid = true;
                     }
 
-                    if (view.FrameConstraints?.Width != null)
-                        size.Width = Math.Min((float)view.FrameConstraints.Width, measured.Width);
+                    if (constraints?.Width != null)
+                        size.Width = Math.Min((float)constraints.Width, measured.Width);
                     
-                    if (view.FrameConstraints?.Height != null)
-                        size.Height = Math.Min((float)view.FrameConstraints.Height, measured.Height);
+                    if (constraints?.Height != null)
+                        size.Height = Math.Min((float)constraints.Height, measured.Height);
 
+                    if (sizing == Sizing.Fill)
+                        size.Height = measured.Height - padding.VerticalThickness;
+                    
                     sizes.Add(size);
                     height = Math.Max(size.Height, height);
-                    nonSpacerWidth += size.Width + view.Padding.HorizontalThickness;
+                    nonSpacerWidth += size.Width + padding.HorizontalThickness;
                 }
 
                 if (index > 0 && !lastWasSpacer && !isSpacer)
@@ -159,8 +172,9 @@ namespace Comet.Layout
                 {
                     size = sizes[index];
                 }
-                
-                var alignment = view.FrameConstraints?.Alignment?.Vertical ?? _defaultAlignment;
+
+                var constraints = view.GetFrameConstraints();
+                var alignment = constraints?.Alignment?.Vertical ?? _defaultAlignment;
                 var alignedY = y;
 
                 var padding = view.GetPadding();
@@ -189,6 +203,13 @@ namespace Comet.Layout
                 
                 x += padding.Left;
 
+                var sizing = view.GetVerticalSizing();
+                if (sizing == Sizing.Fill)
+                {
+                    alignedY = padding.Top;
+                    size.Height = measured.Height - padding.VerticalThickness;
+                }
+                
                 view.Frame = new RectangleF(x, alignedY, size.Width, size.Height);
                 
                 x += size.Width;

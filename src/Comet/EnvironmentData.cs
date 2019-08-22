@@ -37,11 +37,13 @@ namespace Comet {
 
         public static class Layout
         {
-            public const string Padding = "Padding";
+            public const string Padding = "Layout.Padding";
+            public const string Constraints = "Layout.Constraints";
             public const string HorizontalSizing = "Layout.HorizontalSizing";
             public const string VerticalSizing = "Layout.VerticalSizing";
+            public const string FrameConstraints = "Layout.FrameConstraints";
         }
-        
+
         public static class View
         {
 	        public const string ClipShape = "ClipShape";

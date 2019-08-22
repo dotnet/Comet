@@ -64,7 +64,7 @@ namespace Comet.iOS.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (UITextField) viewHandler.NativeView;
-            nativeView.Text = virtualView.Text.Get();
+            nativeView.Text = virtualView.Text?.Get() ?? string.Empty;
             virtualView.InvalidateMeasurement();
         }
         
