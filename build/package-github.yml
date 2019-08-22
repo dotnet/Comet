@@ -85,6 +85,7 @@ stages:
       inputs:
         solution: 'src/Comet.Skia.iOS/Comet.Skia.iOS.csproj'
         configuration: '$(BuildConfiguration)'
+        msbuildArguments: '/p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"'
 
     - task: MSBuild@1
       displayName: 'Build Comet.Skia.Mac'
