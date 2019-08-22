@@ -12,6 +12,7 @@
     <copyright>James Clancey</copyright>
     <projectUrl>https://github.com/clancey/Comet</projectUrl>
     <repository type="git" url="https://github.com/clancey/Comet"/>
+    <license type="expression">MIT</license>
     <language>C#</language>
     <dependencies>
       <group>
