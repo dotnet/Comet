@@ -18,6 +18,15 @@
       <group>
         <dependency id="Clancey.Comet.Reload" version="0.0.6-alpha" />
       </group>
+      <group>
+        <dependency id="Xamarin.FFImageLoading" version="2.4.11.982" targetFramework="xamarinios10" />
+      </group>
+      <group>
+        <dependency id="Xamarin.FFImageLoading" version="2.4.11.982" targetFramework="monoandroid81" />
+      </group>
+      <group>
+        <dependency id="Xamarin.FFImageLoading" version="2.4.11.982" targetFramework="Xamarin.Mac20" />
+      </group>
     </dependencies>
   </metadata>
   <files>
