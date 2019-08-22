@@ -133,7 +133,6 @@
             "replaces": "CometSdk",
             "defaultValue": "0.0.9-alpha"
         },
-        ,
         "CometReloadSdk": {
             "type": "parameter",
             "dataType": "string",

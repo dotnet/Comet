@@ -5,9 +5,6 @@
     <ProduceReferenceAssembly>true</ProduceReferenceAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Comet\src\Comet\Comet.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <PackageReference Include="Clancey.Comet" Version="CometSdk" />
     <PackageReference Include="Clancey.Comet.Reload" Version="CometReloadSdk" />
     <PackageReference Include="Xamarin.Essentials" Version="XamarinEssentialsSdk" />
