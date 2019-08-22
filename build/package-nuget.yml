@@ -54,6 +54,7 @@ stages:
       inputs:
         solution: 'src/Comet.Android/Comet.Android.csproj'
         configuration: '$(BuildConfiguration)'
+        msbuildArguments: '/p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"'
 
     - task: MSBuild@1
       displayName: 'Build Comet.iOS'
