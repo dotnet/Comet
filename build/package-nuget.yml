@@ -21,7 +21,7 @@ stages:
         script: |
           echo '$(Build_BuildID)' $BUILD_BUILDID
                   BUILDNUMBER=$BUILD_BUILDID
-                  VERSION=1.0.$BUILDNUMBER
+                  VERSION=0.1.$BUILDNUMBER
                   echo 'VERSION ' $VERSION
                   
                   #if ! [ $BRANCH = master ]; then
@@ -95,78 +95,6 @@ stages:
         solution: 'src/Comet.Skia.Mac/Comet.Skia.Mac.csproj'
         configuration: '$(BuildConfiguration)'
 
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack Comet'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet/Comet.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack Xamarin.Forms.Loader'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Xamarin.Forms.Loader/Xamarin.Forms.Loader.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: NuGetCommand@2
-      displayName: 'dotnet pack Comet.Android'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.Android/Comet.Android.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: NuGetCommand@2
-      displayName: 'dotnet pack Comet.iOS'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.iOS/Comet.iOS.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: NuGetCommand@2
-      displayName: 'dotnet pack Comet.Mac'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.Mac/Comet.Mac.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack Comet.Skia'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.Skia/Comet.Skia.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: NuGetCommand@2
-      displayName: 'dotnet pack Comet.Skia.Android'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.Skia.Android/Comet.Skia.Android.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: NuGetCommand@2
-      displayName: 'dotnet pack Comet.Skia.iOS'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.Skia.iOS/Comet.Skia.iOS.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: NuGetCommand@2
-      displayName: 'dotnet pack Comet.Skia.Mac'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.Skia.Mac/Comet.Skia.Mac.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
     - task: NuGetCommand@2
       inputs:
         command: 'pack'
@@ -211,7 +139,7 @@ stages:
         script: |
           echo '$(Build_BuildID)' $BUILD_BUILDID
                   BUILDNUMBER=$BUILD_BUILDID
-                  VERSION=1.0.$BUILDNUMBER
+                  VERSION=0.1.$BUILDNUMBER
                   echo 'VERSION ' $VERSION
                   
                   #if ! [ $BRANCH = master ]; then
@@ -244,54 +172,6 @@ stages:
       inputs:
         solution: 'src/Comet.Skia.WPF/Comet.Skia.WPF.csproj'
         configuration: '$(BuildConfiguration)'
-
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack Comet'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet/Comet.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack Comet.UWP'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.UWP/Comet.UWP.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack Comet.WPF'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.WPF/Comet.WPF.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack Comet.Skia'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.Skia/Comet.Skia.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack Comet.Skia.UWP'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.Skia.UWP/Comet.Skia.UWP.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-
-    - task: DotNetCoreCLI@2
-      displayName: 'dotnet pack Comet.Skia.WPF'
-      inputs:
-        command: pack
-        packagesToPack: 'src/Comet.Skia.WPF/Comet.Skia.WPF.csproj'
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
 
     - task: NuGetCommand@2
       inputs:
@@ -329,7 +209,7 @@ stages:
         script: |
           echo '$(Build_BuildID)' $BUILD_BUILDID
                   BUILDNUMBER=$BUILD_BUILDID
-                  VERSION=1.0.$BUILDNUMBER
+                  VERSION=0.1.$BUILDNUMBER
                   echo 'VERSION ' $VERSION
                   
                   #if ! [ $BRANCH = master ]; then
@@ -355,24 +235,18 @@ stages:
         artifactName: 'drop_nuget_windows'
         downloadPath: '$(System.ArtifactsDirectory)'
 
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop_nuget_beta'
+        publishLocation: 'Container'
+
+    - script: echo Publish Nuget Github the code!
+
     - task: NuGetCommand@2
       inputs:
         command: 'push'
         packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
         nuGetFeedType: 'external'
         publishFeedCredentials: 'ClanceyNugetFeed'
-
-    - task: GitHubRelease@0
-      inputs:
-        gitHubConnection: 'GitHubRelease'
-        repositoryName: 'Clancey/Comet'
-        action: 'create'
-        target: '$(Build.SourceVersion)'
-        tagSource: 'manual'
-        tag: 'v$(VERSION)-beta'
-        title: 'v$(VERSION)-beta'
-        assets: |
-          $(System.ArtifactsDirectory)/**/drop_nuget_mac/*.nupkg
-          $(System.ArtifactsDirectory)/**/drop_nuget_windows/*.nupkg
-        addChangeLog: false
-        isDraft: true
+      enabled: false
