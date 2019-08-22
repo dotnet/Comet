@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>CFBundleDisplayName</key>
-	<string>HeyTodd.iOS</string>
+	<string>NewApp.iOS</string>
 	<key>CFBundleIdentifier</key>
 	<string>com.microsoft.NewApp-iOS</string>
 	<key>CFBundleShortVersionString</key>
