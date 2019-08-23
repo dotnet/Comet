@@ -147,7 +147,7 @@ stages:
           
           nuget source Add -Name "GHNuget" \
                -Source "https://nuget.pkg.github.com/OWNER/index.json" \
-               -UserName Clancey -Password $gp
+               -UserName Clancey -Password $(gp)
           
           nuget push *.nupkg -Source "GHNuget"
 
