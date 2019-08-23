@@ -146,7 +146,7 @@ stages:
           # Write your commands here
           
           nuget source Add -Name "GHNuget" \
-               -Source "https://nuget.pkg.github.com/OWNER/index.json" \
+               -Source "https://nuget.pkg.github.com/Clancey/index.json" \
                -UserName Clancey -Password $(gp)
           
           nuget push *.nupkg -Source "GHNuget"
