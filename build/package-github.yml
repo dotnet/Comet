@@ -139,9 +139,23 @@ stages:
    
     - script: echo Publish Nuget Github the code!
 
-    - task: NuGetCommand@2
+    - task: Bash@3
       inputs:
-        command: 'push'
-        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-        nuGetFeedType: 'external'
-        publishFeedCredentials: 'ClanceyGitHubPackages'
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          nuget source Add -Name "GHNuget" \
+               -Source "https://nuget.pkg.github.com/OWNER/index.json" \
+               -UserName Clancey -Password $gp
+          
+          nuget push *.nupkg -Source "GHNuget"
+
+    # - task: NuGetCommand@2
+    #   inputs:
+    #     command: 'push'
+    #     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    #     nuGetFeedType: 'external'
+    #     publishFeedCredentials: 'ClanceyGitHubPackages'
+
+    
