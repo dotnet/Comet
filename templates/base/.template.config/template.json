@@ -131,7 +131,7 @@
             "type": "parameter",
             "dataType": "string",
             "replaces": "CometSdk",
-            "defaultValue": "0.1.7352-beta"
+            "defaultValue": "0.1.7364-beta"
         },
         "CometReloadSdk": {
             "type": "parameter",
