@@ -130,12 +130,6 @@ stages:
         SourceFolder: '$(Build.SourcesDirectory)'
         Contents: '**\*.nupkg'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-    - task: PublishBuildArtifacts@1
-      inputs:
-        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
-        ArtifactName: 'drop_nuget_alpha'
-        publishLocation: 'Container'
    
     - script: echo Publish Nuget Github the code!
 
@@ -149,7 +143,13 @@ stages:
                -Source "https://nuget.pkg.github.com/Clancey/index.json" \
                -UserName Clancey -Password $(gp)
           
-          nuget push $(Build.SourcesDirectory)/**/*.nupkg -Source "GHNuget"
+          nuget push $(Build.ArtifactStagingDirectory)/**/*.nupkg -Source "GHNuget"
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop_nuget_alpha'
+        publishLocation: 'Container'
 
     
 
