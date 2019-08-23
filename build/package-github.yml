@@ -149,7 +149,9 @@ stages:
                -Source "https://nuget.pkg.github.com/Clancey/index.json" \
                -UserName Clancey -Password $(gp)
           
-          nuget push $(Build.ArtifactStagingDirectory)/**/*.nupkg -Source "GHNuget"
+          nuget push $(Build.SourcesDirectory)/**/*.nupkg -Source "GHNuget"
+
+    
 
     # - task: NuGetCommand@2
     #   inputs:
