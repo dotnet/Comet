@@ -26,9 +26,12 @@ namespace NewApp.iOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-#if DEBUG
+            //-:cnd
+            #if DEBUG
             Comet.Reload.Init();
-#endif
+            #endif
+            //+:cnd
+
             window = new UIWindow
             {
                 RootViewController = new MainPage().ToViewController()
