@@ -26,11 +26,11 @@ namespace NewApp.iOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
-            //-:cnd
-            #if DEBUG
+//-:cnd:noEmit
+#if DEBUG
             Comet.Reload.Init();
-            #endif
-            //+:cnd
+#endif
+//+:cnd:noEmit
 
             window = new UIWindow
             {
