@@ -1,4 +1,4 @@
-﻿var Comet = (function () {
+﻿var comet = (function () {
     return {
         canvas: (function () {
             return {

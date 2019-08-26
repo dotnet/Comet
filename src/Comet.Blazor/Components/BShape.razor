@@ -5,7 +5,7 @@
 
 @inject CanvasWriter Writer;
 
-<canvas @ref="@_canvas" />
+<canvas @ref="@_canvas" @ref:suppressField />
 
 @code {
     private object _canvas;

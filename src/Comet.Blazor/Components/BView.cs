@@ -13,7 +13,7 @@ namespace Comet.Blazor.Components
 
             var name = View?.GetType().Name ?? "null";
             builder.OpenElement(0, "div");
-            builder.AddAttribute(1, "class", $"Comet-view Comet-view-{name}");
+            builder.AddAttribute(1, "class", $"comet-view comet-view-{name}");
 
             if (View is null)
             {
