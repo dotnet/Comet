@@ -9,12 +9,11 @@
 
   <ItemGroup>
     <None Remove="Comet.js" />
+    <None Remove="Scripts\comet.js" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Scripts\Comet.js">
-      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Scripts\comet.js" />
   </ItemGroup>
 
   <ItemGroup>

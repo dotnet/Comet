@@ -8,6 +8,6 @@ namespace Comet.Blazor.Components
         {
         }
 
-        internal void NotifyUpdate() => Invoke(StateHasChanged);
+        internal void NotifyUpdate() => InvokeAsync(StateHasChanged);
     }
 }
