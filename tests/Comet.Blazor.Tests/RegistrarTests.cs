@@ -5,11 +5,19 @@ using System;
 using System.Linq;
 using System.Reflection;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Comet.Blazor.Tests
 {
     public class RegistrarTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public RegistrarTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public void AllHandlersAreRegistered()
         {
@@ -57,6 +65,7 @@ namespace Comet.Blazor.Tests
                 }
                 else
                 {
+                    _output.WriteLine(type.FullName);
                     Assert.IsNotType<ViewHandler>(handler);
                 }
             }
