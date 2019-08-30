@@ -62,13 +62,15 @@ namespace Comet
 
         public static T AddGesture<T>(this T view, Gesture gesture) where T : View
         {
-            view.gestures.Add(gesture);
+            var gestures = (List<Gesture>)(view.Gestures ?? (view.Gestures = new List<Gesture>()));
+            gestures.Add(gesture);
             view?.ViewHandler?.UpdateValue(Comet.Gesture.AddGestureProperty, gesture);
             return view;
         }
         public static T RemoveGesture<T>(this T view, Gesture gesture) where T : View
         {
-            view.gestures.Remove(gesture);
+            var gestures = (List<Gesture>)view.Gestures;
+            gestures.Remove(gesture);
             view?.ViewHandler?.UpdateValue(Comet.Gesture.RemoveGestureProperty, gesture);
             return view;
         }

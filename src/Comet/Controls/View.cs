@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using Comet.Helpers;
 using Comet.Internal;
 //using System.Reflection;
@@ -20,22 +21,28 @@ namespace Comet
         public event EventHandler<ViewHandlerChangedEventArgs> ViewHandlerChanged;
         public event EventHandler<EventArgs> NeedsLayout;
 
-        internal List<Gesture> gestures = new List<Gesture>();
-        public IReadOnlyList<Gesture> Gestures => gestures;
+        public IReadOnlyList<Gesture> Gestures
+        {
+            get => GetPropertyFromContext<List<Gesture>>();
+            internal set => SetPropertyInContext(value);
+        }
 
         View parent;
 
         public string Id
         {
-            get => this.GetEnvironment<string>(nameof(Id),false) ?? (Id = Guid.NewGuid().ToString());
-            set => this.SetEnvironment(nameof(Id), value, false);
+            get => GetPropertyFromContext<string>() ?? (Id = Guid.NewGuid().ToString());
+            set => SetPropertyInContext(value);
         }
 
         public string Tag
         {
-            get => this.GetEnvironment<string>(nameof(Tag), false);
-            internal set => this.SetEnvironment(nameof(Tag),value,false);
+            get => GetPropertyFromContext<string>();
+            internal set => SetPropertyInContext(value);
         }
+
+        internal T GetPropertyFromContext<T>([CallerMemberName] string property = null) => this.GetEnvironment<T>(property, false);
+        internal void SetPropertyInContext(object value,[CallerMemberName] string property = null) => this.SetEnvironment(property,value,false);
 
         public View Parent
         {
@@ -112,8 +119,7 @@ namespace Comet
                 ((NavigationView)this).PerformNavigate = nav.PerformNavigate;
             }
             var oldView = view.ViewHandler;
-            this.gestures = view.gestures;
-            view.gestures = new List<Gesture>();
+            this.Gestures = view.Gestures;
             view.ViewHandler = null;
             view.replacedView?.Dispose();
             this.ViewHandler = oldView;
@@ -303,8 +309,12 @@ namespace Comet
                 return;
 
             ActiveViews.Remove(this);
-            foreach (var g in gestures)
-                ViewHandler?.UpdateValue(Gesture.RemoveGestureProperty, g);
+            var gestures = Gestures;
+            if (gestures != null)
+            {
+                foreach (var g in gestures)
+                    ViewHandler?.UpdateValue(Gesture.RemoveGestureProperty, g);
+            }
             Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
             HotReloadHelper.UnRegister(this);
             var vh = ViewHandler;

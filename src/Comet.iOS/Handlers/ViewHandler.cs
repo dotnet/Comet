@@ -3,6 +3,7 @@ using CoreAnimation;
 using CoreGraphics;
 using Comet.Graphics;
 using UIKit;
+using System.Linq;
 
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -52,7 +53,10 @@ namespace Comet.iOS.Handlers
 
         public static void AddGestures(IViewHandler handler, View view)
         {
-            foreach (var g in view.Gestures)
+            var gestures = view.Gestures;
+            if (!gestures?.Any() ?? false)
+                return;
+            foreach (var g in gestures)
                 AddGesture(handler, g);
         }
 
@@ -64,7 +68,10 @@ namespace Comet.iOS.Handlers
 
         public static void RemoveGestures(IViewHandler handler, View view)
         {
-            foreach (var g in view.Gestures)
+            var gestures = view.Gestures;
+            if (!gestures?.Any() ?? false)
+                return;
+            foreach (var g in gestures)
                 RemoveGesture(handler, g);
         }
 

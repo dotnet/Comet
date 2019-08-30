@@ -45,10 +45,10 @@ namespace Comet.Android.Handlers
         public static void AddGestures(AndroidViewHandler handler, View view)
         {
             var gestures = view.Gestures;
-            if (!gestures.Any())
+            if (!gestures?.Any() ?? false)
                 return;
             var listner = handler.GetGestureListener();
-            foreach (var gesture in view.Gestures)
+            foreach (var gesture in gestures)
                 listner.AddGesture(gesture);
         }
 
@@ -62,10 +62,10 @@ namespace Comet.Android.Handlers
         public static void RemoveGestures(AndroidViewHandler handler, View view)
         {
             var gestures = view.Gestures;
-            if (!gestures.Any())
+            if (!gestures?.Any() ?? false)
                 return;
             var listner = handler.GetGestureListener();
-            foreach (var gesture in view.Gestures)
+            foreach (var gesture in gestures)
                 listner.RemoveGesture(gesture);
             listner.Dispose();
 
