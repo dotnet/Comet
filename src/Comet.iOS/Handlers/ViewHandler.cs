@@ -54,7 +54,7 @@ namespace Comet.iOS.Handlers
         public static void AddGestures(IViewHandler handler, View view)
         {
             var gestures = view.Gestures;
-            if (!gestures?.Any() ?? false)
+            if (!(gestures?.Any() ?? false))
                 return;
             foreach (var g in gestures)
                 AddGesture(handler, g);
@@ -69,7 +69,7 @@ namespace Comet.iOS.Handlers
         public static void RemoveGestures(IViewHandler handler, View view)
         {
             var gestures = view.Gestures;
-            if (!gestures?.Any() ?? false)
+            if (!(gestures?.Any() ?? false))
                 return;
             foreach (var g in gestures)
                 RemoveGesture(handler, g);

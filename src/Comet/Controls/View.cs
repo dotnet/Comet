@@ -310,7 +310,7 @@ namespace Comet
 
             ActiveViews.Remove(this);
             var gestures = Gestures;
-            if (gestures != null)
+            if (gestures?.Any() ?? false)
             {
                 foreach (var g in gestures)
                     ViewHandler?.UpdateValue(Gesture.RemoveGestureProperty, g);
