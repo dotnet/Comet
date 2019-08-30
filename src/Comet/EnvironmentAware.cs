@@ -41,7 +41,7 @@ namespace Comet
             => type == null ? key : $"{type.Name}.{key}";
 
 
-        internal object GetValue(string key, ContextualObject current, View view,string typedKey)
+        internal object GetValue(string key, ContextualObject current, View view,string typedKey, bool cascades)
         {
             try
             {
@@ -49,6 +49,9 @@ namespace Comet
                 var value = current == this ? LocalContext(false)?.GetValueInternal(key) : null; ;
                 if (value != null)
                     return value;
+
+                if (!cascades)
+                    return null;
                 //Check the cascading context
                 if (value == null)
                     value = Context(false)?.GetValueInternal(typedKey) ?? Context(false)?.GetValueInternal(key);
@@ -58,7 +61,7 @@ namespace Comet
                     //If no more parents, check the environment
                     if (view == null)
                         return View.Environment.GetValueInternal(typedKey) ?? View.Environment.GetValueInternal(key);
-                    value = view.GetValue(key,current,view.Parent, typedKey);
+                    value = view.GetValue(key,current,view.Parent, typedKey,cascades);
                 }
                 return value;
             }
@@ -67,11 +70,11 @@ namespace Comet
                 return null;
             }
         }
-        internal T GetValue<T>(string key, ContextualObject current, View view, string typedKey)
+        internal T GetValue<T>(string key, ContextualObject current, View view, string typedKey, bool cascades)
         {
             try
             {
-                var value = GetValue(key, current, view,typedKey);
+                var value = GetValue(key, current, view,typedKey, cascades);
                 return (T)value;
             }
             catch (Exception ex)
@@ -143,16 +146,16 @@ namespace Comet
         //    return contextualObject;
         //}
 
-        public static T GetEnvironment<T>(this ContextualObject contextualObject, View view, string key) => contextualObject.GetEnvironment<T>(view, contextualObject.GetType(),key);
-        public static T GetEnvironment<T>(this ContextualObject contextualObject, View view, Type type, string key) => contextualObject.GetValue<T>(key, contextualObject, view, ContextualObject.GetTypedKey(type ?? contextualObject.GetType(),key));
-        public static object GetEnvironment(this ContextualObject contextualObject, View view, string key) => contextualObject.GetValue(key, contextualObject, view, ContextualObject.GetTypedKey(contextualObject, key));
-        public static object GetEnvironment(this ContextualObject contextualObject, View view,Type type, string key) => contextualObject.GetValue(key, contextualObject, view, ContextualObject.GetTypedKey(type ?? contextualObject.GetType(), key));
+        public static T GetEnvironment<T>(this ContextualObject contextualObject, View view, string key, bool cascades = true) => contextualObject.GetEnvironment<T>(view, contextualObject.GetType(),key, cascades);
+        public static T GetEnvironment<T>(this ContextualObject contextualObject, View view, Type type, string key, bool cascades = true) => contextualObject.GetValue<T>(key, contextualObject, view, ContextualObject.GetTypedKey(type ?? contextualObject.GetType(),key), cascades);
+        public static object GetEnvironment(this ContextualObject contextualObject, View view, string key, bool cascades = true) => contextualObject.GetValue(key, contextualObject, view, ContextualObject.GetTypedKey(contextualObject, key), cascades);
+        public static object GetEnvironment(this ContextualObject contextualObject, View view,Type type, string key, bool cascades = true) => contextualObject.GetValue(key, contextualObject, view, ContextualObject.GetTypedKey(type ?? contextualObject.GetType(), key), cascades);
 
-        public static T GetEnvironment<T>(this View view, string key) => view.GetEnvironment<T>(view, view.GetType(), key);
-        public static T GetEnvironment<T>(this View view, Type type, string key) => view.GetValue<T>(key, view, view.Parent,ContextualObject.GetTypedKey(type ?? view.GetType(), key));
+        public static T GetEnvironment<T>(this View view, string key, bool cascades = true) => view.GetEnvironment<T>(view, view.GetType(), key, cascades);
+        public static T GetEnvironment<T>(this View view, Type type, string key, bool cascades = true) => view.GetValue<T>(key, view, view.Parent,ContextualObject.GetTypedKey(type ?? view.GetType(), key), cascades);
 
-        public static object GetEnvironment(this View view, string key) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedKey(view, key));
-        public static object GetEnvironment(this View view, Type type, string key) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedKey(type ?? view.GetType(), key));
+        public static object GetEnvironment(this View view, string key, bool cascades = true) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedKey(view, key), cascades);
+        public static object GetEnvironment(this View view, Type type, string key, bool cascades = true) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedKey(type ?? view.GetType(), key), cascades);
 
 
         public static Dictionary<string, object> DebugGetEnvironment(this View view)

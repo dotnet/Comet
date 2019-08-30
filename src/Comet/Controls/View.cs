@@ -24,19 +24,17 @@ namespace Comet
         public IReadOnlyList<Gesture> Gestures => gestures;
 
         View parent;
-        string id;
 
         public string Id
         {
-            get => id ?? (id = Guid.NewGuid().ToString());
-            set => id = value;
+            get => this.GetEnvironment<string>(nameof(Id),false) ?? (Id = Guid.NewGuid().ToString());
+            set => this.SetEnvironment(nameof(Id), value, false);
         }
 
-        string tag;
         public string Tag
         {
-            get => tag;
-            internal set => tag = value;
+            get => this.GetEnvironment<string>(nameof(Tag), false);
+            internal set => this.SetEnvironment(nameof(Tag),value,false);
         }
 
         public View Parent
