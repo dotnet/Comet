@@ -10,7 +10,7 @@ namespace Comet
             
         }
 
-        internal override void ContextPropertyChanged(string property, object value)
+        internal override void ContextPropertyChanged(string property, object value, bool cascades)
         {
             
         }

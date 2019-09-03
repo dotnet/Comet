@@ -22,10 +22,10 @@ namespace Comet {
 			}
 		}
 		
-		internal override void ContextPropertyChanged (string property, object value)
+		internal override void ContextPropertyChanged (string property, object value, bool cascades)
 		{
-			base.ContextPropertyChanged (property, value);
-			Content?.ContextPropertyChanged (property, value);
+			base.ContextPropertyChanged (property, value,cascades);
+			Content?.ContextPropertyChanged (property, value,cascades);
 		}
 
         protected override void Dispose(bool disposing)

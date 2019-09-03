@@ -155,12 +155,14 @@ namespace Comet
                 view.Navigation = parent as NavigationView ?? parent?.Navigation;
             }
         }
-        internal override void ContextPropertyChanged(string property, object value)
+        internal override void ContextPropertyChanged(string property, object value, bool cascades)
         {
-            base.ContextPropertyChanged(property, value);
+            base.ContextPropertyChanged(property, value,cascades);
+            if (!cascades)
+                return;
             foreach (var view in Views)
             {
-                view.ContextPropertyChanged(property, value);
+                view.ContextPropertyChanged(property, value,cascades);
             }
         }
 

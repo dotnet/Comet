@@ -33,7 +33,7 @@ namespace Comet
         }
 
 
-        internal abstract void ContextPropertyChanged(string property, object value);
+        internal abstract void ContextPropertyChanged(string property, object value, bool cascades);
 
         public static string GetTypedKey(ContextualObject obj, string key)
             => GetTypedKey(obj.GetType(), key);
@@ -125,7 +125,7 @@ namespace Comet
             contextualObject.SetValue(typedKey, value, cascades);
             //TODO: Verify this is needed 
             Device.InvokeOnMainThread(() => {
-                contextualObject.ContextPropertyChanged(typedKey, value);
+                contextualObject.ContextPropertyChanged(typedKey, value,cascades);
             });
             return contextualObject;
         }
@@ -137,7 +137,7 @@ namespace Comet
                 return contextualObject;
             Device.InvokeOnMainThread(() =>
             {
-                contextualObject.ContextPropertyChanged(key, value);
+                contextualObject.ContextPropertyChanged(key, value,cascades);
             });
             return contextualObject;
         }

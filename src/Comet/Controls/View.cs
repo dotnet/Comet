@@ -241,7 +241,7 @@ namespace Comet
             replacedView?.ViewPropertyChanged(property, value);
         }
 
-        internal override void ContextPropertyChanged(string property, object value)
+        internal override void ContextPropertyChanged(string property, object value, bool cascades)
         {
             ViewPropertyChanged(property, value);
         }
