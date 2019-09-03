@@ -31,7 +31,12 @@ namespace Comet.Blazor
 
             // Unsupported views. Without registering these, it cause an infinite recursion on derived views
             Registrar.Handlers.Register<ActivityIndicator, UnsupportedHandler<ActivityIndicator>>();
-            //Registrar.Handlers.Register<Control, UnsupportedHandler<Control>>();
+            Registrar.Handlers.Register<SecureField, UnsupportedHandler<SecureField>>();
+            Registrar.Handlers.Register<Slider, UnsupportedHandler<Slider>>();
+            Registrar.Handlers.Register<Toggle, UnsupportedHandler<Toggle>>();
+            Registrar.Handlers.Register<DrawableControl, UnsupportedHandler<DrawableControl>>();
+            Registrar.Handlers.Register<ViewRepresentable, UnsupportedHandler<ViewRepresentable>>();
+            Registrar.Handlers.Register<WebView, UnsupportedHandler<WebView>>();
 
             Device.PerformInvokeOnMainThread = a => a();
             ListView.HandlerSupportsVirtualization = false;

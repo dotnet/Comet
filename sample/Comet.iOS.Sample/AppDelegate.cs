@@ -16,16 +16,16 @@ namespace Comet.iOS.Sample {
 			get;
 			set;
 		}
-		public override void FinishedLaunching (UIApplication application)
+		
+        UIWindow window;
+
+        public override void FinishedLaunching (UIApplication application)
 		{
 			base.FinishedLaunching (application);
 		}
-		UIWindow window;
+		
 		public override bool FinishedLaunching (UIApplication application, NSDictionary launchOptions)
 		{
-            // Override point for customization after application launch.
-            // If not required for your application you can safely delete this method
-
 #if DEBUG
             Comet.Reload.Init();
 #endif

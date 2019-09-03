@@ -16,11 +16,11 @@ namespace Comet.Blazor
             UI.Init();
 
             app.UseImages();
-            app.Map("/_Comet/Comet.js", app2 =>
+            app.Map("/_comet/comet.js", app2 =>
             {
                 app2.Run(async ctx =>
                 {
-                    using (var stream = typeof(CometExtensions).Assembly.GetManifestResourceStream(typeof(CometExtensions), "Scripts.Comet.js"))
+                    using (var stream = typeof(CometExtensions).Assembly.GetManifestResourceStream(typeof(CometExtensions), "Scripts.comet.js"))
                     {
                         ctx.Response.StatusCode = 200;
                         ctx.Response.ContentType = "application/javascript";

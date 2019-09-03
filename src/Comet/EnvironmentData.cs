@@ -147,15 +147,18 @@ namespace Comet {
             base.CallPropertyRead(propertyName);
         }
 
-        public void SetValue(string key, object value)
+        public bool SetValue(string key, object value)
         {
-            SetProperty(value, key);
+            //if Nothing changed, don't send on notifications
+            if (!SetProperty(value, key))
+                return false;
             if (View != null)
                 View?.GetState().OnPropertyChanged(this, key,value);
             else if(isStatic)
             {
                 View.ActiveViews.ForEach(x => x.GetState()?.OnPropertyChanged(this, key, value));
             }
+            return true;
         }
 		internal void Clear()
 		{

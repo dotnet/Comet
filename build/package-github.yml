@@ -130,18 +130,34 @@ stages:
         SourceFolder: '$(Build.SourcesDirectory)'
         Contents: '**\*.nupkg'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
+   
+    - script: echo Publish Nuget Github the code!
+
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          nuget source Add -Name "GHNuget" \
+               -Source "https://nuget.pkg.github.com/Clancey/index.json" \
+               -UserName Clancey -Password $(gp)
+          
+          nuget push $(Build.ArtifactStagingDirectory)/**/*.nupkg -Source "GHNuget"
 
     - task: PublishBuildArtifacts@1
       inputs:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop_nuget_alpha'
         publishLocation: 'Container'
-   
-    - script: echo Publish Nuget Github the code!
 
-    - task: NuGetCommand@2
-      inputs:
-        command: 'push'
-        packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
-        nuGetFeedType: 'external'
-        publishFeedCredentials: 'ClanceyGitHubPackages'
+    
+
+    # - task: NuGetCommand@2
+    #   inputs:
+    #     command: 'push'
+    #     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    #     nuGetFeedType: 'external'
+    #     publishFeedCredentials: 'ClanceyGitHubPackages'
+
+    

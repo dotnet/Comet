@@ -1,0 +1,306 @@
+﻿{
+    "author": "Comet",
+    "classifications": [
+        "Comet",
+        "Mobile"
+    ],
+    "name": "Comet App",
+    "groupIdentity": "Comet.App",
+    "identity": "Comet.App.CSharp",
+    "shortName": "comet-app",
+    "tags": {
+        "language": "C#",
+        "type": "project"
+    },
+    "sourceName": "NewApp",
+    "primaryOutputs": [
+        {
+            "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\" && (kind == \"quickstart\"))",
+            "path": "NewApp\\MainPage.cs"
+        },
+        {
+            "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\" && (kind == \"quickstart\"))",
+            "path": "NewApp\\README.md"
+        },
+        {
+            "condition": "CreateiOSProject",
+            "path": "NewApp.iOS\\NewApp.iOS.csproj"
+        },
+        {
+            "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\" && (kind == \"quickstart\"))",
+            "path": "NewApp\\NewApp.csproj"
+        }
+    ],
+    "defaultName": "App",
+    "preferNameDirectory": "true",
+    "guids": [
+        "99E19497-29A6-4B77-B773-BEC55F9B55DC", // .NET Standard Library
+        "8D9F8CF0-E178-402D-8D40-A88B7B5F3D42", // Android
+        "91D74A40-E440-42AD-B51F-C2D641C49384", // iOS
+        "3EA9E612-E717-4E55-9034-C415CD62AF9A", // UWP
+        "B19C892E-2628-4CA7-AD27-08D406A3B14B"  // UITest
+    ],
+    "symbols": {
+        "kind": {
+            "type": "parameter",
+            "datatype": "choice",
+            "defaultValue": "quickstart",
+            "choices": [
+                {
+                    "choice": "quickstart",
+                    "description": "Quick Start Comet iOS app"
+                }
+            ]
+        },
+        "AppIdentifier": {
+            "type": "parameter",
+            "description": "Overrides the Info.plist's CFBundleIdentifier",
+            "datatype": "string",
+            "defaultValue": "com.companyname"
+        },
+        "AndroidAppIdentifier": {
+            "type": "parameter",
+            "description": "Overrides the package name in the AndroidManifest.xml",
+            "datatype": "string"
+        },
+        "iOSAppIdentifier": {
+            "type": "parameter",
+            "description": "Overrides the Info.plist's CFBundleIdentifier",
+            "datatype": "string"
+        },
+        "AndroidAppIdentifierReplacer": {
+            "type": "generated",
+            "generator": "coalesce",
+            "parameters": {
+                "sourceVariableName": "AndroidAppIdentifier",
+                "fallbackVariableName": "AppIdentifier"
+            },
+            "replaces": "com.companyname.NewApp.Android"
+        },
+        "iOSAppIdentifierReplacer": {
+            "type": "generated",
+            "generator": "coalesce",
+            "parameters": {
+                "sourceVariableName": "iOSAppIdentifier",
+                "fallbackVariableName": "AppIdentifier"
+            },
+            "replaces": "com.companyname.NewApp.iOS"
+        },
+        "WindowsSdk": {
+            "type": "parameter",
+            "description": "Windows SDK Target Version. Minimum Version is Fall Creator's Update (10.0.16278).",
+            "dataType": "string",
+            "replaces": "WindowsSdk"
+        },
+        "AndroidSDKVersion": {
+            "type": "parameter",
+            "datatype": "string",
+            "replaces": "AndroidSDKVersion",
+            "defaultValue": "v9.0"
+        },
+        "TargetAndroidAPI": {
+            "type": "parameter",
+            "datatype": "string",
+            "replaces": "TargetAndroidAPI",
+            "defaultValue": "28"
+        },
+        "MinAndroidAPI": {
+            "type": "parameter",
+            "datatype": "int",
+            "replaces": "MinAndroidAPI",
+            "defaultValue": "21"
+        },
+        "SupportLibVersion": {
+            "type": "parameter",
+            "datatype": "string",
+            "replaces": "SupportLibVersion",
+            "defaultValue": "28.0.0.1"
+        },
+        "IncludeXamarinEssentials": {
+            "type": "parameter",
+            "dataType": "bool",
+            "defaultValue": "true"
+        },
+        "XamarinEssentialsSdk": {
+            "type": "parameter",
+            "dataType": "string",
+            "replaces": "XamarinEssentialsSdk",
+            "defaultValue": "1.3.0-pre"
+        },
+        "CometSdk": {
+            "type": "parameter",
+            "dataType": "string",
+            "replaces": "CometSdk",
+            "defaultValue": "0.1.7364-beta"
+        },
+        "CometReloadSdk": {
+            "type": "parameter",
+            "dataType": "string",
+            "replaces": "CometReloadSdk",
+            "defaultValue": "0.0.9-alpha"
+        },
+        "ProjectID": {
+            "type": "generated",
+            "generator": "guid",
+            "replaces": "Project_ID"
+        },
+        "UserID": {
+            "type": "generated",
+            "generator": "guid",
+            "replaces": "User_ID"
+        },
+        "IISPort": {
+            "type": "generated",
+            "generator": "port",
+            "replaces": "IISPortNum"
+        },
+        "SSLPort": {
+            "type": "generated",
+            "generator": "port",
+            "replaces": "SSLPortNum"
+        },
+        // Project Symbols
+        "CreateSharedProject": {
+            "type": "parameter",
+            "dataType": "bool",
+            "defaultValue": "true"
+        },
+        "CreateiOSProject": {
+            "type": "parameter",
+            "dataType": "bool",
+            "defaultValue": "true"
+        },
+        "CreateMacProject": {
+            "type": "parameter",
+            "dataType": "bool",
+            "defaultValue": "false"
+        },
+        "CreateAndroidProject": {
+            "type": "parameter",
+            "dataType": "bool",
+            "defaultValue": "true"
+        },
+        "CreateUWPProject": {
+            "type": "parameter",
+            "dataType": "bool",
+            "defaultValue": "false"
+        },
+        "CreateBackendProject": {
+            "type": "parameter",
+            "dataType": "bool",
+            "defaultValue": "false"
+        },
+        "CreateUITestProject": {
+            "type": "parameter",
+            "dataType": "bool",
+            "defaultValue": "false"
+        },
+        "OpenXaml": {
+            "type": "parameter",
+            "dataType": "bool",
+            "defaultValue": "true"
+        },
+        "OpenXamlCs": {
+            "type": "parameter",
+            "dataType": "bool",
+            "defaultValue": "true"
+        },
+        "LibraryProjectName": {
+            "type": "parameter",
+            "dataType": "string",
+            "replaces": "LibraryProjectName"
+        }
+    },
+    "postActions": [
+        {
+            "condition": "OpenMainCs",
+            "description": "Opens MainPage.cs in the editor.",
+            "manualInstructions": [],
+            "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+            "args": {
+                "files": "0"
+            },
+            "continueOnError": true
+        },
+        {
+            "condition": "OpenReadme",
+            "description": "Opens README.md in the editor.",
+            "manualInstructions": [],
+            "actionId": "84C0DA21-51C8-4541-9940-6CA19AF04EE6",
+            "args": {
+                "files": "1"
+            },
+            "continueOnError": true
+        }
+    ],
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "condition": "(!CreateSharedProject)",
+                    "exclude": "NewApp/**/*"
+                },
+                {
+                    "condition": "(!CreateiOSProject)",
+                    "exclude": [
+                        "NewApp.iOS/**/*"
+                    ]
+                },
+                {
+                    "condition": "(!CreateAndroidProject)",
+                    "exclude": [
+                        "NewApp.Android/**/*"
+                    ]
+                },
+                {
+                    "condition": "(!CreateUWPProject)",
+                    "exclude": [
+                        "NewApp.UWP/**/*"
+                    ]
+                },
+                {
+                    "condition": "(!CreateMacProject)",
+                    "exclude": [
+                        "NewApp.macOS/**/*"
+                    ]
+                }
+            ]
+        },
+        {
+            "source": "../quickstart/",
+            "condition": "(kind == \"quickstart\")",
+            "modifiers": [
+                {
+                    "condition": "(!CreateiOSProject)",
+                    "exclude": [
+                        "NewApp/NewApp.csproj"
+                    ]
+                },
+                {
+                    "condition": "(!CreateiOSProject)",
+                    "exclude": [
+                        "NewApp.iOS/**/*"
+                    ]
+                },
+                {
+                    "condition": "(!CreateAndroidProject)",
+                    "exclude": [
+                        "NewApp.Android/**/*"
+                    ]
+                },
+                {
+                    "condition": "(!CreateUWPProject)",
+                    "exclude": [
+                        "NewApp.UWP/**/*"
+                    ]
+                },
+                {
+                    "condition": "(!CreateMacProject)",
+                    "exclude": [
+                        "NewApp.macOS/**/*"
+                    ]
+                }
+            ]
+        }
+    ]
+}
