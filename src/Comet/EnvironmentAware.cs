@@ -85,10 +85,13 @@ namespace Comet
 
         internal bool SetValue(string key, object value, bool cascades)
         {
+            //We only create the backing dictionary if it is needed. 
+            //If we are setting the value to null, 
+            //there is no reason to create the dictionary if it doesnt exist
             if (cascades)
-                return Context(true).SetValue(key, value);
+                return Context(value != null)?.SetValue(key, value) ?? false;
             else
-                return LocalContext(true).SetValue(key, value);
+                return LocalContext(value != null)?.SetValue(key, value) ?? false;
         }
         
         
