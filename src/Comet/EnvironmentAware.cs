@@ -83,12 +83,12 @@ namespace Comet
             }
         }
 
-        internal void SetValue(string key, object value, bool cascades)
+        internal bool SetValue(string key, object value, bool cascades)
         {
             if (cascades)
-                Context(true)?.SetValue(key, value);
+                return Context(true).SetValue(key, value);
             else
-                LocalContext(true).SetValue(key, value);
+                return LocalContext(true).SetValue(key, value);
         }
         
         
@@ -130,7 +130,8 @@ namespace Comet
         public static T SetEnvironment<T>(this T contextualObject, string key, object value, bool cascades = false)
             where T : ContextualObject
         {
-            contextualObject.SetValue(key, value, cascades);
+           if(!contextualObject.SetValue(key, value, cascades))
+                return contextualObject;
             Device.InvokeOnMainThread(() =>
             {
                 contextualObject.ContextPropertyChanged(key, value);
