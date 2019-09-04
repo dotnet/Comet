@@ -7,6 +7,10 @@ Video Preview:
 
 [![Video Demo](http://img.youtube.com/vi/-Ieg9UadN8s/0.jpg)](http://www.youtube.com/watch?v=-Ieg9UadN8s)
 
+## Getting Started
+
+When you're ready to take a ride on the comet, head over to the wiki and follow the [Getting Started](https://github.com/Clancey/Comet/wiki/Getting-Started) guide.
+
 ## Key Concepts
 
 Comet is an MVU style pattern.
