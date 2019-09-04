@@ -109,9 +109,9 @@ namespace Comet
 
             DisposeObservable();
 
-            var currentViews = CurrentViews.ToList();
-            CurrentViews.Clear();
-            currentViews.ForEach(x => x.Value?.Dispose());
+            var currentViews = CurrentViews?.ToList();
+            CurrentViews?.Clear();
+            currentViews?.ForEach(x => x.Value?.Dispose());
             base.Dispose(disposing);
         }
     }
