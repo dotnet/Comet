@@ -13,12 +13,12 @@ namespace Comet
         int Rows(int section);
         View FooterView();
         View HeaderView();
-        object ItemAt(int section, int row);
-        View ViewFor(int section, int row);
+        object ItemAt(int section, int index);
+        View ViewFor(int section, int index);
         View HeaderFor(int section);
         View FooterFor(int section);
         bool ShouldDisposeViews { get; }
-        void OnSelected(int section, int row);
+        void OnSelected(int section, int index);
     }
 
     public class ListView<T> : ListView
@@ -84,13 +84,13 @@ namespace Comet
 
         public Func<int> Count { get; set; }
 
-        protected override int GetRows(int section) => items?.Count() ?? Count?.Invoke() ?? 0;
+        protected override int GetCount(int section) => items?.Count() ?? Count?.Invoke() ?? 0;
 
-        protected override object GetItemAt(int section, int row) => items.SafeGetAtIndex(row, ItemFor);
+        protected override object GetItemAt(int section, int index) => items.SafeGetAtIndex(index, ItemFor);
 
-        protected override View GetViewFor(int section, int row)
+        protected override View GetViewFor(int section, int index)
         {
-            var item = (T)GetItemAt(section, row);
+            var item = (T)GetItemAt(section, index);
             if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
                 CurrentViews[item] = view = ViewFor(item);
@@ -130,15 +130,15 @@ namespace Comet
 
         protected virtual int GetSections() => 1;
 
-        protected virtual int GetRows(int section) => views?.Count ?? 0;
+        protected virtual int GetCount(int section) => views?.Count ?? 0;
 
         protected virtual View GetHeaderFor(int section) => null;
 
         protected virtual View GetFooterFor(int section) => null;
 
-        protected virtual object GetItemAt(int section, int row) => views?[row];
+        protected virtual object GetItemAt(int section, int index) => views?[index];
 
-        protected virtual View GetViewFor(int section, int row) => views?[row];
+        protected virtual View GetViewFor(int section, int index) => views?[index];
 
         public virtual void Add(View view)
         {
@@ -183,21 +183,21 @@ namespace Comet
 
         int IListView.Sections() => GetSections();
 
-        int IListView.Rows(int section) => GetRows(section);
+        int IListView.Rows(int section) => GetCount(section);
 
         View IListView.FooterView() => Footer;
 
         View IListView.HeaderView() => Header;
 
-        object IListView.ItemAt(int section, int row) => GetItemAt(section, row);
+        object IListView.ItemAt(int section, int index) => GetItemAt(section, index);
 
-        View IListView.ViewFor(int section, int row) => GetViewFor(section, row);
+        View IListView.ViewFor(int section, int index) => GetViewFor(section, index);
 
         View IListView.HeaderFor(int section) => GetHeaderFor(section);
 
         View IListView.FooterFor(int section) => GetFooterFor(section);
 
-        void IListView.OnSelected(int section, int row) => OnSelected(section, row);
+        void IListView.OnSelected(int section, int index) => OnSelected(section, index);
     }
 
 
@@ -215,9 +215,9 @@ namespace Comet
                 views = new List<View>();
             views.Add(view);
         }
-        public virtual object GetItemAt(int row) => views?[row];
+        public virtual object GetItemAt(int index) => views?[index];
         public virtual int GetCount() => views?.Count ?? 0;
-        public virtual View GetViewFor(int row) => (View)GetItemAt(row);
+        public virtual View GetViewFor(int index) => (View)GetItemAt(index);
     }
 
     public class Section<T> : Section
@@ -243,8 +243,8 @@ namespace Comet
 
         public Func<int, T> ItemFor { get; set; }
 
-        public override object GetItemAt(int row) => items.SafeGetAtIndex(row, ItemFor);
-        public override View GetViewFor(int row) => ViewFor((T)GetItemAt(row));
+        public override object GetItemAt(int index) => items.SafeGetAtIndex(index, ItemFor);
+        public override View GetViewFor(int index) => ViewFor((T)GetItemAt(index));
 
     }
 
@@ -263,14 +263,14 @@ namespace Comet
         protected override int GetSections() => sections?.Count() ?? 0;
         protected override View GetHeaderFor(int section) => sections?[section]?.Header;
         protected override View GetFooterFor(int section) => sections?[section]?.Footer;
-        protected override object GetItemAt(int section, int row) => sections?[section]?.GetItemAt(row);
-        protected override int GetRows(int section) => sections?[section]?.GetCount() ?? 0;
-        protected override View GetViewFor(int section, int row)
+        protected override object GetItemAt(int section, int index) => sections?[section]?.GetItemAt(index);
+        protected override int GetCount(int section) => sections?[section]?.GetCount() ?? 0;
+        protected override View GetViewFor(int section, int index)
         {
-            var item = (T)GetItemAt(section, row);
+            var item = (T)GetItemAt(section, index);
             if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
-                CurrentViews[item] = view = sections?[section]?.GetViewFor(row);
+                CurrentViews[item] = view = sections?[section]?.GetViewFor(index);
                 view.Parent = this;
             }
             return view;
@@ -292,8 +292,8 @@ namespace Comet
         protected override int GetSections() => sections?.Count() ?? 0;
         protected override View GetHeaderFor(int section) => sections?[section]?.Header;
         protected override View GetFooterFor(int section) => sections?[section]?.Footer;
-        protected override object GetItemAt(int section, int row) => sections?[section]?.GetItemAt(row);
-        protected override int GetRows(int section) => sections?[section]?.GetCount() ?? 0;
-        protected override View GetViewFor(int section, int row) => sections?[section]?.GetViewFor(row);
+        protected override object GetItemAt(int section, int index) => sections?[section]?.GetItemAt(index);
+        protected override int GetCount(int section) => sections?[section]?.GetCount() ?? 0;
+        protected override View GetViewFor(int section, int index) => sections?[section]?.GetViewFor(index);
     }
 }
