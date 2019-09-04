@@ -29,9 +29,15 @@ namespace Comet
         readonly Binding<IReadOnlyList<T>> itemsBinding;
         IReadOnlyList<T> items;
 
-        public ListView() { }
+        public ListView(Binding<IReadOnlyList<T>> items) : this()
+        {
 
-        public ListView(Binding<IReadOnlyList<T>> items)
+            this.itemsBinding = items;
+            this.items = items.Get();
+            SetupObservable();
+        }
+
+        public ListView()
         {
             if (HandlerSupportsVirtualization)
             {
@@ -44,9 +50,6 @@ namespace Comet
                 CurrentViews = new Dictionary<object, View>();
 
             ShouldDisposeViews = true;
-            this.itemsBinding = items;
-            this.items = items.Get();
-            SetupObservable();
         }
         protected override void ViewPropertyChanged(string property, object value)
         {
@@ -91,6 +94,8 @@ namespace Comet
         protected override View GetViewFor(int section, int index)
         {
             var item = (T)GetItemAt(section, index);
+            if (item == null)
+                return null;
             if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
                 CurrentViews[item] = view = ViewFor(item);
@@ -260,17 +265,26 @@ namespace Comet
                 sections = new List<Section<T>>();
             sections.Add(section);
         }
-        protected override int GetSections() => sections?.Count() ?? 0;
-        protected override View GetHeaderFor(int section) => sections?[section]?.Header;
-        protected override View GetFooterFor(int section) => sections?[section]?.Footer;
-        protected override object GetItemAt(int section, int index) => sections?[section]?.GetItemAt(index);
-        protected override int GetCount(int section) => sections?[section]?.GetCount() ?? 0;
+
+        public Func<int, Section<T>> SectionFor { get; set; }
+
+        public Func<int> SectionCount { get; set; }
+
+
+        protected override int GetSections() => sections?.Count() ?? SectionCount?.Invoke() ?? 0;
+        protected override View GetHeaderFor(int section) => sections.SafeGetAtIndex(section, SectionFor)?.Header;
+        protected override View GetFooterFor(int section) => sections.SafeGetAtIndex(section, SectionFor)?.Footer;
+        protected override object GetItemAt(int section, int index) => sections.SafeGetAtIndex(section, SectionFor)?.GetItemAt(index);
+        protected override int GetCount(int section) => sections.SafeGetAtIndex(section, SectionFor)?.GetCount() ?? 0;
+
         protected override View GetViewFor(int section, int index)
         {
             var item = (T)GetItemAt(section, index);
+            if (item == null)
+                return null;
             if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
-                CurrentViews[item] = view = sections?[section]?.GetViewFor(index);
+                CurrentViews[item] = view = sections.SafeGetAtIndex(section, SectionFor)?.GetViewFor(index);
                 view.Parent = this;
             }
             return view;
