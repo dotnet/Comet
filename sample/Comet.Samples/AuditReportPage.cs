@@ -31,7 +31,7 @@ namespace Comet.Samples
             
             return new ListView<ApiAuditManager.AuditReport>(reports.Value)
             {
-                Cell = (report) => new HStack()
+                ViewFor = (report) => new HStack()
                     {
                         new VStack(HorizontalAlignment.Leading)
                         {

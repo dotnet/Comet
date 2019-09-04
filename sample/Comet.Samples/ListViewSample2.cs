@@ -30,7 +30,7 @@ namespace Comet.Samples
 		{
 			Body = () => new ListView<Song> (Songs) 
 			{
-				Cell = song => new HStack
+				ViewFor = song => new HStack
 				{
 					new Image(song.ArtworkUrl)
 						.Frame(44,44, Alignment.Center)

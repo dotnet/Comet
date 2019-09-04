@@ -74,7 +74,7 @@ namespace Comet.Samples {
             {
                 new ListView<MenuItem> (pages)
                 {
-                    Cell = (page) =>  new HStack()
+                    ViewFor = (page) =>  new HStack()
                     {
                         new Text(page.Title),
                         new Spacer() 

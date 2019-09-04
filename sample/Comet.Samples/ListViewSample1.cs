@@ -25,7 +25,7 @@ namespace Comet.Samples
         [Body]
         View body() => new ListView<Song>(Songs)
         {
-            Cell = (song) => new HStack 
+            ViewFor = (song) => new HStack 
             {
                 new Image (song.ArtworkUrl).Frame(52, 52).Padding(4),
                 new VStack(HorizontalAlignment.Leading, spacing:2)
