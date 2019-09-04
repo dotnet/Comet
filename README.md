@@ -140,14 +140,14 @@ public class MyPage : View {
 ```
 
 
-## What platforms will be supported?
+## What platforms are being targeted?
 
 * iOS
 * Android
 * UWP
 * WPF
 * Mac OS
-* Xamarin.Forms
+* Xamarin.Forms - all Forms targets: Linux, macOS, Tizen, WPF, and of course Android, iOS, UWP.
 * Blazor
 
 # Disclaimer
