@@ -57,8 +57,8 @@ namespace Comet.UWP.Handlers
 
         private void HandleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = VirtualView.ItemAt(0,TypedNativeView.SelectedIndex);
-            VirtualView?.OnSelected(item);
+            var item = ListView?.ItemAt(0,TypedNativeView.SelectedIndex);
+            ListView?.OnSelected(item);
         }
     }
 
