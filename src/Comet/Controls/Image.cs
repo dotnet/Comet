@@ -33,16 +33,31 @@ namespace Comet
                 LoadBitmapFromSource(_source.CurrentValue);
             }
         }
-        
+
+        protected override void ViewPropertyChanged(string property, object value)
+        {
+            base.ViewPropertyChanged(property, value);
+            if (property == nameof(Source))
+            {
+                LoadBitmapFromSource((string)value);
+            }
+        }
+
         private async void LoadBitmapFromSource(string source)
         {
             try
             {
+                if (string.IsNullOrWhiteSpace(source))
+                {
+                    Bitmap = null;
+                    return;
+                }
                 var loadBitmapTask = Device.BitmapService?.LoadBitmapAsync(source);
                 if (loadBitmapTask != null)
                 {
                     var bitmap = await loadBitmapTask;
                     Bitmap = bitmap;
+                    this.ViewPropertyChanged(nameof(Bitmap), bitmap);
                 }
             }
             catch (Exception exc)
