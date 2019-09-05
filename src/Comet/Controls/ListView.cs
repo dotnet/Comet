@@ -98,7 +98,10 @@ namespace Comet
                 return null;
             if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
-                CurrentViews[item] = view = ViewFor(item);
+                view = ViewFor?.Invoke(item);
+                if (view == null)
+                    return null;
+                CurrentViews[item] = view;
                 view.Parent = this;
             }
             return view;
@@ -249,7 +252,7 @@ namespace Comet
         public Func<int, T> ItemFor { get; set; }
 
         public override object GetItemAt(int index) => items.SafeGetAtIndex(index, ItemFor);
-        public override View GetViewFor(int index) => ViewFor((T)GetItemAt(index));
+        public override View GetViewFor(int index) => ViewFor?.Invoke((T)GetItemAt(index));
         public override int GetCount() => items?.Count ?? Count?.Invoke() ?? 0;
 
     }
@@ -285,7 +288,10 @@ namespace Comet
                 return null;
             if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
-                CurrentViews[item] = view = sections.SafeGetAtIndex(section, SectionFor)?.GetViewFor(index);
+                view = sections.SafeGetAtIndex(section, SectionFor)?.GetViewFor(index);
+                if (view == null)
+                    return null;
+                CurrentViews[item] = view;
                 view.Parent = this;
             }
             return view;
