@@ -209,14 +209,27 @@ namespace Comet
     }
 
 
-    public class Section : View
+    public class Section : View, IEnumerable<View>
     {
+        public Section(Binding<IList<View>> views, View header = null, View footer = null)
+        {
+
+        }
+        public Section(View header = null, View footer = null)
+        {
+            Header = header;
+            Footer = footer;
+        }
         public View Header { get; set; }
         public View Footer { get; set; }
-        public Func<int, View> ViewFor { get; set; }
-        public Func<int> Count { get; set; }
 
         List<View> views;
+        public virtual void Add(IEnumerable<View> views)
+        {
+            if (this.views == null)
+                this.views = new List<View>();
+            this.views.AddRange(views);
+        }
         public virtual void Add(View view)
         {
             if (views == null)
@@ -226,6 +239,9 @@ namespace Comet
         public virtual object GetItemAt(int index) => views?[index];
         public virtual int GetCount() => views?.Count ?? 0;
         public virtual View GetViewFor(int index) => (View)GetItemAt(index);
+
+        public IEnumerator<View> GetEnumerator() => views?.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => views?.GetEnumerator();
     }
 
     public class Section<T> : Section
@@ -247,7 +263,10 @@ namespace Comet
             items = itemsBinding.Get();
             base.ViewPropertyChanged(property, value);
         }
-        public new Func<T, View> ViewFor { get; set; }
+
+        public Func<int> Count { get; set; }
+
+        public Func<T, View> ViewFor { get; set; }
 
         public Func<int, T> ItemFor { get; set; }
 
@@ -301,20 +320,43 @@ namespace Comet
 
     public class SectionedListView : ListView
     {
+        public SectionedListView()
+        {
+
+        }
+        public SectionedListView(IList<Section> sections)
+        {
+            this.sections = sections;
+        }
         public override void Add(View view) => throw new NotSupportedException("You cannot add a View directly to a SectionedListView");
 
-        List<Section> sections;
+        IList<Section> sections;
         public virtual void Add(Section section)
         {
             if (sections == null)
                 sections = new List<Section>();
             sections.Add(section);
         }
-        protected override int GetSections() => sections?.Count() ?? 0;
+
+        public virtual void Add(IEnumerable<Section> items)
+        {
+            if (this.sections == null)
+                this.sections = new List<Section>();
+            ((List<Section>)this.sections).AddRange(items);
+        }
+        protected override int GetSections()
+        {
+            var s = sections?.Count() ?? 0;
+            return s;
+        }
         protected override View GetHeaderFor(int section) => sections?[section]?.Header;
         protected override View GetFooterFor(int section) => sections?[section]?.Footer;
         protected override object GetItemAt(int section, int index) => sections?[section]?.GetItemAt(index);
-        protected override int GetCount(int section) => sections?[section]?.GetCount() ?? 0;
+        protected override int GetCount(int section)
+        {
+            var count = sections?[section]?.GetCount() ?? 0;
+            return count;
+        }
         protected override View GetViewFor(int section, int index) => sections?[section]?.GetViewFor(index);
     }
 }

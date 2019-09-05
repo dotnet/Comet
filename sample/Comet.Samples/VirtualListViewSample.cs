@@ -7,7 +7,9 @@ namespace Comet.Samples
         {
             Body = () => new ListView<int>
             {
-                Count= ()=> 10,
+                Count = () => 10,
+                ItemFor = (i) => i,
+                ViewFor = (i) => new Text(i.ToString()),
             };
         }
     }
