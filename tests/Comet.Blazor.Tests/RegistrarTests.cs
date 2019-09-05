@@ -2,6 +2,7 @@ using Comet.Blazor.Handlers;
 using Microsoft.AspNetCore.Builder;
 using NSubstitute;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Xunit;
@@ -44,6 +45,13 @@ namespace Comet.Blazor.Tests
         [Fact]
         public void AllCometSkiaHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(Skia.SkiaShapeView).Assembly);
 
+
+        static List<string> skippedViews = new List<string>
+        {
+            nameof(Section),
+            //The Generic <T>
+            $"{nameof(Section)}`1",
+        };
         private void AllInternalHandlersAreRegistered(Assembly assembly)
         {
             var appBuilder = GetAppBuilder();
@@ -55,6 +63,8 @@ namespace Comet.Blazor.Tests
 
             foreach (var type in types)
             {
+                if (skippedViews.Contains(type.Name))
+                    continue;
                 var handler = Registrar.Handlers.GetHandler(type);
 
                 Assert.NotNull(handler);
