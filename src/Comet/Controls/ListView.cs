@@ -41,9 +41,12 @@ namespace Comet
         {
             if (HandlerSupportsVirtualization)
             {
-                CurrentViews = new FixedSizeDictionary<object, View>(30)
+                CurrentViews = new FixedSizeDictionary<object, View>(50)
                 {
-                    OnDequeue = (pair) => pair.Value?.Dispose()
+                    OnDequeue = (pair) =>
+                    {
+                        pair.Value?.Dispose();
+                    }
                 };
             }
             else
@@ -279,6 +282,8 @@ namespace Comet
     public class SectionedListView<T> : ListView<T>
     {
 
+        Dictionary<int, Section<T>> sectionCache = new Dictionary<int, Section<T>>();
+
         public override void Add(View view) => throw new NotSupportedException("You cannot add a View directly to a SectionedListView");
 
         List<Section<T>> sections;
@@ -295,10 +300,10 @@ namespace Comet
 
 
         protected override int GetSections() => sections?.Count() ?? SectionCount?.Invoke() ?? 0;
-        protected override View GetHeaderFor(int section) => sections.SafeGetAtIndex(section, SectionFor)?.Header;
-        protected override View GetFooterFor(int section) => sections.SafeGetAtIndex(section, SectionFor)?.Footer;
-        protected override object GetItemAt(int section, int index) => sections.SafeGetAtIndex(section, SectionFor)?.GetItemAt(index);
-        protected override int GetCount(int section) => sections.SafeGetAtIndex(section, SectionFor)?.GetCount() ?? 0;
+        protected override View GetHeaderFor(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.Header;
+        protected override View GetFooterFor(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.Footer;
+        protected override object GetItemAt(int section, int index) => sections.SafeGetAtIndex(section, GetCachedSection)?.GetItemAt(index);
+        protected override int GetCount(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.GetCount() ?? 0;
 
         protected override View GetViewFor(int section, int index)
         {
@@ -307,7 +312,7 @@ namespace Comet
                 return null;
             if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
-                view = sections.SafeGetAtIndex(section, SectionFor)?.GetViewFor(index);
+                view = sections.SafeGetAtIndex(section, GetCachedSection)?.GetViewFor(index);
                 if (view == null)
                     return null;
                 CurrentViews[item] = view;
@@ -315,6 +320,39 @@ namespace Comet
             }
             return view;
 
+        }
+        protected Section<T> GetCachedSection(int index)
+        {
+            if(!sectionCache.TryGetValue(index, out var section))
+            {
+                section = SectionFor?.Invoke(index);
+                if (section != null)
+                {
+                    section.Parent = this;
+                    sectionCache[index] = section;
+                }
+            }
+            return section;
+        }
+        public override void ReloadData()
+        {
+            sectionCache.Clear();
+            base.ReloadData();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            var cached = sectionCache.Values.ToList();
+            cached.ForEach(s => s.Dispose());
+            sectionCache.Clear();
+            base.Dispose(disposing);
+        }
+        protected override void OnParentChange(View parent)
+        {
+            sections?.ForEach(section => section.Parent = this);
+
+            foreach (var pair in sectionCache)
+                pair.Value.Parent = this;
+            base.OnParentChange(parent);
         }
     }
 
@@ -358,5 +396,12 @@ namespace Comet
             return count;
         }
         protected override View GetViewFor(int section, int index) => sections?[section]?.GetViewFor(index);
+
+        protected override void OnParentChange(View parent)
+        {
+            foreach (var section in sections)
+                section.Parent = this;
+            base.OnParentChange(parent);
+        }
     }
 }

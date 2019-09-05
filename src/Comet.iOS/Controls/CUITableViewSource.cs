@@ -41,7 +41,6 @@ namespace Comet.iOS.Controls
                 return HasHeaders;
               
             }
-            Console.WriteLine(sel.Name);
             return base.RespondsToSelector(sel);
         }
         public override UIView GetViewForHeader(UITableView tableView, nint section) => _listView?.HeaderFor((int)section).ToView();
