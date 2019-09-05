@@ -310,12 +310,13 @@ namespace Comet
             var item = (T)GetItemAt(section, index);
             if (item == null)
                 return null;
-            if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
+            var key = (section, item);
+            if (!CurrentViews.TryGetValue(key, out var view) || (view?.IsDisposed ?? true))
             {
                 view = sections.SafeGetAtIndex(section, GetCachedSection)?.GetViewFor(index);
                 if (view == null)
                     return null;
-                CurrentViews[item] = view;
+                CurrentViews[key] = view;
                 view.Parent = this;
             }
             return view;
