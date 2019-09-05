@@ -19,7 +19,7 @@ namespace Comet.UWP.Handlers
 
         }
 
-        public ListView ListView => VirtualView;
+        public IListView ListView => VirtualView;
 
         protected override UWPListView CreateView()
         {
