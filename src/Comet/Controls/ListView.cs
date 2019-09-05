@@ -55,7 +55,7 @@ namespace Comet
         {
             //Update this when things change!
             DisposeObservable();
-            items = itemsBinding.Get();
+            items = itemsBinding?.Get();
             SetupObservable();
             base.ViewPropertyChanged(property, value);
         }
@@ -250,6 +250,7 @@ namespace Comet
 
         public override object GetItemAt(int index) => items.SafeGetAtIndex(index, ItemFor);
         public override View GetViewFor(int index) => ViewFor((T)GetItemAt(index));
+        public override int GetCount() => items?.Count ?? Count?.Invoke() ?? 0;
 
     }
 
