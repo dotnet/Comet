@@ -28,7 +28,7 @@ namespace Comet.iOS.Controls
                 {
 
                     var v = value.ViewFor(0,0);
-                    var constraints = v.GetFrameConstraints();
+                    var constraints = v?.GetFrameConstraints();
 
                     if (constraints?.Height != null)
                         RowHeight = (float)constraints.Height;
