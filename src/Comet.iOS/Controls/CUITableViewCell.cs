@@ -40,9 +40,6 @@ namespace Comet.iOS.Controls
                 view = view.Diff(_virtualView);
             }
 
-            if (shouldDispose)
-                _virtualView?.Dispose();
-
             _virtualView = view;
             var newView = view.ToView();
 
@@ -63,6 +60,9 @@ namespace Comet.iOS.Controls
             _currentContent = newView;
             if (_currentContent != null && _currentContent.Superview != ContentView)
                 ContentView.Add(_currentContent);
+
+            if (shouldDispose)
+                oldView?.Dispose();
         }
     }
 }

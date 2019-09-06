@@ -127,6 +127,12 @@ namespace Comet
                 return newView;
             }
 
+            //Always diff thebuilt views as well!
+            if (newView.BuiltView != null && oldView.BuiltView != null)
+            {
+                newView.BuiltView.Diff(oldView.BuiltView);
+            }
+
             if (newView is ContentView ncView && oldView is ContentView ocView)
             {
                 ncView.Content?.DiffUpdate(ocView.Content);
