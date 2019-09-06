@@ -58,18 +58,20 @@ namespace Comet.Reflection
             PropertyInfo info = null;
             foreach (var part in name.Split('.'))
             {
+                if (obj == null)
+                    return false;
                 info = null;
                 field = null;
-                var type = obj.GetType();
+                var type = obj?.GetType();
                 lastObect = obj;
-                info = type.GetDeepProperty(part);
+                info = type?.GetDeepProperty(part);
                 if (info != null)
                 {
                     obj = info.GetValue(obj, null);
                 }
                 else
                 {
-                    field = type.GetDeepField(part);
+                    field = type?.GetDeepField(part);
                     if (field == null)
                         return false;
                     obj = field.GetValue(obj);
