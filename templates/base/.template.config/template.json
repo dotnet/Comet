@@ -7,7 +7,7 @@
     "name": "Comet App",
     "groupIdentity": "Comet.App",
     "identity": "Comet.App.CSharp",
-    "shortName": "comet-app",
+    "shortName": "comet",
     "tags": {
         "language": "C#",
         "type": "project"
@@ -16,19 +16,23 @@
     "primaryOutputs": [
         {
             "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\" && (kind == \"quickstart\"))",
-            "path": "NewApp\\MainPage.cs"
+            "path": "NewApp.sln"
         },
         {
             "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\" && (kind == \"quickstart\"))",
-            "path": "NewApp\\README.md"
+            "path": "NewApp/MainPage.cs"
+        },
+        {
+            "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\" && (kind == \"quickstart\"))",
+            "path": "NewApp/README.md"
         },
         {
             "condition": "CreateiOSProject",
-            "path": "NewApp.iOS\\NewApp.iOS.csproj"
+            "path": "NewApp.iOS/NewApp.iOS.csproj"
         },
         {
             "condition": "(HostIdentifier != \"dotnetcli\" && HostIdentifier != \"dotnetcli-preview\" && (kind == \"quickstart\"))",
-            "path": "NewApp\\NewApp.csproj"
+            "path": "NewApp/NewApp.csproj"
         }
     ],
     "defaultName": "App",
@@ -230,6 +234,20 @@
             "args": {
                 "files": "1"
             },
+            "continueOnError": true
+        },
+        {
+            "condition": "(!skipRestore)",
+            "description": "Restore NuGet packages required by this project.",
+            "manualInstructions": [
+                {
+                "text": "Run 'dotnet restore'"
+                }
+            ],
+            "args": {
+                "files": [ "NewApp/NewApp.csproj", "NewApp.iOS/NewApp.iOS.csproj" ]
+            },
+            "actionId": "210D431B-A78B-4D2F-B762-4ED3E3EA9025",
             "continueOnError": true
         }
     ],
