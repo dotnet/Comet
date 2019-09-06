@@ -27,7 +27,7 @@ namespace Comet
             internal set => SetPropertyInContext(value);
         }
 
-        View parent;
+        WeakReference parent;
 
         public string Id
         {
@@ -46,12 +46,13 @@ namespace Comet
 
         public View Parent
         {
-            get => parent;
+            get => parent?.Target as View;
             set
             {
-                if (parent == value)
+                var p = parent?.Target as View;
+                if (p == value)
                     return;
-                parent = value;
+                parent = new WeakReference(value);
                 OnParentChange(value);
             }
         }
@@ -316,6 +317,7 @@ namespace Comet
                     ViewHandler?.UpdateValue(Gesture.RemoveGestureProperty, g);
             }
             Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
+
             HotReloadHelper.UnRegister(this);
             var vh = ViewHandler;
             ViewHandler = null;

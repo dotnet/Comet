@@ -124,5 +124,12 @@ namespace Comet.iOS
                 _virtualView.SetFrameFromNativeView(bounds.ToRectangleF());
             }
         }
+
+        protected override void Dispose(bool disposing)
+        {
+            if(disposing)
+                CurrentView?.Dispose();
+            base.Dispose(disposing);
+        }
     }
 }

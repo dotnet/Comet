@@ -277,6 +277,13 @@ namespace Comet
         public override View GetViewFor(int index) => ViewFor?.Invoke((T)GetItemAt(index));
         public override int GetCount() => items?.Count ?? Count?.Invoke() ?? 0;
 
+        protected override void OnParentChange(View parent)
+        {
+            base.OnParentChange(parent);
+            Header?.SetParent(parent);
+            Footer?.SetParent(parent);
+        }
+
     }
 
     public class SectionedListView<T> : ListView<T>
@@ -300,8 +307,8 @@ namespace Comet
 
 
         protected override int GetSections() => sections?.Count() ?? SectionCount?.Invoke() ?? 0;
-        protected override View GetHeaderFor(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.Header;
-        protected override View GetFooterFor(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.Footer;
+        protected override View GetHeaderFor(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.Header?.SetParent(this);
+        protected override View GetFooterFor(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.Footer?.SetParent(this);
         protected override object GetItemAt(int section, int index) => sections.SafeGetAtIndex(section, GetCachedSection)?.GetItemAt(index);
         protected override int GetCount(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.GetCount() ?? 0;
 
@@ -313,11 +320,10 @@ namespace Comet
             var key = (section, item);
             if (!CurrentViews.TryGetValue(key, out var view) || (view?.IsDisposed ?? true))
             {
-                view = sections.SafeGetAtIndex(section, GetCachedSection)?.GetViewFor(index);
+                view = sections.SafeGetAtIndex(section, GetCachedSection)?.GetViewFor(index)?.SetParent(this);
                 if (view == null)
                     return null;
                 CurrentViews[key] = view;
-                view.Parent = this;
             }
             return view;
 
@@ -388,15 +394,15 @@ namespace Comet
             var s = sections?.Count() ?? 0;
             return s;
         }
-        protected override View GetHeaderFor(int section) => sections?[section]?.Header;
-        protected override View GetFooterFor(int section) => sections?[section]?.Footer;
+        protected override View GetHeaderFor(int section) => sections?[section]?.Header?.SetParent(this);
+        protected override View GetFooterFor(int section) => sections?[section]?.Footer?.SetParent(this);
         protected override object GetItemAt(int section, int index) => sections?[section]?.GetItemAt(index);
         protected override int GetCount(int section)
         {
             var count = sections?[section]?.GetCount() ?? 0;
             return count;
         }
-        protected override View GetViewFor(int section, int index) => sections?[section]?.GetViewFor(index);
+        protected override View GetViewFor(int section, int index) => sections?[section]?.GetViewFor(index)?.SetParent(this);
 
         protected override void OnParentChange(View parent)
         {
