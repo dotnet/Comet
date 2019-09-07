@@ -298,7 +298,9 @@ namespace Comet
                     value = viewThatWasReplaced.GetEnvironment(key);
                 }
                 if (value != null)
-                    f.SetValue(this, value);
+                {
+                    f.SetValue(this, value?.Convert(f.FieldType));
+                }
             }
         }
 

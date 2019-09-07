@@ -37,13 +37,17 @@ namespace Comet.Reflection
             }
         }
 
-        static object Convert(object obj, Type type)
+        public static object Convert(this object obj, Type type)
         {
             if (obj == null)
                 return null;
             var newType = obj.GetType();
             if (type.IsAssignableFrom(newType))
                 return obj;
+            if (obj?.GetType().Name == "State`1" && type.Name != "State`1")
+            {
+                return obj.GetPropValue<object>("Value");
+            }
             //if (type == typeof(String))
             //    return obj.ToString();
             return System.Convert.ChangeType(obj, type);

@@ -61,6 +61,10 @@ namespace Comet
         {
             var state = StateBuilder.CurrentState;
             var props = state?.EndProperty();
+            if(props?.Length > 1)
+            {
+                state.BindingState.AddGlobalProperties(props);
+            }
             return new Binding<T>(
                 getValue: () => value,
                 setValue: null)
