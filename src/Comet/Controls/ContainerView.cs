@@ -165,16 +165,6 @@ namespace Comet
             }
         }
 
-        public override RectangleF Frame
-        {
-            get => base.Frame;
-            set
-            {
-                base.Frame = value;
-                RequestLayout();
-            }
-        }
-
         protected void OnFrameSet()
         {
 

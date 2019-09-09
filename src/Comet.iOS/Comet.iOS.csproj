@@ -98,7 +98,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet\Comet.csproj">
-      <Project>{F8F78BA6-F213-4916-8E04-78FE51885C7E}</Project>
+      <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
       <Name>Comet</Name>
     </ProjectReference>
   </ItemGroup>

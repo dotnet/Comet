@@ -422,7 +422,7 @@ namespace Comet
 
             return measuredSize;
         }
-        
+
         protected virtual void RequestLayout()
         {
             var constraints = this.GetFrameConstraints();
@@ -483,10 +483,10 @@ namespace Comet
             LayoutSubviews(new RectangleF(Frame.X + x,Frame.Y+y,MeasuredSize.Width,MeasuredSize.Height));
         }
 
-        public virtual void LayoutSubviews(RectangleF bounds)
+        public virtual void LayoutSubviews(RectangleF frame)
         {
             if (BuiltView != null)
-                BuiltView.Frame = bounds;
+                BuiltView.Frame = frame;
         }
     }
 }

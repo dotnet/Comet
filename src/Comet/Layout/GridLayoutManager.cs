@@ -126,9 +126,10 @@ namespace Comet.Layout
             return new SizeF(_width, _height);
         }
 
-        public void Layout(AbstractLayout layout, SizeF measured)
+        public void Layout(AbstractLayout layout, RectangleF bounds)
         {
-           var size = measured;
+            var measured = bounds.Size;
+            var size = bounds.Size;
             if (_gridX == null || !_lastSize.Equals(size))
             {
                 ComputeGrid(size.Width, size.Height);
@@ -289,7 +290,7 @@ namespace Comet.Layout
             for (var c = 0; c < columns; c++)
             {
                 var w = _definedColumns[c];
-                if (!w.ToString().EndsWith("*"))
+                if (!w.ToString().EndsWith("*", StringComparison.Ordinal))
                 {
                     if (float.TryParse(w.ToString(), out var value))
                     {
@@ -324,7 +325,7 @@ namespace Comet.Layout
             for (var r = 0; r < rows; r++)
             {
                 var h = _definedRows[r];
-                if (!h.ToString().EndsWith("*"))
+                if (!h.ToString().EndsWith("*", StringComparison.Ordinal))
                 {
                     if (float.TryParse(h.ToString(), out var value))
                     {
@@ -376,7 +377,7 @@ namespace Comet.Layout
             if (value != null)
             {
                 var str = value.ToString();
-                if (str.EndsWith("*"))
+                if (str.EndsWith("*", StringComparison.Ordinal))
                 {
                     str = str.Substring(0, str.Length - 1);
                     if (float.TryParse(str, out var f))

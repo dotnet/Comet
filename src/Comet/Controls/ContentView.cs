@@ -35,10 +35,32 @@ namespace Comet {
             base.Dispose(disposing);
         }
 
-        public override void LayoutSubviews(RectangleF bounds)
+        public override void LayoutSubviews(RectangleF frame)
         {
             if (Content != null)
-	             Content.Frame = bounds;
+            {
+                var padding = Content.GetPadding();
+                var bounds = new RectangleF(
+                    padding.Left,
+                    padding.Top,
+                    frame.Width,
+                    frame.Height);
+                Content.Frame = bounds;
+            }
         }
-	}
+
+        public override SizeF Measure(SizeF availableSize)
+        {
+            if (Content != null)
+            {
+                var padding = Content.GetPadding();
+                availableSize.Width -= padding.HorizontalThickness;
+                availableSize.Height -= padding.VerticalThickness;
+                var measuredSize = Content.Measure(availableSize, true);
+                return measuredSize;
+            }
+
+            return base.Measure(availableSize);
+        }
+    }
 }

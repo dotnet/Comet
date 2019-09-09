@@ -84,7 +84,7 @@ namespace Comet.Android.Handlers
                     var density = displayMetrics.Density;
 
                     var scaledSize = new SizeF(parent.Width / density, parent.Height / density);
-                    var measuredSize = view.Measure(scaledSize);
+                    var measuredSize = view.Measure(scaledSize, true);
                     view.MeasuredSize = measuredSize;
                     view.MeasurementValid = true;
 

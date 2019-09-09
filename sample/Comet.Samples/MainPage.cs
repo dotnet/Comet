@@ -6,7 +6,8 @@ using Comet.Samples.Skia;
 
 namespace Comet.Samples {
 	public class MainPage : View {
-		List<MenuItem> pages = new List<MenuItem> {
+		List<MenuItem> pages = new List<MenuItem>
+        {
             new MenuItem("Ride the Comet",()=> new RideSample()),
             new MenuItem("AuditReportPage",()=> new AuditReportPage()),
             new MenuItem("Demo Credit Card",()=> new DemoCreditCardView()),
@@ -62,6 +63,9 @@ namespace Comet.Samples {
             new MenuItem("DavidSample1b",()=> new DavidSample1b()),
             new MenuItem("DavidSample1c",()=> new DavidSample1c()),
             new MenuItem("DavidSample2",()=> new DavidSample2()),
+            new MenuItem("Issue125",() => new Issue125()),
+            new MenuItem("Issue125b",() => new Issue125b()),
+            new MenuItem("Issue125c",() => new Issue125c())
         };
 
 		public MainPage (List<MenuItem> additionalPage = null)
