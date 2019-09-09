@@ -41,10 +41,10 @@ namespace Comet {
             {
                 var padding = Content.GetPadding();
                 var bounds = new RectangleF(
-                    padding.Left,
-                    padding.Top,
-                    frame.Width,
-                    frame.Height);
+                    frame.Left + padding.Left,
+                    frame.Top + padding.Top,
+                    frame.Width - padding.HorizontalThickness,
+                    frame.Height - padding.VerticalThickness);
                 Content.Frame = bounds;
             }
         }
