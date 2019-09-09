@@ -52,6 +52,8 @@ namespace Comet
                 if (EqualityComparer<T>.Default.Equals((T)val, value))
                     return false;
             }
+            else if (value == null)
+                return false;
             dictionary[propertyName] = value;
 
             CallPropertyChanged(propertyName, value);
@@ -407,8 +409,9 @@ namespace Comet
                 if (ViewUpdateProperties.TryGetValue(update.property, out var actions))
                 {
                     var removed = new List<(string PropertyName, WeakReference ViewReference)> ();
+                    var actionsList = actions.ToList();
                     Device.InvokeOnMainThread(() => {
-                        foreach (var a in actions)
+                        foreach (var a in actionsList)
                         {
                             var view = a.ViewReference.Target as View;
                             if (view == null)
