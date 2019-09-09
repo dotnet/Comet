@@ -94,9 +94,12 @@ namespace Comet
                 return default;
             }
         }
+      
 
         public static void SetValue<T>(this View view, State state, ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")
         {
+            if (view.IsDisposed)
+                return;
             state.SetValue<T>(ref currentValue, newValue, view, propertyName);
         }
 
