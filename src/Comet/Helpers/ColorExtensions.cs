@@ -14,7 +14,7 @@ namespace Comet
         /// <returns></returns>
         public static T Color<T> (this T view, Color color) where T: View
         {
-            view.SetEnvironment(EnvironmentKeys.Colors.Color, color);
+            view.SetEnvironment(EnvironmentKeys.Colors.Color, color,false);
             return view;
         }
         public static T Color<T>(this T view, Type type, Color color) where T : View
@@ -42,9 +42,9 @@ namespace Comet
         /// <param name="color"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Background<T>(this T view, Color color) where T : View
+        public static T Background<T>(this T view, Color color, bool cascades = false) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.Colors.BackgroundColor, color,false);
+            view.SetEnvironment(EnvironmentKeys.Colors.BackgroundColor, color, cascades);
             return view;
         }
 

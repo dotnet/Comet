@@ -168,7 +168,8 @@ namespace Comet
             {
                 replaced.viewThatWasReplaced = this;
                 replaced.Navigation = this.Navigation;
-                replaced.Parent = this.Parent ?? this;
+                replaced.Parent = this;
+                replaced.SetEnvironmentFields();
                 replacedView = replaced;
                 replacedView.ViewHandler = ViewHandler;
                 return builtView = replacedView.GetRenderView();

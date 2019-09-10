@@ -130,7 +130,7 @@ namespace Comet
             return contextualObject;
         }
 
-        public static T SetEnvironment<T>(this T contextualObject, string key, object value, bool cascades = false)
+        public static T SetEnvironment<T>(this T contextualObject, string key, object value, bool cascades = true)
             where T : ContextualObject
         {
            if(!contextualObject.SetValue(key, value, cascades))
