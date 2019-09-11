@@ -54,8 +54,8 @@ namespace Comet.WPF.Handlers
 
         private void HandleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = VirtualView.ItemAt(0, TypedNativeView.SelectedIndex);
-            VirtualView?.OnSelected(item);
+            IListView listView = VirtualView;
+            listView.OnSelected(0, TypedNativeView.SelectedIndex);
         }
 
         public class ListViewHandlerItem : ListViewItem
