@@ -24,7 +24,7 @@ namespace Comet.iOS
                 else
                     _startingCurrentView = value;
 
-                Title = value?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
+                Title = value?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? value?.BuiltView?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
             }
         }
 
