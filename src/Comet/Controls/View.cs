@@ -127,7 +127,7 @@ namespace Comet
         }
         View builtView;
         public View BuiltView => builtView;
-        internal void Reload() => ResetView();
+        internal virtual void Reload() => ResetView();
         void ResetView()
         {
             if (usedEnvironmentData.Any())

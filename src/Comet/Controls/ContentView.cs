@@ -62,5 +62,10 @@ namespace Comet {
 
             return base.Measure(availableSize);
         }
+        internal override void Reload()
+        {
+            Content?.Reload();
+            base.Reload();
+        }
     }
 }
