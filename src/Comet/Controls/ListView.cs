@@ -2,224 +2,427 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using System.Linq;
+using Comet.Internal;
 
 namespace Comet
 {
-
     public interface IListView
     {
         int Sections();
         int Rows(int section);
         View FooterView();
         View HeaderView();
-        object ItemAt(int section, int row);
-        View ViewFor(int section, int row);
+        object ItemAt(int section, int index);
+        View ViewFor(int section, int index);
         View HeaderFor(int section);
         View FooterFor(int section);
         bool ShouldDisposeViews { get; }
-        void OnSelected(int section, int row);
+        void OnSelected(int section, int index);
     }
 
     public class ListView<T> : ListView
     {
         //TODO Evaluate if 30 is a good number
-        IDictionary<object, View> CurrentViews { get; }
-        public readonly IList<T> List;
+        protected IDictionary<object, View> CurrentViews { get; }
 
-        public ListView(IList<T> list) : base()
+        readonly Binding<IReadOnlyList<T>> itemsBinding;
+        IReadOnlyList<T> items;
+
+        public ListView(Binding<IReadOnlyList<T>> items) : this()
+        {
+
+            this.itemsBinding = items;
+            this.items = items.Get();
+            SetupObservable();
+        }
+
+        public ListView()
         {
             if (HandlerSupportsVirtualization)
             {
-                CurrentViews = new FixedSizeDictionary<object, View>(30)
+                CurrentViews = new FixedSizeDictionary<object, View>(50)
                 {
-                    OnDequeue = (pair) => pair.Value?.Dispose()
+                    OnDequeue = (pair) =>
+                    {
+                        pair.Value?.Dispose();
+                    }
                 };
             }
             else
                 CurrentViews = new Dictionary<object, View>();
 
-            List = list;
+            ShouldDisposeViews = true;
+        }
+        protected override void ViewPropertyChanged(string property, object value)
+        {
+            //Update this when things change!
+            DisposeObservable();
+            items = itemsBinding?.Get();
             SetupObservable();
+            base.ViewPropertyChanged(property, value);
         }
 
-        public void Add(Func<T, View> cell)
+        void SetupObservable()
         {
-            if (Cell != null)
-            {
-                throw new Exception("You can only have one ListView Cell");
-            }
-            Cell = cell;
-        }
-        public View Header { get; set; }
-
-        public View Footer { get; set; }
-
-        public override void Add(View view)
-        {
-            throw new NotSupportedException();
+            if (!(items is ObservableCollection<T> observable))
+                return;
+            observable.CollectionChanged += Observable_CollectionChanged;
         }
 
-        public Func<T, View> Cell { get; set; }
-
-        protected override int RowCount() => List?.Count ?? 0;
-        protected override View ViewFor(int index)
+        protected virtual void Observable_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-            var item = List[index];
+            ReloadData();
+        }
+
+        void DisposeObservable()
+        {
+            if (!(items is ObservableCollection<T> observable))
+                return;
+
+            observable.CollectionChanged -= Observable_CollectionChanged;
+        }
+
+
+        public Func<T, View> ViewFor { get; set; }
+
+        public Func<int, T> ItemFor { get; set; }
+
+        public Func<int> Count { get; set; }
+
+        protected override int GetCount(int section) => items?.Count() ?? Count?.Invoke() ?? 0;
+
+        protected override object GetItemAt(int section, int index) => items.SafeGetAtIndex(index, ItemFor);
+
+        protected override View GetViewFor(int section, int index)
+        {
+            var item = (T)GetItemAt(section, index);
+            if (item == null)
+                return null;
             if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
-                CurrentViews[item] = view = Cell(item);
+                using (new StateBuilder(State))
+                {
+                    if(item is INotifyPropertyRead read)
+                        State.StartMonitoring(read);
+                    view = ViewFor?.Invoke(item);
+                }
+                if (view == null)
+                    return null;
+                CurrentViews[item] = view;
                 view.Parent = this;
             }
             return view;
         }
 
-        public override object ItemAt(int section, int row)
-        {
-            return List[row];
-        }
+        public override void Add(View view) => throw new NotSupportedException("You cannot add a View directly to a Typed ListView");
 
-        protected override View HeaderView() => Header;
-        protected override View FooterView() => Footer;
 
-        void SetupObservable()
-        {
-            if (!(List is ObservableCollection<T> observable))
-                return;
-            observable.CollectionChanged += Observable_CollectionChanged;
-        }
-	
-        private void Observable_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            ReloadData();
-        }
-        
-        void DisposeObservable()
-        {
-            if (!(List is ObservableCollection<T> observable))
-                return;
-	
-            observable.CollectionChanged -= Observable_CollectionChanged;
-        }
-
-        
         protected override void Dispose(bool disposing)
         {
             if (!disposing)
                 return;
-            
+
             DisposeObservable();
-            
-            var currentViews = CurrentViews.ToList();
-            CurrentViews.Clear();
-            currentViews.ForEach(x => x.Value?.Dispose());
+
+            var currentViews = CurrentViews?.ToList();
+            CurrentViews?.Clear();
+            currentViews?.ForEach(x => x.Value?.Dispose());
             base.Dispose(disposing);
         }
-
-        protected override void OnParentChange(View parent)
-        {
-            base.OnParentChange(parent);
-            foreach (var pair in CurrentViews)
-                pair.Value.Parent = parent;
-        }
-        protected override void OnSelected(int index)
-        {
-            var item = List[index];
-            var view = ViewFor(index);
-            ItemSelected?.Invoke(item);
-        }
-
     }
 
     public class ListView : View, IEnumerable, IEnumerable<View>, IListView
     {
         public static bool HandlerSupportsVirtualization { get; set; } = true;
 
-        List<View> views = new List<View>();
-        public ListView()
-        {
-            ShouldDisposeView = false;
-        }
+        List<View> views;
 
-        public virtual IEnumerator GetEnumerator() => views.GetEnumerator();
+        public View Header { get; set; }
+
+        public View Footer { get; set; }
+
+        public Action<object> ItemSelected { get; set; }
+
+        protected virtual int GetSections() => 1;
+
+        protected virtual int GetCount(int section) => views?.Count ?? 0;
+
+        protected virtual View GetHeaderFor(int section) => null;
+
+        protected virtual View GetFooterFor(int section) => null;
+
+        protected virtual object GetItemAt(int section, int index) => views?[index];
+
+        protected virtual View GetViewFor(int section, int index) => views?[index];
 
         public virtual void Add(View view)
         {
+            if (views == null)
+                views = new List<View>();
             views.Add(view);
         }
 
-
-        IEnumerator<View> IEnumerable<View>.GetEnumerator() => views.GetEnumerator();
-
-        protected virtual View ViewFor(int section, int row) => ViewFor(row);
-        protected virtual View ViewFor(int index) => views[index];
-
-        public Action<object> ItemSelected { get; set; }
-        protected virtual void OnSelected(int section, int index) => OnSelected(index);
-        protected virtual void OnSelected(int index)
+        public virtual void ReloadData()
         {
-            var view = views[index];
-            if (view.IsDisposed)
-            {
-                Console.WriteLine(":(");
-            }
-            ItemSelected?.Invoke(view);
+            ViewHandler?.UpdateValue(nameof(ReloadData), null);
         }
-        protected virtual int RowCount() => views.Count;
-        public void OnSelected(object item) => ItemSelected?.Invoke(item);
 
-        
+        protected virtual void OnSelected(int section, int index)
+        {
+            var item = GetItemAt(section, index);
+            ItemSelected?.Invoke(item);
+        }
+
         protected override void Dispose(bool disposing)
         {
-            views.ForEach(v => v.Dispose());
+            views?.ForEach(v => v.Dispose());
             //TODO: Verify. I don't think we need to check all active views anymore
             var cells = ActiveViews.Where(x => x.Parent == this).ToList();
             foreach (var cell in cells)
                 cell.Dispose();
             base.Dispose(disposing);
         }
+
         protected override void OnParentChange(View parent)
         {
             base.OnParentChange(parent);
-            views.ForEach(v => v.Parent = parent);
+            views?.ForEach(v => v.Parent = parent);
         }
+        protected bool ShouldDisposeViews { get; set; }
 
-        public void ReloadData()
+        bool IListView.ShouldDisposeViews => ShouldDisposeViews;
+
+        IEnumerator<View> IEnumerable<View>.GetEnumerator() => views?.GetEnumerator();
+
+        IEnumerator IEnumerable.GetEnumerator() => views?.GetEnumerator();
+
+        int IListView.Sections() => GetSections();
+
+        int IListView.Rows(int section) => GetCount(section);
+
+        View IListView.FooterView() => Footer;
+
+        View IListView.HeaderView() => Header;
+
+        object IListView.ItemAt(int section, int index) => GetItemAt(section, index);
+
+        View IListView.ViewFor(int section, int index) => GetViewFor(section, index);
+
+        View IListView.HeaderFor(int section) => GetHeaderFor(section);
+
+        View IListView.FooterFor(int section) => GetFooterFor(section);
+
+        void IListView.OnSelected(int section, int index) => OnSelected(section, index);
+    }
+
+
+    public class Section : View, IEnumerable<View>
+    {
+        public Section(Binding<IList<View>> views, View header = null, View footer = null)
         {
-            ViewHandler?.UpdateValue(nameof(ReloadData), null);
+
         }
-
-        View IListView.ViewFor(int section, int row) => ViewFor(section, row);
-
-        View IListView.HeaderFor(int section) => HeaderFor(section);
-
-        View IListView.FooterFor(int section) => FooterFor(section);
-
-        void IListView.OnSelected(int section, int row) => OnSelected(row);
-
-        int IListView.Sections() => 1;
-
-        int IListView.Rows(int section) => RowCount();
-
-        View IListView.FooterView() => FooterView();
-
-        View IListView.HeaderView() => HeaderView();
-
-
-        protected virtual View FooterView() => null;
-
-        protected virtual View HeaderView() => null;
-
-        protected virtual View HeaderFor(int section) => null;
-        protected virtual View FooterFor(int section) => null;
-
-        public virtual object ItemAt(int section, int row)
+        public Section(View header = null, View footer = null)
         {
-            return views[row];
+            Header = header;
+            Footer = footer;
+        }
+        public View Header { get; set; }
+        public View Footer { get; set; }
+
+        List<View> views;
+        public virtual void Add(IEnumerable<View> views)
+        {
+            if (this.views == null)
+                this.views = new List<View>();
+            this.views.AddRange(views);
+        }
+        public virtual void Add(View view)
+        {
+            if (views == null)
+                views = new List<View>();
+            views.Add(view);
+        }
+        public virtual object GetItemAt(int index) => views?[index];
+        public virtual int GetCount() => views?.Count ?? 0;
+        public virtual View GetViewFor(int index) => (View)GetItemAt(index);
+
+        public IEnumerator<View> GetEnumerator() => views?.GetEnumerator();
+        IEnumerator IEnumerable.GetEnumerator() => views?.GetEnumerator();
+    }
+
+    public class Section<T> : Section
+    {
+        readonly Binding<IReadOnlyList<T>> itemsBinding;
+        IReadOnlyList<T> items;
+
+        public Section() { }
+
+        public Section(Binding<IReadOnlyList<T>> items)
+        {
+            this.itemsBinding = items;
+            this.items = items.Get();
         }
 
-        protected bool ShouldDisposeView { get; set; } = true;
-        bool IListView.ShouldDisposeViews { get => ShouldDisposeView; }
+        protected override void ViewPropertyChanged(string property, object value)
+        {
+            //Update this when things change!
+            items = itemsBinding.Get();
+            base.ViewPropertyChanged(property, value);
+        }
+
+        public Func<int> Count { get; set; }
+
+        public Func<T, View> ViewFor { get; set; }
+
+        public Func<int, T> ItemFor { get; set; }
+
+        public override object GetItemAt(int index) => items.SafeGetAtIndex(index, ItemFor);
+        public override View GetViewFor(int index)
+        {
+            var item = (T)GetItemAt(index);
+            using (new StateBuilder(State))
+            {
+                if (item is INotifyPropertyRead read)
+                    State.StartMonitoring(read);
+                return ViewFor?.Invoke(item);
+            }
+        }
+        public override int GetCount() => items?.Count ?? Count?.Invoke() ?? 0;
+
+        protected override void OnParentChange(View parent)
+        {
+            base.OnParentChange(parent);
+            Header?.SetParent(parent);
+            Footer?.SetParent(parent);
+        }
+
+    }
+
+    public class SectionedListView<T> : ListView<T>
+    {
+
+        Dictionary<int, Section<T>> sectionCache = new Dictionary<int, Section<T>>();
+
+        public override void Add(View view) => throw new NotSupportedException("You cannot add a View directly to a SectionedListView");
+
+        List<Section<T>> sections;
+        public virtual void Add(Section<T> section)
+        {
+            if (sections == null)
+                sections = new List<Section<T>>();
+            sections.Add(section);
+        }
+
+        public Func<int, Section<T>> SectionFor { get; set; }
+
+        public Func<int> SectionCount { get; set; }
+
+
+        protected override int GetSections() => sections?.Count() ?? SectionCount?.Invoke() ?? 0;
+        protected override View GetHeaderFor(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.Header?.SetParent(this);
+        protected override View GetFooterFor(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.Footer?.SetParent(this);
+        protected override object GetItemAt(int section, int index) => sections.SafeGetAtIndex(section, GetCachedSection)?.GetItemAt(index);
+        protected override int GetCount(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.GetCount() ?? 0;
+
+        protected override View GetViewFor(int section, int index)
+        {
+            var item = (T)GetItemAt(section, index);
+            if (item == null)
+                return null;
+            var key = (section, item);
+            if (!CurrentViews.TryGetValue(key, out var view) || (view?.IsDisposed ?? true))
+            {
+                view = sections.SafeGetAtIndex(section, GetCachedSection)?.GetViewFor(index)?.SetParent(this);
+                if (view == null)
+                    return null;
+                CurrentViews[key] = view;
+            }
+            return view;
+
+        }
+        protected Section<T> GetCachedSection(int index)
+        {
+            if(!sectionCache.TryGetValue(index, out var section))
+            {
+                section = SectionFor?.Invoke(index);
+                if (section != null)
+                {
+                    section.Parent = this;
+                    sectionCache[index] = section;
+                }
+            }
+            return section;
+        }
+        public override void ReloadData()
+        {
+            sectionCache.Clear();
+            base.ReloadData();
+        }
+        protected override void Dispose(bool disposing)
+        {
+            var cached = sectionCache.Values.ToList();
+            cached.ForEach(s => s.Dispose());
+            sectionCache.Clear();
+            base.Dispose(disposing);
+        }
+        protected override void OnParentChange(View parent)
+        {
+            sections?.ForEach(section => section.Parent = this);
+
+            foreach (var pair in sectionCache)
+                pair.Value.Parent = this;
+            base.OnParentChange(parent);
+        }
+    }
+
+    public class SectionedListView : ListView
+    {
+        public SectionedListView()
+        {
+
+        }
+        public SectionedListView(IList<Section> sections)
+        {
+            this.sections = sections;
+        }
+        public override void Add(View view) => throw new NotSupportedException("You cannot add a View directly to a SectionedListView");
+
+        IList<Section> sections;
+        public virtual void Add(Section section)
+        {
+            if (sections == null)
+                sections = new List<Section>();
+            sections.Add(section);
+        }
+
+        public virtual void Add(IEnumerable<Section> items)
+        {
+            if (this.sections == null)
+                this.sections = new List<Section>();
+            ((List<Section>)this.sections).AddRange(items);
+        }
+        protected override int GetSections()
+        {
+            var s = sections?.Count() ?? 0;
+            return s;
+        }
+        protected override View GetHeaderFor(int section) => sections?[section]?.Header?.SetParent(this);
+        protected override View GetFooterFor(int section) => sections?[section]?.Footer?.SetParent(this);
+        protected override object GetItemAt(int section, int index) => sections?[section]?.GetItemAt(index);
+        protected override int GetCount(int section)
+        {
+            var count = sections?[section]?.GetCount() ?? 0;
+            return count;
+        }
+        protected override View GetViewFor(int section, int index) => sections?[section]?.GetViewFor(index)?.SetParent(this);
+
+        protected override void OnParentChange(View parent)
+        {
+            foreach (var section in sections)
+                section.Parent = this;
+            base.OnParentChange(parent);
+        }
     }
 }

@@ -201,5 +201,22 @@ namespace Comet
             var constraints = view.GetEnvironment<object>(view, EnvironmentKeys.Layout.Constraints);
             return constraints ?? defaultValue;
         }
+
+        public static SizeF Measure(this View view, SizeF availableSize, bool includePadding)
+        {
+            if (includePadding)
+            {
+                var padding = view.GetPadding();
+                availableSize.Width -= padding.HorizontalThickness;
+                availableSize.Height -= padding.VerticalThickness;
+
+                var measuredSize = view.Measure(availableSize);
+                measuredSize.Width += padding.HorizontalThickness;
+                measuredSize.Height += padding.VerticalThickness;
+                return measuredSize; 
+            }
+
+            return view.Measure(availableSize);
+        }
     }
 }

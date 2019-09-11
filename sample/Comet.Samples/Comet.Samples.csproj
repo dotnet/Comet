@@ -17,6 +17,7 @@
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="ApiAudit\" />
+    <Folder Include="GitHubIssues\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="1.68.0" />

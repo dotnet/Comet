@@ -7,6 +7,10 @@ Video Preview:
 
 [![Video Demo](http://img.youtube.com/vi/-Ieg9UadN8s/0.jpg)](http://www.youtube.com/watch?v=-Ieg9UadN8s)
 
+## Getting Started
+
+When you're ready to take a ride on the comet, head over to the wiki and follow the [Getting Started](https://github.com/Clancey/Comet/wiki/Getting-Started) guide.
+
 ## Key Concepts
 
 Comet is an MVU style pattern.
@@ -136,14 +140,14 @@ public class MyPage : View {
 ```
 
 
-## What platforms will be supported?
+## What platforms are being targeted?
 
 * iOS
 * Android
 * UWP
 * WPF
 * Mac OS
-* Xamarin.Forms
+* Xamarin.Forms - all Forms targets: Linux, macOS, Tizen, WPF, and of course Android, iOS, UWP.
 * Blazor
 
 # Disclaimer

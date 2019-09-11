@@ -19,7 +19,7 @@ namespace Comet.UWP.Handlers
 
         }
 
-        public ListView ListView => VirtualView;
+        public IListView ListView => VirtualView;
 
         protected override UWPListView CreateView()
         {
@@ -57,8 +57,7 @@ namespace Comet.UWP.Handlers
 
         private void HandleSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var item = VirtualView.ItemAt(0,TypedNativeView.SelectedIndex);
-            VirtualView?.OnSelected(item);
+            ListView?.OnSelected(0, TypedNativeView.SelectedIndex);
         }
     }
 

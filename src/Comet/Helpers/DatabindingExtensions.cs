@@ -94,9 +94,12 @@ namespace Comet
                 return default;
             }
         }
+      
 
         public static void SetValue<T>(this View view, State state, ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")
         {
+            if (view.IsDisposed)
+                return;
             state.SetValue<T>(ref currentValue, newValue, view, propertyName);
         }
 
@@ -125,6 +128,12 @@ namespace Comet
             if (!newView.AreSameType(oldView))
             {
                 return newView;
+            }
+
+            //Always diff thebuilt views as well!
+            if (newView.BuiltView != null && oldView.BuiltView != null)
+            {
+                newView.BuiltView.Diff(oldView.BuiltView);
             }
 
             if (newView is ContentView ncView && oldView is ContentView ocView)

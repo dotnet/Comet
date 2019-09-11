@@ -1,5 +1,6 @@
 ﻿using System;
 using Foundation;
+using ObjCRuntime;
 using UIKit;
 
 namespace Comet.iOS.Controls
@@ -31,8 +32,20 @@ namespace Comet.iOS.Controls
                 _rowHeight = null;
             }
         }
+        public bool HasHeaders { get; set; }
 
-        public override nint NumberOfSections(UITableView tableView) => 1;
+        public override bool RespondsToSelector(Selector sel)
+        {
+            if(sel.Name == "tableView:viewForHeaderInSection:")
+            {
+                return HasHeaders;
+              
+            }
+            return base.RespondsToSelector(sel);
+        }
+        public override UIView GetViewForHeader(UITableView tableView, nint section) => _listView?.HeaderFor((int)section).ToView();
+
+        public override nint NumberOfSections(UITableView tableView) => _listView?.Sections() ?? 0;
 
         public override nint RowsInSection(UITableView tableview, nint section) => _listView?.Rows((int)section) ?? 0;
 
@@ -75,11 +88,11 @@ namespace Comet.iOS.Controls
 
                 if (constraints?.Height != null)
                     return (float)constraints?.Height;
-
+                
                 // todo: this is really inefficient.
                 if (view.ToView() != null)
                 {
-                    var measure = view.Measure(tableView.Bounds.Size.ToSizeF());
+                    var measure = view.Measure(tableView.Bounds.Size.ToSizeF(), true);
                     return measure.Height;
                 }
             }

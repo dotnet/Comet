@@ -6,11 +6,16 @@ using Comet.Samples.Skia;
 
 namespace Comet.Samples {
 	public class MainPage : View {
-		List<MenuItem> pages = new List<MenuItem> {
+		List<MenuItem> pages = new List<MenuItem>
+        {
             new MenuItem("Ride the Comet",()=> new RideSample()),
+            new MenuItem("AuditReportPage",()=> new AuditReportPage()),
             new MenuItem("Demo Credit Card",()=> new DemoCreditCardView()),
             new MenuItem("Demo Credit Card 2",()=> new DemoCreditCardView2()),
             new MenuItem("Demo Credit Card 3",()=> new DemoCreditCardView3()),
+            new MenuItem("Sectioned List View",()=>new SectionedListViewSample()),
+            new MenuItem("Virtual Sectioned List View",()=>new VirtualSectionedListViewSample()),
+            new MenuItem("Virtual List View",()=>new VirtualListViewSample()),
             new MenuItem("Binding Sample!",()=> new BindingSample()),
             new MenuItem("Animation Sample",()=> new AnimationSample()),
             new MenuItem("TabView",()=> new TabViewSample()),
@@ -53,12 +58,15 @@ namespace Comet.Samples {
             new MenuItem("SwiftUI Tutorial Section 4b", ()=> new Section4b()),
             new MenuItem("SwiftUI Tutorial Section 4c", ()=> new Section4c()),
             new MenuItem("SwiftUI Tutorial Section 4d", ()=> new Section4c()),
-            new MenuItem("AuditReportPage",()=> new AuditReportPage()),
             new MenuItem("DavidSample1",()=> new DavidSample1()),
             new MenuItem("DavidSample1a",()=> new DavidSample1a()),
             new MenuItem("DavidSample1b",()=> new DavidSample1b()),
             new MenuItem("DavidSample1c",()=> new DavidSample1c()),
             new MenuItem("DavidSample2",()=> new DavidSample2()),
+            new MenuItem("Issue123",() => new Issue123()),
+            new MenuItem("Issue125",() => new Issue125()),
+            new MenuItem("Issue125b",() => new Issue125b()),
+            new MenuItem("Issue125c",() => new Issue125c())
         };
 
 		public MainPage (List<MenuItem> additionalPage = null)
@@ -74,7 +82,7 @@ namespace Comet.Samples {
             {
                 new ListView<MenuItem> (pages)
                 {
-                    Cell = (page) =>  new HStack()
+                    ViewFor = (page) =>  new HStack()
                     {
                         new Text(page.Title),
                         new Spacer() 

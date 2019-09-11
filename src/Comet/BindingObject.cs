@@ -52,6 +52,8 @@ namespace Comet
                 if (EqualityComparer<T>.Default.Equals((T)val, value))
                     return false;
             }
+            else if (value == null)
+                return false;
             dictionary[propertyName] = value;
 
             CallPropertyChanged(propertyName, value);
@@ -61,7 +63,7 @@ namespace Comet
 
         protected virtual void CallPropertyChanged(string propertyName, object value)
         {
-            OnPropertyChanged?.Invoke((this, propertyName, value));
+            listeners.ToList().ForEach(x => x.OnPropertyChanged(this, propertyName, value));
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
@@ -69,18 +71,24 @@ namespace Comet
         {
             PropertyRead?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
+        HashSet<BindingObjectManager> listeners = new HashSet<BindingObjectManager>();
         internal bool SetPropertyInternal(object value, [CallerMemberName] string propertyName = "")
         {
             dictionary[propertyName] = value;
-
-            OnPropertyChanged?.Invoke((this, propertyName, value));
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            CallPropertyChanged(propertyName, value);
 
             return true;
         }
+        internal void Listen(BindingObjectManager manager)
+        {
+            listeners.Add(manager);
+        }
+        internal void RemoveListener(BindingObjectManager manager)
+        {
+            listeners.Remove(manager);
 
-        internal Action<(object Sender, string PropertyName, object Value)> OnPropertyChanged { get; set; }
+        }
+
     }
 
     public class BindingObjectManager
@@ -144,7 +152,7 @@ namespace Comet
 
             if (obj is BindingObject bobj)
             {
-                bobj.OnPropertyChanged = (s) => OnPropertyChanged(s.Sender, s.PropertyName, s.Value);
+                bobj.Listen(this);
             }
             else
             {
@@ -185,7 +193,7 @@ namespace Comet
             children.Remove(obj);
             if (obj is BindingObject b)
             {
-                b.OnPropertyChanged = null;
+                b.RemoveListener(this);
             }
             else
             {
@@ -407,8 +415,9 @@ namespace Comet
                 if (ViewUpdateProperties.TryGetValue(update.property, out var actions))
                 {
                     var removed = new List<(string PropertyName, WeakReference ViewReference)> ();
+                    var actionsList = actions.ToList();
                     Device.InvokeOnMainThread(() => {
-                        foreach (var a in actions)
+                        foreach (var a in actionsList)
                         {
                             var view = a.ViewReference.Target as View;
                             if (view == null)

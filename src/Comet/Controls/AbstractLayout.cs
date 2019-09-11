@@ -48,18 +48,24 @@ namespace Comet
 		        return new SizeF((float)width, (float)height);
 
 	        var measuredSize = _layout?.Measure(this, availableSize) ?? availableSize;
-            
-	        // If we have a constraint for just one of the values, then combine the constrained value
-	        // with the measured value for our size.
-	        if (width != null || height != null)
+
+            // If we have a constraint for just one of the values, then combine the constrained value
+            // with the measured value for our size.
+            if (width != null || height != null)
 		        return new SizeF(width ?? measuredSize.Width, height ?? measuredSize.Height);
 
-	        return measuredSize;
+            return measuredSize;
         }
         
-        public override void LayoutSubviews(RectangleF bounds)
+        public override void LayoutSubviews(RectangleF frame)
         {
-	        _layout?.Layout(this, bounds.Size);
+            var padding = this.GetPadding();
+            var bounds = new RectangleF(
+                padding.Left,
+                padding.Right,
+                frame.Width - padding.HorizontalThickness,
+                frame.Height - padding.VerticalThickness);
+	        _layout?.Layout(this, bounds);
         }
     
         protected override void Dispose(bool disposing)

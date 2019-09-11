@@ -27,7 +27,7 @@ namespace Comet
             internal set => SetPropertyInContext(value);
         }
 
-        View parent;
+        WeakReference parent;
 
         public string Id
         {
@@ -46,12 +46,13 @@ namespace Comet
 
         public View Parent
         {
-            get => parent;
+            get => parent?.Target as View;
             set
             {
-                if (parent == value)
+                var p = parent?.Target as View;
+                if (p == value)
                     return;
-                parent = value;
+                parent = new WeakReference(value);
                 OnParentChange(value);
             }
         }
@@ -126,7 +127,7 @@ namespace Comet
         }
         View builtView;
         public View BuiltView => builtView;
-        internal void Reload() => ResetView();
+        internal virtual void Reload() => ResetView();
         void ResetView()
         {
             if (usedEnvironmentData.Any())
@@ -167,7 +168,8 @@ namespace Comet
             {
                 replaced.viewThatWasReplaced = this;
                 replaced.Navigation = this.Navigation;
-                replaced.Parent = this.Parent ?? this;
+                replaced.Parent = this;
+                replaced.SetEnvironmentFields();
                 replacedView = replaced;
                 replacedView.ViewHandler = ViewHandler;
                 return builtView = replacedView.GetRenderView();
@@ -297,7 +299,9 @@ namespace Comet
                     value = viewThatWasReplaced.GetEnvironment(key);
                 }
                 if (value != null)
-                    f.SetValue(this, value);
+                {
+                    f.SetValue(this, value?.Convert(f.FieldType));
+                }
             }
         }
 
@@ -316,6 +320,7 @@ namespace Comet
                     ViewHandler?.UpdateValue(Gesture.RemoveGestureProperty, g);
             }
             Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
+
             HotReloadHelper.UnRegister(this);
             var vh = ViewHandler;
             ViewHandler = null;
@@ -418,7 +423,7 @@ namespace Comet
 
             return measuredSize;
         }
-        
+
         protected virtual void RequestLayout()
         {
             var constraints = this.GetFrameConstraints();
@@ -479,10 +484,10 @@ namespace Comet
             LayoutSubviews(new RectangleF(Frame.X + x,Frame.Y+y,MeasuredSize.Width,MeasuredSize.Height));
         }
 
-        public virtual void LayoutSubviews(RectangleF bounds)
+        public virtual void LayoutSubviews(RectangleF frame)
         {
             if (BuiltView != null)
-                BuiltView.Frame = bounds;
+                BuiltView.Frame = frame;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Comet.iOS.Controls
             get => _delegate.ListView;
             set
             {
-                _delegate.ListView = value;
+                ResetDelegate(value);
 
                 // If we have items in the list, we can check to see if there are frame constraints on the root view.  If so,
                 // we can use those as our cell height.
@@ -28,7 +28,7 @@ namespace Comet.iOS.Controls
                 {
 
                     var v = value.ViewFor(0,0);
-                    var constraints = v.GetFrameConstraints();
+                    var constraints = v?.GetFrameConstraints();
 
                     if (constraints?.Height != null)
                         RowHeight = (float)constraints.Height;
@@ -44,7 +44,33 @@ namespace Comet.iOS.Controls
                 ReloadData();
             }
         }
-
+        void ResetDelegate(IListView listView)
+        {
+            bool hasHeader = false;
+            bool valueChanged = false;
+            var uneven = _delegate.UnevenRows;
+            if (listView?.Sections() > 0)
+            {
+                hasHeader = listView.HeaderFor(0) != null;
+            }
+            if (_delegate.HasHeaders != hasHeader)
+            {
+                valueChanged = true;
+            }
+            if (valueChanged) { 
+                _delegate = new CUITableViewSource
+                {
+                    HasHeaders = hasHeader,
+                    UnevenRows = uneven,
+                    ListView = listView,
+                };
+                _delegate.HasHeaders = hasHeader;
+                WeakDataSource = _delegate;
+                WeakDelegate = _delegate;
+            }
+            else
+                _delegate.ListView = listView;
+        }
         public bool UnevenRows
         {
             get => _delegate.UnevenRows;

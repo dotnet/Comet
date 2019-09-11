@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Comet.Internal;
 
 namespace Comet
 {
@@ -81,9 +82,35 @@ namespace Comet
         public static T OnTapNavigate<T>(this T view, Func<View> destination) where T : View
             => view.OnTap((v) => NavigationView.Navigate(view, destination.Invoke()));
 
+        public static void Navigate(this View view, View destination) => NavigationView.Navigate(view, destination);
+
         public static ListView<T> OnSelectedNavigate<T>(this ListView<T> view, Func<T, View> destination)
         {
             return view.OnSelected(v => NavigationView.Navigate(view, destination?.Invoke(v)));
+        }
+
+        public static void SetResult<T>(this View view, T value )
+        {
+            var resultView = view.FindParentOfType<ResultView<T>>();
+            resultView.SetResult(value);
+        }
+
+
+        public static void SetResult<T>(this View view, State<T> value)
+        {
+            var resultView = view.FindParentOfType<ResultView<T>>();
+            resultView.SetResult(value.Value);
+        }
+
+        public static void SetResultCanceled<T>(this View view)
+        {
+            var resultView = view.FindParentOfType<ResultView<T>>();
+            resultView.Cancel();
+        }
+        public static void SetResultException<T>(this View view, Exception ex)
+        {
+            var resultView = view.FindParentOfType<ResultView<T>>();
+            resultView.SetException(ex);
         }
     }
 }

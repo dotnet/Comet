@@ -104,7 +104,7 @@ namespace Comet.Mac.Controls
                 // todo: this is really inefficient.
                 if (view.ToView() != null)
                 {
-                    var measure = view.Measure(tableView.Bounds.Size.ToSizeF());
+                    var measure = view.Measure(tableView.Bounds.Size.ToSizeF(), true);
                     return measure.Height;
                 }
             }

@@ -6,7 +6,7 @@ namespace Comet
     {
         private readonly Action<T>[] _actions;
         
-        public MulticastAction(Binding<T> binding, Action<T>  action) : this((v)=> binding?.Set(v), action)
+        public MulticastAction(Binding<T> binding, Action<T>  action) : this((v)=> binding?.Set?.Invoke(v), action)
         {
         }
         

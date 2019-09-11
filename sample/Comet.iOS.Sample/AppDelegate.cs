@@ -34,14 +34,18 @@ namespace Comet.iOS.Sample {
 			
             "turtlerock.jpg".LoadImage();
 
-			window = new UIWindow {
+            window = new UIWindow {
 				RootViewController = new MainPage (new List<MenuItem>
                 {
                     new MenuItem("SwiftUI Tutorial Section 5 (Native)", () => new Section5Native()),
                     new MenuItem("SwiftUI Tutorial Section 5b (Native)", () => new Section5NativeB())
                 }).ToViewController (),
 			};
-			window.MakeKeyAndVisible ();
+            /*window = new UIWindow
+            {
+                RootViewController = new Issue123().ToViewController(),
+            };*/
+            window.MakeKeyAndVisible ();
 
 			return true;
 		}

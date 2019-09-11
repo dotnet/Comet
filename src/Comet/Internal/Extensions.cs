@@ -22,6 +22,26 @@ namespace Comet.Internal
         public static View GetView(this View view) => view.GetView();
 
         public static Dictionary<Type, Type> GetAllRenderers(this Registrar<View, IViewHandler> registar) => registar.Handler;
+
+        public static T SetParent<T>(this T view, View parent) where T: View
+        {
+            if (view != null)
+                view.Parent = parent;
+            return view;
+        }
+
+        public static T FindParentOfType<T>(this View view) where T: View
+        {
+            if (view == null)
+                return null;
+            if(view.BuiltView is T bt)
+            {
+                return bt;
+            }
+            if (view is T t)
+                return t;
+            return view.Parent?.FindParentOfType<T>();
+        }
        
     }
 }

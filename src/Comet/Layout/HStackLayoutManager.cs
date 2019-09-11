@@ -78,8 +78,6 @@ namespace Comet.Layout
 
             if (spacerCount > 0)
                 width = available.Width;
-
-            var layoutPadding = layout.GetPadding();
             
             var layoutVerticalSizing = layout.GetVerticalSizing();
             if (layoutVerticalSizing == Sizing.Fill)
@@ -87,13 +85,14 @@ namespace Comet.Layout
             
             var layoutHorizontalSizing = layout.GetHorizontalSizing();
             if (layoutHorizontalSizing == Sizing.Fill)
-                width = available.Width - layoutPadding.HorizontalThickness;
+                width = available.Width;
             
             return new SizeF(width, height);
         }
 
-        public void Layout(AbstractLayout layout, SizeF measured)
+        public void Layout(AbstractLayout layout, RectangleF bounds)
         {
+            var measured = bounds.Size;
             var height = 0f;
             
             var index = 0;
@@ -147,7 +146,7 @@ namespace Comet.Layout
             }
 
             nonSpacerWidth = Math.Min(nonSpacerWidth, measured.Width);
-
+            
             var spacerWidth = 0f;
             if (spacerCount>0)
             {
@@ -155,8 +154,8 @@ namespace Comet.Layout
                 spacerWidth = availableWidth / spacerCount;
             }
 
-            var x = 0f;
-            var y = 0f;
+            var x = bounds.X;
+            var y = bounds.Y;
             index = 0;
             foreach (var view in layout)
             {

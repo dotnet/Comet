@@ -153,8 +153,11 @@ namespace Comet {
             if (!SetProperty(value, key))
                 return false;
             if (View != null)
-                View?.GetState().OnPropertyChanged(this, key,value);
-            else if(isStatic)
+            {
+                if(!(View.GetState()?.IsBuilding ?? false))
+                    View?.GetState().OnPropertyChanged(this, key, value);
+            }
+            else if (isStatic)
             {
                 View.ActiveViews.ForEach(x => x.GetState()?.OnPropertyChanged(this, key, value));
             }
