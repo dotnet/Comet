@@ -101,7 +101,12 @@ namespace Comet
                 return null;
             if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
-                view = ViewFor?.Invoke(item);
+                using (new StateBuilder(State))
+                {
+                    if(item is INotifyPropertyRead read)
+                        State.StartMonitoring(read);
+                    view = ViewFor?.Invoke(item);
+                }
                 if (view == null)
                     return null;
                 CurrentViews[item] = view;
@@ -274,7 +279,16 @@ namespace Comet
         public Func<int, T> ItemFor { get; set; }
 
         public override object GetItemAt(int index) => items.SafeGetAtIndex(index, ItemFor);
-        public override View GetViewFor(int index) => ViewFor?.Invoke((T)GetItemAt(index));
+        public override View GetViewFor(int index)
+        {
+            var item = (T)GetItemAt(index);
+            using (new StateBuilder(State))
+            {
+                if (item is INotifyPropertyRead read)
+                    State.StartMonitoring(read);
+                return ViewFor?.Invoke(item);
+            }
+        }
         public override int GetCount() => items?.Count ?? Count?.Invoke() ?? 0;
 
         protected override void OnParentChange(View parent)
