@@ -10,6 +10,7 @@ namespace Comet.iOS.Handlers
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
             [nameof(Comet.Text.Value)] = MapValueProperty,
+            [nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
             [EnvironmentKeys.Fonts.Family] = MapFontProperty,
             [EnvironmentKeys.Fonts.Italic] = MapFontProperty,
             [EnvironmentKeys.Fonts.Size] = MapFontProperty,
@@ -55,6 +56,14 @@ namespace Comet.iOS.Handlers
         {
             var nativeView = (UILabel) viewHandler.NativeView;
             nativeView.Text = virtualView.Value?.Get() ?? string.Empty;
+            virtualView.InvalidateMeasurement();
+        }
+        
+        public static void MapTextAlignmentProperty(IViewHandler viewHandler, Text virtualView)
+        {
+            var nativeView = (UILabel) viewHandler.NativeView;
+            var textAlignment = virtualView.GetTextAlignment();
+            nativeView.TextAlignment = textAlignment.ToUITextAlignment();
             virtualView.InvalidateMeasurement();
         }
 

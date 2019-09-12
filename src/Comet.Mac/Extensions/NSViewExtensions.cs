@@ -1,3 +1,4 @@
+using System;
 using AppKit;
 
 namespace Comet.Mac.Extensions
@@ -36,6 +37,28 @@ namespace Comet.Mac.Extensions
                 return null;
 
             return NSColor.FromDeviceRgba(color.R, color.G, color.B, color.A);
+        }
+        
+        public static NSTextAlignment ToNSTextAlignment(this TextAlignment? target)
+        {
+            if (target == null)
+                return NSTextAlignment.Natural;
+            
+            switch (target)
+            {
+                case TextAlignment.Natural:
+                    return NSTextAlignment.Natural;
+                case TextAlignment.Left:
+                    return NSTextAlignment.Left;
+                case TextAlignment.Right:
+                    return NSTextAlignment.Right;
+                case TextAlignment.Center:
+                    return NSTextAlignment.Center;
+                case TextAlignment.Justified:
+                    return NSTextAlignment.Justified;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(target), target, null);
+            }
         }
     }
 }

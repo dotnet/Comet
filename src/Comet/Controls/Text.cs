@@ -18,7 +18,7 @@ namespace Comet
 
         }
 
-            Binding<string> _value;
+        Binding<string> _value;
         public Binding<string> Value
         {
             get => _value;

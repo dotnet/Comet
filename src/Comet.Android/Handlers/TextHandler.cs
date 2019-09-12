@@ -11,6 +11,7 @@ namespace Comet.Android.Handlers
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
         {
             [nameof(Text.Value)] = MapValueProperty,
+            [nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
             //TODO: this may cause a lot of font setting
             [EnvironmentKeys.Fonts.Family] = MapFontProperty,
             [EnvironmentKeys.Fonts.Italic] = MapFontProperty,
@@ -43,6 +44,14 @@ namespace Comet.Android.Handlers
             nativeView.Text = virtualView.Value?.Get() ?? string.Empty;
         }
 
+        public static void MapTextAlignmentProperty(IViewHandler viewHandler, Text virtualView)
+        {
+            var nativeView = (TextView) viewHandler.NativeView;
+            var textAlignment = virtualView.GetTextAlignment();
+            nativeView.TextAlignment = textAlignment.ToAndroidTextAlignment();
+            virtualView.InvalidateMeasurement();
+        }
+        
         public static void MapFontProperty(IViewHandler viewHandler, Text virtualView)
         {
         }

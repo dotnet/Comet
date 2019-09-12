@@ -67,6 +67,11 @@ namespace Comet {
             public const string Image = "TabView.Item.Image";
             public const string Title = "TabView.Item.Title";
         }
+        
+        public static class Text
+        {
+	        public const string Alignment = "Text.Alignment";
+        }
     }
 
 	[AttributeUsage (AttributeTargets.Field)]

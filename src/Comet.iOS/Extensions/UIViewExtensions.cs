@@ -1,3 +1,4 @@
+using System;
 using CoreGraphics;
 using UIKit;
 
@@ -21,6 +22,28 @@ namespace Comet
             }
 
             return points;
+        }
+
+        public static UITextAlignment ToUITextAlignment(this TextAlignment? target)
+        {
+            if (target == null)
+                return UITextAlignment.Natural;
+            
+            switch (target)
+            {
+                case TextAlignment.Natural:
+                    return UITextAlignment.Natural;
+                case TextAlignment.Left:
+                    return UITextAlignment.Left;
+                case TextAlignment.Right:
+                    return UITextAlignment.Right;
+                case TextAlignment.Center:
+                    return UITextAlignment.Center;
+                case TextAlignment.Justified:
+                    return UITextAlignment.Justified;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(target), target, null);
+            }
         }
     }
 }

@@ -69,7 +69,13 @@ namespace Comet.Samples {
             new MenuItem("Issue125c",() => new Issue125c()),
             new MenuItem("Issue133",() => new Issue133()),
             new MenuItem("Issue133b",() => new Issue133b()),
-            new MenuItem("Issue133c",() => new Issue133c())
+            new MenuItem("Issue133c",() => new Issue133c()),
+            new MenuItem("Question1",() => new Question1()),
+            new MenuItem("Question1a",() => new Question1a()),
+            new MenuItem("Question1b",() => new Question1b()),
+            new MenuItem("Question1c",() => new Question1c()),
+            new MenuItem("Question1d",() => new Question1d()),
+            new MenuItem("Question1e",() => new Question1e()),
         };
 
 		public MainPage (List<MenuItem> additionalPage = null)

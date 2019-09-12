@@ -1,6 +1,8 @@
-﻿using Android.App;
+﻿using System;
+using Android.App;
 using Comet.Android.Controls;
 using AView = Android.Views.View;
+using ATextAlignment = Android.Views.TextAlignment;
 
 namespace Comet.Android
 {
@@ -68,5 +70,27 @@ namespace Comet.Android
 
         public static Color ToColor (this int colorInt)
             => new global::Android.Graphics.Color(colorInt).ToColor();
+        
+        public static ATextAlignment ToAndroidTextAlignment(this TextAlignment? target)
+        {
+            if (target == null)
+                return ATextAlignment.ViewStart;
+            
+            switch (target)
+            {
+                case TextAlignment.Natural:
+                    return ATextAlignment.TextStart;
+                case TextAlignment.Left:
+                    return ATextAlignment.ViewStart;
+                case TextAlignment.Right:
+                    return ATextAlignment.ViewEnd;
+                case TextAlignment.Center:
+                    return ATextAlignment.Center;
+                case TextAlignment.Justified:
+                    return ATextAlignment.Gravity;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(target), target, null);
+            }
+        }
     }
 }
