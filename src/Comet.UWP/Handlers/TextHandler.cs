@@ -8,7 +8,8 @@ namespace Comet.UWP.Handlers
     {
         public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>()
             {
-                [nameof(Text.Value)] = MapValueProperty
+                [nameof(Text.Value)] = MapValueProperty,
+                [nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
             };
 
         public TextHandler() : base(Mapper)
@@ -26,6 +27,15 @@ namespace Comet.UWP.Handlers
         {
             var nativeView = (UWPLabel)viewHandler.NativeView;
             nativeView.Text = virtualView.Value;
+            virtualView.InvalidateMeasurement();
+        }
+
+        public static void MapTextAlignmentProperty(IViewHandler viewHandler, Text virtualView)
+        {
+            var nativeView = (UWPLabel)viewHandler.NativeView;
+            var textAlignment = virtualView.GetTextAlignment();
+            nativeView.HorizontalTextAlignment = textAlignment.ToTextAlignment();
+            virtualView.InvalidateMeasurement();
         }
     }
 }

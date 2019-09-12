@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using System.Windows.Controls;
+using WPFTextAlignment = System.Windows.HorizontalAlignment;
 
 namespace Comet.WPF
 {
@@ -74,6 +75,29 @@ namespace Comet.WPF
                     contentControl.Content = null;
                 }
                 return;
+            }
+        }
+
+        public static WPFTextAlignment ToHorizontalAlignment(this TextAlignment? target)
+        {
+            // todo: this needs to add support for RTL
+            if (target == null)
+                return WPFTextAlignment.Left;
+
+            switch (target)
+            {
+                case TextAlignment.Natural:
+                    return WPFTextAlignment.Left;
+                case TextAlignment.Left:
+                    return WPFTextAlignment.Left;
+                case TextAlignment.Right:
+                    return WPFTextAlignment.Right;
+                case TextAlignment.Center:
+                    return WPFTextAlignment.Center;
+                case TextAlignment.Justified:
+                    return WPFTextAlignment.Stretch;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(target), target, null);
             }
         }
     }

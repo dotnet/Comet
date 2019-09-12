@@ -9,7 +9,8 @@ namespace Comet.UWP.Handlers
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>()
         {
-            [nameof(TextField.Text)] = MapTextProperty
+            [nameof(TextField.Text)] = MapTextProperty,
+            [nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
         };
 
         public TextFieldHandler() : base(Mapper)
@@ -38,6 +39,15 @@ namespace Comet.UWP.Handlers
         {
             var nativeView = (UWPTextField)viewHandler.NativeView;
             nativeView.Text = virtualView.Text ?? "";
+            virtualView.InvalidateMeasurement();
+        }
+
+        public static void MapTextAlignmentProperty(IViewHandler viewHandler, TextField virtualView)
+        {
+            var nativeView = (UWPTextField)viewHandler.NativeView;
+            var textAlignment = virtualView.GetTextAlignment();
+            nativeView.HorizontalTextAlignment = textAlignment.ToTextAlignment();
+            virtualView.InvalidateMeasurement();
         }
     }
 }

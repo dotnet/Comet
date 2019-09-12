@@ -1,6 +1,7 @@
 ﻿using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using UWPTextAlignment = Windows.UI.Xaml.TextAlignment;
 
 namespace Comet.UWP
 {
@@ -81,6 +82,28 @@ namespace Comet.UWP
                     contentControl.Content = null;
                 }
                 return;
+            }
+        }
+
+        public static UWPTextAlignment ToTextAlignment(this TextAlignment? target)
+        {
+            if (target == null)
+                return UWPTextAlignment.Start;
+
+            switch (target)
+            {
+                case TextAlignment.Natural:
+                    return UWPTextAlignment.Start;
+                case TextAlignment.Left:
+                    return UWPTextAlignment.Left;
+                case TextAlignment.Right:
+                    return UWPTextAlignment.Right;
+                case TextAlignment.Center:
+                    return UWPTextAlignment.Center;
+                case TextAlignment.Justified:
+                    return UWPTextAlignment.Justify;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(target), target, null);
             }
         }
     }
