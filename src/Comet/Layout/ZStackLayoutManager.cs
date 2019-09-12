@@ -12,7 +12,7 @@ namespace Comet.Layout
             return available;
         }
 
-        public void Layout(AbstractLayout layout, RectangleF bounds)
+        public void Layout(AbstractLayout layout, RectangleF rect)
         {
             
         }

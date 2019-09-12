@@ -126,10 +126,10 @@ namespace Comet.Layout
             return new SizeF(_width, _height);
         }
 
-        public void Layout(AbstractLayout layout, RectangleF bounds)
+        public void Layout(AbstractLayout layout, RectangleF rect)
         {
-            var measured = bounds.Size;
-            var size = bounds.Size;
+            var measured = rect.Size;
+            var size = rect.Size;
             if (_gridX == null || !_lastSize.Equals(size))
             {
                 ComputeGrid(size.Width, size.Height);

@@ -90,9 +90,9 @@ namespace Comet.Layout
             return new SizeF(width, height);
         }
 
-        public void Layout(AbstractLayout layout, RectangleF bounds)
+        public void Layout(AbstractLayout layout, RectangleF rect)
         {
-            var measured = bounds.Size;
+            var measured = rect.Size;
             var height = 0f;
             
             var index = 0;
@@ -118,6 +118,7 @@ namespace Comet.Layout
                     var margin = view.GetMargin();
                     var sizing = view.GetVerticalSizing();
 
+                    // todo: this should never be needed.  Need to investigate this.
                     if (!view.MeasurementValid)
                     {
                         view.MeasuredSize = size = view.Measure(measured);
@@ -154,8 +155,8 @@ namespace Comet.Layout
                 spacerWidth = availableWidth / spacerCount;
             }
 
-            var x = bounds.X;
-            var y = bounds.Y;
+            var x = rect.X;
+            var y = rect.Y;
             index = 0;
             foreach (var view in layout)
             {

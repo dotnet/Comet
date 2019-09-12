@@ -4,6 +4,6 @@ namespace Comet.Layout
     {
         void Invalidate();
         SizeF Measure(AbstractLayout layout, SizeF available);
-        void Layout(AbstractLayout layout, RectangleF bounds);
+        void Layout(AbstractLayout layout, RectangleF rect);
     }
 }

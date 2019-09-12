@@ -92,9 +92,9 @@ namespace Comet.Layout
             return new SizeF(width, height);
         }
 
-        public void Layout(AbstractLayout layout, RectangleF bounds)
+        public void Layout(AbstractLayout layout, RectangleF rect)
         {
-            var measured = bounds.Size;
+            var measured = rect.Size;
             var width = 0f;
 
             var index = 0;
@@ -150,8 +150,8 @@ namespace Comet.Layout
                 spacerHeight = availableHeight / spacerCount;
             }
 
-            var x = bounds.X;
-            var y = bounds.Y;
+            var x = rect.X;
+            var y = rect.Y;
             index = 0;
             foreach (var view in layout)
             {
@@ -206,6 +206,7 @@ namespace Comet.Layout
                 y += size.Height;
                 y += margin.Bottom;
                 
+                lastWasSpacer = isSpacer;
                 index++;
             }
         }
