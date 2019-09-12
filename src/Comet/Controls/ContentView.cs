@@ -39,12 +39,12 @@ namespace Comet {
         {
             if (Content != null)
             {
-                var padding = Content.GetPadding();
+                var margin = Content.GetMargin();
                 var bounds = new RectangleF(
-                    frame.Left + padding.Left,
-                    frame.Top + padding.Top,
-                    frame.Width - padding.HorizontalThickness,
-                    frame.Height - padding.VerticalThickness);
+                    frame.Left + margin.Left,
+                    frame.Top + margin.Top,
+                    frame.Width - margin.HorizontalThickness,
+                    frame.Height - margin.VerticalThickness);
                 Content.Frame = bounds;
             }
         }
@@ -53,9 +53,9 @@ namespace Comet {
         {
             if (Content != null)
             {
-                var padding = Content.GetPadding();
-                availableSize.Width -= padding.HorizontalThickness;
-                availableSize.Height -= padding.VerticalThickness;
+                var margin = Content.GetMargin();
+                availableSize.Width -= margin.HorizontalThickness;
+                availableSize.Height -= margin.VerticalThickness;
                 var measuredSize = Content.Measure(availableSize, true);
                 return measuredSize;
             }

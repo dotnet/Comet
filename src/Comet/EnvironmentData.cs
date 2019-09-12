@@ -37,7 +37,8 @@ namespace Comet {
 
         public static class Layout
         {
-            public const string Padding = "Layout.Padding";
+	        public const string Margin = "Layout.Margin";
+	        public const string Padding = "Layout.Padding";
             public const string Constraints = "Layout.Constraints";
             public const string HorizontalSizing = "Layout.HorizontalSizing";
             public const string VerticalSizing = "Layout.VerticalSizing";

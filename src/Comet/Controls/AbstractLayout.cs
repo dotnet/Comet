@@ -59,12 +59,12 @@ namespace Comet
         
         public override void LayoutSubviews(RectangleF frame)
         {
-            var padding = this.GetPadding();
+            var margin = this.GetMargin();
             var bounds = new RectangleF(
-                padding.Left,
-                padding.Right,
-                frame.Width - padding.HorizontalThickness,
-                frame.Height - padding.VerticalThickness);
+                margin.Left,
+                margin.Right,
+                frame.Width - margin.HorizontalThickness,
+                frame.Height - margin.VerticalThickness);
 	        _layout?.Layout(this, bounds);
         }
     

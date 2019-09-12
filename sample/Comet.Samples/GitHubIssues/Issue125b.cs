@@ -31,7 +31,7 @@ namespace Comet.Samples
                         new Text(item.Name).Frame(alignment: Alignment.Leading),
                         new Spacer(),
                         new Toggle(item.Done).Frame(alignment:Alignment.Center)
-                    }.Padding(6).FillHorizontal()
+                    }.Margin(6).FillHorizontal()
             }.Title("Tasky"),
         };
     }

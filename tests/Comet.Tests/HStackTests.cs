@@ -89,12 +89,12 @@ namespace Comet.Tests
         }
 
         [Fact]
-        public void TestView1WithPaddingOnStack()
+        public void TestView1WithMarginOnStack()
         {
             var view = new HStackTestView1();
             InitializeHandlers(view);
 
-            var stack = view.GetViewWithTag<HStack>("stack").Padding();
+            var stack = view.GetViewWithTag<HStack>("stack").Margin();
             var textField = view.GetViewWithTag<TextField>("textfield");
             var spacer = view.GetViewWithTag<Spacer>("spacer");
             var text = view.GetViewWithTag<Text>("text");
@@ -123,12 +123,12 @@ namespace Comet.Tests
         }
 
         [Fact]
-        public void TestView1WithPaddingAndFrameConstraintsOnStack()
+        public void TestView1WithMarginAndFrameConstraintsOnStack()
         {
             var view = new HStackTestView1();
             InitializeHandlers(view);
 
-            var stack = view.GetViewWithTag<HStack>("stack").Padding().Frame(height: 20);
+            var stack = view.GetViewWithTag<HStack>("stack").Margin().Frame(height: 20);
             var textField = view.GetViewWithTag<TextField>("textfield");
             var spacer = view.GetViewWithTag<Spacer>("spacer");
             var text = view.GetViewWithTag<Text>("text");
@@ -157,12 +157,12 @@ namespace Comet.Tests
         }
 
         [Fact]
-        public void TestView1WithPaddingAndFrameConstraintsOnStackAndItems()
+        public void TestView1WithMarginAndFrameConstraintsOnStackAndItems()
         {
             var view = new HStackTestView1();
             InitializeHandlers(view);
 
-            var stack = view.GetViewWithTag<HStack>("stack").Padding().Frame(height: 20);
+            var stack = view.GetViewWithTag<HStack>("stack").Margin().Frame(height: 20);
             var textField = view.GetViewWithTag<TextField>("textfield").Frame(alignment: Alignment.Top);
             var spacer = view.GetViewWithTag<Spacer>("spacer");
             var text = view.GetViewWithTag<Text>("text").Frame(alignment: Alignment.Bottom);
@@ -191,12 +191,12 @@ namespace Comet.Tests
         }
 
         [Fact]
-        public void TestView1WithPaddingAndFrameConstraintsOnItems()
+        public void TestView1WithMarginAndFrameConstraintsOnItems()
         {
             var view = new HStackTestView1();
             InitializeHandlers(view);
 
-            var stack = view.GetViewWithTag<HStack>("stack").Padding();
+            var stack = view.GetViewWithTag<HStack>("stack").Margin();
             var textField = view.GetViewWithTag<TextField>("textfield").Frame(height: 22);
             var spacer = view.GetViewWithTag<Spacer>("spacer");
             var text = view.GetViewWithTag<Text>("text").Frame(height: 18);
@@ -225,13 +225,13 @@ namespace Comet.Tests
         }
 
         [Fact]
-        public void TestView1WithPaddingAndFrameConstraintsAndPaddingOnItems()
+        public void TestView1WithMarginAndFrameConstraintsAndMarginOnItems()
         {
             var view = new HStackTestView1();
             InitializeHandlers(view);
 
-            var stack = view.GetViewWithTag<HStack>("stack").Padding();
-            var textField = view.GetViewWithTag<TextField>("textfield").Frame(height: 22).Padding();
+            var stack = view.GetViewWithTag<HStack>("stack").Margin();
+            var textField = view.GetViewWithTag<TextField>("textfield").Frame(height: 22).Margin();
             var spacer = view.GetViewWithTag<Spacer>("spacer");
             var text = view.GetViewWithTag<Text>("text").Frame(height: 18);
 

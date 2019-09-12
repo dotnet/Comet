@@ -26,18 +26,18 @@ namespace Comet.Samples
                         .Style(Graphics.DrawingStyle.Fill)
                         .Fill(Color.Grey))
                         .Frame(40,30,alignment: Alignment.Trailing)
-                        .Padding(top: 30, right: 30)
+                        .Margin(top: 30, right: 30)
                         .FitHorizontal(),
 
                     new Text("CARD NUMBER")
                         .FontSize(10)
                         .Color(Color.Silver)
-                        .Padding(left: 30),
+                        .Margin(left: 30),
 
                     new Text(Card.Number)
                         .FontSize(14)
                         .Color(Color.Black)
-                        .Padding(left: 30, bottom:20)
+                        .Margin(left: 30, bottom:20)
                         .Frame(height:20),
 
                     new HStack()
@@ -50,7 +50,7 @@ namespace Comet.Samples
                          new Text("CVV")
                             .FontSize(10)
                             .Color(Color.Silver),
-                    }.Padding(left:30),
+                    }.Margin(left:30),
 
                     new HStack()
                     {
@@ -62,39 +62,39 @@ namespace Comet.Samples
                         new Text(Card.CVV)
                             .FontSize(14)
                             .Color(Color.Black)
-                    }.Padding(left:30, bottom:30).Frame(height: 20),
+                    }.Margin(left:30, bottom:30).Frame(height: 20),
 
-                }.RoundedBorder(radius: 8, color: "#3177CB", filled: true).Padding(30)
+                }.RoundedBorder(radius: 8, color: "#3177CB", filled: true).Margin(30)
             }.Background("#f6f6f6"),
 
             new BorderedEntry(Card.Number,"Enter CC Number", "\uf09d")
-                .Padding(left:20, right: 20),
+                .Margin(left:20, right: 20),
 
             new HStack(spacing:20)
             {
                 new BorderedEntry(Card.Expiration, "MM/YYYY", "\uf783")
                     .Frame(height: 40, width: 200)
-                    .Padding(left:20),
+                    .Margin(left:20),
 
                 new Spacer(),
 
                 new BorderedEntry(Card.CVV, "CVV", "\uf023")
                     .Frame( height: 40, width: 100)
-                    .Padding(right:20),
+                    .Margin(right:20),
             },
 
             new HStack
             {
                 new Toggle(remember),
                 new Text("  Remember Me")
-            }.Padding(left:20),
+            }.Margin(left:20),
 
             new Button("Purchase for $200")
                 .RoundedBorder(22, Color.SlateGrey)
                 .Background(Color.SlateGrey)
                 .Color(Color.White)
                 .Frame(height:44)
-                .Padding(left:20, right:20),
+                .Margin(left:20, right:20),
 
             new Separator(),
 
@@ -102,7 +102,7 @@ namespace Comet.Samples
                 .RoundedBorder(22, Color.SlateGrey)
                 .Color(Color.SlateGrey)
                 .Frame(height: 44)
-                .Padding(left:20, right:20),
+                .Margin(left:20, right:20),
 
 
         }.FillHorizontal().Frame(alignment: Alignment.Top);
@@ -121,7 +121,7 @@ namespace Comet.Samples
             {
                 Add(new Text(icon)
                     .Frame(width: 20)
-                    .Padding(left: 8)
+                    .Margin(left: 8)
                     .FontFamily("Font Awesome 5 Free"));
 
                 Add(new TextField(val, placeholder));

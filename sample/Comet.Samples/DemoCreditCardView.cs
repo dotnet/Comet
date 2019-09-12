@@ -153,9 +153,9 @@ namespace Comet.Samples
             {
                     new Text(icon)
                         .Frame(width:20)
-                        .Padding(left:8, top:8)
+                        .Margin(left:8, top:8)
                         .FontFamily("Font Awesome 5 Free"),
-                    new TextField(val, placeholder).Padding(top:9)
+                    new TextField(val, placeholder).Margin(top:9)
                 
             }.RoundedBorder(color: Color.Grey).FillHorizontal();
         }

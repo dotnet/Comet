@@ -17,7 +17,7 @@ namespace Comet.Samples
                     .Frame(width:320, height:44)
                     .Background(Color.Black)
                     .Color(Color.White)
-                    .Padding(20)
+                    .Margin(20)
                 ,
             }
         };

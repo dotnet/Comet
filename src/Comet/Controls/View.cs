@@ -432,11 +432,11 @@ namespace Comet
 
             if (width > 0 && height > 0)
             {
-                var padding = BuiltView?.GetPadding();
-                if (padding != null)
+                var margin = BuiltView?.GetMargin();
+                if (margin != null)
                 {
-                    width -= ((Thickness) padding).HorizontalThickness;
-                    height -= ((Thickness) padding).VerticalThickness;
+                    width -= ((Thickness) margin).HorizontalThickness;
+                    height -= ((Thickness) margin).VerticalThickness;
                 }
                 
                 if (!MeasurementValid)

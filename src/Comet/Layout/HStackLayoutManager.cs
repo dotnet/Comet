@@ -57,9 +57,9 @@ namespace Comet.Layout
                     var finalHeight = size.Height;
                     var finalWidth = size.Width;
                     
-                    var padding = view.GetPadding();
-                    finalHeight += padding.VerticalThickness;
-                    finalWidth += padding.HorizontalThickness;
+                    var margin = view.GetMargin();
+                    finalHeight += margin.VerticalThickness;
+                    finalWidth += margin.HorizontalThickness;
 
                     var verticalSizing = view.GetVerticalSizing();
                     if (verticalSizing == Sizing.Fill)
@@ -115,7 +115,7 @@ namespace Comet.Layout
                 {
                     var size = view.MeasuredSize;
                     var constraints = view.GetFrameConstraints();
-                    var padding = view.GetPadding();
+                    var margin = view.GetMargin();
                     var sizing = view.GetVerticalSizing();
 
                     if (!view.MeasurementValid)
@@ -131,11 +131,11 @@ namespace Comet.Layout
                         size.Height = Math.Min((float)constraints.Height, measured.Height);
 
                     if (sizing == Sizing.Fill)
-                        size.Height = measured.Height - padding.VerticalThickness;
+                        size.Height = measured.Height - margin.VerticalThickness;
                     
                     sizes.Add(size);
                     height = Math.Max(size.Height, height);
-                    nonSpacerWidth += size.Width + padding.HorizontalThickness;
+                    nonSpacerWidth += size.Width + margin.HorizontalThickness;
                 }
 
                 if (index > 0 && !lastWasSpacer && !isSpacer)
@@ -176,18 +176,18 @@ namespace Comet.Layout
                 var alignment = constraints?.Alignment?.Vertical ?? _defaultAlignment;
                 var alignedY = y;
 
-                var padding = view.GetPadding();
+                var margin = view.GetMargin();
                 
                 switch (alignment)
                 {
                     case VerticalAlignment.Center:
-                        alignedY += (measured.Height - size.Height - padding.Bottom + padding.Top) / 2;
+                        alignedY += (measured.Height - size.Height - margin.Bottom + margin.Top) / 2;
                         break;
                     case VerticalAlignment.Bottom:
-                        alignedY += measured.Height - size.Height - padding.Bottom;
+                        alignedY += measured.Height - size.Height - margin.Bottom;
                         break;
                     case VerticalAlignment.Top:
-                        alignedY = padding.Top;
+                        alignedY = margin.Top;
                         break;
                     case VerticalAlignment.FirstTextBaseline:
                         throw new NotSupportedException(VerticalAlignment.FirstTextBaseline.ToString());
@@ -200,19 +200,19 @@ namespace Comet.Layout
                 if (index > 0 && !lastWasSpacer && !isSpacer)
                     x += _spacing;
                 
-                x += padding.Left;
+                x += margin.Left;
 
                 var sizing = view.GetVerticalSizing();
                 if (sizing == Sizing.Fill)
                 {
-                    alignedY = padding.Top;
-                    size.Height = measured.Height - padding.VerticalThickness;
+                    alignedY = margin.Top;
+                    size.Height = measured.Height - margin.VerticalThickness;
                 }
                 
                 view.Frame = new RectangleF(x, alignedY, size.Width, size.Height);
                 
                 x += size.Width;
-                x += padding.Right;
+                x += margin.Right;
                 
                 lastWasSpacer = isSpacer;
                 index++;

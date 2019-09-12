@@ -66,7 +66,8 @@ namespace Comet.Samples {
             new MenuItem("Issue123",() => new Issue123()),
             new MenuItem("Issue125",() => new Issue125()),
             new MenuItem("Issue125b",() => new Issue125b()),
-            new MenuItem("Issue125c",() => new Issue125c())
+            new MenuItem("Issue125c",() => new Issue125c()),
+            new MenuItem("Issue133",() => new Issue133())
         };
 
 		public MainPage (List<MenuItem> additionalPage = null)
@@ -86,7 +87,7 @@ namespace Comet.Samples {
                     {
                         new Text(page.Title),
                         new Spacer() 
-                    }.Frame(height:44).Padding(left:10),
+                    }.Frame(height:44).Margin(left:10),
                 }.OnSelectedNavigate( page => page.Page().Title(page.Title))
 			};
         }

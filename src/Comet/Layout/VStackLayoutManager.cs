@@ -57,9 +57,9 @@ namespace Comet.Layout
                     var finalHeight = size.Height;
                     var finalWidth = size.Width;
                     
-                    var padding = view.GetPadding();
-                    finalHeight += padding.VerticalThickness;
-                    finalWidth += padding.HorizontalThickness;
+                    var margin = view.GetMargin();
+                    finalHeight += margin.VerticalThickness;
+                    finalWidth += margin.HorizontalThickness;
 
                     var sizing = view.GetHorizontalSizing();
                     if (sizing == Sizing.Fill)
@@ -79,7 +79,7 @@ namespace Comet.Layout
             if (spacerCount > 0)
                 height = available.Height;
 
-            var layoutPadding = layout.GetPadding();
+            var layoutMargin = layout.GetMargin();
 
             var layoutHorizontalSizing = layout.GetHorizontalSizing();
             if (layoutHorizontalSizing == Sizing.Fill)
@@ -87,7 +87,7 @@ namespace Comet.Layout
             
             var layoutVerticalSizing = layout.GetVerticalSizing();
             if (layoutVerticalSizing == Sizing.Fill)
-                height = available.Height - layoutPadding.VerticalThickness;
+                height = available.Height - layoutMargin.VerticalThickness;
             
             return new SizeF(width, height);
         }
@@ -117,7 +117,7 @@ namespace Comet.Layout
                 {
                     var size = view.MeasuredSize;
                     var constraints = view.GetFrameConstraints();
-                    var padding = view.GetPadding();
+                    var margin = view.GetMargin();
                     var sizing = view.GetHorizontalSizing();
 
                     if (constraints?.Width != null)
@@ -127,11 +127,11 @@ namespace Comet.Layout
                         size.Height = Math.Min((float)constraints.Height, measured.Height);
 
                     if (sizing == Sizing.Fill)
-                        size.Width = measured.Width - padding.HorizontalThickness;
+                        size.Width = measured.Width - margin.HorizontalThickness;
                     
                     sizes.Add(size);
                     width = Math.Max(size.Width, width);
-                    nonSpacerHeight += size.Height + padding.VerticalThickness;
+                    nonSpacerHeight += size.Height + margin.VerticalThickness;
                 }
                 
                 if (index > 0 && !lastWasSpacer && !isSpacer)
@@ -172,18 +172,18 @@ namespace Comet.Layout
                 var alignment = constraints?.Alignment?.Horizontal ?? _defaultAlignment;
                 var alignedX = x;
 
-                var padding = view.GetPadding();
+                var margin = view.GetMargin();
                 
                 switch (alignment)
                 {
                     case HorizontalAlignment.Center:
-                        alignedX += (measured.Width - size.Width - padding.Left + padding.Right) / 2;
+                        alignedX += (measured.Width - size.Width - margin.Left + margin.Right) / 2;
                         break;
                     case HorizontalAlignment.Trailing:
-                        alignedX = layout.Frame.Width - size.Width - padding.Right;
+                        alignedX = layout.Frame.Width - size.Width - margin.Right;
                         break;
                     case HorizontalAlignment.Leading:
-                        alignedX = padding.Left;
+                        alignedX = margin.Left;
                         break;
                       default:
                         throw new ArgumentOutOfRangeException();
@@ -192,19 +192,19 @@ namespace Comet.Layout
                 if (index > 0 && !lastWasSpacer && !isSpacer)
                     y += _spacing;
                 
-                y += padding.Top;
+                y += margin.Top;
 
                 var sizing = view.GetHorizontalSizing();
                 if (sizing == Sizing.Fill)
                 {
-                    alignedX = padding.Left;
-                    size.Width = measured.Width - padding.HorizontalThickness;
+                    alignedX = margin.Left;
+                    size.Width = measured.Width - margin.HorizontalThickness;
                 }
 
                 view.Frame = new RectangleF(alignedX, y, size.Width, size.Height);
                 
                 y += size.Height;
-                y += padding.Bottom;
+                y += margin.Bottom;
                 
                 index++;
             }

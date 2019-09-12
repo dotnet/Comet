@@ -34,7 +34,7 @@ namespace Comet.Samples
 				{
 					new Image(song.ArtworkUrl)
 						.Frame(44,44, Alignment.Center)
-						.Padding(left:10f)
+						.Margin(left:10f)
 						.ClipShape(new Circle()),
 					new VStack(HorizontalAlignment.Leading)
 					{

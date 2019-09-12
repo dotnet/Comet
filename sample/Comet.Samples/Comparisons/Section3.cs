@@ -41,7 +41,7 @@ namespace Comet.Samples.Comparisons
                         new Text("California")
                             .Background(Color.Green),
                     }
-                 }.Padding();
+                 }.Margin();
 
     }
 }

@@ -187,13 +187,13 @@ namespace Comet.Layout
                     }
                 }
 
-                var padding = view.GetPadding();
-                if (!padding.IsEmpty)
+                var margin = view.GetMargin();
+                if (!margin.IsEmpty)
                 {
-                    x += padding.Left;
-                    y += padding.Top;
-                    w -= padding.HorizontalThickness;
-                    h -= padding.VerticalThickness;
+                    x += margin.Left;
+                    y += margin.Top;
+                    w -= margin.HorizontalThickness;
+                    h -= margin.VerticalThickness;
                 }
 
                 view.Frame = new RectangleF(x, y, w, h);

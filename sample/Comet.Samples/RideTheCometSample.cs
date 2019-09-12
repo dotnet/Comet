@@ -39,7 +39,7 @@ namespace Comet.Samples.Comparisons
                     comet.Rides++;
                 })
                     .Frame(height:44)
-                    .Padding(8)
+                    .Margin(8)
                     .Color(Color.White)
                     .Background("#1d1d1d")
             };

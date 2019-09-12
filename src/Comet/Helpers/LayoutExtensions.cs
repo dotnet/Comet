@@ -11,16 +11,16 @@ namespace Comet
         /// <param name="view"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public static T Padding<T>(this T view) where T : View
+        public static T Margin<T>(this T view) where T : View
         {
             var defaultThickness = new Thickness(10);
-            view.Padding(defaultThickness);
+            view.Margin(defaultThickness);
             return view;
         }
         
-        public static T Padding<T>(this T view, float? left = null, float? top= null, float? right= null, float? bottom = null) where T : View
+        public static T Margin<T>(this T view, float? left = null, float? top= null, float? right= null, float? bottom = null) where T : View
         {
-            view.Padding(new Thickness(
+            view.Margin(new Thickness(
                 left ?? 0,
                 top ?? 0,
                 right ?? 0,
@@ -28,9 +28,9 @@ namespace Comet
             return view;
         }
         
-        public static T Padding<T>(this T view, float value) where T : View
+        public static T Margin<T>(this T view, float value) where T : View
         {
-            view.Padding(new Thickness(value));
+            view.Margin(new Thickness(value));
             return view;
         }
         
@@ -77,13 +77,13 @@ namespace Comet
             this View view,
             RectangleF frame)
         {
-            var padding = view.GetPadding();
-            if (!padding.IsEmpty)   
+            var margin = view.GetMargin();
+            if (!margin.IsEmpty)   
             {
-                frame.X += padding.Left;
-                frame.Y += padding.Top;
-                frame.Width -= padding.HorizontalThickness;
-                frame.Height -= padding.VerticalThickness;
+                frame.X += margin.Left;
+                frame.Y += margin.Top;
+                frame.Width -= margin.HorizontalThickness;
+                frame.Height -= margin.VerticalThickness;
             }
 
             var sizeThatFits = view.Measure(frame.Size);
@@ -178,16 +178,16 @@ namespace Comet
             return constraints ?? defaultContraints;
         }
 
-        public static T Padding<T>(this T view, Thickness padding, bool cascades = false) where T : View
+        public static T Margin<T>(this T view, Thickness margin, bool cascades = false) where T : View
         {
-            view.SetEnvironment(EnvironmentKeys.Layout.Padding, padding, cascades);
+            view.SetEnvironment(EnvironmentKeys.Layout.Margin, margin, cascades);
             return view;
         }
 
-        public static Thickness GetPadding(this View view, Thickness? defaultValue = null)
+        public static Thickness GetMargin(this View view, Thickness? defaultValue = null)
         {
-            var padding = view.GetEnvironment<Thickness?>(view, EnvironmentKeys.Layout.Padding);
-            return padding ?? defaultValue ?? Thickness.Empty;
+            var margin = view.GetEnvironment<Thickness?>(view, EnvironmentKeys.Layout.Margin);
+            return margin ?? defaultValue ?? Thickness.Empty;
         }
 
         public static T LayoutConstraints<T>(this T view, object contraints, bool cascades = false) where T : View
@@ -202,17 +202,17 @@ namespace Comet
             return constraints ?? defaultValue;
         }
 
-        public static SizeF Measure(this View view, SizeF availableSize, bool includePadding)
+        public static SizeF Measure(this View view, SizeF availableSize, bool includeMargin)
         {
-            if (includePadding)
+            if (includeMargin)
             {
-                var padding = view.GetPadding();
-                availableSize.Width -= padding.HorizontalThickness;
-                availableSize.Height -= padding.VerticalThickness;
+                var margin = view.GetMargin();
+                availableSize.Width -= margin.HorizontalThickness;
+                availableSize.Height -= margin.VerticalThickness;
 
                 var measuredSize = view.Measure(availableSize);
-                measuredSize.Width += padding.HorizontalThickness;
-                measuredSize.Height += padding.VerticalThickness;
+                measuredSize.Width += margin.HorizontalThickness;
+                measuredSize.Height += margin.VerticalThickness;
                 return measuredSize; 
             }
 
