@@ -1,5 +1,6 @@
 ﻿using System;
 using AppKit;
+using Comet.Mac.Extensions;
 
 namespace Comet.Mac.Handlers
 {
@@ -7,7 +8,8 @@ namespace Comet.Mac.Handlers
     {
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
-            [nameof(TextField.Text)] = MapTextProperty
+            [nameof(TextField.Text)] = MapTextProperty,
+            [nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
         };
 
         public TextFieldHandler() : base(Mapper)
@@ -42,6 +44,14 @@ namespace Comet.Mac.Handlers
         {
             var nativeView = (NSTextField) viewHandler.NativeView;
             nativeView.StringValue = virtualView.Text?.Get() ?? string.Empty;
+            virtualView.InvalidateMeasurement();
+        }
+        
+        public static void MapTextAlignmentProperty(IViewHandler viewHandler, TextField virtualView)
+        {
+            var nativeView = (NSTextField) viewHandler.NativeView;
+            var textAlignment = virtualView.GetTextAlignment();
+            nativeView.Alignment = textAlignment.ToNSTextAlignment();
             virtualView.InvalidateMeasurement();
         }
     }

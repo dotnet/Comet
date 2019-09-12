@@ -45,10 +45,17 @@ namespace Comet.Android.Handlers
 
         public static void MapColorProperty(IViewHandler viewHandler, TextField virtualView)
         {
-            var textView = viewHandler.NativeView as EditText;
+            var textView = (EditText)viewHandler.NativeView;
             var color = virtualView.GetColor(DefaultColor).ToColor();
             textView.SetTextColor(color);
-
+        }
+        
+        public static void MapTextAlignmentProperty(IViewHandler viewHandler, TextField virtualView)
+        {
+            var nativeView = (EditText) viewHandler.NativeView;
+            var textAlignment = virtualView.GetTextAlignment();
+            nativeView.TextAlignment = textAlignment.ToAndroidTextAlignment();
+            virtualView.InvalidateMeasurement();
         }
     }
 }

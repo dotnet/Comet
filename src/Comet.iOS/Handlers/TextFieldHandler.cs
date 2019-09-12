@@ -11,7 +11,8 @@ namespace Comet.iOS.Handlers
         public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
         {
             [nameof(TextField.Text)] = MapTextProperty,
-            [nameof(SecureField.Placeholder)] = MapPlaceholderProperty,
+            [nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
+            [nameof(TextField.Placeholder)] = MapPlaceholderProperty,
             [EnvironmentKeys.Colors.Color] = MapColorProperty,
         };
 
@@ -65,6 +66,14 @@ namespace Comet.iOS.Handlers
         {
             var nativeView = (UITextField) viewHandler.NativeView;
             nativeView.Text = virtualView.Text?.Get() ?? string.Empty;
+            virtualView.InvalidateMeasurement();
+        }
+        
+        public static void MapTextAlignmentProperty(IViewHandler viewHandler, TextField virtualView)
+        {
+            var nativeView = (UITextField) viewHandler.NativeView;
+            var textAlignment = virtualView.GetTextAlignment();
+            nativeView.TextAlignment = textAlignment.ToUITextAlignment();
             virtualView.InvalidateMeasurement();
         }
         
