@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 
-
 /*
  
 import SwiftUI
@@ -44,25 +43,23 @@ namespace Comet.Samples.Comparisons
                     .Color(Color.White)
                     .Background("#1d1d1d")
             };
-    }
 
-    public class Comet : BindingObject
-    {
-        public int Rides
+        public class Comet : BindingObject
         {
-            get => GetProperty<int>();
-            set => SetProperty(value);
-        }
-
-        public string CometTrain
-        {
-            get
+            public int Rides
             {
-                return "☄️".Repeat(Rides);
+                get => GetProperty<int>();
+                set => SetProperty(value);
+            }
+
+            public string CometTrain
+            {
+                get
+                {
+                    return "☄️".Repeat(Rides);
+                }
             }
         }
     }
-
-    
 }
-    
+
