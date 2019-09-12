@@ -478,10 +478,14 @@ namespace Comet
                     break;                
             }
 
-            var x = (width - MeasuredSize.Width) * xFactor;
-            var y = (height - MeasuredSize.Height) * yFactor;
+            // Make sure the final width is not larger than the frame we're allocated. 
+            var finalWidth = Math.Min(width, MeasuredSize.Width);
+            var finalHeight = Math.Min(height, MeasuredSize.Height);
+            
+            var x = (width - finalWidth) * xFactor;
+            var y = (height - finalHeight) * yFactor;
 
-            LayoutSubviews(new RectangleF(Frame.X + x,Frame.Y+y,MeasuredSize.Width,MeasuredSize.Height));
+            LayoutSubviews(new RectangleF(Frame.X + x,Frame.Y+y,finalWidth,finalHeight));
         }
 
         public virtual void LayoutSubviews(RectangleF frame)

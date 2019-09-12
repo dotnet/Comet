@@ -67,7 +67,9 @@ namespace Comet.Samples {
             new MenuItem("Issue125",() => new Issue125()),
             new MenuItem("Issue125b",() => new Issue125b()),
             new MenuItem("Issue125c",() => new Issue125c()),
-            new MenuItem("Issue133",() => new Issue133())
+            new MenuItem("Issue133",() => new Issue133()),
+            new MenuItem("Issue133b",() => new Issue133b()),
+            new MenuItem("Issue133c",() => new Issue133c())
         };
 
 		public MainPage (List<MenuItem> additionalPage = null)

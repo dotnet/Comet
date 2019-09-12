@@ -190,6 +190,19 @@ namespace Comet
             return margin ?? defaultValue ?? Thickness.Empty;
         }
 
+        public static T Padding<T>(this T view, Thickness padding, bool cascades = false) where T : View
+        {
+            view.SetEnvironment(EnvironmentKeys.Layout.Padding, padding, cascades);
+            return view;
+        }
+
+        public static Thickness GetPadding(this View view, Thickness? defaultValue = null)
+        {
+            var margin = view.GetEnvironment<Thickness?>(view, EnvironmentKeys.Layout.Padding);
+            return margin ?? defaultValue ?? Thickness.Empty;
+        }
+
+        
         public static T LayoutConstraints<T>(this T view, object contraints, bool cascades = false) where T : View
         {
             view.SetEnvironment(EnvironmentKeys.Layout.Constraints, contraints, cascades);
