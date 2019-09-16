@@ -12,8 +12,8 @@ namespace Comet.Blazor
             _jsRuntime = jsRuntime;
         }
 
-        public Task<SizeF> GetSizeAsync(object canvas) => _jsRuntime.InvokeAsync<SizeF>("comet.canvas.getSize", new[] { canvas });
+        public ValueTask<SizeF> GetSizeAsync(object canvas) => _jsRuntime.InvokeAsync<SizeF>("comet.canvas.getSize", new[] { canvas });
 
-        public Task DrawImageAsync(object canvas, byte[] bytes) => _jsRuntime.InvokeAsync<object>("comet.canvas.drawImage", new[] { canvas, bytes });
+        public ValueTask<object> DrawImageAsync(object canvas, byte[] bytes) => _jsRuntime.InvokeAsync<object>("comet.canvas.drawImage", new[] { canvas, bytes });
     }
 }

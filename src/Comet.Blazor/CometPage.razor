@@ -21,7 +21,7 @@
     private readonly Stack<View> _navigationStack = new Stack<View>();
     private View _view;
 
-    private void OnMouseDown(UIMouseEventArgs ui)
+    private void OnMouseDown(MouseEventArgs ui)
     {
         // Detect back button
         if (ui.Buttons == 8)
