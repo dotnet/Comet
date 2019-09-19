@@ -28,7 +28,8 @@ namespace Comet
 		public object Data
         {
 			get => context;
-			private set => (this).SetValue(base.State, ref context, value);
+            //TODO: Fix this when we fix the DatBinding nonsense;
+            private set => context = value;//(this).SetValue(base.State, ref context, value);
 		}
 
 		public Func<object> DataBinding { get; private set; }
@@ -36,18 +37,19 @@ namespace Comet
 		protected override void WillUpdateView ()
 		{
 			base.WillUpdateView ();
-			if (DataBinding != null)
-            {
-				base.State.StartProperty ();
-				var text = DataBinding.Invoke ();
-				var props = base.State.EndProperty ();
-				var propCount = props.Length;
-				if (propCount > 0)
-                {
-					base.State.BindingState.AddViewProperty (props, this, nameof(DataBinding));
-				}
-				Data = text;
-			}
+            //TODO Why is there DataBinding like this still? Kill it!!!
+			//if (DataBinding != null)
+   //         {
+			//	base.State.StartProperty ();
+			//	var text = DataBinding.Invoke ();
+			//	var props = base.State.EndProperty ();
+			//	var propCount = props.Length;
+			//	if (propCount > 0)
+   //             {
+			//		base.State.BindingState.AddViewProperty (props, this, nameof(DataBinding));
+			//	}
+			//	Data = text;
+			//}
 		}
         protected override void ViewPropertyChanged(string property, object value)
         {

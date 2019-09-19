@@ -14,7 +14,7 @@ namespace Comet.Internal
                 return (Func<View>)Delegate.CreateDelegate(typeof(Func<View>), view, bodyMethod.Name);
             return null;
         }
-
+        public static BindingState InternalGetState(this View view) => view.GetState();
         public static void ResetGlobalEnvironment(this View view) => View.Environment.Clear();
 
         public static void DisposeAllViews(this View view) => View.ActiveViews.Clear();

@@ -14,5 +14,12 @@ namespace Comet.Internal
             return default;
 
         }
+
+        public static TValue GetOrCreateForKey<TValue, TKey>(this IDictionary<TKey,TValue> dictionary, TKey key) where TValue : new ()
+        {
+            if (!dictionary.TryGetValue(key, out var result))
+                dictionary[key] = result = new TValue();
+            return result;
+        }
     }
 }

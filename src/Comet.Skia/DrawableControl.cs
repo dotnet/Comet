@@ -12,7 +12,7 @@ namespace Comet
 			controlDelegate.VirtualDrawableControl = this;
 		}
 		
-		internal State GetState() => State;
+		internal BindingState GetState() => State;
 
 		protected override void ViewPropertyChanged(string property, object value)
 		{

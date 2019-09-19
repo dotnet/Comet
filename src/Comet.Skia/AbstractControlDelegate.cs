@@ -121,14 +121,14 @@ namespace Comet.Skia
             currentValue = newValue;
             if (VirtualDrawableControl != null)
             {
-                newValue?.BindToProperty(VirtualDrawableControl.GetState(), (View) VirtualDrawableControl, propertyName);
+                newValue?.BindToProperty((View) VirtualDrawableControl, propertyName);
                 _boundProperties.Add(propertyName);
             }
             else
                 _bindingInitializers.Add(
                     () =>
                     {
-                        newValue?.BindToProperty(VirtualDrawableControl.GetState(), (View)VirtualDrawableControl, propertyName);
+                        newValue?.BindToProperty((View)VirtualDrawableControl, propertyName);
                         _boundProperties.Add(propertyName);
                     });
         }

@@ -65,20 +65,18 @@ namespace Comet
             this.Navigation = parent.Navigation ?? parent as NavigationView;
         }
         public NavigationView Navigation { get; set; }
-        protected State State { get; set; }
-        internal State GetState() => State;
+        protected BindingState State { get; set; }
+        internal BindingState GetState() => State;
 
         public View()
         {
             ActiveViews.Add(this);
             Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
             HotReloadHelper.Register(this);
-            State = StateBuilder.CurrentState ?? new State
-            {
-                StateChanged = Reload
-            };
+            //TODO: Should this need its view?
+            State = new BindingState();
+            StateManager.ConstructingView(this);
             SetEnvironmentFields();
-            State.StartBuildingView();
 
         }
 
@@ -154,7 +152,12 @@ namespace Comet
         public Func<View> Body
         {
             get => body;
-            set => this.SetValue(State, ref body, value, ResetPropertyString);
+            set
+            {
+                body = value;
+                ResetView();
+             //   this.SetBindingValue(State, ref body, value, ResetPropertyString);
+            }
         }
 
         internal View GetView() => GetRenderView();
@@ -180,19 +183,17 @@ namespace Comet
             if (builtView != null)
                 return builtView;
             Debug.WriteLine($"Building View: {this.GetType().Name}");
-            using (new StateBuilder(State))
+            using (new StateBuilder(this))
             {
-                State.SetParent(this);
-                State.StartProperty();
                 var view = Body.Invoke();
                 view.Parent = this;
                 if (view is NavigationView navigationView)
                     Navigation = navigationView;
-                var props = State.EndProperty();
-                var propCount = props.Length;
+                var props = StateManager.EndProperty();
+                var propCount = props.Count;
                 if (propCount > 0)
                 {
-                    State.BindingState.AddViewProperty(props, this, ResetPropertyString);
+                    State.AddGlobalProperties(props);
                 }
                 UpdateBuiltViewContext(view);
                 return builtView = view;
@@ -217,7 +218,7 @@ namespace Comet
 
         internal void BindingPropertyChanged(string property, object value)
         {
-
+            State.BindingPropertyChanged(property, value);
             ViewPropertyChanged(property, value);
         }
         protected const string ResetPropertyString = "ResetPropertyString";
@@ -273,7 +274,7 @@ namespace Comet
                 var attribute = f.GetCustomAttributes(true).OfType<EnvironmentAttribute>().FirstOrDefault();
                 var key = attribute.Key ?? f.Name;
                 var value = this.GetEnvironment(key);
-                State.BindingState.AddGlobalProperty(key);
+                State.AddGlobalProperty((View.Environment, key));
                 usedEnvironmentData.Add(key);
                 if (value == null)
                 {
@@ -290,7 +291,7 @@ namespace Comet
                         if (value != null)
                         {
                             usedEnvironmentData.Add(key);
-                            State.BindingState.AddGlobalProperty(key);
+                            State.AddGlobalProperty((View.Environment, key));
                         }
                     }
                 }
@@ -332,7 +333,8 @@ namespace Comet
             builtView = null;
             Body = null;
             Context(false)?.Clear();
-            State?.DisposingObject(this);
+            StateManager.Disposing(this);
+            State.Clear();
             State = null;
 
         }

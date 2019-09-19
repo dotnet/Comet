@@ -33,42 +33,38 @@ namespace Comet {
 
     }
 	
-	public class StateBuilder : IDisposable {
-		static List<State> currentStates = new List<State> ();
-		public static State CurrentState => currentStates.LastOrDefault ();
-       
-		public StateBuilder (State state)
+	public class StateBuilder : IDisposable {       
+		public StateBuilder (View view)
 		{
-			State = state;
-			state.StartBuildingView ();
-			currentStates.Add (state);
+			View = view;
+            StateManager.StartBuilding(view);
 		}
 
-		public State State { get; }
+		public View View { get; private set; }
 
 		public void Dispose ()
-		{
-			State.EndBuildingView ();
-			currentStates.Remove (State);
-		}
+        {
+            StateManager.EndBuilding(View);
+            View = null;
+        }
 	}
 
 
-	[Serializable]
-	public class State : BindingObjectManager {
-		public State()
-		{
+	//[Serializable]
+	//public class State : BindingObjectManager {
+	//	public State()
+	//	{
 
-		}
-		internal object GetValue (string property)
-		{
-			return parent?.GetPropertyValue(property) ?? this.GetPropertyValue (property);
-		}
+	//	}
+	//	internal object GetValue (string property)
+	//	{
+	//		return parent?.GetPropertyValue(property) ?? this.GetPropertyValue (property);
+	//	}
 
-        internal void SetChildrenValue<T>(string property, T value)
-        {
-            parent?.SetDeepPropertyValue(property, value);
-            parent?.BindingPropertyChanged(property, value);
-        }
-    }
+ //       internal void SetChildrenValue<T>(string property, T value)
+ //       {
+ //           parent?.SetDeepPropertyValue(property, value);
+ //           parent?.BindingPropertyChanged(property, value);
+ //       }
+ //   }
 }

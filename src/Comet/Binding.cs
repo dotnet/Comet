@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using Comet.Reflection;
 
 namespace Comet
 {
@@ -31,6 +32,8 @@ namespace Comet
             Console.Write("Test");
         }
 
+        public IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> BoundProperties { get; protected set; }
+
     }
 
     public class Binding<T> : Binding
@@ -49,21 +52,13 @@ namespace Comet
             private set;
         }
         public T CurrentValue { get; private set; }
-
-
-
-        public string[] BoundProperties { get; private set; }
-
-
-
-
+        
         public static implicit operator Binding<T>(T value)
         {
-            var state = StateBuilder.CurrentState;
-            var props = state?.EndProperty();
-            if(props?.Length > 1)
+            var props = StateManager.EndProperty();
+            if(props?.Count > 1)
             {
-                state.BindingState.AddGlobalProperties(props);
+                StateManager.CurrentView.GetState().AddGlobalProperties(props);
             }
             return new Binding<T>(
                 getValue: () => value,
@@ -77,10 +72,9 @@ namespace Comet
 
         public static implicit operator Binding<T>(Func<T> value)
         {
-            var state = StateBuilder.CurrentState;
-            state?.StartProperty();
+            StateManager.StartProperty();
             var result = value == null ? default : value.Invoke();
-            var props = state?.EndProperty();
+            var props = StateManager.EndProperty();
             return new Binding<T>(
                 getValue: value,
                 setValue: null)
@@ -94,11 +88,9 @@ namespace Comet
 
         public static implicit operator Binding<T>(State<T> state)
         {
-
-            var bindingState = StateBuilder.CurrentState;
-            bindingState?.StartProperty();
+            StateManager.StartProperty();
             var result = state.Value;
-            var props = bindingState?.EndProperty();
+            var props = StateManager.EndProperty();
 
 
             var binding = new Binding<T>(
@@ -137,42 +129,44 @@ namespace Comet
             return null;
         }
 
-        public void BindToProperty(State state, View view, string property)
+        public void BindToProperty(View view, string property)
         {
-            if (IsFunc && BoundProperties?.Length > 0)
+            if (IsFunc && BoundProperties?.Count > 0)
             {
-                state.BindingState.AddViewProperty(BoundProperties, view, property);
+                StateManager.UpdateBinding(this, view);
+                view.GetState().AddViewProperty(BoundProperties, view, property);
                 return;
             }
 
             if (IsValue)
             {
 
-                bool isGlobal = BoundProperties?.Length > 1;
-                var propCount = BoundProperties?.Length ?? 0;
+                bool isGlobal = BoundProperties?.Count > 1;
+                var propCount = BoundProperties?.Count ?? 0;
                 if (propCount == 0)
                     return;
 
                 var prop = BoundProperties[0];
-                if (BoundProperties?.Length == 1)
+                if (BoundProperties?.Count == 1)
                 {
 
 
-                    var stateValue = state.GetValue(prop).Cast<T>();
+                    var stateValue =  view.GetPropertyValue(prop.PropertyName).Cast<T>();
                     var newValue = Get.Invoke();
-                    var old = state.EndProperty();
+                    var old = StateManager.EndProperty();
                     //1 to 1 binding!
                     if (EqualityComparer<T>.Default.Equals(stateValue, newValue))
                     {
-                        Get = () => state.GetValue(prop).Cast<T>();
+                        Get = () => view.GetPropertyValue(prop.PropertyName).Cast<T>();
                         Set = (v) =>
                         {
-                            state.SetChildrenValue(prop, v);
+                            view?.SetDeepPropertyValue(property, v);
+                            view?.BindingPropertyChanged(property, v);
                         };
                         CurrentValue = newValue;
                         IsValue = false;
                         IsFunc = true;
-                        state.BindingState.AddViewProperty(prop, property, view);
+                        view.GetState().AddViewProperty(prop, property, view);
                         Debug.WriteLine($"Databinding: {property} to {prop}");
                     }
                     else
@@ -200,7 +194,12 @@ namespace Comet
 
                 if (isGlobal)
                 {
-                    state.BindingState.AddGlobalProperties(BoundProperties);
+                    StateManager.UpdateBinding(this, StateManager.CurrentView);
+                    StateManager.CurrentView.GetState().AddGlobalProperties(BoundProperties);
+                }
+                else
+                {
+                    StateManager.UpdateBinding(this, view);
                 }
 
 
