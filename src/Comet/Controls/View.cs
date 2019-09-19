@@ -274,7 +274,6 @@ namespace Comet
                 var attribute = f.GetCustomAttributes(true).OfType<EnvironmentAttribute>().FirstOrDefault();
                 var key = attribute.Key ?? f.Name;
                 var value = this.GetEnvironment(key);
-                State.AddGlobalProperty((View.Environment, key));
                 usedEnvironmentData.Add(key);
                 if (value == null)
                 {
@@ -301,6 +300,9 @@ namespace Comet
                 }
                 if (value != null)
                 {
+                    State.AddGlobalProperty((View.Environment, key));
+                    if(value is INotifyPropertyRead notify)
+                        StateManager.RegisterChild(this, notify, key);
                     f.SetValue(this, value?.Convert(f.FieldType));
                 }
             }

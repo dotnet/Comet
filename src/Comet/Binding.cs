@@ -133,7 +133,7 @@ namespace Comet
         {
             if (IsFunc && BoundProperties?.Count > 0)
             {
-                StateManager.UpdateBinding(this, view);
+                StateManager.UpdateBinding(this, StateManager.CurrentView);
                 view.GetState().AddViewProperty(BoundProperties, view, property);
                 return;
             }
@@ -166,6 +166,7 @@ namespace Comet
                         CurrentValue = newValue;
                         IsValue = false;
                         IsFunc = true;
+                        StateManager.UpdateBinding(this, view);
                         view.GetState().AddViewProperty(prop, property, view);
                         Debug.WriteLine($"Databinding: {property} to {prop}");
                     }
@@ -199,7 +200,8 @@ namespace Comet
                 }
                 else
                 {
-                    StateManager.UpdateBinding(this, view);
+                    StateManager.UpdateBinding(this, StateManager.CurrentView);
+
                 }
 
 

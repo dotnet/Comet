@@ -110,14 +110,19 @@ namespace Comet
                     {
                         //If the view is null, this is a child propety for a binding object.
                         //We will need to send its notification out for each view that monitors it.
-                        ChildPropertyNamesMapping.GetOrCreateForKey(child)[view?.Id ?? ""] = field.Name;
-                        if (!MonitoredObjects.Contains(child))
-                        {
-                            StartMonitoring(child);
-                        }
+                        RegisterChild(view,child, field.Name);
                         yield return child;
                     }
                 }
+            }
+        }
+
+        public static void RegisterChild (View view, INotifyPropertyRead value, string fieldName)
+        {
+            ChildPropertyNamesMapping.GetOrCreateForKey(value)[view?.Id ?? ""] = fieldName;
+            if (!MonitoredObjects.Contains(value))
+            {
+                StartMonitoring(value);
             }
         }
 
