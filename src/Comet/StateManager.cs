@@ -173,10 +173,6 @@ namespace Comet
             if (!isBuilding)
                 return;
             currentReadProperies.Add((sender as INotifyPropertyRead, propertyName));
-            //var first = childrenProperty.FirstOrDefault(x => x.Key.Target == sender);
-            //string parentproperty = first.Value;
-            //var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
-            //listProperties.Add(prop);
         }        
         static internal void OnPropertyChanged(object sender, string propertyName, object value)
         {
@@ -198,7 +194,7 @@ namespace Comet
                 return;
             }
 
-            var mappings = ChildPropertyNamesMapping[notify];
+            ChildPropertyNamesMapping.TryGetValue(notify, out var mappings);
             List<View> disposedViews = new List<View>();
             views.ForEach((view) =>
             {
@@ -208,7 +204,8 @@ namespace Comet
                     //Cleanup this View
                     return;
                 }
-                mappings.TryGetValue(view.Id, out var parentproperty);
+                string parentproperty = null;
+                mappings?.TryGetValue(view.Id, out parentproperty);
                
                 var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
                 //TODO: Change this to use notify and property name
@@ -278,6 +275,11 @@ namespace Comet
                 //ChildPropertyNamesMapping.GetOrCreateForKey(prop.BindingObject).Add(view.Id,)
                 NotifyToViewMappings.GetOrCreateForKey(prop.BindingObject).Add(view);
             }
+        }
+
+        internal static void ListenToEnvironment(View view)
+        {
+            NotifyToViewMappings.GetOrCreateForKey(View.Environment).Add(view);
         }
     }
 }

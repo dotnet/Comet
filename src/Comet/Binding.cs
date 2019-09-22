@@ -199,7 +199,6 @@ namespace Comet
                 else
                 {
                     StateManager.UpdateBinding(this, BoundFromView);
-
                 }
             }
         }
