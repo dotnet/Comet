@@ -13,7 +13,8 @@ namespace Comet
     public static class StateManager
     {
         static WeakStack<View> currentBuildingView = new WeakStack<View>();
-        public static View CurrentView => currentBuildingView.Peek();
+        public static View CurrentView => currentBuildingView.Peek() ?? LastView?.Target as View;
+        static WeakReference LastView;
         static Dictionary<string, List<INotifyPropertyRead>> ViewObjectMappings = new Dictionary<string, List<INotifyPropertyRead>>();
         static Dictionary<INotifyPropertyRead, HashSet<View>> NotifyToViewMappings = new Dictionary<INotifyPropertyRead, HashSet<View>>();
         static Dictionary<INotifyPropertyChanged, Dictionary<string, string>> ChildPropertyNamesMapping = new Dictionary<INotifyPropertyChanged, Dictionary<string, string>>();
@@ -27,6 +28,7 @@ namespace Comet
         static bool isBuilding = false;
         public static void ConstructingView(View view)
         {
+            LastView = new WeakReference(view);
             // currentBuildingView.Push(view);
 
             var mappings = CheckForStateAttributes(view, view).ToList();

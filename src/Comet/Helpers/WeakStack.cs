@@ -7,9 +7,9 @@ namespace Comet.Helpers
     {
         readonly Stack<WeakReference> items = new Stack<WeakReference>();
 
-        public T Peek() => items.Peek()?.Target as T;
+        public T Peek() => items.Count == 0 ? null : items.Peek()?.Target as T;
 
-        public T Pop() => items.Pop()?.Target as T;
+        public T Pop() => items.Count == 0 ? null : items.Pop()?.Target as T;
 
         public void Push(T value) => items.Push(new WeakReference(value));
 

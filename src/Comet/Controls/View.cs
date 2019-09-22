@@ -42,7 +42,12 @@ namespace Comet
         }
 
         internal T GetPropertyFromContext<T>([CallerMemberName] string property = null) => this.GetEnvironment<T>(property, false);
-        internal void SetPropertyInContext(object value,[CallerMemberName] string property = null) => this.SetEnvironment(property,value,false);
+        internal void SetPropertyInContext(object value, [CallerMemberName] string property = null)
+        {
+            if (this.IsDisposed)
+                return;
+            this.SetEnvironment(property, value, false);
+        }
 
         public View Parent
         {
