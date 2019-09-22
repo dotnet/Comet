@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Comet.Reflection;
 
 // ReSharper disable once CheckNamespace
 namespace Comet
@@ -81,7 +82,12 @@ namespace Comet
                 return default;
             try
             {
-                if (typeof(T) == typeof(string))
+                var type = typeof(T);
+                if (val?.GetType().Name == "State`1" && type.Name != "State`1")
+                {
+                    return val.GetPropValue<T>("Value");
+                }
+                if (type == typeof(string))
                 {
                     return (T) (object) val?.ToString();
                 }

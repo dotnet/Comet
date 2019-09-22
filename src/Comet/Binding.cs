@@ -25,6 +25,12 @@ namespace Comet
             get => _view?.Target as View;
             set => _view = new WeakReference(value);
         }
+        WeakReference _boundFromView;
+        internal View BoundFromView
+        {
+            get => _boundFromView?.Target as View;
+            set => _boundFromView = new WeakReference(value);
+        }
 
         internal void SetInternalValue(string key, object value)
         {
@@ -67,6 +73,7 @@ namespace Comet
                 IsValue = true,
                 CurrentValue = value,
                 BoundProperties = props,
+                BoundFromView = StateManager.CurrentView
             };
         }
 
@@ -82,6 +89,7 @@ namespace Comet
                 IsFunc = true,
                 CurrentValue = result,
                 BoundProperties = props,
+                BoundFromView = StateManager.CurrentView
             };
         }
 
@@ -133,7 +141,7 @@ namespace Comet
         {
             if (IsFunc && BoundProperties?.Count > 0)
             {
-                StateManager.UpdateBinding(this, StateManager.CurrentView);
+                StateManager.UpdateBinding(this, BoundFromView);
                 view.GetState().AddViewProperty(BoundProperties, view, property);
                 return;
             }
@@ -151,7 +159,7 @@ namespace Comet
                 {
 
 
-                    var stateValue =  view.GetPropertyValue(prop.PropertyName).Cast<T>();
+                    var stateValue = prop.BindingObject.GetPropertyValue(prop.PropertyName).Cast<T>();
                     var newValue = Get.Invoke();
                     var old = StateManager.EndProperty();
                     //1 to 1 binding!
@@ -195,12 +203,12 @@ namespace Comet
 
                 if (isGlobal)
                 {
-                    StateManager.UpdateBinding(this, StateManager.CurrentView);
-                    StateManager.CurrentView.GetState().AddGlobalProperties(BoundProperties);
+                    StateManager.UpdateBinding(this, BoundFromView);
+                    BoundFromView.GetState().AddGlobalProperties(BoundProperties);
                 }
                 else
                 {
-                    StateManager.UpdateBinding(this, StateManager.CurrentView);
+                    StateManager.UpdateBinding(this, BoundFromView);
 
                 }
 
