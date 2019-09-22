@@ -29,11 +29,7 @@ namespace Comet
 
         WeakReference parent;
 
-        public string Id
-        {
-            get => GetPropertyFromContext<string>() ?? (Id = Guid.NewGuid().ToString());
-            set => SetPropertyInContext(value);
-        }
+        public string Id { get; } = IDGenerator.Instance.Next;
 
         public string Tag
         {
@@ -516,6 +512,6 @@ namespace Comet
             if (BuiltView != null)
                 BuiltView.Frame = frame;
         }
-        public override string ToString() => $"{{{this.GetType()}}} - {this.Id}";
+        public override string ToString() => $"{this.GetType()} - {this.Id}";
     }
 }
