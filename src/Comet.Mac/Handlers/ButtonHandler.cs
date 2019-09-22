@@ -39,7 +39,7 @@ namespace Comet.Mac.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
         {
             var nativeButton = (NSButton) viewHandler.NativeView;
-            nativeButton.Title = virtualView.Text?.Get() ?? string.Empty;
+            nativeButton.Title = virtualView.Text?.CurrentValue ?? string.Empty;
             virtualView.InvalidateMeasurement();
         }
     }

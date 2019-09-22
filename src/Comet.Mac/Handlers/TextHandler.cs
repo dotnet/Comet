@@ -49,7 +49,7 @@ namespace Comet.Mac.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (NSTextField) viewHandler.NativeView;
-            nativeView.StringValue = virtualView.Value?.Get() ?? string.Empty;
+            nativeView.StringValue = virtualView.Value?.CurrentValue ?? string.Empty;
             virtualView.InvalidateMeasurement();
         }
 

@@ -15,7 +15,7 @@ namespace Comet
         static WeakStack<View> currentBuildingView = new WeakStack<View>();
         public static View CurrentView => currentBuildingView.Peek();
         static Dictionary<string, List<INotifyPropertyRead>> ViewObjectMappings = new Dictionary<string, List<INotifyPropertyRead>>();
-        static Dictionary<INotifyPropertyRead, WeakList<View>> NotifyToViewMappings = new Dictionary<INotifyPropertyRead, WeakList<View>>();
+        static Dictionary<INotifyPropertyRead, HashSet<View>> NotifyToViewMappings = new Dictionary<INotifyPropertyRead, HashSet<View>>();
         static Dictionary<INotifyPropertyChanged, Dictionary<string, string>> ChildPropertyNamesMapping = new Dictionary<INotifyPropertyChanged, Dictionary<string, string>>();
 
 
@@ -188,7 +188,7 @@ namespace Comet
                     throw new Exception("Error, this is null!!!");
             if(!NotifyToViewMappings.TryGetValue(notify, out var views))
             {
-                StopMonitoring(notify);
+                //StopMonitoring(notify);
                 return;
             }
 
@@ -208,13 +208,11 @@ namespace Comet
                     //Cleanup this View
                     return;
                 }
-                var parentproperty = mappings[view.Id];
+                mappings.TryGetValue(view.Id, out var parentproperty);
+               
                 var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
-                //TODO: Change this to updating bindings instead of views
-                view.BindingPropertyChanged(prop, value);
                 //TODO: Change this to use notify and property name
-                if (!view.GetState().UpdateValues(new[] { ((notify, propertyName), value) }))
-                    view.Reload();
+                view.BindingPropertyChanged(notify, propertyName, value);
 
                 //TODO: Make sure we handle nested binding objects
 
@@ -277,6 +275,7 @@ namespace Comet
         {
             foreach(var prop in binding.BoundProperties)
             {
+                //ChildPropertyNamesMapping.GetOrCreateForKey(prop.BindingObject).Add(view.Id,)
                 NotifyToViewMappings.GetOrCreateForKey(prop.BindingObject).Add(view);
             }
         }

@@ -33,7 +33,7 @@ namespace Comet.iOS.Handlers
         public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
         {
             var nativeView = (UISwitch) viewHandler.NativeView;
-            nativeView.On = virtualView.IsOn.Get();
+            nativeView.On = virtualView.IsOn.CurrentValue;
         }
     }
 }

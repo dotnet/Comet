@@ -51,7 +51,7 @@ namespace Comet
 			//	Data = text;
 			//}
 		}
-        protected override void ViewPropertyChanged(string property, object value)
+        public override void ViewPropertyChanged(string property, object value)
         {
             if(property == nameof(DataBinding))
             {

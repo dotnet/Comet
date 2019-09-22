@@ -31,7 +31,7 @@ namespace Comet.iOS.Handlers
         public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
         {
             var nativeView = (CUIImageView) viewHandler.NativeView;
-            nativeView.Bitmap = virtualView.Bitmap?.Get();
+            nativeView.Bitmap = virtualView.Bitmap?.CurrentValue;
             virtualView.InvalidateMeasurement();
         }
     }

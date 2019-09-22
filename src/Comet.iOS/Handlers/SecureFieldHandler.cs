@@ -48,14 +48,14 @@ namespace Comet.iOS.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, SecureField virtualView)
         {
             var nativeView = (UITextField) viewHandler.NativeView;
-            nativeView.Text = virtualView.Text.Get();
+            nativeView.Text = virtualView.Text.CurrentValue;
             virtualView.InvalidateMeasurement();
         }
 
         public static void MapPlaceholderProperty(IViewHandler viewHandler, SecureField virtualView)
         {
             var nativeView = (UITextField) viewHandler.NativeView;
-            nativeView.Placeholder = virtualView.Placeholder.Get();
+            nativeView.Placeholder = virtualView.Placeholder.CurrentValue;
             virtualView.InvalidateMeasurement();
         }
     }

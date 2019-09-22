@@ -33,7 +33,7 @@ namespace Comet
         {
 
             this.itemsBinding = items;
-            this.items = items.Get();
+            this.items = items.CurrentValue;
             SetupObservable();
         }
 
@@ -54,11 +54,11 @@ namespace Comet
 
             ShouldDisposeViews = true;
         }
-        protected override void ViewPropertyChanged(string property, object value)
+        public override void ViewPropertyChanged(string property, object value)
         {
             //Update this when things change!
             DisposeObservable();
-            items = itemsBinding?.Get();
+            items = itemsBinding?.CurrentValue;
             SetupObservable();
             base.ViewPropertyChanged(property, value);
         }
@@ -262,13 +262,13 @@ namespace Comet
         public Section(Binding<IReadOnlyList<T>> items)
         {
             this.itemsBinding = items;
-            this.items = items.Get();
+            this.items = items.CurrentValue;
         }
 
-        protected override void ViewPropertyChanged(string property, object value)
+        public override void ViewPropertyChanged(string property, object value)
         {
             //Update this when things change!
-            items = itemsBinding.Get();
+            items = itemsBinding.CurrentValue;
             base.ViewPropertyChanged(property, value);
         }
 

@@ -55,7 +55,7 @@ namespace Comet.iOS.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (UILabel) viewHandler.NativeView;
-            nativeView.Text = virtualView.Value?.Get() ?? string.Empty;
+            nativeView.Text = virtualView.Value?.CurrentValue ?? string.Empty;
             virtualView.InvalidateMeasurement();
         }
         

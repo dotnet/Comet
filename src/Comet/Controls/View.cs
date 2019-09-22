@@ -216,13 +216,15 @@ namespace Comet
 
         }
 
-        internal void BindingPropertyChanged(string property, object value)
+        internal void BindingPropertyChanged(INotifyPropertyRead bindingObject, string property, object value)
         {
-            State.BindingPropertyChanged(property, value);
-            ViewPropertyChanged(property, value);
+            if (!State.UpdateValue((bindingObject, property), value))
+                Reload();
+            else
+                ViewPropertyChanged(property, value);
         }
         protected const string ResetPropertyString = "ResetPropertyString";
-        protected virtual void ViewPropertyChanged(string property, object value)
+        public virtual void ViewPropertyChanged(string property, object value)
         {
             if (property == ResetPropertyString)
             {
@@ -497,5 +499,6 @@ namespace Comet
             if (BuiltView != null)
                 BuiltView.Frame = frame;
         }
+        public override string ToString() => $"{{{this.GetType()}}} - {this.Id}";
     }
 }

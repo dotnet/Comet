@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Comet.Internal
 {
@@ -21,5 +22,8 @@ namespace Comet.Internal
                 dictionary[key] = result = new TValue();
             return result;
         }
+
+        public static void ForEach<T>(this IEnumerable<T> items, Action<T> action) =>
+            items.ToList().ForEach(action); 
     }
 }

@@ -30,12 +30,12 @@ namespace Comet.Tests {
 		{
 			var orgView = new MyOrgView ();
 			var orgText = orgView.GetView () as Text;
-			Assert.Equal (MyOrgView.TextValue, orgText.Value.Get());
+			Assert.Equal (MyOrgView.TextValue, orgText.Value.CurrentValue);
 
 			HotReloadHelper.RegisterReplacedView (typeof (MyOrgView).FullName, typeof (MyNewView));
 			var newText = orgView.GetView () as Text;
 
-			Assert.Equal (MyNewView.TextValue, newText.Value.Get());
+			Assert.Equal (MyNewView.TextValue, newText.Value.CurrentValue);
 
 		}
 	}

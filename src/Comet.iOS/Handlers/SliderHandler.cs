@@ -41,19 +41,19 @@ namespace Comet.iOS.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Slider virtualView)
         {
             var nativeView = (UISlider) viewHandler.NativeView;
-            nativeView.Value = virtualView.Value.Get();
+            nativeView.Value = virtualView.Value.CurrentValue;
         }
 
         public static void MapFromProperty(IViewHandler viewHandler, Slider virtualView)
         {
             var nativeView = (UISlider) viewHandler.NativeView;
-            nativeView.MinValue = virtualView.From.Get();
+            nativeView.MinValue = virtualView.From.CurrentValue;
         }
         
         public static void MapThroughProperty(IViewHandler viewHandler, Slider virtualView)
         {
             var nativeView = (UISlider) viewHandler.NativeView;
-            nativeView.MaxValue = virtualView.Through.Get();
+            nativeView.MaxValue = virtualView.Through.CurrentValue;
         }
     }
 }

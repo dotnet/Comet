@@ -51,8 +51,10 @@ namespace Comet.Tests.Handlers
 			ChangedProperties [property] = value;
 
             var val = CurrentView.GetPropertyValue(property) as Binding;
-            if (val != null)
-                val.GetValue();
+
+            //TODO: This may break things
+            //if (val != null)
+            //    val.GetValue();
 
 
         }

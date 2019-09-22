@@ -8,14 +8,7 @@ namespace Comet
 {
     public class Binding
     {
-        public Binding(Func<object> getValue, Action<object> setValue)
-        {
-            GetValue = getValue;
-            SetValue = setValue;
-        }
-
-        public Func<object> GetValue { get; }
-        public Action<object> SetValue { get; }
+        public object Value { get; set; }
 
         public bool IsValue { get; internal set; }
         public bool IsFunc { get; internal set; }
@@ -32,43 +25,44 @@ namespace Comet
             set => _boundFromView = new WeakReference(value);
         }
 
-        internal void SetInternalValue(string key, object value)
-        {
-            //View.SetValue()
-            Console.Write("Test");
-        }
-
         public IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> BoundProperties { get; protected set; }
+
+        public virtual void BindingValueChanged(INotifyPropertyRead bindingObject, string propertyName, object value)
+        {
+            Value = value;
+            View.ViewPropertyChanged(propertyName, value);
+        }
 
     }
 
     public class Binding<T> : Binding
     {
+        public Binding()
+        {
+
+        }
         public Binding(Func<T> getValue, Action<T> setValue)
-            : base(ToGenericGetter(getValue), ToGenericSetter(setValue))
         {
             Get = getValue;
             Set = setValue;
         }
 
-        public Func<T> Get { get; private set; }
+        Func<T> Get { get; set; }
         public Action<T> Set
         {
             get;
             private set;
         }
-        public T CurrentValue { get; private set; }
-        
+        public T CurrentValue { get => (T)Value; private set => Value = value; }
+
         public static implicit operator Binding<T>(T value)
         {
             var props = StateManager.EndProperty();
-            if(props?.Count > 1)
+            if (props?.Count > 1)
             {
                 StateManager.CurrentView.GetState().AddGlobalProperties(props);
             }
-            return new Binding<T>(
-                getValue: () => value,
-                setValue: null)
+            return new Binding<T>()
             {
                 IsValue = true,
                 CurrentValue = value,
@@ -116,8 +110,8 @@ namespace Comet
         }
 
         public static implicit operator T(Binding<T> value)
-            => value == null || value.Get == null
-            ? default : value.Get.Invoke();
+            => value == null
+            ? default : value.CurrentValue;
 
 
 
@@ -139,10 +133,11 @@ namespace Comet
 
         public void BindToProperty(View view, string property)
         {
+            View = view;
             if (IsFunc && BoundProperties?.Count > 0)
             {
-                StateManager.UpdateBinding(this, BoundFromView);
-                view.GetState().AddViewProperty(BoundProperties, view, property);
+                StateManager.UpdateBinding(this, view);
+                view.GetState().AddViewProperty(BoundProperties, this, property);
                 return;
             }
 
@@ -160,22 +155,17 @@ namespace Comet
 
 
                     var stateValue = prop.BindingObject.GetPropertyValue(prop.PropertyName).Cast<T>();
-                    var newValue = Get.Invoke();
                     var old = StateManager.EndProperty();
                     //1 to 1 binding!
-                    if (EqualityComparer<T>.Default.Equals(stateValue, newValue))
+                    if (EqualityComparer<T>.Default.Equals(stateValue, CurrentValue))
                     {
-                        Get = () => view.GetPropertyValue(prop.PropertyName).Cast<T>();
                         Set = (v) =>
                         {
                             view?.SetDeepPropertyValue(property, v);
-                            view?.BindingPropertyChanged(property, v);
+                            //view?.BindingPropertyChanged(property, v);
                         };
-                        CurrentValue = newValue;
-                        IsValue = false;
-                        IsFunc = true;
                         StateManager.UpdateBinding(this, view);
-                        view.GetState().AddViewProperty(prop, property, view);
+                        view.GetState().AddViewProperty(prop, property, this);
                         Debug.WriteLine($"Databinding: {property} to {prop}");
                     }
                     else
@@ -193,11 +183,11 @@ namespace Comet
                 else
                 {
                     var errorMessage = $"Warning: {property} is using Multiple state Variables. For performance reasons, please switch to a Lambda.";
-                    if (Debugger.IsAttached)
-                    {
-                        throw new Exception(errorMessage);
-                    }
-
+                    //if (Debugger.IsAttached)
+                    //{
+                    //    throw new Exception(errorMessage);
+                    //}
+                    isGlobal = true;
                     Debug.WriteLine(errorMessage);
                 }
 
@@ -211,9 +201,18 @@ namespace Comet
                     StateManager.UpdateBinding(this, BoundFromView);
 
                 }
-
-
             }
+        }
+        public override void BindingValueChanged(INotifyPropertyRead bindingObject, string propertyName, object value)
+        {
+            if (IsFunc)
+                CurrentValue = Get();
+            else
+            {
+                CurrentValue = (T)value;
+            }
+            View?.ViewPropertyChanged(propertyName, value);
+
         }
     }
 
@@ -221,35 +220,9 @@ namespace Comet
     {
         public static T GetValueOrDefault<T>(this Binding<T> binding, T defaultValue = default)
         {
-            if (binding?.Get == null)
+            if (binding.Value == null)
                 return defaultValue;
-
-            return binding.Get.Invoke();
-        }
-
-        internal static Binding<T> TwoWayBinding<TBindingObject, T>(this TBindingObject binding, Expression<Func<TBindingObject, T>> expression) where TBindingObject : BindingObject
-        {
-            if (expression.Body is MemberExpression member)
-            {
-                var memberName = member.Member.Name;
-                var getValue = expression.Compile();
-
-                return new Binding<T>(
-                    getValue: () => getValue.Invoke(binding),
-                    setValue: value =>
-                    {
-                        binding.SetPropertyInternal(value, memberName);
-                    });
-            }
-            else
-            {
-                var getValue = expression.Compile();
-
-                return new Binding<T>(
-                    getValue: () => getValue.Invoke(binding),
-                    setValue: null)
-                { IsFunc = true };
-            }
+            return binding.CurrentValue;
         }
     }
 }

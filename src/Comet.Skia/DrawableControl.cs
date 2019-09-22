@@ -14,7 +14,7 @@ namespace Comet
 		
 		internal BindingState GetState() => State;
 
-		protected override void ViewPropertyChanged(string property, object value)
+		public override void ViewPropertyChanged(string property, object value)
 		{
 			ControlDelegate?.ViewPropertyChanged(property, value);
 			base.ViewPropertyChanged(property, value);

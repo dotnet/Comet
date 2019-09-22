@@ -83,272 +83,6 @@ namespace Comet
 
     }
 
-    //public class BindingObjectManager
-    //{
-    //    protected View parent;
-    //    public void SetParent(View parent)
-    //    {
-    //        if (this.parent == parent)
-    //        {
-    //            return;
-    //        }
-    //        this.parent = parent;
-    //        CheckForStateAttributes(parent);
-    //    }
-    //    public BindingState BindingState { get; set; } = new BindingState();
-    //    internal Action StateChanged;
-
-
-    //    int isBuildingCount = 0;
-    //    bool isBuilding;
-    //    public bool IsBuilding => isBuilding;
-
-
-    //    public IEnumerable<KeyValuePair<string, object>> ChangedProperties => changeDictionary;
-    //    Dictionary<string, object> changeDictionary = new Dictionary<string, object>();
-    //    List<(string property, object value)> pendingUpdates = new List<(string, object)>();
-
-
-    //    List<string> listProperties = new List<string>();
-
-    //    internal void ResetChangeDictionary()
-    //    {
-    //        changeDictionary.Clear();
-    //    }
-
-    //    internal void StartBuildingView()
-    //    {
-    //        CheckForStateAttributes(this);
-    //        isBuilding = true;
-    //        if (listProperties.Any())
-    //        {
-    //            BindingState.AddGlobalProperties(listProperties);
-    //        }
-    //        listProperties.Clear();
-    //    }
-
-    //    WeakList<INotifyPropertyRead> children = new WeakList<INotifyPropertyRead>();
-    //    Dictionary<WeakReference, string> childrenProperty = new Dictionary<WeakReference, string>();
-
-    //    public void StartMonitoring(INotifyPropertyRead obj)
-    //    {
-    //        if (children.Contains(obj))
-    //            return;
-    //        children.Add(obj);
-    //        //Check in for more properties!
-    //        CheckForStateAttributes(obj);
-
-    //        if (obj is BindingObject bobj)
-    //        {
-    //            bobj.Listen(this);
-    //        }
-    //        else
-    //        {
-    //            obj.PropertyChanged += Obj_PropertyChanged;
-    //        }
-    //        obj.PropertyRead += Obj_PropertyRead;
-    //    }
-
-    //    private void Obj_PropertyRead(object sender, PropertyChangedEventArgs e) => OnPropertyRead(sender, e.PropertyName);
-
-    //    private void Obj_PropertyChanged(object sender, PropertyChangedEventArgs e)
-    //    {
-    //        if (sender is BindingObject b)
-    //        {
-    //            OnPropertyChanged(sender, e.PropertyName, b.GetValueInternal(e.PropertyName));
-    //            return;
-    //        }
-
-    //        var value = sender.GetPropertyValue(e.PropertyName);
-    //        OnPropertyChanged(sender, e.PropertyName, value);
-    //    }
-
-    //    internal void Reset()
-    //    {
-    //        changeDictionary.Clear();
-    //        var watchedChildren = children.ToList();
-    //        foreach (var child in watchedChildren)
-    //        {
-    //            StopMonitoring(child);
-    //        }
-
-    //    }
-
-    //    public void StopMonitoring(INotifyPropertyRead obj)
-    //    {
-    //        if (!children.Contains(obj))
-    //            return;
-    //        children.Remove(obj);
-    //        if (obj is BindingObject b)
-    //        {
-    //            b.RemoveListener(this);
-    //        }
-    //        else
-    //        {
-    //            obj.PropertyChanged -= Obj_PropertyRead;
-    //        }
-    //        obj.PropertyRead -= Obj_PropertyRead;
-
-    //    }
-
-    //    internal void EndBuildingView()
-    //    {
-    //        listProperties.Clear();
-    //        isBuilding = false;
-    //    }
-
-        
-    //    internal void StartProperty()
-    //    {
-    //        isBuilding = true;
-    //        if (listProperties.Any())
-    //        {
-    //            BindingState.AddGlobalProperties(listProperties);
-    //        }
-    //        listProperties.Clear();
-    //    }
-
-    //    internal string[] EndProperty()
-    //    {
-    //        var changed = listProperties.Distinct().ToArray();
-    //        listProperties.Clear();
-    //        return changed;
-
-    //    }
-
-    //    bool isUpdating;
-    //    public void StartUpdate()
-    //    {
-    //        isBuildingCount++;
-    //        isUpdating = true;
-    //    }
-
-    //    public void EndUpdate()
-    //    {
-    //        if (isBuildingCount-- <= 0)
-    //        {
-    //            isBuildingCount = 0;
-    //            isUpdating = false;
-    //        }
-    //        if (pendingUpdates.Any())
-    //        {
-    //            if (!BindingState.UpdateValues(pendingUpdates))
-    //            {
-    //                pendingUpdates.Clear();
-    //                StateChanged?.Invoke();
-    //                return;
-    //            }
-    //        }
-    //        pendingUpdates.Clear();
-    //    }
-
-
-    //    internal void OnPropertyChanged(object sender, string propertyName, object value)
-    //    {
-    //        if (value?.GetType() == typeof(View))
-    //            return;
-    //        var first = childrenProperty.FirstOrDefault(x => x.Key.Target == sender);
-    //        string parentproperty = first.Value;
-    //        var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
-    //        changeDictionary[prop] = value;
-    //        pendingUpdates.Add((prop, value));
-    //        if (!isUpdating)
-    //        {
-    //            EndUpdate();
-    //        }
-
-    //    }
-
-    //    internal void OnPropertyRead(object sender, string propertyName)
-    //    {
-    //        if (!isBuilding)
-    //            return;
-    //        var first = childrenProperty.FirstOrDefault(x => x.Key.Target == sender);
-    //        string parentproperty = first.Value;
-    //        var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
-    //        listProperties.Add(prop);
-    //    }
-
-
-    //    bool hasChecked;
-    //    static Assembly CometAssembly = typeof(BindingObject).Assembly;
-    //    void CheckForStateAttributes(object obj)
-    //    {
-    //        if (hasChecked && obj == this)
-    //            return;
-    //        hasChecked = obj == this;
-    //        var type = obj.GetType();
-    //        //var properties = type.GetProperties (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
-    //        //	Where (x => Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
-    //        var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
-    //            //ToList ();
-    //            Where(x => (x.FieldType.Assembly == CometAssembly && x.FieldType.Name == "State`1") || Attribute.IsDefined(x, typeof(StateAttribute))).ToList();
-    //        //if (properties.Any()) {
-    //        //	foreach(var prop in properties) {
-    //        //		var child = prop.GetValue (this) as BindingObject;
-    //        //		if (child != null) {
-    //        //			SetProperty(child,prop.Name);
-    //        //		}
-    //        //	}
-    //        //}
-
-    //        if (fields.Any())
-    //        {
-    //            foreach (var field in fields)
-    //            {
-    //                if(!field.IsInitOnly)
-    //                {
-    //                    throw new ReadonlyRequiresException(field.DeclaringType?.FullName,field.Name);
-    //                }
-    //                var child = field.GetValue(obj) as INotifyPropertyRead;
-    //                if (child != null)
-    //                {
-    //                    if (children.Contains(child))
-    //                        continue;
-    //                    childrenProperty[new WeakReference(child)] = field.Name;
-    //                    StartMonitoring(child);
-    //                }
-    //            }
-    //        }
-    //       // Console.WriteLine(type);
-    //        hasChecked = true;
-    //    }
-    //    internal void DisposingObject(object obj)
-    //    {
-    //        var type = obj.GetType();
-    //        //var properties = type.GetProperties (BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
-    //        //	Where (x => Attribute.IsDefined (x, typeof (StateAttribute))).ToList ();
-    //        var fields = type.GetFields(BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance).
-    //            //ToList ();
-    //            Where(x => (x.FieldType.Assembly == CometAssembly && x.FieldType.Name == "State`1") || Attribute.IsDefined(x, typeof(StateAttribute))).ToList();
-    //        //if (properties.Any()) {
-    //        //	foreach(var prop in properties) {
-    //        //		var child = prop.GetValue (this) as BindingObject;
-    //        //		if (child != null) {
-    //        //			SetProperty(child,prop.Name);
-    //        //		}
-    //        //	}
-    //        //}
-
-    //        if (fields.Any())
-    //        {
-    //            foreach (var field in fields)
-    //            {
-    //                var child = field.GetValue(obj) as INotifyPropertyRead;
-    //                if (child != null)
-    //                {
-    //                    childrenProperty.Remove(new WeakReference(child));
-    //                    StopMonitoring(child);
-    //                }
-    //            }
-    //        }
-    //        //Console.WriteLine(type);
-    //        hasChecked = true;
-    //    }
-
-    //}
-
-
 
     public class BindingState
     {
@@ -356,7 +90,7 @@ namespace Comet
         Dictionary<string, object> changeDictionary = new Dictionary<string, object>();
 
         public HashSet<(INotifyPropertyRead BindingObject, string PropertyName)> GlobalProperties { get; set; } = new HashSet<(INotifyPropertyRead BindingObject, string PropertyName)>();
-        public Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), List<(string PropertyName, WeakReference ViewReference)>> ViewUpdateProperties = new Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), List<(string PropertyName, WeakReference ViewReference)>>();
+        public Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), List<(string PropertyName, Binding Binding)>> ViewUpdateProperties = new Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), List<(string PropertyName, Binding Binding)>>();
         public void AddGlobalProperty((INotifyPropertyRead BindingObject, string PropertyName) property)
         {
             if (GlobalProperties.Add(property))
@@ -367,18 +101,18 @@ namespace Comet
             foreach (var prop in properties)
                 AddGlobalProperty(prop);
         }
-        public void AddViewProperty((INotifyPropertyRead BindingObject, string PropertyName) property, string propertyName, View view)
+        public void AddViewProperty((INotifyPropertyRead BindingObject, string PropertyName) property, string propertyName, Binding binding)
         {
             if (!ViewUpdateProperties.TryGetValue(property, out var actions))
-                ViewUpdateProperties[property] = actions = new List<(string PropertyName, WeakReference ViewReference)>();
-            actions.Add((propertyName, new WeakReference(view)));
+                ViewUpdateProperties[property] = actions = new List<(string PropertyName, Binding Binding)>();
+            actions.Add((propertyName, binding));
         }
 
-        public void AddViewProperty(IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> properties, View view, string propertyName)
+        public void AddViewProperty(IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> properties, Binding binding, string propertyName)
         {
             foreach (var p in properties)
             {
-                AddViewProperty(p, propertyName ?? p.PropertyName, view);
+                AddViewProperty(p, propertyName ?? p.PropertyName, binding);
             }
         }
         public void Clear()
@@ -401,16 +135,27 @@ namespace Comet
             bool didUpdate = true;
             foreach (var update in updates)
             {
-                if (GlobalProperties.Contains(update.property))
-                    return false;
- 
+               
+                UpdateValue(update.property,update.value);
+
             }
             return didUpdate;
         }
 
-        internal void BindingPropertyChanged(string property, object value)
+        public bool UpdateValue((INotifyPropertyRead BindingObject, string PropertyName) property, object value)
         {
-            changeDictionary[property] = value;
+
+            changeDictionary[property.PropertyName] = value;
+            if (GlobalProperties.Contains(property))
+                return false;
+            if (ViewUpdateProperties.TryGetValue((property.BindingObject, property.PropertyName), out var bindings))
+            {
+                foreach (var binding in bindings)
+                {
+                    binding.Binding.BindingValueChanged(property.BindingObject, binding.PropertyName, value);
+                }
+            }
+            return true;
         }
     }
 }
