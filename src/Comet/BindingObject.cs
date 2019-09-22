@@ -130,22 +130,22 @@ namespace Comet
         /// </summary>
         /// <param name="updates"></param>
         /// <returns></returns>
-        public bool UpdateValues(IEnumerable<((INotifyPropertyRead BindingObject, string PropertyName) property, object value)> updates)
-        {
-            bool didUpdate = true;
-            foreach (var update in updates)
-            {
+        //public bool UpdateValues(IEnumerable<((INotifyPropertyRead BindingObject, string PropertyName) property, object value)> updates)
+        //{
+        //    bool didUpdate = true;
+        //    foreach (var update in updates)
+        //    {
                
-                UpdateValue(update.property,update.value);
+        //        UpdateValue(update.property,update.value);
 
-            }
-            return didUpdate;
-        }
+        //    }
+        //    return didUpdate;
+        //}
 
-        public bool UpdateValue((INotifyPropertyRead BindingObject, string PropertyName) property, object value)
+        public bool UpdateValue((INotifyPropertyRead BindingObject, string PropertyName) property, string fullProperty, object value)
         {
 
-            changeDictionary[property.PropertyName] = value;
+            changeDictionary[fullProperty] = value;
             if (GlobalProperties.Contains(property))
                 return false;
             if (ViewUpdateProperties.TryGetValue((property.BindingObject, property.PropertyName), out var bindings))

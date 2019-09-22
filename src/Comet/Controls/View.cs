@@ -216,12 +216,13 @@ namespace Comet
 
         }
 
-        internal void BindingPropertyChanged(INotifyPropertyRead bindingObject, string property, object value)
+        internal void BindingPropertyChanged(INotifyPropertyRead bindingObject, string property, string fullProperty, object value)
         {
-            if (!State.UpdateValue((bindingObject, property), value))
+            var prop = property.Split('.').Last();
+            if (!State.UpdateValue((bindingObject, property),fullProperty, value))
                 Reload();
             else
-                ViewPropertyChanged(property, value);
+                ViewPropertyChanged(prop, value);
         }
         protected const string ResetPropertyString = "ResetPropertyString";
         public virtual void ViewPropertyChanged(string property, object value)
