@@ -65,7 +65,7 @@ namespace Comet
                 }
                 return value;
             }
-            catch (Exception ex)
+            catch
             {
                 return null;
             }
@@ -77,7 +77,7 @@ namespace Comet
                 var value = GetValue(key, current, view,typedKey, cascades);
                 return (T)value;
             }
-            catch (Exception ex)
+            catch
             {
                 return default;
             }

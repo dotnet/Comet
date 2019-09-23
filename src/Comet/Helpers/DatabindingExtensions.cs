@@ -94,7 +94,7 @@ namespace Comet
 
                 return (T) val;
             }
-            catch (Exception ex)
+            catch
             {
                 //This is ok, sometimes the values are not the same.
                 return default;

@@ -128,7 +128,7 @@ namespace Comet {
 			try {
 				var value = GetValue (key);
 				return (T)value;
-			} catch (Exception ex) {
+			} catch {
 				return default;
 			}
 		}
@@ -138,7 +138,7 @@ namespace Comet {
 			try {
 				var value = GetValueInternal (key);
 				return value;
-			} catch (Exception ex) {
+			} catch {
 				return null;
 			}
 		}
