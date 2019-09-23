@@ -31,7 +31,7 @@ namespace Comet.UWP.Handlers
         {
             var imageHandler = (ImageHandler)viewHandler;
             var bitmap = virtualView.Bitmap;
-            var nativeBitmap = (ImageSource)bitmap?.Get()?.NativeBitmap;
+            var nativeBitmap = (ImageSource)bitmap?.CurrentValue?.NativeBitmap;
             imageHandler.TypedNativeView.Source = nativeBitmap;
             virtualView.InvalidateMeasurement();
         }
