@@ -1,7 +1,6 @@
 ﻿using Comet.Blazor.Handlers;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.RenderTree;
-using System.Diagnostics;
+using Microsoft.AspNetCore.Components.Rendering;
 
 namespace Comet.Blazor.Components
 {

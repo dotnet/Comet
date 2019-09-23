@@ -5,7 +5,7 @@
 
 @inject CanvasWriter Writer;
 
-<canvas @ref="@_canvas" @ref:suppressField />
+<canvas @ref="@_canvas" />
 
 @code {
     private object _canvas;
@@ -13,7 +13,7 @@
     [Parameter]
     public Shape Shape { get; set; }
 
-    protected override async Task OnAfterRenderAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         var size = await Writer.GetSizeAsync(_canvas).ConfigureAwait(false);
         var bounds = new RectangleF(0, 0, size.Width, size.Height);
