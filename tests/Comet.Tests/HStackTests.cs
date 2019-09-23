@@ -54,7 +54,7 @@ namespace Comet.Tests
             Assert.Equal(new RectangleF(280, 0, 40, 12), text.Frame);
         }
 
-        [Fact(Skip = "Measurements not as expected")]
+        [Fact]
         public void TestView1WithFrameConstraints()
         {
             var view = new HStackTestView1().Frame(320, 600);
@@ -68,24 +68,24 @@ namespace Comet.Tests
             view.Frame = new RectangleF(0, 0, 320, 600);
 
             Assert.True(view.MeasurementValid);
-            Assert.Equal(new SizeF(320, 12), view.MeasuredSize);
+            Assert.Equal(new SizeF(320, 600), view.MeasuredSize);
             Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
 
             Assert.True(stack.MeasurementValid);
-            Assert.Equal(new SizeF(320, 12), stack.MeasuredSize);
-            Assert.Equal(new RectangleF(0, 294, 320, 12), stack.Frame);
+            Assert.Equal(new SizeF(320, 600), stack.MeasuredSize);
+            Assert.Equal(new RectangleF(0, 0, 320, 600), stack.Frame);
 
             Assert.True(textField.MeasurementValid);
             Assert.Equal(new SizeF(40, 12), textField.MeasuredSize);
-            Assert.Equal(new RectangleF(0, 0, 40, 12), textField.Frame);
+            Assert.Equal(new RectangleF(0, 294, 40, 12), textField.Frame);
 
             Assert.True(spacer.MeasurementValid);
             Assert.Equal(new SizeF(-1, -1), spacer.MeasuredSize);
-            Assert.Equal(new RectangleF(40, 0, 240, 12), spacer.Frame);
+            Assert.Equal(new RectangleF(40, 294, 240, 12), spacer.Frame);
 
             Assert.True(text.MeasurementValid);
             Assert.Equal(new SizeF(40, 12), text.MeasuredSize);
-            Assert.Equal(new RectangleF(280, 0, 40, 12), text.Frame);
+            Assert.Equal(new RectangleF(280, 294, 40, 12), text.Frame);
         }
 
         [Fact]
