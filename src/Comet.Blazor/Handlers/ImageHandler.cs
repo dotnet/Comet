@@ -18,7 +18,7 @@ namespace Comet.Blazor.Handlers
         {
             var nativeView = (BImage)viewHandler.NativeView;
 
-            nativeView.Url = (string)virtualView.Bitmap?.Get()?.NativeBitmap;
+            nativeView.Url = (string)virtualView.Bitmap?.CurrentValue?.NativeBitmap;
         }
     }
 }
