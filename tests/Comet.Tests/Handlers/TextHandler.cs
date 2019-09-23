@@ -11,7 +11,7 @@
 		
 		private SizeF HandleOnMeasure(SizeF arg)
 		{
-			var length = VirtualView.Value?.Get()?.Length ?? 0;
+			var length = VirtualView.Value?.CurrentValue?.Length ?? 0;
 			return new SizeF(10 * length, 12);
 		}
 	}

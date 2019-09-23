@@ -41,7 +41,7 @@ namespace Comet.Android.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (TextView) viewHandler.NativeView;
-            nativeView.Text = virtualView.Value?.Get() ?? string.Empty;
+            nativeView.Text = virtualView.Value?.CurrentValue ?? string.Empty;
         }
 
         public static void MapTextAlignmentProperty(IViewHandler viewHandler, Text virtualView)

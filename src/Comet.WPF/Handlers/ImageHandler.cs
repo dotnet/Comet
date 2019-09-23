@@ -25,7 +25,7 @@ namespace Comet.WPF.Handlers
         public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
         {
             var imageHandler = (ImageHandler)viewHandler;
-            var bitmap = (BitmapImage)virtualView.Bitmap?.Get()?.NativeBitmap;
+            var bitmap = (BitmapImage)virtualView.Bitmap?.CurrentValue?.NativeBitmap;
             imageHandler.TypedNativeView.Source = bitmap;
             imageHandler.VirtualView.InvalidateMeasurement();
         }

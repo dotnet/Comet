@@ -34,7 +34,7 @@ namespace Comet
             }
         }
 
-        protected override void ViewPropertyChanged(string property, object value)
+        public override void ViewPropertyChanged(string property, object value)
         {
             base.ViewPropertyChanged(property, value);
             if (property == nameof(Source))

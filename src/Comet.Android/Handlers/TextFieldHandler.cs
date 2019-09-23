@@ -40,7 +40,7 @@ namespace Comet.Android.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (EditText) viewHandler.NativeView;
-            nativeView.Text = virtualView.Text?.Get() ?? string.Empty;
+            nativeView.Text = virtualView.Text?.CurrentValue ?? string.Empty;
         }
 
         public static void MapColorProperty(IViewHandler viewHandler, TextField virtualView)

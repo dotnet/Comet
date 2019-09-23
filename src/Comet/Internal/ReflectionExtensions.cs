@@ -37,6 +37,8 @@ namespace Comet.Reflection
             }
         }
 
+        public static T Convert<T>(this object obj) => (T)obj.Convert(typeof(T));
+
         public static object Convert(this object obj, Type type)
         {
             if (obj == null)

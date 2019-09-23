@@ -33,7 +33,7 @@ namespace Comet
         {
 
             this.itemsBinding = items;
-            this.items = items.Get();
+            this.items = items.CurrentValue;
             SetupObservable();
         }
 
@@ -54,11 +54,11 @@ namespace Comet
 
             ShouldDisposeViews = true;
         }
-        protected override void ViewPropertyChanged(string property, object value)
+        public override void ViewPropertyChanged(string property, object value)
         {
             //Update this when things change!
             DisposeObservable();
-            items = itemsBinding?.Get();
+            items = itemsBinding?.CurrentValue;
             SetupObservable();
             base.ViewPropertyChanged(property, value);
         }
@@ -101,11 +101,11 @@ namespace Comet
                 return null;
             if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
             {
-                using (new StateBuilder(State))
+                using (new StateBuilder(this))
                 {
-                    if(item is INotifyPropertyRead read)
-                        State.StartMonitoring(read);
                     view = ViewFor?.Invoke(item);
+                    if (item is INotifyPropertyRead read && view != null)
+                        StateManager.MonitorListViewObject(view,read);
                 }
                 if (view == null)
                     return null;
@@ -262,13 +262,13 @@ namespace Comet
         public Section(Binding<IReadOnlyList<T>> items)
         {
             this.itemsBinding = items;
-            this.items = items.Get();
+            this.items = items.CurrentValue;
         }
 
-        protected override void ViewPropertyChanged(string property, object value)
+        public override void ViewPropertyChanged(string property, object value)
         {
             //Update this when things change!
-            items = itemsBinding.Get();
+            items = itemsBinding.CurrentValue;
             base.ViewPropertyChanged(property, value);
         }
 
@@ -282,11 +282,13 @@ namespace Comet
         public override View GetViewFor(int index)
         {
             var item = (T)GetItemAt(index);
-            using (new StateBuilder(State))
+            using (new StateBuilder(this))
             {
-                if (item is INotifyPropertyRead read)
-                    State.StartMonitoring(read);
-                return ViewFor?.Invoke(item);
+                var view = ViewFor?.Invoke(item);
+                //TODO: Make sure we clean this up. This is a memory leak!!!!
+                if (item is INotifyPropertyRead read && view != null)
+                    StateManager.MonitorListViewObject(view, read);
+                return view;
             }
         }
         public override int GetCount() => items?.Count ?? Count?.Invoke() ?? 0;

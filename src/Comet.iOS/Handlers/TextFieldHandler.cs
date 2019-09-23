@@ -65,7 +65,7 @@ namespace Comet.iOS.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (UITextField) viewHandler.NativeView;
-            nativeView.Text = virtualView.Text?.Get() ?? string.Empty;
+            nativeView.Text = virtualView.Text?.CurrentValue ?? string.Empty;
             virtualView.InvalidateMeasurement();
         }
         
@@ -80,7 +80,7 @@ namespace Comet.iOS.Handlers
         public static void MapPlaceholderProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (UITextField) viewHandler.NativeView;
-            nativeView.Placeholder = virtualView.Placeholder.Get();
+            nativeView.Placeholder = virtualView.Placeholder.CurrentValue;
             virtualView.InvalidateMeasurement();
         }
         public static void MapColorProperty(IViewHandler viewHandler, TextField virtualView)

@@ -145,10 +145,13 @@ namespace Comet {
         protected override void CallPropertyRead(string propertyName)
         {
             if (View != null)
-                View?.GetState().OnPropertyRead(this, propertyName);
+                StateManager.OnPropertyRead(View.Environment, propertyName);
             else if (isStatic)
             {
-                View.ActiveViews.ForEach(x => x.GetState()?.OnPropertyRead(this, propertyName));
+
+                StateManager.OnPropertyRead(View.Environment, propertyName);
+                //TODO: Verify this is right. We may need a way to tell allthe views a property changed
+                // View.ActiveViews.ForEach(x => x.GetState()?.OnPropertyRead(this, propertyName));
             }
             base.CallPropertyRead(propertyName);
         }
@@ -160,12 +163,14 @@ namespace Comet {
                 return false;
             if (View != null)
             {
-                if(!(View.GetState()?.IsBuilding ?? false))
-                    View?.GetState().OnPropertyChanged(this, key, value);
+                if (!StateManager.IsBuilding)
+                    StateManager.OnPropertyChanged(View.Environment, key, value);
             }
             else if (isStatic)
             {
-                View.ActiveViews.ForEach(x => x.GetState()?.OnPropertyChanged(this, key, value));
+                StateManager.OnPropertyChanged(View.Environment, key, value);
+                //TODO: Verify this is right. We may need a way to tell allthe views a property changed
+                //View.ActiveViews.ForEach(x => x.GetState()?.OnPropertyChanged(this, key, value));
             }
             return true;
         }

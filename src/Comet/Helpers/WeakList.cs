@@ -57,7 +57,7 @@ namespace Comet.Helpers
 
         List<WeakReference> CleanseItems()
         {
-            items.RemoveAll(x => !x.IsAlive);
+            items.RemoveAll(x => !x.IsAlive || ((x.Target as View)?.IsDisposed ?? false));
             return items;
         }
         public void ForEach(Action<T> action)
