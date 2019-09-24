@@ -161,7 +161,8 @@ namespace Comet
                     {
                         Set = (v) =>
                         {
-                            view?.SetDeepPropertyValue(property, v);
+                            prop.BindingObject.SetPropertyValue(prop.PropertyName, v);
+                            CurrentValue = v;
                             //view?.BindingPropertyChanged(property, v);
                         };
                         StateManager.UpdateBinding(this, view);
