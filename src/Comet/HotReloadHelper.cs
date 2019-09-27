@@ -72,8 +72,9 @@ namespace Comet {
         static Dictionary<string, List<Type>> replacedHandlers = new Dictionary<string, List<Type>>();
 		public static void RegisterReplacedView(string oldViewType, Type newViewType)
 		{
-			if (!IsEnabled)
+			if (!IsEnabled || oldViewType == newViewType.FullName)
 				return;
+
             Console.WriteLine($"{oldViewType} - {newViewType}");
             if(newViewType.IsSubclassOf(typeof(View)))
 			    replacedViews [oldViewType] = newViewType;
