@@ -14,7 +14,10 @@ namespace Comet.Layout
 
         public void Layout(AbstractLayout layout, RectangleF rect)
         {
-            
+            foreach(var v in layout)
+            {
+                v.Frame = rect;
+            }
         }
     }
 }
