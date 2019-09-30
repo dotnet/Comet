@@ -20,6 +20,12 @@ namespace Comet.Skia
         public static SizeF ToSizeF(this SKSize size)
             => new SizeF(size.Width, size.Height);
 
+        public static RectangleF ToRectangleF(this SKRect rect)
+            => new RectangleF(rect.Left, rect.Top, rect.Width, rect.Height);
+
+        public static SKRect ToSKRect(this RectangleF rect)
+            => new SKRect(rect.X, rect.Y, rect.Width, rect.Height);
+
          public static SKPath ToSKPath(
             this PathF path)
         {
