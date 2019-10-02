@@ -11,6 +11,7 @@
 
             // Controls
             Registrar.Handlers.Register<DrawableControl, DrawableControlHandler> ();
+            Registrar.Handlers.Register<SkiaView, SkiaViewHandler> ();
 		}
     }
 }

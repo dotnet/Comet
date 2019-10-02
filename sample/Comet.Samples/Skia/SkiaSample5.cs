@@ -10,17 +10,17 @@ namespace Comet.Samples.Skia
         [Body]
         View body() => new VStack
         {
-            new DrawableControl(new SkiaShapeView(new Circle().Stroke(Color.Blue,2))).Frame(100,60),
+            new SkiaShapeView(new Circle().Stroke(Color.Blue,2)).Frame(100,60),
 
-            new DrawableControl(new SkiaShapeView(new Rectangle().Stroke(Color.Magenta,2))).Frame(100,60),
+            new SkiaShapeView(new Rectangle().Stroke(Color.Magenta,2)).Frame(100,60),
 
-            new DrawableControl(new SkiaShapeView(new RoundedRectangle(6).Stroke(Color.Purple, 2))).Frame(100,60),
+            new SkiaShapeView(new RoundedRectangle(6).Stroke(Color.Purple, 2)).Frame(100,60),
 
-            new DrawableControl(new SkiaShapeView(new Capsule().Stroke(Color.Orange,2))).Frame(100,30),
+            new SkiaShapeView(new Capsule().Stroke(Color.Orange,2)).Frame(100,30),
 
-            new DrawableControl(new SkiaShapeView(new Ellipse().Stroke(Color.Green, 2))).Frame(100,60),
+            new SkiaShapeView(new Ellipse().Stroke(Color.Green, 2)).Frame(100,60),
 
-            new DrawableControl(new SkiaShapeView(new Path(PuzzlePiece).Stroke(Color.Red,2))).Frame(60,60)
+            new SkiaShapeView(new Path(PuzzlePiece).Stroke(Color.Red,2)).Frame(60,60)
         };
     }
 }

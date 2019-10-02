@@ -12,8 +12,4 @@
       <PackageReference Include="SkiaSharp" Version="1.68.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Services" />
-    </ItemGroup>
-
 </Project>

@@ -44,10 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AndroidSkiaView.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="DrawableControlHandler.cs" />
     <Compile Include="AndroidDrawableControl.cs" />
+    <Compile Include="SkiaViewHandler.cs" />
     <Compile Include="UI.cs" />
   </ItemGroup>
   <ItemGroup>

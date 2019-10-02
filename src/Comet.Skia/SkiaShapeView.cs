@@ -1,12 +1,11 @@
-﻿using System;
-using Comet.Graphics;
+﻿using Comet.Graphics;
 using SkiaSharp;
 
 namespace Comet.Skia
 {
-    public class SkiaShapeView : AbstractControlDelegate
+    public class SkiaShapeView : SkiaView
     {
-        public Shape Shape;
+        public Shape Shape { get; }
 
         public SkiaShapeView(Shape shape)
         {
@@ -25,23 +24,23 @@ namespace Comet.Skia
                 object fill = null;
                 float lineWidth = 0;
                 
-                var drawingStyle = Shape.GetDrawingStyle(VirtualDrawableControl, DrawingStyle.StrokeFill);
+                var drawingStyle = Shape.GetDrawingStyle(this, DrawingStyle.StrokeFill);
                 
                 switch (drawingStyle)
                 {
                     case DrawingStyle.StrokeFill:
                         strokePaint = new SKPaint();
-                        strokePaint.StrokeWidth = lineWidth = Shape.GetLineWidth(VirtualDrawableControl, 1);
-                        strokePaint.Color = Shape.GetStrokeColor(VirtualDrawableControl, Color.Black).ToSKColor();
+                        strokePaint.StrokeWidth = lineWidth = Shape.GetLineWidth(this, 1);
+                        strokePaint.Color = Shape.GetStrokeColor(this, Color.Black).ToSKColor();
                         strokePaint.Style = SKPaintStyle.Stroke;
                         fillPaint = new SKPaint();
                         fillPaint.Style = SKPaintStyle.Fill;
-                        fill = Shape.GetFill(VirtualDrawableControl);
+                        fill = Shape.GetFill(this);
                         break;
                     case DrawingStyle.Stroke:
                         strokePaint = new SKPaint();
-                        strokePaint.StrokeWidth = lineWidth = Shape.GetLineWidth(VirtualDrawableControl, 1);
-                        strokePaint.Color = Shape.GetStrokeColor(VirtualDrawableControl, Color.Black).ToSKColor();
+                        strokePaint.StrokeWidth = lineWidth = Shape.GetLineWidth(this, 1);
+                        strokePaint.Color = Shape.GetStrokeColor(this, Color.Black).ToSKColor();
                         strokePaint.Style = SKPaintStyle.Stroke;
                         fillPaint = new SKPaint();
                         fillPaint.Style = SKPaintStyle.Fill;
@@ -49,7 +48,7 @@ namespace Comet.Skia
                     case DrawingStyle.Fill:
                         fillPaint = new SKPaint();
                         fillPaint.Style = SKPaintStyle.Fill;
-                        fill = Shape.GetFill(VirtualDrawableControl);
+                        fill = Shape.GetFill(this);
                         break;
                 }
                 
