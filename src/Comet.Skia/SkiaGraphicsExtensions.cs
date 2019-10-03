@@ -7,6 +7,8 @@ namespace Comet.Skia
     {
         public static SKColor ToSKColor(this Color target)
         {
+            if (target == null)
+                return new SKColor();
             var r = (byte) (target.R * 255f);
             var g = (byte) (target.G * 255f);
             var b = (byte) (target.B * 255f);
