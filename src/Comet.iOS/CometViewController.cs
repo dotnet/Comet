@@ -34,5 +34,16 @@ namespace Comet.iOS
             _containerView.CurrentView = _startingCurrentView;
             _startingCurrentView = null;
         }
+        public override void ViewDidAppear(bool animated)
+        {
+            base.ViewDidAppear(animated);
+            _containerView?.CurrentView?.ViewDidAppear();
+        }
+
+        public override void ViewDidDisappear(bool animated)
+        {
+            base.ViewDidDisappear(animated);
+            _containerView?.CurrentView?.ViewDidDisappear();
+        }
     }
 }

@@ -60,7 +60,8 @@ namespace Comet.iOS.Controls
             _currentContent = newView;
             if (_currentContent != null && _currentContent.Superview != ContentView)
                 ContentView.Add(_currentContent);
-
+            view.ViewDidAppear();
+            oldView?.ViewDidDisappear();
             if (shouldDispose)
                 oldView?.Dispose();
         }

@@ -178,5 +178,17 @@ namespace Comet
             Views.Clear();
             base.Dispose(disposing);
         }
+
+        public override void ViewDidAppear()
+        {
+            Views.ForEach(v => v.ViewDidAppear());
+            base.ViewDidAppear();
+        }
+
+        public override void ViewDidDisappear()
+        {
+            Views.ForEach(v => v.ViewDidDisappear());
+            base.ViewDidDisappear();
+        }
     }
 }

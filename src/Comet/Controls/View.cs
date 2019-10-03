@@ -513,5 +513,16 @@ namespace Comet
                 BuiltView.Frame = frame;
         }
         public override string ToString() => $"{this.GetType()} - {this.Id}";
+
+        View notificationView => replacedView ?? builtView;
+
+        public virtual void ViewDidAppear()
+        {
+            notificationView?.ViewDidAppear();
+        }
+        public virtual void ViewDidDisappear()
+        {
+            notificationView?.ViewDidDisappear();
+        }
     }
 }

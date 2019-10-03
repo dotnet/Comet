@@ -67,5 +67,17 @@ namespace Comet {
             Content?.Reload();
             base.Reload();
         }
+
+        public override void ViewDidAppear()
+        {
+            Content?.ViewDidAppear();
+            base.ViewDidAppear();
+        }
+
+        public override void ViewDidDisappear()
+        {
+            Content?.ViewDidAppear();
+            base.ViewDidDisappear();
+        }
     }
 }
