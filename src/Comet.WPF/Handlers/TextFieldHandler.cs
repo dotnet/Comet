@@ -38,7 +38,7 @@ namespace Comet.WPF.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
         {
             var nativeView = (WPFTextField)viewHandler.NativeView;
-            nativeView.Text = virtualView.Text;
+            nativeView.Text = virtualView.Text?.CurrentValue ?? string.Empty;
             virtualView.InvalidateMeasurement();
         }
         public static void MapTextAlignmentProperty(IViewHandler viewHandler, TextField virtualView)

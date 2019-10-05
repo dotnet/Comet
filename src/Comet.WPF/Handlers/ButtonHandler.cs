@@ -33,7 +33,7 @@ namespace Comet.WPF.Handlers
         public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
         {
             var nativeButton = (WPFButton)viewHandler.NativeView;
-            nativeButton.Content = virtualButton.Text;
+            nativeButton.Content = virtualButton.Text?.CurrentValue ?? string.Empty;
         }
     }
 }
