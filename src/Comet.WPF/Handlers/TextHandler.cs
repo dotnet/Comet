@@ -24,7 +24,7 @@ namespace Comet.WPF.Handlers
         public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
         {
             var nativeView = (WPFLabel)viewHandler.NativeView;
-            nativeView.Content = virtualView.Value;
+            nativeView.Content = virtualView.Value?.CurrentValue ?? string.Empty;
             virtualView.InvalidateMeasurement();
         }
 
