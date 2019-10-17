@@ -81,6 +81,9 @@
     <Compile Include="UI.cs" />
     <Compile Include="WPFExtensions.cs" />
   </ItemGroup>
+   <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.4.16" />
+  </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet\Comet.csproj">
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
@@ -92,9 +95,6 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
