@@ -28,7 +28,8 @@ namespace Comet.Skia.iOS
 
         public override void Remove(View view)
         {
-            TypedNativeView.ControlDelegate = null;
+            if(TypedNativeView != null)
+                TypedNativeView.ControlDelegate = null;
             SetMapper(null);
             
             base.Remove(view);
