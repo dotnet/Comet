@@ -45,7 +45,7 @@ namespace Comet.UWP
             Registrar.Handlers.Register<ZStack, ManagedZStackHandler>();
             Registrar.Handlers.Register<Grid, ManagedGridHandler>();
 
-            Device.PerformInvokeOnMainThread = async a => await GetDispatcher().RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () => a());
+            ThreadHelper.JoinableTaskContext = new Microsoft.VisualStudio.Threading.JoinableTaskContext();
 
             Device.BitmapService = new UWPBitmapService();
 

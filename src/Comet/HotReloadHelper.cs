@@ -106,11 +106,13 @@ namespace Comet {
             }
 		}
        
-		public static void TriggerReload()
+		public static async void TriggerReload()
 		{
 			var roots = View.ActiveViews.Where (x => x.Parent == null).ToList();
+
+            await ThreadHelper.SwitchToMainThreadAsync();
 			foreach(var view in roots) {
-				Device.InvokeOnMainThread (view.Reload);
+				view.Reload();
 			}
 		}
 	}

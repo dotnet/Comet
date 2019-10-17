@@ -48,7 +48,7 @@ namespace Comet.Android
             ModalView.PerformDismiss = ModalManager.DismisModal;
 
             // Device Services
-            Device.PerformInvokeOnMainThread = (a) => AndroidContext.CurrentContext.RunOnUiThread(a);
+            ThreadHelper.JoinableTaskContext = new Microsoft.VisualStudio.Threading.JoinableTaskContext();
             Device.GraphicsService = new AndroidGraphicsService();
             Device.BitmapService = new AndroidBitmapService();
         }

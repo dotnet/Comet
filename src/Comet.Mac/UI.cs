@@ -41,7 +41,7 @@ namespace Comet.Mac
             Registrar.Handlers.Register<Grid, GridHandler>();
 
             // Device Features
-            Device.PerformInvokeOnMainThread = _invoker.BeginInvokeOnMainThread;
+            ThreadHelper.JoinableTaskContext = new Microsoft.VisualStudio.Threading.JoinableTaskContext();
             Device.FontService = new MacFontService();
             Device.GraphicsService = new MacGraphicsService();
             Device.BitmapService = new MacBitmapService();

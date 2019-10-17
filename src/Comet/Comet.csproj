@@ -18,6 +18,9 @@
     <Folder Include="Gestures\" />
     <Folder Include="Exceptions\" />
   </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.4.16" />
+  </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

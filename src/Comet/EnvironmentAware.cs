@@ -124,7 +124,7 @@ namespace Comet
             var typedKey = ContextualObject.GetTypedKey(type, key);
             contextualObject.SetValue(typedKey, value, cascades);
             //TODO: Verify this is needed 
-            Device.InvokeOnMainThread(() => {
+            ThreadHelper.RunOnMainThread(() => {
                 contextualObject.ContextPropertyChanged(typedKey, value,cascades);
             });
             return contextualObject;
@@ -135,7 +135,7 @@ namespace Comet
         {
            if(!contextualObject.SetValue(key, value, cascades))
                 return contextualObject;
-            Device.InvokeOnMainThread(() =>
+            ThreadHelper.RunOnMainThread(() =>
             {
                 contextualObject.ContextPropertyChanged(key, value,cascades);
             });

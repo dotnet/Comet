@@ -254,13 +254,12 @@ namespace Comet
             ViewPropertyChanged(property, value);
         }
 
-        public static void SetGlobalEnvironment(string key, object value)
+        public static async void SetGlobalEnvironment(string key, object value)
         {
             Environment.SetValue(key, value);
-            Device.InvokeOnMainThread(() =>
-            {
-                ActiveViews.ForEach(x => x.ViewPropertyChanged(key, value));
-            });
+            await ThreadHelper.SwitchToMainThreadAsync();
+            ActiveViews.ForEach(x => x.ViewPropertyChanged(key, value));
+            
         }
         public static void SetGlobalEnvironment(IDictionary<string, object> data)
         {

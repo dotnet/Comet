@@ -38,7 +38,7 @@ namespace Comet.Blazor
             Registrar.Handlers.Register<ViewRepresentable, UnsupportedHandler<ViewRepresentable>>();
             Registrar.Handlers.Register<WebView, UnsupportedHandler<WebView>>();
 
-            Device.PerformInvokeOnMainThread = a => a();
+            ThreadHelper.JoinableTaskContext = new Microsoft.VisualStudio.Threading.JoinableTaskContext();
             ListView.HandlerSupportsVirtualization = false;
         }
     }

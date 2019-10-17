@@ -9,16 +9,14 @@ namespace Comet.Samples
 
         public ProgressBarSample1()
         {
-            _timer = new Timer(state =>
-            {
+            _timer = new Timer(async state =>             {
                 var p = (State<double>)state;
-                Device.InvokeOnMainThread(() =>
-                {
-                    var current = p.Value;
-                    var value = current < 101 ? current + 1 : 0;
+                await ThreadHelper.SwitchToMainThreadAsync();
 
-                    p.Value = value;
-                });
+                var current = p.Value;
+                var value = current < 101 ? current + 1 : 0;
+
+                p.Value = value;
             }, percentage, 100, 100);
         }
 

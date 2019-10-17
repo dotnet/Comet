@@ -22,8 +22,8 @@ namespace Comet.Tests {
 			Registrar.Handlers.Register<ListView, GenericViewHandler> ();
 			Registrar.Handlers.Register<View, GenericViewHandler> ();
 			Registrar.Handlers.Register<ContentView, GenericViewHandler> ();
-			
-			Device.PerformInvokeOnMainThread = (a) => a ();
+
+            ThreadHelper.JoinableTaskContext = new Microsoft.VisualStudio.Threading.JoinableTaskContext();
             HotReloadHelper.IsEnabled = true;
 
         }
