@@ -16,7 +16,8 @@
     <language>C#</language>
     <dependencies>
       <group>
-        <dependency id="Clancey.Comet.Reload" version="0.0.6-alpha" />
+        <dependency id="Clancey.Comet.Reload" version="0.0.6-alpha" />        
+        <dependency id="Microsoft.VisualStudio.Threading" version="16.4.16" />
       </group>
       <group targetFramework="xamarinios10" >
         <dependency id="Xamarin.FFImageLoading" version="2.4.11.982" />
