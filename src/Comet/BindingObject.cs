@@ -35,6 +35,8 @@ namespace Comet
 
         internal object GetValueInternal(string propertyName)
         {
+            if (string.IsNullOrWhiteSpace(propertyName))
+                return null;
             dictionary.TryGetValue(propertyName, out var val);
             return val;
         }

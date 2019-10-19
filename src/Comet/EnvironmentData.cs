@@ -72,6 +72,11 @@ namespace Comet {
         {
 	        public const string Alignment = "Text.Alignment";
         }
+        public static class Navigation
+        {
+            public const string BackgroundColor = "NavigationBackgroundColor";
+            public const string TextColor = "NavigationTextColor";
+        }
     }
 
 	[AttributeUsage (AttributeTargets.Field)]

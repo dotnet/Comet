@@ -5,8 +5,13 @@ namespace Comet.iOS
 {
     public class CUINavigationController : UINavigationController
     {
+        static UIColor DefaultBarTintColor;
         public CUINavigationController()
         {
+            if (DefaultBarTintColor == null)
+            {
+                DefaultBarTintColor = NavigationBar.BarTintColor;
+            }
         }
         public override UIViewController[] PopToRootViewController(bool animated)
         {
@@ -21,8 +26,6 @@ namespace Comet.iOS
                 cometVC.CurrentView = null;
             }
             return vc;
-
-
         }
     }
 }
