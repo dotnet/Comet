@@ -170,7 +170,7 @@ namespace Comet.iOS.Handlers
             {
                 handler.HasContainer = true;
                 if (viewHandler?.ContainerView != null)
-                    viewHandler.ContainerView.OverlayView = overlay.ToView();
+                    viewHandler.ContainerView.OverlayView = new ShapeView(overlay).ToView();
             }
             else
             {

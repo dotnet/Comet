@@ -42,14 +42,13 @@ namespace Comet
 
         public static T Overlay<T>(this T view, Shape shape) where T : View
         {
-            var shapeView = new ShapeView(shape);
-            view.SetEnvironment(EnvironmentKeys.View.Overlay, shapeView);
+            view.SetEnvironment(EnvironmentKeys.View.Overlay, shape);
             return view;
         }
 
-        public static View GetOverlay(this View view)
+        public static Shape GetOverlay(this View view)
         {
-            return view.GetEnvironment<View>(EnvironmentKeys.View.Overlay);
+            return view.GetEnvironment<Shape>(EnvironmentKeys.View.Overlay);
         }
 
         public static T Frame<T>(this T view, float? width = null, float? height = null, Alignment alignment = null) where T : View
