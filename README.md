@@ -1,5 +1,5 @@
 # Comet ☄️
-[![Gitter](https://badges.gitter.im/Clancey-Comet/community.svg)](https://gitter.im/Clancey-Comet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[Chat on Discord](https://discord.gg/7Ms7ptM)
 
 What is Comet? Comet is a prototype for a new UI Framework/Pattern to write app UI.  It follows the Model View Update (MVU) pattern. It magically databinds for you!  
 
