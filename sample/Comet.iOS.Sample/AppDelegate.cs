@@ -30,7 +30,8 @@ namespace Comet.iOS.Sample {
 #if DEBUG
             Comet.Reload.Init();
 #endif
-			
+            //TODO make it to where this isnt needed
+            new Style().Apply();
             Comet.Skia.iOS.UI.Init();
 			
             "turtlerock.jpg".LoadImage();
