@@ -6,12 +6,13 @@ namespace Comet.Styles
 {
     public class Style
     {
-        
         public ButtonStyle Button { get; set; } = new ButtonStyle();
+
+        public NavbarStyle Navbar { get; set; } = new NavbarStyle();
 
         public TextStyle Label { get; set; } = new TextStyle
         {
-            StyleId = nameof(Label),
+            StyleId = nameof(Label)
         };
 
         public TextStyle H1 { get; set; } = new TextStyle
@@ -134,46 +135,68 @@ namespace Comet.Styles
             },
         };
 
-        public virtual void Apply()
+        public virtual void Apply(ContextualObject view = null)
         {
-            ApplyButton();
-            ApplyTextStyle(Label);
-            ApplyTextStyle(H1);
-            ApplyTextStyle(H2);
-            ApplyTextStyle(H3);
-            ApplyTextStyle(H4);
-            ApplyTextStyle(H5);
-            ApplyTextStyle(H6);
-            ApplyTextStyle(Subtitle1);
-            ApplyTextStyle(Subtitle2);
-            ApplyTextStyle(Body1);
-            ApplyTextStyle(Body2);
-            ApplyTextStyle(Caption);
-            ApplyTextStyle(Overline);
-
+            ApplyButton(view);
+            ApplyNavbarStyles(view);
+            ApplyTextStyle(view, Label);
+            ApplyTextStyle(view, H1);
+            ApplyTextStyle(view, H2);
+            ApplyTextStyle(view, H3);
+            ApplyTextStyle(view, H4);
+            ApplyTextStyle(view, H5);
+            ApplyTextStyle(view, H6);
+            ApplyTextStyle(view, Subtitle1);
+            ApplyTextStyle(view, Subtitle2);
+            ApplyTextStyle(view, Body1);
+            ApplyTextStyle(view, Body2);
+            ApplyTextStyle(view, Caption);
+            ApplyTextStyle(view, Overline);
         }
 
 
-        public virtual void ApplyTextStyle(TextStyle textStyle)
+        protected virtual void ApplyTextStyle(ContextualObject view, TextStyle textStyle)
         {
-            View.SetGlobalEnvironment(textStyle.FormatedId(EnvironmentKeys.Colors.Color), textStyle.Color);
-            View.SetGlobalEnvironment(textStyle.FormatedId(EnvironmentKeys.Fonts.Size), textStyle?.Font?.Size);
-            View.SetGlobalEnvironment(textStyle.FormatedId(EnvironmentKeys.Fonts.Family), textStyle?.Font?.Family);
-            View.SetGlobalEnvironment(textStyle.FormatedId(EnvironmentKeys.Fonts.Italic), textStyle?.Font?.Italic);
-            View.SetGlobalEnvironment(textStyle.FormatedId(EnvironmentKeys.Fonts.Weight), textStyle?.Font?.Weight);
+            SetEnvironement(view, textStyle.StyleId, EnvironmentKeys.Colors.Color, textStyle.Color);
+            SetEnvironement(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font?.Size);
+            SetEnvironement(view, textStyle.StyleId, EnvironmentKeys.Fonts.Family, textStyle?.Font?.Family);
+            SetEnvironement(view, textStyle.StyleId, EnvironmentKeys.Fonts.Italic, textStyle?.Font?.Italic);
+            SetEnvironement(view, textStyle.StyleId, EnvironmentKeys.Fonts.Weight, textStyle?.Font?.Weight);
         }
 
-        protected virtual void ApplyButton()
+        protected virtual void ApplyButton(ContextualObject view)
         {
-            View.SetGlobalEnvironment(typeof(Button), EnvironmentKeys.Colors.Color, Button?.TextColor);
+            SetEnvironement(view, typeof(Button), EnvironmentKeys.Colors.Color, Button?.TextColor);
             //Set the BorderStyle
 
-            View.SetGlobalEnvironment(typeof(Button), EnvironmentKeys.View.ClipShape, Button?.Border);
-            View.SetGlobalEnvironment(typeof(Button), EnvironmentKeys.View.Overlay, Button?.Border);
-            View.SetGlobalEnvironment(typeof(Button), EnvironmentKeys.Colors.BackgroundColor, Button?.BackgroundColor);
+            SetEnvironement(view, typeof(Button), EnvironmentKeys.View.ClipShape, Button?.Border);
+            SetEnvironement(view, typeof(Button), EnvironmentKeys.View.Overlay, Button?.Border);
+            SetEnvironement(view, typeof(Button), EnvironmentKeys.Colors.BackgroundColor, Button?.BackgroundColor);
 
-            View.SetGlobalEnvironment(typeof(Button), EnvironmentKeys.View.Shadow, Button?.Shadow);
+            SetEnvironement(view, typeof(Button), EnvironmentKeys.View.Shadow, Button?.Shadow);
         }
 
+
+        protected virtual void ApplyNavbarStyles(ContextualObject view)
+        {
+            SetEnvironement(view, "", EnvironmentKeys.Navigation.BackgroundColor, Navbar?.BackgroundColor);
+            SetEnvironement(view, "", EnvironmentKeys.Navigation.TextColor, Navbar?.TextColor);
+        }
+
+        protected void SetEnvironement(ContextualObject view, Type type, string key, object value)
+        {
+            if (view != null)
+                view.SetEnvironment(type, key, value);
+            else
+                View.SetGlobalEnvironment(type, key, value);
+        }
+
+        protected void SetEnvironement(ContextualObject view, string styleId, string key, object value)
+        {
+            if (view != null)
+                view.SetEnvironment(styleId, key, value);
+            else
+                View.SetGlobalEnvironment(styleId, key, value);
+        }
     }
 }

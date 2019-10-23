@@ -9,6 +9,5 @@ namespace Comet.Styles
         public string StyleId { get; set; }
         public FontAttributes Font { get; set; }
         public Color Color {get;set;}
-        public string FormatedId(string key) => string.IsNullOrWhiteSpace(StyleId) ? key : $"{StyleId}.{key}";
     }
 }

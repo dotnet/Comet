@@ -136,6 +136,18 @@ namespace Comet
 
     public static class ContextualObjectExtensions
     {
+        public static T SetEnvironment<T>(this T contextualObject, string styleId, string key, object value, bool cascades = true)
+            where T : ContextualObject
+        {
+            var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
+            contextualObject.SetValue(typedKey, value, cascades);
+            //TODO: Verify this is needed 
+            ThreadHelper.RunOnMainThread(() => {
+                contextualObject.ContextPropertyChanged(typedKey, value,cascades);
+            });
+            return contextualObject;
+        }
+
         public static T SetEnvironment<T>(this T contextualObject, Type type, string key, object value, bool cascades = true)
             where T : ContextualObject
         {
@@ -143,7 +155,7 @@ namespace Comet
             contextualObject.SetValue(typedKey, value, cascades);
             //TODO: Verify this is needed 
             ThreadHelper.RunOnMainThread(() => {
-                contextualObject.ContextPropertyChanged(typedKey, value,cascades);
+                contextualObject.ContextPropertyChanged(typedKey, value, cascades);
             });
             return contextualObject;
         }

@@ -17,5 +17,7 @@ namespace Comet.Styles
 
         public Shadow Shadow { get; set; }
 
+        public Thickness Padding { get; set; }
+
     }
 }

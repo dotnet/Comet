@@ -52,6 +52,7 @@ namespace Comet {
             public const string Overlay = "Overlay";
             public const string Title = "Title";
             public const string Border = "Border";
+            public const string StyleId = "StyleId";
         }
 
         public static class Shape

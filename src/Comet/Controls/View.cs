@@ -261,6 +261,14 @@ namespace Comet
             ActiveViews.ForEach(x => x.ViewPropertyChanged(key, value));
             
         }
+        public static async void SetGlobalEnvironment(string styleId, string key, object value)
+        {
+            //If there is no style, set the default key
+            var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
+            Environment.SetValue(typedKey, value);
+            await ThreadHelper.SwitchToMainThreadAsync();
+            ActiveViews.ForEach(x => x.ViewPropertyChanged(typedKey, value));
+        }
 
         public static async void SetGlobalEnvironment(Type type, string key, object value)
         {
