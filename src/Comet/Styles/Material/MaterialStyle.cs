@@ -66,15 +66,15 @@ namespace Comet.Styles.Material
 
         protected virtual void ApplyButton(ContextualObject view, string styleId, ButtonStyle style)
         {
-            SetEnvironement(view, styleId, EnvironmentKeys.Colors.Color, Button?.TextColor);
+            SetEnvironement(view, styleId, EnvironmentKeys.Colors.Color, style?.TextColor);
 
             //Set the BorderStyle
 
-            SetEnvironement(view, styleId, EnvironmentKeys.View.ClipShape, Button?.Border);
-            SetEnvironement(view, styleId, EnvironmentKeys.View.Overlay, Button?.Border);
-            SetEnvironement(view, styleId, EnvironmentKeys.Colors.BackgroundColor, Button?.BackgroundColor);
+            SetEnvironement(view, styleId, EnvironmentKeys.View.ClipShape, style?.Border);
+            SetEnvironement(view, styleId, EnvironmentKeys.View.Overlay, style?.Border);
+            SetEnvironement(view, styleId, EnvironmentKeys.Colors.BackgroundColor, style?.BackgroundColor);
 
-            SetEnvironement(view, styleId, EnvironmentKeys.View.Shadow, Button?.Shadow);
+            SetEnvironement(view, styleId, EnvironmentKeys.View.Shadow, style?.Shadow);
         }
     }
 }
