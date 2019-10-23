@@ -25,7 +25,7 @@ namespace Comet.Styles.Material
             PrimaryColorPalette = colorPalette;
             SecondaryColorPalette = colorPalette;
 
-           OutlinedButton = new ButtonStyle
+            OutlinedButton = new ButtonStyle
             {
                 TextColor = colorPalette.P900,
                 Border = new RoundedRectangle(4f).Stroke(Color.Grey, 1f, true),
@@ -42,7 +42,7 @@ namespace Comet.Styles.Material
                 Padding = new Thickness(16, 0, 16, 0),
             };
 
-            TextButton = new ButtonStyle
+            Button = TextButton = new ButtonStyle
             {
                 TextColor = colorPalette.P900,
                 Padding = new Thickness(16, 0, 16, 0),
