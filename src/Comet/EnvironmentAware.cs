@@ -37,7 +37,7 @@ namespace Comet
 
         public string StyleId
         {
-            get => LocalContext(false)?.GetValueInternal(nameof(StyleId)) as string;
+            get => LocalContext(false)?.GetValueInternal(nameof(StyleId)).value as string;
             set => LocalContext(true).SetPropertyInternal(value);
         }
 
@@ -62,26 +62,54 @@ namespace Comet
                 //typedKey = "Button.BackgroundColor"
 
                 //Check the local context
-                var value = current == this ? LocalContext(false)?.GetValueInternal(key) ?? LocalContext(false)?.GetValueInternal(styledKey) : null; ;
-                if (value != null)
-                    return value;
+                if (current == this) {
+                    var r = LocalContext(false)?.GetValueInternal(key) ?? (false,null);
+                    if (r.hasValue)
+                        return r.value;
+
+                    r = LocalContext(false)?.GetValueInternal(styledKey) ?? (false, null);
+                    if (r.hasValue)
+                        return r.value;
+                }
 
                 if (!cascades)
                     return null;
                 //Check the cascading context
                 //When checking Context, we use the key first, then style, then typed key
-                if (value == null)
-                    value = Context(false)?.GetValueInternal(key) ?? Context(false)?.GetValueInternal(styledKey) ?? Context(false)?.GetValueInternal(typedKey);
+                var result = Context(false)?.GetValueInternal(key) ?? (false, null);
+                if (result.hasValue)
+                    return result.value;
+
+                result = Context(false)?.GetValueInternal(styledKey) ?? (false, null);
+
+                if (result.hasValue)
+                    return result.value;
+
+                result = Context(false)?.GetValueInternal(typedKey) ?? (false, null); ;
+
+                if (result.hasValue)
+                    return result.value;
+
                 //Check the parent
-                if (value == null)
+
+                //If no more parents, check the environment
+                //For global environment check Styled -> Typed -> then root key
+                if (view == null)
                 {
-                    //If no more parents, check the environment
-                    //For global environment check Styled -> Typed -> then root key
-                    if (view == null)
-                        return View.Environment.GetValueInternal(styledKey) ?? View.Environment.GetValueInternal(typedKey) ?? View.Environment.GetValueInternal(key);
-                    value = view.GetValue(key,current,view.Parent,styledKey, typedKey,cascades);
+                    result =  View.Environment.GetValueInternal(styledKey);
+
+                    if (result.hasValue)
+                        return result.value;
+                    result = View.Environment.GetValueInternal(typedKey);
+
+                    if (result.hasValue)
+                        return result.value;
+                    result = View.Environment.GetValueInternal(key);
+
+                    if (result.hasValue)
+                        return result.value;
                 }
-                return value;
+                return  view.GetValue(key,current,view.Parent,styledKey, typedKey,cascades);
             }
             catch
             {

@@ -33,12 +33,12 @@ namespace Comet
             return defaultValue;
         }
 
-        internal object GetValueInternal(string propertyName)
+        internal (bool hasValue,object value) GetValueInternal(string propertyName)
         {
             if (string.IsNullOrWhiteSpace(propertyName))
-                return null;
-            dictionary.TryGetValue(propertyName, out var val);
-            return val;
+                return (false,null);
+            var hasValue = dictionary.TryGetValue(propertyName, out var val);
+            return (hasValue,val);
         }
         /// <summary>
         /// Returns true if the value changed
@@ -54,8 +54,7 @@ namespace Comet
                 if (EqualityComparer<T>.Default.Equals((T)val, value))
                     return false;
             }
-            else if (value == null)
-                return false;
+
             dictionary[propertyName] = value;
 
             CallPropertyChanged(propertyName, value);

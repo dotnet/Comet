@@ -25,12 +25,13 @@ namespace Comet.Styles.Material
             PrimaryColorPalette = colorPalette;
             SecondaryColorPalette = colorPalette;
 
-            OutlinedButton = new ButtonStyle
+            Button = OutlinedButton = new ButtonStyle
             {
                 TextColor = colorPalette.P900,
                 Border = new RoundedRectangle(4f).Stroke(Color.Grey, 1f, true),
                 BackgroundColor = colorPalette.PD900,
                 Padding = new Thickness(16, 0, 16, 0),
+                Shadow = null,
             };
 
             ContainedButton = new ButtonStyle
@@ -42,10 +43,13 @@ namespace Comet.Styles.Material
                 Padding = new Thickness(16, 0, 16, 0),
             };
 
-            Button = TextButton = new ButtonStyle
+            TextButton = new ButtonStyle
             {
                 TextColor = colorPalette.P900,
                 Padding = new Thickness(16, 0, 16, 0),
+                BackgroundColor = Color.Transparent,
+                Shadow = null,
+                Border = null,
             };
 
             Navbar = new NavbarStyle
