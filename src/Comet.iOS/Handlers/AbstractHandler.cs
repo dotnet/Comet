@@ -77,7 +77,7 @@ namespace Comet.iOS.Handlers
             set { }
         }
 
-        public virtual bool AutoSafeArea => true;
+        public virtual bool IgnoreSafeArea => VirtualView?.GetIgnoreSafeArea() ?? false;
 
         public virtual SizeF Measure(SizeF availableSize)
         {
@@ -86,6 +86,7 @@ namespace Comet.iOS.Handlers
 
         public void SetFrame(RectangleF frame)
         {
+            if (_nativeView == null) return;
             _nativeView.Frame = frame.ToCGRect();
         }
 

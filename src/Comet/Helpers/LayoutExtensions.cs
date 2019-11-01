@@ -231,5 +231,13 @@ namespace Comet
 
             return view.Measure(availableSize);
         }
+
+        public static T IgnoreSafeArea<T>(this T view) where T : View
+        {
+            view.SetEnvironment(EnvironmentKeys.Layout.IgnoreSafeArea, true,false);
+            return view;
+        }
+
+        public static bool GetIgnoreSafeArea(this View view) => (bool?)view.GetEnvironment(view,EnvironmentKeys.Layout.IgnoreSafeArea, false) ?? false;
     }
 }

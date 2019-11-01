@@ -105,24 +105,20 @@ namespace Comet.iOS
                 return;
             var iOSHandler = _virtualView?.BuiltView?.ViewHandler as iOSViewHandler;
 
-            bool autoAdjust = iOSHandler?.AutoSafeArea ?? true ;
+            bool ignoreSafeArea = iOSHandler?.IgnoreSafeArea ?? false ;
 
-            if (!autoAdjust || _nativeView is UIScrollView)
-            {
-                _nativeView.Frame = Bounds;
-            }
-            else
+            var bounds = Bounds;
+
+            if(!ignoreSafeArea)
             {
                 //TODO: opt out of safe are
-                var bounds = Bounds;
                 var safe = SafeAreaInsets;
                 bounds.X += safe.Left;
                 bounds.Y += safe.Top;
                 bounds.Height -= safe.Top + safe.Bottom;
                 bounds.Width -= safe.Left + safe.Right;
-
-                _virtualView.SetFrameFromNativeView(bounds.ToRectangleF());
             }
+            _virtualView.SetFrameFromNativeView(bounds.ToRectangleF());
         }
 
         protected override void Dispose(bool disposing)

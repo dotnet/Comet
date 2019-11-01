@@ -212,7 +212,7 @@ namespace Comet.iOS.Handlers
 
         public override CGSize IntrinsicContentSize => _measured.ToCGSize();
 
-        public bool AutoSafeArea => true;
+        public bool IgnoreSafeArea => _view?.GetIgnoreSafeArea() ?? false;
 
         public override void LayoutSubviews()
         {

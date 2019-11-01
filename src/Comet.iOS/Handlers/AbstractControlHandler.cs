@@ -73,7 +73,7 @@ namespace Comet.iOS.Handlers
             }
         }
 
-        public bool AutoSafeArea => true;
+        public bool IgnoreSafeArea => VirtualView?.GetIgnoreSafeArea() ?? false;
 
         public virtual SizeF Measure(SizeF availableSize)
         {

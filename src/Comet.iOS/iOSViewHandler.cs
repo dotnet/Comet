@@ -11,6 +11,6 @@ namespace Comet.iOS
 
         CUIContainerView ContainerView { get; }
 
-        bool AutoSafeArea { get; }
+        bool IgnoreSafeArea { get; }
     }
 }

@@ -10,7 +10,7 @@ namespace Comet.iOS.Handlers
     {
         private UIView _content;
 
-        public override bool AutoSafeArea => false;
+        public override bool IgnoreSafeArea => !(VirtualView?.GetIgnoreSafeArea() ?? true);
         protected override UIScrollView CreateView()
         {
             var scrollView = new UIScrollView
