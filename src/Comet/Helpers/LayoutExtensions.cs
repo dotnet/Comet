@@ -238,6 +238,6 @@ namespace Comet
             return view;
         }
 
-        public static bool GetIgnoreSafeArea(this View view) => (bool?)view.GetEnvironment(view,EnvironmentKeys.Layout.IgnoreSafeArea, false) ?? false;
+        public static bool GetIgnoreSafeArea(this View view, bool defaultValue) => (bool?)view.GetEnvironment(view,EnvironmentKeys.Layout.IgnoreSafeArea, false) ?? defaultValue;
     }
 }
