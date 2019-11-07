@@ -6,7 +6,7 @@ namespace Comet.iOS
 {
     public class TabViewHandler : AbstractHandler<TabView,CUITabView>
     {
-        public override bool IgnoreSafeArea => VirtualView?.GetIgnoreSafeArea() ?? true;
+        public override bool IgnoreSafeArea => VirtualView?.GetIgnoreSafeArea(true) ?? true;
         public override void SetView(View view)
         {
             base.SetView(view);

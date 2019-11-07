@@ -9,5 +9,6 @@ namespace Comet.iOS.Handlers
         {
             return VirtualView?.Content?.ToView();
         }
+        public override bool IgnoreSafeArea => VirtualView?.Content?.GetOrCreateViewHandler().IgnoreSafeArea ?? false;
     }
 }

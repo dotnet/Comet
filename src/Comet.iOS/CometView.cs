@@ -109,7 +109,9 @@ namespace Comet.iOS
 
             var bounds = Bounds;
 
-            if(!ignoreSafeArea)
+            if(ignoreSafeArea)
+                _nativeView.Frame = Bounds;
+            else
             {
                 //TODO: opt out of safe are
                 var safe = SafeAreaInsets;
@@ -117,8 +119,9 @@ namespace Comet.iOS
                 bounds.Y += safe.Top;
                 bounds.Height -= safe.Top + safe.Bottom;
                 bounds.Width -= safe.Left + safe.Right;
+                _virtualView.SetFrameFromNativeView(bounds.ToRectangleF());
             }
-            _virtualView.SetFrameFromNativeView(bounds.ToRectangleF());
+           
         }
 
         protected override void Dispose(bool disposing)

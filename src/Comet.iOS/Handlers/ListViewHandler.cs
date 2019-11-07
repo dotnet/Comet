@@ -9,7 +9,7 @@ namespace Comet.iOS.Handlers
 {
     public class ListViewHandler : AbstractHandler<ListView, CUITableView>
     {
-        public override bool IgnoreSafeArea => VirtualView?.GetIgnoreSafeArea() ?? true;
+        public override bool IgnoreSafeArea => VirtualView?.GetIgnoreSafeArea(true) ?? true;
 
         public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>(ViewHandler.Mapper)
         {
