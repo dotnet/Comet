@@ -80,13 +80,13 @@ namespace Comet
 
         public static Color GetBackgroundColor(this View view,Type type, Color defaultColor = null)
         {
-            var color = view.GetEnvironment<Color>(type,EnvironmentKeys.Colors.BackgroundColor);
+            var color = view?.GetEnvironment<Color>(type,EnvironmentKeys.Colors.BackgroundColor);
             return color ?? defaultColor;
         }
 
         public static Color GetBackgroundColor(this View view, Color defaultColor = null)
         {
-            var color = view.GetEnvironment<Color>(EnvironmentKeys.Colors.BackgroundColor);
+            var color = view?.GetEnvironment<Color>(EnvironmentKeys.Colors.BackgroundColor);
             return color ?? defaultColor;
         }
     }

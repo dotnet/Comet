@@ -13,13 +13,13 @@ namespace Comet.Skia.iOS
 
         public iOSSkiaView()
         {
+            Opaque = false;
         }
 
         public iOSSkiaView(CGRect frame) : base(frame)
         {
-            
+            Opaque = false;   
         }
-
         public SkiaView VirtualView
         {
             get => _virtualView;

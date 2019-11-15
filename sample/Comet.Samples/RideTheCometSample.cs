@@ -41,7 +41,9 @@ namespace Comet.Samples.Comparisons
                     .Frame(height:44)
                     .Margin(8)
                     .Color(Color.White)
-                    .Background("#1d1d1d")
+                    .Background(Color.Green)
+                .RoundedBorder(color:Color.Blue)
+                .Shadow(Color.Grey,4,2,2)
             };
 
         public class Comet : BindingObject

@@ -46,6 +46,7 @@
     <Compile Include="iOSDrawableControl.cs" />
     <Compile Include="SkiaViewHandler.cs" />
     <Compile Include="UI.cs" />
+    <Compile Include="SkiaControlHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="1.68.0" />
