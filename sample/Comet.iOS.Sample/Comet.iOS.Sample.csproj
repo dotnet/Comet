@@ -49,10 +49,11 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution: INTERACTIVE INNOVATIVE SOLUTIONS LLC</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <LangVersion>latest</LangVersion>
     <MtouchExtraArgs>--interpreter</MtouchExtraArgs>
+    <CodesignProvision>WildCard</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -66,12 +67,12 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Core" />
-    <Reference Include="Xamarin.iOS" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors" />
+    <Reference Include="System"/>
+    <Reference Include="System.Xml"/>
+    <Reference Include="System.Core"/>
+    <Reference Include="Xamarin.iOS"/>
+    <Reference Include="System.Numerics"/>
+    <Reference Include="System.Numerics.Vectors"/>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="1.68.0"/>
@@ -132,17 +133,17 @@
       <Visible>false</Visible>
     </ImageAsset>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup/>
   <ItemGroup>
-    <InterfaceDefinition Include="LaunchScreen.storyboard" />
+    <InterfaceDefinition Include="LaunchScreen.storyboard"/>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Info.plist" />
-    <None Include="Entitlements.plist" />
+    <None Include="Info.plist"/>
+    <None Include="Entitlements.plist"/>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Main.cs" />
-    <Compile Include="AppDelegate.cs" />
+    <Compile Include="Main.cs"/>
+    <Compile Include="AppDelegate.cs"/>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Comet.Skia.iOS\Comet.Skia.iOS.csproj">
@@ -175,8 +176,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="Resources\turtlerock.jpg" />
-    <BundleResource Include="Resources\fa-solid-900.ttf" />
+    <BundleResource Include="Resources\turtlerock.jpg"/>
+    <BundleResource Include="Resources\fa-solid-900.ttf"/>
   </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets"/>
 </Project>
