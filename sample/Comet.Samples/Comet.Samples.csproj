@@ -21,7 +21,7 @@
     <Folder Include="CommunityQuestions\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="1.68.1-rc.172" />
+    <PackageReference Include="SkiaSharp" Version="1.68.0" />
     <PackageReference Include="Clancey.Comet.Reload" Version="0.0.9-alpha" />
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.4.16" />
   </ItemGroup>
