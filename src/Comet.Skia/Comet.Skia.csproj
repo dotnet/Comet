@@ -18,8 +18,8 @@
     <ItemGroup>
 
     
-      <PackageReference Include="SkiaSharp" Version="1.68.1-rc.172" />
-      <PackageReference Include="SkiaSharp.HarfBuzz" Version="1.68.1-rc.172" />
+      <PackageReference Include="SkiaSharp" Version="1.68.0" />
+      <PackageReference Include="SkiaSharp.HarfBuzz" Version="1.68.0" />
     </ItemGroup>
 
     <ItemGroup>
