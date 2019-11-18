@@ -28,17 +28,10 @@ namespace Comet.Skia
         public override SizeF Measure(SizeF availableSize)
         {
             var button = VirtualButton;
-            var lines = SkiaText.GetLines(button.Text, button.GetFont(defaultFont),
+            var size = SkiaText.GetTextSize(button.Text, button.GetFont(defaultFont),
                 button.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center,
                 button.GetLineBreakMode(LineBreakMode.NoWrap),availableSize.Width - minHPadding);
-            float width = 0;
-            float height = 0;
-            foreach(var l in lines)
-            {
-                width = Math.Max(width, l.Width);
-                height += l.Height;
-            }
-            return new SizeF(width + hPadding,height + vPadding);
+            return new SizeF(size.Width + hPadding,size.Height + vPadding);
         }
     }
 }

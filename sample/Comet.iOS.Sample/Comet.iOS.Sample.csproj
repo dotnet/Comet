@@ -75,12 +75,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SkiaSharp">
-      <Version>1.68.0</Version>
+      <Version>1.68.1-rc.172</Version>
     </PackageReference>
+    <PackageReference Include="SkiaSharp.HarfBuzz" Version="1.68.1-rc.172" />
     <PackageReference Include="SkiaSharp.Views">
-      <Version>1.68.0</Version>
+      <Version>1.68.1-rc.172</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
     <PackageReference Include="Xamarin.FFImageLoading">
       <Version>2.4.11.982</Version>
     </PackageReference>
@@ -88,7 +89,7 @@
       <Version>0.0.9-alpha</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Threading">
-      <Version>16.4.16</Version>
+      <Version>16.4.33</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +172,10 @@
     <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
       <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
       <Name>Comet.Samples</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\RichTextKit\Topten.RichTextKit\Topten.RichTextKit.csproj">
+      <Project>{55408CA3-EE36-481D-9A4B-E590FA520336}</Project>
+      <Name>Topten.RichTextKit</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

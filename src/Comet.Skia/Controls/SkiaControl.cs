@@ -1,5 +1,7 @@
 ﻿using System;
+using Comet.Skia.Internal;
 using SkiaSharp;
+using TextBlock = Topten.RichTextKit.TextBlock;
 
 namespace Comet.Skia
 {
@@ -48,7 +50,6 @@ namespace Comet.Skia
         {
             canvas.Save();
 
-            // or:
             var emojiChar = 0x1F680;
 
             // ask the font manager for a font with that character
@@ -64,21 +65,13 @@ namespace Comet.Skia
             };
 
             //canvas.ClipRect(VirtualView.Frame.ToSKRect());
-            var lines = SkiaText.GetLines(text, data,
-                alignment, lineBreakMode, VirtualView.Frame.Width, VirtualView.Frame.Height);
 
-
-
-            paint.Typeface = data.ToSKTypeface();
-
-            foreach (var line in lines)
-            {
-                if (!string.IsNullOrWhiteSpace(line.Text))
-                {
-                    canvas.DrawText(line.Text, line.Origin, paint);
-                }
-            }
-
+            var tb = new TextBlock();
+            tb.AddText(text, data.ToStyle(color));
+            tb.Alignment = alignment.ToTextAlignment();
+            tb.MaxWidth = VirtualView.Frame.Width;
+            tb.Layout();
+            tb.Paint(canvas);
             canvas.Restore();
         }
     }
