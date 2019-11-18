@@ -20,7 +20,7 @@
 
         using (var surface = SKSurface.Create(new SKImageInfo((int)size.Width, (int)size.Height)))
         {
-            var image = (IControlDelegate)new SkiaShapeView(Shape);
+            var image = new SkiaShapeView(Shape);
 
             image.Draw(surface.Canvas, bounds);
 
