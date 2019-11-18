@@ -29,7 +29,7 @@ namespace Comet {
 		public static implicit operator Action<T>(State<T> state) => value => state.Value = value;
 		public static implicit operator State<T>(T value) => new State<T>(value);
 
-        public override string ToString() => $"State<{typeof(T)}> : {GetValueInternal(nameof(Value))?.ToString()}";
+        public override string ToString() => $"State<{typeof(T)}> : {GetValueInternal(nameof(Value)).value?.ToString()}";
 
     }
 	

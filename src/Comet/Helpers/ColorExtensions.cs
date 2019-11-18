@@ -89,5 +89,17 @@ namespace Comet
             var color = view?.GetEnvironment<Color>(EnvironmentKeys.Colors.BackgroundColor);
             return color ?? defaultColor;
         }
+
+        public static Color GetNavigationBackgroundColor(this View view, Color defaultColor = null)
+        {
+            var color = view.GetEnvironment<Color>(EnvironmentKeys.Navigation.BackgroundColor);
+            return color ?? defaultColor;
+        }
+        public static Color GetNavigationTextColor(this View view, Color defaultColor = null)
+        {
+            var color = view.GetEnvironment<Color>(EnvironmentKeys.Navigation.TextColor);
+            return color ?? defaultColor;
+        }
+
     }
 }

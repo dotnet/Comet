@@ -11,6 +11,10 @@ namespace Comet.Android.Controls
         private readonly View view;
         public string Title { get; }
 
+        public CometFragment()
+        {
+        }
+
         public CometFragment(View view)
         {
             this.view = view;

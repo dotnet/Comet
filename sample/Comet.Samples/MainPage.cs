@@ -9,6 +9,8 @@ namespace Comet.Samples {
 		List<MenuItem> pages = new List<MenuItem>
         {
             new MenuItem("Ride the Comet",()=> new RideSample()),
+            new MenuItem("Text Styles",()=> new TextStylesSample()),
+            new MenuItem("Material Design",()=> new MaterialStylePicker()),
             new MenuItem("AuditReportPage",()=> new AuditReportPage()),
             new MenuItem("Demo Credit Card",()=> new DemoCreditCardView()),
             new MenuItem("Demo Credit Card 2",()=> new DemoCreditCardView2()),
