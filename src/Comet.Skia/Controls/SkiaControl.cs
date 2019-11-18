@@ -46,32 +46,25 @@ namespace Comet.Skia
             canvas.DrawRect(bounds, paint);
         }
 
-        protected void DrawText(string text, SKCanvas canvas, FontAttributes data, Color color, TextAlignment alignment, LineBreakMode lineBreakMode )
+        protected void DrawText(string text, SKCanvas canvas, FontAttributes data, Color color, TextAlignment alignment, LineBreakMode lineBreakMode, VerticalAlignment verticalAlignment)
         {
             canvas.Save();
 
-            var emojiChar = 0x1F680;
-
-            // ask the font manager for a font with that character
-            var fontManager = SKFontManager.Default;
-            var emojiTypeface = fontManager.MatchCharacter(emojiChar);
-
-            var paint = new SKPaint
-            {
-                Color = color.ToSKColor(),
-                IsAntialias = true,
-                TextSize = data.Size,
-                Typeface = emojiTypeface
-            };
-
-            //canvas.ClipRect(VirtualView.Frame.ToSKRect());
-
             var tb = new TextBlock();
             tb.AddText(text, data.ToStyle(color));
-            tb.Alignment = alignment.ToTextAlignment();
             tb.MaxWidth = VirtualView.Frame.Width;
+            tb.MaxHeight = VirtualView.Frame.Height;
+            tb.Alignment = alignment.ToTextAlignment();
             tb.Layout();
-            tb.Paint(canvas);
+
+            var y = verticalAlignment switch
+            {
+                VerticalAlignment.Bottom => VirtualView.Frame.Height - tb.MeasuredHeight,
+                VerticalAlignment.Center => (VirtualView.Frame.Height - tb.MeasuredHeight)/2,
+                _ => 0
+            };
+           
+            tb.Paint(canvas,new SKPoint(0,y));
             canvas.Restore();
         }
     }

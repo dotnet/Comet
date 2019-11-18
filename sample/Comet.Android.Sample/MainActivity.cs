@@ -21,6 +21,8 @@ namespace Comet.Android.Sample
             Comet.Reload.Init();
 #endif
             Comet.Skia.Android.UI.Init();
+            Comet.Android.UI.Init();
+            Registrar.Handlers.Register<Button, Skia.Android.SkiaControlHandler<Skia.Button>>();
 
             Page = new MainPage();
         }

@@ -51,6 +51,7 @@
     <Compile Include="AndroidDrawableControl.cs" />
     <Compile Include="SkiaViewHandler.cs" />
     <Compile Include="UI.cs" />
+    <Compile Include="SkiaControlHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

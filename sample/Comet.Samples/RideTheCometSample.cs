@@ -35,7 +35,7 @@ namespace Comet.Samples.Comparisons
                     .LineBreakMode(LineBreakMode.CharacterWrap)
                     ,
 
-                new Button("   Ride the Comet!☄️   ", ()=>{
+                new Button("Ride the Comet! ☄️", ()=>{
                     comet.Rides++;
                 })
                     .Frame(height:44)
