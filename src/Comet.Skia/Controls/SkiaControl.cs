@@ -21,12 +21,14 @@ namespace Comet.Skia
             canvas.Clear(Color.Transparent.ToSKColor());
             if (VirtualView == null)
                 return;
+            canvas.Save();
             var border = VirtualView?.GetBorder();
             var backgroundColor = VirtualView?.GetBackgroundColor();
             if (border != null)
                 DrawBorder(canvas, border, dirtyRect, backgroundColor);
             else
                 DrawBackground(canvas, backgroundColor);
+            canvas.Restore();
         }
 
         protected virtual void DrawBorder(SKCanvas canvas, Shape shape, RectangleF rect, Color backgroundColor)
@@ -40,6 +42,8 @@ namespace Comet.Skia
 
         protected virtual void DrawBackground(SKCanvas canvas, Color backgroundColor)
         {
+            if (backgroundColor == null)
+                return;
             var paint = new SKPaint();
             paint.Color = backgroundColor.ToSKColor();
             var bounds = new SKRect(0, 0, VirtualView.Frame.Width, VirtualView.Frame.Height);
@@ -48,7 +52,6 @@ namespace Comet.Skia
 
         protected void DrawText(string text, SKCanvas canvas, FontAttributes data, Color color, TextAlignment alignment, LineBreakMode lineBreakMode, VerticalAlignment verticalAlignment)
         {
-            canvas.Save();
 
             var tb = new TextBlock();
             tb.AddText(text, data.ToStyle(color));
@@ -65,7 +68,6 @@ namespace Comet.Skia
             };
            
             tb.Paint(canvas,new SKPoint(0,y));
-            canvas.Restore();
         }
     }
 }
