@@ -12,12 +12,12 @@ namespace Comet.iOS
 
         public CometView()
         {
-            BackgroundColor = UIColor.White;
+            BackgroundColor = UIColor.SystemBackgroundColor;
         }
 
         public CometView(CGRect rect) : base(rect)
         {
-            BackgroundColor = UIColor.White;
+            BackgroundColor = UIColor.SystemBackgroundColor;
         }
 
         public View CurrentView
