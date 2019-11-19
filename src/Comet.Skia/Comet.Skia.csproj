@@ -12,14 +12,13 @@
     </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\Comet\Comet.csproj" />
-      <ProjectReference Include="..\..\..\RichTextKit\Topten.RichTextKit\Topten.RichTextKit.csproj" />
     </ItemGroup>
 
     <ItemGroup>
 
     
       <PackageReference Include="SkiaSharp" Version="1.68.0" />
-      <PackageReference Include="SkiaSharp.HarfBuzz" Version="1.68.0" />
+      <PackageReference Include="Topten.RichTextKit" Version="0.1.116" />
     </ItemGroup>
 
     <ItemGroup>

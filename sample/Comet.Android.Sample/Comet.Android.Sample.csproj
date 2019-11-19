@@ -113,6 +113,9 @@
     <PackageReference Include="Clancey.Comet.Reload">
       <Version>0.0.9-alpha</Version>
     </PackageReference>
+    <PackageReference Include="Topten.RichTextKit">
+      <Version>0.1.116</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Comet\Comet.csproj">
