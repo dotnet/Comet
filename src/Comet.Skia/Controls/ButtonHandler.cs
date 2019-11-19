@@ -13,7 +13,7 @@ namespace Comet.Skia
         Pressed
     }
 
-    public class Button : SkiaControl
+    public class ButtonHandler : SkiaControl
     {
 		static float hPadding = 40;
         static float minHPadding = 10;
