@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AndroidContext.cs" />
+    <Compile Include="CometView.cs" />
     <Compile Include="Controls\CUIContentView.cs" />
     <Compile Include="Controls\CUIContainerView.cs" />
     <Compile Include="Controls\CUIImageView.cs" />

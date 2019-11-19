@@ -30,20 +30,24 @@ namespace Comet.Android
         }*/
 		public static CometFragment ToFragment(this View view) => new CometFragment(view);
 
-        public static AView ToView(this View view)
+        public static AndroidViewHandler GetOrCreateViewHandler(this View view)
         {
             if (view == null)
                 return null;
-
             var handler = view.ViewHandler;
             if (handler == null)
             {
-                handler = Registrar.Handlers.GetHandler(view.GetType()) as IViewHandler;
+                handler = Registrar.Handlers.GetHandler(view.GetType());
                 view.ViewHandler = handler;
             }
+            var aView = handler as AndroidViewHandler;
+            return aView;
+        }
 
-            var page = handler as AndroidViewHandler;
-            return page.View;
+        public static AView ToView(this View view)
+        {
+            var handler = view.GetOrCreateViewHandler();
+            return handler?.View;
         }
 
         public static global::Android.Graphics.Color ToColor(this Color color)

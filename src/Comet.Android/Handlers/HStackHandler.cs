@@ -13,7 +13,7 @@ namespace Comet.Android.Handlers
 
         public HStackHandler() : base(AndroidContext.CurrentContext)
         {
-            Orientation = AOrientation.Vertical;
+            Orientation = AOrientation.Horizontal;
         }
 
         

@@ -53,6 +53,7 @@ namespace Comet {
             public const string Overlay = "Overlay";
             public const string Title = "Title";
             public const string Border = "Border";
+            public const string StyleId = "StyleId";
         }
 
         public static class Shape
@@ -72,6 +73,26 @@ namespace Comet {
         public static class Text
         {
 	        public const string Alignment = "Text.Alignment";
+            public static class Style
+            {
+                public const string H1 = nameof(H1);
+                public const string H2 = nameof(H2);
+                public const string H3 = nameof(H3);
+                public const string H4 = nameof(H4);
+                public const string H5 = nameof(H5);
+                public const string H6 = nameof(H6);
+                public const string Subtitle1 = nameof(Subtitle1);
+                public const string Subtitle2 = nameof(Subtitle2);
+                public const string Body1 = nameof(Body1);
+                public const string Body2 = nameof(Body2);
+                public const string Caption = nameof(Caption);
+                public const string Overline = nameof(Overline);
+            }
+        }
+        public static class Navigation
+        {
+            public const string BackgroundColor = "NavigationBackgroundColor";
+            public const string TextColor = "NavigationTextColor";
         }
     }
 

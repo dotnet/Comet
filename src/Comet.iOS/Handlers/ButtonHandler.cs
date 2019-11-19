@@ -21,6 +21,7 @@ namespace Comet.iOS.Handlers
 
         private static FontAttributes DefaultFont;
         private static Color DefaultColor;
+        private static Color DefaultSelectedColor;
         protected override UIButton CreateView()
         {
             var button = new UIButton(UIButtonType.System);
@@ -29,6 +30,7 @@ namespace Comet.iOS.Handlers
             {
                 DefaultFont = button.Font.ToFont();
                 DefaultColor = button.TitleColor(UIControlState.Normal).ToColor() ;
+                DefaultSelectedColor = button.TitleColor(UIControlState.Highlighted).ToColor();
             }
 
             button.TouchUpInside += HandleTouchUpInside;

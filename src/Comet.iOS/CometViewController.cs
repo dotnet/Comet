@@ -10,10 +10,6 @@ namespace Comet.iOS
         private CometView _containerView;
         private View _startingCurrentView;
         
-        public CometViewController()
-        {
-        }
-
         public View CurrentView
         {
             get => _containerView?.CurrentView ?? _startingCurrentView;
@@ -25,6 +21,7 @@ namespace Comet.iOS
                     _startingCurrentView = value;
 
                 Title = value?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? value?.BuiltView?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
+
             }
         }
 
@@ -40,10 +37,34 @@ namespace Comet.iOS
             _containerView?.CurrentView?.ViewDidAppear();
         }
 
+        public override void ViewWillAppear(bool animated)
+        {
+            base.ViewWillAppear(animated);
+            ApplyStyle();
+        }
+
         public override void ViewDidDisappear(bool animated)
         {
             base.ViewDidDisappear(animated);
             _containerView?.CurrentView?.ViewDidDisappear();
+        }
+
+        public void ApplyStyle()
+        {
+            var barColor = _containerView?.CurrentView?.GetNavigationBackgroundColor();
+
+            if (barColor != null && NavigationController != null)
+            {
+                this.NavigationController.NavigationBar.BarTintColor = barColor.ToUIColor();
+            }
+            
+            var textColor = _containerView?.CurrentView?.GetNavigationTextColor();
+            if (textColor != null && NavigationController != null)
+            {
+                var color = textColor.ToUIColor();
+                this.NavigationController.NavigationBar.TintColor = color;
+                this.NavigationController.NavigationBar.TitleTextAttributes = new UIStringAttributes { ForegroundColor = color };
+            }
         }
     }
 }
