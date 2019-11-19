@@ -59,7 +59,7 @@ namespace Comet.Skia
             
         }
 
-        public virtual void EndInteraction(PointF[] points)
+        public virtual void EndInteraction(PointF[] points, bool inside)
         {
             
         }

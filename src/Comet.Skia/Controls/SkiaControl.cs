@@ -35,9 +35,7 @@ namespace Comet.Skia
         {
             var strokeColor = shape.GetStrokeColor(VirtualView, Color.Black);
             var strokeWidth = shape.GetLineWidth(VirtualView, 1);
-
-
-            canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: backgroundColor);
+            canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: backgroundColor ?? Color.Fuchsia);
         }
 
         protected virtual void DrawBackground(SKCanvas canvas, Color backgroundColor)

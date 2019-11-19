@@ -6,12 +6,18 @@ using System.Linq;
 
 namespace Comet.Skia
 {
+    public enum ButtonState
+    {
+        Normal,
+        Hover,
+        Pressed
+    }
+
     public class Button : SkiaControl
     {
 		static float hPadding = 40;
         static float minHPadding = 10;
 		static float vPadding = 10;
-        
 
         static FontAttributes defaultFont = new FontAttributes
         {
@@ -22,8 +28,18 @@ namespace Comet.Skia
         CButton VirtualButton => VirtualView as CButton;
         public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
         {
-			base.Draw(canvas,dirtyRect);
-            DrawText(VirtualButton.Text,canvas,VirtualView.GetFont(defaultFont), VirtualView.GetColor(Color.Black),
+            canvas.Clear(Color.Transparent.ToSKColor());
+            var border = VirtualView?.GetBorder();
+
+            var backgroundColor = VirtualView?.GetBackgroundColor();
+            if (buttonState != ButtonState.Normal)
+                backgroundColor = backgroundColor.WithAlpha(.8f);
+            if (border != null)
+                DrawBorder(canvas, border, dirtyRect, backgroundColor);
+            else
+                DrawBackground(canvas, backgroundColor);
+
+            DrawText(VirtualButton.Text,canvas, VirtualView.GetFont(defaultFont), VirtualView.GetColor(Color.Black),
                 VirtualView.GetTextAlignment(TextAlignment.Center)?? TextAlignment.Center,
                 VirtualView.GetLineBreakMode(LineBreakMode.NoWrap), VerticalAlignment.Center);
         }
@@ -35,6 +51,46 @@ namespace Comet.Skia
                 button.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center,
                 button.GetLineBreakMode(LineBreakMode.NoWrap),availableSize.Width - minHPadding);
             return new SizeF(size.Width + hPadding,size.Height + vPadding);
+        }
+
+        public override bool StartInteraction(PointF[] points)
+        {
+
+            ButtonState = ButtonState.Pressed;
+            return base.StartInteraction(points);
+        }
+
+        public override void HoverInteraction(PointF[] points)
+        {
+            ButtonState = ButtonState.Hover;
+            base.HoverInteraction(points);
+        }
+
+
+        public override void EndInteraction(PointF[] points, bool contained)
+        {
+            ButtonState = ButtonState.Normal;
+            if(contained)
+                VirtualButton?.OnClick();
+            base.EndInteraction(points,contained);
+        }
+
+        public override void CancelInteraction()
+        {
+            ButtonState = ButtonState.Normal;
+            base.CancelInteraction();
+        }
+
+        ButtonState buttonState = ButtonState.Normal;
+        public ButtonState ButtonState {
+            get => buttonState;
+            set
+            {
+                if (buttonState == value)
+                    return;
+                buttonState = value;
+                Invalidate();
+            }
         }
     }
 }

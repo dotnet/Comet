@@ -2,6 +2,7 @@
 using SkiaSharp.Views.Android;
 using Android.Content;
 using Android.Views;
+using System.Linq;
 
 namespace Comet.Skia.Android
 {
@@ -115,11 +116,15 @@ namespace Comet.Skia.Android
             return true;
         }
 
+        bool PointsContained(PointF[] points) => points.Any(p => VirtualView.Frame.BoundsContains(p));
+        bool pressedContained = false;
+
         public void TouchesBegan(PointF[] points)
         {
             _dragStarted = false;
             _lastMovedViewPoints = points;
             VirtualView?.StartInteraction(points);
+            pressedContained = true;
         }
 
         public void TouchesMoved(PointF[] points)
@@ -138,16 +143,18 @@ namespace Comet.Skia.Android
 
             _lastMovedViewPoints = points;
             _dragStarted = true;
+            pressedContained = PointsContained(points);
             VirtualView?.DragInteraction(points);
         }
 
         public void TouchesEnded(PointF[] points)
         {
-            VirtualView?.EndInteraction(points);
+            VirtualView?.EndInteraction(points, pressedContained);
         }
 
         public void TouchesCanceled()
         {
+            pressedContained = false;
             VirtualView?.CancelInteraction();
         }
     }
