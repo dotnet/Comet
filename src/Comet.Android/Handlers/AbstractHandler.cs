@@ -51,6 +51,7 @@ namespace Comet.Android.Handlers
         public virtual void Remove(View view)
         {
             ViewHandler.RemoveGestures(this, view);
+            _nativeView = null;
             _virtualView = null;
         }
 
