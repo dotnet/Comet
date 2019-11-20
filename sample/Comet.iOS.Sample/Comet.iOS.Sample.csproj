@@ -90,6 +90,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Threading">
       <Version>16.4.16</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.iOS.MaterialComponents">
+      <Version>72.2.0.1</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -171,6 +174,12 @@
     <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
       <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
       <Name>Comet.Samples</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Material\Comet.Material.iOS\Comet.Material.iOS.csproj">
+      <Project>{86DE0847-5552-4103-AA9F-53A5C8BDDAAE}</Project>
+      <Name>Comet.Material.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
