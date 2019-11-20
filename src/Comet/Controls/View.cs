@@ -129,24 +129,36 @@ namespace Comet
         internal virtual void Reload() => ResetView();
         void ResetView()
         {
-            if (usedEnvironmentData.Any())
-                PopulateFromEnvironment();
-            var oldView = builtView;
-            builtView = null;
-            if (replacedView != null)
+            // We save the old replaced view so we can clean it up after the diff
+            var oldReplacedView = replacedView;
+            //Null it out, so it isnt replaced by this.GetRenderView();
+            replacedView = null;
+            try
             {
-                replacedView.ViewHandler = null;
-                replacedView.Dispose();
-                replacedView = null;
+                if (usedEnvironmentData.Any())
+                    PopulateFromEnvironment();
+                var oldView = builtView;
+                builtView = null;
+                
+                if (ViewHandler == null)
+                    return;
+                ViewHandler.Remove(this);
+                var view = this.GetRenderView();
+                if (oldView != null)
+                    view = view.Diff(oldView);
+                oldView?.Dispose();
+                ViewHandler?.SetView(view);
             }
-            if (ViewHandler == null)
-                return;
-            ViewHandler.Remove(this);
-            var view = this.GetRenderView();
-            if (oldView != null)
-                view = view.Diff(oldView);
-            oldView?.Dispose();
-            ViewHandler?.SetView(view);
+
+            finally
+            {
+                //We are done, clean it up.
+                if (oldReplacedView != null)
+                {
+                    oldReplacedView.ViewHandler = null;
+                    oldReplacedView.Dispose();
+                }
+            }
         }
 
         Func<View> body;
@@ -176,7 +188,6 @@ namespace Comet
                 replaced.PopulateFromEnvironment();
 
                 replacedView = replaced;
-                replacedView.ViewHandler = ViewHandler;
                 return builtView = replacedView.GetRenderView();
             }
             CheckForBody();
