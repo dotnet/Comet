@@ -1,4 +1,5 @@
 ﻿using System;
+using Android.App;
 using AContext = Android.Content.Context;
 using AView = Android.Views.View;
 using AViewGroup = Android.Views.ViewGroup;
@@ -66,8 +67,7 @@ namespace Comet.Android
             {
                 newHandler.NativeViewChanged += HandleNativeViewChanged;
                 nativeView = newHandler.View ?? new AView(AndroidContext.CurrentContext);
-                AddView(nativeView, this.Width, this.Height);
-                this.RequestLayout();
+                AddView(nativeView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
             }
         }
 
@@ -84,14 +84,12 @@ namespace Comet.Android
             nativeView = newNativeView;
             if (newNativeView != null)
             {
-                AddView(nativeView, this.Width, this.Height);
-                this.RequestLayout();
+                AddView(nativeView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
             }
         }
 
         protected override void OnLayout(bool changed, int l, int t, int r, int b)
         {
-            var androidHandler = virtualView?.BuiltView?.ViewHandler as AndroidViewHandler;
             if (nativeView == null) return;
             nativeView.Layout(l, t, r, b);
             var rect = new RectangleF(l, t, Math.Abs(l - r), Math.Abs(b - t));
