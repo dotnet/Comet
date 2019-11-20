@@ -6,13 +6,13 @@ using UIKit;
 using MButton = MaterialComponents.Button;
 namespace Comet.Material.iOS
 {
-    public class ButtonHandler : AbstractControlHandler<Button, MButton>
+    public class ButtonHandler : MaterialViewHandler<Button, MButton>
     {
-        public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(ViewHandler.Mapper)
+        public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(MaterialViewHandler.Mapper)
         {
             [nameof(Button.Text)] = MapTextProperty,
-            [nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty,
-            //[EnvironmentKeys.Colors.Color] = MapColorProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
+            [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
         };
 
         public ButtonHandler() : base(Mapper)
@@ -35,24 +35,12 @@ namespace Comet.Material.iOS
                 DefaultColor = button.TitleColor(UIControlState.Normal).ToColor();
                 DefaultSelectedColor = button.TitleColor(UIControlState.Highlighted).ToColor();
             }
-            var semanticColorScheme = new SemanticColorScheme(ColorSchemeDefaults.Material201804)
-            {
-
-            };
-            var typographyScheme = new TypographyScheme();
-            buttonScheme = new ButtonScheme
-            {
-                ColorScheme = semanticColorScheme,
-                TypographyScheme = typographyScheme,
-                 ShapeScheme = new ShapeScheme(),
-            };
+          
 
             button.TouchUpInside += HandleTouchUpInside;
-            //button.SetTitleColor(UIColor.Blue, UIControlState.Normal);
-            ContainedButtonThemer.ApplyScheme(buttonScheme, button);
-            /*Layer.BorderColor = UIColor.Blue.CGColor;
-            Layer.BorderWidth = .5f;
-            Layer.CornerRadius = 3f;*/
+
+            RecreateScheme();
+            ApplyScheme();
 
             return button;
         }
@@ -76,14 +64,39 @@ namespace Comet.Material.iOS
 
         public static void MapColorProperty(IViewHandler viewHandler, Button virtualView)
         {
-            var nativeView = (UIButton)viewHandler.NativeView;
-            nativeView.SetTitleColor(virtualView.GetColor(DefaultColor).ToUIColor(), UIControlState.Normal);
+            var materialView = viewHandler as IMaterialView;
+            var color = virtualView.GetColor(null);
+           materialView.ColorScheme.SecondaryColor = color?.ToUIColor();
+
+            materialView.ApplyScheme();
         }
 
-
-        public static void MapOverlayProperty(IViewHandler handler, View virtualView)
+        public static void MapBackgroundColorProperty(IViewHandler handler, Button virtualView)
         {
+            var materialView = handler as IMaterialView;
+            var color = virtualView.GetBackgroundColor();
+            if (color != null)
+                materialView.ColorScheme.PrimaryColor = color.ToUIColor();
 
+            materialView.ApplyScheme();
+        }
+
+        public override void ApplyScheme()
+        {
+            if (TypedNativeView == null)
+                return;
+            ContainedButtonThemer.ApplyScheme(buttonScheme, TypedNativeView);
+        }
+
+        public override void RecreateScheme()
+        {
+            buttonScheme = new ButtonScheme
+            {
+                ColorScheme = this.ColorScheme,
+                TypographyScheme = this.TypographyScheme,
+                ShapeScheme = this.ShapeScheme,
+            };
+            ApplyScheme();
         }
     }
 }

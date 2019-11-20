@@ -178,6 +178,8 @@
     <ProjectReference Include="..\..\src\Material\Comet.Material.iOS\Comet.Material.iOS.csproj">
       <Project>{86DE0847-5552-4103-AA9F-53A5C8BDDAAE}</Project>
       <Name>Comet.Material.iOS</Name>
+      <IsAppExtension>false</IsAppExtension>
+      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
