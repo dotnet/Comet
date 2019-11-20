@@ -41,7 +41,7 @@ namespace Comet.Android.Handlers
         public virtual void SetView(View view)
         {
             _virtualView = view as TVirtualView;
-            _nativeView = CreateView(AndroidContext.CurrentContext);
+            _nativeView ??= CreateView(AndroidContext.CurrentContext);
             //_nativeView.list
 
             mapper?.UpdateProperties(this, _virtualView);
@@ -51,8 +51,8 @@ namespace Comet.Android.Handlers
         public virtual void Remove(View view)
         {
             ViewHandler.RemoveGestures(this, view);
-            _virtualView = null;
             _nativeView = null;
+            _virtualView = null;
         }
 
         protected virtual void DisposeView(TNativeView nativeView)
