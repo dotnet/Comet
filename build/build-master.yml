@@ -40,7 +40,7 @@ stages:
     displayName: Build Comet Mac
     pool:
       name: Hosted macOS
-      vmImage: 'macOS 10.14'
+      vmImage: 'macOS-latest'
       demands:
       - MSBuild
       - Xamarin.Android
@@ -200,7 +200,7 @@ stages:
     displayName: Build Comet Android Samples
     pool:
       name: Hosted macOS
-      vmImage: 'macOS 10.14'
+      vmImage: 'macOS-latest'
       demands:
       - MSBuild
       - Xamarin.Android
@@ -237,7 +237,7 @@ stages:
     displayName: Build Comet iOS and Mac Samples
     pool:
       name: Hosted macOS
-      vmImage: 'macOS 10.14'
+      vmImage: 'macOS-latest'
       demands:
       - xcode
       - Xamarin.iOS
