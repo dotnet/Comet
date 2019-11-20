@@ -40,7 +40,7 @@ stages:
     displayName: Build Comet Mac
     pool:
       name: Hosted macOS
-      vmImage: 'macOS 10.14'
+      vmImage: 'macOS-latest'
       demands:
       - MSBuild
       - Xamarin.Android
