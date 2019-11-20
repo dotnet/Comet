@@ -41,7 +41,7 @@ namespace Comet.iOS.Handlers
         public virtual void SetView(View view)
         {
             _virtualView = view as TVirtualView;
-            _nativeView = CreateView();
+            _nativeView ??= CreateView();
             mapper?.UpdateProperties(this, _virtualView);
             ViewHandler.AddGestures(this, view);
         }
@@ -50,7 +50,6 @@ namespace Comet.iOS.Handlers
         {
             ViewHandler.RemoveGestures(this, view);
             _virtualView = null;
-            _nativeView = null;
         }
 
         protected virtual void DisposeView(TNativeView nativeView)
