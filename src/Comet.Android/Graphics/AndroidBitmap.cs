@@ -1,8 +1,9 @@
-﻿using ABitmap = Android.Graphics.Bitmap;
+﻿using System.Drawing;
+using ABitmap = Android.Graphics.Bitmap;
 
 namespace Comet.Android.Graphics
 {
-    public class AndroidBitmap : Comet.Graphics.Bitmap
+	public class AndroidBitmap : Comet.Graphics.Bitmap
     {
         private ABitmap _bitmap;
 

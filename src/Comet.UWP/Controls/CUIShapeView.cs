@@ -1,11 +1,12 @@
-﻿using Windows.Foundation;
+﻿using System.Drawing;
+using Windows.Foundation;
 using Windows.UI.Xaml.Media;
 using WCanvas = Windows.UI.Xaml.Controls.Canvas;
 using WPath = Windows.UI.Xaml.Shapes.Path;
 
 namespace Comet.UWP.Controls
 {
-    public class CUIShapeView : WCanvas
+	public class CUIShapeView : WCanvas
     {
         private Shape _shape;
         private WPath _path;

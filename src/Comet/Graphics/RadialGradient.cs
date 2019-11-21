@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Comet.Graphics
 {
     public class RadialGradient : Gradient

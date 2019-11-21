@@ -2,10 +2,11 @@
 using SkiaSharp.Views.Android;
 using Android.Content;
 using Android.Views;
+using System.Drawing;
 
 namespace Comet.Skia.Android
 {
-    public class AndroidDrawableControl : SKCanvasView, IDrawableControl
+	public class AndroidDrawableControl : SKCanvasView, IDrawableControl
     {
         private  IControlDelegate _controlDelegate;
         private RectangleF _bounds;

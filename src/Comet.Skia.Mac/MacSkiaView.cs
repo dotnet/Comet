@@ -3,10 +3,11 @@ using CoreGraphics;
 using SkiaSharp.Views.Mac;
 using Comet.Mac;
 using AppKit;
+using System.Drawing;
 
 namespace Comet.Skia.Mac
 {
-    public class MacSkiaView : SKCanvasView
+	public class MacSkiaView : SKCanvasView
     {
         private SkiaView _virtualView;
         

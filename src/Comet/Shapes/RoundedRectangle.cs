@@ -1,4 +1,5 @@
 using Comet.Graphics;
+using System.Drawing;
 
 namespace Comet
 {

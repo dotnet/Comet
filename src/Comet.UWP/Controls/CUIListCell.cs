@@ -4,10 +4,11 @@ using Windows.UI.Xaml.Controls;
 using Comet.UWP.Handlers;
 using WGrid = Windows.UI.Xaml.Controls.Grid;
 using UwpSize = Windows.Foundation.Size;
+using System.Drawing;
 
 namespace Comet.UWP
 {
-    public class CUIListCell : WGrid
+	public class CUIListCell : WGrid
     {
         private View _view;
         private UIElement _nativeView;

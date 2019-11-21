@@ -1,10 +1,11 @@
 using System.Collections.Generic;
+using System.Drawing;
 using Comet.Skia;
 using SkiaSharp;
 
 namespace Comet.Samples.Skia
 {
-    public class BindableFingerPaint : SimpleFingerPaint
+	public class BindableFingerPaint : SimpleFingerPaint
     {
         private readonly List<List<PointF>> _pointsLists = new List<List<PointF>>();
         private Binding<float> _strokeWidth = 2f;

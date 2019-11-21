@@ -4,10 +4,11 @@ using Android.Widget;
 using Comet.Android.Controls;
 using AView = Android.Views.View;
 using AOrientation = Android.Widget.Orientation;
+using System.Drawing;
 
 namespace Comet.Android.Handlers
 {
-    public class HStackHandler : LinearLayout, AndroidViewHandler
+	public class HStackHandler : LinearLayout, AndroidViewHandler
     {
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 

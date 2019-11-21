@@ -1,9 +1,10 @@
 using System;
+using System.Drawing;
 using SkiaSharp;
 
 namespace Comet.Skia
 {
-    public interface IControlDelegate
+	public interface IControlDelegate
     {
         event Action Invalidated;
         PropertyMapper<DrawableControl> Mapper { get; }

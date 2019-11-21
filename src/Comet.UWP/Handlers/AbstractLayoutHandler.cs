@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -7,7 +8,7 @@ using UwpSize = Windows.Foundation.Size;
 
 namespace Comet.UWP.Handlers
 {
-    public abstract class AbstractLayoutHandler : Panel, UWPViewHandler
+	public abstract class AbstractLayoutHandler : Panel, UWPViewHandler
     {
         private AbstractLayout _view;
 

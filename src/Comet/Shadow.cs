@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Comet.Graphics
 {
     public class Shadow
@@ -5,7 +7,7 @@ namespace Comet.Graphics
         public Color Color { get; private set; } = Color.Black;
         public float Opacity { get; private set;} = .5f;
         public float Radius { get; private set;} = 10;
-        public SizeF Offset { get; private set;} = SizeF.Zero;
+        public SizeF Offset { get; private set;} = SizeF.Empty;
 
         public Shadow()
         {

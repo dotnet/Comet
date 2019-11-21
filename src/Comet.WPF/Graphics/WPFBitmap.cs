@@ -1,9 +1,11 @@
 ﻿using Comet.Graphics;
+using System.Drawing;
 using System.Windows.Media.Imaging;
+using Bitmap = Comet.Graphics.Bitmap;
 
 namespace Comet.WPF.Graphics
 {
-    public class WPFBitmap : Bitmap
+	public class WPFBitmap : Bitmap
     {
         private BitmapImage _image;
 

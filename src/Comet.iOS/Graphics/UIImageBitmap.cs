@@ -1,9 +1,11 @@
 ﻿using Comet.Graphics;
+using System.Drawing;
 using UIKit;
+using Bitmap = Comet.Graphics.Bitmap;
 
 namespace Comet.iOS.Graphics
 {
-    public class UIImageBitmap : Bitmap
+	public class UIImageBitmap : Bitmap
     {
         private UIImage _image;
 
@@ -12,7 +14,7 @@ namespace Comet.iOS.Graphics
             _image = image;
         }
 
-        public override SizeF Size => _image?.Size.ToSizeF() ?? SizeF.Zero;
+        public override SizeF Size => _image?.Size.ToSizeF() ?? SizeF.Empty;
 
         public override object NativeBitmap => _image;
 

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 // ReSharper disable MemberCanBePrivate.Global
@@ -337,7 +338,7 @@ namespace Comet.Graphics
        
         public PathF Rotate(float angle)
         {
-            var center = Bounds.Center;
+            var center = Bounds.Center();
             return Rotate(angle, center);
         }
 

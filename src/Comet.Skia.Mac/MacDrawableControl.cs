@@ -3,10 +3,11 @@ using CoreGraphics;
 using SkiaSharp.Views.Mac;
 using Comet.Mac;
 using AppKit;
+using System.Drawing;
 
 namespace Comet.Skia.Mac
 {
-    public class MacDrawableControl : SKCanvasView, IDrawableControl
+	public class MacDrawableControl : SKCanvasView, IDrawableControl
     {
         private  IControlDelegate _controlDelegate;
         

@@ -2,10 +2,11 @@
 using SkiaSharp.Views.Android;
 using Android.Content;
 using Android.Views;
+using System.Drawing;
 
 namespace Comet.Skia.Android
 {
-    public class AndroidSkiaView : SKCanvasView
+	public class AndroidSkiaView : SKCanvasView
     {
         private  SkiaView _virtualView;
         private RectangleF _bounds;

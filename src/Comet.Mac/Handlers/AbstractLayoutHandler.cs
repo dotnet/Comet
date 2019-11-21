@@ -3,6 +3,7 @@ using AppKit;
 using CoreGraphics;
 using Comet.Mac.Controls;
 using Comet.Mac.Extensions;
+using System.Drawing;
 
 namespace Comet.Mac.Handlers
 {

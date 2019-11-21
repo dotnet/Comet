@@ -4,10 +4,11 @@ using Android.Widget;
 using Android.Support.V7.Widget;
 using AView = Android.Views.View;
 using Comet.Android.Controls;
+using System.Drawing;
 
 namespace Comet.Android.Handlers
 {
-    public class ListViewHandler : RecyclerView, AndroidViewHandler
+	public class ListViewHandler : RecyclerView, AndroidViewHandler
     {
         public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 

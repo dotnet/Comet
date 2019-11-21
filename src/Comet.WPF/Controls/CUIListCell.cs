@@ -1,4 +1,5 @@
 ﻿using Comet.WPF.Handlers;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using WGrid = System.Windows.Controls.Grid;
@@ -6,7 +7,7 @@ using WPFSize = System.Windows.Size;
 
 namespace Comet.WPF
 {
-    public class CUIListCell : WGrid
+	public class CUIListCell : WGrid
     {
         private View _view;
         private UIElement _nativeView;
@@ -68,7 +69,7 @@ namespace Comet.WPF
             if (double.IsInfinity(availableSize.Width))
                 availableSize.Width = 800;
 
-            var measuredSize = _view?.Measure(availableSize.ToSizeF()).ToSize();
+            var measuredSize = _view?.Measure(availableSize.ToSizeF()).ToWSize();
             return measuredSize ?? availableSize;
         }
 

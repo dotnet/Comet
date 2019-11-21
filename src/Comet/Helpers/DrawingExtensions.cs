@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Comet.Graphics;
 
 // ReSharper disable once CheckNamespace

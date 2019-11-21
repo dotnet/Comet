@@ -2,10 +2,11 @@
 using CoreGraphics;
 using AppKit;
 using Comet.Mac.Extensions;
+using System.Drawing;
 
 namespace Comet.Mac
 {
-    public class CUIShapeView : NSView
+	public class CUIShapeView : NSView
     {
         public View View { get; internal set; }
         public Shape Shape

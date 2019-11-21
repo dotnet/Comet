@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Comet.Reflection;
 
-namespace Comet.Tests.Handlers 
+namespace Comet.Tests.Handlers
 {
 	public class GenericViewHandler: IViewHandler 
 	{

@@ -1,6 +1,8 @@
-﻿namespace Comet.Samples
+﻿using System.Drawing;
+
+namespace Comet.Samples
 {
-    public class AnimationSample : View
+	public class AnimationSample : View
     {
         public AnimationSample()
         {
