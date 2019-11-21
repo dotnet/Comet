@@ -56,8 +56,7 @@ stages:
           version: 3.0.100-preview9-014004
           includePreviewVersions: true
           installationPath: $(Agent.ToolsDirectory)/dotnet
-
-    - task: NuGetToolInstaller@1
+      - task: NuGetToolInstaller@1
       displayName: Use Nuget 5.0.2
       inputs:
         versionSpec: '5.0.2'
