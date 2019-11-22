@@ -12,7 +12,7 @@ namespace Comet.Android.Graphics
             _bitmap = image;
         }
 
-        public override SizeF Size => _bitmap != null ? new SizeF(_bitmap.Width, _bitmap.Height) : SizeF.Zero;
+        public override SizeF Size => _bitmap != null ? new SizeF(_bitmap.Width, _bitmap.Height) : SizeF.Empty;
 
         public override object NativeBitmap => _bitmap;
 
