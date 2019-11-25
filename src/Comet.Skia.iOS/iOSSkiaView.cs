@@ -5,6 +5,7 @@ using SkiaSharp.Views.iOS;
 using Comet.iOS;
 using UIKit;
 using System.Linq;
+using System.Drawing;
 
 namespace Comet.Skia.iOS
 {

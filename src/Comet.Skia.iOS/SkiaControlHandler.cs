@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+
 namespace Comet.Skia.iOS
 {
     public class SkiaControlHandler<T> : SkiaViewHandler

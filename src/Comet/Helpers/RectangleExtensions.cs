@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+
 namespace Comet
 {
     public static class RectangleExtensions

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using SkiaSharp;
 using Topten.RichTextKit;
 using Comet.Skia.Internal;
+using System.Drawing;
 
 namespace Comet.Skia
 {

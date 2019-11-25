@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+
 namespace Comet.Skia.Android
 {
     public class SkiaControlHandler<T> : SkiaViewHandler
