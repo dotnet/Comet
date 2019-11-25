@@ -49,8 +49,8 @@
     <Compile Include="SkiaControlHandler.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="1.68.0" />
-    <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
+    <PackageReference Include="SkiaSharp" Version="1.68.1" />
+    <PackageReference Include="SkiaSharp.Views" Version="1.68.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet.iOS\Comet.iOS.csproj">

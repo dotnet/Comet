@@ -17,7 +17,7 @@
     <ItemGroup>
 
     
-      <PackageReference Include="SkiaSharp" Version="1.68.0" />
+      <PackageReference Include="SkiaSharp" Version="1.68.1" />
       <PackageReference Include="Topten.RichTextKit" Version="0.1.116" />
     </ItemGroup>
 
