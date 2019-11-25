@@ -37,10 +37,7 @@ namespace Comet.iOS.Sample {
             new MaterialStyle(ColorPalette.Blue).Apply();
             Comet.Skia.iOS.UI.Init();
             Comet.iOS.UI.Init();
-
-            Registrar.Handlers.Register<Button, Skia.iOS.SkiaControlHandler<Skia.ButtonHandler>>();
-            Registrar.Handlers.Register<Text, Skia.iOS.SkiaControlHandler<Skia.TextHandler>>();
-
+            ActivateSkiaDrawnControls();
             "turtlerock.jpg".LoadImage();
             window = new UIWindow {
 				RootViewController = new MainPage (new List<MenuItem>
@@ -57,6 +54,13 @@ namespace Comet.iOS.Sample {
 
 			return true;
 		}
+
+        public void ActivateSkiaDrawnControls()
+        {
+            Registrar.Handlers.Register<Button, Skia.iOS.SkiaControlHandler<Skia.ButtonHandler>>();
+            Registrar.Handlers.Register<Text, Skia.iOS.SkiaControlHandler<Skia.TextHandler>>();
+        }
+
 
 		public override void OnResignActivation (UIApplication application)
 		{

@@ -93,6 +93,6 @@ namespace Comet.Skia
             }
         }
 
-        protected override string AccessibilityText() => VirtualButton?.Text;
+        public override string AccessibilityText() => VirtualButton?.Text;
     }
 }

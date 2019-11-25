@@ -54,7 +54,13 @@ namespace Comet.Skia.iOS
         {
             if (Handle == IntPtr.Zero)
                 return;
-
+            var control = _virtualView as SkiaControl;
+            if (control != null)
+            {
+                this.AccessibilityLabel = control.AccessibilityText();
+                //this.AccessibilityTraits = UIAccessibilityTrait.StaticText;
+                this.IsAccessibilityElement = true;
+            }
             SetNeedsDisplay();
         }
 

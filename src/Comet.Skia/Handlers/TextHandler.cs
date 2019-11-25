@@ -54,7 +54,7 @@ namespace Comet.Skia
             return new SizeF(size.Width + hPadding, size.Height + (vPadding * 2));
         }
 
-        protected override string AccessibilityText() => VirtualText?.Value;
+        public override string AccessibilityText() => VirtualText?.Value;
 
         public static void MapValueProperty(IViewHandler viewHandler, SkiaView virtualView)
         {
