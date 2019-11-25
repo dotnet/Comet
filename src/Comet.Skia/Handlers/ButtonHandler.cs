@@ -47,7 +47,7 @@ namespace Comet.Skia
         public override SizeF Measure(SizeF availableSize)
         {
             var button = VirtualButton;
-            var size = SkiaText.GetTextSize(button.Text, button.GetFont(defaultFont),
+            var size = SkiaTextHelper.GetTextSize(button.Text, button.GetFont(defaultFont),
                 button.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center,
                 button.GetLineBreakMode(LineBreakMode.NoWrap),availableSize.Width - minHPadding);
             return new SizeF(size.Width + hPadding,size.Height + vPadding);
@@ -92,5 +92,7 @@ namespace Comet.Skia
                 Invalidate();
             }
         }
+
+        protected override string AccessibilityText() => VirtualButton?.Text;
     }
 }

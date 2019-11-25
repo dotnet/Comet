@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace Comet.Skia
 {
-    public static class SkiaText
+    public static class SkiaTextHelper
     {
 
         public static SizeF GetTextSize(string text, FontAttributes fontAttributes, TextAlignment alignment, LineBreakMode lineBreakMode, float maxWidth, float height = -1)

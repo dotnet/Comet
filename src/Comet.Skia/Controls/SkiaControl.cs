@@ -68,5 +68,7 @@ namespace Comet.Skia
            
             tb.Paint(canvas,new SKPoint(0,y));
         }
+
+        protected abstract string AccessibilityText();
     }
 }

@@ -22,7 +22,7 @@ namespace Comet.Android.Sample
 #endif
             Comet.Skia.Android.UI.Init();
             Comet.Android.UI.Init();
-            Registrar.Handlers.Register<Button, Skia.Android.SkiaControlHandler<Skia.Button>>();
+            Registrar.Handlers.Register<Button, Skia.Android.SkiaControlHandler<Skia.ButtonHandler>>();
 
             Page = new MainPage();
         }
