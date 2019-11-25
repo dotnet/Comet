@@ -12,6 +12,7 @@
             // Controls
             Registrar.Handlers.Register<DrawableControl, DrawableControlHandler> ();
             Registrar.Handlers.Register<SkiaView, SkiaViewHandler> ();
+			Registrar.Handlers.Register<SKButton, SkiaControlHandler<ButtonHandler>>();
 		}
     }
 }

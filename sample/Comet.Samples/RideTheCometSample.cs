@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Comet.Skia;
 
 /*
  
@@ -43,7 +44,7 @@ namespace Comet.Samples.Comparisons
                     .Color(Color.White)
                     .Background(Color.Green)
                 .RoundedBorder(color:Color.Blue)
-                .Shadow(Color.Grey,4,2,2)
+                .Shadow(Color.Grey,4,2,2),
             };
 
         public class Comet : BindingObject

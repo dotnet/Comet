@@ -28,6 +28,7 @@
     </ItemGroup>
     <ItemGroup>
       <Folder Include="Controls\" />
+      <Folder Include="Handlers\" />
     </ItemGroup>
     <ItemGroup>
       <None Remove="Controls\SkiaControl.config" />

@@ -37,7 +37,9 @@ namespace Comet.iOS.Sample {
             new MaterialStyle(ColorPalette.Blue).Apply();
             Comet.Skia.iOS.UI.Init();
             Comet.iOS.UI.Init();
-            Registrar.Handlers.Register<Button, Skia.iOS.SkiaControlHandler<Skia.ButtonHandler>>();
+
+            //Registrar.Handlers.Register<Button, Skia.iOS.SkiaControlHandler<Skia.ButtonHandler>>();
+
             "turtlerock.jpg".LoadImage();
             window = new UIWindow {
 				RootViewController = new MainPage (new List<MenuItem>
