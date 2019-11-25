@@ -1,10 +1,11 @@
 using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 
 namespace Comet.WPF.Handlers
 {
-    public abstract class AbstractStackLayoutHandler : StackPanel, WPFViewHandler
+	public abstract class AbstractStackLayoutHandler : StackPanel, WPFViewHandler
     {
         private AbstractLayout _view;
 

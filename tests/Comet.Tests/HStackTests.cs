@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Comet.Tests
 {
-    public class HStackTests : TestBase
+	public class HStackTests : TestBase
     {
         public class HStackTestView1 : View
         {

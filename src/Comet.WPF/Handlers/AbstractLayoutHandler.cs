@@ -1,12 +1,13 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
 using WPFSize = System.Windows.Size;
 
 namespace Comet.WPF.Handlers
 {
-    public abstract class AbstractLayoutHandler : Panel, WPFViewHandler
+	public abstract class AbstractLayoutHandler : Panel, WPFViewHandler
     {
         private AbstractLayout _view;
 
@@ -109,7 +110,7 @@ namespace Comet.WPF.Handlers
 
         protected override WPFSize MeasureOverride(WPFSize availableSize)
         {
-            return _view.Measure(availableSize.ToSizeF()).ToSize();
+            return _view.Measure(availableSize.ToSizeF()).ToWSize();
         }
 
         protected override WPFSize ArrangeOverride(WPFSize finalSize)

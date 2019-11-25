@@ -1,3 +1,5 @@
+using System.Drawing;
+
 namespace Comet.Layout
 {
     public interface ILayoutManager

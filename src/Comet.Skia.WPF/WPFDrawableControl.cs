@@ -1,12 +1,14 @@
 ﻿using SkiaSharp.Views.Desktop;
 using SkiaSharp.Views.WPF;
 using System;
+using System.Drawing;
 using System.Windows;
 using System.Windows.Input;
+using Size = System.Windows.Size;
 
 namespace Comet.Skia.WPF
 {
-    public class WPFDrawableControl : SKElement, IDrawableControl
+	public class WPFDrawableControl : SKElement, IDrawableControl
     {
         private IControlDelegate _controlDelegate;
         private RectangleF _bounds;

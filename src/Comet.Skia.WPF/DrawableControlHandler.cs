@@ -1,11 +1,12 @@
 ﻿using Comet.WPF.Handlers;
+using System.Drawing;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable MemberCanBePrivate.Global
 
 namespace Comet.Skia.WPF
 {
-    public class DrawableControlHandler : AbstractControlHandler<DrawableControl, WPFDrawableControl>
+	public class DrawableControlHandler : AbstractControlHandler<DrawableControl, WPFDrawableControl>
     {
         protected override WPFDrawableControl CreateView()
         {

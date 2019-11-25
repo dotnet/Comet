@@ -1,4 +1,6 @@
-﻿namespace Comet.Tests.Handlers 
+﻿using System.Drawing;
+
+namespace Comet.Tests.Handlers
 {
 	public class TextFieldHandler: GenericViewHandler 
 	{

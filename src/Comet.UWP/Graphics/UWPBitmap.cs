@@ -1,9 +1,10 @@
 ﻿using Comet.Graphics;
+using System.Drawing;
 using Windows.UI.Xaml.Media.Imaging;
 
 namespace Comet.UWP.Graphics
 {
-    public class UWPBitmap : Bitmap
+	public class UWPBitmap : Bitmap
     {
         private WriteableBitmap _image;
 

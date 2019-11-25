@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using Comet.UWP.Controls;
 using Windows.UI.Xaml;
 
 namespace Comet.UWP.Handlers
 {
-    public abstract class AbstractControlHandler<TVirtualView, TNativeView> : UWPViewHandler
+	public abstract class AbstractControlHandler<TVirtualView, TNativeView> : UWPViewHandler
         where TVirtualView : View
         where TNativeView : UIElement
     {

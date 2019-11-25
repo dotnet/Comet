@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using Comet.Layout;
 
 namespace Comet
 {
-	public abstract class AbstractLayout : ContainerView
+    public abstract class AbstractLayout : ContainerView
     {
 		private readonly ILayoutManager _layout;
 		

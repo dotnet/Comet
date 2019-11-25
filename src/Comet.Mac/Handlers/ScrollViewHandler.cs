@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using AppKit;
 using Comet.Mac.Extensions;
 
 namespace Comet.Mac.Handlers
 {
-    public class ScrollViewHandler : AbstractControlHandler<ScrollView, NSScrollView>
+	public class ScrollViewHandler : AbstractControlHandler<ScrollView, NSScrollView>
     {
         public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
         {

@@ -2,6 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using Comet.WPF.Controls;
+using System.Drawing;
 
 
 namespace Comet.WPF.Handlers
@@ -71,7 +72,7 @@ namespace Comet.WPF.Handlers
         
         public virtual SizeF Measure(SizeF availableSize)
         {
-            _nativeView?.Measure(availableSize.ToSize());
+            _nativeView?.Measure(availableSize.ToWSize());
             return _nativeView?.DesiredSize.ToSizeF() ?? availableSize;
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Drawing;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Comet.Helpers;
@@ -98,8 +99,8 @@ namespace Comet
                     return;
 
                 measurementValid = false;
-                _measuredSize = SizeF.Zero;
-                frame = RectangleF.Zero;
+                _measuredSize = SizeF.Empty;
+                frame = RectangleF.Empty;
                 
                 var oldViewHandler = viewHandler;
                 viewHandler?.Remove(this);
@@ -428,7 +429,7 @@ namespace Comet
             MeasurementValid = false;
 
             // TODO We should "invalidate" layout here. Close enough for now?
-            frame = RectangleF.Zero;
+            frame = RectangleF.Empty;
 
             Parent?.InvalidateMeasurement();
             NeedsLayout?.Invoke(this, EventArgs.Empty);

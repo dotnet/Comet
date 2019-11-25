@@ -1,6 +1,7 @@
 ﻿using System;
+using System.Drawing;
 
-namespace Comet 
+namespace Comet
 {
 	public interface IViewHandler //TODO: UnComment this: IDisposable
 	{

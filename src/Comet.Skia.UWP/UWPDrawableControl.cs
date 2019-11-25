@@ -4,10 +4,11 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Input;
 using Comet.UWP;
 using SkiaSharp.Views.UWP;
+using System.Drawing;
 
 namespace Comet.Skia.UWP
 {
-    public class UWPDrawableControl : global::SkiaSharp.Views.UWP.SKXamlCanvas, IDrawableControl
+	public class UWPDrawableControl : global::SkiaSharp.Views.UWP.SKXamlCanvas, IDrawableControl
     {
         private readonly List<uint> _touchIds = new List<uint>();
         private readonly List<PointF> _touchPoints = new List<PointF>();

@@ -1,10 +1,11 @@
 using System;
 using CoreGraphics;
 using Comet.Graphics;
+using System.Drawing;
 
 namespace Comet.Mac
 {
-    public static class CoreGraphicsExtensions
+	public static class CoreGraphicsExtensions
     {
         public static PointF ToPointF(this CGPoint size)
         {

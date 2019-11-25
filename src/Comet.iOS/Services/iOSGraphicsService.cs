@@ -1,10 +1,11 @@
 using CoreGraphics;
 using Comet.Graphics;
 using Comet.Services;
+using System.Drawing;
 
 namespace Comet.iOS.Services
 {
-    public class iOSGraphicsService : IGraphicsService
+	public class iOSGraphicsService : IGraphicsService
     {
         public RectangleF GetPathBounds(PathF path)
         {

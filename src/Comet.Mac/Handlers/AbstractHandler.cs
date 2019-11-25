@@ -1,6 +1,7 @@
 using System;
 using Comet.Mac.Controls;
 using AppKit;
+using System.Drawing;
 
 namespace Comet.Mac.Handlers
 {

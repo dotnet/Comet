@@ -1,8 +1,9 @@
-﻿using ABitmap = Android.Graphics.Bitmap;
+﻿using System.Drawing;
+using ABitmap = Android.Graphics.Bitmap;
 
 namespace Comet.Android.Graphics
 {
-    public class AndroidBitmap : Comet.Graphics.Bitmap
+	public class AndroidBitmap : Comet.Graphics.Bitmap
     {
         private ABitmap _bitmap;
 
@@ -11,7 +12,7 @@ namespace Comet.Android.Graphics
             _bitmap = image;
         }
 
-        public override SizeF Size => _bitmap != null ? new SizeF(_bitmap.Width, _bitmap.Height) : SizeF.Zero;
+        public override SizeF Size => _bitmap != null ? new SizeF(_bitmap.Width, _bitmap.Height) : SizeF.Empty;
 
         public override object NativeBitmap => _bitmap;
 

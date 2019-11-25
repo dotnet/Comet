@@ -7,7 +7,7 @@ using UWPPoint = Windows.Foundation.Point;
 
 namespace Comet.UWP
 {
-    public static class FoundationExtensions
+	public static class FoundationExtensions
     {
         public static PointF ToPointF(this PointerPoint point)
         {
