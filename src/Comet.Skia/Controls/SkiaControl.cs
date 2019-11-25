@@ -8,13 +8,19 @@ namespace Comet.Skia
 {
     public abstract class SkiaControl : SkiaView
     {
-        protected View VirtualView { get; private set; }
+
+        protected SkiaControl() : this(new PropertyMapper<SkiaView>()) { }
+
+        protected SkiaControl(PropertyMapper<SkiaView> mapper) : base(mapper) { }
+
+        public View VirtualView { get; private set; }
 
         public override SizeF Measure(SizeF availableSize) => new SizeF(100, 44);
 
         public virtual void SetView(View view)
         {
             VirtualView = view;
+            this.Parent = view?.Parent;
         }
 
         public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
@@ -56,6 +62,7 @@ namespace Comet.Skia
             tb.AddText(text, data.ToStyle(color));
             tb.MaxWidth = VirtualView.Frame.Width;
             tb.MaxHeight = VirtualView.Frame.Height;
+            tb.MaxLines = null;
             tb.Alignment = alignment.ToTextAlignment();
             tb.Layout();
 

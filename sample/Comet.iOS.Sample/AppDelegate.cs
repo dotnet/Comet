@@ -38,7 +38,7 @@ namespace Comet.iOS.Sample {
             Comet.Skia.iOS.UI.Init();
             Comet.iOS.UI.Init();
 
-            //Registrar.Handlers.Register<Button, Skia.iOS.SkiaControlHandler<Skia.ButtonHandler>>();
+            Registrar.Handlers.Register<Button, Skia.iOS.SkiaControlHandler<Skia.ButtonHandler>>();
             Registrar.Handlers.Register<Text, Skia.iOS.SkiaControlHandler<Skia.TextHandler>>();
 
             "turtlerock.jpg".LoadImage();

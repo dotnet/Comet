@@ -31,7 +31,7 @@ namespace Comet.Samples.Comparisons
         [Body]
         View body()
             => new VStack {
-                new Text(()=> $"({comet.Rides}) rides taken: {comet.CometTrain}")
+                new Text(()=> $"({comet.Rides}) rides taken:{comet.CometTrain}")
                     .Frame(width:300)
                     .LineBreakMode(LineBreakMode.CharacterWrap)
                     ,

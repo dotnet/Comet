@@ -16,6 +16,8 @@ namespace Comet.Skia
             tb.AddText(text, fontAttributes.ToStyle());
             tb.Alignment = alignment.ToTextAlignment();
             tb.MaxWidth = maxWidth;
+            
+            tb.MaxLines = null;
             tb.Layout();
             return new SizeF(tb.MeasuredWidth, tb.MeasuredHeight);
         }

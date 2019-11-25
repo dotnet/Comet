@@ -28,15 +28,26 @@ namespace Comet.Skia.iOS
             set
             {
                 if (_virtualView != null)
+                {
                     _virtualView.Invalidated -= HandleInvalidated;
+                    _virtualView.NeedsLayout -= NeedsLayout;
+                }
 
                 _virtualView = value;
 
                 if (_virtualView != null)
+                {
                     _virtualView.Invalidated += HandleInvalidated;
+                    _virtualView.NeedsLayout += NeedsLayout;
+                }
 
                 HandleInvalidated();
             }
+        }
+
+        private void NeedsLayout(object sender, EventArgs e)
+        {
+            SetNeedsLayout();
         }
 
         private void HandleInvalidated()

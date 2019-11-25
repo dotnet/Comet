@@ -6,14 +6,29 @@ namespace Comet.Skia
 {
     public class TextHandler : SkiaControl
     {
-		static float hPadding = 40;
+        public static readonly PropertyMapper<SkiaView> Mapper = new PropertyMapper<SkiaView>()
+        {
+            [nameof(Comet.Text.Value)] = MapValueProperty,
+            [nameof(EnvironmentKeys.Text.Alignment)] = MapValueProperty,
+            [EnvironmentKeys.Fonts.Family] = MapValueProperty,
+            [EnvironmentKeys.Fonts.Italic] = MapValueProperty,
+            [EnvironmentKeys.Fonts.Size] = MapValueProperty,
+            [EnvironmentKeys.Fonts.Weight] = MapValueProperty,
+            [EnvironmentKeys.Colors.Color] = MapValueProperty,
+            [EnvironmentKeys.LineBreakMode.Mode] = MapValueProperty,
+        };
+        public TextHandler() : base(Mapper)
+        {
+
+        }
+        static float hPadding = 40;
         static float minHPadding = 10;
         static float vPadding = 10;
 
         static FontAttributes defaultFont = new FontAttributes
         {
             Family = "System",
-            Size = 14,
+            Size = 16,
             Weight = Weight.Regular,
         };
 
@@ -33,9 +48,19 @@ namespace Comet.Skia
             var size = SkiaTextHelper.GetTextSize(text.Value, text.GetFont(defaultFont),
                 text.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center,
                 text.GetLineBreakMode(LineBreakMode.NoWrap), availableSize.Width - minHPadding);
-            return new SizeF(size.Width + hPadding, size.Height + vPadding);
+            var margin = text.GetMargin();
+            if (size.Width > 300)
+                Console.WriteLine("Hi");
+            return new SizeF(size.Width + hPadding, size.Height + (vPadding * 2));
         }
 
         protected override string AccessibilityText() => VirtualText?.Value;
+
+        public static void MapValueProperty(IViewHandler viewHandler, SkiaView virtualView)
+        {
+            var control = virtualView as SkiaControl;
+            control.VirtualView.InvalidateMeasurement();
+            virtualView.Invalidate();
+        }
     }
 }

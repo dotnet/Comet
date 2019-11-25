@@ -83,7 +83,7 @@ namespace Comet.Skia
         }
         
         protected void SetBindingValue<T>(
-            ref Binding<T> currentValue, 
+            ref Binding<T> currentValue,
             Binding<T> newValue, 
             [CallerMemberName] string propertyName = "")
         {
