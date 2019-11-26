@@ -35,9 +35,12 @@ namespace Comet.iOS.Sample {
             
             //TODO make it to where this isnt needed
             new MaterialStyle(ColorPalette.Blue).Apply();
-            Comet.Skia.iOS.UI.Init();
-            Comet.iOS.UI.Init();
-            ActivateSkiaDrawnControls();
+            //Enables Skia
+            Comet.Skia.UI.Init();
+
+            //Replaces Native controls with Skia Controls
+            Comet.Skia.Controls.Init();
+
             "turtlerock.jpg".LoadImage();
             window = new UIWindow {
 				RootViewController = new MainPage (new List<MenuItem>
@@ -57,8 +60,7 @@ namespace Comet.iOS.Sample {
 
         public void ActivateSkiaDrawnControls()
         {
-            Registrar.Handlers.Register<Button, Skia.iOS.SkiaControlHandler<Skia.ButtonHandler>>();
-            Registrar.Handlers.Register<Text, Skia.iOS.SkiaControlHandler<Skia.TextHandler>>();
+            Skia.iOS.Controls.Init();
         }
 
 

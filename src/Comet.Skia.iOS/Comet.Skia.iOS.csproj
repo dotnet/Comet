@@ -47,6 +47,7 @@
     <Compile Include="SkiaViewHandler.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="SkiaControlHandler.cs" />
+    <Compile Include="Controls.cs" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="1.68.1" />

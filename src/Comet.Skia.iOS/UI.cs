@@ -1,4 +1,6 @@
-﻿namespace Comet.Skia.iOS
+﻿using Comet.Skia.iOS;
+
+namespace Comet.Skia
 {
 	public static class UI
     {
@@ -8,12 +10,12 @@
 		{
 			if (_hasInitialized) return;
 			_hasInitialized = true;
-
             // Controls
             Registrar.Handlers.Register<DrawableControl, DrawableControlHandler> ();
             Registrar.Handlers.Register<SkiaView, SkiaViewHandler> ();
-			Registrar.Handlers.Register<SKButton, SkiaControlHandler<ButtonHandler>>();
-			Registrar.Handlers.Register<SKText, SkiaControlHandler<TextHandler>>();
+
+			var generic = typeof(SkiaControlHandler<>);
+			Skia.Internal.Registration.RegisterDefaultViews(generic);
 		}
     }
 }
