@@ -13,7 +13,7 @@ namespace Comet.UWP.Graphics
             _image = image;
         }
 
-        public override SizeF Size => _image != null ? new SizeF(_image.PixelWidth, _image.PixelHeight) : SizeF.Zero;
+        public override SizeF Size => _image != null ? new SizeF(_image.PixelWidth, _image.PixelHeight) : SizeF.Empty;
 
         public override object NativeBitmap => _image;
 
