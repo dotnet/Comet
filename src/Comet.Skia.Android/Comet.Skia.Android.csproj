@@ -52,6 +52,7 @@
     <Compile Include="SkiaViewHandler.cs" />
     <Compile Include="UI.cs" />
     <Compile Include="SkiaControlHandler.cs" />
+    <Compile Include="Controls.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -59,10 +60,10 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="28.0.0.1" />
     <PackageReference Include="SkiaSharp">
-      <Version>1.68.0</Version>
+      <Version>1.68.1</Version>
     </PackageReference>
     <PackageReference Include="SkiaSharp.Views">
-      <Version>1.68.0</Version>
+      <Version>1.68.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
