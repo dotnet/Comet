@@ -111,7 +111,7 @@ namespace Comet.UWP.Handlers
 
         protected override UwpSize MeasureOverride(UwpSize availableSize)
         {
-            return _view?.Measure(availableSize.ToSizeF()).ToSize() ?? availableSize;
+            return _view?.Measure(availableSize.ToSizeF()).ToWSize() ?? availableSize;
         }
 
         protected override UwpSize ArrangeOverride(UwpSize finalSize)

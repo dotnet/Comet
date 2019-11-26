@@ -24,7 +24,7 @@ namespace Comet.UWP
             return new SizeF((float) size.Width, (float) size.Height);
         }
 
-        public static UWPSize ToSize(this SizeF size)
+        public static UWPSize ToWSize(this SizeF size)
         {
             return new UWPSize((float)size.Width, (float)size.Height);
         }

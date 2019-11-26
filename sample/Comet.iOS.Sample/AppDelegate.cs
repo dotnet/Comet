@@ -32,14 +32,17 @@ namespace Comet.iOS.Sample {
             Comet.Reload.Init();
 #endif
 
-            
-            //TODO make it to where this isnt needed
-            new MaterialStyle(ColorPalette.Blue).Apply();
+            //Adds the material Style
+            //new MaterialStyle(ColorPalette.Blue).Apply();
+
             //Enables Skia
             Comet.Skia.UI.Init();
 
             //Replaces Native controls with Skia Controls
             Comet.Skia.Controls.Init();
+
+            //Replaces the native controls with controls from Googles Material Lib
+            //Comet.Material.iOS.UI.Init();
 
             "turtlerock.jpg".LoadImage();
             window = new UIWindow {

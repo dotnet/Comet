@@ -3,6 +3,7 @@ using Windows.Foundation;
 using Windows.UI.Xaml.Media;
 using WCanvas = Windows.UI.Xaml.Controls.Canvas;
 using WPath = Windows.UI.Xaml.Shapes.Path;
+using Size = Windows.Foundation.Size;
 
 namespace Comet.UWP.Controls
 {
