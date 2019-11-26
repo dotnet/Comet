@@ -61,11 +61,6 @@ namespace Comet.iOS.Sample {
 			return true;
 		}
 
-        public void ActivateSkiaDrawnControls()
-        {
-            Skia.iOS.Controls.Init();
-        }
-
 
 		public override void OnResignActivation (UIApplication application)
 		{
