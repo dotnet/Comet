@@ -33,10 +33,10 @@ namespace Comet.iOS.Sample {
 #endif
             //TODO make it to where this isnt needed
 
-            new MaterialStyle(ColorPalette.Blue).Apply();
+            //new MaterialStyle(ColorPalette.Blue).Apply();
             Comet.Skia.iOS.UI.Init();
             Comet.iOS.UI.Init();
-            Comet.Material.iOS.UI.Init();
+            //Comet.Material.iOS.UI.Init();
             "turtlerock.jpg".LoadImage();
             window = new UIWindow {
 				RootViewController = new MainPage (new List<MenuItem>
