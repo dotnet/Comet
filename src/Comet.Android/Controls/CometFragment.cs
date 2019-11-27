@@ -8,8 +8,8 @@ namespace Comet.Android.Controls
 {
     public class CometFragment : Fragment
     {
-        private readonly View view;
-        public string Title { get; }
+        CometView containerView;
+        View startingCurrentView;
 
         public CometFragment()
         {
@@ -17,25 +17,42 @@ namespace Comet.Android.Controls
 
         public CometFragment(View view)
         {
-            this.view = view;
-            this.Title = view?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
+            this.CurrentView = view;
         }
 
-        AView currentBuiltView;
+        public string Title { get; set; }
+
+        public View CurrentView
+        {
+            get => containerView?.CurrentView ?? startingCurrentView;
+            set
+            {
+                if (containerView != null)
+                    containerView.CurrentView = value;
+                else
+                    startingCurrentView = value;
+
+                Title = value?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? value?.BuiltView?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
+            }
+        }
+
         public override AView OnCreateView(LayoutInflater inflater,
             ViewGroup container,
-            Bundle savedInstanceState) => currentBuiltView = view.ToView();
+            Bundle savedInstanceState)
+        {
+            containerView = new CometView(AndroidContext.CurrentContext);
+            containerView.CurrentView = startingCurrentView;
+            startingCurrentView = null;
+            return containerView;
+        }
 
         public override void OnDestroy()
         {
-            if (view != null)
+            if (containerView != null)
             {
-                view.ViewHandler = null;
-            }
-            if (currentBuiltView != null)
-            {
-                currentBuiltView?.Dispose();
-                currentBuiltView = null;
+                containerView.CurrentView.ViewHandler = null;
+                containerView.CurrentView?.Dispose();
+                containerView.CurrentView = null;
             }
             base.OnDestroy();
             this.Dispose();
