@@ -1,9 +1,9 @@
 namespace Comet.Graphics
 {
-    public enum DrawingStyle
-    {
-        StrokeFill,
-        Stroke,
-        Fill
-    }
+	public enum DrawingStyle
+	{
+		StrokeFill,
+		Stroke,
+		Fill
+	}
 }

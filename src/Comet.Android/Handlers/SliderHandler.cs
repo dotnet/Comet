@@ -7,53 +7,53 @@ using Android.Widget;
 
 namespace Comet.Android.Handlers
 {
-    public class SliderHandler : AbstractControlHandler<Slider, SeekBar>
-    {
-        public static readonly PropertyMapper<Slider> Mapper = new PropertyMapper<Slider>(ViewHandler.Mapper)
-        {
-            [nameof(Slider.Value)] = MapValueProperty,
-            [nameof(Slider.From)] = MapFromProperty,
-            [nameof(Slider.Through)] = MapThroughProperty,
-        };
-        
-        public SliderHandler() : base(Mapper)
-        {
+	public class SliderHandler : AbstractControlHandler<Slider, SeekBar>
+	{
+		public static readonly PropertyMapper<Slider> Mapper = new PropertyMapper<Slider>(ViewHandler.Mapper)
+		{
+			[nameof(Slider.Value)] = MapValueProperty,
+			[nameof(Slider.From)] = MapFromProperty,
+			[nameof(Slider.Through)] = MapThroughProperty,
+		};
 
-        }
+		public SliderHandler() : base(Mapper)
+		{
 
-        protected override SeekBar CreateView(Context context)
-        {
-            var slider = new SeekBar(context);
-            slider.ProgressChanged += HandleValueChanged;
-            return slider;
-        }
+		}
 
-        protected override void DisposeView(SeekBar nativeView)
-        {
-            nativeView.ProgressChanged -= HandleValueChanged;
-        }
+		protected override SeekBar CreateView(Context context)
+		{
+			var slider = new SeekBar(context);
+			slider.ProgressChanged += HandleValueChanged;
+			return slider;
+		}
 
-        private void HandleValueChanged(object sender, EventArgs e)
-        {
-            VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.Progress);
-        }
-        
-        public static void MapValueProperty(IViewHandler viewHandler, Slider virtualView)
-        {
-            var nativeView = (SeekBar) viewHandler.NativeView;
-            nativeView.Progress = (int)virtualView.Value;
-        }
+		protected override void DisposeView(SeekBar nativeView)
+		{
+			nativeView.ProgressChanged -= HandleValueChanged;
+		}
 
-        public static void MapFromProperty(IViewHandler viewHandler, Slider virtualView)
-        {
-            var nativeView = (SeekBar) viewHandler.NativeView;
-            nativeView.Min = (int)virtualView.From;
-        }
-        
-        public static void MapThroughProperty(IViewHandler viewHandler, Slider virtualView)
-        {
-            var nativeView = (SeekBar) viewHandler.NativeView;
-            nativeView.Max = (int)virtualView.Through;
-        }
-    }
+		private void HandleValueChanged(object sender, EventArgs e)
+		{
+			VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.Progress);
+		}
+
+		public static void MapValueProperty(IViewHandler viewHandler, Slider virtualView)
+		{
+			var nativeView = (SeekBar)viewHandler.NativeView;
+			nativeView.Progress = (int)virtualView.Value;
+		}
+
+		public static void MapFromProperty(IViewHandler viewHandler, Slider virtualView)
+		{
+			var nativeView = (SeekBar)viewHandler.NativeView;
+			nativeView.Min = (int)virtualView.From;
+		}
+
+		public static void MapThroughProperty(IViewHandler viewHandler, Slider virtualView)
+		{
+			var nativeView = (SeekBar)viewHandler.NativeView;
+			nativeView.Max = (int)virtualView.Through;
+		}
+	}
 }

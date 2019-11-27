@@ -6,11 +6,11 @@ using Comet.Mac.Controls;
 
 namespace Comet.Mac.Handlers
 {
-    public class SpacerHandler : AbstractHandler<Spacer, NSColorView>
-    {
-        protected override NSColorView CreateView()
-        {
-            return new NSColorView();
-        }
-    }
+	public class SpacerHandler : AbstractHandler<Spacer, NSColorView>
+	{
+		protected override NSColorView CreateView()
+		{
+			return new NSColorView();
+		}
+	}
 }

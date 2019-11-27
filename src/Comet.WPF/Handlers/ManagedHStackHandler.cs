@@ -2,8 +2,8 @@
 
 namespace Comet.WPF.Handlers
 {
-    public class ManagedHStackHandler : AbstractLayoutHandler
-    {
+	public class ManagedHStackHandler : AbstractLayoutHandler
+	{
 
-    }
+	}
 }

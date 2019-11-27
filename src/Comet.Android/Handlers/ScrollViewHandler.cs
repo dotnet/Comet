@@ -4,53 +4,53 @@ using AScrollView = Android.Widget.ScrollView;
 
 namespace Comet.Android.Handlers
 {
-    public class ScrollViewHandler : AbstractControlHandler<ScrollView, AScrollView>
-    {
-        public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
-        {
-        };
+	public class ScrollViewHandler : AbstractControlHandler<ScrollView, AScrollView>
+	{
+		public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
+		{
+		};
 
-        private AView _content;
+		private AView _content;
 
-        public ScrollViewHandler() : base(Mapper)
-        {
-        }
+		public ScrollViewHandler() : base(Mapper)
+		{
+		}
 
-        protected override AScrollView CreateView(Context context)
-        {
-            return new AScrollView(context);
-        }
+		protected override AScrollView CreateView(Context context)
+		{
+			return new AScrollView(context);
+		}
 
-        protected override void DisposeView(AScrollView nativeView)
-        {
-        }
+		protected override void DisposeView(AScrollView nativeView)
+		{
+		}
 
-        public override void Remove(View view)
-        {
-            if (_content != null)
-            {
-                TypedNativeView.RemoveView(_content);
-                _content = null;
-            }
+		public override void Remove(View view)
+		{
+			if (_content != null)
+			{
+				TypedNativeView.RemoveView(_content);
+				_content = null;
+			}
 
-            base.Remove(view);
-        }
+			base.Remove(view);
+		}
 
-        public override void SetView(View view)
-        {
-            base.SetView(view);
+		public override void SetView(View view)
+		{
+			base.SetView(view);
 
-            var newContent = VirtualView?.View?.ToView();
-            if (_content == null || newContent != _content)
-            {
-                if (_content != null)
-                    TypedNativeView.RemoveView(_content);
+			var newContent = VirtualView?.View?.ToView();
+			if (_content == null || newContent != _content)
+			{
+				if (_content != null)
+					TypedNativeView.RemoveView(_content);
 
-                _content = newContent;
+				_content = newContent;
 
-                if (_content != null)
-                    TypedNativeView.AddView(_content);
-            }
-        }
-    }
+				if (_content != null)
+					TypedNativeView.AddView(_content);
+			}
+		}
+	}
 }

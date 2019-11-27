@@ -40,9 +40,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
-    <Folder Include="Handlers\" />
-    <Folder Include="Extensions\" />
-    <Folder Include="Graphics\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controls\CUIContainerView.cs" />

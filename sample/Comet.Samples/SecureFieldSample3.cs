@@ -17,15 +17,15 @@ struct ContentView : View {
 */
 namespace Comet.Samples
 {
-    public class SecureFieldSample3 : View
-    {
-        readonly State<string> password = new State<string>("");
+	public class SecureFieldSample3 : View
+	{
+		readonly State<string> password = new State<string>("");
 
-        [Body]
-        View body() => new VStack()
-        {
-            new SecureField(null, "Enter a password", password),
-            new Text(password)
-        }.FillHorizontal();
-    }
+		[Body]
+		View body() => new VStack()
+		{
+			new SecureField(null, "Enter a password", password),
+			new Text(password)
+		}.FillHorizontal();
+	}
 }

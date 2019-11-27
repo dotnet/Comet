@@ -6,21 +6,21 @@ using Bitmap = Comet.Graphics.Bitmap;
 namespace Comet.WPF.Graphics
 {
 	public class WPFBitmap : Bitmap
-    {
-        private BitmapImage _image;
+	{
+		private BitmapImage _image;
 
-        public WPFBitmap(BitmapImage image)
-        {
-            _image = image;
-        }
+		public WPFBitmap(BitmapImage image)
+		{
+			_image = image;
+		}
 
-        public override SizeF Size => new SizeF(_image.PixelWidth, _image.PixelHeight);
+		public override SizeF Size => new SizeF(_image.PixelWidth, _image.PixelHeight);
 
-        public override object NativeBitmap => _image;
+		public override object NativeBitmap => _image;
 
-        protected override void DisposeNative()
-        {
-            _image = null;
-        }
-    }
+		protected override void DisposeNative()
+		{
+			_image = null;
+		}
+	}
 }

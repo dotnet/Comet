@@ -3,10 +3,10 @@ using System.Windows;
 
 namespace Comet.WPF
 {
-    public interface WPFViewHandler : IViewHandler
-    {
-        event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+	public interface WPFViewHandler : IViewHandler
+	{
+		event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
-        UIElement View { get; }
-    }
+		UIElement View { get; }
+	}
 }

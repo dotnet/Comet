@@ -6,138 +6,138 @@ using System;
 
 namespace Comet.Mac
 {
-    public class CometView : NSColorView
-    {
-        private View _virtualView;
-        private MacViewHandler _handler;
-        private NSView _nativeView;
-        
-        public CometView()
-        {
-        }
+	public class CometView : NSColorView
+	{
+		private View _virtualView;
+		private MacViewHandler _handler;
+		private NSView _nativeView;
 
-        public CometView(CGRect rect) : base(rect)
-        {
+		public CometView()
+		{
+		}
 
-        }
+		public CometView(CGRect rect) : base(rect)
+		{
 
-        public View CurrentView
-        {
-            get => _virtualView;
-            set
-            {
-                if (value == _virtualView)
-                    return;
+		}
 
-                if (_virtualView != null)
-                {
-                    _virtualView.ViewHandlerChanged -= HandleViewHandlerChanged;
-                    _virtualView.NeedsLayout -= HandleNeedsLayout;
-                    if (_handler is MacViewHandler viewHandler)
-                        viewHandler.NativeViewChanged -= HandleNativeViewChanged;
-                }
+		public View CurrentView
+		{
+			get => _virtualView;
+			set
+			{
+				if (value == _virtualView)
+					return;
 
-                _virtualView = value;
+				if (_virtualView != null)
+				{
+					_virtualView.ViewHandlerChanged -= HandleViewHandlerChanged;
+					_virtualView.NeedsLayout -= HandleNeedsLayout;
+					if (_handler is MacViewHandler viewHandler)
+						viewHandler.NativeViewChanged -= HandleNativeViewChanged;
+				}
 
-                if (_virtualView != null)
-                {
-                    _handler = _virtualView.GetOrCreateViewHandler();
+				_virtualView = value;
 
-                    _virtualView.ViewHandlerChanged += HandleViewHandlerChanged;
-                    _virtualView.NeedsLayout += HandleNeedsLayout;
-                    if (_handler is MacViewHandler viewHandler)
-                        viewHandler.NativeViewChanged += HandleNativeViewChanged;
+				if (_virtualView != null)
+				{
+					_handler = _virtualView.GetOrCreateViewHandler();
 
-                    HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, null, (NSView)_handler.NativeView));
-                }
-            }
-        }
+					_virtualView.ViewHandlerChanged += HandleViewHandlerChanged;
+					_virtualView.NeedsLayout += HandleNeedsLayout;
+					if (_handler is MacViewHandler viewHandler)
+						viewHandler.NativeViewChanged += HandleNativeViewChanged;
 
-        private void HandleNeedsLayout(object sender, EventArgs e)
-        {
-            SetNeedsLayout();
-        }
+					HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, null, (NSView)_handler.NativeView));
+				}
+			}
+		}
 
-        private void HandleViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
-        {
-            Console.WriteLine($"[{GetType().Name}] HandleViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
+		private void HandleNeedsLayout(object sender, EventArgs e)
+		{
+			SetNeedsLayout();
+		}
 
-            if (e.OldViewHandler is MacViewHandler oldHandler)
-            {
-                oldHandler.NativeViewChanged -= HandleNativeViewChanged;
-                _nativeView?.RemoveFromSuperview();
-                _nativeView = null;
-            }
+		private void HandleViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
+		{
+			Console.WriteLine($"[{GetType().Name}] HandleViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
 
-            if (e.NewViewHandler is MacViewHandler newHandler)
-            {
-                newHandler.NativeViewChanged += HandleNativeViewChanged;
-                _nativeView = newHandler.View ?? new NSView();
-                AddSubview(_nativeView);
-                SetNeedsLayout();
-            }
-        }
+			if (e.OldViewHandler is MacViewHandler oldHandler)
+			{
+				oldHandler.NativeViewChanged -= HandleNativeViewChanged;
+				_nativeView?.RemoveFromSuperview();
+				_nativeView = null;
+			}
 
-        private void HandleNativeViewChanged(object sender, ViewChangedEventArgs e)
-        {
-            if (_virtualView == null)
-                return;
+			if (e.NewViewHandler is MacViewHandler newHandler)
+			{
+				newHandler.NativeViewChanged += HandleNativeViewChanged;
+				_nativeView = newHandler.View ?? new NSView();
+				AddSubview(_nativeView);
+				SetNeedsLayout();
+			}
+		}
 
-            var newNativeView = _handler?.View;
-            if (newNativeView == _nativeView)
-                return;
+		private void HandleNativeViewChanged(object sender, ViewChangedEventArgs e)
+		{
+			if (_virtualView == null)
+				return;
 
-            _nativeView?.RemoveFromSuperview();
-            _nativeView = newNativeView;
+			var newNativeView = _handler?.View;
+			if (newNativeView == _nativeView)
+				return;
 
-            if (newNativeView != null)
-            {
-                AddSubview(newNativeView);
-                Layout();
-            }
-        }
+			_nativeView?.RemoveFromSuperview();
+			_nativeView = newNativeView;
 
-        private void SetNeedsLayout()
-        {
-            NeedsLayout = true;
-        }
+			if (newNativeView != null)
+			{
+				AddSubview(newNativeView);
+				Layout();
+			}
+		}
 
-        public override CGRect Frame
-        {
-            get => base.Frame;
-            set
-            {
-                base.Frame = value;
-                Layout();
-                NeedsLayout = false;
-            }
-        }
-        
-        public override void ViewDidMoveToSuperview()
-        {
-            if (NeedsLayout)
-            {
-                Layout();
-                NeedsLayout = false;
-            }
+		private void SetNeedsLayout()
+		{
+			NeedsLayout = true;
+		}
 
-            base.ViewDidMoveToSuperview();
-        }
+		public override CGRect Frame
+		{
+			get => base.Frame;
+			set
+			{
+				base.Frame = value;
+				Layout();
+				NeedsLayout = false;
+			}
+		}
 
-        public override void Layout()
-        {
-            if (Bounds.IsEmpty || _nativeView == null)
-                return;
+		public override void ViewDidMoveToSuperview()
+		{
+			if (NeedsLayout)
+			{
+				Layout();
+				NeedsLayout = false;
+			}
 
-            if (_nativeView is NSScrollView sv)
-            {
-                _nativeView.Frame = Bounds;
-            }
-            else
-            {
-                var bounds = Bounds;
-                _virtualView.SetFrameFromNativeView(bounds.ToRectangleF());
-            }
-        }
-    }
+			base.ViewDidMoveToSuperview();
+		}
+
+		public override void Layout()
+		{
+			if (Bounds.IsEmpty || _nativeView == null)
+				return;
+
+			if (_nativeView is NSScrollView sv)
+			{
+				_nativeView.Frame = Bounds;
+			}
+			else
+			{
+				var bounds = Bounds;
+				_virtualView.SetFrameFromNativeView(bounds.ToRectangleF());
+			}
+		}
+	}
 }

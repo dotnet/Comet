@@ -9,89 +9,89 @@ using System.Drawing;
 namespace Comet.Android.Handlers
 {
 	public class HStackHandler : LinearLayout, AndroidViewHandler
-    {
-        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+	{
+		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
-        public HStackHandler() : base(AndroidContext.CurrentContext)
-        {
-            Orientation = AOrientation.Horizontal;
-        }
+		public HStackHandler() : base(AndroidContext.CurrentContext)
+		{
+			Orientation = AOrientation.Horizontal;
+		}
 
-        
-        public AView View => this;
-        public object NativeView => View;
-        public bool HasContainer { get; set; } = false;
 
-        public CUITouchGestureListener GestureListener { get; set; }
+		public AView View => this;
+		public object NativeView => View;
+		public bool HasContainer { get; set; } = false;
 
-        public SizeF Measure(SizeF availableSize)
-        {
-            return availableSize;
-        }
+		public CUITouchGestureListener GestureListener { get; set; }
 
-        public void SetFrame(RectangleF frame)
-        {
-            // Do nothing
-        }
+		public SizeF Measure(SizeF availableSize)
+		{
+			return availableSize;
+		}
 
-        public void Remove(View view)
-        {
-        }
+		public void SetFrame(RectangleF frame)
+		{
+			// Do nothing
+		}
 
-        HStack stack;
+		public void Remove(View view)
+		{
+		}
 
-        public void SetView(View view)
-        {
-            stack = view as HStack;
-            UpdateChildren(stack);
-            stack.ChildrenChanged += Stack_ChildrenChanged;
-        }
+		HStack stack;
 
-        private void Stack_ChildrenChanged(object sender, EventArgs e)
-        {
-            UpdateChildren(stack);
-        }
+		public void SetView(View view)
+		{
+			stack = view as HStack;
+			UpdateChildren(stack);
+			stack.ChildrenChanged += Stack_ChildrenChanged;
+		}
 
-        public void UpdateValue(string property, object value)
-        {
-        }
+		private void Stack_ChildrenChanged(object sender, EventArgs e)
+		{
+			UpdateChildren(stack);
+		}
 
-        readonly List<AView> views = new List<AView>();
+		public void UpdateValue(string property, object value)
+		{
+		}
 
-        protected void UpdateChildren(HStack stack)
-        {
-            var children = stack.GetChildren();
-            if (views.Count == children.Count)
-            {
-                bool areSame = false;
-                for (var i = 0; i < views.Count; i++)
-                {
-                    var v = views[i];
-                    var c = children[i].ToView();
-                    areSame = c == v;
-                    if (!areSame)
-                    {
-                        break;
-                    }
-                }
+		readonly List<AView> views = new List<AView>();
 
-                if (areSame)
-                    return;
-            }
+		protected void UpdateChildren(HStack stack)
+		{
+			var children = stack.GetChildren();
+			if (views.Count == children.Count)
+			{
+				bool areSame = false;
+				for (var i = 0; i < views.Count; i++)
+				{
+					var v = views[i];
+					var c = children[i].ToView();
+					areSame = c == v;
+					if (!areSame)
+					{
+						break;
+					}
+				}
 
-            foreach (var v in views)
-            {
-                base.RemoveView(v);
-            }
+				if (areSame)
+					return;
+			}
 
-            views.Clear();
-            foreach (var child in children)
-            {
-                var cview = child.ToView() ?? new AView(AndroidContext.CurrentContext);
-                views.Add(cview);
-                //cview.ContentMode = UIViewContentMode.Top;
-                base.AddView(cview);
-            }
-        }
-    }
+			foreach (var v in views)
+			{
+				base.RemoveView(v);
+			}
+
+			views.Clear();
+			foreach (var child in children)
+			{
+				var cview = child.ToView() ?? new AView(AndroidContext.CurrentContext);
+				views.Add(cview);
+				//cview.ContentMode = UIViewContentMode.Top;
+				base.AddView(cview);
+			}
+		}
+	}
 }

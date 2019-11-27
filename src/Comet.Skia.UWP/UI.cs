@@ -3,10 +3,10 @@
 namespace Comet.Skia
 {
 	public static class UI
-    {
+	{
 		static bool _hasInitialized;
 
-		public static void Init ()
+		public static void Init()
 		{
 			if (_hasInitialized) return;
 			_hasInitialized = true;
@@ -19,5 +19,5 @@ namespace Comet.Skia
 			var generic = typeof(SkiaControlHandler<>);
 			Skia.Internal.Registration.RegisterDefaultViews(generic);
 		}
-    }
+	}
 }

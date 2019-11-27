@@ -5,102 +5,102 @@ using Android.Views;
 using AView = Android.Views.View;
 namespace Comet.Android.Controls
 {
-    public class CUITouchGestureListener : Java.Lang.Object, AView.IOnTouchListener
-    {
-        class GestureDetectorListener : Java.Lang.Object, GestureDetector.IOnGestureListener
-        {
-            GestureDetector gestureDetector;
-            public GestureDetectorListener()
-            {
-                gestureDetector = new GestureDetector(AndroidContext.CurrentContext, this);
-            }
-           
+	public class CUITouchGestureListener : Java.Lang.Object, AView.IOnTouchListener
+	{
+		class GestureDetectorListener : Java.Lang.Object, GestureDetector.IOnGestureListener
+		{
+			GestureDetector gestureDetector;
+			public GestureDetectorListener()
+			{
+				gestureDetector = new GestureDetector(AndroidContext.CurrentContext, this);
+			}
 
-            public bool OnDown(MotionEvent e)
-            {
-                return true;
-            }
 
-            public bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
-            {
-                return true;
-            }
+			public bool OnDown(MotionEvent e)
+			{
+				return true;
+			}
 
-            public void OnLongPress(MotionEvent e)
-            {
-            }
+			public bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
+			{
+				return true;
+			}
 
-            public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
-            {
+			public void OnLongPress(MotionEvent e)
+			{
+			}
 
-                return true;
-            }
+			public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
+			{
 
-            public void OnShowPress(MotionEvent e)
-            {
-            }
+				return true;
+			}
 
-            public bool OnSingleTapUp(MotionEvent e)
-            {
-                dictionary[e].OnTap();
-                return true;
-            }
-            Dictionary<MotionEvent, CUITouchGestureListener> dictionary = new Dictionary<MotionEvent, CUITouchGestureListener>();
-            public bool OnTouchEvent(CUITouchGestureListener v, MotionEvent e)
-            {
-                var isComplete = e.IsComplete();
-                try
-                {
-                    if (!isComplete)
-                        dictionary[e] = v;
-                    Logger.Debug($"Touch dictionary {dictionary.Count}");
-                    return gestureDetector.OnTouchEvent(e);
-                }
-                finally
-                {
-                    if(isComplete)
-                        dictionary.Remove(e);
-                }
-            }
-        }
+			public void OnShowPress(MotionEvent e)
+			{
+			}
 
-        AView view;
-        GestureDetectorListener _gestureDetector;
-        GestureDetectorListener gestureDetector => _gestureDetector ?? (_gestureDetector = new GestureDetectorListener());
-        public CUITouchGestureListener(AView view)
-        {
-            this.view = view;
-            view.SetOnTouchListener(this);
-        }
-        List<Gesture> gestures = new List<Gesture>();
-        public void AddGesture(Gesture gesture)
-        {
-            gestures.Add(gesture);
-        }
+			public bool OnSingleTapUp(MotionEvent e)
+			{
+				dictionary[e].OnTap();
+				return true;
+			}
+			Dictionary<MotionEvent, CUITouchGestureListener> dictionary = new Dictionary<MotionEvent, CUITouchGestureListener>();
+			public bool OnTouchEvent(CUITouchGestureListener v, MotionEvent e)
+			{
+				var isComplete = e.IsComplete();
+				try
+				{
+					if (!isComplete)
+						dictionary[e] = v;
+					Logger.Debug($"Touch dictionary {dictionary.Count}");
+					return gestureDetector.OnTouchEvent(e);
+				}
+				finally
+				{
+					if (isComplete)
+						dictionary.Remove(e);
+				}
+			}
+		}
 
-        public void RemoveGesture(Gesture gesture)
-        {
+		AView view;
+		GestureDetectorListener _gestureDetector;
+		GestureDetectorListener gestureDetector => _gestureDetector ?? (_gestureDetector = new GestureDetectorListener());
+		public CUITouchGestureListener(AView view)
+		{
+			this.view = view;
+			view.SetOnTouchListener(this);
+		}
+		List<Gesture> gestures = new List<Gesture>();
+		public void AddGesture(Gesture gesture)
+		{
+			gestures.Add(gesture);
+		}
 
-            gestures.Remove(gesture);
-        }
+		public void RemoveGesture(Gesture gesture)
+		{
 
-        protected void OnTap()
-        {
-            foreach (var g in gestures.OfType<TapGesture>())
-                g.Invoke();
-        }
+			gestures.Remove(gesture);
+		}
 
-        public bool OnTouch(AView v, MotionEvent e)
+		protected void OnTap()
+		{
+			foreach (var g in gestures.OfType<TapGesture>())
+				g.Invoke();
+		}
 
-        {
-            Console.WriteLine($"Touching view:{v}");
-            return gestureDetector.OnTouchEvent(this,e);
-        }
-        protected override void Dispose(bool disposing)
-        {
-            view.SetOnTouchListener(null);
-            base.Dispose(disposing);
-        }
+		public bool OnTouch(AView v, MotionEvent e)
 
-    }
+		{
+			Console.WriteLine($"Touching view:{v}");
+			return gestureDetector.OnTouchEvent(this, e);
+		}
+		protected override void Dispose(bool disposing)
+		{
+			view.SetOnTouchListener(null);
+			base.Dispose(disposing);
+		}
+
+	}
 }

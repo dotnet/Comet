@@ -4,36 +4,36 @@ using WPFButton = System.Windows.Controls.Button;
 
 namespace Comet.WPF.Handlers
 {
-    public class ButtonHandler : AbstractControlHandler<Button, WPFButton>
-    {
-        public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>()
-        {
-            [nameof(Button.Text)] = MapTextProperty
-        };
-        
+	public class ButtonHandler : AbstractControlHandler<Button, WPFButton>
+	{
+		public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>()
+		{
+			[nameof(Button.Text)] = MapTextProperty
+		};
 
-        public ButtonHandler() : base(Mapper)
-        {
-        }
 
-        protected override WPFButton CreateView()
-        {
-            var button = new WPFButton();
-            button.Click += HandleClick;
-            return button;
-        }
+		public ButtonHandler() : base(Mapper)
+		{
+		}
 
-        protected override void DisposeView(WPFButton button)
-        {
-            button.Click -= HandleClick;
-        }
+		protected override WPFButton CreateView()
+		{
+			var button = new WPFButton();
+			button.Click += HandleClick;
+			return button;
+		}
 
-        private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick();
+		protected override void DisposeView(WPFButton button)
+		{
+			button.Click -= HandleClick;
+		}
 
-        public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
-        {
-            var nativeButton = (WPFButton)viewHandler.NativeView;
-            nativeButton.Content = virtualButton.Text?.CurrentValue ?? string.Empty;
-        }
-    }
+		private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick();
+
+		public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
+		{
+			var nativeButton = (WPFButton)viewHandler.NativeView;
+			nativeButton.Content = virtualButton.Text?.CurrentValue ?? string.Empty;
+		}
+	}
 }

@@ -10,23 +10,23 @@ using Comet.Samples;
 
 namespace Comet.Android.Sample
 {
-    [Activity(Label = "@string/app_name", MainLauncher = true)]
-    public class MainActivity : CometActivity
-    {
+	[Activity(Label = "@string/app_name", MainLauncher = true)]
+	public class MainActivity : CometActivity
+	{
 
-        protected override void OnCreate(Bundle savedInstanceState)
-        {
-            base.OnCreate(savedInstanceState);
+		protected override void OnCreate(Bundle savedInstanceState)
+		{
+			base.OnCreate(savedInstanceState);
 #if DEBUG
-            Comet.Reload.Init();
+			Comet.Reload.Init();
 #endif
-            Comet.Skia.UI.Init();
+			Comet.Skia.UI.Init();
 
-            //Replaces native controls with Skia drawn controls
-            //Comet.Skia.Controls.Init ();
+			//Replaces native controls with Skia drawn controls
+			//Comet.Skia.Controls.Init ();
 
-            Page = new MainPage();
-        }
-    }
+			Page = new MainPage();
+		}
+	}
 }
 

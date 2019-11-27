@@ -8,155 +8,155 @@ using System.Drawing;
 namespace Comet.Skia.Android
 {
 	public class AndroidSkiaView : SKCanvasView
-    {
-        private  SkiaView _virtualView;
-        private RectangleF _bounds;
-        private bool _dragStarted;
-        private PointF[] _lastMovedViewPoints;
+	{
+		private SkiaView _virtualView;
+		private RectangleF _bounds;
+		private bool _dragStarted;
+		private PointF[] _lastMovedViewPoints;
 
-        public AndroidSkiaView(Context context) : base(context)
-        {
-            SetBackgroundColor(global::Android.Graphics.Color.Transparent);
+		public AndroidSkiaView(Context context) : base(context)
+		{
+			SetBackgroundColor(global::Android.Graphics.Color.Transparent);
 
-            if ((int)global::Android.OS.Build.VERSION.SdkInt < 21)
-                SetLayerType(LayerType.Software, null);
-        }
+			if ((int)global::Android.OS.Build.VERSION.SdkInt < 21)
+				SetLayerType(LayerType.Software, null);
+		}
 
-        public SkiaView VirtualView
-        {
-            get => _virtualView;
-            set
-            {
-                if (_virtualView != null)
-                {
-                    _virtualView.Invalidated -= HandleInvalidated;
-                }
+		public SkiaView VirtualView
+		{
+			get => _virtualView;
+			set
+			{
+				if (_virtualView != null)
+				{
+					_virtualView.Invalidated -= HandleInvalidated;
+				}
 
-                _virtualView = value;
+				_virtualView = value;
 
-                if (_virtualView != null)
-                {
-                    _bounds = new RectangleF(0, 0, MeasuredWidth, MeasuredHeight);
-                    _virtualView.Invalidated += HandleInvalidated;
-                }
+				if (_virtualView != null)
+				{
+					_bounds = new RectangleF(0, 0, MeasuredWidth, MeasuredHeight);
+					_virtualView.Invalidated += HandleInvalidated;
+				}
 
-                HandleInvalidated();
-            }
-        }
+				HandleInvalidated();
+			}
+		}
 
-        private void HandleInvalidated()
-        {
-            if (Handle == IntPtr.Zero)
-                return;
-            
-            Invalidate();
-        }
+		private void HandleInvalidated()
+		{
+			if (Handle == IntPtr.Zero)
+				return;
 
-        protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
-        {
-            base.OnLayout(changed, left, top, right, bottom);
+			Invalidate();
+		}
 
-            if (changed)
-            {
-                var width = right - left;
-                var height = bottom - top;
-                _bounds = new RectangleF(left, top, width, height);
-                _virtualView?.Resized(_bounds);
-            }
-        }
+		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
+		{
+			base.OnLayout(changed, left, top, right, bottom);
 
-        protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
-        {
-            if (_virtualView == null) return;
-            var canvas = e.Surface.Canvas;
+			if (changed)
+			{
+				var width = right - left;
+				var height = bottom - top;
+				_bounds = new RectangleF(left, top, width, height);
+				_virtualView?.Resized(_bounds);
+			}
+		}
 
-            canvas.Save();
-            var scale = CanvasSize.Width / _bounds.Width;
-            canvas.Scale(scale,scale);
-            _virtualView.Draw(canvas, _bounds);
-            canvas.Restore();
-        }
+		protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
+		{
+			if (_virtualView == null) return;
+			var canvas = e.Surface.Canvas;
 
-        public override bool OnTouchEvent(MotionEvent e)
-        {
-            try
-            {
-                if (e == null) throw new ArgumentNullException(nameof(e));
+			canvas.Save();
+			var scale = CanvasSize.Width / _bounds.Width;
+			canvas.Scale(scale, scale);
+			_virtualView.Draw(canvas, _bounds);
+			canvas.Restore();
+		}
 
-                int touchCount = e.PointerCount;
-                var touchPoints = new PointF[touchCount];
+		public override bool OnTouchEvent(MotionEvent e)
+		{
+			try
+			{
+				if (e == null) throw new ArgumentNullException(nameof(e));
 
-                for (int i = 0; i < touchCount; i++)
-                    touchPoints[i] = new PointF(e.GetX(i), e.GetY(i));
+				int touchCount = e.PointerCount;
+				var touchPoints = new PointF[touchCount];
 
-                var actionMasked = e.Action & MotionEventActions.Mask;
+				for (int i = 0; i < touchCount; i++)
+					touchPoints[i] = new PointF(e.GetX(i), e.GetY(i));
 
-                switch (actionMasked)
-                {
-                    case MotionEventActions.Move:
-                        TouchesMoved(touchPoints);
-                        break;
-                    case MotionEventActions.Down:
-                    case MotionEventActions.PointerDown:
-                        TouchesBegan(touchPoints);
-                        break;
-                    case MotionEventActions.Up:
-                    case MotionEventActions.PointerUp:
-                        TouchesEnded(touchPoints);
-                        break;
-                    case MotionEventActions.Cancel:
-                        TouchesCanceled();
-                        break;
-                }
-            }
-            catch (Exception exc)
-            {
-                Logger.Error("An unexpected error occured handling a touch event within the control.", exc);
-            }
+				var actionMasked = e.Action & MotionEventActions.Mask;
 
-            return true;
-        }
+				switch (actionMasked)
+				{
+					case MotionEventActions.Move:
+						TouchesMoved(touchPoints);
+						break;
+					case MotionEventActions.Down:
+					case MotionEventActions.PointerDown:
+						TouchesBegan(touchPoints);
+						break;
+					case MotionEventActions.Up:
+					case MotionEventActions.PointerUp:
+						TouchesEnded(touchPoints);
+						break;
+					case MotionEventActions.Cancel:
+						TouchesCanceled();
+						break;
+				}
+			}
+			catch (Exception exc)
+			{
+				Logger.Error("An unexpected error occured handling a touch event within the control.", exc);
+			}
 
-        bool PointsContained(PointF[] points) => points.Any(p => VirtualView.Frame.BoundsContains(p));
-        bool pressedContained = false;
+			return true;
+		}
 
-        public void TouchesBegan(PointF[] points)
-        {
-            _dragStarted = false;
-            _lastMovedViewPoints = points;
-            VirtualView?.StartInteraction(points);
-            pressedContained = true;
-        }
+		bool PointsContained(PointF[] points) => points.Any(p => VirtualView.Frame.BoundsContains(p));
+		bool pressedContained = false;
 
-        public void TouchesMoved(PointF[] points)
-        {
-            if (!_dragStarted)
-            {
-                if (points.Length == 1)
-                {
-                    float deltaX = _lastMovedViewPoints[0].X - points[0].X;
-                    float deltaY = _lastMovedViewPoints[0].Y - points[0].Y;
+		public void TouchesBegan(PointF[] points)
+		{
+			_dragStarted = false;
+			_lastMovedViewPoints = points;
+			VirtualView?.StartInteraction(points);
+			pressedContained = true;
+		}
 
-                    if (Math.Abs(deltaX) <= 3 && Math.Abs(deltaY) <= 3)
-                        return;
-                }
-            }
+		public void TouchesMoved(PointF[] points)
+		{
+			if (!_dragStarted)
+			{
+				if (points.Length == 1)
+				{
+					float deltaX = _lastMovedViewPoints[0].X - points[0].X;
+					float deltaY = _lastMovedViewPoints[0].Y - points[0].Y;
 
-            _lastMovedViewPoints = points;
-            _dragStarted = true;
-            pressedContained = PointsContained(points);
-            VirtualView?.DragInteraction(points);
-        }
+					if (Math.Abs(deltaX) <= 3 && Math.Abs(deltaY) <= 3)
+						return;
+				}
+			}
 
-        public void TouchesEnded(PointF[] points)
-        {
-            VirtualView?.EndInteraction(points, pressedContained);
-        }
+			_lastMovedViewPoints = points;
+			_dragStarted = true;
+			pressedContained = PointsContained(points);
+			VirtualView?.DragInteraction(points);
+		}
 
-        public void TouchesCanceled()
-        {
-            pressedContained = false;
-            VirtualView?.CancelInteraction();
-        }
-    }
+		public void TouchesEnded(PointF[] points)
+		{
+			VirtualView?.EndInteraction(points, pressedContained);
+		}
+
+		public void TouchesCanceled()
+		{
+			pressedContained = false;
+			VirtualView?.CancelInteraction();
+		}
+	}
 }
