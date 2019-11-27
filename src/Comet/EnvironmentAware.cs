@@ -109,7 +109,7 @@ namespace Comet
                     if (result.hasValue)
                         return result.value;
                 }
-                return  view.GetValue(key,current,view.Parent,styledKey, typedKey,cascades);
+                return  view?.GetValue(key,current,view.Parent,styledKey, typedKey,cascades);
             }
             catch
             {
