@@ -70,7 +70,7 @@ namespace Comet.UWP
             {
                 DiscardHandlers(navigationView.Content);
             }
-            if (view is IEnumerable<View> views)
+            if (view is IEnumerable<View> views && (views.GetEnumerator() != null))
             {
                 foreach (var subview in views)
                 {
