@@ -4,44 +4,63 @@ using Foundation;
 using SkiaSharp.Views.iOS;
 using Comet.iOS;
 using UIKit;
+using System.Linq;
+using System.Drawing;
 
 namespace Comet.Skia.iOS
 {
     public class iOSSkiaView : SKCanvasView
     {
-        private  SkiaView _virtualView;
+        private SkiaView _virtualView;
 
         public iOSSkiaView()
         {
+            Opaque = false;
         }
 
         public iOSSkiaView(CGRect frame) : base(frame)
         {
-            
+            Opaque = false;
         }
-
         public SkiaView VirtualView
         {
             get => _virtualView;
             set
             {
                 if (_virtualView != null)
+                {
                     _virtualView.Invalidated -= HandleInvalidated;
+                    _virtualView.NeedsLayout -= NeedsLayout;
+                }
 
                 _virtualView = value;
 
                 if (_virtualView != null)
+                {
                     _virtualView.Invalidated += HandleInvalidated;
+                    _virtualView.NeedsLayout += NeedsLayout;
+                }
 
                 HandleInvalidated();
             }
+        }
+
+        private void NeedsLayout(object sender, EventArgs e)
+        {
+            SetNeedsLayout();
         }
 
         private void HandleInvalidated()
         {
             if (Handle == IntPtr.Zero)
                 return;
-            
+            var control = _virtualView as SkiaControl;
+            if (control != null)
+            {
+                this.AccessibilityLabel = control.AccessibilityText();
+                //this.AccessibilityTraits = UIAccessibilityTrait.StaticText;
+                this.IsAccessibilityElement = true;
+            }
             SetNeedsDisplay();
         }
 
@@ -52,11 +71,11 @@ namespace Comet.Skia.iOS
 
             canvas.Save();
             var scale = CanvasSize.Width / (float)Bounds.Width;
-            canvas.Scale(scale,scale);
+            canvas.Scale(scale, scale);
             _virtualView.Draw(canvas, Bounds.ToRectangleF());
             canvas.Restore();
         }
-        
+
         public override CGRect Frame
         {
             get => base.Frame;
@@ -67,24 +86,27 @@ namespace Comet.Skia.iOS
             }
         }
 
+        bool pressedContained = false;
         public override void TouchesBegan(NSSet touches, UIEvent evt)
         {
             try
             {
                 var viewPoints = this.GetPointsInView(evt);
                 _virtualView?.StartInteraction(viewPoints);
+                pressedContained = true;
             }
             catch (Exception exc)
             {
                 Logger.Warn("An unexpected error occured handling a touch event within the control.", exc);
             }
         }
-
+        bool PointsContained(PointF[] points) => points.Any(p => VirtualView.Frame.BoundsContains(p));
         public override void TouchesMoved(NSSet touches, UIEvent evt)
         {
             try
             {
                 var viewPoints = this.GetPointsInView(evt);
+                pressedContained = PointsContained(viewPoints);
                 _virtualView?.DragInteraction(viewPoints);
             }
             catch (Exception exc)
@@ -98,7 +120,7 @@ namespace Comet.Skia.iOS
             try
             {
                 var viewPoints = this.GetPointsInView(evt);
-                _virtualView?.EndInteraction(viewPoints);
+                _virtualView?.EndInteraction(viewPoints, pressedContained);
             }
             catch (Exception exc)
             {
@@ -110,6 +132,7 @@ namespace Comet.Skia.iOS
         {
             try
             {
+                pressedContained = false;
                 _virtualView?.CancelInteraction();
             }
             catch (Exception exc)

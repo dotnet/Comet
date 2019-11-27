@@ -1,18 +1,20 @@
-﻿using Comet.iOS.Handlers;
+﻿using Comet.UWP.Handlers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-// ReSharper disable ClassNeverInstantiated.Global
-// ReSharper disable MemberCanBePrivate.Global
-
-namespace Comet.Skia.iOS
+namespace Comet.Skia.UWP
 {
-    public class SkiaViewHandler : AbstractControlHandler<SkiaView, iOSSkiaView>
+	public class SkiaViewHandler : AbstractControlHandler<SkiaView, UWPSkiaView>
     {
-        protected override iOSSkiaView CreateView()
+        protected override UWPSkiaView CreateView()
         {
-            return new iOSSkiaView();
+            return new UWPSkiaView();
         }
 
-        protected override void DisposeView(iOSSkiaView nativeView)
+        protected override void DisposeView(UWPSkiaView nativeView)
         {
         }
 
@@ -29,7 +31,7 @@ namespace Comet.Skia.iOS
         {
             TypedNativeView.VirtualView = null;
             SetMapper(null);
-            
+
             base.Remove(view);
         }
 

@@ -4,12 +4,33 @@
         <TargetFramework>netstandard2.0</TargetFramework>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+      <LangVersion>latest</LangVersion>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+      <LangVersion>latest</LangVersion>
+    </PropertyGroup>
     <ItemGroup>
       <ProjectReference Include="..\Comet\Comet.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="SkiaSharp" Version="1.68.0" />
+
+    
+      <PackageReference Include="SkiaSharp" Version="1.68.1" />
+      <PackageReference Include="Topten.RichTextKit" Version="0.1.116" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="Controls\ButtonBase.cs" />
+      <Compile Remove="Controls\IDrawable.cs" />
+      <Compile Remove="Controls\IMeasurable.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Controls\" />
+      <Folder Include="Handlers\" />
+    </ItemGroup>
+    <ItemGroup>
+      <None Remove="Controls\SkiaControl.config" />
+    </ItemGroup>
 </Project>

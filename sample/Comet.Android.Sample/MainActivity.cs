@@ -20,7 +20,10 @@ namespace Comet.Android.Sample
 #if DEBUG
             Comet.Reload.Init();
 #endif
-            Comet.Skia.Android.UI.Init();
+            Comet.Skia.UI.Init();
+
+            //Replaces native controls with Skia drawn controls
+            //Comet.Skia.Controls.Init ();
 
             Page = new MainPage();
         }

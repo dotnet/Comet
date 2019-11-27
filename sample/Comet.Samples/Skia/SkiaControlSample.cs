@@ -1,4 +1,4 @@
-﻿using FluentButton = Comet.Skia.Fluent.Button;
+﻿//using FluentButton = Comet.Skia.Fluent.Button;
 
 namespace Comet.Samples.Skia
 {
@@ -10,7 +10,7 @@ namespace Comet.Samples.Skia
         View body() => new VStack
         {
             new Button(() => $"Hello form the platform {count.Value}", () => ++count.Value),
-            new FluentButton($"Hello from skia {count.Value}", () => ++count.Value)
+            //new FluentButton($"Hello from skia {count.Value}", () => ++count.Value)
         };
     }
 }

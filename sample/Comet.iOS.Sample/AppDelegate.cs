@@ -31,12 +31,19 @@ namespace Comet.iOS.Sample {
 #if DEBUG
             Comet.Reload.Init();
 #endif
-            //TODO make it to where this isnt needed
 
+            //Adds the material Style
             //new MaterialStyle(ColorPalette.Blue).Apply();
-            Comet.Skia.iOS.UI.Init();
-            Comet.iOS.UI.Init();
+
+            //Enables Skia
+            Comet.Skia.UI.Init();
+
+            //Replaces Native controls with Skia Controls
+            Comet.Skia.Controls.Init();
+
+            //Replaces the native controls with controls from Googles Material Lib
             //Comet.Material.iOS.UI.Init();
+
             "turtlerock.jpg".LoadImage();
             window = new UIWindow {
 				RootViewController = new MainPage (new List<MenuItem>
@@ -53,6 +60,7 @@ namespace Comet.iOS.Sample {
 
 			return true;
 		}
+
 
 		public override void OnResignActivation (UIApplication application)
 		{

@@ -12,12 +12,12 @@ namespace Comet.Skia
         
         private readonly List<string> _boundProperties = new List<string>();
         
-        protected SkiaView() : this(new PropertyMapper<SkiaView>())
+        public SkiaView() : this(new PropertyMapper<SkiaView>())
         {
             
         }
         
-        protected SkiaView(PropertyMapper<SkiaView> mapper)
+        public SkiaView(PropertyMapper<SkiaView> mapper)
         {
             Mapper = mapper ?? new PropertyMapper<SkiaView>();
         }
@@ -59,7 +59,7 @@ namespace Comet.Skia
             
         }
 
-        public virtual void EndInteraction(PointF[] points)
+        public virtual void EndInteraction(PointF[] points, bool inside)
         {
             
         }
@@ -82,7 +82,7 @@ namespace Comet.Skia
         }
         
         protected void SetBindingValue<T>(
-            ref Binding<T> currentValue, 
+            ref Binding<T> currentValue,
             Binding<T> newValue, 
             [CallerMemberName] string propertyName = "")
         {

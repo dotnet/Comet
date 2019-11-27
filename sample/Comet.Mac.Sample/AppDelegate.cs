@@ -26,7 +26,10 @@ namespace Comet.Mac.Sample
 #if DEBUG
             Comet.Reload.Init();
 #endif
-            Comet.Skia.Mac.UI.Init();
+            Comet.Skia.UI.Init();
+
+			//Replaces native controls with Skia Controls
+            //Comet.Skia.Controls.Init ();
         }
 
         public override void WillTerminate(NSNotification notification)

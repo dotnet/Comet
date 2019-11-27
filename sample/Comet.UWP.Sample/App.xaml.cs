@@ -34,7 +34,7 @@ namespace Comet.UWP.Sample
                 Window.Current.Content = rootFrame;
             }
 
-            Comet.Skia.UWP.UI.Init();
+            Comet.Skia.UI.Init();
 
             if (e.PrelaunchActivated == false)
             {

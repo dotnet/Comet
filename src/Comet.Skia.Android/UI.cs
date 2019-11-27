@@ -1,4 +1,6 @@
-﻿namespace Comet.Skia.Android
+﻿using Comet.Skia.Android;
+
+namespace Comet.Skia
 {
 	public static class UI
     {
@@ -12,6 +14,10 @@
             // Controls
             Registrar.Handlers.Register<DrawableControl, DrawableControlHandler> ();
             Registrar.Handlers.Register<SkiaView, SkiaViewHandler> ();
+
+
+			var generic = typeof (SkiaControlHandler<>);
+			Skia.Internal.Registration.RegisterDefaultViews (generic);
 		}
     }
 }

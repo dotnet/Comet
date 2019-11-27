@@ -3,6 +3,7 @@ using CoreGraphics;
 using SkiaSharp.Views.Mac;
 using Comet.Mac;
 using AppKit;
+using System.Linq;
 using System.Drawing;
 
 namespace Comet.Skia.Mac
@@ -72,11 +73,13 @@ namespace Comet.Skia.Mac
                 _virtualView?.Resized(Bounds.ToRectangleF());
             }
         }
-
+        bool PointsContained(PointF[] points) => points.Any(p => VirtualView.Frame.BoundsContains(p));
+        bool pressedContained = false;
         public override void MouseDown(NSEvent theEvent)
         {
             try
             {
+                pressedContained = true;
                 var windowPoint = theEvent.LocationInWindow;
                 var pointInView = ConvertPointFromView(windowPoint, Window.ContentView);
                 var points = new PointF[] { pointInView.ToPointF() };
@@ -95,6 +98,7 @@ namespace Comet.Skia.Mac
                 var windowPoint = theEvent.LocationInWindow;
                 var pointInView = ConvertPointFromView(windowPoint, Window.ContentView);
                 var points = new PointF[] { pointInView.ToPointF() };
+                pressedContained = PointsContained(points);
                 _virtualView?.DragInteraction(points);
             }
             catch (Exception exc)
@@ -110,7 +114,7 @@ namespace Comet.Skia.Mac
                 var windowPoint = theEvent.LocationInWindow;
                 var pointInView = ConvertPointFromView(windowPoint, Window.ContentView);
                 var points = new PointF[] { pointInView.ToPointF() };
-                _virtualView?.EndInteraction(points);
+                _virtualView?.EndInteraction(points,pressedContained);
             }
             catch (Exception exc)
             {

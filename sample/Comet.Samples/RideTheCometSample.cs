@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Comet.Skia;
 
 /*
  
@@ -30,18 +31,20 @@ namespace Comet.Samples.Comparisons
         [Body]
         View body()
             => new VStack {
-                new Text(()=> $"({comet.Rides}) rides taken: {comet.CometTrain}")
+                new Text(()=> $"({comet.Rides}) rides taken:{comet.CometTrain}")
                     .Frame(width:300)
                     .LineBreakMode(LineBreakMode.CharacterWrap)
                     ,
 
-                new Button("   Ride the Comet!☄️   ", ()=>{
+                new Button("Ride the Comet! ☄️", ()=>{
                     comet.Rides++;
                 })
                     .Frame(height:44)
                     .Margin(8)
                     .Color(Color.White)
-                    .Background("#1d1d1d")
+                    .Background(Color.Green)
+                .RoundedBorder(color:Color.Blue)
+                .Shadow(Color.Grey,4,2,2),
             };
 
         public class Comet : BindingObject

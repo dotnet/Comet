@@ -118,7 +118,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="SkiaSharp.Views">
-      <Version>1.68.0</Version>
+      <Version>1.68.1</Version>
+    </PackageReference>
+    <PackageReference Include="Topten.RichTextKit">
+      <Version>0.1.116</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
