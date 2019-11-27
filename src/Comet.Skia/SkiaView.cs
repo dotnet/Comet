@@ -12,7 +12,7 @@ namespace Comet.Skia
         
         private readonly List<string> _boundProperties = new List<string>();
         
-        protected SkiaView() : this(new PropertyMapper<SkiaView>())
+        public SkiaView() : this(new PropertyMapper<SkiaView>())
         {
             
         }
