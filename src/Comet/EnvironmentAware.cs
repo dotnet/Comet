@@ -48,7 +48,7 @@ namespace Comet
 		public static string GetTypedStyleId(ContextualObject theObject, string key)
 		{
 			var styleId = theObject.StyleId;
-			return String.IsNullOrWhiteSpace(styleId) ? null : $"{styleId}.{key}";
+			return string.IsNullOrWhiteSpace(styleId) ? null : $"{styleId}.{key}";
 		}
 
 		internal object GetValue(string key, ContextualObject current, View view, string styledKey, string typedKey, bool cascades)

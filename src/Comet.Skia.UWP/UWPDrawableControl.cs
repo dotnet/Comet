@@ -55,12 +55,9 @@ namespace Comet.Skia.UWP
 			}
 		}
 
-		private void HandleInvalidated()
-		{
-			Invalidate();
-		}
+        private void HandleInvalidated() => Invalidate();
 
-		protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
+        protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
 		{
 			if (_controlDelegate == null) return;
 			var canvas = e.Surface.Canvas;
@@ -107,12 +104,9 @@ namespace Comet.Skia.UWP
 			_controlDelegate?.StartHoverInteraction(viewPoints);
 		}
 
-		private void OnPointerExited(object sender, PointerRoutedEventArgs e)
-		{
-			_controlDelegate?.EndHoverInteraction();
-		}
+        private void OnPointerExited(object sender, PointerRoutedEventArgs e) => _controlDelegate?.EndHoverInteraction();
 
-		protected void OnPointerPressed(
+        protected void OnPointerPressed(
 			object source,
 			PointerRoutedEventArgs evt)
 		{

@@ -16,14 +16,14 @@ namespace Comet.UWP
 
 		public CometPage()
 		{
-			this.InitializeComponent();
-			this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
+			InitializeComponent();
+			NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
 		}
 
 		public CometPage(View view)
 		{
-			this.InitializeComponent();
-			this.NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
+			InitializeComponent();
+			NavigationCacheMode = Windows.UI.Xaml.Navigation.NavigationCacheMode.Disabled;
 			View = view;
 		}
 
@@ -50,7 +50,7 @@ namespace Comet.UWP
 
 					nav.PerformNavigate = toView => {
 						SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
-						this.Frame.Navigate(typeof(CometPage), toView);
+						Frame.Navigate(typeof(CometPage), toView);
 						DiscardHandlers(_view);
 					};
 				}
@@ -87,7 +87,7 @@ namespace Comet.UWP
 
 		private static void OnBackRequested(object sender, BackRequestedEventArgs e)
 		{
-			Frame rootFrame = Window.Current.Content as Frame;
+			var rootFrame = Window.Current.Content as Frame;
 
 			if (rootFrame?.CanGoBack ?? false)
 			{
