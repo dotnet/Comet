@@ -26,9 +26,9 @@ namespace Comet.WPF.Handlers
 			_mapper = mapper;
 		}
 
-        protected void SetMapper(PropertyMapper<TVirtualView> mapper) => _mapper = mapper;
+		protected void SetMapper(PropertyMapper<TVirtualView> mapper) => _mapper = mapper;
 
-        protected abstract TNativeView CreateView();
+		protected abstract TNativeView CreateView();
 
 		protected abstract void DisposeView(TNativeView nativeView);
 
@@ -59,11 +59,11 @@ namespace Comet.WPF.Handlers
 
 				if (value && _containerView == null)
 				{
-                    _containerView = new CUIContainerView
-                    {
-                        MainView = _nativeView
-                    };
-                    ViewChanged?.Invoke(this, EventArgs.Empty);
+					_containerView = new CUIContainerView
+					{
+						MainView = _nativeView
+					};
+					ViewChanged?.Invoke(this, EventArgs.Empty);
 				}
 			}
 		}
@@ -74,9 +74,9 @@ namespace Comet.WPF.Handlers
 			return _nativeView.DesiredSize.ToSizeF();
 		}
 
-        public void SetFrame(RectangleF frame) => _nativeView.Arrange(frame.ToRect());
+		public void SetFrame(RectangleF frame) => _nativeView.Arrange(frame.ToRect());
 
-        public virtual void Remove(View view)
+		public virtual void Remove(View view)
 		{
 			_virtualView = null;
 
@@ -104,10 +104,10 @@ namespace Comet.WPF.Handlers
 			_nativeView.InvalidateArrange();
 		}
 
-        public virtual void UpdateValue(string property, object value) => _mapper?.UpdateProperty(this, _virtualView, property);
+		public virtual void UpdateValue(string property, object value) => _mapper?.UpdateProperty(this, _virtualView, property);
 
-        #region IDisposable Support
-        private bool disposedValue = false; // To detect redundant calls
+		#region IDisposable Support
+		private bool disposedValue = false; // To detect redundant calls
 
 		protected virtual void Dispose(bool disposing)
 		{
