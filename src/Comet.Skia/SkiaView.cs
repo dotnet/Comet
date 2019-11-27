@@ -17,7 +17,7 @@ namespace Comet.Skia
             
         }
         
-        protected SkiaView(PropertyMapper<SkiaView> mapper)
+        public SkiaView(PropertyMapper<SkiaView> mapper)
         {
             Mapper = mapper ?? new PropertyMapper<SkiaView>();
         }
