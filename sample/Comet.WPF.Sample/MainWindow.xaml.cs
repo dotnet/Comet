@@ -11,7 +11,8 @@ namespace Comet.WPF.Sample
         public MainWindow()
         {
             InitializeComponent();
-            Comet.Skia.WPF.UI.Init();
+            Comet.Skia.UI.Init();
+            //Comet.Skia.Controls.Init();
 
             MainFrame.NavigationService.Navigate(new CometPage(MainFrame, new MainPage()));
         }
