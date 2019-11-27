@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -70,7 +71,7 @@ namespace Comet.UWP
             {
                 DiscardHandlers(navigationView.Content);
             }
-            if (view is IEnumerable<View> views)
+            if (view is IEnumerable<View> views && (views.GetEnumerator() != null))
             {
                 foreach (var subview in views)
                 {

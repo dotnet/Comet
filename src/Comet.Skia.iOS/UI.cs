@@ -8,6 +8,9 @@ namespace Comet.Skia {
 		{
 			if (_hasInitialized) return;
 			_hasInitialized = true;
+
+			Comet.iOS.UI.Init();
+
 			// Controls
 			Registrar.Handlers.Register<DrawableControl, DrawableControlHandler> ();
 			Registrar.Handlers.Register<SkiaView, SkiaViewHandler> ();
