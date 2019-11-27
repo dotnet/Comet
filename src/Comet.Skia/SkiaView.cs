@@ -33,10 +33,9 @@ namespace Comet.Skia
             Invalidated?.Invoke();
         }
 
-        public virtual void Draw(SKCanvas canvas, RectangleF dirtyRect)
-        {
-            
-        }
+        public Action<SKCanvas, RectangleF> OnDraw;
+
+        public virtual void Draw (SKCanvas canvas, RectangleF dirtyRect) => OnDraw?.Invoke (canvas, dirtyRect);
 
         public virtual void StartHoverInteraction(PointF[] points)
         {
