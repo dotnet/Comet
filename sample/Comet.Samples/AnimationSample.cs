@@ -8,6 +8,7 @@ namespace Comet.Samples
 		{
 			Body = Build;
 		}
+		readonly State<bool> shouldAnimate = true;
 		Text animatedText;
 		Button button;
 		View Build() =>
@@ -53,9 +54,11 @@ namespace Comet.Samples
 						button.Background(Color.Green);
 				}).EndAnimationSequence(),
 				(button = new Button("Animate", () => {
-					animatedText.Animate(duration: 3, action: (text) => {
-						text.Background(Color.Pink);
-					});
+					shouldAnimate.Value = !shouldAnimate;
+					if(shouldAnimate)
+						this.ResumeAnimations();
+					else
+						this.PauseAnimations();
 				}))
 			};
 	}

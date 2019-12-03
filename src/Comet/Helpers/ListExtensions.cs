@@ -25,5 +25,18 @@ namespace Comet.Internal
 
 		public static void ForEach<T>(this IEnumerable<T> items, Action<T> action) =>
 			items.ToList().ForEach(action);
+
+		public static bool TryRemove<T>(this IList<T> list, T item)
+        {
+            try
+            {
+				list.Remove(item);
+				return true;
+            }
+            catch
+            {
+				return false;
+            }
+        }
 	}
 }

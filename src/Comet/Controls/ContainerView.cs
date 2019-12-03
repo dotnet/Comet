@@ -175,20 +175,31 @@ namespace Comet
 			{
 				view.Dispose();
 			}
-			Views.Clear();
+			Views?.Clear();
 			base.Dispose(disposing);
 		}
 
 		public override void ViewDidAppear()
 		{
-			Views.ForEach(v => v.ViewDidAppear());
+			Views?.ForEach(v => v.ViewDidAppear());
 			base.ViewDidAppear();
 		}
 
 		public override void ViewDidDisappear()
 		{
-			Views.ForEach(v => v.ViewDidDisappear());
+			Views?.ForEach(v => v.ViewDidDisappear());
 			base.ViewDidDisappear();
 		}
-	}
+
+        public override void PauseAnimations()
+		{
+			Views?.ForEach(v => v.PauseAnimations());
+			base.PauseAnimations();
+        }
+        public override void ResumeAnimations()
+		{
+			Views?.ForEach(v => v.ResumeAnimations());
+			base.ResumeAnimations();
+        }
+    }
 }

@@ -83,5 +83,16 @@ namespace Comet
 			Content?.ViewDidAppear();
 			base.ViewDidDisappear();
 		}
-	}
+
+        public override void PauseAnimations()
+        {
+			Content?.PauseAnimations();
+            base.PauseAnimations();
+        }
+        public override void ResumeAnimations()
+        {
+			Content?.ResumeAnimations();
+            base.ResumeAnimations();
+        }
+    }
 }

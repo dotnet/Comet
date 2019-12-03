@@ -38,7 +38,7 @@ namespace Comet
 		{
 			var duration = steps.Sum(x => x.Delay + x.Duration);
 			Duration = duration;
-			AnimationManger.Add(this);
+			View.AddAnimation(this);
 			return View;
 		}
 

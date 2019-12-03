@@ -18,7 +18,8 @@ namespace Comet
 		{
 			childrenAnimations = animations;
 		}
-
+		bool paused;
+		public bool IsPaused => paused;
 		object locker = new object();
 		List<Animation> childrenAnimations = new List<Animation>();
 		public double StartDelay { get; set; }
@@ -50,6 +51,9 @@ namespace Comet
 		int usingResource = 0;
 		public void Tick(double secondsSinceLastUpdate)
 		{
+			if (IsPaused)
+				return;
+
 			if (0 == Interlocked.Exchange(ref usingResource, 1))
 			{
 				try
@@ -159,6 +163,17 @@ namespace Comet
 			foreach (var x in childrenAnimations)
 				x.Reset();
 		}
+
+		public void Pause()
+        {
+			paused = true;
+			AnimationManger.Remove(this);
+        }
+		public void Resume()
+        {
+			paused = false;
+			AnimationManger.Add(this);
+        }
 
 		#region IDisposable Support
 		public bool IsDisposed => disposedValue;

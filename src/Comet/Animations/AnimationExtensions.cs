@@ -13,8 +13,7 @@ namespace Comet
 		where T : View
 		{
 			var animation = CreateAnimation(view, easing, action, completed, duration, delay, repeats, autoReverses);
-			AnimationManger.Add(animation);
-
+			view.AddAnimation(animation);
 			return view;
 		}
 

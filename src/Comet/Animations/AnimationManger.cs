@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Comet.Internal;
 
 namespace Comet
 {
@@ -37,6 +38,13 @@ namespace Comet
 				Start();
 		}
 
+		public static void Remove(Animation animation)
+        {
+			Animations.TryRemove(animation);
+			if (!Animations.Any())
+				End();
+		}
+
 		static void Start()
 		{
 			lastUpdate = GetCurrentTick();
@@ -54,13 +62,15 @@ namespace Comet
 			var animations = Animations.ToList();
 			Parallel.ForEach(animations, (animation) => {
 				if (animation.HasFinished)
+				{
+					Animations.TryRemove(animation);
 					return;
+				}
 
 				animation.Tick(seconds * SpeedModifier);
 				if (animation.HasFinished)
 				{
-					Animations.Remove(animation);
-					animation.Dispose();
+					Animations.TryRemove(animation);
 				}
 			});
 
