@@ -14,7 +14,7 @@ namespace Comet
 				Calculate = (progress,s,e) => {
 					var start = (int)s;
 					var end = (int)e;
-					return ((end - start) * progress) + start;
+					return (int)((end - start) * progress) + start;
 				}
 			},
 			[typeof(short)] = new Lerp
@@ -22,7 +22,7 @@ namespace Comet
 				Calculate = (progress, s, e) => {
 					var start = (short)s;
 					var end = (short)e;
-					return ((end - start) * progress) + start;
+					return (short)((end - start) * progress) + start;
 				}
 			},
 			[typeof(byte)] = new Lerp
@@ -30,7 +30,7 @@ namespace Comet
 				Calculate = (progress, s, e) => {
 					var start = (byte)s;
 					var end = (byte)e;
-					return ((end - start) * progress) + start;
+					return (byte)((end - start) * progress) + start;
 				}
 			},
 			[typeof(float)] = new Lerp
@@ -38,7 +38,7 @@ namespace Comet
 				Calculate = (progress, s, e) => {
 					var start = (float)s;
 					var end = (float)e;
-					return ((end - start) * progress) + start;
+					return (float)((end - start) * progress) + start;
 				}
 			},
 			[typeof(double)] = new Lerp
@@ -54,7 +54,7 @@ namespace Comet
 				Calculate = (progress, s, e) => {
 					var start = (int)s;
 					var end = (int)e;
-					return ((end - start) * progress) + start;
+					return (long)((end - start) * progress) + start;
 				}
 			},
 			[typeof(bool)] = new Lerp
@@ -71,7 +71,7 @@ namespace Comet
 				Calculate = (progress, s, e) => {
 					var start = (uint)s;
 					var end = (uint)e;
-					return ((end - start) * progress) + start;
+					return (uint)((end - start) * progress) + start;
 				}
 			},
 
