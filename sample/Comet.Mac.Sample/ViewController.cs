@@ -16,7 +16,7 @@ namespace Comet.Mac.Sample
 		public override void ViewDidLoad()
 		{
 			base.ViewDidLoad();
-
+			UI.Init();
 			var hotViewController = new MainPage().ToViewController();
 			AddChildViewController(hotViewController);
 			var view = hotViewController.View;

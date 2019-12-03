@@ -1,5 +1,4 @@
 ﻿using Foundation;
-using Comet.iOS.Services;
 using Comet.Mac.Handlers;
 using Comet.Mac.Services;
 
@@ -45,6 +44,9 @@ namespace Comet.Mac
 			Device.FontService = new MacFontService();
 			Device.GraphicsService = new MacGraphicsService();
 			Device.BitmapService = new MacBitmapService();
+
+
+			AnimationManger.SetTicker(new MacTicker());
 		}
 	}
 }
