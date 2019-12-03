@@ -143,9 +143,8 @@ namespace Comet
 		//    return didUpdate;
 		//}
 
-		public bool UpdateValue((INotifyPropertyRead BindingObject, string PropertyName) property, string fullProperty, object value)
+		public bool UpdateValue(View view,(INotifyPropertyRead BindingObject, string PropertyName) property, string fullProperty, object value)
 		{
-
 			changeDictionary[fullProperty] = value;
 			if (GlobalProperties.Contains(property))
 				return false;

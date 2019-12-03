@@ -17,6 +17,7 @@
   <ItemGroup>
     <Folder Include="Gestures\" />
     <Folder Include="Exceptions\" />
+    <Folder Include="Animations\" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.4.16" />

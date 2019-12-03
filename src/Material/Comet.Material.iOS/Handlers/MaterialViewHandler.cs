@@ -17,9 +17,8 @@ namespace Comet.Material.iOS
 			[nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
 			[nameof(EnvironmentKeys.View.Border)] = MapBorderProperty,
 			[nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
-			//[nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
-			//[nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty,
-			[nameof(EnvironmentKeys.Animations.Animation)] = ViewHandler.MapAnimationProperty,
+            //[nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
+            //[nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty,
 		};
 
 		public static void MapBackgroundColorProperty(IViewHandler handler, View virtualView)

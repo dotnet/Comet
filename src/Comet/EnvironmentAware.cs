@@ -132,6 +132,14 @@ namespace Comet
 
 		internal bool SetValue(string key, object value, bool cascades)
 		{
+			//Monitor changes if we care!
+			if(monitoredChanges != null)
+            {
+				//TODO: Check into this for shapes!!!!!
+				var oldValue = this.GetEnvironment(this as View, key, cascades);
+				monitoredChanges[(this, key)] = (oldValue, value);
+            }
+
 			//We only create the backing dictionary if it is needed. 
 			//If we are setting the value to null, 
 			//there is no reason to create the dictionary if it doesnt exist
@@ -141,6 +149,18 @@ namespace Comet
 				return LocalContext(value != null)?.SetValue(key, value) ?? false;
 		}
 
+		static Dictionary<(ContextualObject view, string property), (object oldValue, object newValue)> monitoredChanges = null;
+		public static void MonitorChanges()
+        {
+			monitoredChanges = new Dictionary<(ContextualObject view, string property), (object oldValue, object newValue)>();
+		}
+
+		public static Dictionary<(ContextualObject view, string property), (object oldValue, object newValue)> StopMonitoringChanges()
+        {
+			var changes = monitoredChanges;
+			monitoredChanges = null;
+			return changes;
+        }
 
 		//protected ICollection<string> GetAllKeys()
 		//{
