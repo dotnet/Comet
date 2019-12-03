@@ -8,16 +8,26 @@ namespace Comet
 {
 	public class Animation : IDisposable
 	{
+		public Animation()
+		{
+
+		}
+
+		public Animation(List<Animation> animations)
+		{
+			childrenAnimations = animations;
+		}
+
 		object locker = new object();
 		List<Animation> childrenAnimations = new List<Animation>();
 		public double StartDelay { get; set; }
 		public double Duration { get; set; }
-		public double CurrentTime { get; private set; }
+		public double CurrentTime { get; protected set; }
 		public Easing Easing { get; set; }
-		public bool HasFinished { get; private set; }
+		public bool HasFinished { get; protected set; }
 		public object StartValue { get; set; }
 		public object EndValue { get; set; }
-		public object CurrentValue { get; private set; }
+		public object CurrentValue { get; protected set; }
 		public bool Repeats { get; set; }
 		public Action<object> ValueChanged { get; set; }
 		Lerp _lerp;
@@ -90,6 +100,7 @@ namespace Comet
 				HasFinished = true;
 			}
 		}
+
 		public Animation CreateAutoReversing()
 		{
 			var reveresedChildren = childrenAnimations.ToList();
@@ -117,6 +128,7 @@ namespace Comet
 			Repeats = false;
 			return parentAnimation;
 		}
+
 
 		public void Reset()
 		{

@@ -138,6 +138,7 @@ namespace Comet
 				//TODO: Check into this for shapes!!!!!
 				var oldValue = this.GetEnvironment(this as View, key, cascades);
 				monitoredChanges[(this, key, cascades)] = (oldValue, value);
+				return false;
 			}
 
 			//We only create the backing dictionary if it is needed. 

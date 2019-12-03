@@ -29,6 +29,7 @@ namespace Comet
 {
 	public class Easing
 	{
+		public static Easing Default => CubicInOut;
 		public static readonly Easing Linear = new Easing(x => x);
 
 		public static readonly Easing SinOut = new Easing(x => Math.Sin(x * Math.PI * 0.5f));

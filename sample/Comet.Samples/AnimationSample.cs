@@ -9,6 +9,7 @@ namespace Comet.Samples
 			Body = Build;
 		}
 		Text animatedText;
+		Button button;
 		View Build() =>
 			new VStack
 			{
@@ -18,10 +19,11 @@ namespace Comet.Samples
 					.Color(Color.Blue)
 					.FontSize(10)
 					.Animate(duration: 3,repeats:true, autoReverses:true, action: (text) => {
-						text.Background(Color.Blue);
-						text.Color(Color.Orange);
+						text.Background(Color.Blue)
+							.Color(Color.Orange);
 						text.FontSize(30);
-					}
+					})
+
 					//new Animation
 					//{
 					//	Duration = 2000,
@@ -31,13 +33,30 @@ namespace Comet.Samples
 					//	RotateTo = 30,
 					//	ScaleTo = new PointF(2f, 2f),
 					//}
-					)),
-				new Text("Regular Text Above..."),
-				new Button("Animate", () => {
+					),
+				new Text("Regular Text Above...")
+				.BeginAnimationSequence(repeats:true)
+					.Animate(duration:1,action:(text)=>{
+						text.Background(Color.Fuchsia);
+						button.Background(Color.Green);
+					}).Animate(duration:1,action:(text)=>{
+						text.Background(Color.AliceBlue);
+					}).Animate(duration:1,action:(text)=>{
+						text.Background(Color.Beige);
+						button.Background(Color.Blue);
+					}).Animate(duration:1,action:(text)=>{
+						text.Background(Color.BlueViolet);
+					}).Animate(duration:1,action:(text)=>{
+						text.Background(Color.Lavender);
+					}).Animate(duration:1,action:(text)=>{
+						text.Background(Color.Fuchsia);
+						button.Background(Color.Green);
+				}).EndAnimationSequence(),
+				(button = new Button("Animate", () => {
 					animatedText.Animate(duration: 3, action: (text) => {
 						text.Background(Color.Pink);
 					});
-				})
+				}))
 			};
 	}
 }
