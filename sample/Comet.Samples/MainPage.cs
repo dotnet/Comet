@@ -21,6 +21,7 @@ namespace Comet.Samples
 			new MenuItem("Virtual Sectioned List View",()=>new VirtualSectionedListViewSample()),
 			new MenuItem("Virtual List View",()=>new VirtualListViewSample()),
 			new MenuItem("Binding Sample!",()=> new BindingSample()),
+			new MenuItem("Animated Skia Sample",()=> new SkiaButtonSample()),
 			new MenuItem("Animation Sample",()=> new AnimationSample()),
 			new MenuItem("TabView",()=> new TabViewSample()),
 			new MenuItem("BasicTestView",()=> new BasicTestView()),

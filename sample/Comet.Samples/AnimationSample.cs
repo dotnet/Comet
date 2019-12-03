@@ -30,10 +30,10 @@ namespace Comet.Samples
 					)),
 				new Text("Regular Text Above..."),
 				new Button("Animate", () => {
-					//View.Animate(() => {
-
-					//});
-                })
+					animatedText.Animate(duration: 3, action: (text) => {
+						text.Background(Color.Pink);
+					});
+				})
 			};
 	}
 }

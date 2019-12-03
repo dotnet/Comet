@@ -9,6 +9,7 @@ namespace Comet
 {
 	public class ThreadHelper
 	{
+		public static bool IsMainThread => joinableTaskContext.MainThread == Thread.CurrentThread;
 		static JoinableTaskContext joinableTaskContext;
 		public static JoinableTaskContext JoinableTaskContext
 		{
@@ -82,10 +83,21 @@ namespace Comet
 		//     STAService.DoSomething(); }
 		public static JoinableTaskFactory.MainThreadAwaitable SwitchToMainThreadAsync(CancellationToken cancellationToken = default) => JoinableTaskContext.Factory.SwitchToMainThreadAsync(cancellationToken);
 
-
+		public static Action<Action> FireOnMainThread;
 		public static async void RunOnMainThread(Action action)
 		{
-			await SwitchToMainThreadAsync();
+
+			if (!IsMainThread)
+			{
+				
+				if (FireOnMainThread != null)
+				{
+					FireOnMainThread(action);
+					return;
+				}
+				//TODO: Figure out why this doesn't always return...
+				await SwitchToMainThreadAsync(true);
+			}
 			action();
 		}
 

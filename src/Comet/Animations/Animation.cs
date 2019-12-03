@@ -1,17 +1,19 @@
 ﻿using System;
+using System.Diagnostics;
 
 namespace Comet
 {
 	public class Animation
 	{
-		public double Start { get; set; } = 0;
-		public double Stop { get; set; }
+		public double StartDelay { get; set; } = 0;
 		public double Duration { get; set; }
+		public double CurrentTime { get; private set; }
 		public Easing Easing { get; set; }
-		public bool HasFinished { get; set; }
+		public bool HasFinished { get; private set; }
 		public object StartValue { get; set; }
 		public object EndValue { get; set; }
-		public object CurrentValue { get; set; }
+		public object CurrentValue { get; private set; }
+		public Action<object> ValueChanged { get; set; }
 		Lerp _lerp;
 		Lerp Lerp
 		{
@@ -27,12 +29,24 @@ namespace Comet
 				return _lerp = Lerp.GetLerp(type);
 			}
 		}
-		public void Tick(double percent)
+		public void Tick(double secondsSinceLastUpdate)
+        {
+			CurrentTime += secondsSinceLastUpdate;
+			var start = CurrentTime - StartDelay;
+			var percent = Math.Min(start / Duration, 1);
+			Update(percent);
+			HasFinished = percent == 1;
+		}
+
+		public void Update(double percent)
 		{
 			try
 			{
 				var progress = Easing.Ease(percent);
 				CurrentValue = Lerp.Calculate(progress, StartValue, EndValue);
+				//ThreadHelper.RunOnMainThread(() =>
+				ValueChanged?.Invoke(CurrentValue);
+				//);
 			}
 			catch (Exception ex)
 			{

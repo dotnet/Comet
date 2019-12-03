@@ -19,9 +19,21 @@ namespace Comet
 
 			foreach (var change in changedProperties)
 			{
-				var propertyName = change.Key;
+				var prop = change.Key;
 				var values = change.Value;
-				
+				if (values.newValue == values.oldValue)
+					continue;
+				var animation = new Animation
+				{
+					Duration = duration,
+					Easing = easing,
+					StartValue = values.oldValue,
+					EndValue = values.newValue,
+					ValueChanged = (value) => {
+						prop.view.SetEnvironment(prop.property, value, prop.cascades);
+					}
+				};
+				AnimationManger.Add(animation);
 				//new Animation(propertyName, values.oldValue, values.newValue);
 			}
 			return view;
@@ -29,13 +41,13 @@ namespace Comet
 
 		public static Color Lerp(this Color color, double progress, Color endColor)
         {
-			float Lerp(float start, float end, double progress) => (float)((start - end) * progress) + start; 
+			float Lerp(float start, float end, double progress) => (float)(((end - start) * progress) + start); 
 
 			var r = Lerp(color.R, endColor.R, progress);
 			var b = Lerp(color.B, endColor.B, progress);
 			var g = Lerp(color.G, endColor.G, progress);
 			var a = Lerp(color.A, endColor.A, progress);
-			return new Color(r, b, g, a);
+			return new Color(r, g, b,  a);
 		}
 	}
 }

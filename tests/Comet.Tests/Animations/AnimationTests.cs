@@ -16,27 +16,27 @@ namespace Comet.Tests
             };
 
             var progress = .1;
-            animation.Tick(progress);
+            animation.Update (progress);
             Assert.Equal(animation.CurrentValue, progress);
 
             progress = .2;
-            animation.Tick(progress);
+            animation.Update (progress);
             Assert.Equal(animation.CurrentValue, progress);
 
             progress = .33333;
-            animation.Tick(progress);
+            animation.Update (progress);
             Assert.Equal(animation.CurrentValue, progress);
 
             progress = .75;
-            animation.Tick(progress);
+            animation.Update (progress);
             Assert.Equal(animation.CurrentValue, progress);
 
             progress = .99;
-            animation.Tick(progress);
+            animation.Update (progress);
             Assert.Equal(animation.CurrentValue, progress);
 
             progress = 1;
-            animation.Tick(progress);
+            animation.Update (progress);
             Assert.Equal(animation.CurrentValue, progress);
         }
     }
