@@ -54,9 +54,12 @@ namespace Comet.iOS
 
 			ThreadHelper.JoinableTaskContext = new Microsoft.VisualStudio.Threading.JoinableTaskContext();
 			ThreadHelper.FireOnMainThread = (action) => _invoker.BeginInvokeOnMainThread(action);
+
 			Device.FontService = new iOSFontService();
 			Device.GraphicsService = new iOSGraphicsService();
 			Device.BitmapService = new iOSBitmapService();
+
+			AnimationManger.SetTicker(new iOSTicker());
 		}
 
 		internal static UIViewController PresentingViewController

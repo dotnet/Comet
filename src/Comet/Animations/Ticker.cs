@@ -7,32 +7,40 @@ namespace Comet
     {
 		public Ticker()
         {
-            timer.Elapsed += Timer_Elapsed;
         }
 
         void Timer_Elapsed(object sender, ElapsedEventArgs e) => Fire?.Invoke();
 
-        Timer timer = new Timer
-        {
-            AutoReset = true,
-			//60 fps
-            Interval = 1000 / 60,
-			
-        };
+        Timer timer;
 
         public virtual int MaxFps { get; set; } = 60;
 		public Action Fire { get; set; }
-        public virtual bool IsRunning => timer.Enabled;
+        public virtual bool IsRunning => timer?.Enabled ?? false;
 
         public virtual void Start()
         {
+            if (timer != null)
+            {
+                return;
+            }
+            timer = new Timer
+            {
+                AutoReset = true,
+                Interval = 1000 / MaxFps,
+            };
+            timer.Elapsed += Timer_Elapsed;
             timer.AutoReset = true;
             timer.Start();
         }
         public virtual void Stop()
         {
+            if (timer == null)
+                return;
             timer.AutoReset = false;
             timer.Stop();
+            timer.Elapsed -= Timer_Elapsed;
+            timer.Dispose();
+            timer = null;
         }
     }
 }

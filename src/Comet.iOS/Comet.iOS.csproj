@@ -91,6 +91,7 @@
     <Compile Include="Controls\CUITapGestures.cs" />
     <Compile Include="Handlers\ActivityIndicatorHandler.cs" />
     <Compile Include="Handlers\ProgressBarHandler.cs" />
+    <Compile Include="Services\iOSTicker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet\Comet.csproj">
