@@ -6,10 +6,11 @@ using Comet.Internal;
 
 namespace Comet
 {
-	public class Animation
+	public class Animation : IDisposable
 	{
+		object locker = new object();
 		List<Animation> childrenAnimations = new List<Animation>();
-		public double StartDelay { get; set; } = 0;
+		public double StartDelay { get; set; }
 		public double Duration { get; set; }
 		public double CurrentTime { get; private set; }
 		public Easing Easing { get; set; }
@@ -17,6 +18,7 @@ namespace Comet
 		public object StartValue { get; set; }
 		public object EndValue { get; set; }
 		public object CurrentValue { get; private set; }
+		public bool Repeats { get; set; }
 		public Action<object> ValueChanged { get; set; }
 		Lerp _lerp;
 		Lerp Lerp
@@ -33,36 +35,41 @@ namespace Comet
 				return _lerp = Lerp.GetLerp(type);
 			}
 		}
+
 		public void Tick(double secondsSinceLastUpdate)
-        {
+		{
 			if (HasFinished)
 				return;
-			CurrentTime += secondsSinceLastUpdate;
-			if (childrenAnimations.Any())
-			{
-				var hasFinished = true;
-				foreach(var animation in childrenAnimations)
-                {
+			lock (locker){
+				CurrentTime += secondsSinceLastUpdate;
+				if (childrenAnimations.Any())
+				{
+					var hasFinished = true;
+					foreach (var animation in childrenAnimations)
+					{
 
-					animation.Tick(secondsSinceLastUpdate);
-					if (!animation.HasFinished)
-						hasFinished = false;
+						animation.Tick(secondsSinceLastUpdate);
+						if (!animation.HasFinished)
+							hasFinished = false;
+
+					}
+					HasFinished = hasFinished;
+
 
 				}
-				HasFinished = hasFinished;
-			
-				if (HasFinished)
-					Console.WriteLine("Hi");
-			}
-			else
-			{
+				else
+				{
 
-				var start = CurrentTime - StartDelay;
-				Console.WriteLine($"{start} = {CurrentTime} - {StartDelay} : {CurrentTime < StartDelay}");
-				if (CurrentTime < StartDelay)
-					return;
-				var percent = Math.Min(start / Duration, 1);
-				Update(percent);
+					var start = CurrentTime - StartDelay;
+					if (CurrentTime < StartDelay)
+						return;
+					var percent = Math.Min(start / Duration, 1);
+					Update(percent);
+				}
+			}
+			if (HasFinished && Repeats)
+			{
+				Reset();
 			}
 		}
 
@@ -83,7 +90,7 @@ namespace Comet
 			}
 		}
 		public Animation CreateAutoReversing()
-        {
+		{
 			var reveresedChildren = childrenAnimations.ToList();
 			reveresedChildren.Reverse();
 			var reveresed = new Animation
@@ -96,15 +103,57 @@ namespace Comet
 				childrenAnimations = reveresedChildren,
 				ValueChanged = ValueChanged,
 			};
-			return new Animation
+			var parentAnimation = new Animation
 			{
 				Duration = reveresed.StartDelay + reveresed.Duration,
+				Repeats = Repeats,
 				childrenAnimations =
 				{
 					this,
 					reveresed,
 				}
 			};
+			Repeats = false;
+			return parentAnimation;
+		}
+
+		public void Reset()
+		{
+			lock (locker){
+
+				CurrentTime = 0;
+				HasFinished = false;
+				foreach(var x in childrenAnimations)
+					x.Reset();
+			}
+		}
+
+		#region IDisposable Support
+		public bool IsDisposed => disposedValue;
+        private bool disposedValue = false; // To detect redundant calls
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposedValue)
+            {
+                if (disposing)
+                {
+					foreach (var child in childrenAnimations)
+						child.Dispose();
+					childrenAnimations.Clear();
+                }
+				ValueChanged = null;
+                disposedValue = true;
+            }
         }
-	}
+
+      
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            Dispose(true);
+        }
+        #endregion
+    }
 }

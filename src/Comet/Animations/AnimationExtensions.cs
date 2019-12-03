@@ -27,6 +27,7 @@ namespace Comet
 				{
 					Duration = duration,
 					Easing = easing,
+					Repeats = repeats,
 					StartValue = values.oldValue,
 					EndValue = values.newValue,
 					ValueChanged = (value) => {

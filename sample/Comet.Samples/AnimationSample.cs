@@ -15,8 +15,12 @@ namespace Comet.Samples
 				new Text("Regular Text Behind..."),
 				(animatedText = new Text("Text to Animate!")
 					.Background(Color.Orange)
+					.Color(Color.Blue)
+					.FontSize(10)
 					.Animate(duration: 3,repeats:true, autoReverses:true, action: (text) => {
 						text.Background(Color.Blue);
+						text.Color(Color.Orange);
+						text.FontSize(30);
 					}
 					//new Animation
 					//{

@@ -51,7 +51,10 @@ namespace Comet
 			{
 				animation.Tick(seconds);
 				if (animation.HasFinished)
+				{
 					Animations.Remove(animation);
+					animation.Dispose();
+				}
 			}
 
 			if (!Animations.Any())
