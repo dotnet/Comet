@@ -51,6 +51,9 @@ namespace Comet.Android
 			ThreadHelper.JoinableTaskContext = new Microsoft.VisualStudio.Threading.JoinableTaskContext();
 			Device.GraphicsService = new AndroidGraphicsService();
 			Device.BitmapService = new AndroidBitmapService();
+
+
+			AnimationManger.SetTicker(new AndroidTicker());
 		}
 	}
 }

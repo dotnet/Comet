@@ -16,6 +16,7 @@ namespace Comet
         public virtual int MaxFps { get; set; } = 60;
 		public Action Fire { get; set; }
         public virtual bool IsRunning => timer?.Enabled ?? false;
+        public virtual bool SystemEnabled => true;
 
         public virtual void Start()
         {

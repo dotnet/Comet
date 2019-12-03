@@ -25,6 +25,11 @@ namespace Comet
 		static List<Animation> Animations = new List<Animation>();
 		public static void Add(Animation animation)
         {
+			//If animations are disabled, don't do anything
+			if(!Ticker.SystemEnabled)
+            {
+				return;
+            }
 			Animations.Add(animation);
 			if(!Ticker.IsRunning)
 				Start();
