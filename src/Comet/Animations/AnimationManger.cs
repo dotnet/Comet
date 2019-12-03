@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Comet
 {
@@ -51,16 +52,17 @@ namespace Comet
 			var seconds = TimeSpan.FromMilliseconds((now - lastUpdate)).TotalSeconds;
 			lastUpdate = now;
 			var animations = Animations.ToList();
-			//TODO: do this in parallel
-			foreach (var animation in animations)
-			{
+			Parallel.ForEach(animations, (animation) => {
+				if (animation.HasFinished)
+					return;
+
 				animation.Tick(seconds);
 				if (animation.HasFinished)
 				{
 					Animations.Remove(animation);
 					animation.Dispose();
 				}
-			}
+			});
 
 			if (!Animations.Any())
 				End();

@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading;
 
 namespace Comet
 {
@@ -133,7 +134,7 @@ namespace Comet
 		internal bool SetValue(string key, object value, bool cascades)
 		{
 			//Monitor changes if we care!
-			if (monitoredChanges != null)
+			if (monitoredChanges != null && Thread.CurrentThread == currentMonitoredThread)
 			{
 				//TODO: Check into this for shapes!!!!!
 				var oldValue = this.GetEnvironment(this as View, key, cascades);
@@ -151,16 +152,29 @@ namespace Comet
 		}
 
 		static Dictionary<(ContextualObject view, string property, bool cascades), (object oldValue, object newValue)> monitoredChanges = null;
+		static Thread currentMonitoredThread;
+		static object locker = new object();
 		public static void MonitorChanges()
 		{
-			monitoredChanges = new Dictionary<(ContextualObject view, string property, bool cascades), (object oldValue, object newValue)>();
+			lock (locker)
+			{
+				Monitor.Enter(locker);
+				monitoredChanges = new Dictionary<(ContextualObject view, string property, bool cascades), (object oldValue, object newValue)>();
+				currentMonitoredThread = Thread.CurrentThread;
+			}
+
 		}
 
 		public static Dictionary<(ContextualObject view, string property, bool cascades), (object oldValue, object newValue)> StopMonitoringChanges()
 		{
-			var changes = monitoredChanges;
-			monitoredChanges = null;
-			return changes;
+			lock (locker)
+			{
+				var changes = monitoredChanges;
+				monitoredChanges = null;
+				currentMonitoredThread = null;
+				Monitor.Exit(locker);
+				return changes;
+			}
 		}
 
 		//protected ICollection<string> GetAllKeys()
