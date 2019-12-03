@@ -7,6 +7,7 @@ namespace Comet
 {
 	public static class AnimationManger
 	{
+		public static double SpeedModifier { get; set; } = 1;
 		static AnimationManger()
 		{
 			SetTicker(new Ticker());
@@ -55,7 +56,7 @@ namespace Comet
 				if (animation.HasFinished)
 					return;
 
-				animation.Tick(seconds);
+				animation.Tick(seconds * SpeedModifier);
 				if (animation.HasFinished)
 				{
 					Animations.Remove(animation);
