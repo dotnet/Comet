@@ -20,21 +20,21 @@ namespace Comet
 			if (isRunning)
 				ticker.Start();
 		}
-		
+
 		static Ticker Ticker;
 
 		static List<Animation> Animations = new List<Animation>();
 		public static void Add(Animation animation)
-        {
+		{
 			//If animations are disabled, don't do anything
-			if(!Ticker.SystemEnabled)
-            {
+			if (!Ticker.SystemEnabled)
+			{
 				return;
-            }
+			}
 			Animations.Add(animation);
-			if(!Ticker.IsRunning)
+			if (!Ticker.IsRunning)
 				Start();
-        }
+		}
 
 		static void Start()
 		{
@@ -45,7 +45,6 @@ namespace Comet
 		static long GetCurrentTick() => (Environment.TickCount & Int32.MaxValue);
 
 		static void End() => Ticker.Stop();
-
 		static void OnFire()
 		{
 			var now = GetCurrentTick();
