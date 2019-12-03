@@ -6,12 +6,12 @@ namespace Comet
 
 	public class Lerp
     {
-		public delegate object LerpDelegate(double progress, object start, object end);
+		public delegate object LerpDelegate(object start, object end, double progress);
 		public static readonly Dictionary<Type, Lerp> Lerps = new Dictionary<Type, Lerp>()
 		{
 			[typeof(int)] = new Lerp
 			{
-				Calculate = (progress,s,e) => {
+				Calculate = (s,e,progress) => {
 					var start = (int)s;
 					var end = (int)e;
 					return (int)((end - start) * progress) + start;
@@ -19,7 +19,7 @@ namespace Comet
 			},
 			[typeof(short)] = new Lerp
 			{
-				Calculate = (progress, s, e) => {
+				Calculate = (s, e, progress) => {
 					var start = (short)s;
 					var end = (short)e;
 					return (short)((end - start) * progress) + start;
@@ -27,7 +27,7 @@ namespace Comet
 			},
 			[typeof(byte)] = new Lerp
 			{
-				Calculate = (progress, s, e) => {
+				Calculate = (s, e, progress) => {
 					var start = (byte)s;
 					var end = (byte)e;
 					return (byte)((end - start) * progress) + start;
@@ -35,7 +35,7 @@ namespace Comet
 			},
 			[typeof(float)] = new Lerp
 			{
-				Calculate = (progress, s, e) => {
+				Calculate = (s, e, progress) => {
 					var start = (float)s;
 					var end = (float)e;
 					return (float)((end - start) * progress) + start;
@@ -43,7 +43,7 @@ namespace Comet
 			},
 			[typeof(double)] = new Lerp
 			{
-				Calculate = (progress, s, e) => {
+				Calculate = (s, e, progress) => {
 					var start = (double)s;
 					var end = (double)e;
 					return ((end - start) * progress) + start;
@@ -51,7 +51,7 @@ namespace Comet
 			},
 			[typeof(long)] = new Lerp
 			{
-				Calculate = (progress, s, e) => {
+				Calculate = (s, e, progress) => {
 					var start = (int)s;
 					var end = (int)e;
 					return (long)((end - start) * progress) + start;
@@ -59,7 +59,7 @@ namespace Comet
 			},
 			[typeof(bool)] = new Lerp
 			{
-				Calculate = (progress, s, e) => {
+				Calculate = (s, e, progress) => {
 					var start = (bool)s;
 					var end = (bool)e;
 					return progress < .5 ? start: end;
@@ -68,7 +68,7 @@ namespace Comet
 
 			[typeof(uint)] = new Lerp
 			{
-				Calculate = (progress, s, e) => {
+				Calculate = (s, e, progress) => {
 					var start = (uint)s;
 					var end = (uint)e;
 					return (uint)((end - start) * progress) + start;
@@ -77,7 +77,7 @@ namespace Comet
 
 			[typeof(Color)] = new Lerp
 			{
-				Calculate = (progress, s, e) => {
+				Calculate = (s, e, progress) => {
 					var start = (Color)s;
 					var end = (Color)e;
 					return start.Lerp(progress, end);

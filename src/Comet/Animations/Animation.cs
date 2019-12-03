@@ -78,7 +78,7 @@ namespace Comet
 			try
 			{
 				var progress = Easing.Ease(percent);
-				CurrentValue = Lerp.Calculate(progress, StartValue, EndValue);
+				CurrentValue = Lerp.Calculate(StartValue, EndValue, progress);
 				ValueChanged?.Invoke(CurrentValue);
 				HasFinished = percent == 1;
 			}
