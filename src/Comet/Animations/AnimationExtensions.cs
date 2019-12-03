@@ -4,10 +4,10 @@ namespace Comet
 	public static class AnimationExtensions
 	{
 
-		public static T Animate<T>(this T view, Action<T> action, Action completed = null, double duration = .2, bool repeats = false, bool autoReverses = false)
-			where T : View => view.Animate(Easing.CubicInOut, action, completed, duration, repeats, autoReverses);
+		public static T Animate<T>(this T view, Action<T> action, Action completed = null, double duration = .2, double delay = 0, bool repeats = false, bool autoReverses = false)
+			where T : View => view.Animate(Easing.CubicInOut, action, completed, duration,delay, repeats, autoReverses);
 
-		public static T Animate<T>(this T view, Easing easing, Action<T> action, Action completed = null, double duration = .2, bool repeats = false, bool autoReverses = false)
+		public static T Animate<T>(this T view, Easing easing, Action<T> action, Action completed = null, double duration = .2, double delay = 0, bool repeats = false, bool autoReverses = false)
 		where T : View
 		{
 
@@ -28,6 +28,7 @@ namespace Comet
 					Duration = duration,
 					Easing = easing,
 					Repeats = repeats,
+					StartDelay = delay,
 					StartValue = values.oldValue,
 					EndValue = values.newValue,
 					ValueChanged = (value) => {
