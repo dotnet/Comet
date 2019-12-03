@@ -36,7 +36,7 @@ namespace Comet
 			}
 		}
 
-		public void Tick(double secondsSinceLastUpdate)
+		public virtual void Tick(double secondsSinceLastUpdate)
 		{
 			if (HasFinished)
 				return;
@@ -73,7 +73,7 @@ namespace Comet
 			}
 		}
 
-		public void Update(double percent)
+		public virtual void Update(double percent)
 		{
 			try
 			{
