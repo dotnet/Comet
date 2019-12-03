@@ -191,6 +191,7 @@ namespace Comet
 				}
 				ValueChanged = null;
 				disposedValue = true;
+				AnimationManger.Remove(this);
 			}
 		}
 

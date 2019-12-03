@@ -33,7 +33,8 @@ namespace Comet
 			{
 				return;
 			}
-			Animations.Add(animation);
+			if(!Animations.Contains(animation))
+				Animations.Add(animation);
 			if (!Ticker.IsRunning)
 				Start();
 		}
