@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using Comet.Internal;
 
 namespace Comet
@@ -45,38 +46,59 @@ namespace Comet
 				return _lerp = Lerp.GetLerp(type);
 			}
 		}
+		double skippedSeconds;
+		int usingResource = 0;
+		public void Tick(double secondsSinceLastUpdate)
+		{
+			if (0 == Interlocked.Exchange(ref usingResource, 1))
+			{
+				try
+				{
+					OnTick(skippedSeconds + secondsSinceLastUpdate);
+					skippedSeconds = 0;
+				}
+				finally
+				{
+					//Release the lock
+					Interlocked.Exchange(ref usingResource, 0);
+				}
+			}
+			//animation is lagging behind!
+			else
+			{
+				skippedSeconds += secondsSinceLastUpdate;
+			}
+		}
 
-		public virtual void Tick(double secondsSinceLastUpdate)
+		protected virtual void OnTick(double secondsSinceLastUpdate)
 		{
 			if (HasFinished)
 				return;
-			lock (locker)
+
+			CurrentTime += secondsSinceLastUpdate;
+			if (childrenAnimations.Any())
 			{
-				CurrentTime += secondsSinceLastUpdate;
-				if (childrenAnimations.Any())
-				{
-					var hasFinished = true;
-					foreach (var animation in childrenAnimations)
-					{
-
-						animation.Tick(secondsSinceLastUpdate);
-						if (!animation.HasFinished)
-							hasFinished = false;
-
-					}
-					HasFinished = hasFinished;
-
-
-				}
-				else
+				var hasFinished = true;
+				foreach (var animation in childrenAnimations)
 				{
 
-					var start = CurrentTime - StartDelay;
-					if (CurrentTime < StartDelay)
-						return;
-					var percent = Math.Min(start / Duration, 1);
-					Update(percent);
+					animation.OnTick(secondsSinceLastUpdate);
+					if (!animation.HasFinished)
+						hasFinished = false;
+
 				}
+				HasFinished = hasFinished;
+
+
+			}
+			else
+			{
+
+				var start = CurrentTime - StartDelay;
+				if (CurrentTime < StartDelay)
+					return;
+				var percent = Math.Min(start / Duration, 1);
+				Update(percent);
 			}
 			if (HasFinished && Repeats)
 			{
@@ -132,14 +154,10 @@ namespace Comet
 
 		public void Reset()
 		{
-			lock (locker)
-			{
-
-				CurrentTime = 0;
-				HasFinished = false;
-				foreach (var x in childrenAnimations)
-					x.Reset();
-			}
+			CurrentTime = 0;
+			HasFinished = false;
+			foreach (var x in childrenAnimations)
+				x.Reset();
 		}
 
 		#region IDisposable Support

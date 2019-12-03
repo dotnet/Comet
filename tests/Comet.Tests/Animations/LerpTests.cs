@@ -12,26 +12,26 @@ namespace Comet.Tests
 			double end = 1;
 			var lerp = Lerp.GetLerp(start.GetType());
 			var progress = .1;
-			var value = (double)lerp.Calculate(progress, start, end);
+			var value = (double)lerp.Calculate(start, end, progress);
 			Assert.Equal(progress, value);
 
 			progress = .2;
-			value = (double)lerp.Calculate(progress, start, end);
+			value = (double)lerp.Calculate(start, end, progress);
 			Assert.Equal(progress, value);
 
 
 			progress = .33333;
-			value = (double)lerp.Calculate(progress, start, end);
+			value = (double)lerp.Calculate(start, end, progress);
 			Assert.Equal(progress, value);
 
 
 			progress = .5;
-			value = (double)lerp.Calculate(progress, start, end);
+			value = (double)lerp.Calculate(start, end, progress);
 			Assert.Equal(progress, value);
 
 
 			progress = 1;
-			value = (double)lerp.Calculate(progress, start, end);
+			value = (double)lerp.Calculate(start, end, progress);
 			Assert.Equal(progress, value);
 
 		}
@@ -43,26 +43,26 @@ namespace Comet.Tests
 			double end = 0;
 			var lerp = Lerp.GetLerp(start.GetType());
 			var progress = .1;
-			var value = (double)lerp.Calculate(progress, start, end);
+			var value = (double)lerp.Calculate(start, end, progress);
 			Assert.Equal(1 - progress, value);
 
 			progress = .2;
-			value = (double)lerp.Calculate(progress, start, end);
+			value = (double)lerp.Calculate(start, end, progress);
 			Assert.Equal(1 - progress, value);
 
 
 			progress = .33333;
-			value = (double)lerp.Calculate(progress, start, end);
+			value = (double)lerp.Calculate(start, end, progress);
 			Assert.Equal(1 - progress, value);
 
 
 			progress = .5;
-			value = (double)lerp.Calculate(progress, start, end);
+			value = (double)lerp.Calculate(start, end, progress);
 			Assert.Equal(1 - progress, value);
 
 
 			progress = 1;
-			value = (double)lerp.Calculate(progress, start, end);
+			value = (double)lerp.Calculate(start, end, progress);
 			Assert.Equal(1 - progress, value);
 
 		}
@@ -76,29 +76,29 @@ namespace Comet.Tests
 
 			var lerp = Lerp.GetLerp(start.GetType());
 			var progress = .1;
-			var value = (bool)lerp.Calculate(progress, start, end);
+			var value = (bool)lerp.Calculate(start, end, progress);
 			Assert.Equal(false, value);
 
 			progress = .2;
-			value = (bool)lerp.Calculate(progress, start, end);
+			value = (bool)lerp.Calculate(start, end, progress);
 			Assert.Equal(false, value);
 
 
 			progress = .4999999;
-			value = (bool)lerp.Calculate(progress, start, end);
+			value = (bool)lerp.Calculate(start, end, progress);
 			Assert.Equal(false, value);
 
 
 			progress = .5;
-			value = (bool)lerp.Calculate(progress, start, end);
+			value = (bool)lerp.Calculate(start, end, progress);
 			Assert.Equal(true, value);
 
 			progress = .75;
-			value = (bool)lerp.Calculate(progress, start, end);
+			value = (bool)lerp.Calculate(start, end, progress);
 			Assert.Equal(true, value);
 
 			progress = 1;
-			value = (bool)lerp.Calculate(progress, start, end);
+			value = (bool)lerp.Calculate(start, end, progress);
 			Assert.Equal(true, value);
 
 		}

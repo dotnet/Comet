@@ -44,7 +44,7 @@ namespace Comet
 
 		Animation currentAnimation;
 		int currentIndex = 0;
-		public override void Tick(double secondsSinceLastUpdate)
+		protected override void OnTick(double secondsSinceLastUpdate)
 		{
 			CurrentTime += secondsSinceLastUpdate;
 			currentAnimation ??= GetNextAnimation();
