@@ -40,7 +40,8 @@ namespace Comet
 		{
 			if (HasFinished)
 				return;
-			lock (locker){
+			lock (locker)
+			{
 				CurrentTime += secondsSinceLastUpdate;
 				if (childrenAnimations.Any())
 				{
@@ -119,41 +120,42 @@ namespace Comet
 
 		public void Reset()
 		{
-			lock (locker){
+			lock (locker)
+			{
 
 				CurrentTime = 0;
 				HasFinished = false;
-				foreach(var x in childrenAnimations)
+				foreach (var x in childrenAnimations)
 					x.Reset();
 			}
 		}
 
 		#region IDisposable Support
 		public bool IsDisposed => disposedValue;
-        private bool disposedValue = false; // To detect redundant calls
+		private bool disposedValue = false; // To detect redundant calls
 
-        protected virtual void Dispose(bool disposing)
-        {
-            if (!disposedValue)
-            {
-                if (disposing)
-                {
+		protected virtual void Dispose(bool disposing)
+		{
+			if (!disposedValue)
+			{
+				if (disposing)
+				{
 					foreach (var child in childrenAnimations)
 						child.Dispose();
 					childrenAnimations.Clear();
-                }
+				}
 				ValueChanged = null;
-                disposedValue = true;
-            }
-        }
+				disposedValue = true;
+			}
+		}
 
-      
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            Dispose(true);
-        }
-        #endregion
-    }
+
+		// This code added to correctly implement the disposable pattern.
+		public void Dispose()
+		{
+			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+			Dispose(true);
+		}
+		#endregion
+	}
 }
