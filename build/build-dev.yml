@@ -414,17 +414,17 @@ stages:
         msbuildArguments: '/p:AppxPackageSigningEnabled=false'
 
 
-- stage: NugetPackPublish
-  jobs:
-  - job: DownloadArtifacts
-    displayName: Download Artifacts from Build Stage
-    pool:
-      vmImage: 'windows-2019'
-      demands:
-      - MSBuild
+# - stage: NugetPackPublish
+#   jobs:
+#   - job: DownloadArtifacts
+#     displayName: Download Artifacts from Build Stage
+#     pool:
+#       vmImage: 'windows-2019'
+#       demands:
+#       - MSBuild
 
-    steps:
-    # - task: NuGetToolInstaller@1
-    #   displayName: Use Nuget 5.0.2
-    #   inputs:
-    #     versionSpec: '5.0.2'
+#     steps:
+#     # - task: NuGetToolInstaller@1
+#     #   displayName: Use Nuget 5.0.2
+#     #   inputs:
+#     #     versionSpec: '5.0.2'
