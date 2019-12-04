@@ -167,7 +167,7 @@ namespace Comet
 		{
 			try
 			{
-				var value = GetValueInternal(key);
+				var value = GetValueInternal(key).value;
 				return value;
 			}
 			catch

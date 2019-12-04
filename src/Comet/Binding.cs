@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Linq.Expressions;
 using Comet.Reflection;
 
@@ -62,6 +63,11 @@ namespace Comet
 			{
 				StateManager.CurrentView.GetState().AddGlobalProperties(props);
 			}
+
+            else if(props?.Count == 1 && props[0].BindingObject is State<T> state)
+            {
+				return state;
+            }
 			return new Binding<T>()
 			{
 				IsValue = true,

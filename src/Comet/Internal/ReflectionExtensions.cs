@@ -142,7 +142,7 @@ namespace Comet.Reflection
 					return null;
 				if (obj is BindingObject bo)
 				{
-					obj = bo.GetValueInternal(part);
+					obj = bo.GetValueInternal(part).value;
 				}
 				else
 				{

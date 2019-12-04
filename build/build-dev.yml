@@ -53,9 +53,11 @@ stages:
       displayName: 'Use .NET Core sdk'
       inputs:
         packageType: sdk
-        version: 3.0.100-preview9-014004
-        includePreviewVersions: true
-        installationPath: $(Agent.ToolsDirectory)/dotnet
+        version: 3.0.x
+
+    - bash:
+        sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(MonoVersion)
+        
     - task: NuGetToolInstaller@1
       displayName: Use Nuget 5.0.2
       inputs:
@@ -65,10 +67,7 @@ stages:
       displayName: 'NuGet restore'
       inputs:
         restoreSolution: build/Comet-Mac.sln
-        
-    - bash:
-        sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(MonoVersion)
-        
+            
     - task: MSBuild@1
       displayName: 'Build Comet'
       inputs:
