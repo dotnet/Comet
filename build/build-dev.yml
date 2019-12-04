@@ -223,11 +223,7 @@ stages:
       displayName: 'Boots to set Mono 6.4.0'
       inputs:
         uri: 'https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg'
-    # - task: UseDotNet@2
-    #   displayName: 'Use .NET Core sdk'
-    #   inputs:
-    #     packageType: sdk
-    #     version: 3.0.x
+
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
@@ -238,6 +234,11 @@ stages:
       inputs:
         uri: 'https://aka.ms/xamarin-android-commercial-d16-3-macos'
 
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: sdk
+        version: 3.0.x
     - task: XamarinAndroid@1
       displayName: 'Build Comet.Android.Sample App'
       inputs:
@@ -271,13 +272,6 @@ stages:
       displayName: 'Boots to set Mono 6.4.0'
       inputs:
         uri: 'https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg'
-
-    # - task: UseDotNet@2
-    #   displayName: 'Use .NET Core sdk'
-    #   inputs:
-    #     packageType: sdk
-    #     version: 3.0.x
-
     - task: Boots@1
       displayName: 'Xamarin.Mac SDK '
       inputs:
@@ -288,6 +282,12 @@ stages:
       inputs:
         uri: 'https://bosstoragemirror.blob.core.windows.net/wrench/jenkins/d16-4/917041448ecb1387068c6db0e7fea9f0ff3088fd/35/package/xamarin.ios-13.8.2.9.pkg'
 
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: sdk
+        version: 3.0.x
+        
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
