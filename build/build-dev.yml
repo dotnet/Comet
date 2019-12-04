@@ -73,6 +73,10 @@ stages:
       inputs:
         solution: 'src/Comet/Comet.csproj'
         configuration: '$(BuildConfiguration)'
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet/bin/Debug/netstandard2.0/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
       displayName: 'Build Xamarin.Forms.Loader.csproj'
@@ -86,11 +90,21 @@ stages:
         solution: 'src/Comet.Android/Comet.Android.csproj'
         configuration: '$(BuildConfiguration)'
 
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.Android/bin/Debug/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
     - task: MSBuild@1
       displayName: 'Build Comet.iOS'
       inputs:
         solution: 'src/Comet.iOS/Comet.iOS.csproj'
         configuration: '$(BuildConfiguration)'
+
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.iOS/bin/Debug/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
       displayName: 'Build Comet.Mac'
@@ -98,29 +112,60 @@ stages:
         solution: 'src/Comet.Mac/Comet.Mac.csproj'
         configuration: '$(BuildConfiguration)'
 
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.Mac/bin/Debug/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
     - task: MSBuild@1
       displayName: 'Build Comet.Skia'
       inputs:
         solution: 'src/Comet.Skia/Comet.Skia.csproj'
         configuration: '$(BuildConfiguration)'
+
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.Skia/bin/Debug/netstandard2.0/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
     
     - task: MSBuild@1
       displayName: 'Build Comet.Skia.Android'
       inputs:
         solution: 'src/Comet.Skia.Android/Comet.Skia.Android.csproj'
         configuration: '$(BuildConfiguration)'
+    
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.Skia.Android/bin/Debug/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
       displayName: 'Build Comet.Skia.iOS'
       inputs:
         solution: 'src/Comet.Skia.iOS/Comet.Skia.iOS.csproj'
         configuration: '$(BuildConfiguration)'
+    
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.Skia.iOS/bin/Debug/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
       displayName: 'Build Comet.Skia.Mac'
       inputs:
         solution: 'src/Comet.Skia.Mac/Comet.Skia.Mac.csproj'
         configuration: '$(BuildConfiguration)'
+
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.Skia.Mac/bin/Debug/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop_mac'
+        publishLocation: 'Container'
 
   - job: BuildCometWindows
     displayName: Build Comet Windows
@@ -146,11 +191,21 @@ stages:
         solution: 'src/Comet.UWP/Comet.UWP.csproj'
         configuration: '$(BuildConfiguration)'
 
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.UWP/bin/Debug/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
     - task: MSBuild@1
       displayName: 'Build Comet.WPF'
       inputs:
         solution: 'src/Comet.WPF/Comet.WPF.csproj'
         configuration: '$(BuildConfiguration)'
+
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.WPF/bin/Debug/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
       displayName: 'Build Comet.Skia.UWP'
@@ -158,11 +213,27 @@ stages:
         solution: 'src/Comet.Skia.UWP/Comet.Skia.UWP.csproj'
         configuration: '$(BuildConfiguration)'
 
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.Skia.UWP/bin/Debug/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
     - task: MSBuild@1
       displayName: 'Build Comet.Skia.WPF'
       inputs:
         solution: 'src/Comet.Skia.WPF/Comet.Skia.WPF.csproj'
         configuration: '$(BuildConfiguration)'
+    
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/Comet.Skia.WPF/bin/Debug/Comet.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: PublishBuildArtifacts@1
+      inputs:
+        PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+        ArtifactName: 'drop_windows'
+        publishLocation: 'Container'
 
 - stage: RunTests
   jobs:
@@ -287,11 +358,16 @@ stages:
       inputs:
         packageType: sdk
         version: 3.0.x
-        
+
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
         restoreSolution: build/Comet-Mac.sln
+
+
+    - task: CmdLine@2
+      inputs:
+        script: '/bin/bash -c "echo ''##vso[task.setvariable variable=MD_APPLE_SDK_ROOT;]''$(xcodeRoot);sudo xcode-select --switch $(xcodeRoot)/Contents/Developer"'
 
     - task: MSBuild@1
       displayName: 'Build iOS'
@@ -336,3 +412,19 @@ stages:
         solution: 'sample/Comet.WPF.Sample/Comet.WPF.Sample.csproj'
         configuration: '$(BuildConfiguration)'
         msbuildArguments: '/p:AppxPackageSigningEnabled=false'
+
+
+- stage: NugetPackPublish
+  jobs:
+  - job: DownloadArtifacts
+    displayName: Download Artifacts from Build Stage
+    pool:
+      vmImage: 'windows-2019'
+      demands:
+      - MSBuild
+
+    steps:
+    # - task: NuGetToolInstaller@1
+    #   displayName: Use Nuget 5.0.2
+    #   inputs:
+    #     versionSpec: '5.0.2'
