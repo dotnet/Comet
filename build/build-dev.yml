@@ -414,17 +414,25 @@ stages:
         msbuildArguments: '/p:AppxPackageSigningEnabled=false'
 
 
-# - stage: NugetPackPublish
-#   jobs:
-#   - job: DownloadArtifacts
-#     displayName: Download Artifacts from Build Stage
-#     pool:
-#       vmImage: 'windows-2019'
-#       demands:
-#       - MSBuild
+- stage: NugetPackPublish
+  jobs:
+  - job: DownloadArtifacts
+    displayName: Download Artifacts from Build Stage
+    pool:
+      vmImage: 'windows-2019'
+      demands:
+      - MSBuild
 
-#     steps:
-#     # - task: NuGetToolInstaller@1
-#     #   displayName: Use Nuget 5.0.2
-#     #   inputs:
-#     #     versionSpec: '5.0.2'
+    steps:
+    - task: DownloadPipelineArtifact@2
+      inputs:
+        buildType: 'current'
+        targetPath: '$(Pipeline.Workspace)'
+    - task: Bash@3
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          echo 'ls'
+          ls -a
