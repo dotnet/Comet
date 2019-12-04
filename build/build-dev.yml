@@ -223,11 +223,11 @@ stages:
       displayName: 'Boots to set Mono 6.4.0'
       inputs:
         uri: 'https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg'
-    - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk'
-      inputs:
-        packageType: sdk
-        version: 3.0.x
+    # - task: UseDotNet@2
+    #   displayName: 'Use .NET Core sdk'
+    #   inputs:
+    #     packageType: sdk
+    #     version: 3.0.x
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
@@ -272,11 +272,11 @@ stages:
       inputs:
         uri: 'https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg'
 
-    - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk'
-      inputs:
-        packageType: sdk
-        version: 3.0.x
+    # - task: UseDotNet@2
+    #   displayName: 'Use .NET Core sdk'
+    #   inputs:
+    #     packageType: sdk
+    #     version: 3.0.x
 
     - task: Boots@1
       displayName: 'Xamarin.Mac SDK '
