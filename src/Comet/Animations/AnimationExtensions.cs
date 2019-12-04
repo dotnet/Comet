@@ -52,9 +52,8 @@ namespace Comet
 					StartDelay = delay,
 					StartValue = values.oldValue,
 					EndValue = values.newValue,
-					ValueChanged = (value) => {
-						prop.view.SetEnvironment(prop.property, value, prop.cascades);
-					}
+					ContextualObject = prop.view,
+					PropertyName = prop.property,					
 				};
 				if (autoReverses)
 					animation = animation.CreateAutoReversing();

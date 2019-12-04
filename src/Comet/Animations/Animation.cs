@@ -13,7 +13,7 @@ namespace Comet
 		{
 
 		}
-
+	
 		public Animation(List<Animation> animations)
 		{
 			childrenAnimations = animations;
@@ -31,7 +31,10 @@ namespace Comet
 		public object EndValue { get; set; }
 		public object CurrentValue { get; protected set; }
 		public bool Repeats { get; set; }
-		public Action<object> ValueChanged { get; set; }
+		public string Id { get; set; }
+		public ContextualObject ContextualObject { get; set; }
+		public string PropertyName { get; set; }
+		public bool PropertyCascades { get; set; }
 		Lerp _lerp;
 		Lerp Lerp
 		{
@@ -46,6 +49,7 @@ namespace Comet
 					return null;
 				return _lerp = Lerp.GetLerp(type);
 			}
+			set => _lerp = value;
 		}
 		double skippedSeconds;
 		int usingResource = 0;
@@ -116,7 +120,7 @@ namespace Comet
 			{
 				var progress = Easing.Ease(percent);
 				CurrentValue = Lerp.Calculate(StartValue, EndValue, progress);
-				ValueChanged?.Invoke(CurrentValue);
+				ContextualObject?.SetEnvironment(PropertyName, CurrentValue, PropertyCascades);
 				HasFinished = percent == 1;
 			}
 			catch (Exception ex)
@@ -139,7 +143,10 @@ namespace Comet
 				StartValue = EndValue,
 				EndValue = StartValue,
 				childrenAnimations = reveresedChildren,
-				ValueChanged = ValueChanged,
+				ContextualObject = ContextualObject,
+				PropertyCascades = PropertyCascades,
+				PropertyName = PropertyName,
+				Lerp = Lerp,
 			};
 			var parentAnimation = new Animation
 			{
@@ -189,7 +196,7 @@ namespace Comet
 						child.Dispose();
 					childrenAnimations.Clear();
 				}
-				ValueChanged = null;
+				ContextualObject = null;
 				disposedValue = true;
 				AnimationManger.Remove(this);
 			}
