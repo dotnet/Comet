@@ -63,6 +63,11 @@ namespace Comet
 			{
 				StateManager.CurrentView.GetState().AddGlobalProperties(props);
 			}
+			//Sometimes people pass in State.Value, instead of the state. If so use the State.
+            else if(props?.Count == 1 && props[0].BindingObject is State<T> state)
+            {
+				return state;
+            }
 			return new Binding<T>()
 			{
 				IsValue = true,
