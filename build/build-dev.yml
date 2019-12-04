@@ -57,7 +57,7 @@ stages:
 
     - bash:
         sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(MonoVersion)
-        
+
     - task: NuGetToolInstaller@1
       displayName: Use Nuget 5.0.2
       inputs:
@@ -215,14 +215,32 @@ stages:
       - Xamarin.Android
 
     steps:
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
-      displayName: 'Select the Xamarin SDK version'
-
     - task: NuGetToolInstaller@1
       displayName: Use Nuget 5.0.2
       inputs:
         versionSpec: '5.0.2'
 
+
+    # - task: Bash@3
+    #   displayName: Installing Boots
+    #   inputs:
+    #     targetType: 'inline'
+    #     script: |
+    #       # BOOTS! WOOHOOO
+          
+    #       dotnet tool install --global boots
+
+
+    - task: Boots@1
+      displayName: 'Boots to set Mono 6.4.0'
+      inputs:
+        uri: 'https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg'
+
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: sdk
+        version: 3.0.x
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
@@ -253,21 +271,27 @@ stages:
       - msbuild
 
     steps:
-    - script: sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh 5_18_1
-      displayName: 'Select the Xamarin SDK version'
-
     - task: NuGetToolInstaller@1
       displayName: Use Nuget 5.0.2
       inputs:
         versionSpec: '5.0.2'
+    - task: Boots@1
+      displayName: 'Boots to set Mono 6.4.0'
+      inputs:
+        uri: 'https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg'
 
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: sdk
+        version: 3.0.x
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
         restoreSolution: build/Comet-Mac.sln
 
     - task: MSBuild@1
-      displayName: 'Build iOS and iOS.Forms'
+      displayName: 'Build iOS'
       inputs:
         solution: 'build/Comet-Mac.sln'
         platform: iPhoneSimulator
