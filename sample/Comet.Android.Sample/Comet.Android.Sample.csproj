@@ -116,6 +116,9 @@
     <PackageReference Include="Topten.RichTextKit">
       <Version>0.1.116</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Threading">
+      <Version>16.4.33</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Comet\Comet.csproj">
