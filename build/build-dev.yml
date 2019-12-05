@@ -60,9 +60,9 @@ stages:
         sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(MonoVersion)
 
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 5.0.2
+      displayName: Use Nuget $(NugetVersion)
       inputs:
-        versionSpec: '5.0.2'
+        versionSpec: $(NugetVersion)
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
@@ -177,9 +177,9 @@ stages:
     
     steps:
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 5.0.2
+      displayName: Use Nuget $(NugetVersion)
       inputs:
-        versionSpec: '5.0.2'
+        versionSpec: $(NugetVersion)
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
@@ -248,9 +248,9 @@ stages:
 
     steps:
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 5.0.2
+      displayName: Use Nuget $(NugetVersion)
       inputs:
-        versionSpec: '5.0.2'
+        versionSpec: $(NugetVersion)
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
@@ -288,9 +288,9 @@ stages:
 
     steps:
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 5.0.2
+      displayName: Use Nuget $(NugetVersion)
       inputs:
-        versionSpec: '5.0.2'
+        versionSpec: $(NugetVersion)
         
     - bash:
         sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(MonoVersion)
@@ -335,21 +335,21 @@ stages:
 
     steps:
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 5.0.2
+      displayName: Use Nuget $(NugetVersion)
       inputs:
-        versionSpec: '5.0.2'
+        versionSpec: $(NugetVersion)
 
     - bash:
         sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(MonoVersion)
     - task: Boots@1
       displayName: 'Xamarin.Mac SDK '
       inputs:
-        uri: 'https://bosstoragemirror.blob.core.windows.net/wrench/jenkins/d16-4/917041448ecb1387068c6db0e7fea9f0ff3088fd/35/package/xamarin.mac-6.8.2.9.pkg'
+        uri: $(MacDownloadUrl)
 
     - task: Boots@1
       displayName: 'Xamarin.iOS SDK'
       inputs:
-        uri: 'https://bosstoragemirror.blob.core.windows.net/wrench/jenkins/d16-4/917041448ecb1387068c6db0e7fea9f0ff3088fd/35/package/xamarin.ios-13.8.2.9.pkg'
+        uri: $(iOSUrl)
 
     - task: UseDotNet@2
       displayName: 'Use .NET Core sdk'
@@ -388,9 +388,9 @@ stages:
       - MSBuild
     steps:
     - task: NuGetToolInstaller@1
-      displayName: Use Nuget 5.0.2
+      displayName: Use Nuget $(NugetVersion)
       inputs:
-        versionSpec: '5.0.2'
+        versionSpec: $(NugetVersion)
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
@@ -453,9 +453,9 @@ stages:
 #                   echo "##vso[task.setvariable variable=Version]$VERSION"
     
 #     - task: NuGetToolInstaller@1
-#       displayName: Use Nuget 5.0.2
+#       displayName: Use Nuget $(NugetVersion)
 #       inputs:
-#         versionSpec: '5.0.2'
+#         versionSpec: $(NugetVersion)
 
 #     - task: NuGetCommand@2
 #       displayName: 'nuget pack Comet.nuspec'
