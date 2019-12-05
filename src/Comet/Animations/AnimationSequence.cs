@@ -18,7 +18,7 @@ namespace Comet
 
 		public T View { get; set; }
 		List<AnimationStep<T>> steps = new List<AnimationStep<T>>();
-		public AnimationSequence<T> Animate(Easing easing, Action<T> action, Action completed = null, double duration = .2, double delay = 0)
+		public AnimationSequence<T> Animate(Easing easing, Action<T> action, Action completed = null, double duration = .2, double delay = 0,string id = null, Lerp lerp = null)
 		{
 			steps.Add(new AnimationStep<T>
 			{
@@ -27,6 +27,8 @@ namespace Comet
 				Completed = completed,
 				Duration = duration,
 				Delay = delay,
+				Id = id,
+				Lerp = lerp,
 			});
 			return this;
 		}
@@ -71,7 +73,7 @@ namespace Comet
 			}
 			var step = steps[currentIndex];
 			currentIndex++;
-			var animation = AnimationExtensions.CreateAnimation<T>(View, step.Easing, step.Action, step.Completed, step.Duration, step.Delay) ?? GetNextAnimation();
+			var animation = AnimationExtensions.CreateAnimation<T>(View, step.Easing, step.Action, step.Completed, step.Duration, step.Delay, id: step.Id, lerp: step.Lerp) ?? GetNextAnimation();
 			return animation;
 		}
 
@@ -84,6 +86,8 @@ namespace Comet
 		public Action Completed { get; set; }
 		public double Duration { get; set; }
 		public double Delay { get; set; }
+		public string Id { get; set; }
+		public Lerp Lerp { get; set; }
 		//public bool Repeats { get; set; }
 		//public bool AutoReverses { get; set; }
 

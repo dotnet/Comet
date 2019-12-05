@@ -36,7 +36,7 @@ namespace Comet
 		public string PropertyName { get; set; }
 		public bool PropertyCascades { get; set; }
 		Lerp _lerp;
-		Lerp Lerp
+		public Lerp Lerp
 		{
 			get
 			{
