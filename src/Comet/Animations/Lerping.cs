@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Comet
 {
 
 	public class Lerp
-    {
+	{
 		public delegate object LerpDelegate(object start, object end, double progress);
 		public static readonly Dictionary<Type, Lerp> Lerps = new Dictionary<Type, Lerp>()
 		{
 			[typeof(int)] = new Lerp
 			{
-				Calculate = (s,e,progress) => {
+				Calculate = (s, e, progress) => {
 					var start = (int)s;
 					var end = (int)e;
 					return (int)((end - start) * progress) + start;
@@ -62,7 +63,7 @@ namespace Comet
 				Calculate = (s, e, progress) => {
 					var start = (bool)s;
 					var end = (bool)e;
-					return progress < .5 ? start: end;
+					return progress < .5 ? start : end;
 				}
 			},
 
@@ -80,13 +81,31 @@ namespace Comet
 				Calculate = (s, e, progress) => {
 					var start = (Color)s;
 					var end = (Color)e;
-					return start.Lerp(progress, end);
+					return start.Lerp(end, progress);
 				}
 			},
+			[typeof(RectangleF)] = new Lerp
+			{
+				Calculate = (s, e, progress) => {
+
+					var start = (RectangleF)s;
+					var end = (RectangleF)e;
+					return start.Lerp(end, progress);
+				}
+			},
+			[typeof(FrameConstraints)] = new Lerp
+			{
+				Calculate = (s, e, progress) => {
+
+					var start = (FrameConstraints)s;
+					var end = (FrameConstraints)e;
+					return start.Lerp(end, progress);
+				}
+			}
 		};
 
 		public static Lerp GetLerp(Type type)
-        {
+		{
 			Lerp lerp;
 			if (Lerps.TryGetValue(type, out lerp))
 				return lerp;
@@ -108,6 +127,6 @@ namespace Comet
 		}
 
 		public LerpDelegate Calculate { get; set; }
-    }
-	
+	}
+
 }

@@ -53,6 +53,9 @@ namespace Comet.Samples
 						text.Background(Color.Fuchsia);
 						button.Background(Color.Green);
 				}).EndAnimationSequence(),
+				new Text("Does this move?").Background(Color.LightBlue).Frame(width:100,height:44).Animate((text)=>{
+					text.Frame(width:400, height: 100);
+				},duration:3,repeats:true,autoReverses:true),
 				(button = new Button("Animate", () => {
 					shouldAnimate.Value = !shouldAnimate;
 					if(shouldAnimate)

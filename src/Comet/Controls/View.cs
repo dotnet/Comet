@@ -100,7 +100,7 @@ namespace Comet
 
 				measurementValid = false;
 				_measuredSize = SizeF.Empty;
-				frame = RectangleF.Empty;
+				Frame = RectangleF.Empty;
 
 				var oldViewHandler = viewHandler;
 				viewHandler?.Remove(this);
@@ -264,6 +264,11 @@ namespace Comet
 
 		internal override void ContextPropertyChanged(string property, object value, bool cascades)
 		{
+			if(property == nameof(Frame))
+            {
+                ViewHandler?.SetFrame((RectangleF)value);
+                RequestLayout();
+            }
 			ViewPropertyChanged(property, value);
 		}
 
@@ -398,20 +403,12 @@ namespace Comet
 			OnDispose(true);
 		}
 
-		private RectangleF frame;
 		public virtual RectangleF Frame
 		{
-			get => frame;
-			set
-			{
-				if (!frame.Equals(value))
-				{
-					frame = value;
-					ViewHandler?.SetFrame(value);
-					RequestLayout();
-				}
-			}
+			get => this.GetEnvironment<RectangleF?>(nameof(Frame),false) ?? RectangleF.Empty;
+			set => this.SetEnvironment(nameof(Frame), value, false);
 		}
+		
 
 		private bool measurementValid;
 		public bool MeasurementValid
@@ -430,7 +427,7 @@ namespace Comet
 			MeasurementValid = false;
 
 			// TODO We should "invalidate" layout here. Close enough for now?
-			frame = RectangleF.Empty;
+			Frame = RectangleF.Empty;
 
 			Parent?.InvalidateMeasurement();
 			NeedsLayout?.Invoke(this, EventArgs.Empty);
@@ -475,8 +472,9 @@ namespace Comet
 		protected virtual void RequestLayout()
 		{
 			var constraints = this.GetFrameConstraints();
-			var width = constraints?.Width ?? Frame.Width;
-			var height = constraints?.Height ?? Frame.Height;
+			var frame = Frame;
+			var width = constraints?.Width ?? frame.Width;
+			var height = constraints?.Height ?? frame.Height;
 
 			if (width > 0 && height > 0)
 			{
@@ -499,8 +497,9 @@ namespace Comet
 
 		private void Layout()
 		{
-			var width = Frame.Width;
-			var height = Frame.Height;
+			var frame = Frame;
+			var width = frame.Width;
+			var height = frame.Height;
 
 			var constraints = this.GetFrameConstraints();
 			var alignment = constraints?.Alignment ?? Alignment.Center;
@@ -532,8 +531,7 @@ namespace Comet
 
 			var x = (width - finalWidth) * xFactor;
 			var y = (height - finalHeight) * yFactor;
-
-			LayoutSubviews(new RectangleF(Frame.X + x, Frame.Y + y, finalWidth, finalHeight));
+			LayoutSubviews(new RectangleF(frame.X + x, frame.Y + y, finalWidth, finalHeight));
 		}
 
 		public virtual void LayoutSubviews(RectangleF frame)
@@ -580,7 +578,5 @@ namespace Comet
 			GetAnimations(false)?.ForEach(x => x.Resume());
 			notificationView?.ResumeAnimations();
 		}
-
 	}
-
 }

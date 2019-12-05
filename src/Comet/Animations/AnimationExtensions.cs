@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 
 namespace Comet
 {
@@ -73,19 +74,6 @@ namespace Comet
 				Easing = easing,
 				Repeats = repeats,
 			};
-		}
-
-		public static Color Lerp(this Color color, double progress, Color endColor)
-		{
-			color ??= Color.Black;
-			endColor ??= Color.Black;
-			float Lerp(float start, float end, double progress) => (float)(((end - start) * progress) + start);
-
-			var r = Lerp(color.R, endColor.R, progress);
-			var b = Lerp(color.B, endColor.B, progress);
-			var g = Lerp(color.G, endColor.G, progress);
-			var a = Lerp(color.A, endColor.A, progress);
-			return new Color(r, g, b, a);
 		}
 	}
 }
