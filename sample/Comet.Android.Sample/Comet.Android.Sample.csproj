@@ -114,7 +114,7 @@
       <Version>0.0.9-alpha</Version>
     </PackageReference>
     <PackageReference Include="Topten.RichTextKit">
-      <Version>0.1.116</Version>
+      <Version>0.1.117</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Threading">
       <Version>16.4.33</Version>
