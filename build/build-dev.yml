@@ -439,15 +439,13 @@ stages:
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Pipeline.Workspace)/drop_windows'
-        Contents:
-          /**
+        Contents: '**'
         TargetFolder: '$(Build.SourcesDirectory)'
     
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Pipeline.Workspace)/drop_mac'
-        Contents: |
-          /**
+        Contents: '**'
         TargetFolder: '$(Build.SourcesDirectory)'
 
     - task: Bash@3
