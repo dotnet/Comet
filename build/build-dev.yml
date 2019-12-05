@@ -1,3 +1,8 @@
+# specific branch build
+trigger:
+  branches:
+    include:
+      - dev
 stages:
 - stage: BuildSource
   jobs:
