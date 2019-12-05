@@ -290,11 +290,9 @@ stages:
       displayName: Use Nuget 5.0.2
       inputs:
         versionSpec: '5.0.2'
-    - task: Boots@1
-      displayName: 'Boots to set Mono 6.4.0'
-      inputs:
-        uri: 'https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg'
-
+        
+    - bash:
+        sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(MonoVersion)
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
@@ -339,10 +337,9 @@ stages:
       displayName: Use Nuget 5.0.2
       inputs:
         versionSpec: '5.0.2'
-    - task: Boots@1
-      displayName: 'Boots to set Mono 6.4.0'
-      inputs:
-        uri: 'https://download.mono-project.com/archive/6.4.0/macos-10-universal/MonoFramework-MDK-6.4.0.198.macos10.xamarin.universal.pkg'
+
+    - bash:
+        sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(MonoVersion)
     - task: Boots@1
       displayName: 'Xamarin.Mac SDK '
       inputs:
@@ -453,6 +450,11 @@ stages:
                   #fi;
                   
                   echo "##vso[task.setvariable variable=Version]$VERSION"
+    
+    - task: NuGetToolInstaller@1
+      displayName: Use Nuget 5.0.2
+      inputs:
+        versionSpec: '5.0.2'
 
     - task: NuGetCommand@2
       displayName: 'nuget pack Comet.nuspec'
@@ -481,3 +483,16 @@ stages:
         PathtoPublish: '$(Build.ArtifactStagingDirectory)'
         ArtifactName: 'drop_nuget_alpha'
         publishLocation: 'Container'
+
+    - task: Bash@3
+      displayName: Publish to GitHub Package
+      inputs:
+        targetType: 'inline'
+        script: |
+          # Write your commands here
+          
+          nuget source Add -Name "GHNuget" \
+               -Source "https://nuget.pkg.github.com/Clancey/index.json" \
+               -UserName Clancey -Password $(GHToken)
+          
+          nuget push *.nupkg -Source "GHNuget"
