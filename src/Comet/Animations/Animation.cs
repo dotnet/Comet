@@ -125,7 +125,8 @@ namespace Comet
 			}
 			catch (Exception ex)
 			{
-				Logger.Error(ex);
+				var message = $"Errpr lerping: {StartValue} to {EndValue} on {PropertyName}";
+				Logger.Error(ex, message);
 				CurrentValue = EndValue;
 				HasFinished = true;
 			}
