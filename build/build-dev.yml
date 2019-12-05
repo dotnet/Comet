@@ -3,6 +3,10 @@ trigger:
   branches:
     include:
       - dev
+pr:
+  - dev
+  - releases/*
+
 stages:
 - stage: BuildSource
   jobs:
