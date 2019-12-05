@@ -3,8 +3,10 @@ trigger:
   branches:
     include:
       - dev
+      - master
 pr:
   - dev
+  - master
   - releases/*
 
 stages:
