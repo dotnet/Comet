@@ -457,7 +457,7 @@ stages:
         script: |
           echo '$(Build_BuildID)' $BUILD_BUILDID
                   BUILDNUMBER=$BUILD_BUILDID
-                  VERSION=0.1.$BUILDNUMBER-alpha
+                  VERSION=0.2.$BUILDNUMBER-beta
                   echo 'VERSION ' $VERSION
                   
                   #if ! [ $BRANCH = master ]; then
