@@ -148,6 +148,7 @@ namespace Comet
 				if (oldView != null)
 					view = view.Diff(oldView);
 				oldView?.Dispose();
+				animations?.ForEach(x => x.Dispose());
 				ViewHandler?.SetView(view);
 			}
 
@@ -233,7 +234,7 @@ namespace Comet
 		internal void BindingPropertyChanged(INotifyPropertyRead bindingObject, string property, string fullProperty, object value)
 		{
 			var prop = property.Split('.').Last();
-			if (!State.UpdateValue((bindingObject, property), fullProperty, value))
+			if (!State.UpdateValue(this, (bindingObject, property), fullProperty, value))
 				Reload();
 			else
 				ViewPropertyChanged(prop, value);
@@ -547,10 +548,39 @@ namespace Comet
 		public virtual void ViewDidAppear()
 		{
 			notificationView?.ViewDidAppear();
+			ResumeAnimations();
 		}
 		public virtual void ViewDidDisappear()
 		{
 			notificationView?.ViewDidDisappear();
+			PauseAnimations();
 		}
+
+		List<Animation> animations;
+		List<Animation> GetAnimations(bool create) => !create ? animations : animations ?? (animations = new List<Animation>());
+		public List<Animation> Animations => animations;
+		public void AddAnimation(Animation animation)
+		{
+			GetAnimations(true).Add(animation);
+			AnimationManger.Add(animation);
+		}
+		public void RemoveAnimation(Animation animation)
+        {
+			GetAnimations(false)?.Remove(animation);
+			AnimationManger.Remove(animation);
+		}
+
+		public virtual void PauseAnimations()
+		{
+			GetAnimations(false)?.ForEach(x => x.Pause());
+			notificationView?.PauseAnimations();
+		}
+		public virtual void ResumeAnimations()
+		{
+			GetAnimations(false)?.ForEach(x => x.Resume());
+			notificationView?.ResumeAnimations();
+		}
+
 	}
+
 }

@@ -4,7 +4,7 @@ using Comet.Graphics;
 using Comet.Map.Graphics;
 using Comet.Services;
 
-namespace Comet.iOS.Services
+namespace Comet.Mac.Services
 {
 	public class MacBitmapService : AbstractBitmapService
 	{

@@ -31,6 +31,7 @@ namespace Comet.Android
 		{
 			base.OnCreate(savedInstanceState);
 			AndroidContext.CurrentContext = this;
+			UI.Init();
 			Xamarin.Essentials.Platform.Init(this, savedInstanceState);
 
 			SupportFragmentManager.AddOnBackStackChangedListener(this);

@@ -18,7 +18,6 @@ namespace Comet.iOS.Handlers
 			[nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
 			[nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
 			[nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty,
-			[nameof(EnvironmentKeys.Animations.Animation)] = MapAnimationProperty,
 		};
 
 		protected override UIView CreateView()
@@ -242,54 +241,6 @@ namespace Comet.iOS.Handlers
 					ClearShadowFromLayer(nativeView.Layer);
 				nativeView.Layer.Mask = null;
 				handler.HasContainer = NeedsContainer(virtualView);
-			}
-		}
-
-		public static void MapAnimationProperty(IViewHandler handler, View virtualView)
-		{
-			var nativeView = (UIView)handler.NativeView;
-			var animation = virtualView.GetAnimation();
-			if (animation != null)
-			{
-				System.Diagnostics.Debug.WriteLine($"Starting animation [{animation}] on [{virtualView.GetType().Name}/{nativeView.GetType().Name}]");
-
-				var duration = (animation.Duration ?? 1000.0) / 1000.0;
-				var delay = (animation.Delay ?? 0.0) / 1000.0;
-				var options = animation.Options.ToAnimationOptions();
-
-				UIView.Animate(
-					duration,
-					delay,
-					options,
-					() => {
-						System.Diagnostics.Debug.WriteLine($"Animation [{animation}] has been started");
-
-						var transform = CGAffineTransform.MakeIdentity();
-
-						if (animation.TranslateTo != null)
-						{
-							var translateTransform = CGAffineTransform.MakeTranslation(animation.TranslateTo.Value.X, animation.TranslateTo.Value.Y);
-							transform = CGAffineTransform.Multiply(transform, translateTransform);
-						}
-						if (animation.RotateTo != null)
-						{
-							var angle = Convert.ToSingle(animation.RotateTo.Value * Math.PI / 180);
-							var rotateTransform = CGAffineTransform.MakeRotation(angle);
-							transform = CGAffineTransform.Multiply(transform, rotateTransform);
-						}
-						if (animation.ScaleTo != null)
-						{
-							var scaleTransform = CGAffineTransform.MakeScale(animation.ScaleTo.Value.X, animation.ScaleTo.Value.Y);
-							transform = CGAffineTransform.Multiply(transform, scaleTransform);
-						}
-						// TODO: implement other animations
-
-						nativeView.Transform = transform;
-					},
-					() => {
-						System.Diagnostics.Debug.WriteLine($"Animation [{animation}] has been completed");
-						// Do nothing
-					});
 			}
 		}
 	}
