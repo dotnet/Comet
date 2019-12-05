@@ -1,5 +1,9 @@
-# Comet ☄️
+# Comet ☄️ 
+
+[![Build Status](https://clancey.visualstudio.com/Comet/_apis/build/status/Clancey.Comet?branchName=dev)](https://clancey.visualstudio.com/Comet/_build/latest?definitionId=1&branchName=dev)
+
 [Chat on Discord](https://discord.gg/7Ms7ptM)
+
 
 What is Comet? Comet is a prototype for a new UI Framework/Pattern to write app UI.  It follows the Model View Update (MVU) pattern. It magically databinds for you!  
 
