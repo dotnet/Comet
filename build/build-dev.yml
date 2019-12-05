@@ -10,7 +10,7 @@ stages:
         displayName: 'Use .NET Core sdk'
         inputs:
           packageType: sdk
-          version: 3.0.100-preview9-014004
+          version: $(DotNetVersion)
           includePreviewVersions: true
           installationPath: $(Agent.ToolsDirectory)/dotnet
       - task: DotNetCoreCLI@2
@@ -54,7 +54,7 @@ stages:
       displayName: 'Use .NET Core sdk'
       inputs:
         packageType: sdk
-        version: 3.0.x
+        version: $(DotNetVersion)
 
     - bash:
         sudo $AGENT_HOMEDIRECTORY/scripts/select-xamarin-sdk.sh $(MonoVersion)
@@ -308,7 +308,7 @@ stages:
       displayName: 'Use .NET Core sdk'
       inputs:
         packageType: sdk
-        version: 3.0.x
+        version: $(DotNetVersion)
     - task: XamarinAndroid@1
       displayName: 'Build Comet.Android.Sample App'
       inputs:
@@ -355,7 +355,7 @@ stages:
       displayName: 'Use .NET Core sdk'
       inputs:
         packageType: sdk
-        version: 3.0.x
+        version: $(DotNetVersion)
 
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
