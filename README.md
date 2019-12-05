@@ -1,6 +1,6 @@
 # Comet ☄️ 
 
-[![Build Status](https://clancey.visualstudio.com/Comet/_apis/build/status/Clancey.Comet?branchName=dev)](https://clancey.visualstudio.com/Comet/_build/latest?definitionId=1&branchName=dev)
+[![Build Status](https://clancey.visualstudio.com/Comet/_apis/build/status/Clancey.Comet?branchName=dev)](https://clancey.visualstudio.com/Comet/_build/latest?definitionId=1&branchName=dev)  [![NuGet](https://img.shields.io/nuget/v/Clancey.Comet.svg)](https://www.nuget.org/packages/Clancey.Comet)
 
 [Chat on Discord](https://discord.gg/7Ms7ptM)
 
