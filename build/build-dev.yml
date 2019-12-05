@@ -19,12 +19,13 @@ stages:
           command: 'build'
           projects: 'Comet.Blazor.sln'
           arguments: '-c $(BuildConfiguration)'
-      - task: DotNetCoreCLI@2
-        displayName: 'Test Blazor'
-        inputs:
-          command: 'test'
-          projects: 'Comet.Blazor.sln'
-          arguments: '-c $(BuildConfiguration)'
+          
+      # - task: DotNetCoreCLI@2
+      #   displayName: 'Test Blazor'
+      #   inputs:
+      #     command: 'test'
+      #     projects: 'Comet.Blazor.sln'
+      #     arguments: '-c $(BuildConfiguration)'
       - task: DotNetCoreCLI@2
         displayName: 'Pack Blazor'
         inputs:
