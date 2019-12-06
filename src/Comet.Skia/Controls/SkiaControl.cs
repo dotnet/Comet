@@ -49,7 +49,7 @@ namespace Comet.Skia
 			var strokeColor = shape.GetStrokeColor(VirtualView, Color.Black);
 			var strokeWidth = shape.GetLineWidth(VirtualView, 1);
 			var fill = shape.GetFill(VirtualView, Color.Transparent);
-			canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: fill);
+			canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: fill, drawingStyle: Graphics.DrawingStyle.StrokeFill);
 		}
 
 		protected virtual void DrawOverlay(SKCanvas canvas, Shape shape, RectangleF rect)
@@ -57,7 +57,7 @@ namespace Comet.Skia
 			var strokeColor = shape.GetStrokeColor(VirtualView, Color.Black);
 			var strokeWidth = shape.GetLineWidth(VirtualView, 1);
 			var fill = shape.GetFill(VirtualView,Color.Transparent);
-			canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: fill);
+			canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: fill, drawingStyle:Graphics.DrawingStyle.StrokeFill);
 		}
 		protected virtual void DrawBackground(SKCanvas canvas, Color backgroundColor)
 		{
