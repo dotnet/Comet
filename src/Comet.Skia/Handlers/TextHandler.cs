@@ -17,7 +17,7 @@ namespace Comet.Skia
 
         public TextHandler() : base(null,Mapper)
 		{
-
+			TouchEnabled = false;
 		}
 		static float hPadding = 40;
 		static float minHPadding = 10;
