@@ -17,5 +17,12 @@ namespace Comet.Skia.iOS
 			base.SetView(control);
 		}
 		public override SizeF Measure(SizeF availableSize) => control.Measure(availableSize);
-	}
+
+        public override void UpdateValue(string property, object value)
+        {
+			if (control is IViewHandler viewHandler)
+				viewHandler.UpdateValue(property, value);
+			base.UpdateValue(property, value);
+        }
+    }
 }

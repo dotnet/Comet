@@ -17,7 +17,7 @@ namespace Comet.Skia
 			[EnvironmentKeys.Colors.Color] = MapValueProperty,
 			[EnvironmentKeys.LineBreakMode.Mode] = MapValueProperty,
 		};
-		public TextHandler() : base(Mapper)
+		public TextHandler()
 		{
 
 		}
@@ -42,19 +42,17 @@ namespace Comet.Skia
 				VirtualView.GetLineBreakMode(LineBreakMode.NoWrap), VerticalAlignment.Center);
 		}
 
-		public override SizeF Measure(SizeF availableSize)
-		{
-			var text = VirtualText;
-			var size = SkiaTextHelper.GetTextSize(text.Value, text.GetFont(defaultFont),
-				text.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center,
-				text.GetLineBreakMode(LineBreakMode.NoWrap), availableSize.Width - minHPadding);
-			var margin = text.GetMargin();
-			if (size.Width > 300)
-				Console.WriteLine("Hi");
-			return new SizeF(size.Width + hPadding, size.Height + (vPadding * 2));
-		}
+        public override SizeF Measure(SizeF availableSize)
+        {
+            var text = VirtualText;
+            var size = SkiaTextHelper.GetTextSize(text.Value, text.GetFont(defaultFont),
+                text.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center,
+                text.GetLineBreakMode(LineBreakMode.NoWrap), availableSize.Width - minHPadding);
+            var margin = text.GetMargin();
+            return new SizeF(size.Width + hPadding, size.Height + (vPadding * 2));
+        }
 
-		public override string AccessibilityText() => VirtualText?.Value;
+        public override string AccessibilityText() => VirtualText?.Value;
 
 		public static void MapValueProperty(IViewHandler viewHandler, SkiaView virtualView)
 		{

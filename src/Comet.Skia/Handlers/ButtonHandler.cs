@@ -3,6 +3,8 @@ using SkiaSharp;
 using CButton = Comet.Button;
 using System.Linq;
 using System.Drawing;
+using Topten.RichTextKit;
+using Comet.Skia.Internal;
 
 namespace Comet.Skia
 {
@@ -13,8 +15,14 @@ namespace Comet.Skia
 		Pressed
 	}
 
-	public class ButtonHandler : SkiaControl
+	public class ButtonHandler : SKiaAbstractControlHandler<CButton>, ITextHandler
 	{
+		public static new readonly PropertyMapper<CButton> Mapper = new PropertyMapper<CButton>(SkiaControl.Mapper)
+		{
+			[nameof(CButton.Text)] = MapResetText,
+			[EnvironmentKeys.Colors.Color] = MapResetText
+		};
+
 		static float hPadding = 40;
 		static float minHPadding = 10;
 		static float vPadding = 10;
@@ -25,32 +33,27 @@ namespace Comet.Skia
 			Size = 14,
 			Weight = Weight.Bold,
 		};
-		CButton VirtualButton => VirtualView as CButton;
-		public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
+
+		public ButtonHandler() : base(null, Mapper)
+        {
+
+        }
+
+
+        public override SizeF Measure(SizeF availableSize)
 		{
-			canvas.Clear(Color.Transparent.ToSKColor());
-			var border = VirtualView?.GetBorder();
-
-			var backgroundColor = VirtualView?.GetBackgroundColor();
-			if (buttonState != ButtonState.Normal)
-				backgroundColor = backgroundColor.WithAlpha(.8f);
-			if (border != null)
-				DrawBorder(canvas, border, dirtyRect, backgroundColor);
-			else
-				DrawBackground(canvas, backgroundColor);
-
-			DrawText(VirtualButton.Text, canvas, VirtualView.GetFont(defaultFont), VirtualView.GetColor(Color.Black),
-				VirtualView.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center,
-				VirtualView.GetLineBreakMode(LineBreakMode.NoWrap), VerticalAlignment.Center);
+			TextBlock.MaxHeight = null;
+			TextBlock.MaxWidth = availableSize.Width - minHPadding;
+			TextBlock.Layout();
+			return new SizeF(TextBlock.MeasuredWidth + hPadding, TextBlock.MeasuredHeight + vPadding);
 		}
 
-		public override SizeF Measure(SizeF availableSize)
+		public override void LayoutSubviews(RectangleF frame)
 		{
-			var button = VirtualButton;
-			var size = SkiaTextHelper.GetTextSize(button.Text, button.GetFont(defaultFont),
-				button.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center,
-				button.GetLineBreakMode(LineBreakMode.NoWrap), availableSize.Width - minHPadding);
-			return new SizeF(size.Width + hPadding, size.Height + vPadding);
+			TextBlock.MaxHeight = frame.Height;
+			TextBlock.MaxWidth = frame.Width;
+			TextBlock.Layout();
+			base.LayoutSubviews(frame);
 		}
 
 		public override bool StartInteraction(PointF[] points)
@@ -71,7 +74,7 @@ namespace Comet.Skia
 		{
 			ButtonState = ButtonState.Normal;
 			if (contained)
-				VirtualButton?.OnClick();
+				TypedVirtualView?.OnClick?.Invoke();
 			base.EndInteraction(points, contained);
 		}
 
@@ -82,6 +85,7 @@ namespace Comet.Skia
 		}
 
 		ButtonState buttonState = ButtonState.Normal;
+
 		public ButtonState ButtonState
 		{
 			get => buttonState;
@@ -94,6 +98,40 @@ namespace Comet.Skia
 			}
 		}
 
-		public override string AccessibilityText() => VirtualButton?.Text;
+		TextBlock textBlock;
+		public TextBlock TextBlock
+		{
+			get => textBlock ??= CreateTextBlock();
+			set => textBlock = value;
+		}
+
+		public VerticalAlignment VerticalAlignment => VerticalAlignment.Center;
+
+		public override string AccessibilityText() => TypedVirtualView?.Text;
+
+		public TextBlock CreateTextBlock()
+		{
+			var font = VirtualView.GetFont(defaultFont);
+			var color = VirtualView.GetColor(Color.Black);
+			var alignment = VirtualView.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center;
+			var tb = new TextBlock();
+			tb.AddText(TypedVirtualView.Text, font.ToStyle(color));
+			tb.MaxWidth = VirtualView.Frame.Width;
+			tb.MaxHeight = VirtualView.Frame.Height;
+			tb.MaxLines = null;
+			tb.Alignment = alignment.ToTextAlignment();
+			tb.Layout();
+			return tb;
+		}
+
+
+		public static void MapResetText(IViewHandler viewHandler, CButton virtualView)
+		{
+			var textHandler = viewHandler as ITextHandler;
+			textHandler.TextBlock = null;
+
+			////nativeView.SetTitle(virtualView.Text?.CurrentValue, UIControlState.Normal);
+			virtualView.InvalidateMeasurement();
+		}
 	}
 }
