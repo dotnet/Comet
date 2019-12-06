@@ -60,7 +60,7 @@ namespace Comet
 			},
 			[typeof(bool)] = new Lerp
 			{
-				Calculate = (s, e, progress) => ((bool)e).GenericLerp((bool)e, progress)
+				Calculate = (s, e, progress) => ((bool)s).GenericLerp((bool)e, progress)
 			},
 
 			[typeof(uint)] = new Lerp

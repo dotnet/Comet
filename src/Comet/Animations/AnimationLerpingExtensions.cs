@@ -36,7 +36,7 @@ namespace Comet
 			=> start.HasValue && end.HasValue ? start.Value.Lerp(end.Value, progress) : start.GenericLerp(end, progress);
 
 		public static T GenericLerp<T>(this T start, T end, double progress, double toggleThreshold = .5)
-			=> progress< toggleThreshold ? start : end;
+			=> progress < toggleThreshold ? start : end;
 
 		public static FrameConstraints Lerp(this FrameConstraints start, FrameConstraints end, double progress)
 			=> new FrameConstraints(width: start.Width.Lerp(end.Width, progress),
