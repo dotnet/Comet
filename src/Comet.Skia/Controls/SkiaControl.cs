@@ -13,6 +13,8 @@ namespace Comet.Skia
 			[SkiaEnvironmentKeys.Background] = DrawBackground,
 			[SkiaEnvironmentKeys.Border] = DrawBorder,
 			[SkiaEnvironmentKeys.Text] = DrawText,
+			[SkiaEnvironmentKeys.Overlay] = DrawOverlay,
+			[SkiaEnvironmentKeys.Clip] = ClipCanvas,
 		};
 
 		public static PropertyMapper<View> Mapper = new PropertyMapper<View>
@@ -22,12 +24,12 @@ namespace Comet.Skia
 			[EnvironmentKeys.View.Shadow] = Redraw,
 			[EnvironmentKeys.View.ClipShape] = Redraw,
 			[EnvironmentKeys.View.Overlay] = Redraw,
-            [EnvironmentKeys.Text.Alignment] = MapResetText,
-            [EnvironmentKeys.Fonts.Family] = MapResetText,
-            [EnvironmentKeys.Fonts.Italic] = MapResetText,
-            [EnvironmentKeys.Fonts.Size] = MapResetText,
-            [EnvironmentKeys.Fonts.Weight] = MapResetText,
-        };
+			[EnvironmentKeys.Text.Alignment] = MapResetText,
+			[EnvironmentKeys.Fonts.Family] = MapResetText,
+			[EnvironmentKeys.Fonts.Italic] = MapResetText,
+			[EnvironmentKeys.Fonts.Size] = MapResetText,
+			[EnvironmentKeys.Fonts.Weight] = MapResetText,
+		};
 
 		protected SkiaControl() : base() { }
 
@@ -41,30 +43,22 @@ namespace Comet.Skia
 			this.Parent = view?.Parent;
 		}
 
-		public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
-		{
-			canvas.Clear(Color.Transparent.ToSKColor());
-			if (VirtualView == null)
-				return;
-			canvas.Save();
 
-
-			var border = VirtualView?.GetBorder();
-			var backgroundColor = VirtualView?.GetBackgroundColor();
-			if (border != null)
-				DrawBorder(canvas, border, dirtyRect, backgroundColor);
-			else
-				DrawBackground(canvas, backgroundColor);
-			canvas.Restore();
-		}
-
-		protected virtual void DrawBorder(SKCanvas canvas, Shape shape, RectangleF rect, Color backgroundColor)
+		protected virtual void DrawBorder(SKCanvas canvas, Shape shape, RectangleF rect)
 		{
 			var strokeColor = shape.GetStrokeColor(VirtualView, Color.Black);
 			var strokeWidth = shape.GetLineWidth(VirtualView, 1);
-			canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: backgroundColor ?? Color.Fuchsia);
+			var fill = shape.GetFill(VirtualView, Color.Transparent);
+			canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: fill);
 		}
 
+		protected virtual void DrawOverlay(SKCanvas canvas, Shape shape, RectangleF rect)
+		{
+			var strokeColor = shape.GetStrokeColor(VirtualView, Color.Black);
+			var strokeWidth = shape.GetLineWidth(VirtualView, 1);
+			var fill = shape.GetFill(VirtualView,Color.Transparent);
+			canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: fill);
+		}
 		protected virtual void DrawBackground(SKCanvas canvas, Color backgroundColor)
 		{
 			if (backgroundColor == null)
@@ -96,8 +90,8 @@ namespace Comet.Skia
 			tb.Paint(canvas, new SKPoint(0, y));
 		}
 
-		protected void DrawText(TextBlock tb, SKCanvas canvas, VerticalAlignment verticalAlignment )
-        {
+		protected void DrawText(TextBlock tb, SKCanvas canvas, VerticalAlignment verticalAlignment)
+		{
 			tb.MaxWidth = VirtualView.Frame.Width;
 			tb.MaxHeight = VirtualView.Frame.Height;
 			tb.Layout();
@@ -113,7 +107,15 @@ namespace Comet.Skia
 
 		public abstract string AccessibilityText();
 
-        public static void DrawBackground(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
+		public static void ClipCanvas(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
+		{
+			var border = view?.GetBorder();
+			var clipShape = view?.GetClipShape() ?? border;
+            if (clipShape != null)
+                canvas.ClipPath(clipShape.PathForBounds(dirtyRect).ToSKPath());
+        }
+
+		public static void DrawBackground(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
 		{
 			control?.DrawBackground(canvas, view.GetBackgroundColor(Color.Transparent));
 		}
@@ -123,7 +125,7 @@ namespace Comet.Skia
 			var shape = view.GetBorder();
 			if (shape == null)
 				return;
-			control?.DrawBorder(canvas,shape,dirtyRect, view.GetBackgroundColor(Color.Transparent));
+			control?.DrawBorder(canvas, shape, dirtyRect);
 		}
 
 		public static void DrawText(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
@@ -134,13 +136,21 @@ namespace Comet.Skia
 			if (textHandler.TextBlock == null)
 				textHandler.TextBlock = textHandler.CreateTextBlock();
 			control?.DrawText(textHandler.TextBlock, canvas, textHandler.VerticalAlignment);
-        }
+		}
+
+		public static void DrawOverlay(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
+		{
+			var shape = view.GetOverlay();
+			if (shape == null)
+				return;
+			control?.DrawOverlay(canvas, shape, dirtyRect);
+		}
 
 		public static void Redraw(IViewHandler viewHandler, View virtualView)
-        {
+		{
 			var control = viewHandler as SkiaControl;
 			control.Invalidate();
-        }
+		}
 
 		public static void MapResetText(IViewHandler viewHandler, View virtualView)
 		{

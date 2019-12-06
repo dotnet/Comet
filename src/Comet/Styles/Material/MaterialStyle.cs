@@ -75,7 +75,7 @@ namespace Comet.Styles.Material
 
 			//Set the BorderStyle
 
-			SetEnvironement(view, styleId, EnvironmentKeys.View.ClipShape, style?.Border);
+			SetEnvironement(view, styleId, EnvironmentKeys.View.Border, style?.Border);
 			SetEnvironement(view, styleId, EnvironmentKeys.View.Overlay, style?.Border);
 			SetEnvironement(view, styleId, EnvironmentKeys.Colors.BackgroundColor, style?.BackgroundColor);
 

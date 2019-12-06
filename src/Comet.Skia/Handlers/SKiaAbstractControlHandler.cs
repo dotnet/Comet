@@ -24,25 +24,39 @@ namespace Comet.Skia
 			this.mapper = mapper ?? new PropertyMapper<TVirtualView>(SkiaControl.Mapper);
 		}
 
-		public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
+        public static string[] DefaultLayerDrawingOrder = new[]
+        {
+            SkiaEnvironmentKeys.Clip,
+            SkiaEnvironmentKeys.Background,
+            SkiaEnvironmentKeys.Border,
+            SkiaEnvironmentKeys.Text,
+            SkiaEnvironmentKeys.Overlay,
+        };
+        protected virtual string[] LayerDrawingOrder() => DefaultLayerDrawingOrder;
+
+
+        public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
 		{
             canvas.Clear(Color.Transparent.ToSKColor());
             if (TypedVirtualView == null || drawMapper == null)
                 return;
             canvas.Save();
+            var layers = LayerDrawingOrder();
+			foreach(var layer in layers)
+            {
+                drawMapper.DrawLayer(canvas, dirtyRect, this, TypedVirtualView, layer);
+            }
+
 
             var border = VirtualView?.GetBorder();
+            var clipShape = VirtualView?.GetClipShape() ?? border;
+            if (clipShape != null)
+                canvas.ClipPath(clipShape.PathForBounds(dirtyRect).ToSKPath());
+
             var didDrawBorder = border != null && drawMapper.DrawLayer(canvas, dirtyRect, this, TypedVirtualView, SkiaEnvironmentKeys.Border);
-
-            if (!didDrawBorder)
-                drawMapper.DrawLayer(canvas, dirtyRect, this, TypedVirtualView, SkiaEnvironmentKeys.Background);
-
-
-            drawMapper.DrawLayer(canvas, dirtyRect, this, TypedVirtualView, SkiaEnvironmentKeys.Text);
 
             canvas.Restore();
         }
-		
 
 		public TVirtualView TypedVirtualView { get; private set; }
 
