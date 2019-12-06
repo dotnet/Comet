@@ -23,9 +23,9 @@ namespace Comet.Samples
 						text.Color(Color.Fuchsia);
 				}).EndAnimationSequence(),
 			//TODO: Figure out why animation doesn't work
-			new SKButton("Hello").Background(Color.Black).Color(Color.White).Animate(x => {
+			new SKButton("Hello").RoundedBorder(color:Color.Black).Background(Color.Black).Color(Color.White).Animate(x => {
                 x.Background(Color.White).Color(Color.Black);
-            },duration:3)
+            },duration:3, autoReverses:true, repeats: true)
         };
     }
 }

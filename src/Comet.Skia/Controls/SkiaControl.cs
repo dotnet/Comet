@@ -8,10 +8,28 @@ namespace Comet.Skia
 {
 	public abstract class SkiaControl : SkiaView
 	{
+		public static DrawMapper<View> DrawMapper = new DrawMapper<View>()
+		{
+			[SkiaEnvironmentKeys.Background] = DrawBackground,
+			[SkiaEnvironmentKeys.Border] = DrawBorder,
+			[SkiaEnvironmentKeys.Text] = DrawText,
+		};
 
-		protected SkiaControl() : this(new PropertyMapper<SkiaView>()) { }
+		public static PropertyMapper<View> Mapper = new PropertyMapper<View>
+		{
+			[EnvironmentKeys.Colors.BackgroundColor] = Redraw,
+			[EnvironmentKeys.View.Border] = Redraw,
+			[EnvironmentKeys.View.Shadow] = Redraw,
+			[EnvironmentKeys.View.ClipShape] = Redraw,
+			[EnvironmentKeys.View.Overlay] = Redraw,
+            [EnvironmentKeys.Text.Alignment] = MapResetText,
+            [EnvironmentKeys.Fonts.Family] = MapResetText,
+            [EnvironmentKeys.Fonts.Italic] = MapResetText,
+            [EnvironmentKeys.Fonts.Size] = MapResetText,
+            [EnvironmentKeys.Fonts.Weight] = MapResetText,
+        };
 
-		protected SkiaControl(PropertyMapper<SkiaView> mapper) : base(mapper) { }
+		protected SkiaControl() : base() { }
 
 		public View VirtualView { get; private set; }
 
@@ -29,6 +47,8 @@ namespace Comet.Skia
 			if (VirtualView == null)
 				return;
 			canvas.Save();
+
+
 			var border = VirtualView?.GetBorder();
 			var backgroundColor = VirtualView?.GetBackgroundColor();
 			if (border != null)
@@ -76,6 +96,64 @@ namespace Comet.Skia
 			tb.Paint(canvas, new SKPoint(0, y));
 		}
 
+		protected void DrawText(TextBlock tb, SKCanvas canvas, VerticalAlignment verticalAlignment )
+        {
+			tb.MaxWidth = VirtualView.Frame.Width;
+			tb.MaxHeight = VirtualView.Frame.Height;
+			tb.Layout();
+			var y = verticalAlignment switch
+			{
+				VerticalAlignment.Bottom => VirtualView.Frame.Height - tb.MeasuredHeight,
+				VerticalAlignment.Center => (VirtualView.Frame.Height - tb.MeasuredHeight) / 2,
+				_ => 0
+			};
+
+			tb.Paint(canvas, new SKPoint(0, y));
+		}
+
 		public abstract string AccessibilityText();
+
+        public static void DrawBackground(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
+		{
+			control?.DrawBackground(canvas, view.GetBackgroundColor(Color.Transparent));
+		}
+
+		public static void DrawBorder(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
+		{
+			var shape = view.GetBorder();
+			if (shape == null)
+				return;
+			control?.DrawBorder(canvas,shape,dirtyRect, view.GetBackgroundColor(Color.Transparent));
+		}
+
+		public static void DrawText(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
+		{
+			var textHandler = control as ITextHandler;
+			if (textHandler == null)
+				return;
+			if (textHandler.TextBlock == null)
+				textHandler.TextBlock = textHandler.CreateTextBlock();
+			control?.DrawText(textHandler.TextBlock, canvas, textHandler.VerticalAlignment);
+        }
+
+		public static void Redraw(IViewHandler viewHandler, View virtualView)
+        {
+			var control = viewHandler as SkiaControl;
+			control.Invalidate();
+        }
+
+		public static void MapResetText(IViewHandler viewHandler, View virtualView)
+		{
+			var textHandler = viewHandler as ITextHandler;
+			textHandler.TextBlock = null;
+
+			////nativeView.SetTitle(virtualView.Text?.CurrentValue, UIControlState.Normal);
+			virtualView.InvalidateMeasurement();
+		}
+		//public static void MapColorProperty(IViewHandler viewHandler, Button virtualView)
+		//{
+		//	var nativeView = (UIButton)viewHandler.NativeView;
+		//	nativeView.SetTitleColor(virtualView.GetColor(DefaultColor).ToUIColor(), UIControlState.Normal);
+		//}
 	}
 }
