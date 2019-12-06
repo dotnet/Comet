@@ -58,7 +58,11 @@ namespace Comet.Skia
 
 		public override bool StartInteraction(PointF[] points)
 		{
-
+			if (normalButtonColor == null)
+			{
+				normalButtonColor = VirtualView?.GetColor(Color.Black);
+				normalButtonBackgroundColor = VirtualView?.GetBackgroundColor();
+			}
 			ButtonState = ButtonState.Pressed;
 			return base.StartInteraction(points);
 		}
@@ -84,8 +88,11 @@ namespace Comet.Skia
 			base.CancelInteraction();
 		}
 
+		
 		ButtonState buttonState = ButtonState.Normal;
 
+		Color normalButtonBackgroundColor;
+		Color normalButtonColor;
 		public ButtonState ButtonState
 		{
 			get => buttonState;
@@ -94,6 +101,12 @@ namespace Comet.Skia
 				if (buttonState == value)
 					return;
 				buttonState = value;
+				TypedVirtualView.Animate(x => {
+					//TODO: remove this crap when we get proper style states...
+					x.Color(buttonState == ButtonState.Normal ? normalButtonColor : normalButtonColor.WithAlpha(.8f));
+					x.Background(buttonState == ButtonState.Normal ? normalButtonBackgroundColor : normalButtonBackgroundColor.WithAlpha(.8f));
+
+				});
 				Invalidate();
 			}
 		}

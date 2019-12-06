@@ -559,11 +559,13 @@ namespace Comet
 		public List<Animation> Animations => animations;
 		public void AddAnimation(Animation animation)
 		{
+			animation.Parent = new WeakReference<View>(this);
 			GetAnimations(true).Add(animation);
 			AnimationManger.Add(animation);
 		}
 		public void RemoveAnimation(Animation animation)
         {
+			animation.Parent = null;
 			GetAnimations(false)?.Remove(animation);
 			AnimationManger.Remove(animation);
 		}

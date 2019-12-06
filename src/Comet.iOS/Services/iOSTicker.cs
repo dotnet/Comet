@@ -24,8 +24,8 @@ namespace Comet.iOS
         {
             if (link == null)
                 return;
-            link.RemoveFromRunLoop(NSRunLoop.Current, NSRunLoop.NSRunLoopCommonModes);
-            link.Dispose();
+            link?.RemoveFromRunLoop(NSRunLoop.Current, NSRunLoop.NSRunLoopCommonModes);
+            link?.Dispose();
             link = null;
         }
     }

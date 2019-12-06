@@ -18,6 +18,7 @@ namespace Comet
 		{
 			childrenAnimations = animations;
 		}
+		internal WeakReference<View> Parent { get; set; }
 		bool paused;
 		public bool IsPaused => paused;
 		object locker = new object();
@@ -182,7 +183,12 @@ namespace Comet
 			paused = false;
 			AnimationManger.Add(this);
         }
-
+		public void RemoveFromParent()
+        {
+			View view = null;
+			if (this.Parent?.TryGetTarget(out view) ?? false)
+				view.RemoveAnimation(this);
+		}
 		#region IDisposable Support
 		public bool IsDisposed => disposedValue;
 		private bool disposedValue = false; // To detect redundant calls

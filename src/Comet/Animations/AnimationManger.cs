@@ -54,7 +54,7 @@ namespace Comet
 
 		static long GetCurrentTick() => (Environment.TickCount & Int32.MaxValue);
 
-		static void End() => Ticker.Stop();
+		static void End() => Ticker?.Stop();
 		static void OnFire()
 		{
 			var now = GetCurrentTick();
@@ -65,6 +65,7 @@ namespace Comet
 				if (animation.HasFinished)
 				{
 					Animations.TryRemove(animation);
+					animation.RemoveFromParent();
 					return;
 				}
 
@@ -72,6 +73,7 @@ namespace Comet
 				if (animation.HasFinished)
 				{
 					Animations.TryRemove(animation);
+					animation.RemoveFromParent();
 				}
 			});
 
