@@ -100,7 +100,7 @@ namespace Comet.Skia.iOS
 				Logger.Warn("An unexpected error occured handling a touch event within the control.", exc);
 			}
 		}
-		public override bool PointInside(CGPoint point, UIEvent uievent) => _virtualView?.TouchEnabled ?? false;
+		public override bool PointInside(CGPoint point, UIEvent uievent) => (_virtualView?.TouchEnabled ?? false) && base.PointInside(point,uievent);
 
         bool PointsContained(PointF[] points) => points.Any(p => VirtualView.Frame.BoundsContains(p));
 		public override void TouchesMoved(NSSet touches, UIEvent evt)
