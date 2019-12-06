@@ -61,7 +61,7 @@ namespace Comet.Skia
 			if (normalButtonColor == null)
 			{
 				normalButtonColor = VirtualView?.GetColor(Color.Black);
-				normalButtonBackgroundColor = VirtualView?.GetBackgroundColor();
+				normalButtonBackgroundColor = VirtualView?.GetBackgroundColor(Color.Transparent);
 			}
 			ButtonState = ButtonState.Pressed;
 			return base.StartInteraction(points);
