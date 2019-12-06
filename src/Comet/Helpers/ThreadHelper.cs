@@ -9,7 +9,7 @@ namespace Comet
 {
 	public class ThreadHelper
 	{
-		public static bool IsMainThread => joinableTaskContext.MainThread == Thread.CurrentThread;
+		public static bool IsMainThread => (joinableTaskContext?.MainThread ?? Thread.CurrentThread) == Thread.CurrentThread;
 		static JoinableTaskContext joinableTaskContext;
 		public static JoinableTaskContext JoinableTaskContext
 		{

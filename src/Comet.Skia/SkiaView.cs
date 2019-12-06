@@ -33,6 +33,8 @@ namespace Comet.Skia
 			Invalidated?.Invoke();
 		}
 
+		public bool TouchEnabled { get; set; } = true;
+
 		public Action<SKCanvas, RectangleF> OnDraw;
 
 		public virtual void Draw(SKCanvas canvas, RectangleF dirtyRect) => OnDraw?.Invoke(canvas, dirtyRect);
