@@ -185,6 +185,8 @@ namespace Comet.Styles
 
 		protected void SetEnvironment(ContextualObject view, Type type, string key, StyleAwareValue value)
         {
+			if (value == null)
+				return;
 			foreach(var pair in value.ToEnvironmentValues())
             {
 				var newKey = pair.key == null ? key : $"{key}.{pair.key}";
@@ -195,6 +197,8 @@ namespace Comet.Styles
 
 		protected void SetEnvironment(ContextualObject view, string styleId, string key, StyleAwareValue value)
 		{
+			if (value == null)
+				return;
 			foreach (var pair in value.ToEnvironmentValues())
 			{
 				var newKey = pair.key == null ? key : $"{pair.key}.{key}";
@@ -203,6 +207,8 @@ namespace Comet.Styles
 		}
 		protected void SetEnvironment(ContextualObject view, string styleId, string key, StyleAwareValue value, Func<object,object> getProperty)
 		{
+			if (value == null)
+				return;
 			foreach (var pair in value.ToEnvironmentValues())
 			{
 				var newKey = pair.key == null ? key : $"{pair.key}.{key}";
