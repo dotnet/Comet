@@ -157,33 +157,61 @@ namespace Comet.Styles
 
 		protected virtual void ApplyTextStyle(ContextualObject view, TextStyle textStyle)
 		{
-			SetEnvironement(view, textStyle.StyleId, EnvironmentKeys.Colors.Color, textStyle.Color);
-			SetEnvironement(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font?.Size);
-			SetEnvironement(view, textStyle.StyleId, EnvironmentKeys.Fonts.Family, textStyle?.Font?.Family);
-			SetEnvironement(view, textStyle.StyleId, EnvironmentKeys.Fonts.Italic, textStyle?.Font?.Italic);
-			SetEnvironement(view, textStyle.StyleId, EnvironmentKeys.Fonts.Weight, textStyle?.Font?.Weight);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Colors.Color, textStyle.Color);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font,(f)=> (f as FontAttributes)?.Size);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Family, textStyle?.Font, (f) => (f as FontAttributes)?.Family);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Italic, textStyle?.Font, (f) => (f as FontAttributes)?.Italic);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Weight, textStyle?.Font, (f) => (f as FontAttributes)?.Weight);
 		}
 
 		protected virtual void ApplyButton(ContextualObject view)
 		{
-			SetEnvironement(view, typeof(Button), EnvironmentKeys.Colors.Color, Button?.TextColor);
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.Colors.Color, Button?.TextColor);
 			//Set the BorderStyle
 
-			SetEnvironement(view, typeof(Button), EnvironmentKeys.View.ClipShape, Button?.Border);
-			SetEnvironement(view, typeof(Button), EnvironmentKeys.View.Overlay, Button?.Border);
-			SetEnvironement(view, typeof(Button), EnvironmentKeys.Colors.BackgroundColor, Button?.BackgroundColor);
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.ClipShape, Button?.Border);
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.Overlay, Button?.Border);
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.Colors.BackgroundColor, Button?.BackgroundColor);
 
-			SetEnvironement(view, typeof(Button), EnvironmentKeys.View.Shadow, Button?.Shadow);
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.Shadow, Button?.Shadow);
 		}
 
 
 		protected virtual void ApplyNavbarStyles(ContextualObject view)
 		{
-			SetEnvironement(view, "", EnvironmentKeys.Navigation.BackgroundColor, Navbar?.BackgroundColor);
-			SetEnvironement(view, "", EnvironmentKeys.Navigation.TextColor, Navbar?.TextColor);
+			SetEnvironment(view, "", EnvironmentKeys.Navigation.BackgroundColor, Navbar?.BackgroundColor);
+			SetEnvironment(view, "", EnvironmentKeys.Navigation.TextColor, Navbar?.TextColor);
 		}
 
-		protected void SetEnvironement(ContextualObject view, Type type, string key, object value)
+		protected void SetEnvironment(ContextualObject view, Type type, string key, StyleAwareValue value)
+        {
+			foreach(var pair in value.ToEnvironmentValues())
+            {
+				var newKey = pair.key == null ? key : $"{key}.{pair.key}";
+				SetEnvironmentValue(view, type, newKey, pair.value);
+			}
+        }
+
+
+		protected void SetEnvironment(ContextualObject view, string styleId, string key, StyleAwareValue value)
+		{
+			foreach (var pair in value.ToEnvironmentValues())
+			{
+				var newKey = pair.key == null ? key : $"{pair.key}.{key}";
+				SetEnvironmentValue(view, styleId, newKey, pair.value);
+			}
+		}
+		protected void SetEnvironment(ContextualObject view, string styleId, string key, StyleAwareValue value, Func<object,object> getProperty)
+		{
+			foreach (var pair in value.ToEnvironmentValues())
+			{
+				var newKey = pair.key == null ? key : $"{pair.key}.{key}";
+				SetEnvironmentValue(view, styleId, newKey, getProperty(pair.value));
+			}
+		}
+
+
+		void SetEnvironmentValue(ContextualObject view, Type type, string key, object value)
 		{
 			if (view != null)
 				view.SetEnvironment(type, key, value);
@@ -191,7 +219,7 @@ namespace Comet.Styles
 				View.SetGlobalEnvironment(type, key, value);
 		}
 
-		protected void SetEnvironement(ContextualObject view, string styleId, string key, object value)
+		void SetEnvironmentValue(ContextualObject view, string styleId, string key, object value)
 		{
 			if (view != null)
 				view.SetEnvironment(styleId, key, value);
