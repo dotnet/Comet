@@ -125,13 +125,6 @@ namespace Comet.Skia
 		}
 
 
-		public static void MapResetText(IViewHandler viewHandler, CButton virtualView)
-		{
-			var textHandler = viewHandler as ITextHandler;
-			textHandler.TextBlock = null;
-
-			////nativeView.SetTitle(virtualView.Text?.CurrentValue, UIControlState.Normal);
-			virtualView.InvalidateMeasurement();
-		}
+	
 	}
 }

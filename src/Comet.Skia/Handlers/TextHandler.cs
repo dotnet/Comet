@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Drawing;
+using Comet;
+using Comet.Skia.Internal;
 using SkiaSharp;
+using Topten.RichTextKit;
 
 namespace Comet.Skia
 {
-	public class TextHandler : SkiaControl
+	public class TextHandler : SKiaAbstractControlHandler<Text>, ITextHandler
 	{
-		public static readonly PropertyMapper<SkiaView> Mapper = new PropertyMapper<SkiaView>()
-		{
-			[nameof(Comet.Text.Value)] = MapValueProperty,
-			[nameof(EnvironmentKeys.Text.Alignment)] = MapValueProperty,
-			[EnvironmentKeys.Fonts.Family] = MapValueProperty,
-			[EnvironmentKeys.Fonts.Italic] = MapValueProperty,
-			[EnvironmentKeys.Fonts.Size] = MapValueProperty,
-			[EnvironmentKeys.Fonts.Weight] = MapValueProperty,
-			[EnvironmentKeys.Colors.Color] = MapValueProperty,
-			[EnvironmentKeys.LineBreakMode.Mode] = MapValueProperty,
+        public static new readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(SkiaControl.Mapper)
+        {
+            [nameof(Comet.Text.Value)] = MapResetText,
+			[EnvironmentKeys.Colors.Color] = MapResetText
 		};
-		public TextHandler()
+
+        public TextHandler() : base(null,Mapper)
 		{
 
 		}
@@ -26,39 +24,47 @@ namespace Comet.Skia
 		static float vPadding = 10;
 
 		static FontAttributes defaultFont = new FontAttributes
-		{
+        {
 			Family = "System",
 			Size = 16,
 			Weight = Weight.Regular,
 		};
 
-		Text VirtualText => (Text)VirtualView;
-		public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
+		public override SizeF Measure(SizeF availableSize)
 		{
-			base.Draw(canvas, dirtyRect);
-
-			DrawText(VirtualText.Value, canvas, VirtualView.GetFont(defaultFont), VirtualView.GetColor(Color.Black),
-				VirtualView.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center,
-				VirtualView.GetLineBreakMode(LineBreakMode.NoWrap), VerticalAlignment.Center);
+			TextBlock.MaxHeight = null;
+			TextBlock.MaxWidth = availableSize.Width - minHPadding;
+			TextBlock.Layout();
+			return new SizeF(TextBlock.MeasuredWidth + hPadding, TextBlock.MeasuredHeight + vPadding);
 		}
 
-        public override SizeF Measure(SizeF availableSize)
+		public override string AccessibilityText() => TypedVirtualView?.Value;
+
+
+        TextBlock textBlock;
+        public TextBlock TextBlock
         {
-            var text = VirtualText;
-            var size = SkiaTextHelper.GetTextSize(text.Value, text.GetFont(defaultFont),
-                text.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center,
-                text.GetLineBreakMode(LineBreakMode.NoWrap), availableSize.Width - minHPadding);
-            var margin = text.GetMargin();
-            return new SizeF(size.Width + hPadding, size.Height + (vPadding * 2));
+            get => textBlock ??= CreateTextBlock();
+            set => textBlock = value;
         }
 
-        public override string AccessibilityText() => VirtualText?.Value;
+		public VerticalAlignment VerticalAlignment => VerticalAlignment.Center;
 
-		public static void MapValueProperty(IViewHandler viewHandler, SkiaView virtualView)
+
+		public TextBlock CreateTextBlock()
 		{
-			var control = virtualView as SkiaControl;
-			control.VirtualView.InvalidateMeasurement();
-			virtualView.Invalidate();
+			var font = VirtualView.GetFont(defaultFont);
+			var color = VirtualView.GetColor(Color.Black);
+			var alignment = VirtualView.GetTextAlignment(TextAlignment.Center) ?? TextAlignment.Center;
+			var tb = new TextBlock();
+			tb.AddText(TypedVirtualView.Value, font.ToStyle(color));
+			tb.MaxWidth = VirtualView.Frame.Width;
+			tb.MaxHeight = VirtualView.Frame.Height;
+			tb.MaxLines = null;
+			tb.Alignment = alignment.ToTextAlignment();
+			tb.Layout();
+			return tb;
 		}
+
 	}
 }

@@ -17,13 +17,16 @@ namespace Comet.Skia
 
 		public static PropertyMapper<View> Mapper = new PropertyMapper<View>
 		{
-			[nameof(EnvironmentKeys.Colors.BackgroundColor)] = Redraw,
-			[nameof(EnvironmentKeys.View.Border)] = Redraw,
-			[nameof(EnvironmentKeys.View.Shadow)] = Redraw,
-			[nameof(EnvironmentKeys.View.ClipShape)] = Redraw,
-			[nameof(EnvironmentKeys.View.Overlay)] = Redraw,
-
-            //["Text"] = MapTextProperty,
+			[EnvironmentKeys.Colors.BackgroundColor] = Redraw,
+			[EnvironmentKeys.View.Border] = Redraw,
+			[EnvironmentKeys.View.Shadow] = Redraw,
+			[EnvironmentKeys.View.ClipShape] = Redraw,
+			[EnvironmentKeys.View.Overlay] = Redraw,
+            [EnvironmentKeys.Text.Alignment] = MapResetText,
+            [EnvironmentKeys.Fonts.Family] = MapResetText,
+            [EnvironmentKeys.Fonts.Italic] = MapResetText,
+            [EnvironmentKeys.Fonts.Size] = MapResetText,
+            [EnvironmentKeys.Fonts.Weight] = MapResetText,
         };
 
 		protected SkiaControl() : base() { }
@@ -138,6 +141,15 @@ namespace Comet.Skia
 			var control = viewHandler as SkiaControl;
 			control.Invalidate();
         }
+
+		public static void MapResetText(IViewHandler viewHandler, View virtualView)
+		{
+			var textHandler = viewHandler as ITextHandler;
+			textHandler.TextBlock = null;
+
+			////nativeView.SetTitle(virtualView.Text?.CurrentValue, UIControlState.Normal);
+			virtualView.InvalidateMeasurement();
+		}
 		//public static void MapColorProperty(IViewHandler viewHandler, Button virtualView)
 		//{
 		//	var nativeView = (UIButton)viewHandler.NativeView;
