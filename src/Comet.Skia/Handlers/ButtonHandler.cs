@@ -65,7 +65,7 @@ namespace Comet.Skia
 			var defaultColor = TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default);
 			var backgroundColor = TypedVirtualView.GetBackgroundColor(state: CurrentState)
 				?? defaultColor.Lerp(Color.Grey, .5);
-			DrawBackground(canvas, defaultColor, dirtyRect);
+			base.DrawBackground(canvas, defaultColor, dirtyRect);
 			var paint = new SKPaint();
 			paint.Color = backgroundColor.ToSKColor();
 			var circleRadius = 5f.Lerp(Math.Max(dirtyRect.Width, dirtyRect.Height) * 2f, radius);
