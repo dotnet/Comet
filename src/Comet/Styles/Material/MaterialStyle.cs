@@ -21,15 +21,6 @@ namespace Comet.Styles.Material
 		public ButtonStyle ContainedButton { get; set; }
 		public ButtonStyle TextButton { get; set; }
 
-		static Color GetHoverColor(Color color) =>
-			color == Color.Black ? Color.White.WithAlpha(.2f) :
-				Color.Black.WithAlpha(.2f);
-
-		static Color GetPressedColor(Color color) =>
-			color == Color.Black ? Color.White.WithAlpha(.1f) :
-				Color.Black.WithAlpha(.1f);
-
-
 		public MaterialStyle(ColorPalette colorPalette)
 		{
 			PrimaryColorPalette = colorPalette;
@@ -42,8 +33,8 @@ namespace Comet.Styles.Material
 				BackgroundColor = new StyleAwareValue<ControlState, Color>
 				{
 					[ControlState.Default] = colorPalette.PD900,
-					[ControlState.Hovered] = GetHoverColor(colorPalette.PD900),
-					[ControlState.Pressed] = GetPressedColor(colorPalette.PD900),
+					[ControlState.Hovered] = Color.Grey.WithAlpha(.6f),
+					[ControlState.Pressed] = Color.Grey.WithAlpha(.4f),
 				},
 				Padding = new Thickness(16, 0, 16, 0),
 				Shadow = null,
@@ -70,8 +61,8 @@ namespace Comet.Styles.Material
 				BackgroundColor = new StyleAwareValue<ControlState, Color>
 				{
 					[ControlState.Default] = Color.Transparent,
-					[ControlState.Hovered] = GetHoverColor(colorPalette.PD900),
-					[ControlState.Pressed] = GetPressedColor(colorPalette.PD900),
+					[ControlState.Hovered] = Color.Grey.WithAlpha(.6f),
+					[ControlState.Pressed] = Color.Grey.WithAlpha(.4f),
 				},
 				Shadow = null,
 				Border = null,

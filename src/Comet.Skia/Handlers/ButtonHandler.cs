@@ -60,6 +60,7 @@ namespace Comet.Skia
 			var radius = (this).GetEnvironment<float>(accentRadius);
 			if (radius <= 0 || radius >= 1)
 			{
+				base.DrawBackground(canvas, defaultColor, dirtyRect);
 				base.DrawBackground(canvas, backgroundColor, dirtyRect);
 				return;
 			}
