@@ -49,13 +49,11 @@ namespace Comet.Skia
                 drawMapper.DrawLayer(canvas, rect, this, TypedVirtualView, layer);
             }
 
-
-            var border = VirtualView?.GetBorder();
-            var clipShape = VirtualView?.GetClipShape() ?? border;
+            var clipShape = VirtualView?.GetClipShape() ?? VirtualView?.GetBorder();
             if (clipShape != null)
                 canvas.ClipPath(clipShape.PathForBounds(rect).ToSKPath());
 
-            var didDrawBorder = border != null && drawMapper.DrawLayer(canvas, rect, this, TypedVirtualView, SkiaEnvironmentKeys.Border);
+            drawMapper.DrawLayer(canvas, rect, this, TypedVirtualView, SkiaEnvironmentKeys.Border);
 
             canvas.Restore();
         }
