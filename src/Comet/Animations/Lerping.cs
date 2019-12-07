@@ -97,7 +97,16 @@ namespace Comet
 					var end = (FrameConstraints)e;
 					return start.Lerp(end, progress);
 				}
-			}
+			},
+			[typeof(Thickness)] = new Lerp
+			{
+				Calculate = (s, e, progress) => {
+
+					var start = (Thickness)(s ?? Thickness.Empty);
+					var end = (Thickness)(e ?? Thickness.Empty);
+					return start.Lerp(end, progress);
+				}
+			},
 		};
 
 		public static Lerp GetLerp(Type type)

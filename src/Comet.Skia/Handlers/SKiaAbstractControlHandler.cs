@@ -42,18 +42,20 @@ namespace Comet.Skia
                 return;
             canvas.Save();
             var layers = LayerDrawingOrder();
+            var padding = this.GetPadding();
+			var rect = dirtyRect.ApplyPadding(padding);
 			foreach(var layer in layers)
             {
-                drawMapper.DrawLayer(canvas, dirtyRect, this, TypedVirtualView, layer);
+                drawMapper.DrawLayer(canvas, rect, this, TypedVirtualView, layer);
             }
 
 
             var border = VirtualView?.GetBorder();
             var clipShape = VirtualView?.GetClipShape() ?? border;
             if (clipShape != null)
-                canvas.ClipPath(clipShape.PathForBounds(dirtyRect).ToSKPath());
+                canvas.ClipPath(clipShape.PathForBounds(rect).ToSKPath());
 
-            var didDrawBorder = border != null && drawMapper.DrawLayer(canvas, dirtyRect, this, TypedVirtualView, SkiaEnvironmentKeys.Border);
+            var didDrawBorder = border != null && drawMapper.DrawLayer(canvas, rect, this, TypedVirtualView, SkiaEnvironmentKeys.Border);
 
             canvas.Restore();
         }
@@ -75,7 +77,10 @@ namespace Comet.Skia
         {
 			mapper?.UpdateProperty(this, TypedVirtualView, property);
 		}
-
+        public override void ViewPropertyChanged(string property, object value)
+        {
+            Invalidate();
+        }
         public void Remove(View view)
         {
             throw new NotImplementedException();

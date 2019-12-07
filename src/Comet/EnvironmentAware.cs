@@ -52,6 +52,9 @@ namespace Comet
 			return string.IsNullOrWhiteSpace(styleId) ? null : $"{styleId}.{key}";
 		}
 
+		public static string GetControlStateKey(ControlState state, string key)
+			=> state == ControlState.Default ? key : $"{state}.{key}";
+
 		internal object GetValue(string key, ContextualObject current, View view, string styledKey, string typedKey, bool cascades)
 		{
 			try
@@ -200,9 +203,10 @@ namespace Comet
 
 	public static class ContextualObjectExtensions
 	{
-		public static T SetEnvironment<T>(this T contextualObject, string styleId, string key, object value, bool cascades = true)
+		public static T SetEnvironment<T>(this T contextualObject, string styleId, string key, object value, bool cascades = true, ControlState state = ControlState.Default)
 			where T : ContextualObject
 		{
+			key = ContextualObject.GetControlStateKey(state, key);
 			var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
 			contextualObject.SetValue(typedKey, value, cascades);
 			//TODO: Verify this is needed 
@@ -212,9 +216,10 @@ namespace Comet
 			return contextualObject;
 		}
 
-		public static T SetEnvironment<T>(this T contextualObject, Type type, string key, object value, bool cascades = true)
+		public static T SetEnvironment<T>(this T contextualObject, Type type, string key, object value, bool cascades = true, ControlState state = ControlState.Default)
 			where T : ContextualObject
 		{
+			key = ContextualObject.GetControlStateKey(state, key);
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			contextualObject.SetValue(typedKey, value, cascades);
 			//TODO: Verify this is needed 
@@ -223,7 +228,7 @@ namespace Comet
 			});
 			return contextualObject;
 		}
-
+		
 		public static T SetEnvironment<T>(this T contextualObject, string key, object value, bool cascades = true)
 			where T : ContextualObject
 		{
@@ -248,8 +253,23 @@ namespace Comet
 		public static object GetEnvironment(this ContextualObject contextualObject, View view, string key, bool cascades = true) => contextualObject.GetValue(key, contextualObject, view, ContextualObject.GetTypedStyleId(contextualObject, key), ContextualObject.GetTypedKey(contextualObject, key), cascades);
 		public static object GetEnvironment(this ContextualObject contextualObject, View view, Type type, string key, bool cascades = true) => contextualObject.GetValue(key, contextualObject, view, ContextualObject.GetTypedStyleId(contextualObject, key), ContextualObject.GetTypedKey(type ?? contextualObject.GetType(), key), cascades);
 
-		public static T GetEnvironment<T>(this View view, string key, bool cascades = true) => view.GetEnvironment<T>(view, view.GetType(), key, cascades);
-		public static T GetEnvironment<T>(this View view, Type type, string key, bool cascades = true) => view.GetValue<T>(key, view, view.Parent, ContextualObject.GetTypedStyleId(view, key), ContextualObject.GetTypedKey(type ?? view.GetType(), key), cascades);
+		public static T GetEnvironment<T>(this View view, string key, ControlState state, bool cascades = true)
+		{
+			key = ContextualObject.GetControlStateKey(state,key);
+			return view.GetEnvironment<T>(key, cascades);
+		}
+		public static T GetEnvironment<T>(this View view, string key, bool cascades = true)
+			=> view.GetEnvironment<T>(view, view.GetType(), key, cascades);
+
+		public static T GetEnvironment<T>(this View view, Type type, string key, ControlState state, bool cascades = true)
+		{
+			key = ContextualObject.GetControlStateKey(state, key);
+			return view.GetEnvironment<T>(type, key, cascades);
+		}
+
+		public static T GetEnvironment<T>(this View view, Type type, string key, bool cascades = true)
+			=> view.GetValue<T>(key, view, view.Parent, ContextualObject.GetTypedStyleId(view, key), ContextualObject.GetTypedKey(type ?? view.GetType(), key), cascades);
+		
 
 		public static object GetEnvironment(this View view, string key, bool cascades = true) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedStyleId(view, key), ContextualObject.GetTypedKey(view, key), cascades);
 		public static object GetEnvironment(this View view, Type type, string key, bool cascades = true) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedStyleId(view, key), ContextualObject.GetTypedKey(type ?? view.GetType(), key), cascades);

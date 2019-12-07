@@ -78,15 +78,15 @@ namespace Comet
 			return view;
 		}
 
-		public static Color GetBackgroundColor(this View view, Type type, Color defaultColor = null)
+		public static Color GetBackgroundColor(this View view, Type type, Color defaultColor = null, ControlState state = ControlState.Default)
 		{
-			var color = view?.GetEnvironment<Color>(type, EnvironmentKeys.Colors.BackgroundColor);
+			var color = view?.GetEnvironment<Color>(type, EnvironmentKeys.Colors.BackgroundColor, state);
 			return color ?? defaultColor;
 		}
 
-		public static Color GetBackgroundColor(this View view, Color defaultColor = null)
+		public static Color GetBackgroundColor(this View view, Color defaultColor = null, ControlState state = ControlState.Default)
 		{
-			var color = view?.GetEnvironment<Color>(EnvironmentKeys.Colors.BackgroundColor);
+			var color = view?.GetEnvironment<Color>(EnvironmentKeys.Colors.BackgroundColor,state);
 			return color ?? defaultColor;
 		}
 

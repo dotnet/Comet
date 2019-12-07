@@ -183,7 +183,6 @@ namespace Comet
 			view.SetEnvironment(EnvironmentKeys.Layout.Margin, margin, cascades);
 			return view;
 		}
-
 		public static Thickness GetMargin(this View view, Thickness? defaultValue = null)
 		{
 			var margin = view.GetEnvironment<Thickness?>(view, EnvironmentKeys.Layout.Margin);

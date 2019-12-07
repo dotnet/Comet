@@ -42,5 +42,13 @@ namespace Comet
 			=> new FrameConstraints(width: start.Width.Lerp(end.Width, progress),
 				height: start.Height.Lerp(end.Height, progress),
 				alignment: start.Alignment.GenericLerp(end.Alignment, progress));
+
+		public static Thickness Lerp(this Thickness start, Thickness end, double progress)
+			=> new Thickness(
+				start.Left.Lerp(end.Left, progress),
+				start.Top.Lerp(end.Top, progress),
+				start.Right.Lerp(end.Right, progress),
+				start.Bottom.Lerp(end.Bottom, progress)
+				);
 	}
 }

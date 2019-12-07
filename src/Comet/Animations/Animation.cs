@@ -9,6 +9,10 @@ namespace Comet
 {
 	public class Animation : IDisposable
 	{
+		//TODO: Add a way to cancel animations
+		//TODO: Add a way to find an animation by ID
+		//TODO: Allow us to prevent an animation from auto disposing
+		
 		public Animation()
 		{
 
@@ -126,7 +130,8 @@ namespace Comet
 			}
 			catch (Exception ex)
 			{
-				var message = $"Errpr lerping: {StartValue} to {EndValue} on {PropertyName}";
+				var message = $"Error lerping: {StartValue} to {EndValue} on {PropertyName}";
+				Debug.WriteLine(message);
 				Logger.Error(ex, message);
 				CurrentValue = EndValue;
 				HasFinished = true;

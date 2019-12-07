@@ -19,11 +19,12 @@ namespace Comet.Skia
 
 		public static PropertyMapper<View> Mapper = new PropertyMapper<View>
 		{
-			[EnvironmentKeys.Colors.BackgroundColor] = Redraw,
-			[EnvironmentKeys.View.Border] = Redraw,
-			[EnvironmentKeys.View.Shadow] = Redraw,
-			[EnvironmentKeys.View.ClipShape] = Redraw,
-			[EnvironmentKeys.View.Overlay] = Redraw,
+			[EnvironmentKeys.Colors.BackgroundColor] = MapBackgroundColor,
+			[EnvironmentKeys.Colors.Color] = MapBackgroundColor,
+			[EnvironmentKeys.View.Border] = MapBorderProperty,
+			[EnvironmentKeys.View.Shadow] = MapShadowProperty,
+			[EnvironmentKeys.View.ClipShape] = MapClipShapeProperty,
+			[EnvironmentKeys.View.Overlay] = MapOverlayProperty,
 			[EnvironmentKeys.Text.Alignment] = MapResetText,
 			[EnvironmentKeys.Fonts.Family] = MapResetText,
 			[EnvironmentKeys.Fonts.Italic] = MapResetText,
@@ -109,20 +110,20 @@ namespace Comet.Skia
 
 		public static void ClipCanvas(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
 		{
-			var border = view?.GetBorder();
-			var clipShape = view?.GetClipShape() ?? border;
+			var border = control?.GetBorder();
+			var clipShape = control?.GetClipShape() ?? border;
             if (clipShape != null)
                 canvas.ClipPath(clipShape.PathForBounds(dirtyRect).ToSKPath());
         }
 
 		public static void DrawBackground(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
 		{
-			control?.DrawBackground(canvas, view.GetBackgroundColor(Color.Transparent));
+			control?.DrawBackground(canvas, control.GetBackgroundColor(Color.Transparent));
 		}
 
 		public static void DrawBorder(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
 		{
-			var shape = view.GetBorder();
+			var shape = control.GetBorder();
 			if (shape == null)
 				return;
 			control?.DrawBorder(canvas, shape, dirtyRect);
@@ -140,7 +141,7 @@ namespace Comet.Skia
 
 		public static void DrawOverlay(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
 		{
-			var shape = view.GetOverlay();
+			var shape = control.GetOverlay();
 			if (shape == null)
 				return;
 			control?.DrawOverlay(canvas, shape, dirtyRect);
@@ -160,10 +161,40 @@ namespace Comet.Skia
 			////nativeView.SetTitle(virtualView.Text?.CurrentValue, UIControlState.Normal);
 			virtualView.InvalidateMeasurement();
 		}
-		//public static void MapColorProperty(IViewHandler viewHandler, Button virtualView)
-		//{
-		//	var nativeView = (UIButton)viewHandler.NativeView;
-		//	nativeView.SetTitleColor(virtualView.GetColor(DefaultColor).ToUIColor(), UIControlState.Normal);
-		//}
+
+		public static void MapBackgroundColor(IViewHandler viewHandler, View virtualView)
+        {
+			var control = viewHandler as SkiaControl;
+			control.Background(virtualView.GetBackgroundColor(Color.Transparent));
+        }
+
+		public static void MapColorProperty(IViewHandler viewHandler, View virtualView)
+		{
+			var control = viewHandler as SkiaControl;
+			control.Color(virtualView.GetColor(Color.Transparent));
+		}
+
+		public static void MapBorderProperty(IViewHandler viewHandler, View virtualView)
+		{
+			var control = viewHandler as SkiaControl;
+			control.Border(virtualView.GetBorder());
+		}
+
+		public static void MapShadowProperty(IViewHandler viewHandler, View virtualView)
+		{
+			var control = viewHandler as SkiaControl;
+			control.SetEnvironment(EnvironmentKeys.View.Shadow, virtualView.GetShadow(), false);
+		}
+
+		public static void MapClipShapeProperty(IViewHandler viewHandler, View virtualView)
+		{
+			var control = viewHandler as SkiaControl;
+			control.ClipShape(virtualView.GetClipShape());
+		}
+		public static void MapOverlayProperty(IViewHandler viewHandler, View virtualView)
+		{
+			var control = viewHandler as SkiaControl;
+			control.Overlay(virtualView.GetOverlay());
+		}
 	}
 }

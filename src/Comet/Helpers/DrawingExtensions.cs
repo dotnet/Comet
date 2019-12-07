@@ -26,7 +26,7 @@ namespace Comet
 			if (type != null)
 				view.SetEnvironment(type, EnvironmentKeys.View.Shadow, shadow, true);
 			else
-				view.SetEnvironment(type, EnvironmentKeys.View.Shadow, shadow, false);
+				view.SetEnvironment(EnvironmentKeys.View.Shadow, shadow, false);
 			return view;
 		}
 

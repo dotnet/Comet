@@ -56,60 +56,30 @@ namespace Comet.Skia
 			base.LayoutSubviews(frame);
 		}
 
-		public override bool StartInteraction(PointF[] points)
-		{
-			if (normalButtonColor == null)
-			{
-				normalButtonColor = VirtualView?.GetColor(Color.Black);
-				normalButtonBackgroundColor = VirtualView?.GetBackgroundColor(Color.Transparent);
-			}
-			ButtonState = ButtonState.Pressed;
-			return base.StartInteraction(points);
-		}
-
-		public override void HoverInteraction(PointF[] points)
-		{
-			ButtonState = ButtonState.Hover;
-			base.HoverInteraction(points);
-		}
 
 
 		public override void EndInteraction(PointF[] points, bool contained)
 		{
-			ButtonState = ButtonState.Normal;
 			if (contained)
 				TypedVirtualView?.OnClick?.Invoke();
 			base.EndInteraction(points, contained);
 		}
 
-		public override void CancelInteraction()
+        protected override void ControlStateChanged()
 		{
-			ButtonState = ButtonState.Normal;
-			base.CancelInteraction();
-		}
+			var endBackground = TypedVirtualView.GetBackgroundColor(state: CurrentState)
+				//If null, get the normal state and lerp that puppy
+				?? TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default).Lerp(Color.Grey, .1).WithAlpha(.5f);
 
-		
-		ButtonState buttonState = ButtonState.Normal;
+			var endPadding = (CurrentState == ControlState.Pressed) ? new Thickness(.5f) : new Thickness();
 
-		Color normalButtonBackgroundColor;
-		Color normalButtonColor;
-		public ButtonState ButtonState
-		{
-			get => buttonState;
-			set
-			{
-				if (buttonState == value)
-					return;
-				buttonState = value;
-				TypedVirtualView.Animate(x => {
-					//TODO: remove this crap when we get proper style states...
-					x.Color(buttonState == ButtonState.Normal ? normalButtonColor : normalButtonColor.WithAlpha(.8f));
-					x.Background(buttonState == ButtonState.Normal ? normalButtonBackgroundColor : normalButtonBackgroundColor.WithAlpha(.8f));
+			this.Animate(x => {
+               // x.Color(end);
+                x.Background(endBackground);
+				x.Padding(endPadding);
+            });
 
-				});
-				Invalidate();
-			}
-		}
+        }
 
 		TextBlock textBlock;
 		public TextBlock TextBlock

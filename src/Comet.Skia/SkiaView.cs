@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using SkiaSharp;
 
@@ -39,8 +40,23 @@ namespace Comet.Skia
 
 		public virtual void Draw(SKCanvas canvas, RectangleF dirtyRect) => OnDraw?.Invoke(canvas, dirtyRect);
 
+		protected PointF CurrentTouchPoint { get; set; }
+		ControlState currentState = ControlState.Default;
+		public ControlState CurrentState
+		{
+			get => currentState;
+			set
+            {
+				if (currentState == value)
+					return;
+				currentState = value;
+				ControlStateChanged();
+			}
+		}
 		public virtual void StartHoverInteraction(PointF[] points)
 		{
+			CurrentTouchPoint = points.FirstOrDefault();
+			CurrentState = ControlState.Hovered;
 		}
 
 		public virtual void HoverInteraction(PointF[] points)
@@ -53,23 +69,32 @@ namespace Comet.Skia
 
 		public virtual bool StartInteraction(PointF[] points)
 		{
+			CurrentTouchPoint = points.FirstOrDefault();
+			CurrentState = ControlState.Pressed;
 			return false;
 		}
 
 		public virtual void DragInteraction(PointF[] points)
 		{
 
+			CurrentTouchPoint = points.FirstOrDefault();
 		}
 
 		public virtual void EndInteraction(PointF[] points, bool inside)
 		{
-
+			CurrentState = ControlState.Default;
 		}
 
 		public virtual void CancelInteraction()
 		{
+			CurrentState = ControlState.Default;
 
 		}
+
+		protected virtual void ControlStateChanged()
+        {
+
+        }
 
 		public virtual void Resized(RectangleF bounds)
 		{
@@ -79,7 +104,7 @@ namespace Comet.Skia
 		public override void ViewPropertyChanged(string property, object value)
 		{
 			base.ViewPropertyChanged(property, value);
-			if (_boundProperties.Contains(property))
+			//if (_boundProperties.Contains(property))
 				Invalidate();
 		}
 
@@ -98,5 +123,6 @@ namespace Comet.Skia
 				return availableSize;
 			return base.Measure(availableSize);
 		}
+		
 	}
 }

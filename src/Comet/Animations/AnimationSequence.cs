@@ -6,6 +6,7 @@ namespace Comet
 {
 	public class AnimationSequence<T> : Animation where T : View
 	{
+		//TODO: Do something for key frames
 		public AnimationSequence()
 		{
 

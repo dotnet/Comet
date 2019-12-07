@@ -7,5 +7,6 @@ namespace Comet
 	   Disabled,
 	   Background,
 	   Pressed,
+	   Hovered
     }
 }
