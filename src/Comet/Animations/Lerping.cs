@@ -37,8 +37,8 @@ namespace Comet
 			[typeof(float)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
-					var start = (float)s;
-					var end = (float)e;
+					var start = (float)(s ?? 0f);
+					var end = (float)(e ?? 0f);
 					return (float)((end - start) * progress) + start;
 				}
 			},

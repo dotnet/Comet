@@ -17,6 +17,9 @@ namespace Comet.Skia
 			return new SKColor(r, g, b, a);
 		}
 
+		public static SKPoint ToSKPoint(this PointF point)
+			=> new SKPoint(point.X, point.Y);
+
 		public static SKSize ToSKSize(this SizeF size)
 			=> new SKSize(size.Width, size.Height);
 

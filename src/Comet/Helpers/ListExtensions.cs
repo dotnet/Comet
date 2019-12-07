@@ -38,5 +38,12 @@ namespace Comet.Internal
 				return false;
             }
         }
+
+		public static IList<T> InsertAfter<T>(this IList<T> list,T itemToAdd, T previousItem)
+        {
+			var index = list.IndexOf(previousItem);
+			list.Insert(index + 1, itemToAdd);
+			return list;
+        }
 	}
 }
