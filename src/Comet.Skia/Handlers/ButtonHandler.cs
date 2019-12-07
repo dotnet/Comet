@@ -10,7 +10,7 @@ namespace Comet.Skia
 {
 	public class ButtonHandler : SKiaAbstractControlHandler<Button>, ITextHandler
 	{
-		
+
 		public static new readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(SkiaControl.Mapper)
 		{
 			[nameof(Button.Text)] = MapResetText,
@@ -22,19 +22,19 @@ namespace Comet.Skia
 		static float vPadding = 10;
 
 		static FontAttributes defaultFont = new FontAttributes
-        {
+		{
 			Family = "System",
 			Size = 14,
 			Weight = Weight.Bold,
 		};
-		
+
 		public ButtonHandler() : base(null, Mapper)
-        {
+		{
 
-        }
+		}
 
 
-        public override SizeF Measure(SizeF availableSize)
+		public override SizeF Measure(SizeF availableSize)
 		{
 			TextBlock.MaxHeight = null;
 			TextBlock.MaxWidth = availableSize.Width - minHPadding;
@@ -52,8 +52,8 @@ namespace Comet.Skia
 
 		const string accentRadius = "Button.AccentRadius";
 
-        protected override void DrawBackground(SKCanvas canvas, Color defaultBackgroundColor,RectangleF dirtyRect)
-        {
+		protected override void DrawBackground(SKCanvas canvas, Color defaultBackgroundColor, RectangleF dirtyRect)
+		{
 			var radius = (this).GetEnvironment<float>(accentRadius);
 			if (radius <= 0 || radius >= 1)
 			{
@@ -65,12 +65,12 @@ namespace Comet.Skia
 			var defaultColor = TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default);
 			var backgroundColor = TypedVirtualView.GetBackgroundColor(state: CurrentState)
 				?? defaultColor.Lerp(Color.Grey, .5);
-			DrawBackground(canvas, defaultColor,dirtyRect);
+			DrawBackground(canvas, defaultColor, dirtyRect);
 			var paint = new SKPaint();
-			paint.Color =  backgroundColor.ToSKColor();
+			paint.Color = backgroundColor.ToSKColor();
 			var circleRadius = 5f.Lerp(Math.Max(dirtyRect.Width, dirtyRect.Height) * 2f, radius);
 			canvas.DrawCircle(point, circleRadius, paint);
-        }
+		}
 
 
 		public override void EndInteraction(PointF[] points, bool contained)
@@ -80,7 +80,7 @@ namespace Comet.Skia
 			base.EndInteraction(points, contained);
 		}
 
-        protected override void ControlStateChanged()
+		protected override void ControlStateChanged()
 		{
 			var endBackground = TypedVirtualView.GetBackgroundColor(state: CurrentState)
 				//If null, get the normal state and lerp that puppy
@@ -89,13 +89,13 @@ namespace Comet.Skia
 			var endPadding = (CurrentState == ControlState.Pressed) ? new Thickness(.5f) : new Thickness();
 			float radius = (CurrentState == ControlState.Pressed) ? 1 : 0;
 			(this).Animate(x => {
-               // x.Color(end);
-                //x.Background(endBackground);
+				// x.Color(end);
+				//x.Background(endBackground);
 				x.Padding(endPadding);
 				x.SetEnvironment(accentRadius, radius);
-            });
+			});
 
-        }
+		}
 
 		TextBlock textBlock;
 		public TextBlock TextBlock

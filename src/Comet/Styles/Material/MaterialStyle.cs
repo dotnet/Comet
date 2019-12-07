@@ -21,6 +21,15 @@ namespace Comet.Styles.Material
 		public ButtonStyle ContainedButton { get; set; }
 		public ButtonStyle TextButton { get; set; }
 
+		static Color GetHoverColor(Color color) =>
+			color == Color.Black ? Color.White.WithAlpha(.2f) :
+				Color.Black.WithAlpha(.2f);
+
+		static Color GetPressedColor(Color color) =>
+			color == Color.Black ? Color.White.WithAlpha(.1f) :
+				Color.Black.WithAlpha(.1f);
+
+
 		public MaterialStyle(ColorPalette colorPalette)
 		{
 			PrimaryColorPalette = colorPalette;
@@ -30,7 +39,12 @@ namespace Comet.Styles.Material
 			{
 				TextColor = colorPalette.P900,
 				Border = new RoundedRectangle(4f).Stroke(Color.Grey, 1f, true),
-				BackgroundColor = colorPalette.PD900,
+				BackgroundColor = new StyleAwareValue<ControlState, Color>
+				{
+					[ControlState.Default] = colorPalette.PD900,
+					[ControlState.Hovered] = GetHoverColor(colorPalette.PD900),
+					[ControlState.Pressed] = GetPressedColor(colorPalette.PD900),
+				},
 				Padding = new Thickness(16, 0, 16, 0),
 				Shadow = null,
 			};
@@ -39,7 +53,12 @@ namespace Comet.Styles.Material
 			{
 				TextColor = colorPalette.PD900,
 				Border = new RoundedRectangle(4f).Stroke(Color.Grey, 1f, true),
-				BackgroundColor = colorPalette.P900,
+				BackgroundColor = new StyleAwareValue<ControlState, Color>
+				{
+					[ControlState.Default] = colorPalette.P900,
+					[ControlState.Hovered] = colorPalette.P800,
+					[ControlState.Pressed] = colorPalette.P700,
+				},
 				Shadow = new Graphics.Shadow().WithColor(Color.Grey).WithRadius(1).WithOffset(new SizeF(1, 1)),
 				Padding = new Thickness(16, 0, 16, 0),
 			};
@@ -48,7 +67,12 @@ namespace Comet.Styles.Material
 			{
 				TextColor = colorPalette.P900,
 				Padding = new Thickness(16, 0, 16, 0),
-				BackgroundColor = Color.Transparent,
+				BackgroundColor = new StyleAwareValue<ControlState, Color>
+				{
+					[ControlState.Default] = Color.Transparent,
+					[ControlState.Hovered] = GetHoverColor(colorPalette.PD900),
+					[ControlState.Pressed] = GetPressedColor(colorPalette.PD900),
+				},
 				Shadow = null,
 				Border = null,
 			};

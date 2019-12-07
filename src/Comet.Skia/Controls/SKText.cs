@@ -4,7 +4,7 @@ namespace Comet.Skia
 	public class SKText : Text
 	{
 		public SKText(
-		   Binding<string> value = null) : base(value)
+			Binding<string> value = null) : base(value)
 		{
 
 		}
