@@ -67,9 +67,9 @@ namespace Comet.Skia
 
 		protected override void ControlStateChanged()
 		{
-			var endBackground = TypedVirtualView.GetBackgroundColor(state: CurrentState);
-			//If null, get the normal state and lerp that puppy
-			//?? TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default).Lerp(Color.Grey, .1).WithAlpha(.5f);
+			var endBackground = TypedVirtualView.GetBackgroundColor(state: CurrentState)
+				//If null, get the normal state and lerp that puppy
+				?? TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default).Lerp(Color.Grey, .1).WithAlpha(.5f);
 
 			var endPadding = (CurrentState == ControlState.Pressed) ? new Thickness(.5f) : new Thickness();
 
