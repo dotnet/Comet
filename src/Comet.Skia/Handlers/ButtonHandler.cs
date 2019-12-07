@@ -35,12 +35,12 @@ namespace Comet.Skia
 		};
 
 		public ButtonHandler() : base(null, Mapper)
-        {
+		{
 
-        }
+		}
 
 
-        public override SizeF Measure(SizeF availableSize)
+		public override SizeF Measure(SizeF availableSize)
 		{
 			TextBlock.MaxHeight = null;
 			TextBlock.MaxWidth = availableSize.Width - minHPadding;
@@ -65,21 +65,21 @@ namespace Comet.Skia
 			base.EndInteraction(points, contained);
 		}
 
-        protected override void ControlStateChanged()
+		protected override void ControlStateChanged()
 		{
-			var endBackground = TypedVirtualView.GetBackgroundColor(state: CurrentState)
-				//If null, get the normal state and lerp that puppy
-				?? TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default).Lerp(Color.Grey, .1).WithAlpha(.5f);
+			var endBackground = TypedVirtualView.GetBackgroundColor(state: CurrentState);
+			//If null, get the normal state and lerp that puppy
+			//?? TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default).Lerp(Color.Grey, .1).WithAlpha(.5f);
 
 			var endPadding = (CurrentState == ControlState.Pressed) ? new Thickness(.5f) : new Thickness();
 
 			this.Animate(x => {
-               // x.Color(end);
-                x.Background(endBackground);
+				// x.Color(end);
+				x.Background(endBackground);
 				x.Padding(endPadding);
-            });
+			});
 
-        }
+		}
 
 		TextBlock textBlock;
 		public TextBlock TextBlock
@@ -108,6 +108,6 @@ namespace Comet.Skia
 		}
 
 
-	
+
 	}
 }

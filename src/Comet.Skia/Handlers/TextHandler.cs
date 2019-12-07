@@ -9,13 +9,13 @@ namespace Comet.Skia
 {
 	public class TextHandler : SKiaAbstractControlHandler<Text>, ITextHandler
 	{
-        public static new readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(SkiaControl.Mapper)
-        {
-            [nameof(Comet.Text.Value)] = MapResetText,
+		public static new readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(SkiaControl.Mapper)
+		{
+			[nameof(Comet.Text.Value)] = MapResetText,
 			[EnvironmentKeys.Colors.Color] = MapResetText
 		};
 
-        public TextHandler() : base(null,Mapper)
+		public TextHandler() : base(null, Mapper)
 		{
 			TouchEnabled = false;
 		}
@@ -24,7 +24,7 @@ namespace Comet.Skia
 		static float vPadding = 10;
 
 		static FontAttributes defaultFont = new FontAttributes
-        {
+		{
 			Family = "System",
 			Size = 16,
 			Weight = Weight.Regular,
@@ -41,12 +41,12 @@ namespace Comet.Skia
 		public override string AccessibilityText() => TypedVirtualView?.Value;
 
 
-        TextBlock textBlock;
-        public TextBlock TextBlock
-        {
-            get => textBlock ??= CreateTextBlock();
-            set => textBlock = value;
-        }
+		TextBlock textBlock;
+		public TextBlock TextBlock
+		{
+			get => textBlock ??= CreateTextBlock();
+			set => textBlock = value;
+		}
 
 		public VerticalAlignment VerticalAlignment => VerticalAlignment.Center;
 
