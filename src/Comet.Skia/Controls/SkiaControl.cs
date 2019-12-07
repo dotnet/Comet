@@ -60,14 +60,13 @@ namespace Comet.Skia
 			var fill = shape.GetFill(VirtualView,Color.Transparent);
 			canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: fill, drawingStyle:Graphics.DrawingStyle.StrokeFill);
 		}
-		protected virtual void DrawBackground(SKCanvas canvas, Color backgroundColor)
+		protected virtual void DrawBackground(SKCanvas canvas, Color backgroundColor, RectangleF rect)
 		{
 			if (backgroundColor == null)
 				return;
 			var paint = new SKPaint();
 			paint.Color = backgroundColor.ToSKColor();
-			var bounds = new SKRect(0, 0, VirtualView.Frame.Width, VirtualView.Frame.Height);
-			canvas.DrawRect(bounds, paint);
+			canvas.DrawRect(rect.ToSKRect(), paint);
 		}
 
 		protected void DrawText(string text, SKCanvas canvas, FontAttributes data, Color color, TextAlignment alignment, LineBreakMode lineBreakMode, VerticalAlignment verticalAlignment)
@@ -118,7 +117,7 @@ namespace Comet.Skia
 
 		public static void DrawBackground(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
 		{
-			control?.DrawBackground(canvas, control.GetBackgroundColor(Color.Transparent));
+			control?.DrawBackground(canvas, control.GetBackgroundColor(Color.Transparent), dirtyRect);
 		}
 
 		public static void DrawBorder(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)

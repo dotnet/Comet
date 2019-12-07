@@ -10,11 +10,7 @@ namespace Comet.Skia
 {
 	public class ButtonHandler : SKiaAbstractControlHandler<Button>, ITextHandler
 	{
-		public static readonly DrawMapper<Button> DrawingMapper = new DrawMapper<Button>(SkiaControl.DrawMapper)
-		{
-			[SkiaEnvironmentKeys.Background] = DrawAccentLayer,
-		};
-
+		
 		public static new readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(SkiaControl.Mapper)
 		{
 			[nameof(Button.Text)] = MapResetText,
@@ -26,13 +22,13 @@ namespace Comet.Skia
 		static float vPadding = 10;
 
 		static FontAttributes defaultFont = new FontAttributes
-		{
+        {
 			Family = "System",
 			Size = 14,
 			Weight = Weight.Bold,
 		};
 		
-		public ButtonHandler() : base(DrawingMapper, Mapper)
+		public ButtonHandler() : base(null, Mapper)
         {
 
         }
@@ -55,12 +51,13 @@ namespace Comet.Skia
 		}
 
 		const string accentRadius = "Button.AccentRadius";
-		protected void DrawAccentLayer(SKCanvas canvas, RectangleF dirtyRect)
+
+        protected override void DrawBackground(SKCanvas canvas, Color defaultBackgroundColor,RectangleF dirtyRect)
         {
-			var radius = this.GetEnvironment<float>(accentRadius);
-			if (radius <= 0)
+			var radius = (this).GetEnvironment<float>(accentRadius);
+			if (radius <= 0 || radius >= 1)
 			{
-				DrawBackground(canvas, this.GetBackgroundColor());
+				base.DrawBackground(canvas, defaultBackgroundColor, dirtyRect);
 				return;
 			}
 
@@ -68,7 +65,7 @@ namespace Comet.Skia
 			var defaultColor = TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default);
 			var backgroundColor = TypedVirtualView.GetBackgroundColor(state: CurrentState)
 				?? defaultColor.Lerp(Color.Grey, .5);
-			DrawBackground(canvas, defaultColor);
+			DrawBackground(canvas, defaultColor,dirtyRect);
 			var paint = new SKPaint();
 			paint.Color =  backgroundColor.ToSKColor();
 			var circleRadius = 5f.Lerp(Math.Max(dirtyRect.Width, dirtyRect.Height) * 2f, radius);
@@ -91,7 +88,7 @@ namespace Comet.Skia
 
 			var endPadding = (CurrentState == ControlState.Pressed) ? new Thickness(.5f) : new Thickness();
 			float radius = (CurrentState == ControlState.Pressed) ? 1 : 0;
-			this.Animate(x => {
+			(this).Animate(x => {
                // x.Color(end);
                 //x.Background(endBackground);
 				x.Padding(endPadding);
@@ -125,14 +122,6 @@ namespace Comet.Skia
 			tb.Layout();
 			return tb;
 		}
-
-		public static void DrawAccentLayer(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, Button view)
-        {
-			var button = control as ButtonHandler;
-			if (button == null)
-				return;
-			button.DrawAccentLayer(canvas, dirtyRect);
-        }
 
 
 	}
