@@ -117,6 +117,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="HarfBuzzSharp">
+      <Version>2.6.1</Version>
+    </PackageReference>
     <PackageReference Include="SkiaSharp.Views">
       <Version>1.68.1</Version>
     </PackageReference>
