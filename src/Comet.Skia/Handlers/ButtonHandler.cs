@@ -1,25 +1,19 @@
 ﻿using System;
 using SkiaSharp;
-using CButton = Comet.Button;
 using System.Linq;
 using System.Drawing;
 using Topten.RichTextKit;
 using Comet.Skia.Internal;
+using Comet.Internal;
 
 namespace Comet.Skia
 {
-	public enum ButtonState
+	public class ButtonHandler : SKiaAbstractControlHandler<Button>, ITextHandler
 	{
-		Normal,
-		Hover,
-		Pressed
-	}
 
-	public class ButtonHandler : SKiaAbstractControlHandler<CButton>, ITextHandler
-	{
-		public static new readonly PropertyMapper<CButton> Mapper = new PropertyMapper<CButton>(SkiaControl.Mapper)
+		public static new readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(SkiaControl.Mapper)
 		{
-			[nameof(CButton.Text)] = MapResetText,
+			[nameof(Button.Text)] = MapResetText,
 			[EnvironmentKeys.Colors.Color] = MapResetText
 		};
 
@@ -56,6 +50,26 @@ namespace Comet.Skia
 			base.LayoutSubviews(frame);
 		}
 
+		const string accentRadius = "Button.AccentRadius";
+		SKPoint animationPoint;
+		protected override void DrawBackground(SKCanvas canvas, Color defaultBackgroundColor, RectangleF dirtyRect)
+		{
+			var defaultColor = TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default);
+			var backgroundColor = TypedVirtualView.GetBackgroundColor(state: CurrentState)
+				?? defaultColor.Lerp(Color.Grey, .5);
+			var radius = (this).GetEnvironment<float>(accentRadius);
+			if (radius <= 0 || radius >= 1)
+			{
+				base.DrawBackground(canvas, defaultColor, dirtyRect);
+				base.DrawBackground(canvas, backgroundColor, dirtyRect);
+				return;
+			}
+			base.DrawBackground(canvas, defaultColor, dirtyRect);
+			var paint = new SKPaint();
+			paint.Color = backgroundColor.ToSKColor();
+			var circleRadius = 5f.Lerp(Math.Max(dirtyRect.Width, dirtyRect.Height) * 2f, radius);
+			canvas.DrawCircle(animationPoint, circleRadius, paint);
+		}
 
 
 		public override void EndInteraction(PointF[] points, bool contained)
@@ -70,13 +84,14 @@ namespace Comet.Skia
 			var endBackground = TypedVirtualView.GetBackgroundColor(state: CurrentState)
 				//If null, get the normal state and lerp that puppy
 				?? TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default).Lerp(Color.Grey, .1).WithAlpha(.5f);
-
+			animationPoint = (CurrentTouchPoint == PointF.Empty ? this.Frame.Center() : CurrentTouchPoint).ToSKPoint();
 			var endPadding = (CurrentState == ControlState.Pressed) ? new Thickness(.5f) : new Thickness();
-
-			this.Animate(x => {
+			float radius = (CurrentState == ControlState.Pressed) ? 1 : 0;
+			(this).Animate(x => {
 				// x.Color(end);
-				x.Background(endBackground);
+				//x.Background(endBackground);
 				x.Padding(endPadding);
+				x.SetEnvironment(accentRadius, radius);
 			});
 
 		}
@@ -106,7 +121,6 @@ namespace Comet.Skia
 			tb.Layout();
 			return tb;
 		}
-
 
 
 	}

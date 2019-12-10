@@ -57,17 +57,16 @@ namespace Comet.Skia
 		{
 			var strokeColor = shape.GetStrokeColor(VirtualView, Color.Black);
 			var strokeWidth = shape.GetLineWidth(VirtualView, 1);
-			var fill = shape.GetFill(VirtualView,Color.Transparent);
-			canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: fill, drawingStyle:Graphics.DrawingStyle.StrokeFill);
+			var fill = shape.GetFill(VirtualView, Color.Transparent);
+			canvas.DrawShape(shape, rect, strokeColor: strokeColor, strokeWidth: strokeWidth, fill: fill, drawingStyle: Graphics.DrawingStyle.StrokeFill);
 		}
-		protected virtual void DrawBackground(SKCanvas canvas, Color backgroundColor)
+		protected virtual void DrawBackground(SKCanvas canvas, Color backgroundColor, RectangleF rect)
 		{
 			if (backgroundColor == null)
 				return;
 			var paint = new SKPaint();
 			paint.Color = backgroundColor.ToSKColor();
-			var bounds = new SKRect(0, 0, VirtualView.Frame.Width, VirtualView.Frame.Height);
-			canvas.DrawRect(bounds, paint);
+			canvas.DrawRect(rect.ToSKRect(), paint);
 		}
 
 		protected void DrawText(string text, SKCanvas canvas, FontAttributes data, Color color, TextAlignment alignment, LineBreakMode lineBreakMode, VerticalAlignment verticalAlignment)
@@ -112,13 +111,13 @@ namespace Comet.Skia
 		{
 			var border = control?.GetBorder();
 			var clipShape = control?.GetClipShape() ?? border;
-            if (clipShape != null)
-                canvas.ClipPath(clipShape.PathForBounds(dirtyRect).ToSKPath());
-        }
+			if (clipShape != null)
+				canvas.ClipPath(clipShape.PathForBounds(dirtyRect).ToSKPath());
+		}
 
 		public static void DrawBackground(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
 		{
-			control?.DrawBackground(canvas, control.GetBackgroundColor(Color.Transparent));
+			control?.DrawBackground(canvas, control.GetBackgroundColor(Color.Transparent), dirtyRect);
 		}
 
 		public static void DrawBorder(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
@@ -163,10 +162,10 @@ namespace Comet.Skia
 		}
 
 		public static void MapBackgroundColor(IViewHandler viewHandler, View virtualView)
-        {
+		{
 			var control = viewHandler as SkiaControl;
 			control.Background(virtualView.GetBackgroundColor(Color.Transparent));
-        }
+		}
 
 		public static void MapColorProperty(IViewHandler viewHandler, View virtualView)
 		{
