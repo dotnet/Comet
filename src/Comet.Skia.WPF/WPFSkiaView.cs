@@ -1,15 +1,31 @@
 ﻿using SkiaSharp.Views.Desktop;
+using SkiaSharp.Views.WPF;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+using System.Drawing;
+using System.Windows;
+using System.Windows.Input;
+using Size = System.Windows.Size;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Diagnostics;
 
 namespace Comet.Skia.WPF
 {
 	public class WPFSkiaView : SkiaSharp.Views.WPF.SKElement
 	{
+		private RectangleF _bounds;
+		private bool _inTouch;
+
+		public WPFSkiaView()
+        {
+
+			PreviewMouseDown += OnPreviewMouseDown;
+			PreviewMouseUp += OnPreviewMouseUp;
+			MouseMove += OnMouseMove;
+			MouseLeave += OnMouseLeave;
+
+			SizeChanged += HandleSizeChanged;
+		}
+
 		SkiaView _virtualView;
 		public SkiaView VirtualView
 		{
@@ -64,6 +80,54 @@ namespace Comet.Skia.WPF
 			Debug.WriteLine($"Painting :{paintCount++}");
 		}
 
+		private void HandleSizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
+		{
+			VirtualView?.Invalidate();
+		}
 
+		private PointF[] GetViewPoints(MouseButtonEventArgs evt)
+		{
+			var point = evt.GetPosition(this);
+			return new PointF[] { new PointF((float)point.X, (float)point.Y) };
+		}
+
+		private PointF[] GetViewPoints(MouseEventArgs evt)
+		{
+			var point = evt.GetPosition(this);
+			return new PointF[] { new PointF((float)point.X, (float)point.Y) };
+		}
+
+		protected virtual void OnPreviewMouseUp(object sender, MouseButtonEventArgs evt)
+		{
+			if (!_inTouch) return;
+			evt.Handled = true;
+			var points = GetViewPoints(evt);
+			var contained = VirtualView?.PointsContained(points) ?? false;
+			VirtualView?.EndInteraction(points, contained);
+			_inTouch = false;
+		}
+
+		private void OnPreviewMouseDown(object sender, MouseButtonEventArgs evt)
+		{
+			if (!(VirtualView?.TouchEnabled ?? false))
+				return;
+			evt.Handled = true;
+			_inTouch = VirtualView?.StartInteraction(GetViewPoints(evt)) ?? false;
+		}
+
+		private void OnMouseMove(object sender, MouseEventArgs evt)
+		{
+			if (!_inTouch) return;
+			evt.Handled = true;
+			VirtualView?.DragInteraction(GetViewPoints(evt));
+		}
+
+		private void OnMouseLeave(object sender, MouseEventArgs evt)
+		{
+			if (!_inTouch) return;
+			evt.Handled = true;
+			VirtualView?.CancelInteraction();
+			_inTouch = false;
+		}
 	}
 }

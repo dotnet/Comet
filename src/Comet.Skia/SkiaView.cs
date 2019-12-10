@@ -33,6 +33,7 @@ namespace Comet.Skia
 		{
 			Invalidated?.Invoke();
 		}
+		public bool PointsContained(PointF[] points) => points.Any(p => Frame.BoundsContains(p));
 
 		public bool TouchEnabled { get; set; } = true;
 
@@ -71,7 +72,7 @@ namespace Comet.Skia
 		{
 			CurrentTouchPoint = points.FirstOrDefault();
 			CurrentState = ControlState.Pressed;
-			return false;
+			return true;
 		}
 
 		public virtual void DragInteraction(PointF[] points)

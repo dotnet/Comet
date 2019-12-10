@@ -102,13 +102,13 @@ namespace Comet.Skia.iOS
 		}
 		public override bool PointInside(CGPoint point, UIEvent uievent) => (_virtualView?.TouchEnabled ?? false) && base.PointInside(point,uievent);
 
-        bool PointsContained(PointF[] points) => points.Any(p => VirtualView.Frame.BoundsContains(p));
+        
 		public override void TouchesMoved(NSSet touches, UIEvent evt)
 		{
 			try
 			{
 				var viewPoints = this.GetPointsInView(evt);
-				pressedContained = PointsContained(viewPoints);
+				pressedContained = VirtualView?.PointsContained(viewPoints) ?? false;
 				_virtualView?.DragInteraction(viewPoints);
 			}
 			catch (Exception exc)
