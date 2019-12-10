@@ -25,7 +25,7 @@ namespace Comet.Skia
 
 		static FontAttributes defaultFont = new FontAttributes
 		{
-			Family = "System",
+			Family = SkiaTextHelper.GetDefaultFontFamily,
 			Size = 16,
 			Weight = Weight.Regular,
 		};

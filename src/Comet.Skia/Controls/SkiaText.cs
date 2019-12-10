@@ -9,7 +9,8 @@ namespace Comet.Skia
 {
 	public static class SkiaTextHelper
 	{
-
+		static SKTypeface defaultTypeface = SKTypeface.CreateDefault();
+		public static string GetDefaultFontFamily => defaultTypeface.FamilyName;
 		public static SizeF GetTextSize(string text, FontAttributes fontAttributes, TextAlignment alignment, LineBreakMode lineBreakMode, float maxWidth, float height = -1)
 		{
 			var tb = new TextBlock();
