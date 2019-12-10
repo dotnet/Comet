@@ -1,4 +1,5 @@
 ﻿using Comet.Samples;
+using Comet.Styles.Material;
 using System.Windows;
 
 namespace Comet.WPF.Sample
@@ -11,8 +12,9 @@ namespace Comet.WPF.Sample
 		public MainWindow()
 		{
 			InitializeComponent();
+			new MaterialStyle(ColorPalette.Blue).Apply();
 			Comet.Skia.UI.Init();
-			//Comet.Skia.Controls.Init();
+			Comet.Skia.Controls.Init();
 
 			MainFrame.NavigationService.Navigate(new CometPage(MainFrame, new MainPage()));
 		}

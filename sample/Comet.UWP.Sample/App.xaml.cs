@@ -13,8 +13,8 @@ namespace Comet.UWP.Sample
 	{
 		public App()
 		{
-			this.InitializeComponent();
-			this.Suspending += OnSuspending;
+			InitializeComponent();
+			Suspending += OnSuspending;
 		}
 
 		protected override void OnLaunched(LaunchActivatedEventArgs e)
@@ -33,8 +33,9 @@ namespace Comet.UWP.Sample
 
 				Window.Current.Content = rootFrame;
 			}
-
-			Comet.Skia.UI.Init();
+			
+			Comet.Skia.UI.Init(); 
+			//Comet.Skia.Controls.Init();
 
 			if (e.PrelaunchActivated == false)
 			{
