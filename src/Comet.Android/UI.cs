@@ -36,6 +36,7 @@ namespace Comet.Android
 			// Native Layouts
 			Registrar.Handlers.Register<HStack, HStackHandler>();
 			Registrar.Handlers.Register<VStack, VStackHandler>();
+			Registrar.Handlers.Register<ZStack, ZStackHandler>();
 
 			// Managed Layouts
 			//Registrar.Handlers.Register<HStack, ManagedHStackHandler>();

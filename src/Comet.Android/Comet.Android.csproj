@@ -93,6 +93,7 @@
     <Compile Include="Controls\CUINavigationView.cs" />
     <Compile Include="Handlers\NavigationViewHandler.cs" />
     <Compile Include="Services\AndroidTicker.cs" />
+    <Compile Include="Handlers\ZStackHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
