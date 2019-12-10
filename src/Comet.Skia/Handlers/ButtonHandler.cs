@@ -54,9 +54,25 @@ namespace Comet.Skia
 		SKPoint animationPoint;
 		protected override void DrawBackground(SKCanvas canvas, Color defaultBackgroundColor, RectangleF dirtyRect)
 		{
+
+
 			var defaultColor = TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default);
-			var backgroundColor = TypedVirtualView.GetBackgroundColor(state: CurrentState)
-				?? defaultColor.Lerp(Color.Grey, .5);
+
+			Color calculateDefaultBackgroundColor()
+			{
+				var c = defaultColor;
+				c = CurrentState switch
+				{
+					ControlState.Disabled => c.Lerp(Color.Grey, .5),
+					ControlState.Hovered => c.Lerp(Color.Grey, .1),
+					ControlState.Pressed => c.Lerp(Color.Grey, .5),
+					_ => c
+				};
+				return c;
+
+			};
+
+			var backgroundColor = TypedVirtualView.GetBackgroundColor(state: CurrentState) ?? calculateDefaultBackgroundColor();
 			var radius = (this).GetEnvironment<float>(accentRadius);
 			if (radius <= 0 || radius >= 1)
 			{
@@ -81,12 +97,13 @@ namespace Comet.Skia
 
 		protected override void ControlStateChanged()
 		{
-			var endBackground = TypedVirtualView.GetBackgroundColor(state: CurrentState)
-				//If null, get the normal state and lerp that puppy
-				?? TypedVirtualView.GetBackgroundColor(Color.Transparent, state: ControlState.Default).Lerp(Color.Grey, .1).WithAlpha(.5f);
 			animationPoint = (CurrentTouchPoint == PointF.Empty ? this.Frame.Center() : CurrentTouchPoint).ToSKPoint();
 			var endPadding = (CurrentState == ControlState.Pressed) ? new Thickness(.5f) : new Thickness();
-			float radius = (CurrentState == ControlState.Pressed) ? 1 : 0;
+
+			//TODO: Make all color stuff state aware
+			//var endColor = TypedVirtualView.GetColor(state: CurrentState);
+
+			float radius = (CurrentState == ControlState.Pressed || CurrentState == ControlState.Hovered) ? 1 : 0;
 			(this).Animate(x => {
 				// x.Color(end);
 				//x.Background(endBackground);

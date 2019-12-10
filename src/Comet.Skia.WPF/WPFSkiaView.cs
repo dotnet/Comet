@@ -22,11 +22,12 @@ namespace Comet.Skia.WPF
 			PreviewMouseUp += OnPreviewMouseUp;
 			MouseMove += OnMouseMove;
 			MouseLeave += OnMouseLeave;
+            MouseEnter += OnMouseEnter;
 
 			SizeChanged += HandleSizeChanged;
 		}
 
-		SkiaView _virtualView;
+        SkiaView _virtualView;
 		public SkiaView VirtualView
 		{
 			get => _virtualView;
@@ -124,10 +125,21 @@ namespace Comet.Skia.WPF
 
 		private void OnMouseLeave(object sender, MouseEventArgs evt)
 		{
-			if (!_inTouch) return;
+			//if (!_inTouch) return;
 			evt.Handled = true;
+			VirtualView?.EndHoverInteraction();
 			VirtualView?.CancelInteraction();
 			_inTouch = false;
 		}
+
+		private void OnMouseEnter(object sender, MouseEventArgs evt)
+		{
+			if (!(VirtualView?.TouchEnabled ?? false))
+				return;
+			evt.Handled = true;
+			VirtualView?.StartHoverInteraction(GetViewPoints(evt));
+
+		}
+
 	}
 }
