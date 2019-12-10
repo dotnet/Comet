@@ -48,8 +48,8 @@ namespace Comet.Tests
 			view.ViewHandler = new GenericViewHandler();
 
 			textField.OnEditingChanged("Test");
-			Assert.Equal(textField.Text, "Test");
-			Assert.Equal(text.Value, "Test");
+			Assert.Equal("Test", textField.Text);
+			Assert.Equal("Test", text.Value);
 
 		}
 

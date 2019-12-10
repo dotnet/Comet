@@ -77,29 +77,29 @@ namespace Comet.Tests
 			var lerp = Lerp.GetLerp(start.GetType());
 			var progress = .1;
 			var value = (bool)lerp.Calculate(start, end, progress);
-			Assert.Equal(false, value);
+			Assert.False(value);
 
 			progress = .2;
 			value = (bool)lerp.Calculate(start, end, progress);
-			Assert.Equal(false, value);
+			Assert.False(value);
 
 
 			progress = .4999999;
 			value = (bool)lerp.Calculate(start, end, progress);
-			Assert.Equal(false, value);
-
+			Assert.False(value);
+			
 
 			progress = .5;
 			value = (bool)lerp.Calculate(start, end, progress);
-			Assert.Equal(true, value);
+			Assert.True(value);
 
 			progress = .75;
 			value = (bool)lerp.Calculate(start, end, progress);
-			Assert.Equal(true, value);
+			Assert.True(value);
 
 			progress = 1;
 			value = (bool)lerp.Calculate(start, end, progress);
-			Assert.Equal(true, value);
+			Assert.True(value);
 
 		}
 	}
