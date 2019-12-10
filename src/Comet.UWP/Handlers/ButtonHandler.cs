@@ -30,7 +30,7 @@ namespace Comet.UWP.Handlers
 			nativeView.Click -= HandleClick;
 		}
 
-		private void HandleClick(object sender, RoutedEventArgs e) => VirtualView?.OnClick();
+		private void HandleClick(object sender, RoutedEventArgs e) => VirtualView?.OnClick?.Invoke();
 
 		public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
 		{

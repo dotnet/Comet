@@ -28,7 +28,7 @@ namespace Comet.WPF.Handlers
 			button.Click -= HandleClick;
 		}
 
-		private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick();
+		private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick?.Invoke();
 
 		public static void MapTextProperty(IViewHandler viewHandler, Button virtualButton)
 		{

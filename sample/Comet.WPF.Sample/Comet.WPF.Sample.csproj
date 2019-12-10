@@ -121,7 +121,7 @@
       <Version>1.68.1</Version>
     </PackageReference>
     <PackageReference Include="Topten.RichTextKit">
-      <Version>0.1.116</Version>
+      <Version>0.1.117</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
