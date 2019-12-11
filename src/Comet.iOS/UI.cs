@@ -29,6 +29,8 @@ namespace Comet.iOS
 			Registrar.Handlers.Register<ShapeView, ShapeViewHandler>();
 			Registrar.Handlers.Register<Toggle, ToggleHandler>();
 			Registrar.Handlers.Register<ActivityIndicator, ActivityIndicatorHandler>();
+      Registrar.Handlers.Register<Stepper, StepperHandler>();
+
 			//Registrar.Handlers.Register<WebView, WebViewHandler> ();
 
 			// Containers
