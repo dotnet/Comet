@@ -213,11 +213,19 @@ namespace Comet
 				CurrentValue = Get();
 			else
 			{
-				CurrentValue = (T)value;
+				CurrentValue = Cast(value);
 			}
 			View?.ViewPropertyChanged(propertyName, value);
 
 		}
+		T Cast(object value)
+        {
+			if (value is T v)
+				return v;
+			if (typeof(T) == typeof(string))
+				return (T)(object)value?.ToString();
+			throw new InvalidCastException();
+        }
 	}
 
 	public static class BindingExtensions
