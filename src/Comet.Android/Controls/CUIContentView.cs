@@ -5,10 +5,10 @@ using LP = Android.Views.ViewGroup.LayoutParams;
 
 namespace Comet.Android.Handlers
 {
-    public class CUIContentView : CustomFrameLayout
-    {
-        public CUIContentView() : base(AndroidContext.CurrentContext)
-        {
-        }
-    }
+	public class CUIContentView : CustomFrameLayout
+	{
+		public CUIContentView() : base(AndroidContext.CurrentContext)
+		{
+		}
+	}
 }

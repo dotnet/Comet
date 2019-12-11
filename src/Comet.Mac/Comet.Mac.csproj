@@ -106,6 +106,7 @@
     <Compile Include="Controls\CUITableViewSource.cs" />
     <Compile Include="Handlers\ListViewHandler.cs" />
     <Compile Include="Controls\CUITableViewCell.cs" />
+    <Compile Include="Services\MacTicker.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet\Comet.csproj">
@@ -113,10 +114,7 @@
       <Name>Comet</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controls\" />
-    <Folder Include="Services\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
   </ItemGroup>

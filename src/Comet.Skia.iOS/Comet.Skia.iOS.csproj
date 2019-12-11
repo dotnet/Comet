@@ -46,10 +46,12 @@
     <Compile Include="iOSDrawableControl.cs" />
     <Compile Include="SkiaViewHandler.cs" />
     <Compile Include="UI.cs" />
+    <Compile Include="SkiaControlHandler.cs" />
+    <Compile Include="Controls.cs" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="1.68.0" />
-    <PackageReference Include="SkiaSharp.Views" Version="1.68.0" />
+    <PackageReference Include="SkiaSharp" Version="1.68.1" />
+    <PackageReference Include="SkiaSharp.Views" Version="1.68.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet.iOS\Comet.iOS.csproj">

@@ -6,39 +6,56 @@ using AView = Android.Views.View;
 
 namespace Comet.Android.Controls
 {
-    public class CometFragment : Fragment
-    {
-        private readonly View view;
-        public string Title { get; }
+	public class CometFragment : Fragment
+	{
+		CometView containerView;
+		View startingCurrentView;
 
-        public CometFragment()
-        {
-        }
+		public CometFragment()
+		{
+		}
 
-        public CometFragment(View view)
-        {
-            this.view = view;
-            this.Title = view?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
-        }
+		public CometFragment(View view)
+		{
+			this.CurrentView = view;
+		}
 
-        AView currentBuiltView;
-        public override AView OnCreateView(LayoutInflater inflater,
-            ViewGroup container,
-            Bundle savedInstanceState) => currentBuiltView = view.ToView();
+		public string Title { get; set; }
 
-        public override void OnDestroy()
-        {
-            if (view != null)
-            {
-                view.ViewHandler = null;
-            }
-            if (currentBuiltView != null)
-            {
-                currentBuiltView?.Dispose();
-                currentBuiltView = null;
-            }
-            base.OnDestroy();
-            this.Dispose();
-        }
-    }
+		public View CurrentView
+		{
+			get => containerView?.CurrentView ?? startingCurrentView;
+			set
+			{
+				if (containerView != null)
+					containerView.CurrentView = value;
+				else
+					startingCurrentView = value;
+
+				Title = value?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? value?.BuiltView?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
+			}
+		}
+
+		public override AView OnCreateView(LayoutInflater inflater,
+			ViewGroup container,
+			Bundle savedInstanceState)
+		{
+			containerView = new CometView(AndroidContext.CurrentContext);
+			containerView.CurrentView = startingCurrentView;
+			startingCurrentView = null;
+			return containerView;
+		}
+
+		public override void OnDestroy()
+		{
+			if (containerView != null)
+			{
+				containerView.CurrentView.ViewHandler = null;
+				containerView.CurrentView?.Dispose();
+				containerView.CurrentView = null;
+			}
+			base.OnDestroy();
+			this.Dispose();
+		}
+	}
 }

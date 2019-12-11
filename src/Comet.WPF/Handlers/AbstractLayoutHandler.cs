@@ -8,117 +8,117 @@ using WPFSize = System.Windows.Size;
 namespace Comet.WPF.Handlers
 {
 	public abstract class AbstractLayoutHandler : Panel, WPFViewHandler
-    {
-        private AbstractLayout _view;
+	{
+		private AbstractLayout _view;
 
-        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
-        public UIElement View => this;
+		public UIElement View => this;
 
-        public object NativeView => View;
+		public object NativeView => View;
 
-        public bool HasContainer
-        {
-            get => false;
-            set { }
-        }
+		public bool HasContainer
+		{
+			get => false;
+			set { }
+		}
 
-        public SizeF Measure(SizeF availableSize)
-        {
-            return availableSize;
-        }
+		public SizeF Measure(SizeF availableSize)
+		{
+			return availableSize;
+		}
 
-        public void SetFrame(RectangleF frame)
-        {
-            Arrange(frame.ToRect());
-        }
+		public void SetFrame(RectangleF frame)
+		{
+			Arrange(frame.ToRect());
+		}
 
-        public void SetView(View view)
-        {
-            _view = view as AbstractLayout;
-            if (_view != null)
-            {
-                _view.ChildrenChanged += HandleChildrenChanged;
-                _view.ChildrenAdded += HandleChildrenAdded;
-                _view.ChildrenRemoved += ViewOnChildrenRemoved;
+		public void SetView(View view)
+		{
+			_view = view as AbstractLayout;
+			if (_view != null)
+			{
+				_view.ChildrenChanged += HandleChildrenChanged;
+				_view.ChildrenAdded += HandleChildrenAdded;
+				_view.ChildrenRemoved += ViewOnChildrenRemoved;
 
-                foreach (var subView in _view)
-                {
-                    var nativeView = subView.ToView() ?? new Canvas();
-                    InternalChildren.Add(nativeView);
-                }
+				foreach (var subView in _view)
+				{
+					var nativeView = subView.ToView() ?? new Canvas();
+					InternalChildren.Add(nativeView);
+				}
 
-                InvalidateArrange();
-            }
-        }
+				InvalidateArrange();
+			}
+		}
 
-        public void Remove(View view)
-        {
-            InternalChildren.Clear();
+		public void Remove(View view)
+		{
+			InternalChildren.Clear();
 
-            if (view != null)
-            {
-                _view.ChildrenChanged -= HandleChildrenChanged;
-                _view.ChildrenAdded -= HandleChildrenAdded;
-                _view.ChildrenRemoved -= ViewOnChildrenRemoved;
-                _view = null;
-            }
-        }
+			if (view != null)
+			{
+				_view.ChildrenChanged -= HandleChildrenChanged;
+				_view.ChildrenAdded -= HandleChildrenAdded;
+				_view.ChildrenRemoved -= ViewOnChildrenRemoved;
+				_view = null;
+			}
+		}
 
-        public virtual void UpdateValue(string property, object value)
-        {
-        }
+		public virtual void UpdateValue(string property, object value)
+		{
+		}
 
-        private void HandleChildrenAdded(object sender, LayoutEventArgs e)
-        {
-            for (var i = 0; i < e.Count; i++)
-            {
-                var index = e.Start + i;
-                var view = _view[index];
-                var nativeView = view.ToView();
-                InternalChildren.Insert(index, nativeView);
-            }
+		private void HandleChildrenAdded(object sender, LayoutEventArgs e)
+		{
+			for (var i = 0; i < e.Count; i++)
+			{
+				var index = e.Start + i;
+				var view = _view[index];
+				var nativeView = view.ToView();
+				InternalChildren.Insert(index, nativeView);
+			}
 
-            InvalidateArrange();
-        }
+			InvalidateArrange();
+		}
 
-        private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
-        {
-            for (var i = 0; i < e.Count; i++)
-            {
-                var index = e.Start + i;
-                InternalChildren.RemoveAt(index);
-            }
+		private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
+		{
+			for (var i = 0; i < e.Count; i++)
+			{
+				var index = e.Start + i;
+				InternalChildren.RemoveAt(index);
+			}
 
-            InvalidateArrange();
-        }
+			InvalidateArrange();
+		}
 
-        private void HandleChildrenChanged(object sender, LayoutEventArgs e)
-        {
-            for (var i = 0; i < e.Count; i++)
-            {
-                var index = e.Start + i;
-                InternalChildren.RemoveAt(index);
+		private void HandleChildrenChanged(object sender, LayoutEventArgs e)
+		{
+			for (var i = 0; i < e.Count; i++)
+			{
+				var index = e.Start + i;
+				InternalChildren.RemoveAt(index);
 
-                var view = _view[index];
-                var newNativeView = view.ToView();
-                InternalChildren.Insert(index, newNativeView);
-            }
+				var view = _view[index];
+				var newNativeView = view.ToView();
+				InternalChildren.Insert(index, newNativeView);
+			}
 
-            InvalidateArrange();
-        }
+			InvalidateArrange();
+		}
 
-        protected override WPFSize MeasureOverride(WPFSize availableSize)
-        {
-            return _view.Measure(availableSize.ToSizeF()).ToWSize();
-        }
+		protected override WPFSize MeasureOverride(WPFSize availableSize)
+		{
+			return _view.Measure(availableSize.ToSizeF()).ToWSize();
+		}
 
-        protected override WPFSize ArrangeOverride(WPFSize finalSize)
-        {
-            if (finalSize.Width > 0 && finalSize.Height > 0)
-                _view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
+		protected override WPFSize ArrangeOverride(WPFSize finalSize)
+		{
+			if (finalSize.Width > 0 && finalSize.Height > 0)
+				_view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
 
-            return finalSize;
-        }
-    }
+			return finalSize;
+		}
+	}
 }

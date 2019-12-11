@@ -6,14 +6,14 @@ using UIKit;
 
 namespace Comet.iOS.Handlers
 {
-    public class HStackHandler : AbstractLayoutHandler
-    {
-        public HStackHandler(CGRect rect) : base(rect)
-        {
-        }
+	public class HStackHandler : AbstractLayoutHandler
+	{
+		public HStackHandler(CGRect rect) : base(rect)
+		{
+		}
 
-        public HStackHandler() : base()
-        {
-        }
-    }
+		public HStackHandler() : base()
+		{
+		}
+	}
 }

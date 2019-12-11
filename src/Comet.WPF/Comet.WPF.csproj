@@ -81,7 +81,7 @@
     <Compile Include="UI.cs" />
     <Compile Include="WPFExtensions.cs" />
   </ItemGroup>
-   <ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.4.16" />
   </ItemGroup>
   <ItemGroup>

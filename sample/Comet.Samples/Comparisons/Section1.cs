@@ -17,10 +17,10 @@ struct ContentView: View {
 
 namespace Comet.Samples.Comparisons
 {
-    public class Section1 : View
-    {
-        [Body]
-        View Body()
-            => new Text("Hello Comet!");
-    }
+	public class Section1 : View
+	{
+		[Body]
+		View Body()
+			=> new Text("Hello Comet!");
+	}
 }

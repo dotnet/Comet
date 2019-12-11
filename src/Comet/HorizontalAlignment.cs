@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Comet
 {
-    public enum HorizontalAlignment
-    {
-        Center,
-        Leading,
-        Trailing
-    }
+	public enum HorizontalAlignment
+	{
+		Center,
+		Leading,
+		Trailing
+	}
 }

@@ -3,16 +3,16 @@ using Android.Runtime;
 
 namespace Comet.Android.Handlers
 {
-    public class ManagedHStackHandler : AbstractLayoutHandler
-    {
-        public ManagedHStackHandler()
-        {
+	public class ManagedHStackHandler : AbstractLayoutHandler
+	{
+		public ManagedHStackHandler()
+		{
 
-        }
+		}
 
-        public ManagedHStackHandler(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
-        {
+		public ManagedHStackHandler(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
+		{
 
-        }
-    }
+		}
+	}
 }

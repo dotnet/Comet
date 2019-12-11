@@ -1,5 +1,6 @@
 ﻿using Comet.Blazor.Components;
 using System;
+using System.Drawing;
 
 namespace Comet.Blazor.Handlers
 {

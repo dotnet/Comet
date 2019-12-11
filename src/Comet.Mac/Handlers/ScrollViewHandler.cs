@@ -6,73 +6,73 @@ using Comet.Mac.Extensions;
 namespace Comet.Mac.Handlers
 {
 	public class ScrollViewHandler : AbstractControlHandler<ScrollView, NSScrollView>
-    {
-        public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
-        {
-            
-        };
+	{
+		public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.Mapper)
+		{
 
-        private NSView _content;
+		};
 
-        public ScrollViewHandler() : base(Mapper)
-        {
-        }
-        
-        protected override NSScrollView CreateView()
-        {
-            return new NSScrollView();
-        }
+		private NSView _content;
 
-        protected override void DisposeView(NSScrollView nativeView)
-        {
-            
-        }
+		public ScrollViewHandler() : base(Mapper)
+		{
+		}
 
-        public override void Remove(View view)
-        {
-            if (VirtualView?.View != null)
-                VirtualView.View.NeedsLayout -= HandleViewNeedsLayout;
+		protected override NSScrollView CreateView()
+		{
+			return new NSScrollView();
+		}
 
-            _content?.RemoveFromSuperview();
-            _content = null;
+		protected override void DisposeView(NSScrollView nativeView)
+		{
 
-            base.Remove(view);
-        }
-        
-        public override void SetView(View view)
-        {
-            base.SetView(view);
+		}
 
-            var scroll = VirtualView;
-            _content = scroll?.View?.ToView();
-            if (_content != null)
-            {
-                if (VirtualView?.View != null)
-                    VirtualView.View.NeedsLayout += HandleViewNeedsLayout;
+		public override void Remove(View view)
+		{
+			if (VirtualView?.View != null)
+				VirtualView.View.NeedsLayout -= HandleViewNeedsLayout;
 
-                var measuredSize = VirtualView.View.Measure(new SizeF(float.PositiveInfinity, float.PositiveInfinity));
-                if (_content.Bounds.Width <= 0 && _content.Bounds.Height <= 0)
-                    _content.Frame = new CoreGraphics.CGRect(0,0,measuredSize.Width,measuredSize.Height);
+			_content?.RemoveFromSuperview();
+			_content = null;
 
-                TypedNativeView.DocumentView = _content;
-            }
+			base.Remove(view);
+		}
 
-            if (VirtualView.Orientation == Orientation.Horizontal)
-            {
-                TypedNativeView.HasVerticalScroller = false;
-                TypedNativeView.HasHorizontalScroller = true;
-                TypedNativeView.HorizontalScrollElasticity = NSScrollElasticity.Automatic;
-            }
-            else
-            {
-                TypedNativeView.HasVerticalScroller = true;
-                TypedNativeView.HasHorizontalScroller = false;
-            }
-        }
-        
-        private void HandleViewNeedsLayout(object sender, EventArgs e)
-        {
-            _content.NeedsLayout = true;
-        }
-    }
+		public override void SetView(View view)
+		{
+			base.SetView(view);
+
+			var scroll = VirtualView;
+			_content = scroll?.View?.ToView();
+			if (_content != null)
+			{
+				if (VirtualView?.View != null)
+					VirtualView.View.NeedsLayout += HandleViewNeedsLayout;
+
+				var measuredSize = VirtualView.View.Measure(new SizeF(float.PositiveInfinity, float.PositiveInfinity));
+				if (_content.Bounds.Width <= 0 && _content.Bounds.Height <= 0)
+					_content.Frame = new CoreGraphics.CGRect(0, 0, measuredSize.Width, measuredSize.Height);
+
+				TypedNativeView.DocumentView = _content;
+			}
+
+			if (VirtualView.Orientation == Orientation.Horizontal)
+			{
+				TypedNativeView.HasVerticalScroller = false;
+				TypedNativeView.HasHorizontalScroller = true;
+				TypedNativeView.HorizontalScrollElasticity = NSScrollElasticity.Automatic;
+			}
+			else
+			{
+				TypedNativeView.HasVerticalScroller = true;
+				TypedNativeView.HasHorizontalScroller = false;
+			}
+		}
+
+		private void HandleViewNeedsLayout(object sender, EventArgs e)
+		{
+			_content.NeedsLayout = true;
+		}
+	}
 }

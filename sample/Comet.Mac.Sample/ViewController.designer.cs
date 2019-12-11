@@ -8,11 +8,11 @@ using Foundation;
 
 namespace Comet.Mac.Sample
 {
-    [Register("ViewController")]
-    partial class ViewController
-    {
-        void ReleaseDesignerOutlets()
-        {
-        }
-    }
+	[Register("ViewController")]
+	partial class ViewController
+	{
+		void ReleaseDesignerOutlets()
+		{
+		}
+	}
 }

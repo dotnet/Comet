@@ -7,123 +7,123 @@ using UIKit;
 
 namespace Comet.Skia.iOS
 {
-    public class iOSDrawableControl : SKCanvasView, IDrawableControl
-    {
-        private  IControlDelegate _controlDelegate;
-        
-        public iOSDrawableControl()
-        {
-        }
+	public class iOSDrawableControl : SKCanvasView, IDrawableControl
+	{
+		private IControlDelegate _controlDelegate;
 
-        public iOSDrawableControl(CGRect frame) : base(frame)
-        {
-            
-        }
+		public iOSDrawableControl()
+		{
+		}
 
-        public IControlDelegate ControlDelegate
-        {
-            get => _controlDelegate;
-            set
-            {
-                if (_controlDelegate != null)
-                {
-                    _controlDelegate.Invalidated -= HandleInvalidated;
-                    _controlDelegate.RemovedFromView(this);
-                    _controlDelegate.NativeDrawableControl = null;
-                }
+		public iOSDrawableControl(CGRect frame) : base(frame)
+		{
 
-                _controlDelegate = value;
+		}
 
-                if (_controlDelegate != null)
-                {
-                    _controlDelegate.AddedToView(this, Bounds.ToRectangleF());
-                    _controlDelegate.Invalidated += HandleInvalidated;
-                    _controlDelegate.NativeDrawableControl = this;
-                }
+		public IControlDelegate ControlDelegate
+		{
+			get => _controlDelegate;
+			set
+			{
+				if (_controlDelegate != null)
+				{
+					_controlDelegate.Invalidated -= HandleInvalidated;
+					_controlDelegate.RemovedFromView(this);
+					_controlDelegate.NativeDrawableControl = null;
+				}
 
-                HandleInvalidated();
-            }
-        }
+				_controlDelegate = value;
 
-        private void HandleInvalidated()
-        {
-            if (Handle == IntPtr.Zero)
-                return;
-            
-            SetNeedsDisplay();
-        }
+				if (_controlDelegate != null)
+				{
+					_controlDelegate.AddedToView(this, Bounds.ToRectangleF());
+					_controlDelegate.Invalidated += HandleInvalidated;
+					_controlDelegate.NativeDrawableControl = this;
+				}
 
-        protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
-        {
-            if (_controlDelegate == null) return;
-            var canvas = e.Surface.Canvas;
+				HandleInvalidated();
+			}
+		}
 
-            canvas.Save();
-            var scale = CanvasSize.Width / (float)Bounds.Width;
-            canvas.Scale(scale,scale);
-            _controlDelegate.Draw(canvas, Bounds.ToRectangleF());
-            canvas.Restore();
-        }
-        
-        public override CGRect Frame
-        {
-            get => base.Frame;
-            set
-            {
-                base.Frame = value;
-                _controlDelegate?.Resized(Bounds.ToRectangleF());
-            }
-        }
+		private void HandleInvalidated()
+		{
+			if (Handle == IntPtr.Zero)
+				return;
 
-        public override void TouchesBegan(NSSet touches, UIEvent evt)
-        {
-            try
-            {
-                var viewPoints = this.GetPointsInView(evt);
-                _controlDelegate?.StartInteraction(viewPoints);
-            }
-            catch (Exception exc)
-            {
-                Logger.Warn("An unexpected error occured handling a touch event within the control.", exc);
-            }
-        }
+			SetNeedsDisplay();
+		}
 
-        public override void TouchesMoved(NSSet touches, UIEvent evt)
-        {
-            try
-            {
-                var viewPoints = this.GetPointsInView(evt);
-                _controlDelegate?.DragInteraction(viewPoints);
-            }
-            catch (Exception exc)
-            {
-                Logger.Warn("An unexpected error occured handling a touch moved event within the control.", exc);
-            }
-        }
+		protected override void OnPaintSurface(SKPaintSurfaceEventArgs e)
+		{
+			if (_controlDelegate == null) return;
+			var canvas = e.Surface.Canvas;
 
-        public override void TouchesEnded(NSSet touches, UIEvent evt)
-        {
-            try
-            {
-                var viewPoints = this.GetPointsInView(evt);
-                _controlDelegate?.EndInteraction(viewPoints);
-            }
-            catch (Exception exc)
-            {
-                Logger.Warn("An unexpected error occured handling a touch ended event within the control.", exc);
-            }
-        }
+			canvas.Save();
+			var scale = CanvasSize.Width / (float)Bounds.Width;
+			canvas.Scale(scale, scale);
+			_controlDelegate.Draw(canvas, Bounds.ToRectangleF());
+			canvas.Restore();
+		}
 
-        public override void TouchesCancelled(NSSet touches, UIEvent evt)
-        {
-            try
-            {
-                _controlDelegate?.CancelInteraction();
-            }
-            catch (Exception exc)
-            {
-                Logger.Warn("An unexpected error occured cancelling the touches within the control.", exc);
-            }
-        }
-    }
+		public override CGRect Frame
+		{
+			get => base.Frame;
+			set
+			{
+				base.Frame = value;
+				_controlDelegate?.Resized(Bounds.ToRectangleF());
+			}
+		}
+
+		public override void TouchesBegan(NSSet touches, UIEvent evt)
+		{
+			try
+			{
+				var viewPoints = this.GetPointsInView(evt);
+				_controlDelegate?.StartInteraction(viewPoints);
+			}
+			catch (Exception exc)
+			{
+				Logger.Warn("An unexpected error occured handling a touch event within the control.", exc);
+			}
+		}
+
+		public override void TouchesMoved(NSSet touches, UIEvent evt)
+		{
+			try
+			{
+				var viewPoints = this.GetPointsInView(evt);
+				_controlDelegate?.DragInteraction(viewPoints);
+			}
+			catch (Exception exc)
+			{
+				Logger.Warn("An unexpected error occured handling a touch moved event within the control.", exc);
+			}
+		}
+
+		public override void TouchesEnded(NSSet touches, UIEvent evt)
+		{
+			try
+			{
+				var viewPoints = this.GetPointsInView(evt);
+				_controlDelegate?.EndInteraction(viewPoints);
+			}
+			catch (Exception exc)
+			{
+				Logger.Warn("An unexpected error occured handling a touch ended event within the control.", exc);
+			}
+		}
+
+		public override void TouchesCancelled(NSSet touches, UIEvent evt)
+		{
+			try
+			{
+				_controlDelegate?.CancelInteraction();
+			}
+			catch (Exception exc)
+			{
+				Logger.Warn("An unexpected error occured cancelling the touches within the control.", exc);
+			}
+		}
+	}
 }

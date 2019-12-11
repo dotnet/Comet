@@ -17,20 +17,20 @@ struct ContentView : View {
 */
 namespace Comet.Samples
 {
-    public class SliderSample1 : View
-    {
-        readonly State<float> celsius = 50;
+	public class SliderSample1 : View
+	{
+		readonly State<float> celsius = 50;
 
-        [Body]
-        View body() => new VStack
-            {
+		[Body]
+		View body() => new VStack
+			{
                 //new Slider(value: 12, from: -100, through: 100, by: 0.1f),
                 //new Slider(value: () => 12f, from: -100, through: 100, by: 0.1f),
                 //new Slider(value: new Binding<float>( getValue: () => 12f, setValue:null), from: -100, through: 100, by: 0.1f),
                 new Slider(value: celsius, from: -100, through: 100, by: 0.1f),
-                new Text(()=>$"{celsius.Value} Celsius"),
-                new Text(()=>$"{celsius.Value * 9 / 5 + 32} Fahrenheit"),
-            };
+				new Text(()=>$"{celsius.Value} Celsius"),
+				new Text(()=>$"{celsius.Value * 9 / 5 + 32} Fahrenheit"),
+			};
 
-    }
+	}
 }

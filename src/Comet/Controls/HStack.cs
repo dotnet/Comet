@@ -1,14 +1,14 @@
 ﻿using Comet.Layout;
 
-namespace Comet 
+namespace Comet
 {
-	public class HStack : AbstractLayout 
-	{    
-        public HStack(
-            VerticalAlignment alignment = VerticalAlignment.Center,
-            float? spacing = null) : base(new HStackLayoutManager(alignment, spacing))
-        {
-            
-        }
-    }
+	public class HStack : AbstractLayout
+	{
+		public HStack(
+			VerticalAlignment alignment = VerticalAlignment.Center,
+			float? spacing = null) : base(new HStackLayoutManager(alignment, spacing))
+		{
+
+		}
+	}
 }

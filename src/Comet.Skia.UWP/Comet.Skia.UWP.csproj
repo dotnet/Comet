@@ -120,10 +120,14 @@
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controls.cs" />
     <Compile Include="DrawableControlHandler.cs" />
+    <Compile Include="SkiaControlHandler.cs" />
+    <Compile Include="SkiaViewHandler.cs" />
     <Compile Include="UWPDrawableControl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UI.cs" />
+    <Compile Include="UWPSkiaView.cs" />
     <EmbeddedResource Include="Properties\Comet.Skia.UWP.rd.xml" />
   </ItemGroup>
   <ItemGroup>

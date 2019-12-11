@@ -1,16 +1,22 @@
-﻿namespace Comet.Skia.WPF
+﻿using Comet.Skia.WPF;
+
+namespace Comet.Skia
 {
 	public static class UI
-    {
+	{
 		static bool _hasInitialized;
 
-		public static void Init ()
+		public static void Init()
 		{
 			if (_hasInitialized) return;
 			_hasInitialized = true;
+			Comet.WPF.UI.Init();
+			// Controls
+			Registrar.Handlers.Register<DrawableControl, DrawableControlHandler>();
+			Registrar.Handlers.Register<SkiaView, SkiaViewHandler>();
 
-            // Controls
-            Registrar.Handlers.Register<DrawableControl, DrawableControlHandler> ();
+			var generic = typeof(SkiaControlHandler<>);
+			Skia.Internal.Registration.RegisterDefaultViews(generic);
 		}
-    }
+	}
 }

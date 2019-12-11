@@ -1,4 +1,5 @@
 ﻿using Microsoft.JSInterop;
+using System.Drawing;
 using System.Threading.Tasks;
 
 namespace Comet.Blazor

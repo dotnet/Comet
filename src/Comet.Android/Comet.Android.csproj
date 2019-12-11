@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AndroidContext.cs" />
+    <Compile Include="CometView.cs" />
     <Compile Include="Controls\CUIContentView.cs" />
     <Compile Include="Controls\CUIContainerView.cs" />
     <Compile Include="Controls\CUIImageView.cs" />
@@ -91,6 +92,8 @@
     <Compile Include="Controls\CUITabView.cs" />
     <Compile Include="Controls\CUINavigationView.cs" />
     <Compile Include="Handlers\NavigationViewHandler.cs" />
+    <Compile Include="Services\AndroidTicker.cs" />
+    <Compile Include="Handlers\ZStackHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

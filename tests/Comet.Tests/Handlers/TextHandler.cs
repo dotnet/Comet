@@ -2,15 +2,15 @@
 
 namespace Comet.Tests.Handlers
 {
-	public class TextHandler: GenericViewHandler 
+	public class TextHandler : GenericViewHandler
 	{
-		public TextHandler ()
+		public TextHandler()
 		{
 			OnMeasure = HandleOnMeasure;
 		}
 
-		public Text VirtualView => (Text) CurrentView;
-		
+		public Text VirtualView => (Text)CurrentView;
+
 		private SizeF HandleOnMeasure(SizeF arg)
 		{
 			var length = VirtualView.Value?.CurrentValue?.Length ?? 0;

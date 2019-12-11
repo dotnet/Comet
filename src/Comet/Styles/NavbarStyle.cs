@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Comet.Styles
 {
-    public class NavbarStyle
-    {
-        public Color BackgroundColor { get; set; }
-        public Color TextColor { get; set; }
-    }
+	public class NavbarStyle
+	{
+		public StyleAwareValue<ControlState, Color> BackgroundColor { get; set; }
+		public StyleAwareValue<ControlState, Color> TextColor { get; set; }
+	}
 }

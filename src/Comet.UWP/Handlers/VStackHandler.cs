@@ -4,11 +4,11 @@ using UWPOrientation = Windows.UI.Xaml.Controls.Orientation;
 
 namespace Comet.UWP.Handlers
 {
-    public class VStackHandler : AbstractStackLayoutHandler
-    {
-        public VStackHandler()
-        {
-            Orientation = UWPOrientation.Vertical;
-        }
-    }
+	public class VStackHandler : AbstractStackLayoutHandler
+	{
+		public VStackHandler()
+		{
+			Orientation = UWPOrientation.Vertical;
+		}
+	}
 }

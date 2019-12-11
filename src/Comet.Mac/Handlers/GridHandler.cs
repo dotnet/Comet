@@ -2,14 +2,14 @@
 
 namespace Comet.Mac.Handlers
 {
-    public class GridHandler : AbstractLayoutHandler
-    {
-        public GridHandler(CGRect rect) : base(rect)
-        {
-        }
+	public class GridHandler : AbstractLayoutHandler
+	{
+		public GridHandler(CGRect rect) : base(rect)
+		{
+		}
 
-        public GridHandler()
-        {
-        }
-    }
+		public GridHandler()
+		{
+		}
+	}
 }
