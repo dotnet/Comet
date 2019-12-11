@@ -86,17 +86,14 @@ namespace Comet
 		public static Action<Action> FireOnMainThread;
 		public static async void RunOnMainThread(Action action)
 		{
-
 			if (!IsMainThread)
 			{
-				
 				if (FireOnMainThread != null)
 				{
 					FireOnMainThread(action);
 					return;
 				}
-				//TODO: Figure out why this doesn't always return...
-				await SwitchToMainThreadAsync(true);
+				await SwitchToMainThreadAsync(false);
 			}
 			action();
 		}
