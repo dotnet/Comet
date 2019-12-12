@@ -57,7 +57,7 @@ namespace Comet.Tests
 		[Fact]
 		public void TestView1WithFrameConstraints()
 		{
-			var view = new HStackTestView1().Frame(320, 600);
+			var view = new HStackTestView1();
 			InitializeHandlers(view);
 
 			var stack = view.GetViewWithTag<HStack>("stack");

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Comet.Internal;
 using Xunit;
 
@@ -41,6 +42,12 @@ namespace Comet.Tests
 
 		}
 
+		public static void InitializeHandlers(View view, float width, float height)
+		{
+			InitializeHandlers(view);
+			view.Frame = new RectangleF(0, 0, width, height);
+		}
+		
 		public static void ResetComet()
 		{
 			var v = new View();
