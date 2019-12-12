@@ -154,15 +154,21 @@ namespace Comet
 			return view;
 		}
 
-		public static Sizing GetHorizontalSizing(this View view, Sizing defaultSizing = Sizing.Fit)
+		public static Sizing GetHorizontalSizing(this View view, ContainerView container, Sizing defaultSizing = Sizing.Fit)
 		{
 			var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.HorizontalSizing);
+			if (sizing != null) return (Sizing)sizing;
+			
+			sizing = view.GetEnvironment<Sizing?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.HorizontalSizing}");
 			return sizing ?? defaultSizing;
 		}
 
-		public static Sizing GetVerticalSizing(this View view, Sizing defaultSizing = Sizing.Fit)
+		public static Sizing GetVerticalSizing(this View view, ContainerView container, Sizing defaultSizing = Sizing.Fit)
 		{
 			var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.VerticalSizing);
+			if (sizing != null) return (Sizing)sizing;
+
+			sizing = view.GetEnvironment<Sizing?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.VerticalSizing}");
 			return sizing ?? defaultSizing;
 		}
 

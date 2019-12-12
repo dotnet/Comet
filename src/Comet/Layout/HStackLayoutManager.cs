@@ -63,7 +63,7 @@ namespace Comet.Layout
 					finalWidth += margin.HorizontalThickness;
 
 					var constraints = view.GetFrameConstraints();
-					var verticalSizing = view.GetVerticalSizing();
+					var verticalSizing = view.GetVerticalSizing(layout);
 					if (verticalSizing == Sizing.Fill && constraints?.Height == null)
 						height = available.Height;
 
@@ -81,11 +81,11 @@ namespace Comet.Layout
 			if (spacerCount > 0)
 				width = available.Width;
 
-			var layoutVerticalSizing = layout.GetVerticalSizing();
+			var layoutVerticalSizing = layout.GetVerticalSizing(layout);
 			if (layoutVerticalSizing == Sizing.Fill)
 				height = available.Height;
 
-			var layoutHorizontalSizing = layout.GetHorizontalSizing();
+			var layoutHorizontalSizing = layout.GetHorizontalSizing(layout);
 			if (layoutHorizontalSizing == Sizing.Fill)
 				width = available.Width;
 
@@ -118,7 +118,7 @@ namespace Comet.Layout
 					var size = view.MeasuredSize;
 					var constraints = view.GetFrameConstraints();
 					var margin = view.GetMargin();
-					var sizing = view.GetVerticalSizing();
+					var sizing = view.GetVerticalSizing(layout);
 
 					// todo: this should never be needed.  Need to investigate this.
 					if (!view.MeasurementValid)
@@ -205,7 +205,7 @@ namespace Comet.Layout
 
 				x += margin.Left;
 
-				var sizing = view.GetVerticalSizing();
+				var sizing = view.GetVerticalSizing(layout);
 				if (sizing == Sizing.Fill && constraints?.Height == null)
 				{
 					alignedY = margin.Top;

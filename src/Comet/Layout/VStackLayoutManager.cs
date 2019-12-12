@@ -63,7 +63,7 @@ namespace Comet.Layout
 					finalWidth += margin.HorizontalThickness;
 
 					var constraints = view.GetFrameConstraints();
-					var sizing = view.GetHorizontalSizing();
+					var sizing = view.GetHorizontalSizing(layout);
 					if (sizing == Sizing.Fill && constraints?.Width == null)
 						width = available.Width;
 
@@ -83,11 +83,11 @@ namespace Comet.Layout
 
 			var layoutMargin = layout.GetMargin();
 
-			var layoutHorizontalSizing = layout.GetHorizontalSizing();
+			var layoutHorizontalSizing = layout.GetHorizontalSizing(layout);
 			if (layoutHorizontalSizing == Sizing.Fill)
 				width = available.Width;
 
-			var layoutVerticalSizing = layout.GetVerticalSizing();
+			var layoutVerticalSizing = layout.GetVerticalSizing(layout);
 			if (layoutVerticalSizing == Sizing.Fill)
 				height = available.Height - layoutMargin.VerticalThickness;
 
@@ -120,7 +120,7 @@ namespace Comet.Layout
 					var size = view.MeasuredSize;
 					var constraints = view.GetFrameConstraints();
 					var margin = view.GetMargin();
-					var sizing = view.GetHorizontalSizing();
+					var sizing = view.GetHorizontalSizing(layout);
 
 					if (constraints?.Width != null)
 						size.Width = Math.Min((float)constraints.Width, measured.Width);
@@ -196,7 +196,7 @@ namespace Comet.Layout
 
 				y += margin.Top;
 
-				var sizing = view.GetHorizontalSizing();
+				var sizing = view.GetHorizontalSizing(layout);
 				if (sizing == Sizing.Fill && constraints?.Width == null)
 				{
 					alignedX = margin.Left;
