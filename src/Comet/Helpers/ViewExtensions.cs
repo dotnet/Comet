@@ -31,9 +31,9 @@ namespace Comet
 			return view.BuiltView.GetViewWithTag(tag);
 		}
 
-        public static T GetViewWithTag<T>(this View view, string tag) where T : View => view.GetViewWithTag(tag) as T;
+		public static T GetViewWithTag<T>(this View view, string tag) where T : View => view.GetViewWithTag(tag) as T;
 
-        public static T Tag<T>(this T view, string tag) where T : View
+		public static T Tag<T>(this T view, string tag) where T : View
 		{
 			view.Tag = tag;
 			return view;
@@ -80,9 +80,9 @@ namespace Comet
 
 		public static void Navigate(this View view, View destination) => NavigationView.Navigate(view, destination);
 
-        public static ListView<T> OnSelectedNavigate<T>(this ListView<T> view, Func<T, View> destination) => view.OnSelected(v => NavigationView.Navigate(view, destination?.Invoke(v)));
+		public static ListView<T> OnSelectedNavigate<T>(this ListView<T> view, Func<T, View> destination) => view.OnSelected(v => NavigationView.Navigate(view, destination?.Invoke(v)));
 
-        public static void SetResult<T>(this View view, T value)
+		public static void SetResult<T>(this View view, T value)
 		{
 			var resultView = view.FindParentOfType<ResultView<T>>();
 			resultView.SetResult(value);
