@@ -62,6 +62,10 @@ namespace Comet.iOS
 			Device.BitmapService = new iOSBitmapService();
 
 			AnimationManger.SetTicker(new iOSTicker());
+
+			//Set Default Style
+			var style = new Styles.Style();
+			style.Apply();
 		}
 
 		internal static UIViewController PresentingViewController

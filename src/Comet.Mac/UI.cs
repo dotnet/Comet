@@ -48,6 +48,10 @@ namespace Comet.Mac
 
 
 			AnimationManger.SetTicker(new MacTicker());
+
+			//Set Default Style
+			var style = new Styles.Style();
+			style.Apply();
 		}
 	}
 }

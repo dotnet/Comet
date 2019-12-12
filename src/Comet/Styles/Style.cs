@@ -137,6 +137,8 @@ namespace Comet.Styles
 
 		public virtual void Apply(ContextualObject view = null)
 		{
+			if(view == null)
+				SetDefaultControlSizingForLayouts();
 			ApplyButton(view);
 			ApplyNavbarStyles(view);
 			ApplyTextStyle(view, Label);
@@ -158,7 +160,7 @@ namespace Comet.Styles
 		protected virtual void ApplyTextStyle(ContextualObject view, TextStyle textStyle)
 		{
 			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Colors.Color, textStyle.Color);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font,(f)=> (f as FontAttributes)?.Size);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font, (f) => (f as FontAttributes)?.Size);
 			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Family, textStyle?.Font, (f) => (f as FontAttributes)?.Family);
 			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Italic, textStyle?.Font, (f) => (f as FontAttributes)?.Italic);
 			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Weight, textStyle?.Font, (f) => (f as FontAttributes)?.Weight);
@@ -192,11 +194,11 @@ namespace Comet.Styles
 			}
 
 			foreach (var pair in value.ToEnvironmentValues())
-            {
+			{
 				var newKey = pair.key == null ? key : $"{key}.{pair.key}";
 				SetEnvironmentValue(view, type, newKey, pair.value);
 			}
-        }
+		}
 
 
 		protected void SetEnvironment(ContextualObject view, string styleId, string key, StyleAwareValue value)
@@ -212,9 +214,10 @@ namespace Comet.Styles
 				SetEnvironmentValue(view, styleId, newKey, pair.value);
 			}
 		}
-		protected void SetEnvironment(ContextualObject view, string styleId, string key, StyleAwareValue value, Func<object,object> getProperty)
+		protected void SetEnvironment(ContextualObject view, string styleId, string key, StyleAwareValue value, Func<object, object> getProperty)
 		{
-			if (value == null) {
+			if (value == null)
+			{
 				SetEnvironmentValue(view, styleId, key, null);
 				return;
 			}
@@ -240,6 +243,31 @@ namespace Comet.Styles
 				view.SetEnvironment(styleId, key, value);
 			else
 				View.SetGlobalEnvironment(styleId, key, value);
+		}
+
+		void SetDefaultControlSizingForLayouts()
+		{
+			void setSizing(Type control, Type container, string keyType, Sizing sizing)
+			{
+				var key = $"{container.Name}.{keyType}";
+				SetEnvironmentValue(null, control, key, sizing);
+			}
+			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(Slider), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
+			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
+			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
+			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
+			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
+			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
+			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
 		}
 	}
 }

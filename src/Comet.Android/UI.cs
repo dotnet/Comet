@@ -1,6 +1,7 @@
 ﻿using Comet.Android.Controls;
 using Comet.Android.Handlers;
 using Comet.Android.Services;
+using Comet.Styles;
 
 namespace Comet.Android
 {
@@ -55,6 +56,11 @@ namespace Comet.Android
 
 
 			AnimationManger.SetTicker(new AndroidTicker());
+
+			//Set Default Style
+			var style = new Style();
+			style.Apply();
+
 		}
 	}
 }
