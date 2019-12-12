@@ -155,6 +155,8 @@ namespace Comet.Skia
 		public static void MapResetText(IViewHandler viewHandler, View virtualView)
 		{
 			var textHandler = viewHandler as ITextHandler;
+			if (textHandler == null)
+				return;
 			textHandler.TextBlock = null;
 
 			////nativeView.SetTitle(virtualView.Text?.CurrentValue, UIControlState.Normal);
