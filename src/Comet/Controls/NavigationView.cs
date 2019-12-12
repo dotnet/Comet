@@ -10,7 +10,20 @@ namespace Comet
 			PerformNavigate(view);
 		}
 
-		public Action<View> PerformNavigate { get; set; }
+		public void SetPerformPop(Action action) => PerformPop = action;
+		public void SetPerformPop(NavigationView navView)
+			=> PerformPop = navView.PerformPop;
+		protected Action PerformPop { get; set; }
+
+		public void SetPerformNavigate(Action<View> action)
+			=> PerformNavigate = action;
+		public void SetPerformNavigate(NavigationView navView)
+			=> PerformNavigate = navView.PerformNavigate;
+
+		protected Action<View> PerformNavigate { get; set; }
+
+
+		public void Pop() => PerformPop();
 
 		public override void Add(View view)
 		{
@@ -36,6 +49,42 @@ namespace Comet
 			{
 				ModalView.Present(view);
 			}
+		}
+
+		public static void Pop(View view)
+		{
+			var parent = FindParentNavigationView(view);
+			if (parent is ModalView)
+			{
+				ModalView.Dismiss();
+			}
+			else if (parent is NavigationView nav)
+			{
+				nav.Pop();
+			}
+		}
+
+		//public static void PopToRoot(View view)
+		//{
+
+		//}
+
+		//public static void PopToView(View fromView, View toView)
+		//{
+
+		//}
+
+		static View FindParentNavigationView(View view)
+		{
+			if (view == null)
+				return null;
+
+			if (view.Parent is NavigationView || view.Parent is ModalView)
+			{
+				return view.Parent;
+			}
+
+			return FindParentNavigationView(view?.Parent) ?? view.Navigation;
 		}
 	}
 }

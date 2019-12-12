@@ -15,7 +15,8 @@ namespace Comet.Android.Handlers
 			if (VirtualView != null)
 			{
 				navigationView.SetRoot(VirtualView?.Content);
-				VirtualView.PerformNavigate = navigationView.NavigateTo;
+				VirtualView.SetPerformNavigate(navigationView.NavigateTo);
+				VirtualView.SetPerformPop(navigationView.Pop);
 			}
 
 			return navigationView;
@@ -26,7 +27,8 @@ namespace Comet.Android.Handlers
 			if (navigationView != null)
 			{
 				navigationView.SetRoot(nav.Content);
-				nav.PerformNavigate = navigationView.NavigateTo;
+				VirtualView.SetPerformNavigate(navigationView.NavigateTo);
+				VirtualView.SetPerformPop(navigationView.Pop);
 			}
 			base.SetView(view);
 		}
@@ -34,7 +36,8 @@ namespace Comet.Android.Handlers
 		{
 			if (VirtualView != null)
 			{
-				VirtualView.PerformNavigate = null;
+				VirtualView.SetPerformNavigate(action:null);
+				VirtualView.SetPerformPop(action: null);
 			}
 
 			base.Remove(view);

@@ -21,14 +21,16 @@ namespace Comet.Mac.Extensions
 			if (view.BuiltView is NavigationView nav && allowNav)
 			{
 				var navController = new NSNavigationController();
-				nav.PerformNavigate = (toView) => {
+				nav.SetPerformNavigate((toView) => {
 					//Since iOS doesn't allow nested navigations, pass the navigate along
 					if (toView is NavigationView newNav)
 					{
-						newNav.PerformNavigate = nav.PerformNavigate;
+						newNav.SetPerformNavigate(nav);
+						newNav.SetPerformPop(nav);
 					}
 					navController.PushViewController(toView.ToViewController(false), true);
-				};
+				});
+				nav.SetPerformPop(() => navController.Pop());
 				navController.PushViewController(vc, false);
 				return navController;
 			}

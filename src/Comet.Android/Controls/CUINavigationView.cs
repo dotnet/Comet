@@ -27,5 +27,8 @@ namespace Comet.Android.Controls
 				.Replace(Id, new CometFragment(view))
 				.CommitAllowingStateLoss();
 		}
+
+		public void Pop() =>
+			AndroidContext.AppCompatActivity.SupportFragmentManager.PopBackStack();
 	}
 }

@@ -80,6 +80,8 @@ namespace Comet
 
 		public static void Navigate(this View view, View destination) => NavigationView.Navigate(view, destination);
 
+		public static void Dismiss(this View view) => NavigationView.Pop(view);
+
 		public static ListView<T> OnSelectedNavigate<T>(this ListView<T> view, Func<T, View> destination) => view.OnSelected(v => NavigationView.Navigate(view, destination?.Invoke(v)));
 
 		public static void SetResult<T>(this View view, T value)

@@ -117,7 +117,9 @@ namespace Comet
 		{
 			if (view is NavigationView nav)
 			{
-				((NavigationView)this).PerformNavigate = nav.PerformNavigate;
+				((NavigationView)this).SetPerformNavigate(nav);
+				((NavigationView)this).SetPerformPop(nav);
+
 			}
 			var oldView = view.ViewHandler;
 			this.Gestures = view.Gestures;
