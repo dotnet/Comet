@@ -26,10 +26,10 @@ namespace Comet.WPF
 
 				if (_view?.BuiltView is NavigationView nav)
 				{
-					nav.PerformNavigate = toView => {
+					nav.SetPerformNavigate(toView => {
 						_frame.NavigationService.Navigate(new CometPage(_frame, toView));
-					};
-				}
+					});
+					nav.SetPerformPop(() => _frame.NavigationService.GoBack());				}
 			}
 		}
 	}
