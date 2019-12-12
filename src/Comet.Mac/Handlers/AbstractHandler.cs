@@ -67,11 +67,8 @@ namespace Comet.Mac.Handlers
 			get => false;
 			set { }
 		}
-
-		public virtual SizeF Measure(SizeF availableSize)
-		{
-			return Comet.View.IllTakeWhatYouCanGive;
-		}
+		
+		public SizeF GetIntrinsicSize(SizeF availableSize) => Comet.View.UseAvailableWidthAndHeight;
 
 		public void SetFrame(RectangleF frame)
 		{

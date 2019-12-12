@@ -5,7 +5,7 @@ namespace Comet
 	public class ProgressBar : View
 	{
 		public ProgressBar(
-			Binding<double> value = null,
+			Binding<float> value = null,
 			bool isIndeterminate = false)
 		{
 			Value = value;
@@ -13,8 +13,8 @@ namespace Comet
 		}
 
 		public ProgressBar(
-			Func<double> value,
-			bool isIndeterminate = false) : this((Binding<double>)value, isIndeterminate)
+			Func<float> value,
+			bool isIndeterminate = false) : this((Binding<float>)value, isIndeterminate)
 		{ }
 
 		Binding<bool> _isIndeterminate;
@@ -24,8 +24,8 @@ namespace Comet
 			set => this.SetBindingValue(ref _isIndeterminate, value);
 		}
 
-		Binding<double> _value;
-		public Binding<double> Value
+		Binding<float> _value;
+		public Binding<float> Value
 		{
 			get => _value;
 			set => this.SetBindingValue(ref _value, value);

@@ -73,7 +73,7 @@ namespace Comet.Android.Handlers
 
 		public CUITouchGestureListener GestureListener { get; set; }
 
-		public virtual SizeF Measure(SizeF availableSize)
+		public virtual SizeF GetIntrinsicSize(SizeF availableSize)
 		{
 			var width = AView.MeasureSpec.MakeMeasureSpec((int)availableSize.Width, MeasureSpecMode.AtMost);
 			var height = AView.MeasureSpec.MakeMeasureSpec((int)availableSize.Height, MeasureSpecMode.AtMost);

@@ -80,11 +80,8 @@ namespace Comet.Android.Handlers
 		}
 
 		public CUITouchGestureListener GestureListener { get; set; }
-
-		public virtual SizeF Measure(SizeF availableSize)
-		{
-			return availableSize;
-		}
+		
+		public SizeF GetIntrinsicSize(SizeF availableSize) => availableSize;
 
 		public void SetFrame(RectangleF frame)
 		{

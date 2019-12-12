@@ -69,15 +69,15 @@ namespace Comet.Mac.Handlers
 				}
 			}
 		}
-
-		public virtual SizeF Measure(SizeF availableSize)
+		
+		public virtual SizeF GetIntrinsicSize(SizeF availableSize)
 		{
 			if (_nativeView is NSControl control)
 				return control.SizeThatFits(availableSize.ToCGSize()).ToSizeF();
 
-			return Comet.View.IllTakeWhatYouCanGive;
+			return Comet.View.UseAvailableWidthAndHeight;
 		}
-
+		
 		public void SetFrame(RectangleF frame)
 		{
 			View.Frame = frame.ToCGRect();

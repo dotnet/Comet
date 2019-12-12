@@ -10,7 +10,7 @@ namespace Comet.Skia.UWP
 	public class SkiaControlHandler<T> : SkiaViewHandler
 	   where T : SkiaControl, new()
 	{
-		T control;
+		readonly T control;
 		public SkiaControlHandler()
 		{
 			control = new T();
@@ -20,6 +20,6 @@ namespace Comet.Skia.UWP
 			control.SetView(view);
 			base.SetView(control);
 		}
-		public override SizeF Measure(SizeF availableSize) => control.Measure(availableSize);
+		public override SizeF GetIntrinsicSize(SizeF availableSize) => control.GetIntrinsicSize(availableSize);
 	}
 }

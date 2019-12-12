@@ -23,10 +23,7 @@ namespace Comet.WPF.Handlers
 			set { }
 		}
 
-		public SizeF Measure(SizeF availableSize)
-		{
-			return availableSize;
-		}
+		public SizeF GetIntrinsicSize(SizeF availableSize) => Comet.View.UseAvailableWidthAndHeight;
 
 		public void SetFrame(RectangleF frame)
 		{

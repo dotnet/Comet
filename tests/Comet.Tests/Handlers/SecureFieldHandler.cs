@@ -6,12 +6,12 @@ namespace Comet.Tests.Handlers
 	{
 		public SecureFieldHandler()
 		{
-			OnMeasure = HandleOnMeasure;
+			OnGetIntrinsicSize = HandleOnGetIntrinsicSize;
 		}
 
 		public SecureField VirtualView => (SecureField)CurrentView;
 
-		private SizeF HandleOnMeasure(SizeF arg)
+		private SizeF HandleOnGetIntrinsicSize(SizeF arg)
 		{
 			var length = VirtualView.Text?.CurrentValue?.Length ?? 0;
 			return new SizeF(10 * length, 12);

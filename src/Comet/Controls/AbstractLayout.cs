@@ -17,46 +17,13 @@ namespace Comet
 
 		public ILayoutManager LayoutManager => _layout;
 
-		protected override void OnAdded(View view)
-		{
-			_layout?.Invalidate();
-		}
+		protected override void OnAdded(View view) => _layout?.Invalidate();
 
-		protected override void OnClear()
-		{
-			_layout?.Invalidate();
-		}
+		protected override void OnClear() => _layout?.Invalidate();
 
-		protected override void OnRemoved(View view)
-		{
-			_layout?.Invalidate();
-		}
+		protected override void OnRemoved(View view) => _layout?.Invalidate();
 
-		protected override void OnInsert(int index, View item)
-		{
-			_layout?.Invalidate();
-		}
-
-		public override SizeF Measure(SizeF availableSize)
-		{
-			var constraints = this.GetFrameConstraints();
-			var width = constraints?.Width;
-			var height = constraints?.Height;
-
-			// If we have both width and height constraints, we can skip measuring the control and
-			// return the constrained values.
-			if (width != null && height != null)
-				return new SizeF((float)width, (float)height);
-
-			var measuredSize = _layout?.Measure(this, availableSize) ?? availableSize;
-
-			// If we have a constraint for just one of the values, then combine the constrained value
-			// with the measured value for our size.
-			if (width != null || height != null)
-				return new SizeF(width ?? measuredSize.Width, height ?? measuredSize.Height);
-
-			return measuredSize;
-		}
+		protected override void OnInsert(int index, View item) => _layout?.Invalidate();
 
 		public override void LayoutSubviews(RectangleF frame)
 		{
@@ -68,6 +35,8 @@ namespace Comet
 				frame.Height - padding.VerticalThickness);
 			_layout?.Layout(this, bounds);
 		}
+
+		public override SizeF GetIntrinsicSize(SizeF availableSize) => _layout.Measure(this, availableSize);
 
 		protected override void Dispose(bool disposing)
 		{

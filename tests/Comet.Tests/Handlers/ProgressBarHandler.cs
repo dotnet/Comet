@@ -6,11 +6,11 @@ namespace Comet.Tests.Handlers
 	{
 		public ProgressBarHandler()
 		{
-			OnMeasure = HandleOnMeasure;
+			OnGetIntrinsicSize = HandleOnGetIntrinsicSize;
 		}
 
 		public Slider VirtualView => (Slider)CurrentView;
 
-		private SizeF HandleOnMeasure(SizeF arg) => new SizeF(100, 20);
+		private SizeF HandleOnGetIntrinsicSize(SizeF arg) => new SizeF(100, 20);
 	}
 }

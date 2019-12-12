@@ -8,7 +8,7 @@ namespace Comet.Skia
 {
 	public abstract class SkiaControl : SkiaView
 	{
-		public static DrawMapper<View> DrawMapper = new DrawMapper<View>()
+		public static readonly DrawMapper<View> DrawMapper = new DrawMapper<View>()
 		{
 			[SkiaEnvironmentKeys.Background] = DrawBackground,
 			[SkiaEnvironmentKeys.Border] = DrawBorder,
@@ -17,7 +17,7 @@ namespace Comet.Skia
 			[SkiaEnvironmentKeys.Clip] = ClipCanvas,
 		};
 
-		public static PropertyMapper<View> Mapper = new PropertyMapper<View>
+		public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>
 		{
 			[EnvironmentKeys.Colors.BackgroundColor] = MapBackgroundColor,
 			[EnvironmentKeys.Colors.Color] = MapBackgroundColor,
@@ -36,8 +36,8 @@ namespace Comet.Skia
 
 		public View VirtualView { get; private set; }
 
-		public override SizeF Measure(SizeF availableSize) => new SizeF(100, 44);
-
+		public override SizeF GetIntrinsicSize(SizeF availableSize) => new SizeF(100, 44);
+		
 		public virtual void SetView(View view)
 		{
 			VirtualView = view;

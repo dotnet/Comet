@@ -53,7 +53,7 @@ namespace Comet
 			}
 		}
 
-		public override SizeF Measure(SizeF availableSize)
+		public override SizeF GetIntrinsicSize(SizeF availableSize)
 		{
 			if (Content != null)
 			{
@@ -64,7 +64,7 @@ namespace Comet
 				return measuredSize;
 			}
 
-			return base.Measure(availableSize);
+			return base.GetIntrinsicSize(availableSize);
 		}
 		internal override void Reload()
 		{

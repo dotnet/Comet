@@ -35,16 +35,10 @@ namespace Comet.Mac.Handlers
 			get => false;
 			set { }
 		}
+		
+		public SizeF GetIntrinsicSize(SizeF availableSize) => Comet.View.UseAvailableWidthAndHeight;
 
-		public SizeF Measure(SizeF available)
-		{
-			return Comet.View.IllTakeWhatYouCanGive;
-		}
-
-		public void SetFrame(RectangleF frame)
-		{
-			Frame = frame.ToCGRect();
-		}
+		public void SetFrame(RectangleF frame) => Frame = frame.ToCGRect();
 
 		public void SetView(View view)
 		{
@@ -189,19 +183,19 @@ namespace Comet.Mac.Handlers
 			NeedsLayout = true;
 		}
 
-		public CGSize SizeThatFits(CGSize size)
+		public CGSize GetIntrinsicSize(CGSize size)
 		{
-			_measured = _view.Measure(size.ToSizeF());
+			_measured = _view.GetIntrinsicSize(size.ToSizeF());
 			return _measured.ToCGSize();
 		}
 
-		public void SizeToFit()
+		public void GetInstrinsicSize()
 		{
 			var size = Superview?.Bounds.Size;
 			if (size == null || ((CGSize)size).IsEmpty)
 				size = NSScreen.MainScreen.Frame.Size;
 
-			_measured = _view.Measure(((CGSize)size).ToSizeF());
+			_measured = _view.GetIntrinsicSize(((CGSize)size).ToSizeF());
 			base.Frame = new CGRect(new CGPoint(0, 0), _measured.ToCGSize());
 		}
 

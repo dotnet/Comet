@@ -7,7 +7,7 @@ using Topten.RichTextKit;
 
 namespace Comet.Skia
 {
-	public class TextHandler : SKiaAbstractControlHandler<Text>, ITextHandler
+	public class TextHandler : SkiaAbstractControlHandler<Text>, ITextHandler
 	{
 		public static new readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(SkiaControl.Mapper)
 		{
@@ -30,7 +30,7 @@ namespace Comet.Skia
 			Weight = Weight.Regular,
 		};
 
-		public override SizeF Measure(SizeF availableSize)
+		public override SizeF GetIntrinsicSize(SizeF availableSize)
 		{
 			TextBlock.MaxHeight = null;
 			TextBlock.MaxWidth = availableSize.Width - minHPadding;
@@ -39,8 +39,7 @@ namespace Comet.Skia
 		}
 
 		public override string AccessibilityText() => TypedVirtualView?.Value;
-
-
+		
 		TextBlock textBlock;
 		public TextBlock TextBlock
 		{

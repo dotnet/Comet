@@ -8,7 +8,7 @@ using Comet.Internal;
 
 namespace Comet.Skia
 {
-	public class ButtonHandler : SKiaAbstractControlHandler<Button>, ITextHandler
+	public class ButtonHandler : SkiaAbstractControlHandler<Button>, ITextHandler
 	{
 
 		public static new readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(SkiaControl.Mapper)
@@ -21,7 +21,7 @@ namespace Comet.Skia
 		static float minHPadding = 10;
 		static float vPadding = 10;
 
-		static FontAttributes defaultFont = new FontAttributes
+		static readonly FontAttributes defaultFont = new FontAttributes
 		{
 			Family = SkiaTextHelper.GetDefaultFontFamily,
 			Size = 14,
@@ -32,9 +32,8 @@ namespace Comet.Skia
 		{
 
 		}
-
-
-		public override SizeF Measure(SizeF availableSize)
+		
+		public override SizeF GetIntrinsicSize(SizeF availableSize)
 		{
 			TextBlock.MaxHeight = null;
 			TextBlock.MaxWidth = availableSize.Width - minHPadding;

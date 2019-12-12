@@ -7,7 +7,14 @@ namespace Comet.Skia
 {
 	public static class SkiaDrawingExtensions
 	{
-		public static void DrawShape(this SKCanvas canvas, Shape shape, RectangleF rect, DrawingStyle drawingStyle = DrawingStyle.Fill, float strokeWidth = 1, Color strokeColor = null, object fill = null)
+		public static void DrawShape(
+			this SKCanvas canvas, 
+			Shape shape, 
+			RectangleF rect, 
+			DrawingStyle drawingStyle = DrawingStyle.Fill, 
+			float strokeWidth = 1, 
+			Color strokeColor = null, 
+			object fill = null)
 		{
 			if (shape == null)
 				return;

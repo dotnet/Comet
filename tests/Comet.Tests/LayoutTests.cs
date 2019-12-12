@@ -84,8 +84,6 @@ namespace Comet.Tests
 		
 		public class SliderInVStackTestView : View
 		{
-			public readonly State<string> text = "Test";
-
 			[Body]
 			View body() => new VStack()
 			{
@@ -109,8 +107,6 @@ namespace Comet.Tests
 		
 		public class ProgressBarInVStackTestView : View
 		{
-			public readonly State<string> text = "Test";
-
 			[Body]
 			View body() => new VStack()
 			{
@@ -145,7 +141,7 @@ namespace Comet.Tests
 		}
 		
 		[Fact]
-		public void LabelInHStackIsCenterAligned()
+		public void LabelInHStackIsCenterAlignedVertically()
 		{
 			
 		}

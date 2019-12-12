@@ -75,16 +75,10 @@ namespace Comet.iOS.Handlers
 		}
 
 		public bool IgnoreSafeArea => VirtualView?.GetIgnoreSafeArea(false) ?? false;
+		
+		public virtual SizeF GetIntrinsicSize(SizeF availableSize) => _nativeView.SizeThatFits(availableSize.ToCGSize()).ToSizeF();
 
-		public virtual SizeF Measure(SizeF availableSize)
-		{
-			return _nativeView.SizeThatFits(availableSize.ToCGSize()).ToSizeF();
-		}
-
-		public void SetFrame(RectangleF frame)
-		{
-			View.Frame = frame.ToCGRect();
-		}
+		public void SetFrame(RectangleF frame) => View.Frame = frame.ToCGRect();
 
 		public virtual void Remove(View view)
 		{
