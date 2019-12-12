@@ -99,7 +99,8 @@ namespace Comet
 		}
 		public void AddGlobalProperties(IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> properties)
 		{
-			foreach (var prop in properties)
+			var props = properties.ToList();
+			foreach (var prop in props)
 				AddGlobalProperty(prop);
 		}
 		public void AddViewProperty((INotifyPropertyRead BindingObject, string PropertyName) property, string propertyName, Binding binding)

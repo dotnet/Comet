@@ -42,7 +42,7 @@ namespace Comet.iOS.Sample
 			Comet.Skia.UI.Init();
 
 			//Replaces Native controls with Skia Controls
-			//Comet.Skia.Controls.Init();
+			Comet.Skia.Controls.Init();
 
 			//Replaces the native controls with controls from Googles Material Lib
 			//Comet.Material.iOS.UI.Init();
