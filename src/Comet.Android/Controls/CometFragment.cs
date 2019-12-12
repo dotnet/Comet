@@ -3,6 +3,7 @@ using Android.OS;
 using Android.Support.V4.App;
 using Android.Views;
 using AView = Android.Views.View;
+using Comet.Internal;
 
 namespace Comet.Android.Controls
 {
@@ -40,10 +41,24 @@ namespace Comet.Android.Controls
 			ViewGroup container,
 			Bundle savedInstanceState)
 		{
-			containerView = new CometView(AndroidContext.CurrentContext);
+			if (CurrentView == null)
+			{
+				var oldViewId = savedInstanceState.GetString(currentViewID);
+				var oldView = Comet.Internal.Extensions.FindViewById(null, oldViewId);
+				startingCurrentView = oldView;
+			}
+
+			containerView ??= new CometView(AndroidContext.CurrentContext);
 			containerView.CurrentView = startingCurrentView;
-			startingCurrentView = null;
 			return containerView;
+		}
+
+		const string currentViewID = nameof(currentViewID);
+		public override void OnSaveInstanceState(Bundle outState)
+		{
+			var viewId = CurrentView.Id;
+			outState.PutString(currentViewID, viewId);
+			base.OnSaveInstanceState(outState);
 		}
 
 		public override void OnDestroy()

@@ -41,7 +41,7 @@ namespace Comet.Mac
 
 			// Device Features
 			ThreadHelper.JoinableTaskContext = new Microsoft.VisualStudio.Threading.JoinableTaskContext();
-			ThreadHelper.FireOnMainThread = (a) => _invoker.BeginInvokeOnMainThread(a);
+			ThreadHelper.SetFireOnMainThread(_invoker.BeginInvokeOnMainThread);
 			Device.FontService = new MacFontService();
 			Device.GraphicsService = new MacGraphicsService();
 			Device.BitmapService = new MacBitmapService();

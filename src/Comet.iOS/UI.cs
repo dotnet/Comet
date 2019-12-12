@@ -55,7 +55,7 @@ namespace Comet.iOS
 			ModalView.PerformDismiss = () => PresentingViewController.DismissModalViewController(true);
 
 			ThreadHelper.JoinableTaskContext = new Microsoft.VisualStudio.Threading.JoinableTaskContext();
-			ThreadHelper.FireOnMainThread = (action) => _invoker.BeginInvokeOnMainThread(action);
+			ThreadHelper.SetFireOnMainThread(_invoker.BeginInvokeOnMainThread);
 
 			Device.FontService = new iOSFontService();
 			Device.GraphicsService = new iOSGraphicsService();

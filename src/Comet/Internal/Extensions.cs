@@ -7,6 +7,9 @@ namespace Comet.Internal
 {
 	public static class Extensions
 	{
+		public static View FindViewById(this View view, string id)
+			=> View.ActiveViews.FirstOrDefault(x => x.Id == id);
+
 		public static Func<View> GetBody(this View view)
 		{
 			var bodyMethod = view.GetType().GetDeepMethodInfo(typeof(BodyAttribute));

@@ -25,16 +25,18 @@ namespace Comet.iOS
 				if ((view.BuiltView ?? view) is NavigationView nav && allowNav)
 				{
 					var navController = new CUINavigationController();
-					nav.PerformNavigate = (toView) => {
+					nav.SetPerformNavigate((toView) => {
 						//Since iOS doesn't allow nested navigations, pass the navigate along
 						if (toView is NavigationView newNav)
 						{
-							newNav.PerformNavigate = nav.PerformNavigate;
+							newNav.SetPerformNavigate(nav);
+							newNav.SetPerformPop(nav);
 						}
 
 						toView.Navigation = nav;
 						navController.PushViewController(toView.ToViewController(false), true);
-					};
+					});
+					nav.SetPerformPop(() => navController.PopViewController(true));
 					navController.PushViewController(vc, false);
 					return navController;
 				}
