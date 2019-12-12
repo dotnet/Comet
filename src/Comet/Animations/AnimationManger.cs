@@ -9,6 +9,9 @@ namespace Comet
 	public static class AnimationManger
 	{
 		public static double SpeedModifier { get; set; } = 1;
+
+		public static bool AllowParrallelAnimations { get; set; } = false;
+
 		static AnimationManger()
 		{
 			SetTicker(new Ticker());
@@ -33,14 +36,14 @@ namespace Comet
 			{
 				return;
 			}
-			if(!Animations.Contains(animation))
+			if (!Animations.Contains(animation))
 				Animations.Add(animation);
 			if (!Ticker.IsRunning)
 				Start();
 		}
 
 		public static void Remove(Animation animation)
-        {
+		{
 			Animations.TryRemove(animation);
 			if (!Animations.Any())
 				End();
@@ -52,7 +55,7 @@ namespace Comet
 			Ticker.Start();
 		}
 
-		static long GetCurrentTick() => (Environment.TickCount & Int32.MaxValue);
+		static long GetCurrentTick() => (Environment.TickCount & int.MaxValue);
 
 		static void End() => Ticker?.Stop();
 		static void OnFire()
@@ -61,7 +64,8 @@ namespace Comet
 			var seconds = TimeSpan.FromMilliseconds((now - lastUpdate)).TotalSeconds;
 			lastUpdate = now;
 			var animations = Animations.ToList();
-			Parallel.ForEach(animations, (animation) => {
+			void animationTick(Animation animation)
+			{
 				if (animation.HasFinished)
 				{
 					Animations.TryRemove(animation);
@@ -75,7 +79,11 @@ namespace Comet
 					Animations.TryRemove(animation);
 					animation.RemoveFromParent();
 				}
-			});
+			}
+			if (AllowParrallelAnimations)
+				Parallel.ForEach(animations, animationTick);
+			else
+				animations.ForEach(animationTick);
 
 			if (!Animations.Any())
 				End();

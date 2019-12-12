@@ -82,8 +82,8 @@ namespace Comet
 		//     // Now switch to the Main thread to talk to some STA object. await this.JobContext.SwitchToMainThreadAsync();
 		//     STAService.DoSomething(); }
 		public static JoinableTaskFactory.MainThreadAwaitable SwitchToMainThreadAsync(CancellationToken cancellationToken = default) => JoinableTaskContext.Factory.SwitchToMainThreadAsync(cancellationToken);
-
-		public static Action<Action> FireOnMainThread;
+		public static void SetFireOnMainThread(Action<Action> action) => FireOnMainThread = action;
+		static Action<Action> FireOnMainThread;
 		public static async void RunOnMainThread(Action action)
 		{
 			if (!IsMainThread)
