@@ -12,6 +12,7 @@ namespace Comet.Skia.Internal
 		{
 			Register<SKButton, Button, ButtonHandler>();
 			Register<SKText, Text, TextHandler>();
+			Register<SKSlider, Slider, SliderHandler>();
 		}
 
 		static void Register<SKiaView, ReplacementView, Handler>()

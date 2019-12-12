@@ -34,6 +34,14 @@ namespace Comet.Skia
 		};
 		protected virtual string[] LayerDrawingOrder() => DefaultLayerDrawingOrder;
 
+		public override SizeF Measure(SizeF availableSize) => GetIntrinsicSize();
+
+        protected SizeF GetIntrinsicSize(float defaultWidth = 100, float defaultHeight = 44)
+        {
+			var minHeight = TypedVirtualView.GetEnvironment<float?>(SkiaEnvironmentKeys.IntrinsicSize.Height) ?? defaultHeight;
+			var minWidth = TypedVirtualView.GetEnvironment<float?>(SkiaEnvironmentKeys.IntrinsicSize.Width) ?? defaultWidth;
+			return new SizeF(minWidth, minHeight);
+		}
 
 		public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
 		{
