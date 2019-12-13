@@ -426,11 +426,7 @@ namespace Comet
 
 		public void InvalidateMeasurement()
 		{
-			MeasurementValid = false;
-
-			// TODO We should "invalidate" layout here. Close enough for now?
-			//Frame = RectangleF.Empty;
-			
+			MeasurementValid = false;			
 			Parent?.InvalidateMeasurement();
 			NeedsLayout?.Invoke(this, EventArgs.Empty);
 		}
