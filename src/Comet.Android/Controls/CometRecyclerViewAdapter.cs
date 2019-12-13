@@ -19,8 +19,10 @@ namespace Comet.Android.Controls
 
             if (holder is CometRecyclerViewHolder rvh && cell != null)
             {
+                // If the cell has a parent already, remove it from that parent.
+                (cell.Parent as CometView)?.RemoveView(cell);
+                
                 var parent = rvh.Parent;
-
                 var density = AndroidContext.DisplayScale;
 
                 var scaledSize = new System.Drawing.SizeF(parent.Width / density, parent.Height / density);
@@ -28,19 +30,19 @@ namespace Comet.Android.Controls
                 view.MeasuredSize = measuredSize;
                 view.MeasurementValid = true;
 
-                cell.LayoutParameters = new ViewGroup.LayoutParams(parent.Width, (int)(measuredSize.Height * density));
-                cell.SetMinimumHeight((int)(measuredSize.Height * density));
-                    
-                rvh.Container.RemoveAllViews();
-                // cell may sometimes have a parent already
-                (cell.Parent as FrameLayout)?.RemoveView(cell);
-                rvh.Container.AddView(cell);
+                rvh.CometView.LayoutParameters = new ViewGroup.LayoutParams(
+                    ViewGroup.LayoutParams.MatchParent, 
+                    (int)(measuredSize.Height * density));
+  
+                // Add our view to the cell.
+                rvh.CometView.CurrentView = view;            
             }
+            
         }
 
         public override RecyclerView.ViewHolder OnCreateViewHolder(ViewGroup parent, int viewType)
         {
-            return new CometRecyclerViewHolder(new FrameLayout(parent.Context), parent, ListView);
+            return new CometRecyclerViewHolder(parent, ListView);
         }
     }
 }

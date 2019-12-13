@@ -10,7 +10,8 @@ namespace Comet.Android.Handlers
 	public class AbstractLayoutHandler : AViewGroup, AndroidViewHandler
 	{
 		private AbstractLayout _view;
-
+		private bool _inLayout;
+		
 		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
 		protected AbstractLayoutHandler() : base(AndroidContext.CurrentContext)
@@ -35,32 +36,6 @@ namespace Comet.Android.Handlers
 			set { }
 		}
 		
-		public SizeF GetIntrinsicSize(SizeF availableSize) => Comet.View.UseAvailableWidthAndHeight;
-
-		public void SetFrame(RectangleF frame)
-		{
-			var scale = AndroidContext.DisplayScale;
-
-			var left = frame.Left * scale;
-			var top = frame.Top * scale;
-			var bottom = frame.Bottom * scale;
-			var right = frame.Right * scale;
-            
-			if (LayoutParameters == null)
-			{
-				LayoutParameters = new AViewGroup.LayoutParams(
-					(int) (frame.Width * scale),
-					(int) (frame.Height * scale));
-			}
-			else
-			{
-				LayoutParameters.Width = (int) (frame.Width * scale);
-				LayoutParameters.Height = (int) (frame.Height * scale);
-			}
-            
-			Layout((int)left, (int)top, (int)right, (int)bottom);
-		}
-
 		public void SetView(View view)
 		{
 			_view = view as AbstractLayout;
@@ -227,19 +202,50 @@ namespace Comet.Android.Handlers
             SetMeasuredDimension((int)scaledWidth, (int)scaledHeight);
 		}
 
+		public SizeF GetIntrinsicSize(SizeF availableSize) => Comet.View.UseAvailableWidthAndHeight;
+
+		public void SetFrame(RectangleF frame)
+		{
+			if (_inLayout)
+				return;
+			
+			var scale = AndroidContext.DisplayScale;
+
+			var left = frame.Left * scale;
+			var top = frame.Top * scale;
+			var bottom = frame.Bottom * scale;
+			var right = frame.Right * scale;
+            
+			if (LayoutParameters == null)
+			{
+				LayoutParameters = new AViewGroup.LayoutParams(
+					(int) (frame.Width * scale),
+					(int) (frame.Height * scale));
+			}
+			else
+			{
+				LayoutParameters.Width = (int) (frame.Width * scale);
+				LayoutParameters.Height = (int) (frame.Height * scale);
+			}
+            
+			Layout((int)left, (int)top, (int)right, (int)bottom);
+		}
+		
 		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
 		{
-			if (_view == null || !changed) return;
-			
+			if (_view == null || !changed || _inLayout) return;
+
 			var displayScale = AndroidContext.DisplayScale;
 			var width = (right - left) / displayScale;
 			var height = (bottom - top) / displayScale;
 
 			if (width > 0 && height > 0)
-			{
+			{			
+				_inLayout = true;
 				var x = left / displayScale;
 				var y = top / displayScale;
 				_view.Frame = new RectangleF(x, y, width, height);
+				_inLayout = false;
 			}
 		}
 	}

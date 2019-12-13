@@ -9,17 +9,17 @@ namespace Comet.Android.Controls
     {
         private readonly IListView listView;
 
-        public FrameLayout Container { get; }
         public ViewGroup Parent { get; }
-
-        public CometRecyclerViewHolder(FrameLayout itemView, ViewGroup parent, IListView listView)
-            : base(itemView)
+        public CometView CometView => (CometView) ItemView;
+        
+        public CometRecyclerViewHolder(
+            ViewGroup parent, 
+            IListView listView) : base(new CometView(parent.Context))
         {
-            Container = itemView;
             Parent = parent;
             this.listView = listView;
 
-            Container.Click += HandleClick;
+            CometView.Click += HandleClick;
         }
 
         private void HandleClick(object sender, EventArgs e)

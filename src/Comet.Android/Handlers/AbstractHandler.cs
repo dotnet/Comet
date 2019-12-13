@@ -78,7 +78,7 @@ namespace Comet.Android.Handlers
 			get => false;
 			set { }
 		}
-
+        
 		public CometTouchGestureListener GestureListener { get; set; }
 		
 		public SizeF GetIntrinsicSize(SizeF availableSize) => availableSize;
