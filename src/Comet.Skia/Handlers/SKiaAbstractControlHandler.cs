@@ -24,14 +24,7 @@ namespace Comet.Skia
 			this.mapper = mapper ?? new PropertyMapper<TVirtualView>(SkiaControl.Mapper);
 		}
 
-		public static string[] DefaultLayerDrawingOrder = new[]
-		{
-			SkiaEnvironmentKeys.Clip,
-			SkiaEnvironmentKeys.Background,
-			SkiaEnvironmentKeys.Border,
-			SkiaEnvironmentKeys.Text,
-			SkiaEnvironmentKeys.Overlay,
-		};
+		
 		protected virtual string[] LayerDrawingOrder() => DefaultLayerDrawingOrder;
 
 		public override SizeF Measure(SizeF availableSize) => GetIntrinsicSize();

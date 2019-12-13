@@ -14,5 +14,14 @@ namespace Comet.Skia
 			public const string Height = "Skia.IntrinsicSize.Height";
 			public const string Width = "Skia.IntrinsicSize.Width";
 		}
+		public static class Slider
+		{
+			public static class Layers
+			{
+				public const string Track = "Skia.Slider.Layers.Track";
+				public const string Progress = "Skia.Slider.Layers.Progress";
+				public const string Thumb = "Skia.Slider.Layers.Progress";
+			}
+		}
 	}
 }
