@@ -32,8 +32,17 @@ namespace Comet
 			return GetHandler(typeof(T));
 		}
 
-		internal List<Type> GetViewType(Type type) => Handler.Where(x => x.Value == type).Select(x => x.Key).ToList();
-
+		internal List<KeyValuePair<Type,Type>> GetViewType(Type type) =>
+			Handler.Where(x => isType(x.Value,type)).ToList();
+		bool isType(Type type, Type type2)
+		{
+			if (type == type2)
+				return true;
+			if (!type.IsGenericType)
+				return false;
+			var paramerter = type.GetGenericArguments();
+			return paramerter[0] == type2;
+		}
 
 		public TTypeRender GetHandler(Type type)
 		{

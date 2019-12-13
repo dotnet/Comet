@@ -109,11 +109,11 @@ namespace Comet
 		//    state.SetValue<T>(ref currentValue, newValue, view, propertyName);
 		//}
 
-		public static View Diff(this View newView, View oldView)
+		public static View Diff(this View newView, View oldView, bool checkRenderers)
 		{
 			if (oldView == null)
 				return newView;
-			var v = newView.DiffUpdate(oldView);
+			var v = newView.DiffUpdate(oldView,checkRenderers);
 			//void callUpdateOnView(View view)
 			//{
 			//    if (view is IContainerView container)
@@ -129,9 +129,9 @@ namespace Comet
 			return v;
 		}
 
-		static View DiffUpdate(this View newView, View oldView)
+		static View DiffUpdate(this View newView, View oldView, bool checkRenderers)
 		{
-			if (!newView.AreSameType(oldView))
+			if (!newView.AreSameType(oldView, checkRenderers))
 			{
 				return newView;
 			}
@@ -139,12 +139,12 @@ namespace Comet
 			//Always diff thebuilt views as well!
 			if (newView.BuiltView != null && oldView.BuiltView != null)
 			{
-				newView.BuiltView.Diff(oldView.BuiltView);
+				newView.BuiltView.Diff(oldView.BuiltView,checkRenderers);
 			}
 
 			if (newView is ContentView ncView && oldView is ContentView ocView)
 			{
-				ncView.Content?.DiffUpdate(ocView.Content);
+				ncView.Content?.DiffUpdate(ocView.Content, checkRenderers);
 			}
 			//Yes if one is IContainer, the other is too!
 			else if (newView is IContainerView newContainer && oldView is IContainerView oldContainer)
@@ -155,10 +155,10 @@ namespace Comet
 				{
 					var n = newChildren.GetViewAtIndex(i);
 					var o = oldChildren.GetViewAtIndex(i);
-					if (n.AreSameType(o))
+					if (n.AreSameType(o, checkRenderers))
 					{
 						Debug.WriteLine("The controls are the same!");
-						DiffUpdate(n, o);
+						DiffUpdate(n, o,checkRenderers);
 						continue;
 					}
 
@@ -171,30 +171,30 @@ namespace Comet
 					//Lets see if the next 2 match
 					var o1 = oldChildren.GetViewAtIndex(i + 1);
 					var n1 = newChildren.GetViewAtIndex(i + 1);
-					if (n1.AreSameType(o1))
+					if (n1.AreSameType(o1, checkRenderers))
 					{
 						Debug.WriteLine("The controls were replaced!");
 						//No big deal the control was replaced!
 						continue;
 					}
 
-					if (n.AreSameType(o1))
+					if (n.AreSameType(o1, checkRenderers))
 					{
 						//we removed one from the old Children and use the next one
 
 						Debug.WriteLine("One control was removed");
-						DiffUpdate(n, o1);
+						DiffUpdate(n, o1, checkRenderers);
 						oldChildren.RemoveAt(i);
 						continue;
 					}
 
-					if (n1.AreSameType(o))
+					if (n1.AreSameType(o, checkRenderers))
 					{
 						//The next ones line up, so this was just a new one being inserted!
 						//Lets add an empty one to make them line up
 
 						Debug.WriteLine("One control was added");
-						DiffUpdate(n1, o);
+						DiffUpdate(n1, o,checkRenderers);
 						oldChildren.Insert(i, null);
 						continue;
 					}
@@ -220,18 +220,28 @@ namespace Comet
 		}
 
 
-		public static bool AreSameType(this View view, View compareView)
+		public static bool AreSameType(this View view, View compareView, bool checkRenderers)
 		{
-			if (HotReloadHelper.IsReplacedView(view, compareView))
-				return true;
-			//Add in more edge cases
-			var viewView = view?.GetView();
-			var compareViewView = compareView?.GetView();
+			static bool AreSameType(View view, View compareView)
+			{
+				if (HotReloadHelper.IsReplacedView(view, compareView))
+					return true;
+				//Add in more edge cases
+				var viewView = view?.GetView();
+				var compareViewView = compareView?.GetView();
 
-			if (HotReloadHelper.IsReplacedView(viewView, compareViewView))
-				return true;
+				if (HotReloadHelper.IsReplacedView(viewView, compareViewView))
+					return true;
 
-			return viewView?.GetType() == compareViewView?.GetType();
+				return viewView?.GetType() == compareViewView?.GetType();
+			}
+			var areSame = AreSameType(view, compareView);
+			if (areSame && checkRenderers && view.ViewHandler != null)
+			{
+				var renderType = Registrar.Handlers.GetRendererType(view.GetType());
+				return renderType != view.ViewHandler.GetType();
+			}
+			return areSame;
 		}
 	}
 }

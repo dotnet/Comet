@@ -129,8 +129,8 @@ namespace Comet
 		}
 		View builtView;
 		public View BuiltView => builtView;
-		internal virtual void Reload() => ResetView();
-		void ResetView()
+		internal virtual void Reload() => ResetView(true);
+		void ResetView(bool isReload = false)
 		{
 			// We save the old replaced view so we can clean it up after the diff
 			var oldReplacedView = replacedView;
@@ -148,7 +148,7 @@ namespace Comet
 				ViewHandler.Remove(this);
 				var view = this.GetRenderView();
 				if (oldView != null)
-					view = view.Diff(oldView);
+					view = view.Diff(oldView, isReload);
 				oldView?.Dispose();
 				animations?.ForEach(x => x.Dispose());
 				ViewHandler?.SetView(view);

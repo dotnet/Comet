@@ -37,7 +37,7 @@ namespace Comet.iOS.Controls
 			//Apple bug, somehow the view be a weird recycle... So only re-use if the view still matches
 			if (isFromThisCell && _virtualView != null && !_virtualView.IsDisposed)
 			{
-				view = view.Diff(_virtualView);
+				view = view.Diff(_virtualView,false);
 			}
 
 			_virtualView = view;
