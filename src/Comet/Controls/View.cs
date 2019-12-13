@@ -384,7 +384,7 @@ namespace Comet
 			replacedView = null;
 			builtView?.Dispose();
 			builtView = null;
-			Body = null;
+			body = null;
 			Context(false)?.Clear();
 			StateManager.Disposing(this);
 			State.Clear();
