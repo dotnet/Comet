@@ -35,7 +35,7 @@ namespace Comet.iOS.Handlers
 
 		private void HandleValueChanged(object sender, EventArgs e)
 		{
-			VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.Value);
+			VirtualView.ValueChanged(TypedNativeView.Value);
 		}
 
 		public static void MapValueProperty(IViewHandler viewHandler, Slider virtualView)

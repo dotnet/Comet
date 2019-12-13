@@ -10,6 +10,7 @@ namespace Comet.Skia.Internal
 
 		static Registration()
 		{
+			new SkiaStyle().Apply();
 			Register<SKButton, Button, ButtonHandler>();
 			Register<SKText, Text, TextHandler>();
 			Register<SKSlider, Slider, SliderHandler>();

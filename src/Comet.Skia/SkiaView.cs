@@ -47,7 +47,7 @@ namespace Comet.Skia
 		{
 			get => currentState;
 			set
-            {
+			{
 				if (currentState == value)
 					return;
 				currentState = value;
@@ -93,9 +93,9 @@ namespace Comet.Skia
 		}
 
 		protected virtual void ControlStateChanged()
-        {
+		{
 
-        }
+		}
 
 		public virtual void Resized(RectangleF bounds)
 		{
@@ -106,7 +106,7 @@ namespace Comet.Skia
 		{
 			base.ViewPropertyChanged(property, value);
 			//if (_boundProperties.Contains(property))
-				Invalidate();
+			Invalidate();
 		}
 
 		protected void SetBindingValue<T>(
