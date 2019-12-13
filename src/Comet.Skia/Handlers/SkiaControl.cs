@@ -32,6 +32,15 @@ namespace Comet.Skia
 			[EnvironmentKeys.Fonts.Weight] = MapResetText,
 		};
 
+		public static string[] DefaultLayerDrawingOrder = new[]
+		{
+			SkiaEnvironmentKeys.Clip,
+			SkiaEnvironmentKeys.Background,
+			SkiaEnvironmentKeys.Border,
+			SkiaEnvironmentKeys.Text,
+			SkiaEnvironmentKeys.Overlay,
+		};
+
 		protected SkiaControl() : base() { }
 
 		public View VirtualView { get; private set; }
