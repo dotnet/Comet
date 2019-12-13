@@ -9,7 +9,7 @@ namespace Comet.Skia
 	{
 		readonly PropertyMapper<TVirtualView> mapper;
 		protected readonly DrawMapper<TVirtualView> drawMapper;
-		
+
 		protected SkiaAbstractControlHandler()
 		{
 			drawMapper = new DrawMapper<TVirtualView>(SkiaControl.DrawMapper);
@@ -22,11 +22,11 @@ namespace Comet.Skia
 			this.mapper = mapper ?? new PropertyMapper<TVirtualView>(SkiaControl.Mapper);
 		}
 
-		
+
 		protected virtual string[] LayerDrawingOrder() => DefaultLayerDrawingOrder;
-		
-        protected SizeF GetIntrinsicSize(float defaultWidth = 100, float defaultHeight = 44)
-        {
+
+		protected SizeF GetIntrinsicSize(float defaultWidth = 100, float defaultHeight = 44)
+		{
 			var minHeight = TypedVirtualView.GetEnvironment<float?>(SkiaEnvironmentKeys.IntrinsicSize.Height) ?? defaultHeight;
 			var minWidth = TypedVirtualView.GetEnvironment<float?>(SkiaEnvironmentKeys.IntrinsicSize.Width) ?? defaultWidth;
 			return new SizeF(minWidth, minHeight);

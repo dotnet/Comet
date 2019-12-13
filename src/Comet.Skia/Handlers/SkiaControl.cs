@@ -17,7 +17,7 @@ namespace Comet.Skia
 			[SkiaEnvironmentKeys.Clip] = ClipCanvas,
 		};
 
-		public static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>
+		public new static readonly PropertyMapper<View> Mapper = new PropertyMapper<View>
 		{
 			[EnvironmentKeys.Colors.BackgroundColor] = MapBackgroundColor,
 			[EnvironmentKeys.Colors.Color] = MapBackgroundColor,
