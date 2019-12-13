@@ -430,7 +430,7 @@ namespace Comet
 
 			// TODO We should "invalidate" layout here. Close enough for now?
 			//Frame = RectangleF.Empty;
-
+			
 			Parent?.InvalidateMeasurement();
 			NeedsLayout?.Invoke(this, EventArgs.Empty);
 		}
@@ -490,7 +490,7 @@ namespace Comet
 			return viewHandler?.GetIntrinsicSize(availableSize) ?? UseAvailableWidthAndHeight;
 		}
 
-		protected virtual void RequestLayout()
+		public virtual void RequestLayout()
 		{
 			var constraints = this.GetFrameConstraints();
 			var frame = Frame;
