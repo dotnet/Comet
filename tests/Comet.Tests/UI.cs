@@ -7,9 +7,9 @@ namespace Comet.Tests
 	public static class UI
 	{
 		static bool hasInit;
-		public static void Init()
+		public static void Init(bool force = false)
 		{
-			if (hasInit)
+			if (hasInit && !force)
 				return;
 			hasInit = true;
 			Registrar.Handlers.Register<Button, GenericViewHandler>();

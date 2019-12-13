@@ -53,6 +53,7 @@ namespace Comet.Tests
 			var v = new View();
 			v.ResetGlobalEnvironment();
 			v.DisposeAllViews();
+			UI.Init(true);
 			HotReloadHelper.Reset();
 			v?.Dispose();
 		}
