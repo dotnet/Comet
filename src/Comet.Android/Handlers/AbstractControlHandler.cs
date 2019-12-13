@@ -86,7 +86,7 @@ namespace Comet.Android.Handlers
 			return new SizeF(measuredWidth, measuredHeight);
 		}
 
-		public void SetFrame(RectangleF frame)
+		public virtual void SetFrame(RectangleF frame)
 		{
 			var nativeView = TypedNativeView;
 			if (nativeView == null) return;

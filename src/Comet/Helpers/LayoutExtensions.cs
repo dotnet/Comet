@@ -222,6 +222,9 @@ namespace Comet
 
 		public static SizeF Measure(this View view, SizeF availableSize, bool includeMargin)
 		{
+			if (availableSize.Width <= 0 || availableSize.Height <= 0)
+				return availableSize;
+			
 			if (includeMargin)
 			{
 				var margin = view.GetMargin();

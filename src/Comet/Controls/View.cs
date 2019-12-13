@@ -429,7 +429,7 @@ namespace Comet
 			MeasurementValid = false;
 
 			// TODO We should "invalidate" layout here. Close enough for now?
-			Frame = RectangleF.Empty;
+			//Frame = RectangleF.Empty;
 
 			Parent?.InvalidateMeasurement();
 			NeedsLayout?.Invoke(this, EventArgs.Empty);
@@ -449,6 +449,9 @@ namespace Comet
 
 		public SizeF Measure(SizeF availableSize)
 		{
+			if (availableSize.Width <= 0 || availableSize.Height <= 0)
+				return availableSize;
+			
 			if (BuiltView != null)
 				return BuiltView.Measure(availableSize);
 

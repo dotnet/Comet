@@ -49,6 +49,9 @@
     <Compile Include="Controls\CometContentView.cs" />
     <Compile Include="Controls\CometContainerView.cs" />
     <Compile Include="Controls\CometImageView.cs" />
+    <Compile Include="Controls\CometRecyclerView.cs" />
+    <Compile Include="Controls\CometRecyclerViewAdapter.cs" />
+    <Compile Include="Controls\CometRecyclerViewHolder.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\AndroidExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
@@ -58,6 +61,7 @@
     <Compile Include="Handlers\ButtonHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />
     <Compile Include="Handlers\SecureFieldHandler.cs" />
+    <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Handlers\TextFieldHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="Handlers\TextHandler.cs" />

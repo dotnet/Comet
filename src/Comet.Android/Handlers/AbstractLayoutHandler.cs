@@ -39,7 +39,26 @@ namespace Comet.Android.Handlers
 
 		public void SetFrame(RectangleF frame)
 		{
-			Layout((int)frame.Left, (int)frame.Top, (int)frame.Right, (int)frame.Bottom);
+			var scale = AndroidContext.DisplayScale;
+
+			var left = frame.Left * scale;
+			var top = frame.Top * scale;
+			var bottom = frame.Bottom * scale;
+			var right = frame.Right * scale;
+            
+			if (LayoutParameters == null)
+			{
+				LayoutParameters = new AViewGroup.LayoutParams(
+					(int) (frame.Width * scale),
+					(int) (frame.Height * scale));
+			}
+			else
+			{
+				LayoutParameters.Width = (int) (frame.Width * scale);
+				LayoutParameters.Height = (int) (frame.Height * scale);
+			}
+            
+			Layout((int)left, (int)top, (int)right, (int)bottom);
 		}
 
 		public void SetView(View view)
@@ -68,10 +87,7 @@ namespace Comet.Android.Handlers
 			ViewHandler.AddGestures(this, view);
 		}
 
-		private void HandleNeedsLayout(object sender, EventArgs e)
-		{
-			Invalidate();
-		}
+		private void HandleNeedsLayout(object sender, EventArgs e) => Invalidate();
 
 		public void Remove(View view)
 		{
@@ -194,8 +210,8 @@ namespace Comet.Android.Handlers
 
 		protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
 		{
-			int width = MeasureSpec.GetSize(widthMeasureSpec);
-			int height = MeasureSpec.GetSize(heightMeasureSpec);
+			var width = MeasureSpec.GetSize(widthMeasureSpec);
+			var height = MeasureSpec.GetSize(heightMeasureSpec);
 
 			var measured = _view.Measure(new SizeF(width, height));
 
@@ -211,13 +227,18 @@ namespace Comet.Android.Handlers
 
 		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
 		{
-			if (_view == null) return;
-
-			var width = right - left;
-			var height = bottom - top;
+			if (_view == null || !changed) return;
+			
+			var displayScale = AndroidContext.DisplayScale;
+			var width = (right - left) / displayScale;
+			var height = (bottom - top) / displayScale;
 
 			if (width > 0 && height > 0)
-				_view.Frame = new RectangleF(left, top, width, height);
+			{
+				var x = left / displayScale;
+				var y = top / displayScale;
+				_view.Frame = new RectangleF(x, y, width, height);
+			}
 		}
 	}
 }

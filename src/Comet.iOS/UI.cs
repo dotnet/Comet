@@ -1,7 +1,4 @@
-﻿
-using System;
-using Foundation;
-using Comet;
+﻿using Foundation;
 using Comet.iOS.Handlers;
 using Comet.iOS.Services;
 using UIKit;
@@ -19,18 +16,17 @@ namespace Comet.iOS
 			_hasInitialized = true;
 
 			// Controls
-			Registrar.Handlers.Register<Button, ButtonHandler>();
-			Registrar.Handlers.Register<ProgressBar, ProgressBarHandler>();
-			Registrar.Handlers.Register<Image, ImageHandler>();
-			Registrar.Handlers.Register<TextField, TextFieldHandler>();
-			Registrar.Handlers.Register<Text, TextHandler>();
-			Registrar.Handlers.Register<SecureField, SecureFieldHandler>();
-			Registrar.Handlers.Register<Slider, SliderHandler>();
-			Registrar.Handlers.Register<ShapeView, ShapeViewHandler>();
-			Registrar.Handlers.Register<Toggle, ToggleHandler>();
 			Registrar.Handlers.Register<ActivityIndicator, ActivityIndicatorHandler>();
-      Registrar.Handlers.Register<Stepper, StepperHandler>();
-
+			Registrar.Handlers.Register<Button, ButtonHandler>();
+			Registrar.Handlers.Register<Image, ImageHandler>();
+			Registrar.Handlers.Register<ProgressBar, ProgressBarHandler>();
+			Registrar.Handlers.Register<SecureField, SecureFieldHandler>();
+			Registrar.Handlers.Register<ShapeView, ShapeViewHandler>();
+			Registrar.Handlers.Register<Slider, SliderHandler>();
+			Registrar.Handlers.Register<Stepper, StepperHandler>();
+			Registrar.Handlers.Register<Text, TextHandler>();
+			Registrar.Handlers.Register<TextField, TextFieldHandler>();
+			Registrar.Handlers.Register<Toggle, ToggleHandler>();
 			//Registrar.Handlers.Register<WebView, WebViewHandler> ();
 
 			// Containers

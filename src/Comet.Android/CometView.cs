@@ -89,12 +89,21 @@ namespace Comet.Android
 			}
 		}
 
-		protected override void OnLayout(bool changed, int l, int t, int r, int b)
+		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
 		{
 			if (nativeView == null) return;
-			nativeView.Layout(l, t, r, b);
-			var rect = new RectangleF(l, t, Math.Abs(l - r), Math.Abs(b - t));
-			virtualView.SetFrameFromNativeView(rect);
+
+			var displayScale = AndroidContext.DisplayScale;
+			var width = (right - left) / displayScale;
+			var height = (bottom - top) / displayScale;
+			if (width > 0 && height > 0)
+			{
+				var x = left / displayScale;
+				var y = top / displayScale;
+
+				var rect = new RectangleF(x, y, width, height);
+				virtualView.SetFrameFromNativeView(rect);
+			}
 		}
 
 		protected override void Dispose(bool disposing)

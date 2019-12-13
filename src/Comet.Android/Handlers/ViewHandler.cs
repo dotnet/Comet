@@ -33,12 +33,12 @@ namespace Comet.Android.Handlers
 
 		public static void MapShadowProperty(IViewHandler handler, View virtualView)
 		{
-			Console.WriteLine("Shadows not yet supported on Android");
+			// todo: Console.WriteLine("Shadows not yet supported on Android");
 		}
 
 		public static void MapClipShapeProperty(IViewHandler handler, View virtualView)
 		{
-			Console.WriteLine("ClipShape not yet supported on Android");
+			// todo: Console.WriteLine("ClipShape not yet supported on Android");
 		}
 
 		public static void AddGestures(AndroidViewHandler handler, View view)

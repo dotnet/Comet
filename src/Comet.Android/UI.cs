@@ -15,22 +15,23 @@ namespace Comet.Android
 			_hasInitialized = true;
 
 			// Controls
+			Registrar.Handlers.Register<ActivityIndicator, ActivityIndicatorHandler>();
 			Registrar.Handlers.Register<Button, ButtonHandler>();
 			Registrar.Handlers.Register<Image, ImageHandler>();
 			Registrar.Handlers.Register<ProgressBar, ProgressBarHandler>();
-			Registrar.Handlers.Register<Slider, SliderHandler>();
-			Registrar.Handlers.Register<TextField, TextFieldHandler>();
-			Registrar.Handlers.Register<Text, TextHandler>();
-			Registrar.Handlers.Register<Toggle, ToggleHandler>();
 			Registrar.Handlers.Register<SecureField, SecureFieldHandler>();
-			Registrar.Handlers.Register<ActivityIndicator, ActivityIndicatorHandler>();
+			Registrar.Handlers.Register<Slider, SliderHandler>();
+			// Stepper
+			Registrar.Handlers.Register<Text, TextHandler>();
+			Registrar.Handlers.Register<TextField, TextFieldHandler>();
+			Registrar.Handlers.Register<Toggle, ToggleHandler>();
 			//Registrar.Handlers.Register<WebView, WebViewHandler> ();
 
 			// Containers
-			Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();
-			Registrar.Handlers.Register<ListView, ListViewHandler>();
-			Registrar.Handlers.Register<View, ViewHandler>();
 			Registrar.Handlers.Register<ContentView, ContentViewHandler>();
+			Registrar.Handlers.Register<ListView, ListViewHandler>();
+			Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();
+			Registrar.Handlers.Register<View, ViewHandler>();
 			Registrar.Handlers.Register<ViewRepresentable, ViewRepresentableHandler>();
 			Registrar.Handlers.Register<TabView, TabViewHandler>();
 			Registrar.Handlers.Register<NavigationView, NavigationViewHandler>();
@@ -40,6 +41,7 @@ namespace Comet.Android
 			Registrar.Handlers.Register<VStack, VStackHandler>();
 			Registrar.Handlers.Register<ZStack, ZStackHandler>();
 			Registrar.Handlers.Register<Grid, GridHandler>();
+			Registrar.Handlers.Register<Spacer, SpacerHandler>();
 
 			// Modal Support
 			ModalView.PerformPresent = ModalManager.ShowModal;

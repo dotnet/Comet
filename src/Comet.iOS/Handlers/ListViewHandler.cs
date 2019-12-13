@@ -22,10 +22,7 @@ namespace Comet.iOS.Handlers
 
 		}
 
-		protected override CUITableView CreateView()
-		{
-			return new CUITableView();
-		}
+		protected override CUITableView CreateView() => new CUITableView();
 
 		public override void Remove(View view)
 		{
