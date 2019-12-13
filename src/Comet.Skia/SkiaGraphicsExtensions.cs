@@ -30,7 +30,7 @@ namespace Comet.Skia
 			=> new RectangleF(rect.Left, rect.Top, rect.Width, rect.Height);
 
 		public static SKRect ToSKRect(this RectangleF rect)
-			=> new SKRect(rect.X, rect.Y, rect.Width, rect.Height);
+			=> new SKRect(rect.X, rect.Y, rect.X + rect.Width, rect.Y + rect.Height);
 
 		public static SKPath ToSKPath(
 		   this PathF path)
