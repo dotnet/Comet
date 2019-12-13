@@ -31,9 +31,7 @@ namespace Comet.Skia
 			SkiaEnvironmentKeys.Overlay,
 		};
 		protected virtual string[] LayerDrawingOrder() => DefaultLayerDrawingOrder;
-
-		public override SizeF Measure(SizeF availableSize) => GetIntrinsicSize();
-
+		
         protected SizeF GetIntrinsicSize(float defaultWidth = 100, float defaultHeight = 44)
         {
 			var minHeight = TypedVirtualView.GetEnvironment<float?>(SkiaEnvironmentKeys.IntrinsicSize.Height) ?? defaultHeight;
