@@ -110,7 +110,9 @@ namespace Comet.iOS
 			var bounds = Bounds;
 
 			if (ignoreSafeArea)
-				_nativeView.Frame = Bounds;
+			{
+				_virtualView.SetFrameFromNativeView(Bounds.ToRectangleF());
+			}
 			else
 			{
 				//TODO: opt out of safe are

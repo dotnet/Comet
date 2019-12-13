@@ -96,10 +96,26 @@ namespace Comet
 			var frameConstraints = view.GetFrameConstraints();
 
 			if (frameConstraints?.Width != null)
+			{
 				width = (float)frameConstraints.Width;
+			}
+			else
+			{
+				var horizontalSizing = view.GetHorizontalSizing(view.Parent as ContainerView, Sizing.Fit);
+				if (horizontalSizing == Sizing.Fill)
+					width = frame.Width;
+			}
 
 			if (frameConstraints?.Height != null)
+			{
 				height = (float)frameConstraints.Height;
+			}
+			else
+			{
+				var verticalSizing = view.GetVerticalSizing(view.Parent as ContainerView, Sizing.Fit);
+				if (verticalSizing == Sizing.Fill)
+					height = frame.Height;
+			}
 
 			var alignment = frameConstraints?.Alignment ?? Alignment.Center;
 
@@ -159,8 +175,9 @@ namespace Comet
 		{
 			var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.HorizontalSizing);
 			if (sizing != null) return (Sizing)sizing;
-			
-			sizing = view.GetEnvironment<Sizing?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.HorizontalSizing}");
+
+			if (container != null)
+				sizing = view.GetEnvironment<Sizing?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.HorizontalSizing}");
 			return sizing ?? defaultSizing;
 		}
 
@@ -169,7 +186,8 @@ namespace Comet
 			var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.VerticalSizing);
 			if (sizing != null) return (Sizing)sizing;
 
-			sizing = view.GetEnvironment<Sizing?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.VerticalSizing}");
+			if (container != null)
+				sizing = view.GetEnvironment<Sizing?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.VerticalSizing}");
 			return sizing ?? defaultSizing;
 		}
 
