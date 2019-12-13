@@ -20,9 +20,9 @@ namespace Comet.WPF.Handlers
 			set { }
 		}
 
-		public SizeF Measure(SizeF availableSize)
+		public SizeF GetIntrinsicSize(SizeF availableSize)
 		{
-			Measure(availableSize.ToSize());
+			Measure(availableSize.ToWSize());
 			return DesiredSize.ToSizeF();
 		}
 

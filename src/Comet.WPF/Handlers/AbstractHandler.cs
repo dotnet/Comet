@@ -70,7 +70,7 @@ namespace Comet.WPF.Handlers
 			set { }
 		}
 
-		public virtual SizeF Measure(SizeF availableSize)
+		public virtual SizeF GetIntrinsicSize(SizeF availableSize)
 		{
 			_nativeView?.Measure(availableSize.ToWSize());
 			return _nativeView?.DesiredSize.ToSizeF() ?? availableSize;
