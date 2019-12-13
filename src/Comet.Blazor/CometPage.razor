@@ -48,8 +48,9 @@
                     View = toView;
                     StateHasChanged();
                 });
-                nav.SetPerformPop(() => {
-                    View =_navigationStack.Pop();
+                nav.SetPerformPop(() =>
+                {
+                    View = _navigationStack.Pop();
                     StateHasChanged();
                 });
             }
