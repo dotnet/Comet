@@ -35,7 +35,7 @@ namespace Comet.Blazor.Handlers
 
         public virtual bool HasContainer { get; set; }
 
-        public virtual SizeF Measure(SizeF availableSize) => availableSize;
+        public virtual SizeF GetIntrinsicSize(SizeF availableSize) => availableSize;
 
         public virtual void Remove(View view)
         {
