@@ -129,8 +129,8 @@ namespace Comet
 		}
 		View builtView;
 		public View BuiltView => builtView;
-		internal virtual void Reload() => ResetView(true);
-		void ResetView(bool isReload = false)
+		internal virtual void Reload(bool isHotReload) => ResetView(isHotReload);
+		void ResetView(bool isHotReload = false)
 		{
 			// We save the old replaced view so we can clean it up after the diff
 			var oldReplacedView = replacedView;
@@ -148,7 +148,7 @@ namespace Comet
 				ViewHandler.Remove(this);
 				var view = this.GetRenderView();
 				if (oldView != null)
-					view = view.Diff(oldView, isReload);
+					view = view.Diff(oldView, isHotReload);
 				oldView?.Dispose();
 				animations?.ForEach(x => x.Dispose());
 				ViewHandler?.SetView(view);
@@ -237,7 +237,7 @@ namespace Comet
 		{
 			var prop = property.Split('.').Last();
 			if (!State.UpdateValue(this, (bindingObject, property), fullProperty, value))
-				Reload();
+				Reload(false);
 			else
 				ViewPropertyChanged(prop, value);
 		}

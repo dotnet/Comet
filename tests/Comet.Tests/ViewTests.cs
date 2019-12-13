@@ -52,7 +52,7 @@ namespace Comet.Tests
 			//Make sure the old one is unasociated 
 			Assert.Null(text?.ViewHandler);
 			//Make sure the new view has the old handler
-			Assert.Equal(currentText?.ViewHandler, textHandler);
+			Assert.Equal(textHandler, currentText?.ViewHandler);
 		}
 	}
 }

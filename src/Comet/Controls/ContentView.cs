@@ -66,10 +66,10 @@ namespace Comet
 
 			return base.GetIntrinsicSize(availableSize);
 		}
-		internal override void Reload()
+		internal override void Reload(bool isHotReload)
 		{
-			Content?.Reload();
-			base.Reload();
+			Content?.Reload(isHotReload);
+			base.Reload(isHotReload);
 		}
 
 		public override void ViewDidAppear()

@@ -125,7 +125,7 @@ namespace Comet
 			await ThreadHelper.SwitchToMainThreadAsync();
 			foreach (var view in roots)
 			{
-				view.Reload();
+				view.Reload(true);
 			}
 		}
 	}
