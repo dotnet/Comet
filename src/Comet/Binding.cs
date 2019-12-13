@@ -45,6 +45,7 @@ namespace Comet
 		public Binding(Func<T> getValue, Action<T> setValue)
 		{
 			Get = getValue;
+			ProcessGetFunc();
 			Set = setValue;
 		}
 
@@ -64,10 +65,10 @@ namespace Comet
 				StateManager.CurrentView.GetState().AddGlobalProperties(props);
 			}
 
-            else if(props?.Count == 1 && props[0].BindingObject is State<T> state)
-            {
+			else if (props?.Count == 1 && props[0].BindingObject is State<T> state)
+			{
 				return state;
-            }
+			}
 			return new Binding<T>()
 			{
 				IsValue = true,
@@ -78,19 +79,20 @@ namespace Comet
 		}
 
 		public static implicit operator Binding<T>(Func<T> value)
+			=> new Binding<T>(
+				getValue: value,
+				setValue: null);
+		protected void ProcessGetFunc()
 		{
 			StateManager.StartProperty();
-			var result = value == null ? default : value.Invoke();
+			var result = Get == null ? default : Get.Invoke();
 			var props = StateManager.EndProperty();
-			return new Binding<T>(
-				getValue: value,
-				setValue: null)
-			{
-				IsFunc = true,
-				CurrentValue = result,
-				BoundProperties = props,
-				BoundFromView = StateManager.CurrentView
-			};
+			IsFunc = true;
+			CurrentValue = result;
+			BoundProperties = props;
+
+			BoundFromView = StateManager.CurrentView;
+
 		}
 
 
@@ -219,13 +221,13 @@ namespace Comet
 
 		}
 		T Cast(object value)
-        {
+		{
 			if (value is T v)
 				return v;
 			if (typeof(T) == typeof(string))
 				return (T)(object)value?.ToString();
 			throw new InvalidCastException();
-        }
+		}
 	}
 
 	public static class BindingExtensions

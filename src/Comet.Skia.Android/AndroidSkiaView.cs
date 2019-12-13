@@ -117,7 +117,6 @@ namespace Comet.Skia.Android
 			return true;
 		}
 
-		bool PointsContained(PointF[] points) => points.Any(p => VirtualView.Frame.BoundsContains(p));
 		bool pressedContained = false;
 
 		public void TouchesBegan(PointF[] points)
@@ -144,7 +143,7 @@ namespace Comet.Skia.Android
 
 			_lastMovedViewPoints = points;
 			_dragStarted = true;
-			pressedContained = PointsContained(points);
+			pressedContained = VirtualView?.PointsContained(points) ?? false;
 			VirtualView?.DragInteraction(points);
 		}
 
