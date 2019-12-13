@@ -132,6 +132,9 @@
     <PackageReference Include="HarfBuzzSharp">
       <Version>2.6.1</Version>
     </PackageReference><PackageReference Include="System.Memory" Version="4.5.3" IncludeAssets="None" />
+<PackageReference Include="Clancey.Comet.Reload">
+  <Version>0.0.11-alpha</Version>
+</PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
 </Project>
