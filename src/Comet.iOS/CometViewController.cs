@@ -51,19 +51,18 @@ namespace Comet.iOS
 
 		public void ApplyStyle()
 		{
-			var barColor = _containerView?.CurrentView?.GetNavigationBackgroundColor();
+			var barColor = _containerView?.CurrentView?.GetNavigationBackgroundColor()?.ToUIColor() ?? CUINavigationController.DefaultBarTintColor;
 
-			if (barColor != null && NavigationController != null)
+			if (NavigationController != null)
 			{
-				this.NavigationController.NavigationBar.BarTintColor = barColor.ToUIColor();
+				this.NavigationController.NavigationBar.BarTintColor = barColor;
 			}
 
-			var textColor = _containerView?.CurrentView?.GetNavigationTextColor();
-			if (textColor != null && NavigationController != null)
+			var textColor = _containerView?.CurrentView?.GetNavigationTextColor()?.ToUIColor() ?? CUINavigationController.DefaultTintColor;
+			if (NavigationController != null)
 			{
-				var color = textColor.ToUIColor();
-				this.NavigationController.NavigationBar.TintColor = color;
-				this.NavigationController.NavigationBar.TitleTextAttributes = new UIStringAttributes { ForegroundColor = color };
+				this.NavigationController.NavigationBar.TintColor = textColor;
+				this.NavigationController.NavigationBar.TitleTextAttributes = new UIStringAttributes { ForegroundColor = textColor };
 			}
 		}
 	}
