@@ -4,6 +4,7 @@ using Android.Content;
 using Android.Views;
 using System.Linq;
 using System.Drawing;
+using Comet.Android;
 
 namespace Comet.Skia.Android
 {
@@ -60,7 +61,8 @@ namespace Comet.Skia.Android
 			{
 				var width = right - left;
 				var height = bottom - top;
-				_bounds = new RectangleF(left, top, width, height);
+				var displayScale = AndroidContext.DisplayScale;
+				_bounds = new RectangleF(0, 0, width / displayScale, height / displayScale);
 				_virtualView?.Resized(_bounds);
 			}
 		}
@@ -71,7 +73,7 @@ namespace Comet.Skia.Android
 			var canvas = e.Surface.Canvas;
 
 			canvas.Save();
-			var scale = CanvasSize.Width / _bounds.Width;
+			var scale = AndroidContext.DisplayScale;
 			canvas.Scale(scale, scale);
 			_virtualView.Draw(canvas, _bounds);
 			canvas.Restore();
@@ -87,7 +89,7 @@ namespace Comet.Skia.Android
 				var touchPoints = new PointF[touchCount];
 
 				for (int i = 0; i < touchCount; i++)
-					touchPoints[i] = new PointF(e.GetX(i), e.GetY(i));
+					touchPoints[i] = new PointF(e.GetX(i) / AndroidContext.DisplayScale, e.GetY(i) / AndroidContext.DisplayScale);
 
 				var actionMasked = e.Action & MotionEventActions.Mask;
 

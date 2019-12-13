@@ -78,7 +78,6 @@ namespace Comet.Skia
 		const float defaultHeight = 2f;
 		public virtual void DrawTrack(SKCanvas canvas, float hSpace, RectangleF rectangle)
 		{
-			Console.WriteLine(rectangle);
 			var paint = new SKPaint();
 			SKColor fillColor11 = ColorFromArgb(97, 3, 218, 197);
 
