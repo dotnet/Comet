@@ -111,7 +111,7 @@
       <Version>2.4.11.982</Version>
     </PackageReference>
     <PackageReference Include="Clancey.Comet.Reload">
-      <Version>0.0.9-alpha</Version>
+      <Version>0.0.10-alpha</Version>
     </PackageReference>
     <PackageReference Include="Topten.RichTextKit">
       <Version>0.1.117</Version>
