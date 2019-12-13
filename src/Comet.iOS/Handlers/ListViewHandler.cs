@@ -22,7 +22,9 @@ namespace Comet.iOS.Handlers
 
 		}
 
-		protected override CUITableView CreateView() => new CUITableView();
+		//Resuse the old control if we can!
+		protected override CUITableView CreateView()
+			=> NativeView as CUITableView ?? new CUITableView();
 
 		public override void Remove(View view)
 		{
