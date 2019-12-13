@@ -129,8 +129,8 @@ namespace Comet
 		}
 		View builtView;
 		public View BuiltView => builtView;
-		internal virtual void Reload() => ResetView();
-		void ResetView()
+		internal virtual void Reload() => ResetView(true);
+		void ResetView(bool isReload = false)
 		{
 			// We save the old replaced view so we can clean it up after the diff
 			var oldReplacedView = replacedView;
@@ -148,7 +148,7 @@ namespace Comet
 				ViewHandler.Remove(this);
 				var view = this.GetRenderView();
 				if (oldView != null)
-					view = view.Diff(oldView);
+					view = view.Diff(oldView, isReload);
 				oldView?.Dispose();
 				animations?.ForEach(x => x.Dispose());
 				ViewHandler?.SetView(view);
@@ -266,11 +266,11 @@ namespace Comet
 
 		internal override void ContextPropertyChanged(string property, object value, bool cascades)
 		{
-			if(property == nameof(Frame))
-            {
-                ViewHandler?.SetFrame((RectangleF)value);
-                RequestLayout();
-            }
+			if (property == nameof(Frame))
+			{
+				ViewHandler?.SetFrame((RectangleF)value);
+				RequestLayout();
+			}
 			ViewPropertyChanged(property, value);
 		}
 
@@ -407,10 +407,10 @@ namespace Comet
 
 		public virtual RectangleF Frame
 		{
-			get => this.GetEnvironment<RectangleF?>(nameof(Frame),false) ?? RectangleF.Empty;
+			get => this.GetEnvironment<RectangleF?>(nameof(Frame), false) ?? RectangleF.Empty;
 			set => this.SetEnvironment(nameof(Frame), value, false);
 		}
-		
+
 
 		private bool measurementValid;
 		public bool MeasurementValid
@@ -460,7 +460,7 @@ namespace Comet
 			// return the constrained values.
 			if (width != null && height != null)
 				return new SizeF((float)width, (float)height);
-			
+
 			var intrinsicSize = GetIntrinsicSize(availableSize);
 
 			// If the intrinsic width is less than 0, then default to the available width
@@ -470,7 +470,7 @@ namespace Comet
 			// If the intrinsic height is less than 0, then default to the available height
 			if (intrinsicSize.Height < 0)
 				intrinsicSize.Height = availableSize.Height;
-			
+
 			// If we have a constraint for just one of the values, then combine the constrained value
 			// with the measured value for our size.
 			if (width != null || height != null)
@@ -478,12 +478,12 @@ namespace Comet
 
 			return intrinsicSize;
 		}
-		
+
 		public virtual SizeF GetIntrinsicSize(SizeF availableSize)
 		{
 			if (BuiltView != null)
 				return BuiltView.GetIntrinsicSize(availableSize);
-			
+
 			return viewHandler?.GetIntrinsicSize(availableSize) ?? UseAvailableWidthAndHeight;
 		}
 
@@ -582,7 +582,7 @@ namespace Comet
 			AnimationManger.Add(animation);
 		}
 		public void RemoveAnimation(Animation animation)
-        {
+		{
 			animation.Parent = null;
 			GetAnimations(false)?.Remove(animation);
 			AnimationManger.Remove(animation);

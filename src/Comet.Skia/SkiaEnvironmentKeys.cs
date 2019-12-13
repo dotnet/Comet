@@ -20,7 +20,7 @@ namespace Comet.Skia
 			{
 				public const string Track = "Skia.Slider.Layers.Track";
 				public const string Progress = "Skia.Slider.Layers.Progress";
-				public const string Thumb = "Skia.Slider.Layers.Progress";
+				public const string Thumb = "Skia.Slider.Layers.Thumb";
 			}
 		}
 	}

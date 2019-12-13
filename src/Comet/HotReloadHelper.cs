@@ -71,22 +71,23 @@ namespace Comet
 
 		static Dictionary<string, Type> replacedViews = new Dictionary<string, Type>();
 		static Dictionary<View, object[]> currentViews = new Dictionary<View, object[]>();
-		static Dictionary<string, List<Type>> replacedHandlers = new Dictionary<string, List<Type>>();
+		static Dictionary<string, List<KeyValuePair<Type, Type>>> replacedHandlers = new Dictionary<string, List<KeyValuePair<Type, Type>>>();
 		public static void RegisterReplacedView(string oldViewType, Type newViewType)
 		{
 			if (!IsEnabled || oldViewType == newViewType.FullName)
 				return;
 
 			Console.WriteLine($"{oldViewType} - {newViewType}");
+
 			if (newViewType.IsSubclassOf(typeof(View)))
 				replacedViews[oldViewType] = newViewType;
-			else if (typeof(IViewHandler).IsAssignableFrom(newViewType))
-			{
 
+			if (typeof(IViewHandler).IsAssignableFrom(newViewType))
+			{
 				if (replacedHandlers.TryGetValue(oldViewType, out var vTypes))
 				{
 					foreach (var vType in vTypes)
-						Registrar.Handlers.Register(vType, newViewType);
+						RegisterHandler(vType, newViewType);
 					return;
 				}
 
@@ -97,15 +98,24 @@ namespace Comet
 				{
 					var staticInit = newViewType.GetMethod("Init", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
 
-					staticInit.Invoke(null, null);
+					staticInit?.Invoke(null, null);
 					views = Registrar.Handlers.GetViewType(t);
 				}
 				replacedHandlers[oldViewType] = views;
 				foreach (var h in views)
 				{
-					Registrar.Handlers.Register(h, newViewType);
+					RegisterHandler(h, newViewType);
 				}
 			}
+		}
+
+		static void RegisterHandler(KeyValuePair<Type, Type> pair, Type newHandler)
+		{
+			var view = pair.Key;
+			var newType = newHandler;
+			if (pair.Value.IsGenericType)
+				newType = pair.Value.GetGenericTypeDefinition().MakeGenericType(newHandler);
+			Registrar.Handlers.Register(view, newType);
 		}
 
 		public static async void TriggerReload()
