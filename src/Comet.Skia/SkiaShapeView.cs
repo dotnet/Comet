@@ -20,7 +20,8 @@ namespace Comet.Skia
 			var drawingStyle = Shape.GetDrawingStyle(this, DrawingStyle.StrokeFill);
 			var strokeColor = Shape.GetStrokeColor(this, Color.Black);
 			var strokeWidth = Shape.GetLineWidth(this, 1);
-			canvas.DrawShape(Shape, rect, drawingStyle, strokeWidth, strokeColor);
+			var fill = Shape.GetFill(this);
+			canvas.DrawShape(Shape, rect, drawingStyle, strokeWidth, strokeColor, fill);
 		}
 	}
 }

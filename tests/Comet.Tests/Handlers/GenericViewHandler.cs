@@ -16,18 +16,15 @@ namespace Comet.Tests.Handlers
 		public object NativeView => throw new NotImplementedException();
 
 		public bool HasContainer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-
-		public SizeF Measure(SizeF availableSize)
-		{
-			return OnMeasure?.Invoke(availableSize) ?? View.IllTakeWhatYouCanGive;
-		}
+		
+		public SizeF GetIntrinsicSize(SizeF availableSize) => OnGetIntrinsicSize?.Invoke(availableSize) ?? View.UseAvailableWidthAndHeight;
 
 		public void SetFrame(RectangleF frame)
 		{
 			Frame = frame;
 		}
 
-		public Func<SizeF, SizeF> OnMeasure { get; set; }
+		public Func<SizeF, SizeF> OnGetIntrinsicSize { get; set; }
 
 		public RectangleF Frame
 		{

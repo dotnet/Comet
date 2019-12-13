@@ -35,11 +35,8 @@ namespace Comet.iOS.Handlers
 			get => false;
 			set { }
 		}
-
-		public SizeF Measure(SizeF availableSize)
-		{
-			return Comet.View.IllTakeWhatYouCanGive;
-		}
+		
+		public SizeF GetIntrinsicSize(SizeF availableSize) => Comet.View.UseAvailableWidthAndHeight;
 
 		public void SetFrame(RectangleF frame)
 		{
@@ -197,7 +194,7 @@ namespace Comet.iOS.Handlers
 
 		public override CGSize SizeThatFits(CGSize size)
 		{
-			_measured = _view.Measure(size.ToSizeF());
+			_measured = _view.GetIntrinsicSize(size.ToSizeF());
 			return _measured.ToCGSize();
 		}
 
@@ -207,7 +204,7 @@ namespace Comet.iOS.Handlers
 			if (size == null || ((CGSize)size).IsEmpty)
 				size = UIScreen.MainScreen.Bounds.Size;
 
-			_measured = _view.Measure(((CGSize)size).ToSizeF());
+			_measured = _view.GetIntrinsicSize(((CGSize)size).ToSizeF());
 			base.Frame = new CGRect(new CGPoint(0, 0), _measured.ToCGSize());
 		}
 

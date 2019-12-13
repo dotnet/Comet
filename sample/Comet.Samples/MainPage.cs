@@ -16,6 +16,7 @@ namespace Comet.Samples
 			new MenuItem("Skia Controls Sample",()=> new SkiaControlsSample()),
 			new MenuItem("Material Design",()=> new MaterialStylePicker()),
 			new MenuItem("AuditReportPage",()=> new AuditReportPage()),
+			new MenuItem("VStackSample",()=> new VStackSample()),
 			new MenuItem("Demo Credit Card",()=> new DemoCreditCardView()),
 			new MenuItem("Demo Credit Card 2",()=> new DemoCreditCardView2()),
 			new MenuItem("Demo Credit Card 3",()=> new DemoCreditCardView3()),

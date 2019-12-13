@@ -118,12 +118,5 @@ namespace Comet.Skia
 			newValue?.BindToProperty(this, propertyName);
 			_boundProperties.Add(propertyName);
 		}
-		public override SizeF Measure(SizeF availableSize)
-		{
-			if (OnDraw != null)
-				return availableSize;
-			return base.Measure(availableSize);
-		}
-		
 	}
 }

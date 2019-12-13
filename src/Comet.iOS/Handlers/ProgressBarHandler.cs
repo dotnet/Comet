@@ -27,7 +27,7 @@ namespace Comet.iOS.Handlers
 		{
 			var nativeView = (UIProgressView)viewHandler.NativeView;
 
-			nativeView.Progress = (float)virtualView.Value.CurrentValue * 0.01f;
+			nativeView.Progress = virtualView.Value.CurrentValue * 0.01f;
 		}
 
 		public static void MapIsIndeterminateProperty(IViewHandler viewHandler, ProgressBar virtualView)

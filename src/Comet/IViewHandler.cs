@@ -10,7 +10,7 @@ namespace Comet
 		void Remove(View view);
 		object NativeView { get; }
 		bool HasContainer { get; set; }
-		SizeF Measure(SizeF availableSize);
+		SizeF GetIntrinsicSize(SizeF availableSize);
 		void SetFrame(RectangleF frame);
 	}
 }

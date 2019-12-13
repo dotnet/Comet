@@ -7,7 +7,7 @@ using SkiaSharp;
 
 namespace Comet.Skia
 {
-	public class SliderHandler : SKiaAbstractControlHandler<Slider>
+	public class SliderHandler : SkiaAbstractControlHandler<Slider>
 	{
 		public static DrawMapper<Slider> SliderDrawMapper = new DrawMapper<Slider>(SkiaControl.DrawMapper)
 		{

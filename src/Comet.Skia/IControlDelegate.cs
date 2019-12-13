@@ -23,7 +23,7 @@ namespace Comet.Skia
 		void Resized(RectangleF bounds);
 		void AddedToView(object nativeView, RectangleF bounds);
 		void RemovedFromView(object nativeView);
-		SizeF Measure(SizeF availableSize);
+		SizeF GetIntrinsicSize(SizeF availableSize);
 		void ViewPropertyChanged(string property, object value);
 	}
 }

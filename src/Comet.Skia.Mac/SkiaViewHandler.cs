@@ -7,10 +7,7 @@ namespace Comet.Skia.Mac
 {
 	public class SkiaViewHandler : AbstractControlHandler<SkiaView, MacSkiaView>
 	{
-		protected override MacSkiaView CreateView()
-		{
-			return new MacSkiaView();
-		}
+		protected override MacSkiaView CreateView() => new MacSkiaView();
 
 		protected override void DisposeView(MacSkiaView nativeView)
 		{

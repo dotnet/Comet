@@ -4,21 +4,19 @@ using SkiaSharp;
 
 namespace Comet.Skia
 {
-	public abstract class SKiaAbstractControlHandler<TVirtualView> : SkiaControl, IViewHandler
+	public abstract class SkiaAbstractControlHandler<TVirtualView> : SkiaControl, IViewHandler
 		where TVirtualView : View
 	{
-
-		PropertyMapper<TVirtualView> mapper;
-		protected DrawMapper<TVirtualView> drawMapper;
-
-
-		protected SKiaAbstractControlHandler()
+		readonly PropertyMapper<TVirtualView> mapper;
+		protected readonly DrawMapper<TVirtualView> drawMapper;
+		
+		protected SkiaAbstractControlHandler()
 		{
 			drawMapper = new DrawMapper<TVirtualView>(SkiaControl.DrawMapper);
 			mapper = new PropertyMapper<TVirtualView>(SkiaControl.Mapper);
 		}
 
-		protected SKiaAbstractControlHandler(DrawMapper<TVirtualView> drawMapper, PropertyMapper<TVirtualView> mapper)
+		protected SkiaAbstractControlHandler(DrawMapper<TVirtualView> drawMapper, PropertyMapper<TVirtualView> mapper)
 		{
 			this.drawMapper = drawMapper ?? new DrawMapper<TVirtualView>(SkiaControl.DrawMapper);
 			this.mapper = mapper ?? new PropertyMapper<TVirtualView>(SkiaControl.Mapper);
@@ -26,9 +24,7 @@ namespace Comet.Skia
 
 		
 		protected virtual string[] LayerDrawingOrder() => DefaultLayerDrawingOrder;
-
-		public override SizeF Measure(SizeF availableSize) => GetIntrinsicSize();
-
+		
         protected SizeF GetIntrinsicSize(float defaultWidth = 100, float defaultHeight = 44)
         {
 			var minHeight = TypedVirtualView.GetEnvironment<float?>(SkiaEnvironmentKeys.IntrinsicSize.Height) ?? defaultHeight;

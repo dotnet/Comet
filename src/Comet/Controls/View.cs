@@ -14,7 +14,7 @@ namespace Comet
 
 	public class View : ContextualObject, IDisposable
 	{
-		public static readonly SizeF IllTakeWhatYouCanGive = new SizeF(-1, -1);
+		public static readonly SizeF UseAvailableWidthAndHeight = new SizeF(-1, -1);
 
 		internal readonly static WeakList<View> ActiveViews = new WeakList<View>();
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
@@ -447,7 +447,7 @@ namespace Comet
 			}
 		}
 
-		public virtual SizeF Measure(SizeF availableSize)
+		public SizeF Measure(SizeF availableSize)
 		{
 			if (BuiltView != null)
 				return BuiltView.Measure(availableSize);
@@ -460,15 +460,31 @@ namespace Comet
 			// return the constrained values.
 			if (width != null && height != null)
 				return new SizeF((float)width, (float)height);
+			
+			var intrinsicSize = GetIntrinsicSize(availableSize);
 
-			var measuredSize = viewHandler?.Measure(availableSize) ?? IllTakeWhatYouCanGive;
+			// If the intrinsic width is less than 0, then default to the available width
+			if (intrinsicSize.Width < 0)
+				intrinsicSize.Width = availableSize.Width;
 
+			// If the intrinsic height is less than 0, then default to the available height
+			if (intrinsicSize.Height < 0)
+				intrinsicSize.Height = availableSize.Height;
+			
 			// If we have a constraint for just one of the values, then combine the constrained value
 			// with the measured value for our size.
 			if (width != null || height != null)
-				return new SizeF(width ?? measuredSize.Width, height ?? measuredSize.Height);
+				return new SizeF(width ?? intrinsicSize.Width, height ?? intrinsicSize.Height);
 
-			return measuredSize;
+			return intrinsicSize;
+		}
+		
+		public virtual SizeF GetIntrinsicSize(SizeF availableSize)
+		{
+			if (BuiltView != null)
+				return BuiltView.GetIntrinsicSize(availableSize);
+			
+			return viewHandler?.GetIntrinsicSize(availableSize) ?? UseAvailableWidthAndHeight;
 		}
 
 		protected virtual void RequestLayout()

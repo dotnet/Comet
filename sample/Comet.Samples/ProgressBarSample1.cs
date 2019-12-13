@@ -4,7 +4,7 @@ namespace Comet.Samples
 {
 	public class ProgressBarSample1 : View
 	{
-		readonly State<double> percentage = new State<double>(10);
+		readonly State<float> percentage = new State<float>(10);
 		private readonly Timer _timer;
 
 		public ProgressBarSample1()

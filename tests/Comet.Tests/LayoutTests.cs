@@ -7,40 +7,125 @@ namespace Comet.Tests
 {
 	public class LayoutTests : TestBase
 	{
-		[Fact]
-		public void LabelInVStackIsFullWidth()
+		public class TextInVStackTestView : View
 		{
-			
+			public readonly State<string> text = "Test";
+
+			[Body]
+			View body() => new VStack()
+			{
+				new Text(text).Tag("text"),
+			}.Tag("stack");
 		}
 		
 		[Fact]
 		public void TextInVStackIsFullWidth()
 		{
+			var view = new TextInVStackTestView();
+			InitializeHandlers(view, 320, 600);
+
+			var stack = view.GetViewWithTag("stack");
+			var text = view.GetViewWithTag("text");
 			
+			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new RectangleF(0, 294, 320, 12), stack.Frame);
+			Assert.Equal(new RectangleF(0, 0, 320, 12), text.Frame);
+		}
+		
+		public class TextFieldInVStackTestView : View
+		{
+			public readonly State<string> text = "Test";
+
+			[Body]
+			View body() => new VStack()
+			{
+				new TextField(text).Tag("textfield"),
+			}.Tag("stack");
 		}
 		
 		[Fact]
 		public void TextFieldInVStackIsFullWidth()
 		{
+			var view = new TextFieldInVStackTestView();
+			InitializeHandlers(view, 320, 600);
+
+			var stack = view.GetViewWithTag("stack");
+			var textfield = view.GetViewWithTag("textfield");
 			
+			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new RectangleF(0, 294, 320, 12), stack.Frame);
+			Assert.Equal(new RectangleF(0, 0, 320, 12), textfield.Frame);
+		}
+		
+		public class SecureFieldInVStackTestView : View
+		{
+			public readonly State<string> text = "Test";
+
+			[Body]
+			View body() => new VStack()
+			{
+				new SecureField(text).Tag("securefield"),
+			}.Tag("stack");
 		}
 		
 		[Fact]
-		public void PasswordFieldInVStackIsFullWidth()
+		public void SecureFieldInVStackIsFullWidth()
 		{
+			var view = new SecureFieldInVStackTestView();
+			InitializeHandlers(view, 320, 600);
+
+			var stack = view.GetViewWithTag("stack");
+			var securefield = view.GetViewWithTag("securefield");
 			
+			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new RectangleF(0, 294, 320, 12), stack.Frame);
+			Assert.Equal(new RectangleF(0, 0, 320, 12), securefield.Frame);
+		}
+		
+		public class SliderInVStackTestView : View
+		{
+			[Body]
+			View body() => new VStack()
+			{
+				new Slider(0).Tag("slider"),
+			}.Tag("stack");
 		}
 		
 		[Fact]
 		public void SliderInVStackIsFullWidth()
 		{
+			var view = new SliderInVStackTestView();
+			InitializeHandlers(view, 320, 600);
+
+			var stack = view.GetViewWithTag("stack");
+			var slider = view.GetViewWithTag("slider");
 			
+			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new RectangleF(0, 290, 320, 20), stack.Frame);
+			Assert.Equal(new RectangleF(0, 0, 320, 20), slider.Frame);
+		}
+		
+		public class ProgressBarInVStackTestView : View
+		{
+			[Body]
+			View body() => new VStack()
+			{
+				new ProgressBar(0).Tag("progressbar"),
+			}.Tag("stack");
 		}
 		
 		[Fact]
 		public void ProgressBarInVStackIsFullWidth()
 		{
+			var view = new ProgressBarInVStackTestView();
+			InitializeHandlers(view, 320, 600);
+
+			var stack = view.GetViewWithTag("stack");
+			var progressbar = view.GetViewWithTag("progressbar");
 			
+			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new RectangleF(0, 290, 320, 20), stack.Frame);
+			Assert.Equal(new RectangleF(0, 0, 320, 20), progressbar.Frame);
 		}
 		
 		[Fact]
@@ -56,7 +141,7 @@ namespace Comet.Tests
 		}
 		
 		[Fact]
-		public void LabelInHStackIsCenterAligned()
+		public void LabelInHStackIsCenterAlignedVertically()
 		{
 			
 		}

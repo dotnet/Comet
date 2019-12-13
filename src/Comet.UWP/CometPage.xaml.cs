@@ -48,11 +48,14 @@ namespace Comet.UWP
 						_initializedBack = true;
 					}
 
-					nav.PerformNavigate = toView => {
+					nav.SetPerformNavigate(toView => {
 						SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
 						Frame.Navigate(typeof(CometPage), toView);
 						DiscardHandlers(_view);
-					};
+					});
+					nav.SetPerformPop(() => {
+						Frame.GoBack();
+					});
 				}
 			}
 		}

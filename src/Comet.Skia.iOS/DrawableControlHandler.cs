@@ -36,9 +36,6 @@ namespace Comet.Skia.iOS
 			base.Remove(view);
 		}
 
-		public override SizeF Measure(SizeF availableSize)
-		{
-			return VirtualView?.ControlDelegate?.Measure(availableSize) ?? availableSize;
-		}
+		public override SizeF GetIntrinsicSize(SizeF availableSize) => VirtualView?.ControlDelegate?.GetIntrinsicSize(availableSize) ?? availableSize;
 	}
 }

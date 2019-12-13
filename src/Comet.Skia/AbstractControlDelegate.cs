@@ -101,7 +101,7 @@ namespace Comet.Skia
 
 		public IDrawableControl NativeDrawableControl { get; set; }
 
-		public virtual SizeF Measure(SizeF availableSize)
+		public virtual SizeF GetIntrinsicSize(SizeF availableSize)
 		{
 			return availableSize;
 		}
