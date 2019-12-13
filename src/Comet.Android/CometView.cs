@@ -12,6 +12,7 @@ namespace Comet.Android
 		View virtualView;
 		AndroidViewHandler handler;
 		AView nativeView;
+		private bool inLayout;
 
 		public CometView(AContext context) : base(context)
 		{
@@ -91,18 +92,17 @@ namespace Comet.Android
 
 		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
 		{
-			if (nativeView == null) return;
+			if (nativeView == null || inLayout) return;
 
 			var displayScale = AndroidContext.DisplayScale;
 			var width = (right - left) / displayScale;
 			var height = (bottom - top) / displayScale;
 			if (width > 0 && height > 0)
 			{
-				var x = left / displayScale;
-				var y = top / displayScale;
-
-				var rect = new RectangleF(x, y, width, height);
+				inLayout = true;
+				var rect = new RectangleF(0, 0, width, height);
 				virtualView.SetFrameFromNativeView(rect);
+				inLayout = false;
 			}
 		}
 
