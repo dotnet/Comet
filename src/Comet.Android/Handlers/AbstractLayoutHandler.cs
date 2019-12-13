@@ -210,6 +210,8 @@ namespace Comet.Android.Handlers
 
 		protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
 		{
+			if (_view == null) return;
+			
 			var width = MeasureSpec.GetSize(widthMeasureSpec);
 			var height = MeasureSpec.GetSize(heightMeasureSpec);
 
