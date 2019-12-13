@@ -22,6 +22,7 @@ namespace Comet.Android
 			Registrar.Handlers.Register<TextField, TextFieldHandler>();
 			Registrar.Handlers.Register<Text, TextHandler>();
 			Registrar.Handlers.Register<Toggle, ToggleHandler>();
+			Registrar.Handlers.Register<SecureField, SecureFieldHandler>();
 			Registrar.Handlers.Register<ActivityIndicator, ActivityIndicatorHandler>();
 			//Registrar.Handlers.Register<WebView, WebViewHandler> ();
 
@@ -34,18 +35,13 @@ namespace Comet.Android
 			Registrar.Handlers.Register<TabView, TabViewHandler>();
 			Registrar.Handlers.Register<NavigationView, NavigationViewHandler>();
 
-			// Native Layouts
+			// Layouts
 			Registrar.Handlers.Register<HStack, HStackHandler>();
 			Registrar.Handlers.Register<VStack, VStackHandler>();
 			Registrar.Handlers.Register<ZStack, ZStackHandler>();
+			Registrar.Handlers.Register<Grid, GridHandler>();
 
-			// Managed Layouts
-			//Registrar.Handlers.Register<HStack, ManagedHStackHandler>();
-			//Registrar.Handlers.Register<VStack, ManagedVStackHandler>();
-			//Registrar.Handlers.Register<ZStack, ManagedZStackHandler>();
-			//Registrar.Handlers.Register<Grid, ManagedGridHandler>();
-
-			// Modal SUpport
+			// Modal Support
 			ModalView.PerformPresent = ModalManager.ShowModal;
 			ModalView.PerformDismiss = ModalManager.DismisModal;
 

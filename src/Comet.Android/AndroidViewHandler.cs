@@ -10,6 +10,6 @@ namespace Comet.Android
 
 		AView View { get; }
 
-		CUITouchGestureListener GestureListener { get; set; }
+		CometTouchGestureListener GestureListener { get; set; }
 	}
 }

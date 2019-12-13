@@ -14,7 +14,7 @@ namespace Comet.Android.Handlers
 		private PropertyMapper<TVirtualView> _mapper;
 		private TVirtualView _virtualView;
 		private TNativeView _nativeView;
-		private CUIContainerView _containerView;
+		private CometContainerView _containerView;
 
 		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
@@ -39,7 +39,7 @@ namespace Comet.Android.Handlers
 
 		public AView View => (AView)_containerView ?? _nativeView;
 
-		public CUIContainerView ContainerView => _containerView;
+		public CometContainerView ContainerView => _containerView;
 
 		public object NativeView => _nativeView;
 
@@ -64,30 +64,53 @@ namespace Comet.Android.Handlers
 
 				if (value && _containerView == null)
 				{
-					_containerView = new CUIContainerView();
+					_containerView = new CometContainerView();
 					_containerView.MainView = _nativeView;
 					NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, _nativeView, _containerView));
 				}
 			}
 		}
 
-		public CUITouchGestureListener GestureListener { get; set; }
+		public CometTouchGestureListener GestureListener { get; set; }
 
 		public virtual SizeF GetIntrinsicSize(SizeF availableSize)
 		{
-			var width = AView.MeasureSpec.MakeMeasureSpec((int)availableSize.Width, MeasureSpecMode.AtMost);
-			var height = AView.MeasureSpec.MakeMeasureSpec((int)availableSize.Height, MeasureSpecMode.AtMost);
+			var scale = AndroidContext.DisplayScale;
+			
+			var width = AView.MeasureSpec.MakeMeasureSpec((int)(availableSize.Width * scale), MeasureSpecMode.AtMost);
+			var height = AView.MeasureSpec.MakeMeasureSpec((int)(availableSize.Height * scale), MeasureSpecMode.AtMost);
 			TypedNativeView.Measure(width, height);
-			return new SizeF(TypedNativeView.MeasuredWidth, TypedNativeView.MeasuredHeight);
+
+			var measuredWidth = TypedNativeView.MeasuredWidth / scale;
+			var measuredHeight = TypedNativeView.MeasuredHeight / scale;
+			return new SizeF(measuredWidth, measuredHeight);
 		}
 
 		public void SetFrame(RectangleF frame)
 		{
-			TypedNativeView.Layout(
-				(int)frame.Left,
-				(int)frame.Top,
-				(int)(frame.Right),
-				(int)frame.Bottom);
+			var nativeView = TypedNativeView;
+			if (nativeView == null) return;
+
+			var scale = AndroidContext.DisplayScale;
+
+			var left = frame.Left * scale;
+			var top = frame.Top * scale;
+			var bottom = frame.Bottom * scale;
+			var right = frame.Right * scale;
+            
+			if (nativeView.LayoutParameters == null)
+			{
+				nativeView.LayoutParameters = new ViewGroup.LayoutParams(
+					(int) (frame.Width * scale),
+					(int) (frame.Height * scale));
+			}
+			else
+			{
+				nativeView.LayoutParameters.Width = (int) (frame.Width * scale);
+				nativeView.LayoutParameters.Height = (int) (frame.Height * scale);
+			}
+            
+			nativeView.Layout((int)left, (int)top, (int)right, (int)bottom);
 		}
 
 		public virtual void Remove(View view)

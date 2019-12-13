@@ -5,12 +5,12 @@ using Comet.Android.Controls;
 
 namespace Comet.Android.Handlers
 {
-	public class NavigationViewHandler : AbstractHandler<NavigationView, CUINavigationView>
+	public class NavigationViewHandler : AbstractHandler<NavigationView, CometNavigationView>
 	{
-		CUINavigationView navigationView;
-		protected override CUINavigationView CreateView(Context context)
+		CometNavigationView navigationView;
+		protected override CometNavigationView CreateView(Context context)
 		{
-			navigationView ??= new CUINavigationView(context);
+			navigationView ??= new CometNavigationView(context);
 
 			if (VirtualView != null)
 			{

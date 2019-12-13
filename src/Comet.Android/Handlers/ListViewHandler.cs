@@ -25,7 +25,7 @@ namespace Comet.Android.Handlers
 		public object NativeView => View;
 		public bool HasContainer { get; set; } = false;
 
-		public CUITouchGestureListener GestureListener { get; set; }
+		public CometTouchGestureListener GestureListener { get; set; }
 
 		public SizeF Measure(SizeF availableSize) => availableSize;
 
@@ -80,8 +80,7 @@ namespace Comet.Android.Handlers
 				{
 					var parent = rvh.Parent;
 
-					var displayMetrics = parent.Context.Resources.DisplayMetrics;
-					var density = displayMetrics.Density;
+					var density = AndroidContext.DisplayScale;
 
 					var scaledSize = new SizeF(parent.Width / density, parent.Height / density);
 					var measuredSize = view.Measure(scaledSize, true);
@@ -90,7 +89,7 @@ namespace Comet.Android.Handlers
 
 					cell.LayoutParameters = new ViewGroup.LayoutParams(parent.Width, (int)(measuredSize.Height * density));
 					cell.SetMinimumHeight((int)(measuredSize.Height * density));
-
+                    
 					rvh.Container.RemoveAllViews();
 					// cell may sometimes have a parent already
 					(cell.Parent as FrameLayout)?.RemoveView(cell);

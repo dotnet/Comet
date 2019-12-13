@@ -33,8 +33,8 @@ namespace Comet.Android
 				.AsBitmapDrawableAsync();
 		}
 
-		public static CUITouchGestureListener GetGestureListener(this AndroidViewHandler handler)
-			=> handler.GestureListener ?? (handler.GestureListener = new CUITouchGestureListener(handler.View));
+		public static CometTouchGestureListener GetGestureListener(this AndroidViewHandler handler)
+			=> handler.GestureListener ?? (handler.GestureListener = new CometTouchGestureListener(handler.View));
 
 		public static bool IsComplete(this MotionEvent e)
 		{

@@ -10,13 +10,13 @@ using System.Linq;
 
 namespace Comet.Android.Handlers
 {
-	public class TabViewHandler : AbstractHandler<TabView, CUITabView>
+	public class TabViewHandler : AbstractHandler<TabView, CometTabView>
 	{
 		//private AView _view;
 
-		protected override CUITabView CreateView(Context context)
+		protected override CometTabView CreateView(Context context)
 		{
-			var tabView = new CUITabView(context);
+			var tabView = new CometTabView(context);
 
 			if (VirtualView != null)
 			{

@@ -5,36 +5,26 @@ using Android.Views;
 using AView = Android.Views.View;
 namespace Comet.Android.Controls
 {
-	public class CUITouchGestureListener : Java.Lang.Object, AView.IOnTouchListener
+	public class CometTouchGestureListener : Java.Lang.Object, AView.IOnTouchListener
 	{
 		class GestureDetectorListener : Java.Lang.Object, GestureDetector.IOnGestureListener
 		{
-			GestureDetector gestureDetector;
+			readonly GestureDetector gestureDetector;
 			public GestureDetectorListener()
 			{
 				gestureDetector = new GestureDetector(AndroidContext.CurrentContext, this);
 			}
 
 
-			public bool OnDown(MotionEvent e)
-			{
-				return true;
-			}
+			public bool OnDown(MotionEvent e) => true;
 
-			public bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY)
-			{
-				return true;
-			}
+			public bool OnFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) => true;
 
 			public void OnLongPress(MotionEvent e)
 			{
 			}
 
-			public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY)
-			{
-
-				return true;
-			}
+			public bool OnScroll(MotionEvent e1, MotionEvent e2, float distanceX, float distanceY) => true;
 
 			public void OnShowPress(MotionEvent e)
 			{
@@ -45,8 +35,8 @@ namespace Comet.Android.Controls
 				dictionary[e].OnTap();
 				return true;
 			}
-			Dictionary<MotionEvent, CUITouchGestureListener> dictionary = new Dictionary<MotionEvent, CUITouchGestureListener>();
-			public bool OnTouchEvent(CUITouchGestureListener v, MotionEvent e)
+			Dictionary<MotionEvent, CometTouchGestureListener> dictionary = new Dictionary<MotionEvent, CometTouchGestureListener>();
+			public bool OnTouchEvent(CometTouchGestureListener v, MotionEvent e)
 			{
 				var isComplete = e.IsComplete();
 				try
@@ -67,22 +57,15 @@ namespace Comet.Android.Controls
 		AView view;
 		GestureDetectorListener _gestureDetector;
 		GestureDetectorListener gestureDetector => _gestureDetector ?? (_gestureDetector = new GestureDetectorListener());
-		public CUITouchGestureListener(AView view)
+		public CometTouchGestureListener(AView view)
 		{
 			this.view = view;
 			view.SetOnTouchListener(this);
 		}
 		List<Gesture> gestures = new List<Gesture>();
-		public void AddGesture(Gesture gesture)
-		{
-			gestures.Add(gesture);
-		}
+		public void AddGesture(Gesture gesture) => gestures.Add(gesture);
 
-		public void RemoveGesture(Gesture gesture)
-		{
-
-			gestures.Remove(gesture);
-		}
+		public void RemoveGesture(Gesture gesture) => gestures.Remove(gesture);
 
 		protected void OnTap()
 		{
@@ -91,7 +74,6 @@ namespace Comet.Android.Controls
 		}
 
 		public bool OnTouch(AView v, MotionEvent e)
-
 		{
 			Console.WriteLine($"Touching view:{v}");
 			return gestureDetector.OnTouchEvent(this, e);

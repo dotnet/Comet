@@ -25,7 +25,7 @@ namespace Comet.Android.Handlers
 
 		public AView View => this;
 
-		public CUIContainerView ContainerView => null;
+		public CometContainerView ContainerView => null;
 
 		public object NativeView => this;
 
@@ -135,7 +135,7 @@ namespace Comet.Android.Handlers
 				var nativeView = view.ToView() ?? new AView(AndroidContext.CurrentContext);
 				AddView(nativeView, index);
 			}
-
+            
 			Invalidate();
 		}
 
@@ -190,19 +190,23 @@ namespace Comet.Android.Handlers
 			Invalidate();
 		}
 
-		public CUITouchGestureListener GestureListener { get; set; }
+		public CometTouchGestureListener GestureListener { get; set; }
 
 		protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
 		{
-			var widthMode = MeasureSpec.GetMode(widthMeasureSpec);
-			var heightMode = MeasureSpec.GetMode(heightMeasureSpec);
-
 			int width = MeasureSpec.GetSize(widthMeasureSpec);
 			int height = MeasureSpec.GetSize(heightMeasureSpec);
 
 			var measured = _view.Measure(new SizeF(width, height));
-			SetMeasuredDimension((int)measured.Width, (int)measured.Height);
 
+            // The measured size is in display independent units, so we need to get the display metrics and
+            // scale them back to display specific units.
+            var density = AndroidContext.DisplayScale;
+
+            var scaledWidth = measured.Width * density;
+            var scaledHeight = measured.Height * density;
+
+            SetMeasuredDimension((int)scaledWidth, (int)scaledHeight);
 		}
 
 		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)

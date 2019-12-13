@@ -35,7 +35,7 @@ namespace Comet.Android.Handlers
 			nativeView.Click -= HandleClick;
 		}
 
-		private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick();
+		private void HandleClick(object sender, EventArgs e) => VirtualView?.OnClick?.Invoke();
 
 		public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
 		{
@@ -47,7 +47,6 @@ namespace Comet.Android.Handlers
 			var textView = viewHandler.NativeView as AButton;
 			var color = virtualView.GetColor(DefaultColor).ToColor();
 			textView.SetTextColor(color);
-
 		}
 	}
 }

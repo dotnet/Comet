@@ -46,9 +46,9 @@
   <ItemGroup>
     <Compile Include="AndroidContext.cs" />
     <Compile Include="CometView.cs" />
-    <Compile Include="Controls\CUIContentView.cs" />
-    <Compile Include="Controls\CUIContainerView.cs" />
-    <Compile Include="Controls\CUIImageView.cs" />
+    <Compile Include="Controls\CometContentView.cs" />
+    <Compile Include="Controls\CometContainerView.cs" />
+    <Compile Include="Controls\CometImageView.cs" />
     <Compile Include="Extensions\ControlExtensions.cs" />
     <Compile Include="Extensions\AndroidExtensions.cs" />
     <Compile Include="Extensions\GraphicsExtensions.cs" />
@@ -57,6 +57,7 @@
     <Compile Include="Handlers\AbstractHandler.cs" />
     <Compile Include="Handlers\ButtonHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />
+    <Compile Include="Handlers\SecureFieldHandler.cs" />
     <Compile Include="Handlers\TextFieldHandler.cs" />
     <Compile Include="Handlers\ImageHandler.cs" />
     <Compile Include="Handlers\TextHandler.cs" />
@@ -81,16 +82,13 @@
     <Compile Include="Controls\ModalManager.cs" />
     <Compile Include="Handlers\SliderHandler.cs" />
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
-    <Compile Include="Handlers\ManagedHStackHandler.cs" />
-    <Compile Include="Handlers\ManagedVStackHandler.cs" />
-    <Compile Include="Handlers\ManagedZStackHandler.cs" />
-    <Compile Include="Handlers\ManagedGridHandler.cs" />
-    <Compile Include="Controls\CUITouchGesterListener.cs" />
+    <Compile Include="Handlers\GridHandler.cs" />
+    <Compile Include="Controls\CometTouchGesterListener.cs" />
     <Compile Include="Handlers\ProgressBarHandler.cs" />
     <Compile Include="Handlers\ActivityIndicatorHandler.cs" />
     <Compile Include="Handlers\TabViewHandler.cs" />
-    <Compile Include="Controls\CUITabView.cs" />
-    <Compile Include="Controls\CUINavigationView.cs" />
+    <Compile Include="Controls\CometTabView.cs" />
+    <Compile Include="Controls\CometNavigationView.cs" />
     <Compile Include="Handlers\NavigationViewHandler.cs" />
     <Compile Include="Services\AndroidTicker.cs" />
     <Compile Include="Handlers\ZStackHandler.cs" />

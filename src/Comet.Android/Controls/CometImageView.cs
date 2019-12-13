@@ -10,12 +10,12 @@ using AView = Android.Views.View;
 
 namespace Comet.Android.Controls
 {
-	public class CUIImageView : ImageView
+	public class CometImageView : ImageView
 	{
 		private Image _image;
 		private Comet.Graphics.Bitmap _bitmap;
 
-		public CUIImageView(Context context) : base(context)
+		public CometImageView(Context context) : base(context)
 		{
 		}
 

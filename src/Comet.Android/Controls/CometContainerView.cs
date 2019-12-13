@@ -6,15 +6,15 @@ using AView = Android.Views.View;
 
 namespace Comet.Android.Controls
 {
-	public class CUIContainerView : LinearLayout
+	public class CometContainerView : LinearLayout
 	{
 		private AView _mainView;
 
-		protected CUIContainerView(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
+		protected CometContainerView(IntPtr javaReference, JniHandleOwnership transfer) : base(javaReference, transfer)
 		{
 		}
 
-		public CUIContainerView() : base(AndroidContext.CurrentContext)
+		public CometContainerView() : base(AndroidContext.CurrentContext)
 		{
 		}
 

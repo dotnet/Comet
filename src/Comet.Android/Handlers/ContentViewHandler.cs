@@ -4,13 +4,13 @@ using LP = Android.Views.ViewGroup.LayoutParams;
 
 namespace Comet.Android.Handlers
 {
-	public class ContentViewHandler : AbstractHandler<ContentView, CUIContentView>
+	public class ContentViewHandler : AbstractHandler<ContentView, CometContentView>
 	{
 		private AView _view;
 
-		protected override CUIContentView CreateView(Context context)
+		protected override CometContentView CreateView(Context context)
 		{
-			var contentView = new CUIContentView();
+			var contentView = new CometContentView();
 			_view = VirtualView?.Content?.ToView();
 			contentView.AddView(_view, new LP(LP.MatchParent, LP.MatchParent));
 			return contentView;

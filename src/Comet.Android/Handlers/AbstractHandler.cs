@@ -79,13 +79,14 @@ namespace Comet.Android.Handlers
 			set { }
 		}
 
-		public CUITouchGestureListener GestureListener { get; set; }
+		public CometTouchGestureListener GestureListener { get; set; }
 		
 		public SizeF GetIntrinsicSize(SizeF availableSize) => availableSize;
 
 		public void SetFrame(RectangleF frame)
 		{
-			// Do nothing
+			// Do nothing.  Subclasses should implement.  
+			// Note to future self, if you're really wondering why this is empty, look at AbstractControlHandler or AbstractLayoutHandler
 		}
 
 		protected void BroadcastNativeViewChanged(AView previousView, AView newView)

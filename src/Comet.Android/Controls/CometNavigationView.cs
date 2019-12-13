@@ -5,9 +5,9 @@ using Android.Widget;
 
 namespace Comet.Android.Controls
 {
-	public class CUINavigationView : CustomFrameLayout
+	public class CometNavigationView : CustomFrameLayout
 	{
-		public CUINavigationView(Context context) : base(context)
+		public CometNavigationView(Context context) : base(context)
 		{
 		}
 

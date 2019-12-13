@@ -5,7 +5,7 @@ using Comet.Android.Controls;
 
 namespace Comet.Android.Handlers
 {
-	public class ImageHandler : AbstractControlHandler<Image, CUIImageView>
+	public class ImageHandler : AbstractControlHandler<Image, CometImageView>
 	{
 		public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>(ViewHandler.Mapper)
 		{
@@ -16,18 +16,18 @@ namespace Comet.Android.Handlers
 		{
 		}
 
-		protected override CUIImageView CreateView(Context context)
+		protected override CometImageView CreateView(Context context)
 		{
-			return new CUIImageView(context);
+			return new CometImageView(context);
 		}
 
-		protected override void DisposeView(CUIImageView nativeView)
+		protected override void DisposeView(CometImageView nativeView)
 		{
 		}
 
 		public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
 		{
-			var nativeView = (CUIImageView)viewHandler.NativeView;
+			var nativeView = (CometImageView)viewHandler.NativeView;
 			nativeView.Bitmap = virtualView.Bitmap?.CurrentValue;
 		}
 	}

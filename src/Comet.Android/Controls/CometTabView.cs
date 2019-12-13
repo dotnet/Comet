@@ -10,12 +10,12 @@ using Android.Widget;
 
 namespace Comet.Android.Controls
 {
-	public class CUITabView : CustomFrameLayout
+	public class CometTabView : CustomFrameLayout
 	{
 		private readonly BottomNavigationView _bottomNavigationView;
 		private List<CometFragment> _fragments;
 
-		public CUITabView(Context context) : base(context)
+		public CometTabView(Context context) : base(context)
 		{
 			_bottomNavigationView = new BottomNavigationView(context)
 			{
