@@ -32,15 +32,15 @@ namespace System.Collections.Generic
 				if (key == null)
 					return default(T1);
 				if (dictionary.TryGetValue(key, out var value))
+				{
+					// Moving this in the queue.  Most recently accessed is most important.
+					queue.Enqueue(key);
 					return value;
+				}
 				return default(T1);
 			}
 			set
 			{
-				if (dictionary.ContainsKey(key))
-				{
-					Remove(key);
-				}
 				queue.Enqueue(key);
 				dictionary[key] = value;
 			}

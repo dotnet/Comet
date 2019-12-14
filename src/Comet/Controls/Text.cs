@@ -24,5 +24,7 @@ namespace Comet
 			get => _value;
 			private set => this.SetBindingValue(ref _value, value);
 		}
+
+		public override string ToString() => _value?.Value?.ToString() ?? string.Empty;
 	}
 }

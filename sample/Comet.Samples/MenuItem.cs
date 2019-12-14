@@ -14,5 +14,7 @@ namespace Comet.Samples
 		}
 		public string Title { get; set; }
 		public Func<View> Page { get; set; }
+
+		public override string ToString() => Title;
 	}
 }
