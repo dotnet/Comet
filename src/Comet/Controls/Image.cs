@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using Comet.Graphics;
 namespace Comet
 {
@@ -43,6 +44,14 @@ namespace Comet
 			{
 				LoadBitmapFromSource((string)value);
 			}
+		}
+
+		public override SizeF GetIntrinsicSize(SizeF availableSize)
+		{
+			if (Bitmap?.Value != null)
+				return Bitmap.GetValueOrDefault().Size;
+
+			return SizeF.Empty;
 		}
 
 		private async void LoadBitmapFromSource(string source)
