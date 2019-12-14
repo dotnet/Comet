@@ -477,6 +477,7 @@ stages:
       inputs:
         command: pack
         packagesToPack: 'Comet.nuspec'
+        includeSymbols: true
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
@@ -485,13 +486,14 @@ stages:
       inputs:
         command: pack
         packagesToPack: 'Comet.Skia.nuspec'
+        includeSymbols: true
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
-        Contents: '**\*.nupkg'
+        Contents: '**\*.nupkg;**\*.snupkg'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: PublishBuildArtifacts@1
