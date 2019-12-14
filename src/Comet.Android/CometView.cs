@@ -26,8 +26,12 @@ namespace Comet.Android
 				if (value == virtualView)
 					return;
 
+				Logger.Debug($" - CurrentView from {virtualView} to {value}");
+
+				AView previousView = null;
 				if (virtualView != null)
 				{
+					previousView = (AView)virtualView.ViewHandler?.NativeView;
 					virtualView.ViewHandlerChanged -= HandleViewHandlerChanged;
 					virtualView.NeedsLayout -= HandleNeedsLayout;
 					if (handler is AndroidViewHandler viewHandler)
@@ -35,18 +39,17 @@ namespace Comet.Android
 				}
 
 				virtualView = value;
+				handler = virtualView?.GetOrCreateViewHandler();
 
 				if (virtualView != null)
 				{
-					handler = virtualView.GetOrCreateViewHandler();
-
 					virtualView.ViewHandlerChanged += HandleViewHandlerChanged;
 					virtualView.NeedsLayout += HandleNeedsLayout;
 					if (handler is AndroidViewHandler viewHandler)
 						viewHandler.NativeViewChanged += HandleNativeViewChanged;
-
-					HandleNativeViewChanged(this, new ViewChangedEventArgs(virtualView, null, (AView)handler.NativeView));
 				}
+
+				HandleNativeViewChanged(this, new ViewChangedEventArgs(virtualView, previousView, (AView)handler?.NativeView));
 			}
 		}
 
@@ -62,30 +65,37 @@ namespace Comet.Android
 			if (e.OldViewHandler is AndroidViewHandler oldHandler)
 			{
 				oldHandler.NativeViewChanged -= HandleNativeViewChanged;
-				this.RemoveView(nativeView);
+				RemoveView(oldHandler.View);
+				nativeView = null;
+				handler = null;
 			}
 
 			if (e.NewViewHandler is AndroidViewHandler newHandler)
 			{
-				newHandler.NativeViewChanged += HandleNativeViewChanged;
-				nativeView = newHandler.View ?? new AView(AndroidContext.CurrentContext);
+				handler = newHandler;
+				handler.NativeViewChanged += HandleNativeViewChanged;
+				nativeView = handler.View ?? new AView(AndroidContext.CurrentContext);
 				AddView(nativeView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
+			}
+			else
+			{
+				Logger.Debug("Handler is null");
 			}
 		}
 
 		void HandleNativeViewChanged(object sender, ViewChangedEventArgs args)
 		{
-			if (virtualView == null)
-				return;
-
-			var newNativeView = handler?.View;
-			if (newNativeView == nativeView)
-				return;
-
-			RemoveView(nativeView);
-			nativeView = newNativeView;
-			if (newNativeView != null)
+			if (args.OldNativeView != null)
 			{
+				RemoveView(args.OldNativeView);
+				nativeView = null;
+			}
+
+			if (args.NewNativeView != null)
+			{
+				nativeView = args.NewNativeView;
+				if (nativeView.Parent is AViewGroup viewGroup)
+					viewGroup.RemoveView(nativeView);
 				AddView(nativeView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
 			}
 		}

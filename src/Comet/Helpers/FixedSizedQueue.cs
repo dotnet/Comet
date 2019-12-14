@@ -30,14 +30,14 @@ namespace System.Collections.Generic
 				queue.Remove(obj);
 				queue.Add(obj);
 
-				Console.WriteLine($"Enqueued[{queue.IndexOf(obj)}]: {obj} ");
+				//Console.WriteLine($"Enqueued[{queue.IndexOf(obj)}]: {obj} ");
 
 			
 				while (queue.Count > Size)
 				{
 					T outObj = queue[0];
 					queue.Remove(outObj);
-					Console.WriteLine($"Dequeue[0]: {outObj}");
+					//Console.WriteLine($"Dequeue[0]: {outObj}");
 					OnDequeue?.Invoke(outObj);
 				}
 			}
@@ -50,7 +50,7 @@ namespace System.Collections.Generic
 				if (queue.Contains(obj))
 					removed = queue.Remove(obj);
 
-				Console.WriteLine($"Dequeue[0]: {obj}");
+				//Console.WriteLine($"Dequeue[0]: {obj}");
 				OnDequeue?.Invoke(obj);
 			}
 

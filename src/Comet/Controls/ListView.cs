@@ -41,10 +41,15 @@ namespace Comet
 		{
 			if (HandlerSupportsVirtualization)
 			{
-				CurrentViews = new FixedSizeDictionary<object, View>(50)
+				CurrentViews = new FixedSizeDictionary<object, View>(150)
 				{
-					OnDequeue = (pair) => {
-						pair.Value?.Dispose();
+					OnDequeue = (pair) =>
+					{
+						var view = pair.Value;
+						if (view?.ViewHandler?.NativeView == null)
+							view.Dispose();
+						else
+							CurrentViews[pair.Key] = view;
 					}
 				};
 			}
