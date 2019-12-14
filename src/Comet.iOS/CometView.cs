@@ -49,7 +49,7 @@ namespace Comet.iOS
 						viewHandler.NativeViewChanged += HandleNativeViewChanged;
 				}
 
-				HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, previousView, (UIView)_handler.NativeView));
+				HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, previousView, (UIView)_handler?.NativeView));
 			}
 		}
 
