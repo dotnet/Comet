@@ -5,7 +5,7 @@ namespace Comet
 {
 	public static class TextExtensions
 	{
-		public static T TextAlignment<T>(this T view, TextAlignment? alignment, bool cascades = false) where T : View
+		public static T TextAlignment<T>(this T view, TextAlignment? alignment, bool cascades = true) where T : View
 		{
 			view.SetEnvironment(EnvironmentKeys.Text.Alignment, alignment, cascades);
 			return view;
