@@ -60,7 +60,7 @@ namespace Comet.iOS.Controls
 			var cellIdentifier = CellType;
 			var cell = tableView.DequeueReusableCell(cellIdentifier) as CUITableViewCell ?? new CUITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
 			var v = _listView?.ViewFor(indexPath.Section, indexPath.Row);
-			cell.SetView(v, _listView.ShouldDisposeViews);
+			cell.SetView(v);
 			return cell;
 		}
 

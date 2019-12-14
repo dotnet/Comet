@@ -28,8 +28,10 @@ namespace Comet.iOS
 				if (value == _virtualView)
 					return;
 
+				UIView previousView = null;
 				if (_virtualView != null)
 				{
+					previousView = (UIView)_virtualView.ViewHandler?.NativeView;
 					_virtualView.ViewHandlerChanged -= HandleViewHandlerChanged;
 					_virtualView.NeedsLayout -= HandleNeedsLayout;
 					if (_handler is iOSViewHandler viewHandler)
@@ -37,18 +39,17 @@ namespace Comet.iOS
 				}
 
 				_virtualView = value;
+				_handler = _virtualView.GetOrCreateViewHandler();
 
 				if (_virtualView != null)
 				{
-					_handler = _virtualView.GetOrCreateViewHandler();
-
 					_virtualView.ViewHandlerChanged += HandleViewHandlerChanged;
 					_virtualView.NeedsLayout += HandleNeedsLayout;
 					if (_handler is iOSViewHandler viewHandler)
 						viewHandler.NativeViewChanged += HandleNativeViewChanged;
-
-					HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, null, (UIView)_handler.NativeView));
 				}
+
+				HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, previousView, (UIView)_handler.NativeView));
 			}
 		}
 
@@ -59,17 +60,19 @@ namespace Comet.iOS
 
 		private void HandleViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
 		{
-			Console.WriteLine($"[{GetType().Name}] HandleViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
+			Logger.Debug($"[{GetType().Name}] HandleViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
 
 			if (e.OldViewHandler is iOSViewHandler oldHandler)
 			{
 				oldHandler.NativeViewChanged -= HandleNativeViewChanged;
 				_nativeView?.RemoveFromSuperview();
 				_nativeView = null;
+				_handler = null;
 			}
 
 			if (e.NewViewHandler is iOSViewHandler newHandler)
 			{
+				_handler = newHandler;
 				newHandler.NativeViewChanged += HandleNativeViewChanged;
 				_nativeView = newHandler.View ?? new UIView();
 				AddSubview(_nativeView);
@@ -79,22 +82,23 @@ namespace Comet.iOS
 
 		void HandleNativeViewChanged(object sender, ViewChangedEventArgs args)
 		{
-			if (_virtualView == null)
-				return;
-
-			var newNativeView = _handler?.View;
-			if (newNativeView == _nativeView)
-				return;
-
-			var _previousFrame = _nativeView?.Frame;
-			_nativeView?.RemoveFromSuperview();
-			_nativeView = newNativeView;
-
-			if (newNativeView != null)
+			CGRect? previousFrame = null;
+			if (args.OldNativeView != null)
 			{
-				if (_previousFrame != null)
-					newNativeView.Frame = (CGRect)_previousFrame;
-				AddSubview(newNativeView);
+				previousFrame = args.OldNativeView.Frame;
+				args.OldNativeView.RemoveFromSuperview();
+				_nativeView = null;
+			}
+
+			if (args.NewNativeView != null)
+			{
+				_nativeView = args.NewNativeView;
+				if (_nativeView.Superview != null)
+					_nativeView.RemoveFromSuperview();
+
+				if (previousFrame != null)
+					_nativeView.Frame = (CGRect)previousFrame;
+				AddSubview(_nativeView);
 				SetNeedsLayout();
 			}
 		}
@@ -123,7 +127,6 @@ namespace Comet.iOS
 				bounds.Width -= safe.Left + safe.Right;
 				_virtualView.SetFrameFromNativeView(bounds.ToRectangleF());
 			}
-
 		}
 
 		protected override void Dispose(bool disposing)

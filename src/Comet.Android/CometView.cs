@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using Android.App;
 using AContext = Android.Content.Context;
 using AView = Android.Views.View;
 using AViewGroup = Android.Views.ViewGroup;
@@ -25,8 +24,6 @@ namespace Comet.Android
 			{
 				if (value == virtualView)
 					return;
-
-				Logger.Debug($" - CurrentView from {virtualView} to {value}");
 
 				AView previousView = null;
 				if (virtualView != null)
@@ -55,12 +52,12 @@ namespace Comet.Android
 
 		private void HandleNeedsLayout(object sender, EventArgs e)
 		{
-			this.RequestLayout();
+			RequestLayout();
 		}
 
 		private void HandleViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
 		{
-			Console.WriteLine($"[{GetType().Name}] HandleViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
+			Logger.Debug($"[{GetType().Name}] HandleViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
 
 			if (e.OldViewHandler is AndroidViewHandler oldHandler)
 			{
@@ -76,10 +73,6 @@ namespace Comet.Android
 				handler.NativeViewChanged += HandleNativeViewChanged;
 				nativeView = handler.View ?? new AView(AndroidContext.CurrentContext);
 				AddView(nativeView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
-			}
-			else
-			{
-				Logger.Debug("Handler is null");
 			}
 		}
 
