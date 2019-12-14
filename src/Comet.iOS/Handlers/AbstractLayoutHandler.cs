@@ -221,7 +221,11 @@ namespace Comet.iOS.Handlers
 				return;
 
 			if (_view != null)
+			{
 				_view.Frame = Frame.ToRectangleF();
+				_view.RequestLayout();
+			}
+
 		}
 	}
 }
