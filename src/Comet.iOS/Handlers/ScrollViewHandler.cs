@@ -13,14 +13,10 @@ namespace Comet.iOS.Handlers
 
 		public override bool IgnoreSafeArea => !(VirtualView?.GetIgnoreSafeArea(true) ?? true);
 		protected override UIScrollView CreateView()
-		{
-			var scrollView = new UIScrollView
+			=> NativeView as UIScrollView ?? new UIScrollView
 			{
 				ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always,
 			};
-
-			return scrollView;
-		}
 
 		public override void SetView(View view)
 		{

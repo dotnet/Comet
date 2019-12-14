@@ -9,6 +9,6 @@ namespace Comet.iOS.Handlers
 {
 	public class SpacerHandler : AbstractHandler<Spacer, UIView>
 	{
-		protected override UIView CreateView() => new UIView();
+		protected override UIView CreateView() => NativeView as UIView ?? new UIView();
 	}
 }

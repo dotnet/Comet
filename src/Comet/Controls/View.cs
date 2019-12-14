@@ -384,7 +384,7 @@ namespace Comet
 			replacedView = null;
 			builtView?.Dispose();
 			builtView = null;
-			Body = null;
+			body = null;
 			Context(false)?.Clear();
 			StateManager.Disposing(this);
 			State.Clear();
@@ -426,11 +426,7 @@ namespace Comet
 
 		public void InvalidateMeasurement()
 		{
-			MeasurementValid = false;
-
-			// TODO We should "invalidate" layout here. Close enough for now?
-			//Frame = RectangleF.Empty;
-			
+			MeasurementValid = false;			
 			Parent?.InvalidateMeasurement();
 			NeedsLayout?.Invoke(this, EventArgs.Empty);
 		}

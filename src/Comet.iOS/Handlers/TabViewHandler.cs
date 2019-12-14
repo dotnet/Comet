@@ -43,6 +43,7 @@ namespace Comet.iOS
 			UnsubscribeEvents();
 			base.Remove(view);
 		}
-		protected override CUITabView CreateView() => new CUITabView();
+		protected override CUITabView CreateView()
+			=> NativeView as CUITabView ?? new CUITabView();
 	}
 }
