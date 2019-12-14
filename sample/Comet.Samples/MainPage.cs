@@ -100,12 +100,12 @@ namespace Comet.Samples
 			{
 				new ListView<MenuItem> (pages)
 				{
-					/*ViewFor = (page) =>  new HStack()
+					ViewFor = (page) =>  new HStack()
 					{
 						new Text(page.Title),
 						new Spacer()
-					}.Frame(height:44).Margin(left:10),*/
-					ViewFor = (page) => new Text(page.Title).FillHorizontal().TextAlignment(TextAlignment.Left).Frame(height:44).Margin(left:10),
+					}.Frame(height:44).Margin(left:10),
+					//ViewFor = (page) => new Text(page.Title).FillHorizontal().TextAlignment(TextAlignment.Left).Frame(height:44).Margin(left:10),
 				}.OnSelectedNavigate( page => page.Page().Title(page.Title))
 			};
 		}
