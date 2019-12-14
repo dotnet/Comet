@@ -493,7 +493,7 @@ stages:
     - task: CopyFiles@2
       inputs:
         SourceFolder: '$(Build.SourcesDirectory)'
-        Contents: '**\*.nupkg;**\*.snupkg'
+        Contents: '**\*.nupkg;**\*.snupkg;**/*.symbols.nupkg'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: PublishBuildArtifacts@1
