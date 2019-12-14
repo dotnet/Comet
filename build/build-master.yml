@@ -10,7 +10,7 @@ stages:
         displayName: 'Use .NET Core sdk'
         inputs:
           packageType: sdk
-          version: 3.0.100-preview8-013656
+          version: 3.0.100-preview9-014004
           includePreviewVersions: true
           installationPath: $(Agent.ToolsDirectory)/dotnet
       - task: DotNetCoreCLI@2
@@ -40,7 +40,7 @@ stages:
     displayName: Build Comet Mac
     pool:
       name: Hosted macOS
-      vmImage: 'macOS 10.14'
+      vmImage: 'macOS-latest'
       demands:
       - MSBuild
       - Xamarin.Android
@@ -200,7 +200,7 @@ stages:
     displayName: Build Comet Android Samples
     pool:
       name: Hosted macOS
-      vmImage: 'macOS 10.14'
+      vmImage: 'macOS-latest'
       demands:
       - MSBuild
       - Xamarin.Android
@@ -237,7 +237,7 @@ stages:
     displayName: Build Comet iOS and Mac Samples
     pool:
       name: Hosted macOS
-      vmImage: 'macOS 10.14'
+      vmImage: 'macOS-latest'
       demands:
       - xcode
       - Xamarin.iOS

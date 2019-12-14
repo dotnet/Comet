@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewApp", "NewApp\NewApp.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewApp.iOS", "NewApp.iOS\NewApp.iOS.csproj", "{BA2C8415-B3DC-409B-980E-DDDA5A5345BD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewApp.Android", "NewApp.Android\NewApp.Android.csproj", "{8D9F8CF0-E178-402D-8D40-A88B7B5F3D42}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

@@ -2,12 +2,12 @@
 
 namespace Comet.Blazor.Handlers
 {
-    public interface IBlazorViewHandler : IViewHandler
-    {
-        Type VirtualType { get; }
+	public interface IBlazorViewHandler : IViewHandler
+	{
+		Type VirtualType { get; }
 
-        Type ComponentType { get; }
+		Type ComponentType { get; }
 
-        void OnComponentLoad(object nativeView);
-    }
+		void OnComponentLoad(object nativeView);
+	}
 }

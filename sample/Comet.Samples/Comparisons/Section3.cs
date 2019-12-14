@@ -28,20 +28,20 @@ struct ContentView: View {
 
 namespace Comet.Samples.Comparisons
 {
-    public class Section3 : View
-    {
-        [Body]
-        View body() =>
-                 new VStack(alignment: HorizontalAlignment.Leading){
-                    new Text("Turtle Rock"),
-                    new HStack {
-                        new Text("Joshua Tree National Park")
-                            .Background(Color.Salmon),
-                        new Spacer(),
-                        new Text("California")
-                            .Background(Color.Green),
-                    }
-                 }.Padding();
+	public class Section3 : View
+	{
+		[Body]
+		View body() =>
+				 new VStack(alignment: HorizontalAlignment.Leading){
+					new Text("Turtle Rock"),
+					new HStack {
+						new Text("Joshua Tree National Park")
+							.Background(Color.Salmon),
+						new Spacer(),
+						new Text("California")
+							.Background(Color.Green),
+					}
+				 }.Margin();
 
-    }
+	}
 }

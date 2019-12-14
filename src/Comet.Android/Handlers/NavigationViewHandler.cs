@@ -5,29 +5,42 @@ using Comet.Android.Controls;
 
 namespace Comet.Android.Handlers
 {
-    public class NavigationViewHandler : AbstractHandler<NavigationView, CUINavigationView>
-    {
-        protected override CUINavigationView CreateView(Context context)
-        {
-            var view = new CUINavigationView(context);
+	public class NavigationViewHandler : AbstractHandler<NavigationView, CometNavigationView>
+	{
+		CometNavigationView navigationView;
+		protected override CometNavigationView CreateView(Context context)
+		{
+			navigationView ??= new CometNavigationView(context);
 
-            if (VirtualView != null)
-            {
-                view.SetRoot(VirtualView?.Content);
-                VirtualView.PerformNavigate = view.NavigateTo;
-            }
+			if (VirtualView != null)
+			{
+				navigationView.SetRoot(VirtualView?.Content);
+				VirtualView.SetPerformNavigate(navigationView.NavigateTo);
+				VirtualView.SetPerformPop(navigationView.Pop);
+			}
 
-            return view;
-        }
+			return navigationView;
+		}
+		public override void SetView(View view)
+		{
+			var nav = view as NavigationView;
+			if (navigationView != null)
+			{
+				navigationView.SetRoot(nav.Content);
+				VirtualView.SetPerformNavigate(navigationView.NavigateTo);
+				VirtualView.SetPerformPop(navigationView.Pop);
+			}
+			base.SetView(view);
+		}
+		public override void Remove(View view)
+		{
+			if (VirtualView != null)
+			{
+				VirtualView.SetPerformNavigate(action:null);
+				VirtualView.SetPerformPop(action: null);
+			}
 
-        public override void Remove(View view)
-        {
-            if (VirtualView != null)
-            {
-                VirtualView.PerformNavigate = null;
-            }
-
-            base.Remove(view);
-        }
-    }
+			base.Remove(view);
+		}
+	}
 }

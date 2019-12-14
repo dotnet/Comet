@@ -21,7 +21,7 @@
     private readonly Stack<View> _navigationStack = new Stack<View>();
     private View _view;
 
-    private void OnMouseDown(UIMouseEventArgs ui)
+    private void OnMouseDown(MouseEventArgs ui)
     {
         // Detect back button
         if (ui.Buttons == 8)
@@ -42,12 +42,17 @@
 
             if (_view?.BuiltView is NavigationView nav)
             {
-                nav.PerformNavigate = toView =>
+                nav.SetPerformNavigate(toView =>
                 {
                     _navigationStack.Push(View);
                     View = toView;
                     StateHasChanged();
-                };
+                });
+                nav.SetPerformPop(() =>
+                {
+                    View = _navigationStack.Pop();
+                    StateHasChanged();
+                });
             }
         }
     }

@@ -21,14 +21,14 @@ struct CircleImage: View {
 
 namespace Comet.Samples.Comparisons
 {
-    public class Section4 : View
-    {
-        [Body]
-        View body() =>
-            new Image("turtlerock.jpg")
-                .ClipShape(new Circle())
-                .Overlay(new Circle().Stroke(Color.White, lineWidth: 4))
-                .Shadow(radius: 10).Background(Color.Green);
-    }
+	public class Section4 : View
+	{
+		[Body]
+		View body() =>
+			new Image("turtlerock.jpg")
+				.ClipShape(new Circle())
+				.Overlay(new Circle().Stroke(Color.White, lineWidth: 4))
+				.Shadow(radius: 10).Background(Color.Green);
+	}
 
 }

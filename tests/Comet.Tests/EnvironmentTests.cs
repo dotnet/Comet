@@ -3,16 +3,21 @@ using Comet.Internal;
 using Comet.Tests.Handlers;
 using Xunit;
 
-namespace Comet.Tests {
-	public class EnvironmentTests : TestBase {
+namespace Comet.Tests
+{
+	public class EnvironmentTests : TestBase
+	{
 
-		public class MyBindingObject : BindingObject {
-			public string Foo {
-				get => GetProperty<string> () ?? "Bar";
-				set => SetProperty (value);
+		public class MyBindingObject : BindingObject
+		{
+			public string Foo
+			{
+				get => GetProperty<string>() ?? "Bar";
+				set => SetProperty(value);
 			}
 		}
-		public class StatePage : View {
+		public class StatePage : View
+		{
 
 			[Environment]
 			public readonly State<int> clickCount;
@@ -21,7 +26,8 @@ namespace Comet.Tests {
 			public readonly MyBindingObject myBindingObject;
 		}
 
-		public class SecondPage : View {
+		public class SecondPage : View
+		{
 
 			[Environment]
 			public readonly State<int> clickCount;
@@ -32,203 +38,205 @@ namespace Comet.Tests {
 		[Fact]
 		public void CanSetAndReadGlobalEnvironment()
 		{
-            ResetComet();
+			ResetComet();
 
 			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 
 			//Not set so should be null
-			var environmentEntry = View.GetGlobalEnvironment<string> (myStringKey);
+			var environmentEntry = View.GetGlobalEnvironment<string>(myStringKey);
 
-			Assert.Null (environmentEntry);
+			Assert.Null(environmentEntry);
 
-			View.SetGlobalEnvironment (myStringKey, myStringConstant);
+			View.SetGlobalEnvironment(myStringKey, myStringConstant);
 
-			environmentEntry = View.GetGlobalEnvironment<string> (myStringKey);
+			environmentEntry = View.GetGlobalEnvironment<string>(myStringKey);
 
-			Assert.Equal (myStringConstant, environmentEntry);
+			Assert.Equal(myStringConstant, environmentEntry);
 
 		}
 
 
 		[Fact]
-		public void CanSetAndReadGlobalEnvironmentFromView ()
+		public void CanSetAndReadGlobalEnvironmentFromView()
 		{
-            ResetComet();
-            const string myStringConstant = "myString";
+			ResetComet();
+			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 
-			View.SetGlobalEnvironment (myStringKey, myStringConstant);
+			View.SetGlobalEnvironment(myStringKey, myStringConstant);
 
-			var myView = new View ();
-		
-			var environmentEntry = myView.GetEnvironment<string> (myStringKey);
+			var myView = new View();
 
-			Assert.Equal (myStringConstant, environmentEntry);
+			var environmentEntry = myView.GetEnvironment<string>(myStringKey);
+
+			Assert.Equal(myStringConstant, environmentEntry);
 
 		}
 
 		[Fact]
-		public void ViewEnvironmentOverwritesGlobal ()
+		public void ViewEnvironmentOverwritesGlobal()
 		{
-            ResetComet();
-            const string myStringConstant = "myString";
-			const string myStringKey = "myString";
-			const string parentStringValue = "myParentString";
-
-			View.SetGlobalEnvironment (myStringKey, myStringConstant);
-
-			var myView = new View ().SetEnvironment(myStringKey,parentStringValue);
-
-			var environmentEntry = myView.GetEnvironment<string> (myStringKey);
-
-			Assert.Equal (parentStringValue, environmentEntry);
-
-		}
-
-
-		[Fact]
-		public void NestedViewGetsValueFromParent ()
-		{
-            ResetComet();
-            const string myStringConstant = "myString";
+			ResetComet();
+			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
 
-			View.SetGlobalEnvironment (myStringKey, myStringConstant);
+			View.SetGlobalEnvironment(myStringKey, myStringConstant);
+
+			var myView = new View().SetEnvironment(myStringKey, parentStringValue);
+
+			var environmentEntry = myView.GetEnvironment<string>(myStringKey);
+
+			Assert.Equal(parentStringValue, environmentEntry);
+
+		}
+
+
+		[Fact]
+		public void NestedViewGetsValueFromParent()
+		{
+			ResetComet();
+			const string myStringConstant = "myString";
+			const string myStringKey = "myString";
+			const string parentStringValue = "myParentString";
+
+			View.SetGlobalEnvironment(myStringKey, myStringConstant);
 
 			Text text = null;
 
-			var view = new View {
-				Body = () => (text = new Text ())
-			}.SetEnvironment(myStringKey, parentStringValue,true);
+			var view = new View
+			{
+				Body = () => (text = new Text())
+			}.SetEnvironment(myStringKey, parentStringValue, true);
 
-			var viewHandler = new GenericViewHandler ();
+			var viewHandler = new GenericViewHandler();
 			view.ViewHandler = viewHandler;
 
-			var textHandler = new GenericViewHandler ();
+			var textHandler = new GenericViewHandler();
 			text.ViewHandler = textHandler;
 
-			var environmentEntry = text.GetEnvironment<string> (myStringKey);
-			Assert.Equal (parentStringValue, environmentEntry);
+			var environmentEntry = text.GetEnvironment<string>(myStringKey);
+			Assert.Equal(parentStringValue, environmentEntry);
 		}
 
 
 		[Fact]
-		public void NestedViewGetsItsVariablesFromItself ()
+		public void NestedViewGetsItsVariablesFromItself()
 		{
-            ResetComet();
-            const string myStringConstant = "myString";
+			ResetComet();
+			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
 			const string testStringValue = "myTextString";
 
-			View.SetGlobalEnvironment (myStringKey, myStringConstant);
+			View.SetGlobalEnvironment(myStringKey, myStringConstant);
 
 			Text text1 = null;
 			Text text2 = null;
 
-			var view = new View {
+			var view = new View
+			{
 				Body = () => new VStack {
 					(text1 = new Text ().SetEnvironment(myStringKey,testStringValue)),
 					(text2 = new Text ())
-				}.SetEnvironment (myStringKey, parentStringValue,true)
+				}.SetEnvironment(myStringKey, parentStringValue, true)
 			};
 
-			var viewHandler = new GenericViewHandler ();
+			var viewHandler = new GenericViewHandler();
 			view.ViewHandler = viewHandler;
 
-			var text1Value = text1.GetEnvironment<string> (myStringKey);
-			Assert.Equal (testStringValue, text1Value);
+			var text1Value = text1.GetEnvironment<string>(myStringKey);
+			Assert.Equal(testStringValue, text1Value);
 
-			var text2Value = text2.GetEnvironment<string> (myStringKey);
-			Assert.Equal (parentStringValue, text2Value);
+			var text2Value = text2.GetEnvironment<string>(myStringKey);
+			Assert.Equal(parentStringValue, text2Value);
 		}
 
 		[Fact]
-		public void FieldsWithAttributesPopulateFromEnvironment ()
+		public void FieldsWithAttributesPopulateFromEnvironment()
 		{
-            ResetComet();
-            View.SetGlobalEnvironment (nameof (StatePage.clickCount), new State<int> (1));
+			ResetComet();
+			View.SetGlobalEnvironment(nameof(StatePage.clickCount), new State<int>(1));
 
 			Text text = null;
-			var view = new StatePage ();
-			view.Body = () =>(text =  new Text (() => view.clickCount.Value.ToString ()));
+			var view = new StatePage();
+			view.Body = () => (text = new Text(() => view.clickCount.Value.ToString()));
 
-			Assert.NotNull (view.clickCount);
-			Assert.Equal (1, view.clickCount.Value);
+			Assert.NotNull(view.clickCount);
+			Assert.Equal(1, view.clickCount.Value);
 
-			var viewHandler = new GenericViewHandler ();
+			var viewHandler = new GenericViewHandler();
 			view.ViewHandler = viewHandler;
 
 
-			var textHandler = new GenericViewHandler ();
+			var textHandler = new GenericViewHandler();
 			text.ViewHandler = textHandler;
 
 			view.clickCount.Value++;
-			Assert.Equal (2, view.clickCount.Value);
+			Assert.Equal(2, view.clickCount.Value);
 
 
-			Assert.Equal ("2", text.Value);
+			Assert.Equal("2", text.Value);
 
 
-			View.SetGlobalEnvironment (nameof (StatePage.clickCount), new State<int> (3));
+			View.SetGlobalEnvironment(nameof(StatePage.clickCount), new State<int>(3));
 
 
-			Assert.Equal (3, view.clickCount.Value);
+			Assert.Equal(3, view.clickCount.Value);
 
 
-			Assert.Equal ("3", text.Value);
+			Assert.Equal("3", text.Value);
 
 		}
 
-        [Fact]
-        public void LocalContextOverridesCascaded()
-        {
-            ResetComet();
-            const string myStringKey = "myString";
-            const string globalValue = "globalValue";
-            const string localValue = "localValue";
-            const string cascadedValue = "casadedValue";
-            const string secondCascadedValue = "secondCascadedValue";
+		[Fact]
+		public void LocalContextOverridesCascaded()
+		{
+			ResetComet();
+			const string myStringKey = "myString";
+			const string globalValue = "globalValue";
+			const string localValue = "localValue";
+			const string cascadedValue = "casadedValue";
+			const string secondCascadedValue = "secondCascadedValue";
 
-            View.SetGlobalEnvironment(myStringKey, globalValue);
+			View.SetGlobalEnvironment(myStringKey, globalValue);
 
-            VStack rootStack = null;
-            VStack stack1 = null;
-            VStack stack2 = null;
-            Text text1 = null;
-            Text text2 = null;
+			VStack rootStack = null;
+			VStack stack1 = null;
+			VStack stack2 = null;
+			Text text1 = null;
+			Text text2 = null;
 
-            var view = new View
-            {
-                Body = () => rootStack = new VStack {
-                    (stack1 = new VStack {
-                        (text1 = new Text())
-                    }).SetEnvironment(myStringKey, cascadedValue,true),
-                    (stack2 = new VStack {
-                        (text2 = new Text()).SetEnvironment(myStringKey, secondCascadedValue,true),
-                    })
-                }.SetEnvironment(myStringKey, localValue, false)
-            };
-
-
-            var viewHandler = new GenericViewHandler();
-            view.ViewHandler = viewHandler;
+			var view = new View
+			{
+				Body = () => rootStack = new VStack {
+					(stack1 = new VStack {
+						(text1 = new Text())
+					}).SetEnvironment(myStringKey, cascadedValue,true),
+					(stack2 = new VStack {
+						(text2 = new Text()).SetEnvironment(myStringKey, secondCascadedValue,true),
+					})
+				}.SetEnvironment(myStringKey, localValue, false)
+			};
 
 
-            void CheckView(View v, string expectedValue)
-            {
-                var value = v.GetEnvironment<string>(myStringKey);
-                Assert.Equal(expectedValue, value);
-            }
+			var viewHandler = new GenericViewHandler();
+			view.ViewHandler = viewHandler;
 
-            CheckView(stack2, globalValue);
-            CheckView(rootStack, localValue);
-            CheckView(stack1, cascadedValue);
-            CheckView(text1, cascadedValue);
-            CheckView(text2, secondCascadedValue);
 
-        }
-    }
+			void CheckView(View v, string expectedValue)
+			{
+				var value = v.GetEnvironment<string>(myStringKey);
+				Assert.Equal(expectedValue, value);
+			}
+
+			CheckView(stack2, globalValue);
+			CheckView(rootStack, localValue);
+			CheckView(stack1, cascadedValue);
+			CheckView(text1, cascadedValue);
+			CheckView(text2, secondCascadedValue);
+
+		}
+	}
 }

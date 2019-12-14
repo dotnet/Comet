@@ -1,5 +1,9 @@
-# Comet ☄️
-[![Gitter](https://badges.gitter.im/Clancey-Comet/community.svg)](https://gitter.im/Clancey-Comet/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+# Comet ☄️ 
+
+[![Build Status](https://clancey.visualstudio.com/Comet/_apis/build/status/Clancey.Comet?branchName=dev)](https://clancey.visualstudio.com/Comet/_build/latest?definitionId=1&branchName=dev)  [![NuGet](https://img.shields.io/nuget/v/Clancey.Comet.svg)](https://www.nuget.org/packages/Clancey.Comet)
+
+[Chat on Discord](https://discord.gg/7Ms7ptM)
+
 
 What is Comet? Comet is a prototype for a new UI Framework/Pattern to write app UI.  It follows the Model View Update (MVU) pattern. It magically databinds for you!  
 

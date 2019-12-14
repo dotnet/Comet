@@ -14,12 +14,12 @@
     public Action<string> TextChanged { get; set; }
     public Action<string> TextInput { get; set; }
 
-    public void OnChange(UIChangeEventArgs evt)
+    public void OnChange(ChangeEventArgs evt)
     {
         TextChanged?.Invoke(evt.Value?.ToString());
     }
 
-    public void OnInput(UIChangeEventArgs evt)
+    public void OnInput(ChangeEventArgs evt)
     {
         TextInput?.Invoke(evt.Value?.ToString());
     }

@@ -2,7 +2,7 @@
 
 namespace Comet.Blazor.Handlers
 {
-    internal class SpacerHandler : BlazorHandler<Spacer, BSpacer>
-    {
-    }
+	internal class SpacerHandler : BlazorHandler<Spacer, BSpacer>
+	{
+	}
 }

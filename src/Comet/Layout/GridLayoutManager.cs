@@ -1,453 +1,454 @@
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 
 namespace Comet.Layout
 {
-    public class GridLayoutManager : ILayoutManager
-    {
-        private readonly List<GridConstraints> _constraints = new List<GridConstraints>();
-        private readonly List<object> _definedRows = new List<object>();
-        private readonly List<object> _definedColumns = new List<object>();
-        private SizeF _lastSize;
-        private float[] _gridX;
-        private float[] _gridY;
-        private float[] _widths;
-        private float[] _heights;
-        private float _width;
-        private float _height;
-        
-        private readonly float _spacing;
-    
-        public GridLayoutManager(
-            float? spacing)
-        {
-            _spacing = spacing ?? 4;
-        }
+	public class GridLayoutManager : ILayoutManager
+	{
+		private readonly List<GridConstraints> _constraints = new List<GridConstraints>();
+		private readonly List<object> _definedRows = new List<object>();
+		private readonly List<object> _definedColumns = new List<object>();
+		private SizeF _lastSize;
+		private float[] _gridX;
+		private float[] _gridY;
+		private float[] _widths;
+		private float[] _heights;
+		private float _width;
+		private float _height;
 
-        public object DefaultRowHeight { get; set; }
-        
-        public object DefaultColumnWidth { get; set; }
+		private readonly float _spacing;
 
-        public void Invalidate()
-        {
-            _constraints.Clear();
-            _gridX = null;
-            _gridY = null;
-            _widths = null;
-            _heights = null;
-        }
+		public GridLayoutManager(
+			float? spacing)
+		{
+			_spacing = spacing ?? 4;
+		}
 
-        public SizeF Measure(AbstractLayout layout, SizeF available)
-        {
-            if (_constraints.Count == 0)
-            {
-                var maxRow = 0;
-                var maxColumn = 0;
-                
-                for (var index = 0; index < layout.Count; index++)
-                {
-                    var view = layout[index];
-                    var constraint = view.GetLayoutConstraints() as GridConstraints ?? GridConstraints.Default;
-                    _constraints.Add(constraint);
-                    
-                    maxRow = Math.Max(maxRow, constraint.Row + constraint.RowSpan - 1);
-                    maxColumn = Math.Max(maxColumn, constraint.Column + constraint.ColumnSpan - 1);
-                }
-                
-                while (maxRow >= _definedRows.Count)
-                    _definedRows.Add(DefaultRowHeight);
-                
-                while (maxColumn >= _definedColumns.Count)
-                    _definedColumns.Add(DefaultColumnWidth);
-            }
-            
-            if (_gridX == null || !_lastSize.Equals(available))
-            {
-                ComputeGrid(available.Width, available.Height);
-                _lastSize = available;
-            }
+		public object DefaultRowHeight { get; set; }
 
-            for (var index = 0; index < _constraints.Count; index++)
-            {
-                var position = _constraints[index];
-                var view = layout[index];
+		public object DefaultColumnWidth { get; set; }
 
-                var x = _gridX[position.Column];
-                var y = _gridY[position.Row];
+		public void Invalidate()
+		{
+			_constraints.Clear();
+			_gridX = null;
+			_gridY = null;
+			_widths = null;
+			_heights = null;
+		}
 
-                var w = 0f;
-                for (var i = 0; i < position.ColumnSpan; i++)
-                    w += GetColumnWidth(position.Column + i);
+		public SizeF Measure(AbstractLayout layout, SizeF available)
+		{
+			if (_constraints.Count == 0)
+			{
+				var maxRow = 0;
+				var maxColumn = 0;
 
-                var h = 0f;
-                for (var i = 0; i < position.RowSpan; i++)
-                    h += GetRowHeight(position.Row + i);
+				for (var index = 0; index < layout.Count; index++)
+				{
+					var view = layout[index];
+					var constraint = view.GetLayoutConstraints() as GridConstraints ?? GridConstraints.Default;
+					_constraints.Add(constraint);
 
-                if (position.WeightX < 1 || position.WeightY < 1)
-                {
-                    var viewSize = view.MeasuredSize;
+					maxRow = Math.Max(maxRow, constraint.Row + constraint.RowSpan - 1);
+					maxColumn = Math.Max(maxColumn, constraint.Column + constraint.ColumnSpan - 1);
+				}
 
-                    if (!view.MeasurementValid)
-                        viewSize = view.Measure(available);
+				while (maxRow >= _definedRows.Count)
+					_definedRows.Add(DefaultRowHeight);
 
-                    var cellWidth = w;
-                    var cellHeight = h;
+				while (maxColumn >= _definedColumns.Count)
+					_definedColumns.Add(DefaultColumnWidth);
+			}
 
-                    if (position.WeightX <= 0)
-                        w = viewSize.Width;
-                    else
-                        w *= position.WeightX;
+			if (_gridX == null || !_lastSize.Equals(available))
+			{
+				ComputeGrid(available.Width, available.Height);
+				_lastSize = available;
+			}
 
-                    if (position.WeightY <= 0)
-                        h = viewSize.Height;
-                    else
-                        h *= position.WeightY;
+			for (var index = 0; index < _constraints.Count; index++)
+			{
+				var position = _constraints[index];
+				var view = layout[index];
 
-                    if (position.PositionX > 0)
-                    {
-                        var availWidth = cellWidth - w;
-                        x += (float)Math.Round(availWidth * position.PositionX);
-                    }
+				var x = _gridX[position.Column];
+				var y = _gridY[position.Row];
 
-                    if (position.PositionY > 0)
-                    {
-                        var availHeight = cellHeight - h;
-                        y += (float)Math.Round(availHeight * position.PositionY);
-                    }
+				var w = 0f;
+				for (var i = 0; i < position.ColumnSpan; i++)
+					w += GetColumnWidth(position.Column + i);
 
-                    view.MeasuredSize = new SizeF(w, h);
-                    view.MeasurementValid = true;
-                }
+				var h = 0f;
+				for (var i = 0; i < position.RowSpan; i++)
+					h += GetRowHeight(position.Row + i);
 
-                view.Frame = new RectangleF(x, y, w, h);
-            }
+				if (position.WeightX < 1 || position.WeightY < 1)
+				{
+					var viewSize = view.MeasuredSize;
 
-            return new SizeF(_width, _height);
-        }
+					if (!view.MeasurementValid)
+						viewSize = view.Measure(available);
 
-        public void Layout(AbstractLayout layout, RectangleF bounds)
-        {
-            var measured = bounds.Size;
-            var size = bounds.Size;
-            if (_gridX == null || !_lastSize.Equals(size))
-            {
-                ComputeGrid(size.Width, size.Height);
-                _lastSize = size;
-            }
+					var cellWidth = w;
+					var cellHeight = h;
 
-            for (var index = 0; index < _constraints.Count; index++)
-            {
-                var position = _constraints[index];
-                var view = layout[index];
+					if (position.WeightX <= 0)
+						w = viewSize.Width;
+					else
+						w *= position.WeightX;
 
-                var viewSize = view.MeasuredSize;
-                if (!view.MeasurementValid)
-                {
-                    view.MeasuredSize = viewSize = view.Measure(measured);
-                    view.MeasurementValid = true;
-                }
+					if (position.WeightY <= 0)
+						h = viewSize.Height;
+					else
+						h *= position.WeightY;
 
-                var x = _gridX[position.Column];
-                var y = _gridY[position.Row];
+					if (position.PositionX > 0)
+					{
+						var availWidth = cellWidth - w;
+						x += (float)Math.Round(availWidth * position.PositionX);
+					}
 
-                var w = 0f;
-                for (var i = 0; i < position.ColumnSpan; i++)
-                    w += GetColumnWidth(position.Column + i);
+					if (position.PositionY > 0)
+					{
+						var availHeight = cellHeight - h;
+						y += (float)Math.Round(availHeight * position.PositionY);
+					}
 
-                var h = 0f;
-                for (var i = 0; i < position.RowSpan; i++)
-                    h += GetRowHeight(position.Row + i);
-                
-                if (position.WeightX < 1 || position.WeightY < 1)
-                {
-                    var cellWidth = w;
-                    var cellHeight = h;
+					view.MeasuredSize = new SizeF(w, h);
+					view.MeasurementValid = true;
+				}
 
-                    if (position.WeightX <= 0)
-                        w = viewSize.Width;
-                    else
-                        w *= position.WeightX;
+				view.Frame = new RectangleF(x, y, w, h);
+			}
 
-                    if (position.WeightY <= 0)
-                        h = viewSize.Height;
-                    else
-                        h *= position.WeightY;
+			return new SizeF(_width, _height);
+		}
 
-                    if (position.PositionX > 0)
-                    {
-                        var availWidth = cellWidth - w;
-                        x += (float) Math.Round(availWidth * position.PositionX);
-                    }
+		public void Layout(AbstractLayout layout, RectangleF rect)
+		{
+			var measured = rect.Size;
+			var size = rect.Size;
+			if (_gridX == null || !_lastSize.Equals(size))
+			{
+				ComputeGrid(size.Width, size.Height);
+				_lastSize = size;
+			}
 
-                    if (position.PositionY > 0)
-                    {
-                        var availHeight = cellHeight - h;
-                        y += (float) Math.Round(availHeight * position.PositionY);
-                    }
-                }
+			for (var index = 0; index < _constraints.Count; index++)
+			{
+				var position = _constraints[index];
+				var view = layout[index];
 
-                var padding = view.GetPadding();
-                if (!padding.IsEmpty)
-                {
-                    x += padding.Left;
-                    y += padding.Top;
-                    w -= padding.HorizontalThickness;
-                    h -= padding.VerticalThickness;
-                }
+				var viewSize = view.MeasuredSize;
+				if (!view.MeasurementValid)
+				{
+					view.MeasuredSize = viewSize = view.Measure(measured);
+					view.MeasurementValid = true;
+				}
 
-                view.Frame = new RectangleF(x, y, w, h);
-            }
-        }
-        
-        public int AddRow(object row)
-        {
-            if (row == null)
-                return -1;
+				var x = _gridX[position.Column];
+				var y = _gridY[position.Row];
 
-            _definedRows.Add(row);
-            Invalidate();            
-            
-            return _definedRows.Count - 1;
-        }
+				var w = 0f;
+				for (var i = 0; i < position.ColumnSpan; i++)
+					w += GetColumnWidth(position.Column + i);
 
-        public void AddRows(params object[] rows)
-        {
-            if (rows == null)
-                return;
+				var h = 0f;
+				for (var i = 0; i < position.RowSpan; i++)
+					h += GetRowHeight(position.Row + i);
 
-            foreach (var row in rows)
-                _definedRows.Add(row ?? DefaultRowHeight);
+				if (position.WeightX < 1 || position.WeightY < 1)
+				{
+					var cellWidth = w;
+					var cellHeight = h;
 
-            Invalidate();            
-        }
+					if (position.WeightX <= 0)
+						w = viewSize.Width;
+					else
+						w *= position.WeightX;
 
-        public void SetRowHeight(int index, object value)
-        {
-            if (index >= 0 && index < _definedRows.Count)
-            {
-                _definedRows[index] = value;
-                Invalidate();            
-            }
-        }
+					if (position.WeightY <= 0)
+						h = viewSize.Height;
+					else
+						h *= position.WeightY;
 
-        public int AddColumn(object column)
-        {
-            if (column == null)
-                return -1;
+					if (position.PositionX > 0)
+					{
+						var availWidth = cellWidth - w;
+						x += (float)Math.Round(availWidth * position.PositionX);
+					}
 
-            _definedColumns.Add(column);
-            
-            Invalidate();            
-            return _definedColumns.Count - 1;
-        }
+					if (position.PositionY > 0)
+					{
+						var availHeight = cellHeight - h;
+						y += (float)Math.Round(availHeight * position.PositionY);
+					}
+				}
 
-        public void AddColumns(params object[] columns)
-        {
-            if (columns == null)
-                return;
+				var margin = view.GetMargin();
+				if (!margin.IsEmpty)
+				{
+					x += margin.Left;
+					y += margin.Top;
+					w -= margin.HorizontalThickness;
+					h -= margin.VerticalThickness;
+				}
 
-            foreach (var column in columns)
-                _definedColumns.Add(column ?? DefaultColumnWidth);
+				view.Frame = new RectangleF(x, y, w, h);
+			}
+		}
 
-            Invalidate();            
-        }
+		public int AddRow(object row)
+		{
+			if (row == null)
+				return -1;
 
-        public void SetColumnWidth(int index, object value)
-        {
-            if (index >= 0 && index < _definedColumns.Count)
-            {
-                _definedColumns[index] = value;
-                Invalidate();            
-            }
-        }
-        
-        private float GetColumnWidth(int column)
-        {
-            return _widths[column];
-        }
+			_definedRows.Add(row);
+			Invalidate();
 
-        private float GetRowHeight(int row)
-        {
-            return _heights[row];
-        }
+			return _definedRows.Count - 1;
+		}
 
-        private void ComputeGrid(float width, float height)
-        {
-            var rows = _definedRows.Count;
-            var columns = _definedColumns.Count;
-            
-            _gridX = new float[columns];
-            _gridY = new float[rows];
-            _widths = new float[columns];
-            _heights = new float[rows];
-            _width = 0;
-            _height = 0;
-                
-            float takenX = 0;
-            var calculatedColumns = new List<int>();
-            var calculatedColumnFactors = new List<float>();
-            for (var c = 0; c < columns; c++)
-            {
-                var w = _definedColumns[c];
-                if (!w.ToString().EndsWith("*", StringComparison.Ordinal))
-                {
-                    if (float.TryParse(w.ToString(), out var value))
-                    {
-                        takenX += value;
-                        _widths[c] = value;
-                    }
-                    else
-                    {
-                        calculatedColumns.Add(c);
-                        calculatedColumnFactors.Add(GetFactor(w));
-                    }
-                }
-                else
-                {
-                    calculatedColumns.Add(c);
-                    calculatedColumnFactors.Add(GetFactor(w));
-                }
-            }
+		public void AddRows(params object[] rows)
+		{
+			if (rows == null)
+				return;
 
-            var availableWidth = width - takenX;
-            var columnFactor = calculatedColumnFactors.Sum(f => f);
-            var columnWidth = availableWidth / columnFactor;
-            var factorIndex = 0;
-            foreach (var c in calculatedColumns)
-            {
-                _widths[c] = columnWidth * calculatedColumnFactors[factorIndex++];
-            }
+			foreach (var row in rows)
+				_definedRows.Add(row ?? DefaultRowHeight);
 
-            float takenY = 0;
-            var calculatedRows = new List<int>();
-            var calculatedRowFactors = new List<float>();
-            for (var r = 0; r < rows; r++)
-            {
-                var h = _definedRows[r];
-                if (!h.ToString().EndsWith("*", StringComparison.Ordinal))
-                {
-                    if (float.TryParse(h.ToString(), out var value))
-                    {
-                        takenY += value;
-                        _heights[r] = value;
-                    }
-                    else
-                    {
-                        calculatedRows.Add(r);
-                        calculatedRowFactors.Add(GetFactor(h));
-                    }
-                }
-                else
-                {
-                    calculatedRows.Add(r);
-                    calculatedRowFactors.Add(GetFactor(h));
-                }
-            }
+			Invalidate();
+		}
 
-            var availableHeight = height - takenY;
-            var rowFactor = calculatedRowFactors.Sum(f => f);
-            var rowHeight = availableHeight / rowFactor;
-            factorIndex = 0;
-            foreach (var r in calculatedRows)
-            {
-                _heights[r] = rowHeight * calculatedRowFactors[factorIndex++];
-            }
+		public void SetRowHeight(int index, object value)
+		{
+			if (index >= 0 && index < _definedRows.Count)
+			{
+				_definedRows[index] = value;
+				Invalidate();
+			}
+		}
 
-            float x = 0;
-            for (var c = 0; c < columns; c++)
-            {
-                _gridX[c] = x;
-                x += _widths[c];
-            }
+		public int AddColumn(object column)
+		{
+			if (column == null)
+				return -1;
 
-            float y = 0;
-            for (var r = 0; r < rows; r++)
-            {
-                _gridY[r] = y;
-                y += _heights[r];
-            }
+			_definedColumns.Add(column);
 
-            _width = _widths.Sum();
-            _height = _heights.Sum();
-        }
+			Invalidate();
+			return _definedColumns.Count - 1;
+		}
 
-        private float GetFactor(object value)
-        {
-            if (value != null)
-            {
-                var str = value.ToString();
-                if (str.EndsWith("*", StringComparison.Ordinal))
-                {
-                    str = str.Substring(0, str.Length - 1);
-                    if (float.TryParse(str, out var f))
-                    {
-                        return f;
-                    }
-                }
-            }
+		public void AddColumns(params object[] columns)
+		{
+			if (columns == null)
+				return;
 
-            return 1;
-        }
-        
-        public float CalculateWidth()
-        {
-            float width = 0;
+			foreach (var column in columns)
+				_definedColumns.Add(column ?? DefaultColumnWidth);
 
-            if (_widths != null)
-            {
-                foreach (var value in _widths)
-                {
-                    width += value;
-                }
-            }
-            else
-            {
-                var columns = _definedColumns.Count;
-                for (var c = 0; c < columns; c++)
-                {
-                    var w = _definedColumns[c];
-                    if (!"*".Equals(w))
-                    {
-                        if (float.TryParse(w.ToString(), out var value))
-                        {
-                            width += value;
-                        }
-                    }
-                }
-            }
+			Invalidate();
+		}
 
-            return width;
-        }
+		public void SetColumnWidth(int index, object value)
+		{
+			if (index >= 0 && index < _definedColumns.Count)
+			{
+				_definedColumns[index] = value;
+				Invalidate();
+			}
+		}
 
-        public float CalculateHeight()
-        {
-            float height = 0;
+		private float GetColumnWidth(int column)
+		{
+			return _widths[column];
+		}
 
-            if (_heights != null)
-            {
-                foreach (var value in _heights)
-                {
-                    height += value;
-                }
-            }
-            else
-            {
-                var rows = _definedRows.Count;
-                for (var r = 0; r < rows; r++)
-                {
-                    var h = _definedRows[r];
-                    if (!"*".Equals(h))
-                    {
-                        if (float.TryParse(h.ToString(), out var value))
-                        {
-                            height += value;
-                        }
-                    }
-                }
-            }
+		private float GetRowHeight(int row)
+		{
+			return _heights[row];
+		}
 
-            return height;
-        }
-    }
+		private void ComputeGrid(float width, float height)
+		{
+			var rows = _definedRows.Count;
+			var columns = _definedColumns.Count;
+
+			_gridX = new float[columns];
+			_gridY = new float[rows];
+			_widths = new float[columns];
+			_heights = new float[rows];
+			_width = 0;
+			_height = 0;
+
+			float takenX = 0;
+			var calculatedColumns = new List<int>();
+			var calculatedColumnFactors = new List<float>();
+			for (var c = 0; c < columns; c++)
+			{
+				var w = _definedColumns[c];
+				if (!w.ToString().EndsWith("*", StringComparison.Ordinal))
+				{
+					if (float.TryParse(w.ToString(), out var value))
+					{
+						takenX += value;
+						_widths[c] = value;
+					}
+					else
+					{
+						calculatedColumns.Add(c);
+						calculatedColumnFactors.Add(GetFactor(w));
+					}
+				}
+				else
+				{
+					calculatedColumns.Add(c);
+					calculatedColumnFactors.Add(GetFactor(w));
+				}
+			}
+
+			var availableWidth = width - takenX;
+			var columnFactor = calculatedColumnFactors.Sum(f => f);
+			var columnWidth = availableWidth / columnFactor;
+			var factorIndex = 0;
+			foreach (var c in calculatedColumns)
+			{
+				_widths[c] = columnWidth * calculatedColumnFactors[factorIndex++];
+			}
+
+			float takenY = 0;
+			var calculatedRows = new List<int>();
+			var calculatedRowFactors = new List<float>();
+			for (var r = 0; r < rows; r++)
+			{
+				var h = _definedRows[r];
+				if (!h.ToString().EndsWith("*", StringComparison.Ordinal))
+				{
+					if (float.TryParse(h.ToString(), out var value))
+					{
+						takenY += value;
+						_heights[r] = value;
+					}
+					else
+					{
+						calculatedRows.Add(r);
+						calculatedRowFactors.Add(GetFactor(h));
+					}
+				}
+				else
+				{
+					calculatedRows.Add(r);
+					calculatedRowFactors.Add(GetFactor(h));
+				}
+			}
+
+			var availableHeight = height - takenY;
+			var rowFactor = calculatedRowFactors.Sum(f => f);
+			var rowHeight = availableHeight / rowFactor;
+			factorIndex = 0;
+			foreach (var r in calculatedRows)
+			{
+				_heights[r] = rowHeight * calculatedRowFactors[factorIndex++];
+			}
+
+			float x = 0;
+			for (var c = 0; c < columns; c++)
+			{
+				_gridX[c] = x;
+				x += _widths[c];
+			}
+
+			float y = 0;
+			for (var r = 0; r < rows; r++)
+			{
+				_gridY[r] = y;
+				y += _heights[r];
+			}
+
+			_width = _widths.Sum();
+			_height = _heights.Sum();
+		}
+
+		private float GetFactor(object value)
+		{
+			if (value != null)
+			{
+				var str = value.ToString();
+				if (str.EndsWith("*", StringComparison.Ordinal))
+				{
+					str = str.Substring(0, str.Length - 1);
+					if (float.TryParse(str, out var f))
+					{
+						return f;
+					}
+				}
+			}
+
+			return 1;
+		}
+
+		public float CalculateWidth()
+		{
+			float width = 0;
+
+			if (_widths != null)
+			{
+				foreach (var value in _widths)
+				{
+					width += value;
+				}
+			}
+			else
+			{
+				var columns = _definedColumns.Count;
+				for (var c = 0; c < columns; c++)
+				{
+					var w = _definedColumns[c];
+					if (!"*".Equals(w))
+					{
+						if (float.TryParse(w.ToString(), out var value))
+						{
+							width += value;
+						}
+					}
+				}
+			}
+
+			return width;
+		}
+
+		public float CalculateHeight()
+		{
+			float height = 0;
+
+			if (_heights != null)
+			{
+				foreach (var value in _heights)
+				{
+					height += value;
+				}
+			}
+			else
+			{
+				var rows = _definedRows.Count;
+				for (var r = 0; r < rows; r++)
+				{
+					var h = _definedRows[r];
+					if (!"*".Equals(h))
+					{
+						if (float.TryParse(h.ToString(), out var value))
+						{
+							height += value;
+						}
+					}
+				}
+			}
+
+			return height;
+		}
+	}
 }

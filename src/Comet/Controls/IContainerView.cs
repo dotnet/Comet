@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Comet {
+namespace Comet
+{
 	public interface IContainerView
-	{ 
+	{
 		IReadOnlyList<View> GetChildren();
 	}
 }

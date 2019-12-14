@@ -1,17 +1,19 @@
-﻿namespace Comet.Tests.Handlers 
+﻿using System.Drawing;
+
+namespace Comet.Tests.Handlers
 {
-	public class TextFieldHandler: GenericViewHandler 
+	public class TextFieldHandler : GenericViewHandler
 	{
-		public TextFieldHandler ()
+		public TextFieldHandler()
 		{
-			OnMeasure = HandleOnMeasure;
+			OnGetIntrinsicSize = HandleOnGetIntrinsicSize;
 		}
 
-		public TextField VirtualView => (TextField) CurrentView;
-		
-		private SizeF HandleOnMeasure(SizeF arg)
+		public TextField VirtualView => (TextField)CurrentView;
+
+		private SizeF HandleOnGetIntrinsicSize(SizeF arg)
 		{
-			var length = VirtualView.Text?.Get()?.Length ?? 0;
+			var length = VirtualView.Text?.CurrentValue?.Length ?? 0;
 			return new SizeF(10 * length, 12);
 		}
 	}

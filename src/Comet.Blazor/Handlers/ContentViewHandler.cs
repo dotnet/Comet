@@ -2,23 +2,23 @@
 
 namespace Comet.Blazor.Handlers
 {
-    internal class ContentViewHandler : BlazorHandler<ContentView, BView>
-    {
-        public static readonly PropertyMapper<ContentView> Mapper = new PropertyMapper<ContentView>
-        {
-            { nameof(ContentView.Content), MapContentProperty }
-        };
+	internal class ContentViewHandler : BlazorHandler<ContentView, BView>
+	{
+		public static readonly PropertyMapper<ContentView> Mapper = new PropertyMapper<ContentView>
+		{
+			{ nameof(ContentView.Content), MapContentProperty }
+		};
 
-        public ContentViewHandler()
-            : base(Mapper)
-        {
-        }
+		public ContentViewHandler()
+			: base(Mapper)
+		{
+		}
 
-        public static void MapContentProperty(IViewHandler viewHandler, ContentView virtualView)
-        {
-            var nativeView = (BView)viewHandler.NativeView;
+		public static void MapContentProperty(IViewHandler viewHandler, ContentView virtualView)
+		{
+			var nativeView = (BView)viewHandler.NativeView;
 
-            nativeView.View = virtualView.Content;
-        }
-    }
+			nativeView.View = virtualView.Content;
+		}
+	}
 }

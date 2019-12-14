@@ -1,16 +1,16 @@
 ﻿using System;
 using Comet.iOS.Controls;
 using UIKit;
-namespace Comet.iOS 
+namespace Comet.iOS
 {
-	public interface iOSViewHandler : IViewHandler 
+	public interface iOSViewHandler : IViewHandler
 	{
-        event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+		event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
-        UIView View { get; }
+		UIView View { get; }
 
-        CUIContainerView ContainerView { get; }
+		CUIContainerView ContainerView { get; }
 
-        bool AutoSafeArea { get; }
-    }
+		bool IgnoreSafeArea { get; }
+	}
 }

@@ -2,39 +2,37 @@
 
 namespace Comet.Samples
 {
-    public class ProgressBarSample1 : View
-    {
-        readonly State<double> percentage = new State<double>(10);
-        private readonly Timer _timer;
+	public class ProgressBarSample1 : View
+	{
+		readonly State<float> percentage = new State<float>(10);
+		private readonly Timer _timer;
 
-        public ProgressBarSample1()
-        {
-            _timer = new Timer(state =>
-            {
-                var p = (State<double>)state;
-                Device.InvokeOnMainThread(() =>
-                {
-                    var current = p.Value;
-                    var value = current < 101 ? current + 1 : 0;
+		public ProgressBarSample1()
+		{
+			_timer = new Timer(async state => {
+				var p = (State<double>)state;
+				await ThreadHelper.SwitchToMainThreadAsync();
 
-                    p.Value = value;
-                });
-            }, percentage, 100, 100);
-        }
+				var current = p.Value;
+				var value = current < 101 ? current + 1 : 0;
 
-        [Body]
-        View body() => new VStack()
-        {
-            new ProgressBar(percentage),
-            new Text(()=>$"{percentage.Value} %"),
-        };
+				p.Value = value;
+			}, percentage, 100, 100);
+		}
 
-        protected override void Dispose(bool disposing)
-        {
-            base.Dispose(disposing);
+		[Body]
+		View body() => new VStack()
+		{
+			new ProgressBar(percentage),
+			new Text(()=>$"{percentage.Value} %"),
+		};
 
-            // TODO: Stop when lifecycle events for views are available
-            _timer.Dispose();
-        }
-    }
+		protected override void Dispose(bool disposing)
+		{
+			base.Dispose(disposing);
+
+			// TODO: Stop when lifecycle events for views are available
+			_timer.Dispose();
+		}
+	}
 }

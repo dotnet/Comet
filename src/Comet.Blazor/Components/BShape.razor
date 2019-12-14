@@ -2,10 +2,11 @@
 
 @using SkiaSharp
 @using Comet.Skia
+@using System.Drawing
 
 @inject CanvasWriter Writer;
 
-<canvas @ref="@_canvas" @ref:suppressField />
+<canvas @ref="@_canvas" />
 
 @code {
     private object _canvas;
@@ -13,14 +14,14 @@
     [Parameter]
     public Shape Shape { get; set; }
 
-    protected override async Task OnAfterRenderAsync()
+    protected override async Task OnAfterRenderAsync(bool firstRender)
     {
         var size = await Writer.GetSizeAsync(_canvas).ConfigureAwait(false);
         var bounds = new RectangleF(0, 0, size.Width, size.Height);
 
         using (var surface = SKSurface.Create(new SKImageInfo((int)size.Width, (int)size.Height)))
         {
-            var image = (IControlDelegate)new SkiaShapeView(Shape);
+            var image = new SkiaShapeView(Shape);
 
             image.Draw(surface.Canvas, bounds);
 

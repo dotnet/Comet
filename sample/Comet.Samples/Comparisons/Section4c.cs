@@ -21,13 +21,13 @@ struct CircleImage: View {
 
 namespace Comet.Samples.Comparisons
 {
-    public class Section4c : View
-    {
-        [Body]
-        View body() => new VStack {
-                new Image("turtlerock.jpg")
-                    .Shadow(radius: 10)
-            };
+	public class Section4c : View
+	{
+		[Body]
+		View body() => new VStack {
+				new Image("turtlerock.jpg")
+					.Shadow(radius: 10)
+			};
 
-    }
+	}
 }
