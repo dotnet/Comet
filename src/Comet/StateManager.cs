@@ -212,8 +212,10 @@ namespace Comet
 					return;
 				}
 				string parentproperty = null;
-				mappings?.TryGetValue(view.Id, out parentproperty);
-				parentproperty ??= mappings.FirstOrDefault().Value;
+				if (!mappings?.TryGetValue(view.Id, out parentproperty) ?? false && (mappings?.Count ?? 0) > 0)
+				{
+					parentproperty ??= mappings?.First().Key;
+				}
 				var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
 				//TODO: Change this to use notify and property name
 				view.BindingPropertyChanged(notify, propertyName, prop, value);
