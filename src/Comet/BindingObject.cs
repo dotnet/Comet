@@ -143,10 +143,17 @@ namespace Comet
 		//    }
 		//    return didUpdate;
 		//}
-
+		protected void UpdatePropertyChangeProperty(View view, string fullProperty, object value)
+		{
+			if (view.Parent != null)
+				UpdatePropertyChangeProperty(view.Parent, fullProperty, value);
+			else
+				view.GetState().changeDictionary[fullProperty] = value;
+		}
 		public bool UpdateValue(View view,(INotifyPropertyRead BindingObject, string PropertyName) property, string fullProperty, object value)
 		{
 			changeDictionary[fullProperty] = value;
+			UpdatePropertyChangeProperty(view, fullProperty, value);
 			if (GlobalProperties.Contains(property))
 				return false;
 			if (ViewUpdateProperties.TryGetValue((property.BindingObject, property.PropertyName), out var bindings))

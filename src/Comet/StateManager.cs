@@ -88,6 +88,11 @@ namespace Comet
 
 
 		static Assembly CometAssembly = typeof(BindingObject).Assembly;
+		public static void CheckBody(View view)
+		{
+			CheckForStateAttributes(view, view).ToList();
+		}
+
 		static IEnumerable<INotifyPropertyRead> CheckForStateAttributes(object obj, View view)
 		{
 			//if (hasChecked && obj == this)
@@ -107,7 +112,8 @@ namespace Comet
 					{
 						throw new ReadonlyRequiresException(field.DeclaringType?.FullName, field.Name);
 					}
-					var child = field.GetValue(obj) as INotifyPropertyRead;
+					var fieldValue = field.GetValue(obj);
+					var child = fieldValue as INotifyPropertyRead;
 					if (child != null)
 					{
 						//If the view is null, this is a child propety for a binding object.
@@ -134,7 +140,7 @@ namespace Comet
 				return;
 			MonitoredObjects.Add(obj);
 			//Check in for more properties!
-			CheckForStateAttributes(obj, null);
+			CheckForStateAttributes(obj, null).ToList();
 
 			//if it is a binding object we auto monitor!!!!
 			if (!(obj is BindingObject))
@@ -207,7 +213,7 @@ namespace Comet
 				}
 				string parentproperty = null;
 				mappings?.TryGetValue(view.Id, out parentproperty);
-
+				parentproperty ??= mappings.FirstOrDefault().Value;
 				var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
 				//TODO: Change this to use notify and property name
 				view.BindingPropertyChanged(notify, propertyName, prop, value);
