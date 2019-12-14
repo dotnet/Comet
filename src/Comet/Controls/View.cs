@@ -220,9 +220,12 @@ namespace Comet
 		bool didCheckForBody;
 		void CheckForBody()
 		{
-			if (didCheckForBody || Body != null)
+			if (didCheckForBody)
 				return;
+			StateManager.CheckBody(this);
 			didCheckForBody = true;
+			if (Body != null)
+				return;
 			var bodyMethod = this.GetBody();
 			if (bodyMethod != null)
 				Body = bodyMethod;
