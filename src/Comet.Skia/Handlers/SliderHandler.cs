@@ -33,7 +33,7 @@ namespace Comet.Skia
 
 		}
 
-		public override string AccessibilityText() => (TypedVirtualView?.Value?.CurrentValue ?? 0).ToString("P");
+		public override string AccessibilityText() => (TypedVirtualView?.GetPercent() ?? 0).ToString("P");
 
 		public static string[] DefaultSliderLayerDrawingOrder =
 			DefaultLayerDrawingOrder.ToList().InsertAfter(new string[] {
