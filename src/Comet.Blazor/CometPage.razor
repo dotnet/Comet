@@ -42,17 +42,12 @@
 
             if (_view?.BuiltView is NavigationView nav)
             {
-                nav.SetPerformNavigate(toView =>
+                nav.PerformNavigate = toView =>
                 {
                     _navigationStack.Push(View);
                     View = toView;
                     StateHasChanged();
-                });
-                nav.SetPerformPop(() =>
-                {
-                    View = _navigationStack.Pop();
-                    StateHasChanged();
-                });
+                };
             }
         }
     }

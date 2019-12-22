@@ -7,129 +7,129 @@ using System.Drawing;
 
 namespace Comet.WPF.Handlers
 {
-	public abstract class AbstractHandler<TVirtualView, TNativeView> : WPFViewHandler
-		where TVirtualView : View
-		where TNativeView : UIElement
-	{
-		protected readonly PropertyMapper<TVirtualView> mapper;
+    public abstract class AbstractHandler<TVirtualView, TNativeView> : WPFViewHandler 
+        where TVirtualView : View 
+        where TNativeView: UIElement
+    {
+        protected readonly PropertyMapper<TVirtualView> mapper;
 
-		protected AbstractHandler(PropertyMapper<TVirtualView> mapper)
-		{
-			this.mapper = mapper;
-		}
+        protected AbstractHandler(PropertyMapper<TVirtualView> mapper)
+        {
+            this.mapper = mapper;
+        }
 
-		protected AbstractHandler()
-		{
+        protected AbstractHandler()
+        {
+            
+        }
 
-		}
+        
+        private TVirtualView _virtualView;
+        private TNativeView _nativeView;
 
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+        
+        protected abstract TNativeView CreateView();
 
-		private TVirtualView _virtualView;
-		private TNativeView _nativeView;
+        public UIElement View => _nativeView;
+        
+        public CUIContainerView ContainerView => null;
 
-		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+        public object NativeView => _nativeView;
+        
+        public TNativeView TypedNativeView => _nativeView;
 
-		protected abstract TNativeView CreateView();
+        protected TVirtualView VirtualView => _virtualView;
 
-		public UIElement View => _nativeView;
+        public virtual void SetView(View view)
+        {
+            _virtualView = (TVirtualView)view;
+            if (_nativeView == null)
+                _nativeView = CreateView();
+            mapper?.UpdateProperties(this, _virtualView);
+        }
 
-		public CUIContainerView ContainerView => null;
+        public virtual void Remove(View view)
+        {
+            _virtualView = null;
+        }
 
-		public object NativeView => _nativeView;
+        protected virtual void DisposeView(TNativeView nativeView)
+        {
+            
+        }
 
-		public TNativeView TypedNativeView => _nativeView;
+        public virtual void UpdateValue(string property, object value)
+        {
+            mapper?.UpdateProperty(this, _virtualView, property);
+        }
 
-		protected TVirtualView VirtualView => _virtualView;
+        public bool HasContainer
+        {
+            get => false;
+            set { }
+        }
+        
+        public virtual SizeF Measure(SizeF availableSize)
+        {
+            _nativeView?.Measure(availableSize.ToWSize());
+            return _nativeView?.DesiredSize.ToSizeF() ?? availableSize;
+        }
 
-		public virtual void SetView(View view)
-		{
-			_virtualView = (TVirtualView)view;
-			if (_nativeView == null)
-				_nativeView = CreateView();
-			mapper?.UpdateProperties(this, _virtualView);
-		}
+        public void SetFrame(RectangleF frame)
+        {
+            _nativeView?.Arrange(frame.ToRect());
+        }
 
-		public virtual void Remove(View view)
-		{
-			_virtualView = null;
-		}
+        protected void BroadcastNativeViewChanged(UIElement previousView, UIElement newView)
+        {
+            NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, previousView, newView));
+        }
+        
+        #region IDisposable Support
+        private bool _disposed = false; // To detect redundant calls
+        
+        private void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
 
-		protected virtual void DisposeView(TNativeView nativeView)
-		{
+            if (_nativeView is FrameworkElement element)
+                element.Parent.RemoveChild(_nativeView);
 
-		}
+            if (_nativeView != null)
+                DisposeView(_nativeView);
 
-		public virtual void UpdateValue(string property, object value)
-		{
-			mapper?.UpdateProperty(this, _virtualView, property);
-		}
+            if (_nativeView is IDisposable disposable)
+                disposable.Dispose();
 
-		public bool HasContainer
-		{
-			get => false;
-			set { }
-		}
+            _nativeView = null;
+            
+            if (_virtualView != null)
+                Remove(_virtualView);
+        }
 
-		public virtual SizeF GetIntrinsicSize(SizeF availableSize)
-		{
-			_nativeView?.Measure(availableSize.ToWSize());
-			return _nativeView?.DesiredSize.ToSizeF() ?? availableSize;
-		}
+        void OnDispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+            _disposed = true;
+            Dispose(disposing);
+        }
 
-		public void SetFrame(RectangleF frame)
-		{
-			_nativeView?.Arrange(frame.ToRect());
-		}
+        ~AbstractHandler()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(false);
+        }
 
-		protected void BroadcastNativeViewChanged(UIElement previousView, UIElement newView)
-		{
-			NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, previousView, newView));
-		}
-
-		#region IDisposable Support
-		private bool _disposed = false; // To detect redundant calls
-
-		private void Dispose(bool disposing)
-		{
-			if (!disposing)
-				return;
-
-			if (_nativeView is FrameworkElement element)
-				element.Parent.RemoveChild(_nativeView);
-
-			if (_nativeView != null)
-				DisposeView(_nativeView);
-
-			if (_nativeView is IDisposable disposable)
-				disposable.Dispose();
-
-			_nativeView = null;
-
-			if (_virtualView != null)
-				Remove(_virtualView);
-		}
-
-		void OnDispose(bool disposing)
-		{
-			if (_disposed)
-				return;
-			_disposed = true;
-			Dispose(disposing);
-		}
-
-		~AbstractHandler()
-		{
-			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-			OnDispose(false);
-		}
-
-		// This code added to correctly implement the disposable pattern.
-		public void Dispose()
-		{
-			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-			OnDispose(true);
-			GC.SuppressFinalize(this);
-		}
-		#endregion
-	}
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
+    }
 }

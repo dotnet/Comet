@@ -4,18 +4,18 @@ using Comet.Graphics;
 
 namespace Comet
 {
-	public abstract class Shape : ContextualObject
-	{
-		protected Shape()
-		{
+    public abstract class Shape : ContextualObject
+    {        
+        protected Shape()
+        {
+            
+        }
 
-		}
+        internal override void ContextPropertyChanged(string property, object value, bool cascades)
+        {
+            
+        }
 
-		internal override void ContextPropertyChanged(string property, object value, bool cascades)
-		{
-
-		}
-
-		public abstract PathF PathForBounds(RectangleF rect);
-	}
+        public abstract PathF PathForBounds(RectangleF rect);
+    }    
 }

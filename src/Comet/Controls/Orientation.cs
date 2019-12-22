@@ -1,8 +1,8 @@
 ﻿namespace Comet
 {
-	public enum Orientation
-	{
-		Vertical,
-		Horizontal
-	}
+    public enum Orientation
+    {
+        Vertical,
+        Horizontal
+    }
 }

@@ -5,14 +5,14 @@ using Xunit;
 
 namespace Comet.Tests
 {
-	public class GridTests : TestBase
+	public class GridTests : TestBase 
 	{
 		public class GridTestView1 : View
 		{
 			public readonly State<string> text = "Test";
 
-			[Body]
-			View body() => new Grid(columns: new[] { "*", "*" }, defaultRowHeight: 20)
+				[Body]
+				View body() => new Grid(columns: new []{"*","*"}, defaultRowHeight:20)
 				{
 					new TextField(text).Tag("textfield").Cell(row:0, column:0, colSpan:2),
 					new Text(text).Tag("text1").Cell(row:1, column: 0),
@@ -31,27 +31,27 @@ namespace Comet.Tests
 			var text1 = view.GetViewWithTag<Text>("text1");
 			var text2 = view.GetViewWithTag<Text>("text2");
 
-			view.Frame = new RectangleF(0, 0, 320, 600);
-
+			view.Frame = new RectangleF(0,0,320,600);
+			
 			Assert.True(view.MeasurementValid);
 			Assert.Equal(new SizeF(320, 40), view.MeasuredSize);
-			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new RectangleF(0,0,320,600), view.Frame);
 
 			Assert.True(grid.MeasurementValid);
 			Assert.Equal(new SizeF(320, 40), grid.MeasuredSize);
-			Assert.Equal(new RectangleF(0, 280, 320, 40), grid.Frame);
-
+			Assert.Equal(new RectangleF(0,280,320,40), grid.Frame);
+			
 			Assert.True(textField.MeasurementValid);
 			Assert.Equal(new SizeF(40, 12), textField.MeasuredSize);
-			Assert.Equal(new RectangleF(0, 0, 320, 20), textField.Frame);
+			Assert.Equal(new RectangleF(0,0,320,20), textField.Frame);
 
 			Assert.True(text1.MeasurementValid);
 			Assert.Equal(new SizeF(40, 12), text1.MeasuredSize);
-			Assert.Equal(new RectangleF(0, 20, 160, 20), text1.Frame);
+			Assert.Equal(new RectangleF(0,20,160,20), text1.Frame);
 
 			Assert.True(text2.MeasurementValid);
 			Assert.Equal(new SizeF(40, 12), text2.MeasuredSize);
-			Assert.Equal(new RectangleF(160, 20, 160, 20), text2.Frame);
+			Assert.Equal(new RectangleF(160,20,160,20), text2.Frame);
 		}
 	}
 }

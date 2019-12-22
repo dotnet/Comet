@@ -10,41 +10,41 @@ using System.Linq;
 
 namespace Comet.Android.Handlers
 {
-	public class TabViewHandler : AbstractHandler<TabView, CometTabView>
-	{
-		//private AView _view;
+    public class TabViewHandler : AbstractHandler<TabView, CUITabView>
+    {
+        //private AView _view;
 
-		protected override CometTabView CreateView(Context context)
-		{
-			var tabView = new CometTabView(context);
+        protected override CUITabView CreateView(Context context)
+        {
+            var tabView = new CUITabView(context);
 
-			if (VirtualView != null)
-			{
-				VirtualView.ChildrenChanged += HandleChildrenChanged;
-				VirtualView.ChildrenAdded += HandleChildrenChanged;
-				VirtualView.ChildrenRemoved += HandleChildrenChanged;
-			}
+            if (VirtualView != null)
+            {
+                VirtualView.ChildrenChanged += HandleChildrenChanged;
+                VirtualView.ChildrenAdded += HandleChildrenChanged;
+                VirtualView.ChildrenRemoved += HandleChildrenChanged;
+            }
 
-			tabView.CreateTabs(VirtualView?.ToList());
+            tabView.CreateTabs(VirtualView?.ToList());
 
-			return tabView;
-		}
+            return tabView;
+        }
 
-		public override void Remove(View view)
-		{
-			if (VirtualView != null)
-			{
-				VirtualView.ChildrenChanged -= HandleChildrenChanged;
-				VirtualView.ChildrenAdded -= HandleChildrenChanged;
-				VirtualView.ChildrenRemoved -= HandleChildrenChanged;
-			}
+        public override void Remove(View view)
+        {
+            if (VirtualView != null)
+            {
+                VirtualView.ChildrenChanged -= HandleChildrenChanged;
+                VirtualView.ChildrenAdded -= HandleChildrenChanged;
+                VirtualView.ChildrenRemoved -= HandleChildrenChanged;
+            }
 
-			base.Remove(view);
-		}
+            base.Remove(view);
+        }
 
-		private void HandleChildrenChanged(object sender, LayoutEventArgs e)
-		{
-			TypedNativeView?.CreateTabs(VirtualView?.ToList());
-		}
-	}
+        private void HandleChildrenChanged(object sender, LayoutEventArgs e)
+        {
+            TypedNativeView?.CreateTabs(VirtualView?.ToList());
+        }
+    }
 }

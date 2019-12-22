@@ -6,24 +6,24 @@ using System.Threading.Tasks;
 
 namespace Comet.UWP.Services
 {
-	class UWPBitmapService : AbstractBitmapService
-	{
-		public override async Task<Bitmap> LoadBitmapFromUrlAsync(string url)
-		{
-			var image = await ImageService.Instance
-				.LoadUrl(url)
-				.AsWriteableBitmapAsync();
+    class UWPBitmapService : AbstractBitmapService
+    {
+        public override async Task<Bitmap> LoadBitmapFromUrlAsync(string url)
+        {
+            var image = await ImageService.Instance
+                .LoadUrl(url)
+                .AsWriteableBitmapAsync();
 
-			return new UWPBitmap(image);
-		}
+            return new UWPBitmap(image);
+        }
 
-		public override async Task<Bitmap> LoadBitmapFromFileAsync(string file)
-		{
-			var image = await ImageService.Instance
-				.LoadFile(file)
-				.AsWriteableBitmapAsync();
+        public override async Task<Bitmap> LoadBitmapFromFileAsync(string file)
+        {
+            var image = await ImageService.Instance
+                .LoadFile(file)
+                .AsWriteableBitmapAsync();
 
-			return new UWPBitmap(image);
-		}
-	}
+            return new UWPBitmap(image);
+        }
+    }
 }

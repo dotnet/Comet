@@ -6,97 +6,97 @@ using UIKit;
 using MButton = MaterialComponents.Button;
 namespace Comet.Material.iOS
 {
-	public class ButtonHandler : MaterialViewHandler<Button, MButton>
-	{
-		public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(MaterialViewHandler.Mapper)
-		{
-			[nameof(Button.Text)] = MapTextProperty,
-			[EnvironmentKeys.Colors.Color] = MapColorProperty,
-			[nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
-		};
+    public class ButtonHandler : MaterialViewHandler<Button, MButton>
+    {
+        public static readonly PropertyMapper<Button> Mapper = new PropertyMapper<Button>(MaterialViewHandler.Mapper)
+        {
+            [nameof(Button.Text)] = MapTextProperty,
+            [EnvironmentKeys.Colors.Color] = MapColorProperty,
+            [nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
+        };
 
-		public ButtonHandler() : base(Mapper)
-		{
+        public ButtonHandler() : base(Mapper)
+        {
 
-		}
+        }
 
-		private static FontAttributes DefaultFont;
-		private static Color DefaultColor;
-		private static Color DefaultSelectedColor;
+        private static FontAttributes DefaultFont;
+        private static Color DefaultColor;
+        private static Color DefaultSelectedColor;
+       
+        ButtonScheme buttonScheme;
+        protected override MButton CreateView()
+        {
+            var button = new MButton();
 
-		ButtonScheme buttonScheme;
-		protected override MButton CreateView()
-		{
-			var button = new MButton();
+            if (DefaultColor == null)
+            {
+                DefaultFont = button.Font.ToFont();
+                DefaultColor = button.TitleColor(UIControlState.Normal).ToColor();
+                DefaultSelectedColor = button.TitleColor(UIControlState.Highlighted).ToColor();
+            }
+          
 
-			if (DefaultColor == null)
-			{
-				DefaultFont = button.Font.ToFont();
-				DefaultColor = button.TitleColor(UIControlState.Normal).ToColor();
-				DefaultSelectedColor = button.TitleColor(UIControlState.Highlighted).ToColor();
-			}
+            button.TouchUpInside += HandleTouchUpInside;
 
+            RecreateScheme();
+            ApplyScheme();
 
-			button.TouchUpInside += HandleTouchUpInside;
+            return button;
+        }
 
-			RecreateScheme();
-			ApplyScheme();
+        protected override void DisposeView(MButton button)
+        {
+            button.TouchUpInside -= HandleTouchUpInside;
+        }
 
-			return button;
-		}
+        private void HandleTouchUpInside(object sender, EventArgs e)
+        {
+            VirtualView?.OnClick?.Invoke();
+        }
 
-		protected override void DisposeView(MButton button)
-		{
-			button.TouchUpInside -= HandleTouchUpInside;
-		}
+        public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
+        {
+            var nativeView = (UIButton)viewHandler.NativeView;
+            nativeView.SetTitle(virtualView.Text?.CurrentValue, UIControlState.Normal);
+            virtualView.InvalidateMeasurement();
+        }
 
-		private void HandleTouchUpInside(object sender, EventArgs e)
-		{
-			VirtualView?.OnClick?.Invoke();
-		}
+        public static void MapColorProperty(IViewHandler viewHandler, Button virtualView)
+        {
+            var materialView = viewHandler as IMaterialView;
+            var color = virtualView.GetColor(null);
+           materialView.ColorScheme.SecondaryColor = color?.ToUIColor();
 
-		public static void MapTextProperty(IViewHandler viewHandler, Button virtualView)
-		{
-			var nativeView = (UIButton)viewHandler.NativeView;
-			nativeView.SetTitle(virtualView.Text?.CurrentValue, UIControlState.Normal);
-			virtualView.InvalidateMeasurement();
-		}
+            materialView.ApplyScheme();
+        }
 
-		public static void MapColorProperty(IViewHandler viewHandler, Button virtualView)
-		{
-			var materialView = viewHandler as IMaterialView;
-			var color = virtualView.GetColor(null);
-			materialView.ColorScheme.SecondaryColor = color?.ToUIColor();
+        public static void MapBackgroundColorProperty(IViewHandler handler, Button virtualView)
+        {
+            var materialView = handler as IMaterialView;
+            var color = virtualView.GetBackgroundColor();
+            if (color != null)
+                materialView.ColorScheme.PrimaryColor = color.ToUIColor();
 
-			materialView.ApplyScheme();
-		}
+            materialView.ApplyScheme();
+        }
 
-		public static void MapBackgroundColorProperty(IViewHandler handler, Button virtualView)
-		{
-			var materialView = handler as IMaterialView;
-			var color = virtualView.GetBackgroundColor();
-			if (color != null)
-				materialView.ColorScheme.PrimaryColor = color.ToUIColor();
+        public override void ApplyScheme()
+        {
+            if (TypedNativeView == null)
+                return;
+            ContainedButtonThemer.ApplyScheme(buttonScheme, TypedNativeView);
+        }
 
-			materialView.ApplyScheme();
-		}
-
-		public override void ApplyScheme()
-		{
-			if (TypedNativeView == null)
-				return;
-			ContainedButtonThemer.ApplyScheme(buttonScheme, TypedNativeView);
-		}
-
-		public override void RecreateScheme()
-		{
-			buttonScheme = new ButtonScheme
-			{
-				ColorScheme = this.ColorScheme,
-				TypographyScheme = this.TypographyScheme,
-				ShapeScheme = this.ShapeScheme,
-			};
-			ApplyScheme();
-		}
-	}
+        public override void RecreateScheme()
+        {
+            buttonScheme = new ButtonScheme
+            {
+                ColorScheme = this.ColorScheme,
+                TypographyScheme = this.TypographyScheme,
+                ShapeScheme = this.ShapeScheme,
+            };
+            ApplyScheme();
+        }
+    }
 }

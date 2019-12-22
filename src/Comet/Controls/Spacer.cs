@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Comet
 {
-	public class Spacer : View
-	{
-	}
+    public class Spacer : View
+    {
+    }
 }

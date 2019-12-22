@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:Comet.WPF.Sample"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-
+         
     </Application.Resources>
 </Application>

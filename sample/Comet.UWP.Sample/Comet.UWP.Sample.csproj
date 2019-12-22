@@ -145,20 +145,11 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="HarfBuzzSharp">
-      <Version>2.6.1</Version>
-    </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.9</Version>
+      <Version>6.2.8</Version>
     </PackageReference>
     <PackageReference Include="SkiaSharp.Views">
-      <Version>1.68.1</Version>
-    </PackageReference>
-    <PackageReference Include="Topten.RichTextKit">
-      <Version>0.1.117</Version>
-    </PackageReference>
-    <PackageReference Include="Clancey.Comet.Reload">
-      <Version>0.0.11-alpha</Version>
+      <Version>1.68.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

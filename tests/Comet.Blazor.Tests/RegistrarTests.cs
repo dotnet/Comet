@@ -68,9 +68,6 @@ namespace Comet.Blazor.Tests
                 var handler = Registrar.Handlers.GetHandler(type);
 
                 Assert.NotNull(handler);
-				//Skia controls don't need explicit handlers
-                if (type.FullName.StartsWith("Comet.Skia"))
-                    continue;
 
                 if (type == typeof(View))
                 {

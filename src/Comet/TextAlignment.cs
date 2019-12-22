@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Comet
 {
-	public enum TextAlignment
-	{
-		Natural,
-		Left,
-		Right,
-		Center,
-		Justified
-	}
+    public enum TextAlignment
+    {
+        Natural,
+        Left,
+        Right,
+        Center,
+        Justified
+    }
 }

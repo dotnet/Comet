@@ -9,14 +9,14 @@ using UIKit;
 
 namespace Comet.Material.iOS
 {
-	public interface IMaterialView
-	{
-		SemanticColorScheme ColorScheme { get; }
+    public interface IMaterialView
+    {
+        SemanticColorScheme ColorScheme { get;}
 
-		TypographyScheme TypographyScheme { get; }
+        TypographyScheme TypographyScheme { get;}
 
-		ShapeScheme ShapeScheme { get; }
-		void ApplyScheme();
-		void RecreateScheme();
-	}
+        ShapeScheme ShapeScheme { get; }
+        void ApplyScheme();
+        void RecreateScheme();
+    }   
 }

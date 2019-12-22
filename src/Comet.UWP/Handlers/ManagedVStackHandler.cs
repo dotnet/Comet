@@ -3,8 +3,8 @@ using Windows.UI.Xaml.Controls;
 
 namespace Comet.UWP.Handlers
 {
-	public class ManagedVStackHandler : AbstractLayoutHandler
-	{
+    public class ManagedVStackHandler : AbstractLayoutHandler
+    {
 
-	}
+    }
 }

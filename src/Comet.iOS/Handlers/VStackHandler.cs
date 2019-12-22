@@ -4,14 +4,14 @@ using UIKit;
 
 namespace Comet.iOS.Handlers
 {
-	public class VStackHandler : AbstractLayoutHandler
-	{
-		public VStackHandler(CGRect rect) : base(rect)
-		{
-		}
+    public class VStackHandler : AbstractLayoutHandler
+    {
+        public VStackHandler(CGRect rect) : base(rect)
+        {
+        }
 
-		public VStackHandler() : base()
-		{
-		}
-	}
+        public VStackHandler() : base()
+        {
+        }
+    }
 }

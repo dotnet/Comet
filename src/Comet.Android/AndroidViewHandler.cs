@@ -4,12 +4,12 @@ using AView = Android.Views.View;
 
 namespace Comet.Android
 {
-	public interface AndroidViewHandler : IViewHandler
-	{
-		event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+    public interface AndroidViewHandler : IViewHandler
+    {
+        event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
-		AView View { get; }
+        AView View { get; }
 
-		CometTouchGestureListener GestureListener { get; set; }
-	}
+        CUITouchGestureListener GestureListener { get; set; }
+    }
 }

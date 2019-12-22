@@ -2,13 +2,13 @@
 
 namespace Comet.Blazor.Handlers
 {
-	internal class UnsupportedHandler<TVirtualView> : BlazorHandler<TVirtualView, BUnsupported>
-		where TVirtualView : View
-	{
-		protected override void NativeViewUpdated()
-		{
-			NativeView.View = VirtualView;
-			base.NativeViewUpdated();
-		}
-	}
+    internal class UnsupportedHandler<TVirtualView> : BlazorHandler<TVirtualView, BUnsupported>
+        where TVirtualView : View
+    {
+        protected override void NativeViewUpdated()
+        {
+            NativeView.View = VirtualView;
+            base.NativeViewUpdated();
+        }
+    }
 }

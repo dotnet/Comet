@@ -8,39 +8,36 @@ namespace AppKit
 	[Register("NSColorView")]
 	public class NSColorView : NSView
 	{
-		public NSColorView()
+		public NSColorView ()
 		{
 		}
-		public NSColorView(IntPtr handle) : base(handle)
+		public NSColorView (IntPtr handle) : base(handle)
 		{
 		}
 
-		public NSColorView(CGRect rect) : base(rect)
+		public NSColorView  (CGRect rect) : base (rect)
 		{
 
 		}
 
 		NSColor backgroundColor = NSColor.Clear;
-		public NSColor BackgroundColor
-		{
-			get
-			{
+		public NSColor BackgroundColor {
+			get {
 				return backgroundColor;
 			}
-			set
-			{
+			set {
 				backgroundColor = value;
-				this.SetNeedsDisplayInRect(Bounds);
+				this.SetNeedsDisplayInRect (Bounds);
 			}
 		}
 
 		public override bool IsFlipped => true;
-		public override void DrawRect(CGRect dirtyRect)
+		public override void DrawRect (CGRect dirtyRect)
 		{
 			var context = NSGraphicsContext.CurrentContext.GraphicsPort;
 			context.SetFillColor(backgroundColor.CGColor); //White
-			context.FillRect(dirtyRect);
-			base.DrawRect(dirtyRect);
+			context.FillRect (dirtyRect);
+			base.DrawRect (dirtyRect);
 		}
 	}
 }

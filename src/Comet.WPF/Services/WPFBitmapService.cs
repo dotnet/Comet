@@ -8,32 +8,32 @@ using System.Windows.Media.Imaging;
 
 namespace Comet.WPF.Services
 {
-	class WPFBitmapService : AbstractBitmapService
-	{
-		public override Task<Bitmap> LoadBitmapFromUrlAsync(string url)
-			=> LoadBitmapAsync(new Uri(url, UriKind.Absolute));
+    class WPFBitmapService : AbstractBitmapService
+    {
+        public override Task<Bitmap> LoadBitmapFromUrlAsync(string url)
+            => LoadBitmapAsync(new Uri(url, UriKind.Absolute));
 
-		public override Task<Bitmap> LoadBitmapFromFileAsync(string file)
-		{
-			var fullPath = System.IO.Path.GetFullPath(file);
-			return LoadBitmapAsync(new Uri(fullPath));
-		}
+        public override Task<Bitmap> LoadBitmapFromFileAsync(string file)
+        {
+            var fullPath = System.IO.Path.GetFullPath(file);
+            return LoadBitmapAsync(new Uri(fullPath));
+        }
 
-		private static Task<Bitmap> LoadBitmapAsync(Uri location)
-		{
-			var bitmap = new BitmapImage(location, new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable));
-			var wrapper = new WPFBitmap(bitmap);
-			if (!bitmap.IsDownloading)
-			{
-				return Task.FromResult<Bitmap>(wrapper);
-			}
+        private static Task<Bitmap> LoadBitmapAsync(Uri location)
+        {
+            var bitmap = new BitmapImage(location, new RequestCachePolicy(RequestCacheLevel.CacheIfAvailable));
+            var wrapper = new WPFBitmap(bitmap);
+            if (!bitmap.IsDownloading)
+            {
+                return Task.FromResult<Bitmap>(wrapper);
+            }
 
-			TaskCompletionSource<Bitmap> completionSource = new TaskCompletionSource<Bitmap>();
-			bitmap.DownloadCompleted += (_, __) => completionSource.SetResult(wrapper);
-			bitmap.DownloadFailed += (_, args) => completionSource.SetException(args.ErrorException);
-			bitmap.DecodeFailed += (_, args) => completionSource.SetException(args.ErrorException);
-			return completionSource.Task;
-		}
+            TaskCompletionSource<Bitmap> completionSource = new TaskCompletionSource<Bitmap>();
+            bitmap.DownloadCompleted += (_, __) => completionSource.SetResult(wrapper);
+            bitmap.DownloadFailed += (_, args) => completionSource.SetException(args.ErrorException);
+            bitmap.DecodeFailed += (_, args) => completionSource.SetException(args.ErrorException);
+            return completionSource.Task;
+        }
 
-	}
+    }
 }

@@ -1,13 +1,11 @@
 ﻿using System;
 using Comet.Samples.Models;
 
-namespace Comet.Samples
-{
-	public class ListViewDetails : View
-	{
+namespace Comet.Samples {
+	public class ListViewDetails : View {
 		[State]
 		readonly Song song;
-		public ListViewDetails(Song song)
+		public ListViewDetails (Song song)
 		{
 			this.song = song;
 			Body = () => new VStack {

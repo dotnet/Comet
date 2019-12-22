@@ -7,232 +7,238 @@ using System.Drawing;
 
 namespace Comet.Mac.Handlers
 {
-	public class AbstractLayoutHandler : NSView, MacViewHandler
-	{
-		private AbstractLayout _view;
-		private SizeF _measured;
+    public class AbstractLayoutHandler : NSView, MacViewHandler
+    {
+        private AbstractLayout _view;
+        private SizeF _measured;
+        
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
-		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+        protected AbstractLayoutHandler(CGRect rect) : base(rect)
+        {
+        }
 
-		protected AbstractLayoutHandler(CGRect rect) : base(rect)
-		{
-		}
+        protected AbstractLayoutHandler()
+        {
+        }
+        
+        public override bool IsFlipped => true;
+        
+        public NSView View => this;
+        
+        public CUIContainerView ContainerView => null;
+        
+        public object NativeView => View;
+        
+        public bool HasContainer
+        {
+            get => false; 
+            set {}
+        }        
+        
+        public SizeF Measure(SizeF available)
+        {
+            return Comet.View.IllTakeWhatYouCanGive;
+        }
 
-		protected AbstractLayoutHandler()
-		{
-		}
+        public void SetFrame(RectangleF frame)
+        {
+            Frame = frame.ToCGRect();
+        }
 
-		public override bool IsFlipped => true;
+        public void SetView(View view)
+        {
+            _view = view as AbstractLayout;
+            if (_view != null)
+            {
+                _view.NeedsLayout += HandleNeedsLayout;
+                _view.ChildrenChanged += HandleChildrenChanged;
+                _view.ChildrenAdded += HandleChildrenAdded;
+                _view.ChildrenRemoved += ViewOnChildrenRemoved;
 
-		public NSView View => this;
+                foreach (var subview in _view)
+                {
+                    subview.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
+                    if (subview.ViewHandler is MacViewHandler handler)
+                        handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+                    
+                    var nativeView = subview.ToView() ?? new NSView();
+                    AddSubview(nativeView);
+                }
 
-		public CUIContainerView ContainerView => null;
+                SetNeedsLayout();
+            }
+        }
 
-		public object NativeView => View;
+        private void HandleNeedsLayout(object sender, EventArgs e)
+        {
+            SetNeedsLayout();
+        }
 
-		public bool HasContainer
-		{
-			get => false;
-			set { }
-		}
-		
-		public SizeF GetIntrinsicSize(SizeF availableSize) => Comet.View.UseAvailableWidthAndHeight;
+        public void Remove(View view)
+        {
+            foreach (var subview in _view)
+            {
+                subview.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
+                if (subview.ViewHandler is MacViewHandler handler)
+                    handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+            }
 
-		public void SetFrame(RectangleF frame) => Frame = frame.ToCGRect();
+            if (view != null)
+            {
+                _view.NeedsLayout -= HandleNeedsLayout;
+                _view.ChildrenChanged -= HandleChildrenChanged;
+                _view.ChildrenAdded -= HandleChildrenAdded;
+                _view.ChildrenRemoved -= ViewOnChildrenRemoved;
+                _view = null;
+            }
+        }
+        
+        private void HandleSubviewViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
+        {
+            if (e.OldViewHandler is MacViewHandler oldHandler)
+                oldHandler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+        }
 
-		public void SetView(View view)
-		{
-			_view = view as AbstractLayout;
-			if (_view != null)
-			{
-				_view.NeedsLayout += HandleNeedsLayout;
-				_view.ChildrenChanged += HandleChildrenChanged;
-				_view.ChildrenAdded += HandleChildrenAdded;
-				_view.ChildrenRemoved += ViewOnChildrenRemoved;
+        private void HandleSubviewNativeViewChanged(object sender, ViewChangedEventArgs args)
+        {
+            args.OldNativeView?.RemoveFromSuperview();
 
-				foreach (var subview in _view)
-				{
-					subview.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
-					if (subview.ViewHandler is MacViewHandler handler)
-						handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+            var index = _view.IndexOf(args.VirtualView);
+            var newView = args.NewNativeView ?? new NSView();
+            this.InsertSubview(newView, index);
+        }
 
-					var nativeView = subview.ToView() ?? new NSView();
-					AddSubview(nativeView);
-				}
+        public virtual void UpdateValue(string property, object value)
+        {
+        }
 
-				SetNeedsLayout();
-			}
-		}
+        private void HandleChildrenAdded(object sender, LayoutEventArgs e)
+        {
+            for (var i = 0; i < e.Count; i++)
+            {
+                var index = e.Start + i;
+                var view = _view[index];
+                
+                view.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
+                if (view.ViewHandler is MacViewHandler handler)
+                    handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+                
+                var nativeView = view.ToView() ?? new NSView();
+                this.InsertSubview(nativeView, index);
+            }
 
-		private void HandleNeedsLayout(object sender, EventArgs e)
-		{
-			SetNeedsLayout();
-		}
+            SetNeedsLayout();
+        }
 
-		public void Remove(View view)
-		{
-			foreach (var subview in _view)
-			{
-				subview.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
-				if (subview.ViewHandler is MacViewHandler handler)
-					handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
-			}
+        private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
+        {
+            if (e.Removed != null)
+            {
+                foreach (var view in e.Removed)
+                {
+                    view.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
+                    if (view.ViewHandler is MacViewHandler handler)
+                        handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+                }
+            }
+            
+            for (var i = 0; i < e.Count; i++)
+            {
+                var index = e.Start + i;
+                var nativeView = Subviews[index];
+                nativeView.RemoveFromSuperview();
+            }
 
-			if (view != null)
-			{
-				_view.NeedsLayout -= HandleNeedsLayout;
-				_view.ChildrenChanged -= HandleChildrenChanged;
-				_view.ChildrenAdded -= HandleChildrenAdded;
-				_view.ChildrenRemoved -= ViewOnChildrenRemoved;
-				_view = null;
-			}
-		}
+            SetNeedsLayout();
+        }
 
-		private void HandleSubviewViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
-		{
-			if (e.OldViewHandler is MacViewHandler oldHandler)
-				oldHandler.NativeViewChanged -= HandleSubviewNativeViewChanged;
-		}
+        private void HandleChildrenChanged(object sender, LayoutEventArgs e)
+        {
+            if (e.Removed != null)
+            {
+                foreach (var view in e.Removed)
+                {
+                    view.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
+                    if (view.ViewHandler is MacViewHandler handler)
+                        handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+                }
+            }
+            
+            for (var i = 0; i < e.Count; i++)
+            {
+                var index = e.Start + i;
+                var oldNativeView = Subviews[index];
+                oldNativeView.RemoveFromSuperview();
 
-		private void HandleSubviewNativeViewChanged(object sender, ViewChangedEventArgs args)
-		{
-			args.OldNativeView?.RemoveFromSuperview();
+                var view = _view[index];
+                
+                view.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
+                if (view.ViewHandler is MacViewHandler handler)
+                    handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+                
+                var newNativeView = view.ToView() ?? new NSView();
+                this.InsertSubview(newNativeView, index);
+            }
 
-			var index = _view.IndexOf(args.VirtualView);
-			var newView = args.NewNativeView ?? new NSView();
-			this.InsertSubview(newView, index);
-		}
+            SetNeedsLayout();
+        }
 
-		public virtual void UpdateValue(string property, object value)
-		{
-		}
+        private void SetNeedsLayout()
+        {
+            NeedsLayout = true;
+        }
 
-		private void HandleChildrenAdded(object sender, LayoutEventArgs e)
-		{
-			for (var i = 0; i < e.Count; i++)
-			{
-				var index = e.Start + i;
-				var view = _view[index];
+        public CGSize SizeThatFits(CGSize size)
+        {
+            _measured = _view.Measure(size.ToSizeF());
+            return _measured.ToCGSize();
+        }
 
-				view.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
-				if (view.ViewHandler is MacViewHandler handler)
-					handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+        public void SizeToFit()
+        {
+            var size = Superview?.Bounds.Size;
+            if (size == null || ((CGSize)size).IsEmpty)
+                size = NSScreen.MainScreen.Frame.Size;
 
-				var nativeView = view.ToView() ?? new NSView();
-				this.InsertSubview(nativeView, index);
-			}
+            _measured = _view.Measure(((CGSize)size).ToSizeF());
+            base.Frame = new CGRect(new CGPoint(0, 0), _measured.ToCGSize());
+        }
 
-			SetNeedsLayout();
-		}
+        public override CGSize IntrinsicContentSize => _measured.ToCGSize();
+        
+        public override CGRect Frame
+        {
+            get => base.Frame;
+            set
+            {
+                base.Frame = value;
+                Layout();
+                NeedsLayout = false;
+            }
+        }
+        
+        public override void ViewDidMoveToSuperview()
+        {
+            if (NeedsLayout)
+            {
+                Layout();
+                NeedsLayout = false;
+            }
 
-		private void ViewOnChildrenRemoved(object sender, LayoutEventArgs e)
-		{
-			if (e.Removed != null)
-			{
-				foreach (var view in e.Removed)
-				{
-					view.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
-					if (view.ViewHandler is MacViewHandler handler)
-						handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
-				}
-			}
+            base.ViewDidMoveToSuperview();
+        }
+        
+        public override void Layout()
+        {
+            if (Superview == null)
+                return;
 
-			for (var i = 0; i < e.Count; i++)
-			{
-				var index = e.Start + i;
-				var nativeView = Subviews[index];
-				nativeView.RemoveFromSuperview();
-			}
+            if (Bounds.Size.IsEmpty)
+                return;
 
-			SetNeedsLayout();
-		}
-
-		private void HandleChildrenChanged(object sender, LayoutEventArgs e)
-		{
-			if (e.Removed != null)
-			{
-				foreach (var view in e.Removed)
-				{
-					view.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
-					if (view.ViewHandler is MacViewHandler handler)
-						handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
-				}
-			}
-
-			for (var i = 0; i < e.Count; i++)
-			{
-				var index = e.Start + i;
-				var oldNativeView = Subviews[index];
-				oldNativeView.RemoveFromSuperview();
-
-				var view = _view[index];
-
-				view.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
-				if (view.ViewHandler is MacViewHandler handler)
-					handler.NativeViewChanged += HandleSubviewNativeViewChanged;
-
-				var newNativeView = view.ToView() ?? new NSView();
-				this.InsertSubview(newNativeView, index);
-			}
-
-			SetNeedsLayout();
-		}
-
-		private void SetNeedsLayout()
-		{
-			NeedsLayout = true;
-		}
-
-		public CGSize GetIntrinsicSize(CGSize size)
-		{
-			_measured = _view.GetIntrinsicSize(size.ToSizeF());
-			return _measured.ToCGSize();
-		}
-
-		public void GetInstrinsicSize()
-		{
-			var size = Superview?.Bounds.Size;
-			if (size == null || ((CGSize)size).IsEmpty)
-				size = NSScreen.MainScreen.Frame.Size;
-
-			_measured = _view.GetIntrinsicSize(((CGSize)size).ToSizeF());
-			base.Frame = new CGRect(new CGPoint(0, 0), _measured.ToCGSize());
-		}
-
-		public override CGSize IntrinsicContentSize => _measured.ToCGSize();
-
-		public override CGRect Frame
-		{
-			get => base.Frame;
-			set
-			{
-				base.Frame = value;
-				Layout();
-				NeedsLayout = false;
-			}
-		}
-
-		public override void ViewDidMoveToSuperview()
-		{
-			if (NeedsLayout)
-			{
-				Layout();
-				NeedsLayout = false;
-			}
-
-			base.ViewDidMoveToSuperview();
-		}
-
-		public override void Layout()
-		{
-			if (Superview == null)
-				return;
-
-			if (Bounds.Size.IsEmpty)
-				return;
-
-			if (_view != null)
-				_view.Frame = Frame.ToRectangleF();
-		}
-	}
+            if (_view != null)
+                _view.Frame = Frame.ToRectangleF();
+        }
+    }
 }

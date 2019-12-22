@@ -1,26 +1,25 @@
 ﻿using System;
-using System.Drawing;
 using Comet.Internal;
 using Xunit;
 
-[assembly: CollectionBehavior(DisableTestParallelization = true)]
-namespace Comet.Tests
+[assembly: CollectionBehavior (DisableTestParallelization = true)]
+namespace Comet.Tests 
 {
-	public class TestBase
+	public class TestBase 
 	{
-		public TestBase()
+		public TestBase ()
 		{
-			UI.Init();
+			UI.Init ();
 		}
-
+		
 		public static void InitializeHandlers(View view)
 		{
 			if (view == null) return;
-
+			
 			var handler = view.ViewHandler;
-			if (handler == null)
+			if (handler == null) 
 			{
-				handler = Registrar.Handlers.GetHandler(view.GetType()) as IViewHandler;
+				handler = Registrar.Handlers.GetHandler (view.GetType ()) as IViewHandler;
 				view.ViewHandler = handler;
 			}
 
@@ -39,23 +38,16 @@ namespace Comet.Tests
 			{
 				InitializeHandlers(view.BuiltView);
 			}
-
+			
 		}
 
-		public static void InitializeHandlers(View view, float width, float height)
-		{
-			InitializeHandlers(view);
-			view.Frame = new RectangleF(0, 0, width, height);
-		}
-		
-		public static void ResetComet()
-		{
-			var v = new View();
-			v.ResetGlobalEnvironment();
-			v.DisposeAllViews();
-			UI.Init(true);
-			HotReloadHelper.Reset();
-			v?.Dispose();
-		}
+        public static void ResetComet()
+        {
+            var v = new View();
+            v.ResetGlobalEnvironment();
+            v.DisposeAllViews();
+            HotReloadHelper.Reset();
+            v?.Dispose();
+        }
 	}
 }

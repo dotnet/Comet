@@ -5,150 +5,150 @@ using Comet.Mac.Controls;
 
 namespace Comet.Mac.Handlers
 {
-	public abstract class AbstractControlHandler<TVirtualView, TNativeView> : MacViewHandler
-		where TVirtualView : View
-		where TNativeView : NSView
-	{
-		private PropertyMapper<TVirtualView> _mapper;
-		private TVirtualView _virtualView;
-		private TNativeView _nativeView;
-		private CUIContainerView _containerView;
+    public abstract class AbstractControlHandler<TVirtualView, TNativeView> : MacViewHandler 
+        where TVirtualView : View 
+        where TNativeView: NSView
+    {
+        private PropertyMapper<TVirtualView> _mapper;
+        private TVirtualView _virtualView;
+        private TNativeView _nativeView;
+        private CUIContainerView _containerView;
+        
+        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
-		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+        protected AbstractControlHandler()
+        {
+        }
+        
+        protected AbstractControlHandler(PropertyMapper<TVirtualView> mapper)
+        {
+            _mapper = mapper;
+        }
 
-		protected AbstractControlHandler()
-		{
-		}
+        protected void SetMapper(PropertyMapper<TVirtualView> mapper)
+        {
+            _mapper = mapper;
+        }
+        
+        protected abstract TNativeView CreateView();
+        
+        protected abstract void DisposeView(TNativeView nativeView);
 
-		protected AbstractControlHandler(PropertyMapper<TVirtualView> mapper)
-		{
-			_mapper = mapper;
-		}
+        public NSView View => (NSView)_containerView ?? _nativeView;
 
-		protected void SetMapper(PropertyMapper<TVirtualView> mapper)
-		{
-			_mapper = mapper;
-		}
+        public CUIContainerView ContainerView => _containerView;
+        
+        public object NativeView => _nativeView;
 
-		protected abstract TNativeView CreateView();
+        public TNativeView TypedNativeView => _nativeView;
+        
+        protected TVirtualView VirtualView => _virtualView;
+        
+        public bool HasContainer
+        {
+            get => _containerView != null;
+            set
+            {
+                if (!value && _containerView != null)
+                {
+                    var oldView = _containerView;
+                    _containerView.ShadowLayer = null;
+                    _containerView.MaskLayer = null;
+                    _containerView = null;
 
-		protected abstract void DisposeView(TNativeView nativeView);
+                    _nativeView.RemoveFromSuperview();
+                    NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, oldView, _nativeView));
+                    return;
+                }
 
-		public NSView View => (NSView)_containerView ?? _nativeView;
+                if (value && _containerView == null)
+                {
+                    _containerView = new CUIContainerView();
+                    _containerView.MainView = _nativeView;
+                    NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, _nativeView, _containerView));
+                }
+            }
+        }
 
-		public CUIContainerView ContainerView => _containerView;
+        public virtual SizeF Measure(SizeF availableSize)
+        {
+            if (_nativeView is NSControl control)
+                return control.SizeThatFits(availableSize.ToCGSize()).ToSizeF();
 
-		public object NativeView => _nativeView;
+            return Comet.View.IllTakeWhatYouCanGive;
+        }
 
-		public TNativeView TypedNativeView => _nativeView;
+        public void SetFrame(RectangleF frame)
+        {
+            View.Frame = frame.ToCGRect();
+        }
 
-		protected TVirtualView VirtualView => _virtualView;
+        public virtual void Remove(View view)
+        {
+            _virtualView = null;
 
-		public bool HasContainer
-		{
-			get => _containerView != null;
-			set
-			{
-				if (!value && _containerView != null)
-				{
-					var oldView = _containerView;
-					_containerView.ShadowLayer = null;
-					_containerView.MaskLayer = null;
-					_containerView = null;
+            // If a container view is being used, then remove the native view from it and get rid of it.
+            if (_containerView != null)
+            {
+                _nativeView.RemoveFromSuperview();
+                _containerView = null;
+            }
+        }
+        
+        public virtual void SetView(View view)
+        {
+            _virtualView = view as TVirtualView;
+            if (_nativeView == null)
+                _nativeView = CreateView();
+            _mapper?.UpdateProperties(this, _virtualView);
+        }
 
-					_nativeView.RemoveFromSuperview();
-					NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, oldView, _nativeView));
-					return;
-				}
-
-				if (value && _containerView == null)
-				{
-					_containerView = new CUIContainerView();
-					_containerView.MainView = _nativeView;
-					NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, _nativeView, _containerView));
-				}
-			}
-		}
-		
-		public virtual SizeF GetIntrinsicSize(SizeF availableSize)
-		{
-			if (_nativeView is NSControl control)
-				return control.SizeThatFits(availableSize.ToCGSize()).ToSizeF();
-
-			return Comet.View.UseAvailableWidthAndHeight;
-		}
-		
-		public void SetFrame(RectangleF frame)
-		{
-			View.Frame = frame.ToCGRect();
-		}
-
-		public virtual void Remove(View view)
-		{
-			_virtualView = null;
-
-			// If a container view is being used, then remove the native view from it and get rid of it.
-			if (_containerView != null)
-			{
-				_nativeView.RemoveFromSuperview();
-				_containerView = null;
-			}
-		}
-
-		public virtual void SetView(View view)
-		{
-			_virtualView = view as TVirtualView;
-			if (_nativeView == null)
-				_nativeView = CreateView();
-			_mapper?.UpdateProperties(this, _virtualView);
-		}
-
-		public virtual void UpdateValue(string property, object value)
-		{
-			_mapper?.UpdateProperty(this, _virtualView, property);
-		}
+        public virtual void UpdateValue(string property, object value)
+        {
+            _mapper?.UpdateProperty(this, _virtualView, property);
+        }
 
 
-		#region IDisposable Support
-		private bool disposedValue = false; // To detect redundant calls
+        #region IDisposable Support
+        private bool disposedValue = false; // To detect redundant calls
 
-		protected virtual void Dispose(bool disposing)
-		{
-			if (!disposing)
-				return;
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposing)
+                return;
 
-			_nativeView?.RemoveFromSuperview();
+            _nativeView?.RemoveFromSuperview();
+            
+            if (_nativeView != null)
+                DisposeView(_nativeView);
+            
+            _nativeView?.Dispose();
+            _nativeView = null;
+            if (_virtualView != null)
+                Remove(_virtualView);
 
-			if (_nativeView != null)
-				DisposeView(_nativeView);
+        }
+        void OnDispose(bool disposing)
+        {
+            if (disposedValue)
+                return;
+            disposedValue = true;
+            Dispose(disposing);
+        }
 
-			_nativeView?.Dispose();
-			_nativeView = null;
-			if (_virtualView != null)
-				Remove(_virtualView);
+        ~AbstractControlHandler()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(false);
+        }
 
-		}
-		void OnDispose(bool disposing)
-		{
-			if (disposedValue)
-				return;
-			disposedValue = true;
-			Dispose(disposing);
-		}
-
-		~AbstractControlHandler()
-		{
-			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-			OnDispose(false);
-		}
-
-		// This code added to correctly implement the disposable pattern.
-		public void Dispose()
-		{
-			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-			OnDispose(true);
-			GC.SuppressFinalize(this);
-		}
-		#endregion
-	}
+        // This code added to correctly implement the disposable pattern.
+        public void Dispose()
+        {
+            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+            OnDispose(true);
+            GC.SuppressFinalize(this);
+        }
+        #endregion
+    }
 }

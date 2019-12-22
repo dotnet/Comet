@@ -2,44 +2,40 @@
 using Comet.Internal;
 using Xunit;
 
-namespace Comet.Tests
-{
-	public class HotReloadTests : TestBase
-	{
+namespace Comet.Tests {
+	public class HotReloadTests : TestBase{
 
-		public class MyOrgView : View
-		{
+		public class MyOrgView : View {
 			public const string TextValue = "Hello!";
-			public MyOrgView()
+			public MyOrgView ()
 			{
-				this.Body = () => new Text(TextValue);
+				this.Body = () => new Text (TextValue);
 			}
 		}
-		public class MyNewView : View
-		{
+		public class MyNewView : View {
 			public const string TextValue = "Goodbye!";
-			public MyNewView()
+			public MyNewView ()
 			{
-				this.Body = () => new Text(TextValue);
+				this.Body = () => new Text (TextValue);
 			}
 		}
 
-		public HotReloadTests()
+		public HotReloadTests ()
 		{
 			HotReloadHelper.IsEnabled = true;
 		}
 
 		[Fact]
-		public void HotReloadRegisterReplacedViewReplacesView()
+		public void HotReloadRegisterReplacedViewReplacesView ()
 		{
-			var orgView = new MyOrgView();
-			var orgText = orgView.GetView() as Text;
-			Assert.Equal(MyOrgView.TextValue, orgText.Value.CurrentValue);
+			var orgView = new MyOrgView ();
+			var orgText = orgView.GetView () as Text;
+			Assert.Equal (MyOrgView.TextValue, orgText.Value.CurrentValue);
 
-			HotReloadHelper.RegisterReplacedView(typeof(MyOrgView).FullName, typeof(MyNewView));
-			var newText = orgView.GetView() as Text;
+			HotReloadHelper.RegisterReplacedView (typeof (MyOrgView).FullName, typeof (MyNewView));
+			var newText = orgView.GetView () as Text;
 
-			Assert.Equal(MyNewView.TextValue, newText.Value.CurrentValue);
+			Assert.Equal (MyNewView.TextValue, newText.Value.CurrentValue);
 
 		}
 	}

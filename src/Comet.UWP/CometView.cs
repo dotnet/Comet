@@ -5,60 +5,60 @@ using WGrid = Windows.UI.Xaml.Controls.Grid;
 
 namespace Comet.UWP
 {
-	public class CometView : WGrid
-	{
-		private View _view;
-		private UIElement _nativeView;
-		private IViewHandler _handler;
+    public class CometView : WGrid
+    {
+        private View _view;
+        private UIElement _nativeView;
+        private IViewHandler _handler;
 
-		public CometView(View view = null)
-		{
-			View = view;
-		}
+        public CometView(View view = null)
+        {
+            View = view;
+        }
 
-		public View View
-		{
-			get => _view;
-			set
-			{
-				if (value == _view)
-					return;
+        public View View
+        {
+            get => _view;
+            set
+            {
+                if (value == _view)
+                    return;
 
-				if (_handler is ViewHandler oldViewHandler)
-					oldViewHandler.NativeViewChanged -= HandleNativeViewChanged;
+                if (_handler is ViewHandler oldViewHandler)
+                    oldViewHandler.NativeViewChanged -= HandleNativeViewChanged;
 
-				_view = value;
-				_handler = _view?.ViewHandler;
+                _view = value;
+                _handler = _view?.ViewHandler;
 
-				if (_handler is ViewHandler newViewHandler)
-					newViewHandler.NativeViewChanged += HandleNativeViewChanged;
+                if (_handler is ViewHandler newViewHandler)
+                    newViewHandler.NativeViewChanged += HandleNativeViewChanged;
 
-				HandleNativeViewChanged(this, null);
-			}
-		}
+                HandleNativeViewChanged(this, null);
+            }
+        }
 
-		private void HandleNativeViewChanged(object sender, ViewChangedEventArgs e)
-		{
-			if (_nativeView != null)
-			{
-				Children.Remove(_nativeView);
-				_nativeView = null;
-			}
+        private void HandleNativeViewChanged(object sender, ViewChangedEventArgs e)
+        {
+            if (_nativeView != null)
+            {
+                Children.Remove(_nativeView);
+                _nativeView = null;
+            }
 
-			_nativeView = _view?.ToView();
+            _nativeView = _view?.ToView();
+           
+            if (_nativeView != null)
+            {
+                if (_nativeView is FrameworkElement frameworkElement)
+                {
+                    WGrid.SetRow(frameworkElement, 0);
+                    WGrid.SetColumn(frameworkElement, 0);
+                    WGrid.SetColumnSpan(frameworkElement, 1);
+                    WGrid.SetRowSpan(frameworkElement, 1);
+                }
 
-			if (_nativeView != null)
-			{
-				if (_nativeView is FrameworkElement frameworkElement)
-				{
-					WGrid.SetRow(frameworkElement, 0);
-					WGrid.SetColumn(frameworkElement, 0);
-					WGrid.SetColumnSpan(frameworkElement, 1);
-					WGrid.SetRowSpan(frameworkElement, 1);
-				}
-
-				Children.Add(_nativeView);
-			}
-		}
-	}
+                Children.Add(_nativeView);
+            }
+        }
+    }
 }
