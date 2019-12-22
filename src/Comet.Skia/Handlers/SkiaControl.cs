@@ -167,9 +167,7 @@ namespace Comet.Skia
 			if (textHandler == null)
 				return;
 			textHandler.TextBlock = null;
-
-			////nativeView.SetTitle(virtualView.Text?.CurrentValue, UIControlState.Normal);
-			virtualView.InvalidateMeasurement();
+			Redraw(viewHandler, virtualView);
 		}
 
 		public static void MapBackgroundColor(IViewHandler viewHandler, View virtualView)
