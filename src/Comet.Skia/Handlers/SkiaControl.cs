@@ -167,6 +167,7 @@ namespace Comet.Skia
 			if (textHandler == null)
 				return;
 			textHandler.TextBlock = null;
+			virtualView.InvalidateMeasurement();
 			Redraw(viewHandler, virtualView);
 		}
 
