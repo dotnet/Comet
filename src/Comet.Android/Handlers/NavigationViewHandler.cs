@@ -5,39 +5,42 @@ using Comet.Android.Controls;
 
 namespace Comet.Android.Handlers
 {
-    public class NavigationViewHandler : AbstractHandler<NavigationView, CUINavigationView>
-    {
-        CUINavigationView navigationView;
-        protected override CUINavigationView CreateView(Context context)
-        {
-            navigationView ??= new CUINavigationView(context);
+	public class NavigationViewHandler : AbstractHandler<NavigationView, CometNavigationView>
+	{
+		CometNavigationView navigationView;
+		protected override CometNavigationView CreateView(Context context)
+		{
+			navigationView ??= new CometNavigationView(context);
 
-            if (VirtualView != null)
-            {
-                navigationView.SetRoot(VirtualView?.Content);
-                VirtualView.PerformNavigate = navigationView.NavigateTo;
-            }
+			if (VirtualView != null)
+			{
+				navigationView.SetRoot(VirtualView?.Content);
+				VirtualView.SetPerformNavigate(navigationView.NavigateTo);
+				VirtualView.SetPerformPop(navigationView.Pop);
+			}
 
-            return navigationView;
-        }
-        public override void SetView(View view)
-        {
-            var nav = view as NavigationView;
-            if (navigationView != null)
-            {
-                navigationView.SetRoot(nav.Content);
-                nav.PerformNavigate = navigationView.NavigateTo;
-            }
-            base.SetView(view);
-        }
-        public override void Remove(View view)
-        {
-            if (VirtualView != null)
-            {
-                VirtualView.PerformNavigate = null;
-            }
+			return navigationView;
+		}
+		public override void SetView(View view)
+		{
+			var nav = view as NavigationView;
+			if (navigationView != null)
+			{
+				navigationView.SetRoot(nav.Content);
+				VirtualView.SetPerformNavigate(navigationView.NavigateTo);
+				VirtualView.SetPerformPop(navigationView.Pop);
+			}
+			base.SetView(view);
+		}
+		public override void Remove(View view)
+		{
+			if (VirtualView != null)
+			{
+				VirtualView.SetPerformNavigate(action:null);
+				VirtualView.SetPerformPop(action: null);
+			}
 
-            base.Remove(view);
-        }
-    }
+			base.Remove(view);
+		}
+	}
 }

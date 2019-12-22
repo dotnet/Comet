@@ -6,24 +6,24 @@ using Comet.Services;
 
 namespace Comet.Android.Services
 {
-    public class AndroidBitmapService : AbstractBitmapService
-    {
-        public override async Task<Bitmap> LoadBitmapFromUrlAsync(string url)
-        {
-            var image = await ImageService.Instance
-                .LoadUrl(url)
-                .AsBitmapDrawableAsync();
-            
-            return new AndroidBitmap(image.Bitmap);
-        }
+	public class AndroidBitmapService : AbstractBitmapService
+	{
+		public override async Task<Bitmap> LoadBitmapFromUrlAsync(string url)
+		{
+			var image = await ImageService.Instance
+				.LoadUrl(url)
+				.AsBitmapDrawableAsync();
 
-        public override async Task<Bitmap> LoadBitmapFromFileAsync(string file)
-        {
-            var image = await  ImageService.Instance
-                .LoadFile(file)
-                .AsBitmapDrawableAsync();
-            
-            return new AndroidBitmap(image.Bitmap);
-        }
-    }
+			return new AndroidBitmap(image.Bitmap);
+		}
+
+		public override async Task<Bitmap> LoadBitmapFromFileAsync(string file)
+		{
+			var image = await ImageService.Instance
+				.LoadFile(file)
+				.AsBitmapDrawableAsync();
+
+			return new AndroidBitmap(image.Bitmap);
+		}
+	}
 }

@@ -3,20 +3,20 @@ using AView = Android.Views.View;
 
 namespace Comet.Android
 {
-    public class ViewChangedEventArgs : EventArgs
-    {
-        public View VirtualView { get; }
-        public AView OldNativeView { get; }
-        public AView NewNativeView { get; }
+	public class ViewChangedEventArgs : EventArgs
+	{
+		public View VirtualView { get; }
+		public AView OldNativeView { get; }
+		public AView NewNativeView { get; }
 
-        public ViewChangedEventArgs(
-            View view,
-            AView oldNativeView,
-            AView newNativeView)
-        {
-            VirtualView = view;
-            OldNativeView = oldNativeView;
-            NewNativeView = newNativeView;
-        }
-    }
+		public ViewChangedEventArgs(
+			View view,
+			AView oldNativeView,
+			AView newNativeView)
+		{
+			VirtualView = view;
+			OldNativeView = oldNativeView;
+			NewNativeView = newNativeView;
+		}
+	}
 }

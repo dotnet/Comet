@@ -6,32 +6,32 @@ using Comet.Android.Handlers;
 
 namespace Comet.Skia.Android
 {
-    public class SkiaViewHandler : AbstractControlHandler<SkiaView, AndroidSkiaView>
-    {
-        protected override AndroidSkiaView CreateView(Context context)
-        {
-            return new AndroidSkiaView(context);
-        }
+	public class SkiaViewHandler : AbstractControlHandler<SkiaView, AndroidSkiaView>
+	{
+		protected override AndroidSkiaView CreateView(Context context)
+		{
+			return new AndroidSkiaView(context);
+		}
 
-        protected override void DisposeView(AndroidSkiaView nativeView)
-        {
-        }
+		protected override void DisposeView(AndroidSkiaView nativeView)
+		{
+		}
 
-        public override void SetView(View view)
-        {
-            base.SetView(view);
+		public override void SetView(View view)
+		{
+			base.SetView(view);
 
-            SetMapper(VirtualView.Mapper);
-            TypedNativeView.VirtualView = VirtualView;
-            VirtualView.Mapper?.UpdateProperties(this, VirtualView);
-        }
+			SetMapper(VirtualView.Mapper);
+			TypedNativeView.VirtualView = VirtualView;
+			VirtualView.Mapper?.UpdateProperties(this, VirtualView);
+		}
 
-        public override void Remove(View view)
-        {
-            TypedNativeView.VirtualView = null;
-            SetMapper(null);
-            
-            base.Remove(view);
-        }
-    }
+		public override void Remove(View view)
+		{
+			TypedNativeView.VirtualView = null;
+			SetMapper(null);
+
+			base.Remove(view);
+		}
+	}
 }

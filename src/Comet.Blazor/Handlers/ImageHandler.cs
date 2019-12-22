@@ -2,23 +2,23 @@
 
 namespace Comet.Blazor.Handlers
 {
-    internal class ImageHandler : BlazorHandler<Image, BImage>
-    {
-        public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>
-        {
-            { nameof(Image.Bitmap), MapBitmapProperty },
-        };
+	internal class ImageHandler : BlazorHandler<Image, BImage>
+	{
+		public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>
+		{
+			{ nameof(Image.Bitmap), MapBitmapProperty },
+		};
 
-        public ImageHandler()
-            : base(Mapper)
-        {
-        }
+		public ImageHandler()
+			: base(Mapper)
+		{
+		}
 
-        public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
-        {
-            var nativeView = (BImage)viewHandler.NativeView;
+		public static void MapBitmapProperty(IViewHandler viewHandler, Image virtualView)
+		{
+			var nativeView = (BImage)viewHandler.NativeView;
 
-            nativeView.Url = (string)virtualView.Bitmap?.CurrentValue?.NativeBitmap;
-        }
-    }
+			nativeView.Url = (string)virtualView.Bitmap?.CurrentValue?.NativeBitmap;
+		}
+	}
 }

@@ -5,100 +5,100 @@ using UIKit;
 
 namespace Comet.iOS.Controls
 {
-    public class CUITableViewSource : UITableViewSource
-    {
-        private static readonly string CellType = "CUIViewCell";
+	public class CUITableViewSource : UITableViewSource
+	{
+		private static readonly string CellType = "CUIViewCell";
 
-        private IListView _listView;
-        private bool _unevenRows;
-        private float? _rowHeight;
-        
-        public IListView ListView
-        {
-            get => _listView;
-            set
-            {
-                _listView = value;
-                _rowHeight = null;
-            }
-        }
+		private IListView _listView;
+		private bool _unevenRows;
+		private float? _rowHeight;
 
-        public bool UnevenRows
-        {
-            get => _unevenRows;
-            set
-            {
-                _unevenRows = value;
-                _rowHeight = null;
-            }
-        }
-        public bool HasHeaders { get; set; }
+		public IListView ListView
+		{
+			get => _listView;
+			set
+			{
+				_listView = value;
+				_rowHeight = null;
+			}
+		}
 
-        public override bool RespondsToSelector(Selector sel)
-        {
-            if(sel.Name == "tableView:viewForHeaderInSection:")
-            {
-                return HasHeaders;
-              
-            }
-            return base.RespondsToSelector(sel);
-        }
-        public override UIView GetViewForHeader(UITableView tableView, nint section) => _listView?.HeaderFor((int)section).ToView();
+		public bool UnevenRows
+		{
+			get => _unevenRows;
+			set
+			{
+				_unevenRows = value;
+				_rowHeight = null;
+			}
+		}
+		public bool HasHeaders { get; set; }
 
-        public override nint NumberOfSections(UITableView tableView) => _listView?.Sections() ?? 0;
+		public override bool RespondsToSelector(Selector sel)
+		{
+			if (sel.Name == "tableView:viewForHeaderInSection:")
+			{
+				return HasHeaders;
 
-        public override nint RowsInSection(UITableView tableview, nint section) => _listView?.Rows((int)section) ?? 0;
+			}
+			return base.RespondsToSelector(sel);
+		}
+		public override UIView GetViewForHeader(UITableView tableView, nint section) => _listView?.HeaderFor((int)section).ToView();
 
-        public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
-        {
-            tableView.DeselectRow(indexPath, true);
-            _listView?.OnSelected(indexPath.Section,indexPath.Row);
-        }
+		public override nint NumberOfSections(UITableView tableView) => _listView?.Sections() ?? 0;
 
-        public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
-        {
-            var cellIdentifier = CellType;
-            var cell = tableView.DequeueReusableCell(cellIdentifier) as CUITableViewCell ?? new CUITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
-            var v = _listView?.ViewFor(indexPath.Section,indexPath.Row);
-            cell.SetView(v, _listView.ShouldDisposeViews);
-            return cell;
-        }
+		public override nint RowsInSection(UITableView tableview, nint section) => _listView?.Rows((int)section) ?? 0;
 
-        public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
-        {
-            if (tableView.RowHeight > 0)
-                return tableView.RowHeight;
+		public override void RowSelected(UITableView tableView, NSIndexPath indexPath)
+		{
+			tableView.DeselectRow(indexPath, true);
+			_listView?.OnSelected(indexPath.Section, indexPath.Row);
+		}
 
-            if (_unevenRows)
-                return CalculateRowHeight(tableView,indexPath.Section, indexPath.Row);
-            
-            if (_rowHeight == null)
-                _rowHeight = CalculateRowHeight(tableView, indexPath.Section, indexPath.Row);
-            
-            return (float) _rowHeight;
-        }
+		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
+		{
+			var cellIdentifier = CellType;
+			var cell = tableView.DequeueReusableCell(cellIdentifier) as CUITableViewCell ?? new CUITableViewCell(UITableViewCellStyle.Default, cellIdentifier);
+			var v = _listView?.ViewFor(indexPath.Section, indexPath.Row);
+			cell.SetView(v);
+			return cell;
+		}
 
-        private float CalculateRowHeight(UITableView tableView,int section, int row)
-        {
-            // todo: we really need a "GetOrCreate" method.
-            var view = _listView?.ViewFor(section, row);
-            if (view != null)
-            {
-                var constraints = view.GetFrameConstraints();
+		public override nfloat GetHeightForRow(UITableView tableView, NSIndexPath indexPath)
+		{
+			if (tableView.RowHeight > 0)
+				return tableView.RowHeight;
 
-                if (constraints?.Height != null)
-                    return (float)constraints?.Height;
-                
-                // todo: this is really inefficient.
-                if (view.ToView() != null)
-                {
-                    var measure = view.Measure(tableView.Bounds.Size.ToSizeF(), true);
-                    return measure.Height;
-                }
-            }
-            
+			if (_unevenRows)
+				return CalculateRowHeight(tableView, indexPath.Section, indexPath.Row);
 
-            return 44f;
-        }
-    }
+			if (_rowHeight == null)
+				_rowHeight = CalculateRowHeight(tableView, indexPath.Section, indexPath.Row);
+
+			return (float)_rowHeight;
+		}
+
+		private float CalculateRowHeight(UITableView tableView, int section, int row)
+		{
+			// todo: we really need a "GetOrCreate" method.
+			var view = _listView?.ViewFor(section, row);
+			if (view != null)
+			{
+				var constraints = view.GetFrameConstraints();
+
+				if (constraints?.Height != null)
+					return (float)constraints?.Height;
+
+				// todo: this is really inefficient.
+				if (view.ToView() != null)
+				{
+					var measure = view.Measure(tableView.Bounds.Size.ToSizeF(), true);
+					return measure.Height;
+				}
+			}
+
+
+			return 44f;
+		}
+	}
 }

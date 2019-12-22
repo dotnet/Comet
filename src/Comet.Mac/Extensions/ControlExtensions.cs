@@ -3,8 +3,10 @@ using System.Threading.Tasks;
 using FFImageLoading;
 using AppKit;
 
-namespace Comet.Mac {
-	public static partial class ControlExtensions {
+namespace Comet.Mac
+{
+	public static partial class ControlExtensions
+	{
 		public static Task<NSImage> LoadImage(this string source)
 		{
 			var isUrl = Uri.IsWellFormedUriString(source, UriKind.RelativeOrAbsolute) && source.Contains("://");

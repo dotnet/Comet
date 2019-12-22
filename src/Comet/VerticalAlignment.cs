@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Comet
 {
-    public enum VerticalAlignment
-    {
-        Center,
-        Bottom,
-        Top,
-        FirstTextBaseline,
-        LastTextBaseline
-    }
+	public enum VerticalAlignment
+	{
+		Center,
+		Bottom,
+		Top,
+		FirstTextBaseline,
+		LastTextBaseline
+	}
 }

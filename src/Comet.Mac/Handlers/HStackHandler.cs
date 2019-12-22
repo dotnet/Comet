@@ -2,14 +2,14 @@
 
 namespace Comet.Mac.Handlers
 {
-    public class HStackHandler : AbstractLayoutHandler
-    {
-        public HStackHandler(CGRect rect) : base(rect)
-        {
-        }
+	public class HStackHandler : AbstractLayoutHandler
+	{
+		public HStackHandler(CGRect rect) : base(rect)
+		{
+		}
 
-        public HStackHandler()
-        {
-        }
-    }
+		public HStackHandler()
+		{
+		}
+	}
 }

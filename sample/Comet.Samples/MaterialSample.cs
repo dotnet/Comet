@@ -5,18 +5,18 @@ using System.Text;
 
 namespace Comet.Samples
 {
-    public class MaterialSample : View
-    {
-        [Body]
-        View body() => new VStack
-        {
-            new HStack
-            {
-                new Button("Button").StyleAsContained(),
-                new Button("Button").StyleAsOutlined(),
-                new Button("Button").StyleAsText(),
-            }
-        };
+	public class MaterialSample : View
+	{
+		[Body]
+		View body() => new VStack
+		{
+			new HStack
+			{
+				new Button("Contained Button").StyleAsContained(),
+				new Button("Outlined Button").StyleAsOutlined(),
+				new Button("Text Button").StyleAsText(),
+			}
+		};
 
-    }
+	}
 }

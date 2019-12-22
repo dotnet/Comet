@@ -3,45 +3,48 @@ using System.Collections.Generic;
 using AppKit;
 using CoreGraphics;
 
-namespace Comet.Mac {
-	public class NSNavigationController : NSViewController {
+namespace Comet.Mac
+{
+	public class NSNavigationController : NSViewController
+	{
 		TitleBar Toolbar;
 		NSView MainContentView;
 		NSViewController currentView;
-		Stack<NSViewController> BackStack = new Stack<NSViewController> ();
-		public NSNavigationController (NSViewController currentView) : this ()
+		Stack<NSViewController> BackStack = new Stack<NSViewController>();
+		public NSNavigationController(NSViewController currentView) : this()
 		{
-			PushViewController (currentView, false);
+			PushViewController(currentView, false);
 		}
-		public NSNavigationController ()
+		public NSNavigationController()
 		{
-			View = new NSColorView ();
+			View = new NSColorView();
 			View.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
-			View.AddSubview (MainContentView = new NSColorView { BackgroundColor = NSColor.White});
+			View.AddSubview(MainContentView = new NSColorView { BackgroundColor = NSColor.White });
 			MainContentView.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
-			View.AddSubview (Toolbar = new TitleBar ());
+			View.AddSubview(Toolbar = new TitleBar());
 		}
 
-		public void PushViewController (NSViewController viewController, bool animated)
+		public void PushViewController(NSViewController viewController, bool animated)
 		{
-			BackStack.Push (viewController);
-			SwitchContent (viewController);
+			BackStack.Push(viewController);
+			SwitchContent(viewController);
 		}
 
-		public void Pop ()
+		public void Pop()
 		{
-			BackStack.Pop ();
+			BackStack.Pop();
 
-			var next = BackStack.Peek ();
-			SwitchContent (next);
+			var next = BackStack.Peek();
+			SwitchContent(next);
 		}
 
-		protected void SwitchContent (NSViewController viewController)
+		protected void SwitchContent(NSViewController viewController)
 		{
-			if (currentView != null) {
-				currentView.View.RemoveFromSuperview ();
-				var childIndex = Array.IndexOf (ChildViewControllers, currentView);
-				this.RemoveChildViewController (childIndex);
+			if (currentView != null)
+			{
+				currentView.View.RemoveFromSuperview();
+				var childIndex = Array.IndexOf(ChildViewControllers, currentView);
+				this.RemoveChildViewController(childIndex);
 			}
 
 			//TODO: Get Title
@@ -57,14 +60,14 @@ namespace Comet.Mac {
 
 			viewController.View.Frame = MainContentView.Bounds;
 			viewController.View.AutoresizingMask = NSViewResizingMask.WidthSizable | NSViewResizingMask.HeightSizable;
-			this.AddChildViewController (viewController);
-			MainContentView.AddSubview (viewController.View);
+			this.AddChildViewController(viewController);
+			MainContentView.AddSubview(viewController.View);
 			currentView = viewController;
-			
+
 		}
-		public override void ViewDidLayout ()
+		public override void ViewDidLayout()
 		{
-			base.ViewDidLayout ();
+			base.ViewDidLayout();
 			var bounds = View.Bounds;
 			var frame = Toolbar.Frame;
 			frame.X = 0;
@@ -75,42 +78,50 @@ namespace Comet.Mac {
 			frame.Y = frame.Bottom;
 			frame.Height = bounds.Height - frame.Y;
 			MainContentView.Frame = frame;
-			if(currentView != null) {
+			if (currentView != null)
+			{
 				currentView.View.Frame = bounds;
 			}
 		}
 
-		public override void ViewDidAppear ()
+		public override void ViewDidAppear()
 		{
-			base.ViewDidAppear ();
+			base.ViewDidAppear();
 			Toolbar.BackButtonPressed = Pop;
 		}
 
-		public override void ViewDidDisappear ()
+		public override void ViewDidDisappear()
 		{
-			base.ViewDidDisappear ();
+			base.ViewDidDisappear();
 			Toolbar.BackButtonPressed = null;
 		}
 
 
 
 
-		class TitleBar : NSColorView {
-			public string Title {
-				get {
+		class TitleBar : NSColorView
+		{
+			public string Title
+			{
+				get
+				{
 					return titleField.StringValue;
 				}
-				set {
+				set
+				{
 					titleField.StringValue = value;
-					ResizeSubviewsWithOldSize (Bounds.Size);
+					ResizeSubviewsWithOldSize(Bounds.Size);
 				}
 			}
 
-			public bool BackButtonHidden {
-				get {
+			public bool BackButtonHidden
+			{
+				get
+				{
 					return backButton.Hidden;
 				}
-				set {
+				set
+				{
 					backButton.Hidden = value;
 				}
 			}
@@ -119,33 +130,35 @@ namespace Comet.Mac {
 
 			NSTextField titleField;
 			NSButton backButton;
-			public TitleBar () : base (new CGRect (9, 0, 100, 44))
+			public TitleBar() : base(new CGRect(9, 0, 100, 44))
 			{
-				AddSubview (titleField = new NSTextField ());
-				AddSubview (backButton = new NSButton () { Title = "Back" });
-				backButton.Activated += (object sender, EventArgs e) => BackButtonPressed?.Invoke ();
+				AddSubview(titleField = new NSTextField());
+				AddSubview(backButton = new NSButton() { Title = "Back" });
+				backButton.Activated += (object sender, EventArgs e) => BackButtonPressed?.Invoke();
 				BackgroundColor = NSColor.Gray;
 
 			}
-			public override bool IsFlipped {
-				get {
+			public override bool IsFlipped
+			{
+				get
+				{
 					return true;
 				}
 			}
 
-			public override void ResizeSubviewsWithOldSize (CGSize oldSize)
+			public override void ResizeSubviewsWithOldSize(CGSize oldSize)
 			{
-				base.ResizeSubviewsWithOldSize (oldSize);
+				base.ResizeSubviewsWithOldSize(oldSize);
 				var bounds = Bounds;
 
-				titleField.SizeToFit ();
+				titleField.SizeToFit();
 				var frame = titleField.Frame;
 				frame.X = (bounds.Width - frame.Width) / 2;
 				frame.Y = (bounds.Height - frame.Height) / 2;
 
 				titleField.Frame = frame;
 
-				backButton.SizeToFit ();
+				backButton.SizeToFit();
 				frame = backButton.Frame;
 				frame.X = 10f;
 				frame.Y = (bounds.Height - frame.Height) / 2;

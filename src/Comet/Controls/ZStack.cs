@@ -1,8 +1,8 @@
-﻿	using Comet.Layout;
+﻿using Comet.Layout;
 
-	namespace Comet 
+namespace Comet
 {
-	public class ZStack : AbstractLayout 
+	public class ZStack : AbstractLayout
 	{
 		public ZStack() : base(new ZStackLayoutManager())
 		{

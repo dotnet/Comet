@@ -3,10 +3,10 @@ using Windows.UI.Xaml.Controls;
 
 namespace Comet.UWP.Handlers
 {
-    public class ManagedGridHandler : AbstractLayoutHandler
-    {
-        public ManagedGridHandler()
-        {
-        }
-    }
+	public class ManagedGridHandler : AbstractLayoutHandler
+	{
+		public ManagedGridHandler()
+		{
+		}
+	}
 }

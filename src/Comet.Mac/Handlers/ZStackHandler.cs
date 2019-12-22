@@ -2,14 +2,14 @@
 
 namespace Comet.Mac.Handlers
 {
-    public class ZStackHandler : AbstractLayoutHandler
-    {
-        public ZStackHandler(CGRect rect) : base(rect)
-        {
-        }
+	public class ZStackHandler : AbstractLayoutHandler
+	{
+		public ZStackHandler(CGRect rect) : base(rect)
+		{
+		}
 
-        public ZStackHandler()
-        {
-        }
-    }
+		public ZStackHandler()
+		{
+		}
+	}
 }

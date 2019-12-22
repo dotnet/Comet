@@ -7,11 +7,8 @@ using UIKit;
 
 namespace Comet.iOS.Handlers
 {
-    public class SpacerHandler : AbstractHandler<Spacer, UIView>
-    {
-        protected override UIView CreateView()
-        {
-            return new UIView();
-        }
-    }
+	public class SpacerHandler : AbstractHandler<Spacer, UIView>
+	{
+		protected override UIView CreateView() => NativeView as UIView ?? new UIView();
+	}
 }

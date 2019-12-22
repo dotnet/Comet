@@ -5,11 +5,11 @@
 
 namespace Comet.UWP.Handlers
 {
-    public class SpacerHandler : AbstractHandler<Spacer, Canvas>
-    {
-        protected override Canvas CreateView()
-        {
-            return new Canvas();
-        }
-    }
+	public class SpacerHandler : AbstractHandler<Spacer, Canvas>
+	{
+		protected override Canvas CreateView()
+		{
+			return new Canvas();
+		}
+	}
 }

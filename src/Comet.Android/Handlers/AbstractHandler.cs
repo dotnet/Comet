@@ -8,140 +8,138 @@ using AView = Android.Views.View;
 namespace Comet.Android.Handlers
 {
 	public abstract class AbstractHandler<TVirtualView, TNativeView> : AndroidViewHandler
-        where TVirtualView : View
-        where TNativeView : AView
-    {
-        protected readonly PropertyMapper<TVirtualView> mapper;
+		where TVirtualView : View
+		where TNativeView : AView
+	{
+		protected readonly PropertyMapper<TVirtualView> mapper;
 
-        protected AbstractHandler(PropertyMapper<TVirtualView> mapper)
-        {
-            this.mapper = mapper;
-        }
+		protected AbstractHandler(PropertyMapper<TVirtualView> mapper)
+		{
+			this.mapper = mapper;
+		}
 
-        protected AbstractHandler()
-        {
-        }
+		protected AbstractHandler()
+		{
+		}
 
-        private TVirtualView _virtualView;
-        private TNativeView _nativeView;
+		private TVirtualView _virtualView;
+		private TNativeView _nativeView;
 
-        public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
-        protected abstract TNativeView CreateView(Context context);
+		protected abstract TNativeView CreateView(Context context);
 
-        public AView View => _nativeView;
+		public AView View => _nativeView;
 
-        //public CUIContainerView ContainerView => null;
+		//public CUIContainerView ContainerView => null;
 
-        public object NativeView => _nativeView;
+		public object NativeView => _nativeView;
 
-        public TNativeView TypedNativeView => _nativeView;
+		public TNativeView TypedNativeView => _nativeView;
 
-        protected TVirtualView VirtualView => _virtualView;
+		protected TVirtualView VirtualView => _virtualView;
 
-        public virtual void SetView(View view)
-        {
-            _virtualView = view as TVirtualView;
-            _nativeView ??= CreateView(AndroidContext.CurrentContext);
-            //_nativeView.list
+		public virtual void SetView(View view)
+		{
+			_virtualView = view as TVirtualView;
+			_nativeView ??= CreateView(AndroidContext.CurrentContext);
+			//_nativeView.list
 
-            mapper?.UpdateProperties(this, _virtualView);
-            ViewHandler.AddGestures(this, view);
-        }
+			mapper?.UpdateProperties(this, _virtualView);
+			ViewHandler.AddGestures(this, view);
+		}
 
-        public virtual void Remove(View view)
-        {
-            ViewHandler.RemoveGestures(this, view);
-            _nativeView = null;
-            _virtualView = null;
-        }
+		public virtual void Remove(View view)
+		{
+			ViewHandler.RemoveGestures(this, view);
+			_nativeView = null;
+			_virtualView = null;
+		}
 
-        protected virtual void DisposeView(TNativeView nativeView)
-        {
-        }
+		protected virtual void DisposeView(TNativeView nativeView)
+		{
+		}
 
-        public virtual void UpdateValue(string property, object value)
-        {
-            mapper?.UpdateProperty(this, _virtualView, property);
-            if (property == Gesture.AddGestureProperty)
-            {
-                ViewHandler.AddGesture(this, (Gesture)value);
-            }
-            else if (property == Gesture.RemoveGestureProperty)
-            {
-                ViewHandler.RemoveGesture(this, (Gesture)value);
-            }
-        }
+		public virtual void UpdateValue(string property, object value)
+		{
+			mapper?.UpdateProperty(this, _virtualView, property);
+			if (property == Gesture.AddGestureProperty)
+			{
+				ViewHandler.AddGesture(this, (Gesture)value);
+			}
+			else if (property == Gesture.RemoveGestureProperty)
+			{
+				ViewHandler.RemoveGesture(this, (Gesture)value);
+			}
+		}
 
-        public bool HasContainer
-        {
-            get => false;
-            set { }
-        }
+		public bool HasContainer
+		{
+			get => false;
+			set { }
+		}
+        
+		public CometTouchGestureListener GestureListener { get; set; }
+		
+		public SizeF GetIntrinsicSize(SizeF availableSize) => availableSize;
 
-        public CUITouchGestureListener GestureListener { get; set; }
+		public void SetFrame(RectangleF frame)
+		{
+			// Do nothing.  Subclasses should implement.  
+			// Note to future self, if you're really wondering why this is empty, look at AbstractControlHandler or AbstractLayoutHandler
+		}
 
-        public virtual SizeF Measure(SizeF availableSize)
-        {
-            return availableSize;
-        }
+		protected void BroadcastNativeViewChanged(AView previousView, AView newView)
+		{
+			NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, previousView, newView));
+		}
 
-        public void SetFrame(RectangleF frame)
-        {
-            // Do nothing
-        }
+		#region IDisposable Support
 
-        protected void BroadcastNativeViewChanged(AView previousView, AView newView)
-        {
-            NativeViewChanged?.Invoke(this, new ViewChangedEventArgs(VirtualView, previousView, newView));
-        }
+		private bool _disposed; // To detect redundant calls
 
-        #region IDisposable Support
+		private void Dispose(bool disposing)
+		{
+			if (!disposing)
+				return;
 
-        private bool _disposed; // To detect redundant calls
+			if (_nativeView != null)
+				DisposeView(_nativeView);
 
-        private void Dispose(bool disposing)
-        {
-            if (!disposing)
-                return;
+			if (_nativeView?.Parent is ViewGroup viewGroup)
+				viewGroup.RemoveView(_nativeView);
 
-            if (_nativeView != null)
-                DisposeView(_nativeView);
+			if (_nativeView is IDisposable disposable)
+				disposable.Dispose();
 
-            if (_nativeView?.Parent is ViewGroup viewGroup)
-                viewGroup.RemoveView(_nativeView);
+			_nativeView = null;
 
-            if (_nativeView is IDisposable disposable)
-                disposable.Dispose();
+			if (_virtualView != null)
+				Remove(_virtualView);
+		}
 
-            _nativeView = null;
+		void OnDispose(bool disposing)
+		{
+			if (_disposed)
+				return;
+			_disposed = true;
+			Dispose(disposing);
+		}
 
-            if (_virtualView != null)
-                Remove(_virtualView);
-        }
+		~AbstractHandler()
+		{
+			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+			OnDispose(false);
+		}
 
-        void OnDispose(bool disposing)
-        {
-            if (_disposed)
-                return;
-            _disposed = true;
-            Dispose(disposing);
-        }
+		// This code added to correctly implement the disposable pattern.
+		public void Dispose()
+		{
+			// Do not change this code. Put cleanup code in Dispose(bool disposing) above.
+			OnDispose(true);
+			GC.SuppressFinalize(this);
+		}
 
-        ~AbstractHandler()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            OnDispose(false);
-        }
-
-        // This code added to correctly implement the disposable pattern.
-        public void Dispose()
-        {
-            // Do not change this code. Put cleanup code in Dispose(bool disposing) above.
-            OnDispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
-    }
+		#endregion
+	}
 }

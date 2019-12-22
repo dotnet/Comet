@@ -19,12 +19,12 @@ struct ContentView: View {
 
 namespace Comet.Samples.Comparisons
 {
-    public class Section2 : View
-    {
-        [Body]
-        View body() =>
-                 new Text("Turtle Rock")
-                     .Color(Color.Green);
-    }
+	public class Section2 : View
+	{
+		[Body]
+		View body() =>
+				 new Text("Turtle Rock")
+					 .Color(Color.Green);
+	}
 
 }

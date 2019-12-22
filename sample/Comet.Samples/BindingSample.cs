@@ -1,35 +1,41 @@
 ﻿using System;
-namespace Comet.Samples {
-	public class BindingSample : View {
-		class MyBindingObject : BindingObject {
-			public bool CanEdit {
-				get => GetProperty<bool> ();
-				set => SetProperty (value);
+namespace Comet.Samples
+{
+	public class BindingSample : View
+	{
+		class MyBindingObject : BindingObject
+		{
+			public bool CanEdit
+			{
+				get => GetProperty<bool>();
+				set => SetProperty(value);
 			}
 
-			public string Text {
-				get => GetProperty<string> ();
-				set => SetProperty (value);
+			public string Text
+			{
+				get => GetProperty<string>();
+				set => SetProperty(value);
 			}
 		}
 
 		[State]
 		readonly MyBindingObject state;
 
-		readonly State<int> clickCount = new State<int> (1);
+		readonly State<int> clickCount = new State<int>(1);
 
-		readonly State<bool> bar = new State<bool> ();
+		readonly State<bool> bar = new State<bool>();
 
-		public BindingSample ()
+		public BindingSample()
 		{
-			state = new MyBindingObject {
+			state = new MyBindingObject
+			{
 				Text = "Bar",
 				CanEdit = true,
 			};
 			Body = Build;
 		}
 
-		View Build () =>
+		View Build() =>
 			new NavigationView{ new ScrollView
 			{
 				new VStack
@@ -46,8 +52,8 @@ namespace Comet.Samples {
 							() => state.Text = $"Click Count: {clickCount.Value++}"),
 						new Button("Update FontSize",
 							() => {
-                                var font = View.GetGlobalEnvironment<float?>(EnvironmentKeys.Fonts.Size) ?? 14;
-                                var size = font + 5;
+								var font = View.GetGlobalEnvironment<float?>(EnvironmentKeys.Fonts.Size) ?? 14;
+								var size = font + 5;
 								View.SetGlobalEnvironment (EnvironmentKeys.Fonts.Size, size);
 							}),
 					},
