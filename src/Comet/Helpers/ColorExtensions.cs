@@ -27,9 +27,9 @@ namespace Comet
 			return view;
 		}
 
-		public static Color GetColor<T>(this T view, Color defaultColor) where T : View
+		public static Color GetColor<T>(this T view, Color defaultColor, ControlState state = ControlState.Default) where T : View
 		{
-			var color = view.GetEnvironment<Color>(EnvironmentKeys.Colors.Color);
+			var color = view.GetEnvironment<Color>(EnvironmentKeys.Colors.Color,state);
 			return color ?? defaultColor;
 		}
 

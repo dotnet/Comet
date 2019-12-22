@@ -24,8 +24,6 @@ namespace Comet.Skia
 
 
 		static float hPadding = 8;
-		static float minHPadding = 10;
-		static float vPadding = 10;
 		static float touchSize = 44f;
 
 		public SliderHandler() : base(SliderDrawMapper, Mapper)
@@ -89,7 +87,7 @@ namespace Comet.Skia
 			//var highlightRect = rectangle.ApplyPadding(new Thickness(hSpace, vSpace)).ToSKRect();
 			var highlightPath = new SKPath();
 			highlightPath.Reset();
-			highlightPath.AddRoundedRect(highlightRect, 1f, 1f, SKPathDirection.Clockwise);
+			highlightPath.AddRoundRect(highlightRect, 1f, 1f, SKPathDirection.Clockwise);
 
 			paint.Reset();
 			paint.IsAntialias = true;
@@ -112,7 +110,7 @@ namespace Comet.Skia
 			var trackRect = highlightRect;
 			SKPath trackPath = new SKPath();
 			trackPath.Reset();
-			trackPath.AddRoundedRect(trackRect, 1f, 1f, SKPathDirection.Clockwise);
+			trackPath.AddRoundRect(trackRect, 1f, 1f, SKPathDirection.Clockwise);
 			paint.Reset();
 			paint.IsAntialias = true;
 			paint.Style = SKPaintStyle.Fill;
