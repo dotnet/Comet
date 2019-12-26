@@ -24,6 +24,7 @@ namespace Comet.UWP
 			Registrar.Handlers.Register<Toggle, ToggleHandler>();
 			Registrar.Handlers.Register<ProgressBar, ProgressBarHandler>();
 			Registrar.Handlers.Register<ShapeView, ShapeViewHandler>();
+			Registrar.Handlers.Register<RadioButton, RadioButtonHandler>();
 			//Registrar.Handlers.Register<WebView, WebViewHandler> ();
 
 			// Containers
