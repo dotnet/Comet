@@ -2,20 +2,35 @@
 {
 	public class RadioButtonSample : View
 	{
-		// TODO: Add state to register to Text to display OnClick responses
-
 		[Body]
 		View Body() => new VStack
 		{
-			new RadioButton("Group 1: Option A", true, "group1"),
-			new RadioButton("Group 1: Option B", false, "group1"),
-			new RadioButton("Group 1: Option C", false, "group1"),
+			new RadioButton(
+				label: "Group 1: Option A", 
+				selected: true, 
+				groupName: "group1", 
+				onClick: () => System.Diagnostics.Debug.WriteLine("Option A selected")),
+			new RadioButton(
+				label: "Group 1: Option B", 
+				groupName: "group1", 
+				onClick: () => System.Diagnostics.Debug.WriteLine("Option B selected")),
+			new RadioButton(
+				label: "Group 1: Option C", 
+				groupName: "group1", 
+				onClick: () => System.Diagnostics.Debug.WriteLine("Option C selected")),
 
 			new VStack
 			{
-				new RadioButton("Implicit Group: Option A", true),
-				new RadioButton("Implicit Group: Option B"),
-				new RadioButton("Implicit Group: Option C")
+				new RadioButton(
+					label: "Implicit Group: Option 1",
+					onClick: () => System.Diagnostics.Debug.WriteLine("Option 1 selected")),
+				new RadioButton(
+					label: "Implicit Group: Option 2",
+					selected: true,
+					onClick: () => System.Diagnostics.Debug.WriteLine("Option 2 selected")),
+				new RadioButton(
+					label: "Implicit Group: Option 3",
+					onClick: () => System.Diagnostics.Debug.WriteLine("Option 3 selected"))
 			}
 		};
 	}
