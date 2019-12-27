@@ -138,6 +138,7 @@
     <Compile Include="Handlers\ManagedHStackHandler.cs" />
     <Compile Include="Handlers\ProgressBarHandler.cs" />
     <Compile Include="Handlers\RadioButtonHandler.cs" />
+    <Compile Include="Handlers\RadioGroupHandler.cs" />
     <Compile Include="Handlers\ShapeViewHandler.cs" />
     <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />

@@ -7,24 +7,20 @@ namespace Comet
 		public RadioButton(
 			Binding<string> label = null,
 			Binding<bool> selected = null,
-			Binding<string> groupName = null,
 			Action onClick = null)
 		{
 			Label = label;
 			Selected = selected;
-			GroupName = groupName;
 			OnClick = onClick;
 		}
 
 		public RadioButton(
 			Func<string> label,
 			Func<bool> selected = null,
-			Func<string> groupName = null,
 			Action onClick = null)
 			: this(
 				  (Binding<string>)label,
 				  (Binding<bool>)selected,
-				  (Binding<string>)groupName,
 				  onClick)
 		{
 
@@ -44,14 +40,20 @@ namespace Comet
 			private set => this.SetBindingValue(ref _selected, value);
 		}
 
-		Binding<string> _groupName;
-		public Binding<string> GroupName
-		{
-			get => _groupName;
-			private set => this.SetBindingValue(ref _groupName, value);
-		}
-
 		public Action OnClick { get; private set; }
+
+		protected override View GetRenderView()
+		{
+			View view =  base.GetRenderView();
+
+			if (view.Parent is RadioGroup)
+			{
+				return view;
+			}
+
+			// TODO: Create Comet-specific UI exceptions
+			throw new Exception("A RadioButton must be in a RadioGroup");
+		}
 	}
 }
  

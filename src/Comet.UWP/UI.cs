@@ -32,6 +32,7 @@ namespace Comet.UWP
 			Registrar.Handlers.Register<ListView, ListViewHandler>();
 			Registrar.Handlers.Register<ScrollView, ScrollViewHandler>();
 			Registrar.Handlers.Register<View, ViewHandler>();
+			Registrar.Handlers.Register<RadioGroup, RadioGroupHandler>();
 
 			// Common Layout
 			Registrar.Handlers.Register<Spacer, SpacerHandler>();

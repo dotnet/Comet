@@ -7,8 +7,7 @@ namespace Comet.WPF.Handlers
 		public static readonly PropertyMapper<RadioButton> Mapper = new PropertyMapper<RadioButton>()
 		{
 			[nameof(RadioButton.Label)] = MapLabelProperty,
-			[nameof(RadioButton.Selected)] = MapSelectedProperty,
-			[nameof(RadioButton.GroupName)] = MapGroupnameProperty
+			[nameof(RadioButton.Selected)] = MapSelectedProperty
 		};
 
 		public RadioButtonHandler() : base(Mapper)
@@ -42,12 +41,6 @@ namespace Comet.WPF.Handlers
 		{
 			var nativeRadioButton = (WPFRadioButton)viewHandler.NativeView;
 			nativeRadioButton.IsChecked = virtualRadioButton.Selected;
-		}
-
-		public static void MapGroupnameProperty(IViewHandler viewHandler, RadioButton virtualRadioButton)
-		{
-			var nativeRadioButton = (WPFRadioButton)viewHandler.NativeView;
-			nativeRadioButton.GroupName = virtualRadioButton.GroupName ?? string.Empty;
 		}
 	}
 }
