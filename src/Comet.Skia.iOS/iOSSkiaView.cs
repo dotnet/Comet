@@ -9,7 +9,7 @@ using System.Drawing;
 
 namespace Comet.Skia.iOS
 {
-	public class iOSSkiaView : SKCanvasView
+	public class iOSSkiaView : SKCanvasView, IUIKeyInput
 	{
 		private SkiaView _virtualView;
 
@@ -85,12 +85,15 @@ namespace Comet.Skia.iOS
 				_virtualView?.Resized(Bounds.ToRectangleF());
 			}
 		}
+		public override bool CanBecomeFirstResponder => _virtualView is ITextFieldHandler;
 
 		bool pressedContained = false;
 		public override void TouchesBegan(NSSet touches, UIEvent evt)
 		{
 			try
 			{
+				if(!this.IsFirstResponder)
+					this.BecomeFirstResponder();
 				var viewPoints = this.GetPointsInView(evt);
 				_virtualView?.StartInteraction(viewPoints);
 				pressedContained = true;
@@ -142,5 +145,36 @@ namespace Comet.Skia.iOS
 				Logger.Warn("An unexpected error occured cancelling the touches within the control.", exc);
 			}
 		}
+
+		public override bool BecomeFirstResponder()
+		{
+			var isFirstResponder = base.BecomeFirstResponder();
+			if (isFirstResponder && _virtualView is ITextFieldHandler tf)
+				tf.StartInput();
+			return isFirstResponder;
+		}
+		public override bool ResignFirstResponder()
+		{
+			var isFirstResponder = base.ResignFirstResponder();
+			if (isFirstResponder && _virtualView is ITextFieldHandler tf)
+				tf.EndInput();
+			return isFirstResponder;
+		}
+
+		public void InsertText(string text) => (_virtualView as ITextFieldHandler)?.InsertText(text);
+
+		public void DeleteBackward() => (_virtualView as ITextFieldHandler)?.Backspace();
+
+		public bool HasText => true;
+
+		public UITextAutocapitalizationType AutocapitalizationType { get; set; }
+		public UITextAutocorrectionType AutocorrectionType { get; set; }
+		public UIKeyboardType KeyboardType { get; set; }
+		public UIKeyboardAppearance KeyboardAppearance { get; set; }
+		public UIReturnKeyType ReturnKeyType { get; set; }
+		public bool EnablesReturnKeyAutomatically { get; set; }
+		public bool SecureTextEntry { get; set; }
+		public UITextSpellCheckingType SpellCheckingType { get; set; }
+
 	}
 }

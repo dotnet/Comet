@@ -122,7 +122,6 @@ namespace Comet.Skia
 		const float defaultThumbHeight = 12f;
 		public virtual void DrawThumb(SKCanvas canvas, float progress, float hSpace, RectangleF rectangle)
 		{
-
 			var paint = new SKPaint();
 			SKColor fillColor11 = ColorFromArgb(255, 3, 218, 197);
 

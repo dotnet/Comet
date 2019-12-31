@@ -21,7 +21,7 @@ namespace Comet.Skia
 				SetEnvironmentValue(null, control, key, sizing);
 			}
 			setSizing(typeof(SKText), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			//setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(SKTextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
 			//setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
 			//setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
 			setSizing(typeof(SKSlider), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);

@@ -53,8 +53,9 @@ namespace Comet
 		public Action<T> Set
 		{
 			get;
-			private set;
+			internal set;
 		}
+
 		public T CurrentValue { get => (T)Value; private set => Value = value; }
 
 		public static implicit operator Binding<T>(T value)

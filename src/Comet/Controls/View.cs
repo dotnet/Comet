@@ -590,6 +590,14 @@ namespace Comet
 			AnimationManger.Remove(animation);
 		}
 
+		public void RemoveAnimations()
+		{
+			GetAnimations(false)?.ToList().ForEach(animation => {
+				animations.Remove(animation);
+				AnimationManger.Remove(animation);
+			});
+		}
+
 		public virtual void PauseAnimations()
 		{
 			GetAnimations(false)?.ForEach(x => x.Pause());
