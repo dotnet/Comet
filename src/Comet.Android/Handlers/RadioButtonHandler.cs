@@ -41,7 +41,7 @@ namespace Comet.Android.Handlers
 		public static void MapSelectedProperty(IViewHandler viewHandler, RadioButton virtualRadioButton)
 		{
 			var nativeRadioButton = (ARadioButton)viewHandler.NativeView;
-			nativeRadioButton.Selected = virtualRadioButton.Selected;
+			nativeRadioButton.Checked = virtualRadioButton.Selected;
 		}
 	}
 }
