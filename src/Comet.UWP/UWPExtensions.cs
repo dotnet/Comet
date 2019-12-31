@@ -33,6 +33,92 @@ namespace Comet.UWP
 			return handler?.View;
 		}
 
+		public static Color ToColor(this Windows.UI.Color color)
+		{
+			if (color == null)
+				return null;
+			return new Color(color.R, color.G, color.B, color.A);
+		}
+
+		public static Windows.UI.Color FromColor(this Color color)
+		{
+			return new Windows.UI.Color
+			{
+				R = (byte)color.R,
+				G = (byte)color.G,
+				B = (byte)color.B,
+				A = (byte)color.A,
+			};
+		}
+
+		public static Weight ToWeight(this ushort weight)
+		{
+			switch ((int)weight)
+			{
+				case (int)Weight.Regular:
+					return Weight.Regular;
+				case (int)Weight.Thin:
+					return Weight.Thin;
+
+				case (int)Weight.Ultralight:
+					return Weight.Ultralight;
+
+				case (int)Weight.Light:
+					return Weight.Light;
+
+				case (int)Weight.Medium:
+					return Weight.Medium;
+
+				case (int)Weight.Semibold:
+					return Weight.Semibold;
+
+				case (int)Weight.Bold:
+					return Weight.Bold;
+
+				case (int)Weight.Heavy:
+					return Weight.Heavy;
+
+				case (int)Weight.Black:
+					return Weight.Black;
+				default:
+					return Weight.Regular;
+			}
+		}
+
+		public static FontAttributes ToFont(this TextBlock textBlock)
+		{
+			if (textBlock == null)
+				return null;
+			var fontAttributes = new FontAttributes
+			{
+				Italic = textBlock.FontStyle == Windows.UI.Text.FontStyle.Italic,
+				Size = (float)textBlock.FontSize,
+				Weight = textBlock.FontWeight.Weight.ToWeight(),
+				Family = textBlock.FontFamily.Source
+			};
+			return fontAttributes;
+		}
+
+		public static void SetFont(this TextBlock textBlock, FontAttributes fontAttributes)
+		{
+			if (textBlock == null)
+				return;
+			textBlock.FontStyle = fontAttributes.Italic ? Windows.UI.Text.FontStyle.Italic : Windows.UI.Text.FontStyle.Normal;
+			textBlock.FontSize = fontAttributes.Size;
+			textBlock.FontWeight = new Windows.UI.Text.FontWeight
+			{
+				Weight = (ushort)fontAttributes.Weight
+			};
+			textBlock.FontFamily = new Windows.UI.Xaml.Media.FontFamily(fontAttributes.Family);
+		}
+
+		public static void SetFontColor(this TextBlock textBlock, Color color)
+		{
+			if (textBlock == null)
+				return;
+			textBlock.Foreground = new Windows.UI.Xaml.Media.SolidColorBrush(color.FromColor());
+		}
+
 		public static UIElement ToEmbeddableView(this View view)
 		{
 			var handler = view.GetOrCreateViewHandler();
