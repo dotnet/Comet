@@ -23,6 +23,7 @@ namespace Comet.Mac
 			Registrar.Handlers.Register<Slider, SliderHandler>();
 			Registrar.Handlers.Register<ShapeView, ShapeViewHandler>();
 			Registrar.Handlers.Register<Toggle, ToggleHandler>();
+			Registrar.Handlers.Register<RadioButton, RadioButtonHandler>();
 			//Registrar.Handlers.Register<WebView, WebViewHandler> ();
 
 			// Containers
@@ -31,6 +32,7 @@ namespace Comet.Mac
 			Registrar.Handlers.Register<ContentView, ContentViewHandler>();
 			Registrar.Handlers.Register<ListView, ListViewHandler>();
 			Registrar.Handlers.Register<ViewRepresentable, ViewRepresentableHandler>();
+			Registrar.Handlers.Register<RadioGroup, RadioGroupHandler>();
 
 			// Managed Layout
 			Registrar.Handlers.Register<HStack, HStackHandler>();
