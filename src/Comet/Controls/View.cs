@@ -423,7 +423,7 @@ namespace Comet
 			{
 				measurementValid = value;
 				if (BuiltView != null)
-					BuiltView.MeasurementValid = true;
+					BuiltView.MeasurementValid = value;
 			}
 		}
 
