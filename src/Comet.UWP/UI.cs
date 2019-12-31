@@ -50,6 +50,8 @@ namespace Comet.UWP
 			Device.BitmapService = new UWPBitmapService();
 
 			ListView.HandlerSupportsVirtualization = false;
+			var style = new Styles.Style();
+			style.Apply();
 		}
 
 		public static CoreDispatcher GetDispatcher()
