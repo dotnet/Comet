@@ -63,7 +63,6 @@ namespace Comet.UWP.Handlers
 			var nativeView = (UWPLabel)viewHandler.NativeView;
 			var color = virtualView.GetColor(DefaultColor);
 			nativeView.SetFontColor(color);
-			virtualView.InvalidateMeasurement();
 		}
 
 		public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)

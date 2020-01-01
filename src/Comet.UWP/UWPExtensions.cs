@@ -37,17 +37,17 @@ namespace Comet.UWP
 		{
 			if (color == null)
 				return null;
-			return new Color(color.R, color.G, color.B, color.A);
+			return new Color((float)(color.R / 255f), (float)(color.G / 255f), (float)(color.B / 255f), (float)(color.A / 255f));
 		}
 
 		public static Windows.UI.Color FromColor(this Color color)
 		{
 			return new Windows.UI.Color
 			{
-				R = (byte)color.R,
-				G = (byte)color.G,
-				B = (byte)color.B,
-				A = (byte)color.A,
+				R = (byte)(color.R * 255f),
+				G = (byte)(color.G * 255f),
+				B = (byte)(color.B * 255f),
+				A = (byte)(color.A * 255f),
 			};
 		}
 
