@@ -68,7 +68,7 @@ namespace Comet.UWP.Handlers
 		public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
 		{
 			var nativeView = (UWPLabel)viewHandler.NativeView;
-			nativeView.Text = virtualView.Value;
+			nativeView.Text = virtualView.Value.CurrentValue;
 			virtualView.InvalidateMeasurement();
 		}
 
