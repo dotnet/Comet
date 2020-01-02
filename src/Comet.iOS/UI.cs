@@ -27,6 +27,7 @@ namespace Comet.iOS
 			Registrar.Handlers.Register<Text, TextHandler>();
 			Registrar.Handlers.Register<TextField, TextFieldHandler>();
 			Registrar.Handlers.Register<Toggle, ToggleHandler>();
+			Registrar.Handlers.Register<RadioButton, RadioButtonHandler>();
 			//Registrar.Handlers.Register<WebView, WebViewHandler> ();
 
 			// Containers
@@ -43,6 +44,7 @@ namespace Comet.iOS
 			Registrar.Handlers.Register<ZStack, ZStackHandler>();
 			Registrar.Handlers.Register<Grid, GridHandler>();
 			Registrar.Handlers.Register<Spacer, SpacerHandler>();
+			Registrar.Handlers.Register<RadioGroup, RadioGroupHandler>();
 
 			// Device Features
 			ModalView.PerformPresent = (o) => {

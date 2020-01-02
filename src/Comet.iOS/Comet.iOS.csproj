@@ -13,10 +13,10 @@
     <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
     <AssemblyName>Comet.iOS</AssemblyName>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
-     <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-    <PublishRepositoryUrl>true</PublishRepositoryUrl> 
+    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>  
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -51,6 +51,7 @@
   <ItemGroup>
     <Compile Include="Controls\CUIContainerView.cs" />
     <Compile Include="Controls\CUIImageView.cs" />
+    <Compile Include="Controls\CUIRadioButton.cs" />
     <Compile Include="Controls\CUITableView.cs" />
     <Compile Include="Controls\CUITableViewCell.cs" />
     <Compile Include="Controls\SizeChangedEventArgs.cs" />
@@ -60,6 +61,8 @@
     <Compile Include="Handlers\AbstractLayoutHandler.cs" />
     <Compile Include="Handlers\GridHandler.cs" />
     <Compile Include="Handlers\HStackHandler.cs" />
+    <Compile Include="Handlers\RadioButtonHandler.cs" />
+    <Compile Include="Handlers\RadioGroupHandler.cs" />
     <Compile Include="Handlers\SecureFieldHandler.cs" />
     <Compile Include="Handlers\SliderHandler.cs" />
     <Compile Include="Handlers\SpacerHandler.cs" />
