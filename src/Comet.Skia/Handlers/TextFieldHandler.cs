@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Threading.Tasks;
 using Comet.Skia.Internal;
 using SkiaSharp;
 using Topten.RichTextKit;
@@ -73,7 +74,7 @@ namespace Comet.Skia
 			if (!carretIsVisible)
 				return;
 			var curser = tb.GetCaretInfo(CaretPosition);
-			var percent = this.GetEnvironment<float>(curserPercent);
+			var percent = this.GetEnvironment<float>(curserPercent,false);
 			var cursorColor = Color.Blue;
 			using var paint = new SKPaint
 			{
@@ -135,15 +136,18 @@ namespace Comet.Skia
 		{
 			carretIsVisible = true;
 			this.RemoveAnimations();
+			this.SetEnvironment(curserPercent, 0f,false);
 			(this).Animate((t) => {
-				t.SetEnvironment(curserPercent, 1f);
+				t.SetEnvironment(curserPercent, 1f,false);
 			}, repeats: true, autoReverses: true, duration: .5f);
 		}
 
-		public void EndInput()
+		public async void EndInput()
 		{
 			carretIsVisible = false;
 			this.RemoveAnimations();
+			this.SetEnvironment(curserPercent, 0f,false);
+			MapResetText(this, VirtualView);
 		}
 	}
 }
