@@ -114,6 +114,8 @@
     <Compile Include="Handlers\ListViewHandler.cs" />
     <Compile Include="Controls\CUITableViewCell.cs" />
     <Compile Include="Services\MacTicker.cs" />
+    <Compile Include="Handlers\RadioGroupHandler.cs" />
+    <Compile Include="Handlers\RadioButtonHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet\Comet.csproj">

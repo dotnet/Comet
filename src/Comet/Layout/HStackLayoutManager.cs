@@ -10,8 +10,8 @@ namespace Comet.Layout
 		private readonly float _spacing;
 
 		public HStackLayoutManager(
-			VerticalAlignment alignment,
-			float? spacing)
+			VerticalAlignment alignment = VerticalAlignment.Center,
+			float? spacing = null)
 		{
 			_defaultAlignment = alignment;
 			_spacing = spacing ?? 4;

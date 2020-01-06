@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using WPFSize = System.Windows.Size;
 
 namespace Comet.WPF.Handlers
@@ -10,6 +11,7 @@ namespace Comet.WPF.Handlers
 	public abstract class AbstractLayoutHandler : Panel, WPFViewHandler
 	{
 		private AbstractLayout _view;
+		private bool _inLayout;
 
 		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
@@ -27,7 +29,9 @@ namespace Comet.WPF.Handlers
 
 		public void SetFrame(RectangleF frame)
 		{
+			_inLayout = true;
 			Arrange(frame.ToRect());
+			_inLayout = false;
 		}
 
 		public void SetView(View view)
@@ -45,6 +49,7 @@ namespace Comet.WPF.Handlers
 					InternalChildren.Add(nativeView);
 				}
 
+				InvalidateMeasure();
 				InvalidateArrange();
 			}
 		}
@@ -76,6 +81,7 @@ namespace Comet.WPF.Handlers
 				InternalChildren.Insert(index, nativeView);
 			}
 
+			InvalidateMeasure();
 			InvalidateArrange();
 		}
 
@@ -87,6 +93,7 @@ namespace Comet.WPF.Handlers
 				InternalChildren.RemoveAt(index);
 			}
 
+			InvalidateMeasure();
 			InvalidateArrange();
 		}
 
@@ -102,6 +109,7 @@ namespace Comet.WPF.Handlers
 				InternalChildren.Insert(index, newNativeView);
 			}
 
+			InvalidateMeasure();
 			InvalidateArrange();
 		}
 
@@ -112,8 +120,14 @@ namespace Comet.WPF.Handlers
 
 		protected override WPFSize ArrangeOverride(WPFSize finalSize)
 		{
+			if (_inLayout) return finalSize;
+
 			if (finalSize.Width > 0 && finalSize.Height > 0)
-				_view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
+			{
+				_view.Frame = RectangleF.Empty;
+				_view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height); 
+				_view.LayoutSubviews(_view.Frame);
+			}
 
 			return finalSize;
 		}

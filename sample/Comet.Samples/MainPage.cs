@@ -52,6 +52,7 @@ namespace Comet.Samples
 			new MenuItem("TextFieldSample2", ()=> new TextFieldSample2()),
 			new MenuItem("TextFieldSample3", ()=> new TextFieldSample3()),
 			new MenuItem("TextFieldSample4", ()=> new TextFieldSample4()),
+			new MenuItem("RadioButtonSample", ()=> new RadioButtonSample()),
 			new MenuItem("SkiaSample1 (FingerPaint)", ()=> new SkiaSample1()),
 			new MenuItem("SkiaSample2 (FingerPaint)", ()=> new SkiaSample2()),
 			new MenuItem("SkiaSample3 (BindableFingerPaint)", ()=> new SkiaSample3()),

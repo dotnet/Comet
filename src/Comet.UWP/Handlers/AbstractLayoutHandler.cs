@@ -1,9 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
 using UwpSize = Windows.Foundation.Size;
 
 namespace Comet.UWP.Handlers
@@ -11,6 +9,7 @@ namespace Comet.UWP.Handlers
 	public abstract class AbstractLayoutHandler : Panel, UWPViewHandler
 	{
 		private AbstractLayout _view;
+		private bool _inLayout;
 
 		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
 
@@ -28,7 +27,9 @@ namespace Comet.UWP.Handlers
 
 		public void SetFrame(RectangleF frame)
 		{
+			_inLayout = true;
 			Arrange(frame.ToRect());
+			_inLayout = false;
 		}
 
 		public void SetView(View view)
@@ -113,8 +114,14 @@ namespace Comet.UWP.Handlers
 
 		protected override UwpSize ArrangeOverride(UwpSize finalSize)
 		{
-			if (finalSize.Width > 0 && finalSize.Height > 0 && _view != null)
+			if (_inLayout) return finalSize;
+
+			if (finalSize.Width > 0 && finalSize.Height > 0)
+			{
+				_view.Frame = RectangleF.Empty;
 				_view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
+				_view.LayoutSubviews(_view.Frame);
+			}
 
 			return finalSize;
 		}

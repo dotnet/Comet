@@ -50,7 +50,7 @@ namespace Comet.WPF.Handlers
 			{
 				if (!value && _containerView != null)
 				{
-					_containerView.MainView = null; ;
+					_containerView.MainView = null; 
 					_containerView = null;
 
 					ViewChanged?.Invoke(this, EventArgs.Empty);
