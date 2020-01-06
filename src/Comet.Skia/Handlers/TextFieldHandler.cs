@@ -13,7 +13,7 @@ namespace Comet.Skia
 			[nameof(Comet.TextField.Text)] = MapResetText,
 			[EnvironmentKeys.Colors.Color] = MapResetText
 		};
-		public int CarretPosition { get; set; }
+		public int CaretPosition { get; set; }
 		public TextFieldHandler() : base(null, Mapper)
 		{
 
@@ -72,7 +72,7 @@ namespace Comet.Skia
 			base.DrawText(tb, canvas, verticalAlignment);
 			if (!carretIsVisible)
 				return;
-			var curser = tb.GetCaretInfo(CarretPosition);
+			var curser = tb.GetCaretInfo(CaretPosition);
 			var percent = this.GetEnvironment<float>(curserPercent);
 			var cursorColor = Color.Blue;
 			using var paint = new SKPaint
@@ -111,23 +111,23 @@ namespace Comet.Skia
 		{
 			var first = points[0];
 			var result = TextBlock.HitTest(first.X, first.Y);
-			CarretPosition = result.ClosestCodePointIndex;
+			CaretPosition = result.ClosestCodePointIndex;
 		}
 
 		public void InsertText(string text)
 		{
 			var oldText = TypedVirtualView.Text?.CurrentValue ?? string.Empty;
-			var newText = oldText.Insert(CarretPosition,text);
+			var newText = oldText.Insert(CaretPosition,text);
 			TypedVirtualView.ValueChanged(newText);
 		}
 
 		public void Backspace()
 		{
 			var oldText = TypedVirtualView.Text?.CurrentValue ?? string.Empty;
-			var pos = CarretPosition - 1;
+			var pos = CaretPosition - 1;
 			if (pos < 0)
 				return;
-			CarretPosition = pos;
+			CaretPosition = pos;
 			var newText = oldText.Remove(pos, 1);
 			TypedVirtualView.ValueChanged(newText);
 		}
