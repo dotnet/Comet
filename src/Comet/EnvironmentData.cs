@@ -96,6 +96,12 @@ namespace Comet
 			public const string BackgroundColor = "NavigationBackgroundColor";
 			public const string TextColor = "NavigationTextColor";
 		}
+		public static class Slider
+		{
+			public const string TrackColor = "SliderTrackColor";
+			public const string ProgressColor = "SliderProgressColor";
+			public const string ThumbColor = "SliderThumbColor";
+		}
 	}
 
 	[AttributeUsage(AttributeTargets.Field)]

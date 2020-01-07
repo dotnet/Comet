@@ -22,6 +22,9 @@ namespace Comet.Skia
 			[SkiaEnvironmentKeys.Slider.Layers.Thumb] = DrawThumb,
 		};
 
+		static Color defaultThumbColor = Color.FromBytes(3, 218, 197, 255);
+		static Color defaultTrackColor = Color.FromBytes(3, 218, 197, 97);
+		static Color defaultProgressColor = Color.FromBytes(3, 218, 197, 255);
 
 		static float hPadding = 8;
 		static float touchSize = 44f;
@@ -70,14 +73,14 @@ namespace Comet.Skia
 		}
 
 		RectangleF TrackRect = new RectangleF();
-		RectangleF TouchTargetRect = new RectangleF(0, 0, touchSize,touchSize);
+		RectangleF TouchTargetRect = new RectangleF(0, 0, touchSize, touchSize);
 		protected override string[] LayerDrawingOrder()
 			=> DefaultSliderLayerDrawingOrder;
 		const float defaultHeight = 2f;
 		public virtual void DrawTrack(SKCanvas canvas, float hSpace, RectangleF rectangle)
 		{
-			var paint = new SKPaint();
-			SKColor fillColor11 = ColorFromArgb(97, 3, 218, 197);
+			using var paint = new SKPaint();
+			var fillColor = TypedVirtualView.GetTrackColor(defaultTrackColor, CurrentState).ToSKColor();
 
 			TrackRect.Width = rectangle.Width - (hSpace * 2);
 			TrackRect.Height = defaultHeight;
@@ -85,36 +88,36 @@ namespace Comet.Skia
 			TrackRect.X = hSpace;
 			var highlightRect = TrackRect.ToSKRect();
 			//var highlightRect = rectangle.ApplyPadding(new Thickness(hSpace, vSpace)).ToSKRect();
-			var highlightPath = new SKPath();
+			using var highlightPath = new SKPath();
 			highlightPath.Reset();
 			highlightPath.AddRoundRect(highlightRect, 1f, 1f, SKPathDirection.Clockwise);
 
 			paint.Reset();
 			paint.IsAntialias = true;
 			paint.Style = SKPaintStyle.Fill;
-			paint.Color = (SKColor)fillColor11;
+			paint.Color = fillColor;
 			canvas.DrawPath(highlightPath, paint);
 
 		}
 
 		public virtual void DrawProgress(SKCanvas canvas, float progress, float hSpace, RectangleF rectangle)
 		{
-			var paint = new SKPaint();
-			SKColor fillColor = ColorFromArgb(255, 0, 0, 0);
-			SKColor fillColor11 = ColorFromArgb(255, 3, 218, 197);
+			using var paint = new SKPaint();
+
+			var fillColor = TypedVirtualView.GetProgressColor(defaultProgressColor, CurrentState).ToSKColor();
 			var width = (rectangle.Width - (hSpace * 2)) * progress;
 			var height = defaultHeight;
 			var y = rectangle.Y + ((rectangle.Height - height) / 2);
 			var highlightRect = new RectangleF(hSpace, y, width, height).ToSKRect();
 
 			var trackRect = highlightRect;
-			SKPath trackPath = new SKPath();
+			using var trackPath = new SKPath();
 			trackPath.Reset();
 			trackPath.AddRoundRect(trackRect, 1f, 1f, SKPathDirection.Clockwise);
 			paint.Reset();
 			paint.IsAntialias = true;
 			paint.Style = SKPaintStyle.Fill;
-			paint.Color = (SKColor)fillColor11;
+			paint.Color = fillColor;
 			canvas.DrawPath(trackPath, paint);
 		}
 
@@ -122,22 +125,22 @@ namespace Comet.Skia
 		const float defaultThumbHeight = 12f;
 		public virtual void DrawThumb(SKCanvas canvas, float progress, float hSpace, RectangleF rectangle)
 		{
-			var paint = new SKPaint();
-			SKColor fillColor11 = ColorFromArgb(255, 3, 218, 197);
+			using var paint = new SKPaint();
 
+			var fillColor = TypedVirtualView.GetThumbColor(defaultThumbColor, CurrentState).ToSKColor();
 			ThumbRect.X = (rectangle.Width - (hSpace * 2) - ThumbRect.Width) * progress + hSpace;
 			ThumbRect.Y = rectangle.Y + (rectangle.Height - ThumbRect.Height) / 2;
 			TouchTargetRect.Center(ThumbRect.Center());
 			var knobRect = ThumbRect.ToSKRect();
 
-			SKPath knobPath = new SKPath();
+			using var knobPath = new SKPath();
 			knobPath.Reset();
 			knobPath.AddOval(knobRect, SKPathDirection.Clockwise);
 
 			paint.Reset();
 			paint.IsAntialias = true;
 			paint.Style = SKPaintStyle.Fill;
-			paint.Color = (SKColor)fillColor11;
+			paint.Color = fillColor;
 			canvas.DrawPath(knobPath, paint);
 		}
 
@@ -158,17 +161,6 @@ namespace Comet.Skia
 			var slider = control as SliderHandler;
 			var progress = view?.GetPercent() ?? 0;
 			slider?.DrawProgress(canvas, progress, hPadding, dirtyRect);
-		}
-
-
-
-		public static SKColor ColorFromArgb(byte alpha, byte red, byte green, byte blue)
-		{
-			return new SKColor(red, blue, green, alpha);
-		}
-		public static SKPaint PaintWithAlpha(byte alpha)
-		{
-			return new SKPaint { Color = new SKColor(255, 255, 255, alpha) };
 		}
 	}
 }

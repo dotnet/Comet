@@ -10,6 +10,8 @@ namespace Comet.Styles
 
 		public NavbarStyle Navbar { get; set; } = new NavbarStyle();
 
+		public SliderStyle Slider { get; set; } = new SliderStyle();
+
 		public TextStyle Label { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Label)
@@ -137,7 +139,7 @@ namespace Comet.Styles
 
 		public virtual void Apply(ContextualObject view = null)
 		{
-			if(view == null)
+			if (view == null)
 				SetDefaultControlSizingForLayouts();
 			ApplyButton(view);
 			ApplyNavbarStyles(view);
@@ -154,6 +156,7 @@ namespace Comet.Styles
 			ApplyTextStyle(view, Body2);
 			ApplyTextStyle(view, Caption);
 			ApplyTextStyle(view, Overline);
+			ApplySliderStyle(view);
 		}
 
 
@@ -170,7 +173,6 @@ namespace Comet.Styles
 		{
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.Colors.Color, Button?.TextColor);
 			//Set the BorderStyle
-
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.ClipShape, Button?.Border);
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.Overlay, Button?.Border);
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.Colors.BackgroundColor, Button?.BackgroundColor);
@@ -183,6 +185,25 @@ namespace Comet.Styles
 		{
 			SetEnvironment(view, "", EnvironmentKeys.Navigation.BackgroundColor, Navbar?.BackgroundColor);
 			SetEnvironment(view, "", EnvironmentKeys.Navigation.TextColor, Navbar?.TextColor);
+		}
+
+
+		protected virtual void ApplySliderStyle(ContextualObject view)
+		{
+			SetEnvironment(view, "", EnvironmentKeys.Slider.TrackColor, Slider?.TrackColor);
+			SetEnvironment(view, "", EnvironmentKeys.Slider.ProgressColor, Slider?.ProgressColor);
+			SetEnvironment(view, "", EnvironmentKeys.Slider.ThumbColor, Slider?.ThumbColor);
+			ApplyViewStyles(view, Slider, typeof(Slider));
+
+		}
+
+		protected virtual void ApplyViewStyles(ContextualObject view, ViewStyle style, Type viewType)
+		{
+			SetEnvironment(view, viewType, EnvironmentKeys.View.ClipShape, style?.ClipShape);
+			SetEnvironment(view, viewType, EnvironmentKeys.View.Overlay, style?.Overlay);
+			SetEnvironment(view, viewType, EnvironmentKeys.View.Border, style?.Border);
+			SetEnvironment(view, viewType, EnvironmentKeys.Colors.BackgroundColor, style?.BackgroundColor);
+			SetEnvironment(view, viewType, EnvironmentKeys.View.Shadow, style?.Shadow);
 		}
 
 		protected void SetEnvironment(ContextualObject view, Type type, string key, StyleAwareValue value)
