@@ -34,7 +34,7 @@ namespace Comet.iOS.Sample
 #if DEBUG
 			Comet.Reload.Init();
 #endif
-
+			UI.Init();
 			//Adds the material Style
 			new MaterialStyle(ColorPalette.Blue).Apply();
 
