@@ -8,6 +8,7 @@ namespace Comet.Samples
 		View body() => new VStack
 		{
 			new SKText("Text"),
+			new SKTextField("Text Field"),
 			new SKButton("Hello!",()=> this.Dismiss()),
 			new SKSlider(),
 		};
