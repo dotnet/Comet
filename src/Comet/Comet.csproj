@@ -27,7 +27,7 @@
     <Folder Include="Animations\" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.4.33" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.4.43" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
   </ItemGroup>
   <ProjectExtensions>

@@ -17,9 +17,9 @@
     <dependencies>
       <group>
         <dependency id="Clancey.Comet"/>
-        <dependency id="SkiaSharp" version="1.68.1"/>
-        <dependency id="SkiaSharp.Views" version="1.68.1"/>
-        <dependency id="Topten.RichTextKit" version="0.1.117"/>
+        <dependency id="SkiaSharp" version="1.68.1.1"/>
+        <dependency id="SkiaSharp.Views" version="1.68.1.1"/>
+        <dependency id="Topten.RichTextKit" version="0.1.118"/>
       </group>
     </dependencies>
   </metadata>
