@@ -23,7 +23,7 @@ namespace Comet.UWP.Handlers
 		public static void MapValueProperty(IViewHandler viewHandler, ProgressBar virtualView)
 		{
 			var nativeView = (UWPProgressBar)viewHandler.NativeView;
-			nativeView.Value = virtualView.Value;
+			nativeView.Value = (int)(virtualView.Value * 100);
 		}
 	}
 }

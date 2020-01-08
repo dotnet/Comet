@@ -116,6 +116,7 @@
     <Compile Include="Services\MacTicker.cs" />
     <Compile Include="Handlers\RadioGroupHandler.cs" />
     <Compile Include="Handlers\RadioButtonHandler.cs" />
+    <Compile Include="Handlers\ProgressBarHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet\Comet.csproj">

@@ -4,17 +4,17 @@ namespace Comet.Samples
 {
 	public class ProgressBarSample1 : View
 	{
-		readonly State<float> percentage = new State<float>(10);
+		readonly State<float> percentage = new State<float>(.1f);
 		private readonly Timer _timer;
 
 		public ProgressBarSample1()
 		{
 			_timer = new Timer(async state => {
-				var p = (State<double>)state;
+				var p = (State<float>)state;
 				await ThreadHelper.SwitchToMainThreadAsync();
 
 				var current = p.Value;
-				var value = current < 101 ? current + 1 : 0;
+				var value = current < 1 ? current + .001f : 0;
 
 				p.Value = value;
 			}, percentage, 100, 100);
@@ -24,7 +24,7 @@ namespace Comet.Samples
 		View body() => new VStack()
 		{
 			new ProgressBar(percentage),
-			new Text(()=>$"{percentage.Value} %"),
+			new Text(()=>$"{percentage.Value.ToString("P2")}"),
 		};
 
 		protected override void Dispose(bool disposing)

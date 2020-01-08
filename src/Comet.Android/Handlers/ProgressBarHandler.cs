@@ -26,7 +26,7 @@ namespace Comet.Android.Handlers
 		{
 			var nativeView = (AProgressBar)viewHandler.NativeView;
 
-			nativeView.Progress = (int)virtualView.Value;
+			nativeView.Progress = (int)(virtualView.Value * 100);
 		}
 
 		protected override void DisposeView(AProgressBar nativeView)
