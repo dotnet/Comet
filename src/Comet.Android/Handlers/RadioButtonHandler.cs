@@ -35,7 +35,7 @@ namespace Comet.Android.Handlers
 		public static void MapLabelProperty(IViewHandler viewHandler, RadioButton virtualRadioButton)
 		{
 			var nativeRadioButton = (ARadioButton)viewHandler.NativeView;
-			nativeRadioButton.Text = virtualRadioButton.Label.CurrentValue;
+			nativeRadioButton.Text = virtualRadioButton.Label?.CurrentValue;
 		}
 
 		public static void MapSelectedProperty(IViewHandler viewHandler, RadioButton virtualRadioButton)

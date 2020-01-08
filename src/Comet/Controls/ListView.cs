@@ -33,7 +33,7 @@ namespace Comet
 		{
 
 			this.itemsBinding = items;
-			this.items = items.CurrentValue;
+			this.items = items?.CurrentValue;
 			SetupObservable();
 		}
 
@@ -266,13 +266,13 @@ namespace Comet
 		public Section(Binding<IReadOnlyList<T>> items)
 		{
 			this.itemsBinding = items;
-			this.items = items.CurrentValue;
+			this.items = items?.CurrentValue;
 		}
 
 		public override void ViewPropertyChanged(string property, object value)
 		{
 			//Update this when things change!
-			items = itemsBinding.CurrentValue;
+			items = itemsBinding?.CurrentValue;
 			base.ViewPropertyChanged(property, value);
 		}
 

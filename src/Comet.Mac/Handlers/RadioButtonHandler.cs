@@ -16,7 +16,7 @@ namespace Comet.Mac.Handlers
 
 		protected override NSButton CreateView()
 		{
-			var button = NSButton.CreateRadioButton(VirtualView.Label.CurrentValue, RadioAction);
+			var button = NSButton.CreateRadioButton(VirtualView.Label?.CurrentValue, RadioAction);
 
 			button.State = VirtualView.Selected
 				? NSCellStateValue.On
@@ -46,7 +46,7 @@ namespace Comet.Mac.Handlers
 		public static void MapLabelProperty(IViewHandler viewHandler, RadioButton virtualRadioButton)
 		{
 			var nativeRadioButton = (NSButton)viewHandler.NativeView;
-			nativeRadioButton.Title = virtualRadioButton.Label.CurrentValue;
+			nativeRadioButton.Title = virtualRadioButton.Label?.CurrentValue;
 		}
 
 		public static void MapSelectedProperty(IViewHandler viewHandler, RadioButton virtualRadioButton)

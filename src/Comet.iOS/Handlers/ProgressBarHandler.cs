@@ -26,7 +26,7 @@ namespace Comet.iOS.Handlers
 		{
 			var nativeView = (UIProgressView)viewHandler.NativeView;
 
-			nativeView.Progress = virtualView.Value.CurrentValue;
+			nativeView.Progress = virtualView.Value?.CurrentValue ?? 0;
 		}
 
 		protected override void DisposeView(UIProgressView nativeView)

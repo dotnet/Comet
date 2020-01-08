@@ -29,7 +29,7 @@ namespace Comet.iOS.Handlers
 		{
 			var nativeView = (CUIShapeView)viewHandler.NativeView;
 			nativeView.View = virtualView;
-			nativeView.Shape = virtualView.Shape.CurrentValue;
+			nativeView.Shape = virtualView.Shape?.CurrentValue;
 		}
 	}
 }
