@@ -36,6 +36,9 @@ namespace Comet.Skia
 
 		public override string AccessibilityText() => (TypedVirtualView?.GetPercent() ?? 0).ToString("P");
 
+		protected override string[] LayerDrawingOrder()
+			=> DefaultSliderLayerDrawingOrder;
+
 		public static string[] DefaultSliderLayerDrawingOrder =
 			DefaultLayerDrawingOrder.ToList().InsertAfter(new string[] {
 				SkiaEnvironmentKeys.Slider.Layers.Track,
@@ -74,8 +77,6 @@ namespace Comet.Skia
 
 		RectangleF TrackRect = new RectangleF();
 		RectangleF TouchTargetRect = new RectangleF(0, 0, touchSize, touchSize);
-		protected override string[] LayerDrawingOrder()
-			=> DefaultSliderLayerDrawingOrder;
 		const float defaultHeight = 2f;
 		public virtual void DrawTrack(SKCanvas canvas, float hSpace, RectangleF rectangle)
 		{

@@ -12,6 +12,8 @@ namespace Comet.Styles
 
 		public SliderStyle Slider { get; set; } = new SliderStyle();
 
+		public ProgressBarStyle ProgressBar { get; set; } = new ProgressBarStyle();
+
 		public TextStyle Label { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Label)
@@ -157,6 +159,7 @@ namespace Comet.Styles
 			ApplyTextStyle(view, Caption);
 			ApplyTextStyle(view, Overline);
 			ApplySliderStyle(view);
+			ApplyProgresBarStyle(view);
 		}
 
 
@@ -194,6 +197,14 @@ namespace Comet.Styles
 			SetEnvironment(view, "", EnvironmentKeys.Slider.ProgressColor, Slider?.ProgressColor);
 			SetEnvironment(view, "", EnvironmentKeys.Slider.ThumbColor, Slider?.ThumbColor);
 			ApplyViewStyles(view, Slider, typeof(Slider));
+
+		}
+
+		protected virtual void ApplyProgresBarStyle(ContextualObject view)
+		{
+			SetEnvironment(view, "", EnvironmentKeys.ProgressBar.TrackColor, ProgressBar?.TrackColor);
+			SetEnvironment(view, "", EnvironmentKeys.ProgressBar.ProgressColor, ProgressBar?.ProgressColor);
+			ApplyViewStyles(view, ProgressBar, typeof(ProgressBar));
 
 		}
 

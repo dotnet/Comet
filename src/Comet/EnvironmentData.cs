@@ -102,6 +102,11 @@ namespace Comet
 			public const string ProgressColor = "SliderProgressColor";
 			public const string ThumbColor = "SliderThumbColor";
 		}
+		public static class ProgressBar
+		{
+			public const string TrackColor = "ProgressBarTrackColor";
+			public const string ProgressColor = "ProgressBarProgressColor";
+		}
 	}
 
 	[AttributeUsage(AttributeTargets.Field)]

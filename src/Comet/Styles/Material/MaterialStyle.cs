@@ -80,6 +80,12 @@ namespace Comet.Styles.Material
 				ProgressColor = colorPalette.P500,
 				TrackColor = colorPalette.P100,
 			};
+
+			ProgressBar = new ProgressBarStyle
+			{
+				ProgressColor = colorPalette.P500,
+				TrackColor = colorPalette.P100,
+			};
 		}
 
 		protected override void ApplyButton(ContextualObject view)
