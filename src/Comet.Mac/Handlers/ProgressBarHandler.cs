@@ -33,7 +33,7 @@ namespace Comet.Mac.Handlers
 		{
 			var nativeView = (NSProgressIndicator)viewHandler.NativeView;
 
-			nativeView.DoubleValue = virtualView.Value.CurrentValue;
+			nativeView.DoubleValue = virtualView.Value?.CurrentValue ?? 0;
 		}
 
 		protected override void DisposeView(NSProgressIndicator nativeView)
