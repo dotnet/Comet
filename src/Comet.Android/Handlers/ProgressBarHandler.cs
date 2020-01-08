@@ -9,7 +9,6 @@ namespace Comet.Android.Handlers
 		public static readonly PropertyMapper<ProgressBar> Mapper = new PropertyMapper<ProgressBar>(ViewHandler.Mapper)
 		{
 			[nameof(ProgressBar.Value)] = MapValueProperty,
-			[nameof(ProgressBar.IsIndeterminate)] = MapIsIndeterminateProperty,
 		};
 
 		public ProgressBarHandler() : base(Mapper)
@@ -28,12 +27,6 @@ namespace Comet.Android.Handlers
 			var nativeView = (AProgressBar)viewHandler.NativeView;
 
 			nativeView.Progress = (int)virtualView.Value;
-		}
-
-		public static void MapIsIndeterminateProperty(IViewHandler viewHandler, ProgressBar virtualView)
-		{
-			var nativeView = (AProgressBar)viewHandler.NativeView;
-			nativeView.Indeterminate = virtualView.IsIndeterminate;
 		}
 
 		protected override void DisposeView(AProgressBar nativeView)

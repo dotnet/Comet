@@ -12,7 +12,6 @@ namespace Comet.UWP.Handlers
 		public static readonly PropertyMapper<ProgressBar> Mapper = new PropertyMapper<ProgressBar>()
 		{
 			[nameof(ProgressBar.Value)] = MapValueProperty,
-			[nameof(ProgressBar.IsIndeterminate)] = MapIsIndeterminateProperty,
 		};
 
 		public ProgressBarHandler() : base(Mapper)
@@ -25,12 +24,6 @@ namespace Comet.UWP.Handlers
 		{
 			var nativeView = (UWPProgressBar)viewHandler.NativeView;
 			nativeView.Value = virtualView.Value;
-		}
-
-		public static void MapIsIndeterminateProperty(IViewHandler viewHandler, ProgressBar virtualView)
-		{
-			var nativeView = (UWPProgressBar)viewHandler.NativeView;
-			nativeView.IsIndeterminate = virtualView.IsIndeterminate;
 		}
 	}
 }
