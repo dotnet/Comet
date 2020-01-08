@@ -55,7 +55,7 @@ namespace Comet
 		}
 
 		public static T Title<T>(this T view, string title, bool cascades = true) where T : View =>
-			view.SetEnvironment(EnvironmentKeys.View.Title, title, cascades);
+			view.SetEnvironment(EnvironmentKeys.View.Title, title, cascades, ControlState.Default);
 
 		public static T AddGesture<T>(this T view, Gesture gesture) where T : View
 		{

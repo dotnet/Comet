@@ -29,7 +29,7 @@ namespace Comet
 		public static T FontSize<T>(this T view, float value) where T : View
 			=> view.SetEnvironment(EnvironmentKeys.Fonts.Size, value, true);
 		public static T FontFamily<T>(this T view, string value) where T : View
-			=> view.SetEnvironment(EnvironmentKeys.Fonts.Family, value, true);
+			=> view.SetEnvironment(EnvironmentKeys.Fonts.Family, value, true, ControlState.Default);
 		public static T FontItalic<T>(this T view, bool value) where T : View
 			=> view.SetEnvironment(EnvironmentKeys.Fonts.Italic, value, true);
 		public static T FontWeight<T>(this T view, Weight value) where T : View

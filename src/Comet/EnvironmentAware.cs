@@ -229,9 +229,10 @@ namespace Comet
 			return contextualObject;
 		}
 		
-		public static T SetEnvironment<T>(this T contextualObject, string key, object value, bool cascades = true)
+		public static T SetEnvironment<T>(this T contextualObject, string key, object value, bool cascades = true, ControlState state = ControlState.Default)
 			where T : ContextualObject
 		{
+			key = ContextualObject.GetControlStateKey(state, key);
 			if (!contextualObject.SetValue(key, value, cascades))
 				return contextualObject;
 			ThreadHelper.RunOnMainThread(() => {
