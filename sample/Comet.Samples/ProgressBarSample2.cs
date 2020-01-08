@@ -9,6 +9,6 @@ namespace Comet.Samples
 		}
 
 		[Body]
-		View body() => new ProgressBar(isIndeterminate: true);
+		View body() => new ProgressBar();
 	}
 }
