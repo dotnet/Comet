@@ -11,6 +11,7 @@ namespace Comet.Samples
 			new SKTextField("Text Field"),
 			new SKButton("Hello!",()=> this.Dismiss()),
 			new SKSlider(),
+			new SKToggle(),
 		};
 	}
 }
