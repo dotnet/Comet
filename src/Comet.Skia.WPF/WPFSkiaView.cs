@@ -12,7 +12,6 @@ namespace Comet.Skia.WPF
 {
 	public class WPFSkiaView : SkiaSharp.Views.WPF.SKElement
 	{
-		private RectangleF _bounds;
 		private bool _inTouch;
 
 		public WPFSkiaView()
@@ -84,6 +83,7 @@ namespace Comet.Skia.WPF
 		private void HandleSizeChanged(object sender, System.Windows.SizeChangedEventArgs e)
 		{
 			VirtualView?.Invalidate();
+			VirtualView?.Resized(new System.Drawing.RectangleF(0, 0, (float)RenderSize.Width, (float)RenderSize.Height));
 		}
 
 		private PointF[] GetViewPoints(MouseButtonEventArgs evt)
