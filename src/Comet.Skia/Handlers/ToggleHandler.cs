@@ -40,8 +40,10 @@ namespace Comet.Skia
 		}
 		const float trackHeight = 14f; 
 		Shape TrackShape = new Pill(Orientation.Horizontal);
-		Shape thumbCircle = new Circle();
-		RectangleF thumbRect = new RectangleF(0, 0, 20, 20);
+		Shape thumbCircle = new Pill(Orientation.Horizontal);
+		RectangleF thumbRect = new RectangleF(0, 0, thumbSize, thumbSize);
+		static float thumbSize = 20;
+		static float thumbStretched = 24;
 		RectangleF trackRect = new RectangleF(0, 0, 34, trackHeight);
 		const float touchSize = 44;
 
@@ -63,6 +65,9 @@ namespace Comet.Skia
 		{
 			//TODO: Get colors from environment
 			thumbRect.Center(rectangle.Center());
+			var thumbProgress = this.GetEnvironment<float>(thumbProgressAnimation, 0);
+			thumbRect.Width = thumbSize.Lerp(thumbStretched, thumbProgress);
+
 			var offX = trackRect.X;
 			var onX = trackRect.Right - thumbRect.Width;
 			var progress = this.GetEnvironment<float>(toggleProgress, 0);
@@ -75,6 +80,7 @@ namespace Comet.Skia
 		public override string AccessibilityText() => $"{TypedVirtualView.IsOn?.CurrentValue ?? false}";
 
 		const string toggleProgress = "Toggle.AnimationProgress";
+		const string thumbProgressAnimation = "Toggle.ThumbAnimationProgress";
 		bool hasSet = false;
 		bool currentState;
 		public void SetState(bool state)
@@ -91,7 +97,39 @@ namespace Comet.Skia
 			});
 
 		}
+		void ToggleValue()
+		{
+			//TODO: Change this to a method on Toggle
+			var binding = TypedVirtualView?.IsOn;
+			if (binding != null)
+				binding.Set(!currentState);
+			else
+				SetState(!currentState);
 
+		}
+
+		public override void EndInteraction(PointF[] points, bool inside)
+		{
+			if (inside)
+				ToggleValue();
+			this.Animate(t => {
+				t.SetEnvironment(thumbProgressAnimation, 0f);
+			});
+			base.EndInteraction(points, inside);
+		}
+		bool shouldExtendThumb;
+		public override bool StartInteraction(PointF[] points)
+		{
+			if(thumbRect.Contains(points))
+			{
+				this.Animate(t => {
+					t.SetEnvironment(thumbProgressAnimation, 1f);
+				});
+			}
+			return base.StartInteraction(points);
+		}
+		
+		
 		public static void DrawThumb(SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, Toggle view)
 		{
 			var slider = control as ToggleHandler;
@@ -109,21 +147,6 @@ namespace Comet.Skia
 		{
 			var control = viewHandler as ToggleHandler;
 			control.SetState(virtualView?.IsOn?.CurrentValue ?? false);
-		}
-		public override void EndInteraction(PointF[] points, bool inside)
-		{
-			if (inside)
-				ToggleValue();
-		}
-		void ToggleValue()
-		{
-			//TODO: Change this to a method on Toggle
-			var binding = TypedVirtualView?.IsOn;
-			if (binding != null)
-				binding.Set(!currentState);
-			else
-				SetState(!currentState);
-
 		}
 	}
 }
