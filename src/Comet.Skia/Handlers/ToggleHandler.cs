@@ -42,7 +42,7 @@ namespace Comet.Skia
 				SkiaEnvironmentKeys.Toggle.Layers.Thumb,
 				}, SkiaEnvironmentKeys.Text).ToArray();
 
-		public ToggleHandler() : base(ToggleDrawMapper, Mapper { }
+		public ToggleHandler() : base(ToggleDrawMapper, Mapper) { }
 
 		public override SizeF GetIntrinsicSize(SizeF availableSize) => new SizeF(width, height);
 
