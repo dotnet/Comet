@@ -10,7 +10,7 @@ namespace Comet.Samples
 		{
 			new SKText("Text"),
 			new SKTextField("Text Field"),
-			new SKButton("Hello!",()=> this.Dismiss()),
+			new SKButton("Hello!"),
 			new SKSlider(progress,0,1,.01f),
 			new SKProgressBar(progress),
 			new SKToggle(),
