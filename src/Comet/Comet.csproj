@@ -30,6 +30,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.4.43" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="App.cs" />
+  </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>
