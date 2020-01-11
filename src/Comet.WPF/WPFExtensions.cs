@@ -2,6 +2,7 @@
 using System.Windows;
 using System.Windows.Controls;
 using WPFTextAlignment = System.Windows.HorizontalAlignment;
+using Comet.Internal;
 
 namespace Comet.WPF
 {
@@ -19,8 +20,9 @@ namespace Comet.WPF
 			var handler = view.ViewHandler;
 			if (handler == null)
 			{
-				handler = Registrar.Handlers.GetHandler(view.GetType());
-				view.ViewHandler = handler;
+				var builtView = view.GetView();
+				handler = Registrar.Handlers.GetHandler(builtView.GetType());
+				builtView.ViewHandler = handler;
 			}
 
 			var iUIElement = handler as WPFViewHandler;

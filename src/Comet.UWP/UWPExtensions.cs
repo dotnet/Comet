@@ -2,6 +2,7 @@
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using UWPTextAlignment = Windows.UI.Xaml.TextAlignment;
+using Comet.Internal;
 
 namespace Comet.UWP
 {
@@ -19,8 +20,9 @@ namespace Comet.UWP
 			var handler = view.ViewHandler;
 			if (handler == null)
 			{
-				handler = Registrar.Handlers.GetHandler(view.GetType());
-				view.ViewHandler = handler;
+				var builtView = view.GetView();
+				handler = Registrar.Handlers.GetHandler(builtView.GetType());
+				builtView.ViewHandler = handler;
 			}
 
 			var iUIElement = handler as UWPViewHandler;

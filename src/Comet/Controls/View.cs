@@ -128,7 +128,7 @@ namespace Comet
 			this.ViewHandler = oldView;
 		}
 		View builtView;
-		public View BuiltView => builtView;
+		public View BuiltView => builtView?.BuiltView ?? builtView;
 		internal virtual void Reload(bool isHotReload) => ResetView(isHotReload);
 		void ResetView(bool isHotReload = false)
 		{
@@ -140,12 +140,12 @@ namespace Comet
 			{
 				if (usedEnvironmentData.Any())
 					PopulateFromEnvironment();
-				var oldView = builtView;
+				var oldView = BuiltView;
 				builtView = null;
 
-				if (ViewHandler == null)
-					return;
-				ViewHandler.Remove(this);
+				//if (ViewHandler == null)
+				//	return;
+				ViewHandler?.Remove(this);
 				var view = this.GetRenderView();
 				if (oldView != null)
 					view = view.Diff(oldView, isHotReload);
@@ -197,8 +197,8 @@ namespace Comet
 			CheckForBody();
 			if (Body == null)
 				return this;
-			if (builtView != null)
-				return builtView;
+			if (BuiltView != null)
+				return BuiltView;
 			Debug.WriteLine($"Building View: {this.GetType().Name}");
 			using (new StateBuilder(this))
 			{
@@ -561,7 +561,7 @@ namespace Comet
 		}
 		public override string ToString() => $"{this.GetType()} - {this.Id}";
 
-		View notificationView => replacedView ?? builtView;
+		View notificationView => replacedView ?? BuiltView;
 
 		public virtual void ViewDidAppear()
 		{

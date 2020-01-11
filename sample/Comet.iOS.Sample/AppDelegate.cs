@@ -55,6 +55,7 @@ namespace Comet.iOS.Sample
 					new MenuItem("SwiftUI Tutorial Section 5 (Native)", () => new Section5Native()),
 					new MenuItem("SwiftUI Tutorial Section 5b (Native)", () => new Section5NativeB())
 				}).ToViewController(),
+				//RootViewController = new NestedViews().ToViewController(),
 			};
 			/*window = new UIWindow
             {

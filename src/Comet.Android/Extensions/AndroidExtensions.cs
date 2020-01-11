@@ -3,6 +3,7 @@ using Android.App;
 using Comet.Android.Controls;
 using AView = Android.Views.View;
 using ATextAlignment = Android.Views.TextAlignment;
+using Comet.Internal;
 
 namespace Comet.Android
 {
@@ -37,8 +38,9 @@ namespace Comet.Android
 			var handler = view.ViewHandler;
 			if (handler == null)
 			{
-				handler = Registrar.Handlers.GetHandler(view.GetType());
-				view.ViewHandler = handler;
+				var builtView = view.GetView();
+				handler = Registrar.Handlers.GetHandler(builtView.GetType());
+				builtView.ViewHandler = handler;
 			}
 			var aView = handler as AndroidViewHandler;
 			return aView;
