@@ -158,7 +158,7 @@
       <Version>0.1.118</Version>
     </PackageReference>
     <PackageReference Include="Clancey.Comet.Reload">
-      <Version>0.0.11-alpha</Version>
+      <Version>0.0.12-alpha</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
