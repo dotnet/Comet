@@ -200,11 +200,13 @@ namespace Comet
 			base.CallPropertyRead(propertyName);
 		}
 
-		public bool SetValue(string key, object value)
+		public bool SetValue(string key, object value, bool cascades)
 		{
 			//if Nothing changed, don't send on notifications
 			if (!SetProperty(value, key))
 				return false;
+			if (!cascades)
+				return true;
 			if (View != null)
 			{
 				if (!StateManager.IsBuilding)

@@ -149,9 +149,9 @@ namespace Comet
 			//If we are setting the value to null, 
 			//there is no reason to create the dictionary if it doesnt exist
 			if (cascades)
-				return Context(value != null)?.SetValue(key, value) ?? false;
+				return Context(value != null)?.SetValue(key, value,true) ?? false;
 			else
-				return LocalContext(value != null)?.SetValue(key, value) ?? false;
+				return LocalContext(value != null)?.SetValue(key, value,false) ?? false;
 		}
 
 		static Dictionary<(ContextualObject view, string property, bool cascades), (object oldValue, object newValue)> monitoredChanges = null;
