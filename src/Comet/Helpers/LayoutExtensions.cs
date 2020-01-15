@@ -77,6 +77,8 @@ namespace Comet
 			this View view,
 			RectangleF frame)
 		{
+			if (view == null)
+				return;
 			var margin = view.GetMargin();
 			if (!margin.IsEmpty)
 			{

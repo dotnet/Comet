@@ -25,11 +25,8 @@ namespace Comet.iOS
 		{
 			var vc = base.PopViewController(animated);
 			var cometVC = vc as CometViewController;
-			if (cometVC?.CurrentView != null)
-			{
-				cometVC?.CurrentView?.Dispose();
-				cometVC.CurrentView = null;
-			}
+			cometVC?.WasPopped();
+		
 			return vc;
 		}
 	}

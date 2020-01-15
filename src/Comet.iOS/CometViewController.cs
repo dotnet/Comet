@@ -25,6 +25,9 @@ namespace Comet.iOS
 			}
 		}
 
+		bool wasPopped;
+		public void WasPopped() => wasPopped = true;
+
 		public override void LoadView()
 		{
 			View = _containerView = new CometView(UIScreen.MainScreen.Bounds);
@@ -47,6 +50,11 @@ namespace Comet.iOS
 		{
 			base.ViewDidDisappear(animated);
 			_containerView?.CurrentView?.ViewDidDisappear();
+			if(wasPopped)
+			{
+				CurrentView.Dispose();
+				CurrentView = null;
+			}
 		}
 
 		public void ApplyStyle()
