@@ -120,7 +120,18 @@ namespace Comet
 
 		public static async void TriggerReload()
 		{
-			var roots = View.ActiveViews.Where(x => x.Parent == null).ToList();
+			List<View> roots = null;
+			while (roots == null)
+			{
+				try
+				{
+					roots = View.ActiveViews.Where(x => x.Parent == null).ToList();
+				}
+				catch
+				{
+					//Sometimes we get list changed exception. Ignorethat crap!!!!
+				}
+			}
 
 			await ThreadHelper.SwitchToMainThreadAsync();
 			foreach (var view in roots)
