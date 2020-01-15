@@ -103,6 +103,7 @@
     <Compile Include="Handlers\ActivityIndicatorHandler.cs" />
     <Compile Include="Handlers\ProgressBarHandler.cs" />
     <Compile Include="Services\iOSTicker.cs" />
+    <Compile Include="CometAppDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet\Comet.csproj">
