@@ -140,7 +140,9 @@ namespace Comet
 			{
 				if (usedEnvironmentData.Any())
 					PopulateFromEnvironment();
+				//Built view shows off the view that has the Handler, But we still need to dispose the parent!
 				var oldView = BuiltView;
+				var oldParentView = builtView;
 				builtView = null;
 
 				//if (ViewHandler == null)
@@ -150,6 +152,7 @@ namespace Comet
 				if (oldView != null)
 					view = view.Diff(oldView, isHotReload);
 				oldView?.Dispose();
+				oldParentView?.Dispose();
 				animations?.ForEach(x => x.Dispose());
 				ViewHandler?.SetView(view);
 			}
@@ -171,8 +174,10 @@ namespace Comet
 			get => body;
 			set
 			{
+				var wasSet = body != null;
 				body = value;
-				ResetView();
+				if(wasSet)
+					ResetView();
 				//   this.SetBindingValue(State, ref body, value, ResetPropertyString);
 			}
 		}
@@ -259,7 +264,7 @@ namespace Comet
 			}
 			catch (Exception ex)
 			{
-				Debug.WriteLine($"Error setting property:{property} : {value}");
+				Debug.WriteLine($"Error setting property:{property} : {value} on :{this}");
 				Debug.WriteLine(ex);
 			}
 
