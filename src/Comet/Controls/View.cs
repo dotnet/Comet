@@ -227,6 +227,8 @@ namespace Comet
 		{
 			if (didCheckForBody)
 				return;
+			if (usedEnvironmentData.Any())
+				PopulateFromEnvironment();
 			StateManager.CheckBody(this);
 			didCheckForBody = true;
 			if (Body != null)

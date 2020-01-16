@@ -163,6 +163,8 @@ namespace Comet.Tests
 			var view = new StatePage();
 			view.Body = () => (text = new Text(() => view.clickCount.Value.ToString()));
 
+			InitializeHandlers(view);
+
 			Assert.NotNull(view.clickCount);
 			Assert.Equal(1, view.clickCount.Value);
 
