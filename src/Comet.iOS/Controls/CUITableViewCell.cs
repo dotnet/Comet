@@ -32,7 +32,7 @@ namespace Comet.iOS.Controls
 			cometView.CurrentView = view;
 
 			previousView?.ViewDidDisappear();
-			view.ViewDidAppear();
+			view?.ViewDidAppear();
 		}
 	}
 }
