@@ -482,7 +482,7 @@ stages:
         versionEnvVar: VERSION
 
     - task: NuGetCommand@2
-      displayName: 'nuget pack Comet.Skia.nuspec'
+      displayName: 'nuget pack Comet.Skia.nuspec -Properties "cometVersion=$VERSION"'
       inputs:
         command: pack
         packagesToPack: 'Comet.Skia.nuspec'
