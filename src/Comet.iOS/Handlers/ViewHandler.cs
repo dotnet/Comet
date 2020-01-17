@@ -169,12 +169,12 @@ namespace Comet.iOS.Handlers
 			{
 				handler.HasContainer = true;
 				if (viewHandler?.ContainerView != null)
-					viewHandler.ContainerView.OverlayView = new ShapeView(overlay).ToView();
+					viewHandler.ContainerView.OverlayShapeView = new ShapeView(overlay);
 			}
 			else
 			{
 				if (viewHandler?.ContainerView != null)
-					viewHandler.ContainerView.OverlayView = null;
+					viewHandler.ContainerView.OverlayShapeView = null;
 				handler.HasContainer = NeedsContainer(virtualView);
 			}
 		}

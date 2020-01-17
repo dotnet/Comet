@@ -58,5 +58,12 @@ namespace Comet
 
 			return intrinsicSize;
 		}
+
+		protected override void Dispose(bool disposing)
+		{
+			if (disposing)
+				View?.Dispose();
+			base.Dispose(disposing);
+		}
 	}
 }
