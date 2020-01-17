@@ -125,7 +125,8 @@ namespace Comet
 			{
 				try
 				{
-					roots = roots = View.ActiveViews.Where(x => (x.Parent is CometApp) || (x.Parent == null && !(x is CometApp) )).ToList();
+					//roots = View.ActiveViews.Where(x => (x.Parent is CometApp) || (x.Parent == null && !(x is CometApp) )).ToList();
+					roots = View.ActiveViews.Where(x => x.Parent == null).ToList();
 				}
 				catch
 				{

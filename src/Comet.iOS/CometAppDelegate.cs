@@ -4,7 +4,7 @@ using UIKit;
 using Comet.Internal;
 namespace Comet.iOS
 {
-	public abstract class CometAppDelegate : UIApplicationDelegate
+	public abstract class CometAppDelegate : UIApplicationDelegate, IReloadHandler
 	{
 		protected abstract CometApp CreateApp();
 		UIWindow window;
@@ -12,13 +12,14 @@ namespace Comet.iOS
 		public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
 		{
 			UI.Init();
-			var app = CreateApp();
-			(app as IApplicationLifeCycle)?.OnInit();
+			App = CreateApp();
+			(App as IApplicationLifeCycle)?.OnInit();
 			window = new UIWindow
 			{
-				RootViewController = app.ToViewController(),
+				RootViewController = App.ToViewController(),
 			};			
 			window.MakeKeyAndVisible();
+			App.ReloadHandler = this;
 			return true;
 		}
 
@@ -30,5 +31,18 @@ namespace Comet.iOS
 
 		public override void WillTerminate(UIApplication application)
 			=> (App as IApplicationLifeCycle).Dispose();
+
+		public void Reload()
+		{
+			var oldVC = window.RootViewController;
+			window.RootViewController = App.ToViewController();
+			if(oldVC is CometViewController cvc)
+			{
+				if (cvc.CurrentView == App)
+					cvc.CurrentView = null;
+
+			}
+			oldVC?.Dispose();
+		}
 	}
 }

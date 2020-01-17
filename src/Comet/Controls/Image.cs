@@ -30,7 +30,7 @@ namespace Comet
 		public Binding<string> Source
 		{
 			get => _source;
-			private set
+			protected set
 			{
 				this.SetBindingValue(ref _source, value);
 				LoadBitmapFromSource(_source.CurrentValue);
