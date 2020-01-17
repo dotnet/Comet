@@ -489,7 +489,7 @@ stages:
         includeSymbols: true
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
-        arguments: '-Properties "cometVersion=$(VERSION)"'
+        arguments: 'cometVersion=$(VERSION)'
 
     - task: CopyFiles@2
       inputs:
