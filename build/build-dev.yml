@@ -42,6 +42,9 @@ stages:
         inputs:
           command: 'pack'
           packagesToPack: 'src/Comet.Blazor/Comet.Blazor.csproj'
+          includesymbols: true
+          versioningScheme: byEnvVar
+          versionEnvVar: VERSION
           arguments: '-c $(BuildConfiguration)'
       - task: PublishBuildArtifacts@1
         inputs:
