@@ -483,7 +483,7 @@ stages:
 
 
     - bash:
-        nuget pack Comet.Skia.nuspec -Properties "cometVersion=$(VERSION)" -Symbols -version $(VERSION)
+        nuget pack Comet.Skia.nuspec -Properties "cometVersion=$(VERSION)" -Symbols -version $(VERSION) - OutputDirectory $(Build.ArtifactStagingDirectory)
 
     - task: CopyFiles@2
       inputs:
