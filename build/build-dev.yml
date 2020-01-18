@@ -481,15 +481,9 @@ stages:
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
-    - task: NuGetCommand@2
-      displayName: 'nuget pack Comet.Skia.nuspec'
-      inputs:
-        command: pack
-        packagesToPack: 'Comet.Skia.nuspec'
-        includeSymbols: true
-        versioningScheme: byEnvVar
-        versionEnvVar: VERSION
-        arguments: 'cometVersion=$(VERSION)'
+
+    - bash:
+        nuget pack Comet.Skia.nuspec -Properties "cometVersion=$(VERSION)" -Symbols -version $(VERSION)
 
     - task: CopyFiles@2
       inputs:
