@@ -76,7 +76,7 @@ namespace Comet.Skia
 		{
 			Invalidate();
 		}
-		public void Remove(View view)
+		public virtual void Remove(View view)
 		{
 			throw new NotImplementedException();
 		}

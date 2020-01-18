@@ -8,7 +8,7 @@ namespace Comet.Helpers
 	public class WeakList<T> : IList<T>
 	{
 		List<WeakReference> items = new List<WeakReference>();
-		public T this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		public T this[int index] { get => (T)items[index].Target; set => throw new NotImplementedException(); }
 
 		public int Count => CleanseItems().Count;
 

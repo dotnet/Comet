@@ -9,7 +9,6 @@ namespace Comet.Samples
 	public class MainPage : View
 	{
 		List<MenuItem> pages = new List<MenuItem>
-
 		{
 			new MenuItem("Ride the Comet",()=> new RideSample()),
 			new MenuItem("Text Styles",()=> new TextStylesSample()),
@@ -25,6 +24,7 @@ namespace Comet.Samples
 			new MenuItem("Virtual List View",()=>new VirtualListViewSample()),
 			new MenuItem("Binding Sample!",()=> new BindingSample()),
 			new MenuItem("Animated Skia Sample",()=> new SkiaButtonSample()),
+			new MenuItem("Nested View", ()=> new NestedViews()),
 			new MenuItem("Animation Sample",()=> new AnimationSample()),
 			new MenuItem("TabView",()=> new TabViewSample()),
 			new MenuItem("BasicTestView",()=> new BasicTestView()),
@@ -52,6 +52,7 @@ namespace Comet.Samples
 			new MenuItem("TextFieldSample2", ()=> new TextFieldSample2()),
 			new MenuItem("TextFieldSample3", ()=> new TextFieldSample3()),
 			new MenuItem("TextFieldSample4", ()=> new TextFieldSample4()),
+			new MenuItem("RadioButtonSample", ()=> new RadioButtonSample()),
 			new MenuItem("SkiaSample1 (FingerPaint)", ()=> new SkiaSample1()),
 			new MenuItem("SkiaSample2 (FingerPaint)", ()=> new SkiaSample2()),
 			new MenuItem("SkiaSample3 (BindableFingerPaint)", ()=> new SkiaSample3()),

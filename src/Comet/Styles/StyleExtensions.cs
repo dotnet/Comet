@@ -7,6 +7,11 @@ namespace Comet
 {
 	public static class StyleExtensions
 	{
+		public static T StyleId<T> (this T view, string styleId) where T : View
+		{
+			view.StyleId = styleId;
+			return view;
+		}
 		public static T StyleAsH1<T>(this T text) where T : Text
 		{
 			text.StyleId = EnvironmentKeys.Text.Style.H1;

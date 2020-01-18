@@ -95,10 +95,7 @@ namespace Comet
 				var t = assemblies.Select(x => x.GetType(oldViewType)).FirstOrDefault(x => x != null);
 				var views = Registrar.Handlers.GetViewType(t);
 				if (views.Count == 0)
-				{
-					var staticInit = newViewType.GetMethod("Init", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
-
-					staticInit?.Invoke(null, null);
+				{					
 					views = Registrar.Handlers.GetViewType(t);
 				}
 				replacedHandlers[oldViewType] = views;
@@ -107,6 +104,9 @@ namespace Comet
 					RegisterHandler(h, newViewType);
 				}
 			}
+			//Call static init if it exists on new classes!
+			var staticInit = newViewType.GetMethod("Init", System.Reflection.BindingFlags.Static | System.Reflection.BindingFlags.Public);
+			staticInit?.Invoke(null, null);
 		}
 
 		static void RegisterHandler(KeyValuePair<Type, Type> pair, Type newHandler)
@@ -120,7 +120,18 @@ namespace Comet
 
 		public static async void TriggerReload()
 		{
-			var roots = View.ActiveViews.Where(x => x.Parent == null).ToList();
+			List<View> roots = null;
+			while (roots == null)
+			{
+				try
+				{
+					roots = View.ActiveViews.Where(x => x.Parent == null).ToList();
+				}
+				catch
+				{
+					//Sometimes we get list changed exception. Ignorethat crap!!!!
+				}
+			}
 
 			await ThreadHelper.SwitchToMainThreadAsync();
 			foreach (var view in roots)

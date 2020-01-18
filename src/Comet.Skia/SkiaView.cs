@@ -33,7 +33,7 @@ namespace Comet.Skia
 		{
 			Invalidated?.Invoke();
 		}
-		public bool PointsContained(PointF[] points) => points.Any(p => Frame.BoundsContains(p));
+		public bool PointsContained(PointF[] points) => points.Any(p => Bounds.BoundsContains(p));
 
 		public bool TouchEnabled { get; set; } = true;
 

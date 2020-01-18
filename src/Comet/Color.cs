@@ -72,6 +72,10 @@ namespace Comet
 			A = alpha / 255f;
 		}
 
+		public static Color FromBytes(byte red, byte green, byte blue) => Color.FromBytes(red, green, blue, 255);
+		public static Color FromBytes(byte red, byte green, byte blue, byte alpha)
+			=> new Color(red / 255f, green / 255f, blue / 255f, alpha / 255f);
+
 		public override int GetHashCode()
 		{
 			return ((int)R ^ (int)B) ^ ((int)G ^ (int)A);

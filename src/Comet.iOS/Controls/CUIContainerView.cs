@@ -10,6 +10,7 @@ namespace Comet.iOS.Controls
 	{
 		private UIView _mainView;
 		private UIView _overlayView;
+		private ShapeView _overlayShapeView;
 		private CAShapeLayer _shadowLayer;
 		private CAShapeLayer _maskLayer;
 		private CGSize _size;
@@ -91,7 +92,17 @@ namespace Comet.iOS.Controls
 			}
 		}
 
-		public UIView OverlayView
+		public ShapeView OverlayShapeView
+		{
+			get => _overlayShapeView;
+			set{
+				_overlayShapeView?.Dispose();
+				_overlayShapeView = value;
+				OverlayView = value?.ToView();
+			}
+		}
+
+		UIView OverlayView
 		{
 			get => _overlayView;
 			set
@@ -167,6 +178,12 @@ namespace Comet.iOS.Controls
 		{
 			get => _clipShape;
 			set => _clipShape = value;
+		}
+
+		protected override void Dispose(bool disposing)
+		{
+			base.Dispose(disposing);
+			OverlayShapeView?.Dispose();
 		}
 	}
 }

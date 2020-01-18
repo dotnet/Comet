@@ -35,7 +35,7 @@ namespace Comet.UWP.Sample
 			}
 			
 			Comet.Skia.UI.Init(); 
-			Comet.Skia.Controls.Init();
+			//Comet.Skia.Controls.Init();
 
 			if (e.PrelaunchActivated == false)
 			{

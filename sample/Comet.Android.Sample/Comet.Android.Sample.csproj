@@ -36,7 +36,9 @@
     <AndroidLinkMode>None</AndroidLinkMode>
     <EmbedAssembliesIntoApk>False</EmbedAssembliesIntoApk>
     <LangVersion>latest</LangVersion>
-<AndroidSupportedAbis>x86</AndroidSupportedAbis>
+    <AndroidSupportedAbis>
+    </AndroidSupportedAbis>
+    <MandroidI18n />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>True</DebugSymbols>
@@ -102,8 +104,8 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="1.68.1" />
-    <PackageReference Include="SkiaSharp.Views" Version="1.68.1" />
+    <PackageReference Include="SkiaSharp" Version="1.68.1.1" />
+    <PackageReference Include="SkiaSharp.Views" Version="1.68.1.1" />
     <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
     <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
@@ -112,13 +114,13 @@
       <Version>2.4.11.982</Version>
     </PackageReference>
     <PackageReference Include="Clancey.Comet.Reload">
-      <Version>0.0.11-alpha</Version>
+      <Version>0.0.12-alpha</Version>
     </PackageReference>
     <PackageReference Include="Topten.RichTextKit">
-      <Version>0.1.117</Version>
+      <Version>0.1.118</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Threading">
-      <Version>16.4.33</Version>
+      <Version>16.4.43</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

@@ -108,7 +108,7 @@ namespace Comet.Tests
 			var view = new View
 			{
 				Body = () => (text = new Text())
-			}.SetEnvironment(myStringKey, parentStringValue, true);
+			}.SetEnvironment(myStringKey, parentStringValue, cascades:true);
 
 			var viewHandler = new GenericViewHandler();
 			view.ViewHandler = viewHandler;
@@ -140,7 +140,7 @@ namespace Comet.Tests
 				Body = () => new VStack {
 					(text1 = new Text ().SetEnvironment(myStringKey,testStringValue)),
 					(text2 = new Text ())
-				}.SetEnvironment(myStringKey, parentStringValue, true)
+				}.SetEnvironment(myStringKey, parentStringValue, cascades: true)
 			};
 
 			var viewHandler = new GenericViewHandler();
@@ -162,6 +162,8 @@ namespace Comet.Tests
 			Text text = null;
 			var view = new StatePage();
 			view.Body = () => (text = new Text(() => view.clickCount.Value.ToString()));
+
+			InitializeHandlers(view);
 
 			Assert.NotNull(view.clickCount);
 			Assert.Equal(1, view.clickCount.Value);
@@ -213,11 +215,11 @@ namespace Comet.Tests
 				Body = () => rootStack = new VStack {
 					(stack1 = new VStack {
 						(text1 = new Text())
-					}).SetEnvironment(myStringKey, cascadedValue,true),
+					}).SetEnvironment(myStringKey, cascadedValue,cascades:true),
 					(stack2 = new VStack {
-						(text2 = new Text()).SetEnvironment(myStringKey, secondCascadedValue,true),
+						(text2 = new Text()).SetEnvironment(myStringKey, secondCascadedValue,cascades:true),
 					})
-				}.SetEnvironment(myStringKey, localValue, false)
+				}.SetEnvironment(myStringKey, localValue, cascades: false)
 			};
 
 

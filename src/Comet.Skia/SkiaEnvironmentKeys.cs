@@ -23,5 +23,14 @@ namespace Comet.Skia
 				public const string Thumb = "Skia.Slider.Layers.Thumb";
 			}
 		}
+
+		public static class Toggle
+		{
+			public static class Layers
+			{
+				public const string Track = "Skia.Toggle.Layers.Track";
+				public const string Thumb = "Skia.Toggle.Layers.Thumb";
+			}
+		}
 	}
 }

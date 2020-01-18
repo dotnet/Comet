@@ -73,6 +73,19 @@ namespace Comet.Styles.Material
 				BackgroundColor = colorPalette.P500,
 				TextColor = colorPalette.PD500
 			};
+
+			Slider = new SliderStyle
+			{
+				ThumbColor = colorPalette.P500,
+				ProgressColor = colorPalette.P500,
+				TrackColor = colorPalette.P100,
+			};
+
+			ProgressBar = new ProgressBarStyle
+			{
+				ProgressColor = colorPalette.P500,
+				TrackColor = colorPalette.P100,
+			};
 		}
 
 		protected override void ApplyButton(ContextualObject view)

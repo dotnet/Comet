@@ -7,13 +7,16 @@ namespace Comet.Skia.Internal
 	{
 		public static Dictionary<Type, Type> DefaultRegistrarTypes = new Dictionary<Type, Type>();
 		public static Dictionary<Type, Type> ReplacementRegistrarTypes = new Dictionary<Type, Type>();
-
+		public static Dictionary<Type, Type> SkiaTypes = new Dictionary<Type, Type>();
 		static Registration()
 		{
 			new SkiaStyle().Apply();
 			Register<SKButton, Button, ButtonHandler>();
 			Register<SKText, Text, TextHandler>();
+			Register<SKTextField, TextField, TextFieldHandler>();
 			Register<SKSlider, Slider, SliderHandler>();
+			Register<SKProgressBar, ProgressBar, ProgressBarHandler>();
+			Register<SKToggle, Toggle, ToggleHandler>();
 		}
 
 		static void Register<SKiaView, ReplacementView, Handler>()

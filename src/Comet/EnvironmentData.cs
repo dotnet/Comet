@@ -96,6 +96,17 @@ namespace Comet
 			public const string BackgroundColor = "NavigationBackgroundColor";
 			public const string TextColor = "NavigationTextColor";
 		}
+		public static class Slider
+		{
+			public const string TrackColor = "SliderTrackColor";
+			public const string ProgressColor = "SliderProgressColor";
+			public const string ThumbColor = "SliderThumbColor";
+		}
+		public static class ProgressBar
+		{
+			public const string TrackColor = "ProgressBarTrackColor";
+			public const string ProgressColor = "ProgressBarProgressColor";
+		}
 	}
 
 	[AttributeUsage(AttributeTargets.Field)]
@@ -189,11 +200,13 @@ namespace Comet
 			base.CallPropertyRead(propertyName);
 		}
 
-		public bool SetValue(string key, object value)
+		public bool SetValue(string key, object value, bool cascades)
 		{
 			//if Nothing changed, don't send on notifications
 			if (!SetProperty(value, key))
 				return false;
+			if (!cascades)
+				return true;
 			if (View != null)
 			{
 				if (!StateManager.IsBuilding)

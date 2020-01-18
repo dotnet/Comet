@@ -16,10 +16,10 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-     <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-    <PublishRepositoryUrl>true</PublishRepositoryUrl> 
+    <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>  
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
     <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -137,6 +137,8 @@
     <Compile Include="Handlers\ManagedZStackHandler.cs" />
     <Compile Include="Handlers\ManagedHStackHandler.cs" />
     <Compile Include="Handlers\ProgressBarHandler.cs" />
+    <Compile Include="Handlers\RadioButtonHandler.cs" />
+    <Compile Include="Handlers\RadioGroupHandler.cs" />
     <Compile Include="Handlers\ShapeViewHandler.cs" />
     <Compile Include="Handlers\SpacerHandler.cs" />
     <Compile Include="Handlers\ToggleHandler.cs" />

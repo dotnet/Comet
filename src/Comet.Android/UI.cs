@@ -21,6 +21,7 @@ namespace Comet.Android
 			Registrar.Handlers.Register<ProgressBar, ProgressBarHandler>();
 			Registrar.Handlers.Register<SecureField, SecureFieldHandler>();
 			Registrar.Handlers.Register<Slider, SliderHandler>();
+			Registrar.Handlers.Register<RadioButton, RadioButtonHandler>();
 			// Stepper
 			Registrar.Handlers.Register<Text, TextHandler>();
 			Registrar.Handlers.Register<TextField, TextFieldHandler>();
@@ -35,6 +36,7 @@ namespace Comet.Android
 			Registrar.Handlers.Register<ViewRepresentable, ViewRepresentableHandler>();
 			Registrar.Handlers.Register<TabView, TabViewHandler>();
 			Registrar.Handlers.Register<NavigationView, NavigationViewHandler>();
+			Registrar.Handlers.Register<RadioGroup, RadioGroupHandler>();
 
 			// Layouts
 			Registrar.Handlers.Register<HStack, HStackHandler>();

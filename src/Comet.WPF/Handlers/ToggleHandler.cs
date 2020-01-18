@@ -18,16 +18,18 @@ namespace Comet.WPF.Handlers
 		protected override CheckBox CreateView()
 		{
 			var checkbox = new CheckBox();
-			checkbox.Checked += HandleChecked;
+			checkbox.Checked += HandleCheckedChanged;
+			checkbox.Unchecked += HandleCheckedChanged;
 			return checkbox;
 		}
 
 		protected override void DisposeView(CheckBox checkbox)
 		{
-			checkbox.Checked -= HandleChecked;
+			checkbox.Checked -= HandleCheckedChanged;
+			checkbox.Unchecked -= HandleCheckedChanged;
 		}
 
-		private void HandleChecked(object sender, RoutedEventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.IsChecked ?? false);
+		private void HandleCheckedChanged(object sender, RoutedEventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.IsChecked ?? false);
 
 		public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
 		{

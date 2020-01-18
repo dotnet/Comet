@@ -14,7 +14,7 @@ namespace Comet.WPF.Sample
 			InitializeComponent();
 			new MaterialStyle(ColorPalette.Blue).Apply();
 			Comet.Skia.UI.Init();
-			Comet.Skia.Controls.Init();
+			//Comet.Skia.Controls.Init();
 
 			MainFrame.NavigationService.Navigate(new CometPage(MainFrame, new MainPage()));
 		}

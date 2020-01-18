@@ -27,9 +27,9 @@ namespace Comet
 			return view;
 		}
 
-		public static Color GetColor<T>(this T view, Color defaultColor) where T : View
+		public static Color GetColor<T>(this T view, Color defaultColor, ControlState state = ControlState.Default) where T : View
 		{
-			var color = view.GetEnvironment<Color>(EnvironmentKeys.Colors.Color);
+			var color = view.GetEnvironment<Color>(EnvironmentKeys.Colors.Color,state);
 			return color ?? defaultColor;
 		}
 
@@ -98,6 +98,78 @@ namespace Comet
 		public static Color GetNavigationTextColor(this View view, Color defaultColor = null)
 		{
 			var color = view.GetEnvironment<Color>(EnvironmentKeys.Navigation.TextColor);
+			return color ?? defaultColor;
+		}
+
+		public static T TrackColor<T>(this T view, Color color, ControlState state = ControlState.Default) where T : Slider
+		{
+			view.SetEnvironment(EnvironmentKeys.Slider.TrackColor, color, cascades:false, state);
+			return view;
+		}
+
+		public static Color GetTrackColor(this Slider view, Color defaultColor = null, ControlState state = ControlState.Default)
+		{
+			var color = view?.GetEnvironment<Color>(EnvironmentKeys.Slider.TrackColor, state);
+			//Fall back to the default state before using the default color
+			color ??= view?.GetEnvironment<Color>(EnvironmentKeys.Slider.TrackColor);
+			return color ?? defaultColor;
+		}
+
+		public static T ProgressColor<T>(this T view, Color color, ControlState state = ControlState.Default) where T : Slider
+		{
+			view.SetEnvironment(EnvironmentKeys.Slider.ProgressColor, color, cascades:false, state);
+			return view;
+		}
+
+		public static Color GetProgressColor(this Slider view, Color defaultColor = null, ControlState state = ControlState.Default)
+		{
+			var color = view?.GetEnvironment<Color>(EnvironmentKeys.Slider.ProgressColor, state);
+			//Fall back to the default state before using the default color
+			color ??= view?.GetEnvironment<Color>(EnvironmentKeys.Slider.ProgressColor);
+			return color ?? defaultColor;
+		}
+
+		public static T ThumbColor<T>(this T view, Color color, ControlState state = ControlState.Default) where T : Slider
+		{
+			view.SetEnvironment(EnvironmentKeys.Slider.ThumbColor, color, cascades:false, state);
+			return view;
+		}
+
+		public static Color GetThumbColor(this Slider view, Color defaultColor = null, ControlState state = ControlState.Default)
+		{
+			var color = view?.GetEnvironment<Color>(EnvironmentKeys.Slider.ThumbColor, state);
+			//Fall back to the default state before using the default color
+			color ??= view?.GetEnvironment<Color>(EnvironmentKeys.Slider.ThumbColor);
+			return color ?? defaultColor;
+		}
+
+
+		public static T TrackColor<T>(this T view, Color color, ControlState state = ControlState.Default, bool cascades = false)
+			where T : ProgressBar
+		{
+			view.SetEnvironment(EnvironmentKeys.ProgressBar.TrackColor, color, cascades, state);
+			return view;
+		}
+
+		public static Color GetTrackColor(this ProgressBar view, Color defaultColor = null, ControlState state = ControlState.Default)
+		{
+			var color = view?.GetEnvironment<Color>(EnvironmentKeys.ProgressBar.TrackColor, state);
+			//Fall back to the default state before using the default color
+			color ??= view?.GetEnvironment<Color>(EnvironmentKeys.ProgressBar.TrackColor);
+			return color ?? defaultColor;
+		}
+
+		public static T ProgressColor<T>(this T view, Color color, bool cascades = false) where T : ProgressBar
+		{
+			view.SetEnvironment(EnvironmentKeys.ProgressBar.ProgressColor, color, cascades);
+			return view;
+		}
+
+		public static Color GetProgressColor(this ProgressBar view, Color defaultColor = null, ControlState state = ControlState.Default)
+		{
+			var color = view?.GetEnvironment<Color>(EnvironmentKeys.ProgressBar.ProgressColor, state);
+			//Fall back to the default state before using the default color
+			color ??= view?.GetEnvironment<Color>(EnvironmentKeys.ProgressBar.ProgressColor);
 			return color ?? defaultColor;
 		}
 

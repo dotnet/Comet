@@ -3,6 +3,7 @@ using System.Linq;
 using CoreGraphics;
 using CoreText;
 using UIKit;
+using Comet.Internal;
 namespace Comet.iOS
 {
 	public static partial class iOSExtensions
@@ -51,9 +52,9 @@ namespace Comet.iOS
 			var handler = view.ViewHandler;
 			if (handler == null)
 			{
-
-				handler = Registrar.Handlers.GetHandler(view.GetType()) as IViewHandler;
-				view.ViewHandler = handler;
+				var builtView = view.GetView();
+				handler = Registrar.Handlers.GetHandler(builtView.GetType()) as IViewHandler;
+				builtView.ViewHandler = handler;
 			}
 			var iUIView = handler as iOSViewHandler;
 			return iUIView;

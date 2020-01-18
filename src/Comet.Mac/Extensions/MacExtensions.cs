@@ -1,4 +1,5 @@
 ﻿using AppKit;
+using Comet.Internal;
 using CoreGraphics;
 
 namespace Comet.Mac.Extensions
@@ -46,8 +47,9 @@ namespace Comet.Mac.Extensions
 			var handler = view.ViewHandler;
 			if (handler == null)
 			{
-				handler = Registrar.Handlers.GetHandler(view.GetType()) as IViewHandler;
-				view.ViewHandler = handler;
+				var builtView = view.GetView();
+				handler = Registrar.Handlers.GetHandler(builtView.GetType());
+				builtView.ViewHandler = handler;
 			}
 
 			return handler as MacViewHandler;

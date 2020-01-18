@@ -32,7 +32,14 @@ namespace Comet.Mac
 
 		public void Pop()
 		{
-			BackStack.Pop();
+			var vc = BackStack.Pop();
+
+			var cometVC = vc as CometViewController;
+			if (cometVC?.CurrentView != null)
+			{
+				cometVC?.CurrentView?.Dispose();
+				cometVC.CurrentView = null;
+			}
 
 			var next = BackStack.Peek();
 			SwitchContent(next);

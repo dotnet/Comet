@@ -105,7 +105,7 @@ namespace Comet.iOS
 
 		public override void LayoutSubviews()
 		{
-			if (Bounds.IsEmpty || _nativeView == null)
+			if (Bounds.IsEmpty || _nativeView == null || _virtualView == null)
 				return;
 			var iOSHandler = _virtualView?.BuiltView?.ViewHandler as iOSViewHandler;
 
@@ -125,7 +125,7 @@ namespace Comet.iOS
 				bounds.Y += safe.Top;
 				bounds.Height -= safe.Top + safe.Bottom;
 				bounds.Width -= safe.Left + safe.Right;
-				_virtualView.SetFrameFromNativeView(bounds.ToRectangleF());
+				_virtualView?.SetFrameFromNativeView(bounds.ToRectangleF());
 			}
 		}
 

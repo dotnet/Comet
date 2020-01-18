@@ -120,20 +120,20 @@
     <BundleResource Include="Resources\turtlerock.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="1.68.1" />
-    <PackageReference Include="SkiaSharp.Views" Version="1.68.1" />
+    <PackageReference Include="SkiaSharp" Version="1.68.1.1" />
+    <PackageReference Include="SkiaSharp.Views" Version="1.68.1.1" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="SkiaSharp.HarfBuzz">
-      <Version>1.68.1</Version>
+      <Version>1.68.1.1</Version>
     </PackageReference>
     <PackageReference Include="Topten.RichTextKit">
-      <Version>0.1.117</Version>
+      <Version>0.1.118</Version>
     </PackageReference>
     <PackageReference Include="HarfBuzzSharp">
-      <Version>2.6.1</Version>
+      <Version>2.6.1.1</Version>
     </PackageReference><PackageReference Include="System.Memory" Version="4.5.3" IncludeAssets="None" />
 <PackageReference Include="Clancey.Comet.Reload">
-  <Version>0.0.11-alpha</Version>
+  <Version>0.0.12-alpha</Version>
 </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
