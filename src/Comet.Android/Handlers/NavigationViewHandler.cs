@@ -27,8 +27,8 @@ namespace Comet.Android.Handlers
 			if (navigationView != null)
 			{
 				navigationView.SetRoot(nav.Content);
-				VirtualView.SetPerformNavigate(navigationView.NavigateTo);
-				VirtualView.SetPerformPop(navigationView.Pop);
+				VirtualView?.SetPerformNavigate(navigationView.NavigateTo);
+				VirtualView?.SetPerformPop(navigationView.Pop);
 			}
 			base.SetView(view);
 		}
