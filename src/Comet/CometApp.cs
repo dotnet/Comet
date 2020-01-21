@@ -16,8 +16,6 @@ namespace Comet
 	public class CometApp : View, IApplicationLifeCycle
 	{
 		public static CometApp CurrentApp { get; private set; }
-		public readonly Dictionary<string, Func<View>> Routes = new Dictionary<string, Func<View>>();
-		public void RegisterRoutes(Dictionary<string, Func<View>> routes) => routes.ToList().ForEach(pair => Routes[pair.Key] = pair.Value);
 
 		protected virtual void OnInit()
 		{
