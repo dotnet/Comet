@@ -143,8 +143,10 @@ namespace Comet
 				var oldView = BuiltView;
 				builtView = null;
 
-				//if (ViewHandler == null)
-				//	return;
+				//FIXME: this thew issue
+				if (ViewHandler == null)
+					return;
+
 				ViewHandler?.Remove(this);
 				var view = this.GetRenderView();
 				if (oldView != null)
@@ -153,7 +155,6 @@ namespace Comet
 				animations?.ForEach(x => x.Dispose());
 				ViewHandler?.SetView(view);
 			}
-
 			finally
 			{
 				//We are done, clean it up.
