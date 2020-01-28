@@ -316,14 +316,14 @@ stages:
       - MSBuild
       - Xamarin.Android
 
+    steps:
 
     - task: UseDotNet@2
       displayName: 'Use .NET Core sdk'
       inputs:
         packageType: sdk
         version: $(DotNetVersion)
-        
-    steps:
+
     - task: NuGetToolInstaller@1
       displayName: Use Nuget $(NugetVersion)
       inputs:
