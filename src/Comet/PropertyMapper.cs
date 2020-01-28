@@ -4,48 +4,65 @@ using System.Linq;
 
 namespace Comet
 {
-	public class PropertyMapper<TVirtualView> : Dictionary<string, Action<IViewHandler, TVirtualView>>
+	public class PropertyMapper
+	{
+		internal Dictionary<string, Action<IViewHandler, View>> genericMap = new Dictionary<string, Action<IViewHandler, View>>();
+	}
+	public class PropertyMapper<TVirtualView> : PropertyMapper
 		where TVirtualView : View
 	{
-		private readonly PropertyMapper<View> _chained;
+		public ICollection<string> Keys => genericMap.Keys;
+		public int Count => genericMap.Count;
+
+		public bool IsReadOnly => false;
+
+		public Action<IViewHandler, TVirtualView> this[string key]
+		{
+			set => genericMap[key] = (r, v) => value?.Invoke(r, (TVirtualView)v);
+		}
 
 		public PropertyMapper()
 		{
 		}
 
-		public PropertyMapper(PropertyMapper<View> chained)
+		public PropertyMapper(PropertyMapper chained)
 		{
-			_chained = chained;
+			//Make a copy, since we are going to mess it up :D
+			genericMap = new Dictionary<string, Action<IViewHandler, View>>(chained.genericMap);
 		}
 
-		public void UpdateProperties(IViewHandler viewHandler, TVirtualView virtualView)
+		public PropertyMapper(PropertyMapper defaultMapper, PropertyMapper instanceMapper)
+		{
+			//Make a copy, since we are going to mess it up :D
+			genericMap = new Dictionary<string, Action<IViewHandler, View>>(defaultMapper.genericMap);
+			//Overwrite the old values with the instance ones!
+			foreach (var pair in instanceMapper.genericMap)
+				genericMap[pair.Key] = pair.Value;
+		}
+
+		public void UpdateProperties(IViewHandler viewRenderer, TVirtualView virtualView)
 		{
 			if (virtualView == null)
 				return;
-			var keys = _chained?.Keys?.Union(this.Keys) ?? Keys;
-			foreach (var key in keys)
+			foreach (var key in genericMap.Keys)
 			{
-				UpdateProperty(key, viewHandler, virtualView);
+				UpdateProperty(key, viewRenderer, virtualView);
 			}
 		}
 
-		protected void UpdateProperty(string key, IViewHandler viewHandler, TVirtualView virtualView)
+		protected void UpdateProperty(string key, IViewHandler viewRenderer, TVirtualView virtualView)
 		{
-			if (this.TryGetValue(key, out var action))
-				action?.Invoke(viewHandler, virtualView);
-			else
-				_chained?.UpdateProperty(key, viewHandler, virtualView);
+			if (genericMap.TryGetValue(key, out var action))
+				action?.Invoke(viewRenderer, virtualView);
 		}
 
-		public void UpdateProperty(IViewHandler viewHandler, TVirtualView virtualView, string property)
+		public void UpdateProperty(IViewHandler viewRenderer, TVirtualView virtualView, string property)
 		{
 			if (virtualView == null)
 				return;
-
-			if (TryGetValue(property, out var updater))
-				updater.Invoke(viewHandler, virtualView);
-
-			_chained?.UpdateProperty(viewHandler, virtualView, property);
+			UpdateProperty(property, viewRenderer, virtualView);
 		}
+
+
 	}
 }
