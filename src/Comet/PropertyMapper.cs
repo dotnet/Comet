@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -8,7 +9,7 @@ namespace Comet
 	{
 		internal Dictionary<string, Action<IViewHandler, View>> genericMap = new Dictionary<string, Action<IViewHandler, View>>();
 	}
-	public class PropertyMapper<TVirtualView> : PropertyMapper
+	public class PropertyMapper<TVirtualView> : PropertyMapper, IEnumerable
 		where TVirtualView : View
 	{
 		public ICollection<string> Keys => genericMap.Keys;
@@ -63,6 +64,9 @@ namespace Comet
 			UpdateProperty(property, viewRenderer, virtualView);
 		}
 
+		public void Add(string key, Action<IViewHandler, TVirtualView> action)
+			=> this[key] = action;
+		IEnumerator IEnumerable.GetEnumerator() => genericMap.GetEnumerator();
 
 	}
 }
