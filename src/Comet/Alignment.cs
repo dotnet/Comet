@@ -1,5 +1,3 @@
-using System;
-
 namespace Comet
 {
 	public class Alignment
@@ -21,13 +19,9 @@ namespace Comet
 		}
 
 		public HorizontalAlignment Horizontal { get; }
-
 		public VerticalAlignment Vertical { get; }
 
-		protected bool Equals(Alignment other)
-		{
-			return Horizontal == other.Horizontal && Vertical == other.Vertical;
-		}
+		protected bool Equals(Alignment other) => Horizontal == other.Horizontal && Vertical == other.Vertical;
 
 		public override bool Equals(object obj)
 		{
