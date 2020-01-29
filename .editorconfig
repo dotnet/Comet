@@ -48,9 +48,23 @@ csharp_space_between_method_call_parameter_list_parentheses = false
 #remove space within empty parameter list parentheses for a method declaration
 csharp_space_between_method_declaration_empty_parameter_list_parentheses = false
 #place a space character after the opening parenthesis and before the closing parenthesis of a method declaration parameter list.
-csharp_space_between_method_declaration_parameter_list_parentheses = falsecsharp_space_between_method_declaration_name_and_open_parenthesis = false
+csharp_space_between_method_declaration_parameter_list_parentheses = false
 
-csharp_space_after_cast = falsecsharp_space_after_comma = truecsharp_space_after_dot = falsecsharp_space_after_semicolon_in_for_statement = truecsharp_space_around_binary_operators = before_and_aftercsharp_space_around_declaration_statements = falsecsharp_space_before_comma = falsecsharp_space_before_dot = falsecsharp_space_before_open_square_brackets = falsecsharp_space_before_semicolon_in_for_statement = falsecsharp_space_between_empty_square_brackets = falsecsharp_space_between_parentheses = falsecsharp_space_between_square_brackets = false
+csharp_space_between_method_declaration_name_and_open_parenthesis = false
+
+csharp_space_after_cast = false
+csharp_space_after_comma = true
+csharp_space_after_dot = false
+csharp_space_after_semicolon_in_for_statement = true
+csharp_space_around_binary_operators = before_and_after
+csharp_space_around_declaration_statements = false
+csharp_space_before_comma = false
+csharp_space_before_dot = false
+csharp_space_before_open_square_brackets = false
+csharp_space_before_semicolon_in_for_statement = false
+csharp_space_between_empty_square_brackets = false
+csharp_space_between_parentheses = false
+csharp_space_between_square_brackets = false
 
 
 #Formatting - wrapping options
@@ -100,3 +114,7 @@ dotnet_style_qualification_for_field = false:suggestion
 dotnet_style_qualification_for_method = false:suggestion
 #prefer properties not to be prefaced with this. or Me. in Visual Basic
 dotnet_style_qualification_for_property = false:suggestion
+
+# ReSharper properties
+resharper_csharp_insert_final_newline=true
+resharper_csharp_wrap_lines=false
