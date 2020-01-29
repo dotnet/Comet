@@ -6,7 +6,9 @@ namespace Comet.Samples
         [Body]
         View body() => new VStack
         {
-            new DatePicker(minimumDate: new DateTime(2015, 10, 1), maximumDate: new DateTime(2018, 10, 01), format: "D", onDateChnaged: SampleDateChanged)
+            new DatePicker(minimumDate: new DateTime(2015, 10, 1),
+				maximumDate: new DateTime(2018, 10, 01),
+				format: "dd/MM/yyyy", onDateChnaged: SampleDateChanged)
 			.Frame(width: 200)
         };
 

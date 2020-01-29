@@ -51,7 +51,7 @@ namespace Comet.iOS
 
 		private void HandleValueChanged(object sender, EventArgs e)
 		{
-			_dateField.Text = _picker.Date.ToDateTime().Date.ToShortDateString();
+			_dateField.Text = _picker.Date.ToDateTime().Date.ToString(VirtualView?.Format.CurrentValue);
 			VirtualView?.OnDateChanged.Invoke(_picker.Date.ToDateTime().Date);
 		}
 
