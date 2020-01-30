@@ -24,6 +24,7 @@ namespace Comet.iOS
 			Registrar.Handlers.Register<ShapeView, ShapeViewHandler>();
 			Registrar.Handlers.Register<Slider, SliderHandler>();
 			Registrar.Handlers.Register<Stepper, StepperHandler>();
+			Registrar.Handlers.Register<DatePicker, DatePickerHandler>();
 			Registrar.Handlers.Register<Text, TextHandler>();
 			Registrar.Handlers.Register<TextField, TextFieldHandler>();
 			Registrar.Handlers.Register<Toggle, ToggleHandler>();
