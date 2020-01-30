@@ -339,7 +339,7 @@ stages:
     - task: Boots@1
       displayName: 'Set Xamarin.Android'
       inputs:
-        uri: 'https://aka.ms/xamarin-android-commercial-d16-3-macos'
+        uri: $(XamarinAndroidMac)
     - task: XamarinAndroid@1
       displayName: 'Build Comet.Android.Sample App'
       inputs:
