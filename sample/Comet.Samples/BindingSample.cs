@@ -21,9 +21,9 @@ namespace Comet.Samples
 		[State]
 		readonly MyBindingObject state;
 
-		readonly State<int> clickCount = new State<int>(1);
+		readonly State<int> clickCount = 1;
 
-		readonly State<bool> bar = new State<bool>();
+		readonly State<bool> bar = false;
 
 		public BindingSample()
 		{
@@ -41,9 +41,9 @@ namespace Comet.Samples
 				new VStack
 				{
 					(state.CanEdit
-						? (View) new TextField(()=>state.Text, onCommit: (value) => state.Text = value )
+						? (View) new TextField(state.Text)
 						: new Text(() => $"{state.Text}: multiText")), // Formatted Text will warn you. This should be done by TextBinding
-                    new Text(state.Text),
+					new Text(state.Text),
 					new HStack
 					{
 						new Button("Toggle Entry/Label",
@@ -57,7 +57,7 @@ namespace Comet.Samples
 								View.SetGlobalEnvironment (EnvironmentKeys.Fonts.Size, size);
 							}),
 					},
-					new Toggle(state.CanEdit, e => state.CanEdit = e)
+					new Toggle(state.CanEdit)
 				}
 			}
 		};
