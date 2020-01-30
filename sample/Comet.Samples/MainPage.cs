@@ -49,7 +49,7 @@ namespace Comet.Samples
 			new MenuItem("SliderSample1", ()=> new SliderSample1()),
 			new MenuItem("StepperSample1", ()=> new StepperSample1()),
 			new MenuItem("DatePickerSample", ()=> new DatePickerSample()),
-            new MenuItem("TextFieldSample1", ()=> new TextFieldSample1()),
+			new MenuItem("TextFieldSample1", ()=> new TextFieldSample1()),
 			new MenuItem("TextFieldSample2", ()=> new TextFieldSample2()),
 			new MenuItem("TextFieldSample3", ()=> new TextFieldSample3()),
 			new MenuItem("TextFieldSample4", ()=> new TextFieldSample4()),

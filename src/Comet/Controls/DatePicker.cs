@@ -1,14 +1,14 @@
 ﻿using System;
 namespace Comet
 {
-    public class DatePicker : View
-    {
-        public DatePicker(Binding<DateTime> date = null,
+	public class DatePicker : View
+	{
+		public DatePicker(Binding<DateTime> date = null,
 			Binding < DateTime> maximumDate = null,
 			Binding<DateTime> minimumDate = null,
 			Binding<string> format = null,
 			Action<DateTime> onDateChnaged = null)
-        {
+		{
 			if (minimumDate?.CurrentValue >= maximumDate?.CurrentValue)
 				throw new ArgumentOutOfRangeException(nameof(minimumDate), "Minimum date is greater than the maximum date");
 			Date = date;

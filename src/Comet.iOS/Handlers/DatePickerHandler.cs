@@ -6,8 +6,8 @@ using UIKit;
 
 namespace Comet.iOS
 {
-    public class DatePickerHandler : AbstractControlHandler<DatePicker, NoCaretField>
-    {
+	public class DatePickerHandler : AbstractControlHandler<DatePicker, NoCaretField>
+	{
 		static UIDatePicker _picker;
 		static NoCaretField _dateField;
 		
@@ -21,10 +21,10 @@ namespace Comet.iOS
 
 		public DatePickerHandler() : base(Mapper)
 		{
-        }
+		}
 		
 		protected override NoCaretField CreateView()
-        {
+		{
 			_dateField = new NoCaretField { BorderStyle = UITextBorderStyle.RoundedRect };
 			_picker = new UIDatePicker { Mode = UIDatePickerMode.Date, TimeZone = new Foundation.NSTimeZone("UTC") };
 			_picker.ValueChanged += HandleValueChanged;
@@ -47,7 +47,7 @@ namespace Comet.iOS
 
 			_dateField.AccessibilityTraits = UIAccessibilityTrait.Button;
 			return _dateField;
-        }
+		}
 
 		private void HandleValueChanged(object sender, EventArgs e)
 		{
@@ -79,7 +79,7 @@ namespace Comet.iOS
 		}
 
 		protected override void DisposeView(NoCaretField nativeView)
-        {
+		{
 			if(_picker != null)
 			{
 				_picker.RemoveFromSuperview();
@@ -88,7 +88,7 @@ namespace Comet.iOS
 				_picker = null;
 			}
 		}
-    }
+	}
 
 	public class NoCaretField : UITextField
 	{
