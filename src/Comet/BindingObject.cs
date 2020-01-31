@@ -1,28 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 using System.Runtime.CompilerServices;
-using Comet.Helpers;
-using Comet.Reflection;
 
 namespace Comet
 {
-
-
-	public interface INotifyPropertyRead : INotifyPropertyChanged
-	{
-		event PropertyChangedEventHandler PropertyRead;
-	}
 	public class BindingObject : INotifyPropertyRead
 	{
-
 		public event PropertyChangedEventHandler PropertyRead;
 		public event PropertyChangedEventHandler PropertyChanged;
 
-		internal protected Dictionary<string, object> dictionary = new Dictionary<string, object>();
+		protected internal readonly Dictionary<string, object> dictionary = new Dictionary<string, object>();
 
 		protected T GetProperty<T>(T defaultValue = default, [CallerMemberName] string propertyName = "")
 		{
@@ -40,13 +29,7 @@ namespace Comet
 			var hasValue = dictionary.TryGetValue(propertyName, out var val);
 			return (hasValue, val);
 		}
-		/// <summary>
-		/// Returns true if the value changed
-		/// </summary>
-		/// <typeparam name="T"></typeparam>
-		/// <param name="value"></param>
-		/// <param name="propertyName"></param>
-		/// <returns></returns>
+
 		protected bool SetProperty<T>(T value, [CallerMemberName] string propertyName = "")
 		{
 			if (dictionary.TryGetValue(propertyName, out object val))
@@ -56,9 +39,7 @@ namespace Comet
 			}
 
 			dictionary[propertyName] = value;
-
 			CallPropertyChanged(propertyName, value);
-
 			return true;
 		}
 
@@ -81,28 +62,29 @@ namespace Comet
 
 			return true;
 		}
-
 	}
-
 
 	public class BindingState
 	{
-		public IEnumerable<KeyValuePair<string, object>> ChangedProperties => changeDictionary;
-		Dictionary<string, object> changeDictionary = new Dictionary<string, object>();
+		readonly Dictionary<string, object> changeDictionary = new Dictionary<string, object>();
 
+		public IEnumerable<KeyValuePair<string, object>> ChangedProperties => changeDictionary;
 		public HashSet<(INotifyPropertyRead BindingObject, string PropertyName)> GlobalProperties { get; set; } = new HashSet<(INotifyPropertyRead BindingObject, string PropertyName)>();
 		public Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), List<(string PropertyName, Binding Binding)>> ViewUpdateProperties = new Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), List<(string PropertyName, Binding Binding)>>();
+
 		public void AddGlobalProperty((INotifyPropertyRead BindingObject, string PropertyName) property)
 		{
 			if (GlobalProperties.Add(property))
 				Debug.WriteLine($"Adding Global Property: {property}");
 		}
+
 		public void AddGlobalProperties(IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> properties)
 		{
 			var props = properties.ToList();
 			foreach (var prop in props)
 				AddGlobalProperty(prop);
 		}
+
 		public void AddViewProperty((INotifyPropertyRead BindingObject, string PropertyName) property, string propertyName, Binding binding)
 		{
 			if (!ViewUpdateProperties.TryGetValue(property, out var actions))
@@ -117,6 +99,7 @@ namespace Comet
 				AddViewProperty(p, propertyName ?? p.PropertyName, binding);
 			}
 		}
+
 		public void Clear()
 		{
 			GlobalProperties?.Clear();
@@ -124,33 +107,23 @@ namespace Comet
 			{
 				key.Value.Clear();
 			}
+
 			ViewUpdateProperties.Clear();
 		}
-		/// <summary>
-		/// This returns true, if it updated the UI based on the changes
-		/// False, if it couldnt update, or the value was global so the whole UI needs refreshed
-		/// </summary>
-		/// <param name="updates"></param>
-		/// <returns></returns>
-		//public bool UpdateValues(IEnumerable<((INotifyPropertyRead BindingObject, string PropertyName) property, object value)> updates)
-		//{
-		//    bool didUpdate = true;
-		//    foreach (var update in updates)
-		//    {
 
-		//        UpdateValue(update.property,update.value);
-
-		//    }
-		//    return didUpdate;
-		//}
 		protected void UpdatePropertyChangeProperty(View view, string fullProperty, object value)
 		{
 			if (view.Parent != null)
+			{
 				UpdatePropertyChangeProperty(view.Parent, fullProperty, value);
+			}
 			else
+			{
 				view.GetState().changeDictionary[fullProperty] = value;
+			}
 		}
-		public bool UpdateValue(View view,(INotifyPropertyRead BindingObject, string PropertyName) property, string fullProperty, object value)
+
+		public bool UpdateValue(View view, (INotifyPropertyRead BindingObject, string PropertyName) property, string fullProperty, object value)
 		{
 			changeDictionary[fullProperty] = value;
 			UpdatePropertyChangeProperty(view, fullProperty, value);
@@ -163,6 +136,7 @@ namespace Comet
 					binding.Binding.BindingValueChanged(property.BindingObject, binding.PropertyName, value);
 				}
 			}
+
 			return true;
 		}
 	}

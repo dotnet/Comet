@@ -73,18 +73,12 @@ namespace Comet
 		}
 
 		public static Color FromBytes(byte red, byte green, byte blue) => Color.FromBytes(red, green, blue, 255);
-		public static Color FromBytes(byte red, byte green, byte blue, byte alpha)
-			=> new Color(red / 255f, green / 255f, blue / 255f, alpha / 255f);
 
-		public override int GetHashCode()
-		{
-			return ((int)R ^ (int)B) ^ ((int)G ^ (int)A);
-		}
+		public static Color FromBytes(byte red, byte green, byte blue, byte alpha)  => new Color(red / 255f, green / 255f, blue / 255f, alpha / 255f);
 
-		public string ToHexString()
-		{
-			return "#" + ToHexString(R) + ToHexString(G) + ToHexString(B);
-		}
+		public override int GetHashCode() => ((int)R ^ (int)B) ^ ((int)G ^ (int)A);
+
+		public string ToHexString() => "#" + ToHexString(R) + ToHexString(G) + ToHexString(B);
 
 		public string ToHexStringIncludingAlpha()
 		{
@@ -94,12 +88,9 @@ namespace Comet
 			return ToHexString();
 		}
 
-		public static string ToHexString(float r, float g, float b)
-		{
-			return "#" + ToHexString(r) + ToHexString(g) + ToHexString(b);
-		}
+		public static string ToHexString(float r, float g, float b) => "#" + ToHexString(r) + ToHexString(g) + ToHexString(b);
 
-		private static string ToHexString(float value)
+		static string ToHexString(float value)
 		{
 			var intValue = (int)(255f * value);
 			var stringValue = intValue.ToString("X");
