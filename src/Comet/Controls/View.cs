@@ -142,7 +142,6 @@ namespace Comet
 					PopulateFromEnvironment();
 				var oldView = BuiltView;
 				builtView = null;
-
 				//if (ViewHandler == null)
 				//	return;
 
