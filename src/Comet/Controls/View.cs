@@ -144,7 +144,6 @@ namespace Comet
 				builtView = null;
 				//if (ViewHandler == null)
 				//	return;
-
 				ViewHandler?.Remove(this);
 				var view = this.GetRenderView();
 				if (oldView != null)
