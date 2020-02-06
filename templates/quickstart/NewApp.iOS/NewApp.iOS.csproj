@@ -143,7 +143,7 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\NewApp\NewApp.csproj">
-        <Project>{DC8AAC73-C9C3-4936-9F2B-EC8906A3A7E0}</Project>
+        <Project>{032FBFD0-7AD6-4B97-8372-B94141CEA15C}</Project>
         <Name>NewApp</Name>
       </ProjectReference>
     </ItemGroup>

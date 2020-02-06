@@ -57,6 +57,8 @@
     #endif-->
   </ItemGroup>
   <ItemGroup>
+      <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="XamarinAndroidAppCompat" />
+      <PackageReference Include="Xamarin.Android.Support.Design" Version="XamarinAndroidDesign" />
       <PackageReference Include="Xamarin.Essentials" Version="XamarinEssentialsSdk" />
       <PackageReference Include="Clancey.Comet.Reload" Version="CometReloadSdk"/>
       <PackageReference Include="Clancey.Comet" Version="CometSdk"/>
@@ -96,15 +98,15 @@
     <Folder Include="Resources\drawable-xxhdpi\" />
     <Folder Include="Resources\drawable-xxxhdpi\" />
   </ItemGroup>
-  <!--#if (!CreateSharedProject)
+  <!--#if (CreateSharedProject)
   <ItemGroup>
     <ProjectReference Include="..\LibraryProjectName\LibraryProjectName.csproj">
-      <Project>{99E19497-29A6-4B77-B773-BEC55F9B55DC}</Project>
+      <Project>{032FBFD0-7AD6-4B97-8372-B94141CEA15C}</Project>
       <Name>LibraryProjectName</Name>
     </ProjectReference>
   </ItemGroup>
   #endif-->
-  <!--#if (CreateSharedProject)
+  <!--#if (!CreateSharedProject)
   <Import Project="..\LibraryProjectName\LibraryProjectName.projitems" Label="Shared" />
   #endif-->
  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
