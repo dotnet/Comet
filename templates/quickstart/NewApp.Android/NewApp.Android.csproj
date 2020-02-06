@@ -57,7 +57,8 @@
     #endif-->
   </ItemGroup>
   <ItemGroup>
-      <PackageReference Include="Xamarin.Forms" Version="XamarinFormsSdk" />
+      <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="XamarinAndroidAppCompat" />
+      <PackageReference Include="Xamarin.Android.Support.Design" Version="XamarinAndroidDesign" />
       <PackageReference Include="Xamarin.Essentials" Version="XamarinEssentialsSdk" />
       <PackageReference Include="Clancey.Comet.Reload" Version="CometReloadSdk"/>
       <PackageReference Include="Clancey.Comet" Version="CometSdk"/>

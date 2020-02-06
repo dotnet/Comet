@@ -26,7 +26,6 @@ namespace NewApp.Droid
             #if (IncludeXamarinEssentials)
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             #endif
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 #if DEBUG
             Comet.Reload.Init();
 #endif
