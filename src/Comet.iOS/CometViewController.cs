@@ -1,11 +1,12 @@
 ﻿using System;
+using System.Drawing;
 using System.Threading.Tasks;
 using CoreGraphics;
 using UIKit;
 
 namespace Comet.iOS
 {
-	public class CometViewController : UIViewController
+	public class CometViewController : UIViewController, IViewHandler
 	{
 		private CometView _containerView;
 		private View _startingCurrentView;
@@ -25,12 +26,16 @@ namespace Comet.iOS
 			}
 		}
 
+		public object NativeView => null;
+
+		public bool HasContainer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
 		bool wasPopped;
 		public void WasPopped() => wasPopped = true;
 
 		public override void LoadView()
 		{
-			View = _containerView = new CometView(UIScreen.MainScreen.Bounds);
+			base.View = _containerView = new CometView(UIScreen.MainScreen.Bounds);
 			_containerView.CurrentView = _startingCurrentView;
 			_startingCurrentView = null;
 		}
@@ -50,9 +55,9 @@ namespace Comet.iOS
 		{
 			base.ViewDidDisappear(animated);
 			_containerView?.CurrentView?.ViewDidDisappear();
-			if(wasPopped)
+			if (wasPopped)
 			{
-				CurrentView.Dispose();
+				CurrentView?.Dispose();
 				CurrentView = null;
 			}
 		}
@@ -72,6 +77,24 @@ namespace Comet.iOS
 				this.NavigationController.NavigationBar.TintColor = textColor;
 				this.NavigationController.NavigationBar.TitleTextAttributes = new UIStringAttributes { ForegroundColor = textColor };
 			}
+		}
+
+		public void SetView(View view) => CurrentView = view;
+
+		public void UpdateValue(string property, object value)
+		{
+
+		}
+
+		public void Remove(View view)
+		{
+		}
+
+		public SizeF GetIntrinsicSize(SizeF availableSize) => availableSize;
+
+		public void SetFrame(RectangleF frame)
+		{
+
 		}
 	}
 }

@@ -43,6 +43,7 @@ namespace Comet.iOS
 				}
 			}
 
+			view.ViewHandler = vc;
 			return vc;
 		}
 		public static iOSViewHandler GetOrCreateViewHandler(this View view)

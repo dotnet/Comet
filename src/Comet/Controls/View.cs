@@ -190,6 +190,7 @@ namespace Comet
 			if (replaced != this)
 			{
 				replaced.viewThatWasReplaced = this;
+				replaced.ViewHandler = ViewHandler; 
 				replaced.Navigation = this.Navigation;
 				replaced.Parent = this;
 				replaced.PopulateFromEnvironment();
