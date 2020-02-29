@@ -1,10 +1,11 @@
 ﻿using System;
+using System.Drawing;
 using AppKit;
 using Comet.Mac.Extensions;
 
 namespace Comet.Mac
 {
-	public class CometViewController : NSViewController
+	public class CometViewController : NSViewController, IViewHandler
 	{
 		private CometView _containerView;
 
@@ -20,7 +21,25 @@ namespace Comet.Mac
 
 		public override void LoadView()
 		{
-			View = ContainerView;
+			base.View = ContainerView;
+		}
+
+		void IViewHandler.SetView(View view) => CurrentView = view;
+		void IViewHandler.UpdateValue(string property, object value)
+		{
+
+		}
+
+		void IViewHandler.Remove(View view)
+		{
+
+		}
+
+		SizeF IViewHandler.GetIntrinsicSize(SizeF availableSize)
+			=> availableSize;
+		void IViewHandler.SetFrame(RectangleF frame)
+		{
+
 		}
 
 		private CometView ContainerView
@@ -33,5 +52,9 @@ namespace Comet.Mac
 				return _containerView;
 			}
 		}
+
+		object IViewHandler.NativeView => null;
+
+		bool IViewHandler.HasContainer { get ; set; }
 	}
 }
