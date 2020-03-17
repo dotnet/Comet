@@ -10,6 +10,8 @@ namespace Comet.Android
 
 		AView View { get; }
 
+		CometContainerView ContainerView { get; }
+
 		CometTouchGestureListener GestureListener { get; set; }
 	}
 }

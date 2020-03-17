@@ -15,7 +15,6 @@ namespace Comet
 		{
 
 		}
-
 		public abstract PathF PathForBounds(RectangleF rect);
 	}
 }

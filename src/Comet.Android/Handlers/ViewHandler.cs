@@ -38,7 +38,16 @@ namespace Comet.Android.Handlers
 
 		public static void MapClipShapeProperty(IViewHandler handler, View virtualView)
 		{
-			// todo: Console.WriteLine("ClipShape not yet supported on Android");
+			var clipShape = virtualView.GetClipShape();
+			if(clipShape != null)
+			{
+				handler.HasContainer = true;
+				var viewHandler = handler as AndroidViewHandler;
+				if(viewHandler?.ContainerView != null)
+				{
+					viewHandler.ContainerView.ClipShape = clipShape;
+				}
+			}
 		}
 
 		public static void AddGestures(AndroidViewHandler handler, View view)

@@ -31,7 +31,7 @@ namespace Comet.Android.Handlers
 
 		public AView View => _nativeView;
 
-		//public CUIContainerView ContainerView => null;
+		public CometContainerView ContainerView => null;
 
 		public object NativeView => _nativeView;
 

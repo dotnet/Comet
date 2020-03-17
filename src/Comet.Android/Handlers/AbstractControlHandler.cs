@@ -88,7 +88,7 @@ namespace Comet.Android.Handlers
 
 		public virtual void SetFrame(RectangleF frame)
 		{
-			var nativeView = TypedNativeView;
+			var nativeView = View;
 			if (nativeView == null) return;
 
 			var scale = AndroidContext.DisplayScale;
