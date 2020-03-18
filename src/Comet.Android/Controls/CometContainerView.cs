@@ -6,6 +6,7 @@ using Android.Views;
 using Android.Widget;
 using Comet.Androids;
 using AView = Android.Views.View;
+using APath = Android.Graphics.Path;
 
 namespace Comet.Android.Controls
 {
@@ -62,15 +63,9 @@ namespace Comet.Android.Controls
 
 		void ApplyShape()
 		{
-			this.ClipToOutline = clipShape != null;
 			var provider = OutlineProvider as CometShapeOutlineProvider;
 			provider.Shape = clipShape;
-			this.InvalidateOutline();
-		}
-
-		protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
-		{
-			base.OnSizeChanged(w, h, oldw, oldh);
+			this.ClipToOutline = clipShape != null;
 			this.InvalidateOutline();
 		}
 
@@ -78,22 +73,21 @@ namespace Comet.Android.Controls
 		class CometShapeOutlineProvider : ViewOutlineProvider
 		{
 			public Shape Shape { get; set; }
+			RectangleF lastBounds;
+			APath currentPath;
 			public override void GetOutline(AView view, Outline outline)
 			{
 				if (Shape == null)
 					return;
-				float scale = 1;// view.Resources.DisplayMetrics.Density;
-				double width = (double)view.Width * scale;
-				double height = (double)view.Height* scale;
-				float minDimension = (float)Math.Min(height, width);
-
 				var bounds = new RectangleF(0, 0, view.Width, view.Height);
-				var path = Shape.PathForBounds(bounds);
-				//outline.
-				float radius = minDimension / 2f;
-				Rect rect = new Rect(0, 0, (int)width, (int)height);
+				if (bounds != lastBounds)
+				{
+					var path = Shape.PathForBounds(bounds);
+					currentPath = path.AsAndroidPath();
+					lastBounds = bounds;
+				}
 				//outline.SetRoundRect(rect, radius);
-				outline.SetConvexPath(path.AsAndroidPath());
+				outline.SetConvexPath(currentPath);
 			}
 		}
 	}
