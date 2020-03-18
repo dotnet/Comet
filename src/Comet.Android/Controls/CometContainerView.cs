@@ -89,7 +89,10 @@ namespace Comet.Android.Controls
 			public override void GetOutline(AView view, Outline outline)
 			{
 				if (Shape == null)
+				{
+					outline.SetEmpty();
 					return;
+				}
 				var bounds = new RectangleF(0, 0, view.Width, view.Height);
 				if (bounds != lastBounds || currentPath == null)
 				{
