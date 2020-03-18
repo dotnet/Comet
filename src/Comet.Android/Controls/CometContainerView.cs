@@ -72,15 +72,26 @@ namespace Comet.Android.Controls
 
 		class CometShapeOutlineProvider : ViewOutlineProvider
 		{
-			public Shape Shape { get; set; }
+			public Shape Shape {
+				get => shape;
+				set
+				{
+					if (shape == value)
+						return;
+					shape = value;
+					currentPath = null;
+				}
+			}
 			RectangleF lastBounds;
 			APath currentPath;
+			private Shape shape;
+
 			public override void GetOutline(AView view, Outline outline)
 			{
 				if (Shape == null)
 					return;
 				var bounds = new RectangleF(0, 0, view.Width, view.Height);
-				if (bounds != lastBounds)
+				if (bounds != lastBounds || currentPath == null)
 				{
 					var path = Shape.PathForBounds(bounds);
 					currentPath = path.AsAndroidPath();
