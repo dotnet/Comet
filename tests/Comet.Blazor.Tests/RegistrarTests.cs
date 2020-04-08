@@ -1,4 +1,4 @@
-using Comet.Blazor.Handlers;
+using System.Maui.Blazor.Handlers;
 using Microsoft.AspNetCore.Builder;
 using NSubstitute;
 using System;
@@ -8,7 +8,7 @@ using System.Reflection;
 using Xunit;
 using Xunit.Abstractions;
 
-namespace Comet.Blazor.Tests
+namespace System.Maui.Blazor.Tests
 {
     public class RegistrarTests
     {
@@ -24,7 +24,7 @@ namespace Comet.Blazor.Tests
         {
             var appBuilder = GetAppBuilder();
 
-            appBuilder.UseComet();
+            appBuilder.UseSystem.Maui();
 
             var types = typeof(IBlazorViewHandler).Assembly.GetTypes()
                 .Where(t => !t.IsAbstract && !t.ContainsGenericParameters && typeof(IBlazorViewHandler).IsAssignableFrom(t));
@@ -40,10 +40,10 @@ namespace Comet.Blazor.Tests
         }
 
         [Fact]
-        public void AllCometHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(View).Assembly);
+        public void AllSystem.MauiHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(View).Assembly);
 
         [Fact]
-        public void AllCometSkiaHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(Skia.SkiaShapeView).Assembly);
+        public void AllSystem.MauiSkiaHandlersRegistered() => AllInternalHandlersAreRegistered(typeof(Skia.SkiaShapeView).Assembly);
 
 
         static List<string> skippedViews = new List<string>
@@ -56,7 +56,7 @@ namespace Comet.Blazor.Tests
         {
             var appBuilder = GetAppBuilder();
 
-            appBuilder.UseComet();
+            appBuilder.UseSystem.Maui();
 
             var types = assembly.GetTypes()
                 .Where(t => !t.IsAbstract && typeof(View).IsAssignableFrom(t));
@@ -69,7 +69,7 @@ namespace Comet.Blazor.Tests
 
                 Assert.NotNull(handler);
 				//Skia controls don't need explicit handlers
-                if (type.FullName.StartsWith("Comet.Skia"))
+                if (type.FullName.StartsWith("System.Maui.Skia"))
                     continue;
 
                 if (type == typeof(View))

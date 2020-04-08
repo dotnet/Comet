@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet", "..\src\Comet\Comet.csproj", "{1591BF3F-2370-4EB6-9336-F4EED244AB42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui", "..\src\System.Maui\System.Maui.csproj", "{1591BF3F-2370-4EB6-9336-F4EED244AB42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.iOS", "..\src\Comet.iOS\Comet.iOS.csproj", "{9DF36DBF-AFE6-438D-B7A6-1B5FB3D1D6D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.iOS", "..\src\System.Maui.iOS\System.Maui.iOS.csproj", "{9DF36DBF-AFE6-438D-B7A6-1B5FB3D1D6D1}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xamarin.Forms.Loader", "..\src\Xamarin.Forms.Loader\Xamarin.Forms.Loader.csproj", "{D4420A5B-F81A-4289-990F-743AC7B29051}"
 EndProject
@@ -11,37 +11,37 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{F90AD9E2-9679-4B6A-A13B-7F949465FA9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Android.Sample", "..\sample\Comet.Android.Sample\Comet.Android.Sample.csproj", "{1B3F8AD2-4252-44CA-8DD6-A7702C46A25D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.Android.Sample", "..\sample\System.Maui.Android.Sample\System.Maui.Android.Sample.csproj", "{1B3F8AD2-4252-44CA-8DD6-A7702C46A25D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Samples", "..\sample\Comet.Samples\Comet.Samples.csproj", "{F6609551-D56D-4737-8326-EFB2A1CADE26}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.Samples", "..\sample\System.Maui.Samples\System.Maui.Samples.csproj", "{F6609551-D56D-4737-8326-EFB2A1CADE26}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{E116F98C-AA6F-4C00-B8D0-DC6D2FECC7B6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Tests", "..\tests\Comet.Tests\Comet.Tests.csproj", "{7F1483A8-0FC2-4187-9453-9E412E41E3D1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.Tests", "..\tests\System.Maui.Tests\System.Maui.Tests.csproj", "{7F1483A8-0FC2-4187-9453-9E412E41E3D1}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Forms", "Forms", "{AAC4616D-CE78-4BBB-8155-C55F22AB7DCD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Skia", "..\src\Comet.Skia\Comet.Skia.csproj", "{9B9BF0E6-C500-4121-8FB6-9DB46D8BA8EC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.Skia", "..\src\System.Maui.Skia\System.Maui.Skia.csproj", "{9B9BF0E6-C500-4121-8FB6-9DB46D8BA8EC}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Skia", "Skia", "{8F240B92-7D40-4AEF-8B6A-B58CD1912706}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Skia.Android", "..\src\Comet.Skia.Android\Comet.Skia.Android.csproj", "{F5FFBB2C-23BE-4029-BFD1-1028F1461F86}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.Skia.Android", "..\src\System.Maui.Skia.Android\System.Maui.Skia.Android.csproj", "{F5FFBB2C-23BE-4029-BFD1-1028F1461F86}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Skia.Mac", "..\src\Comet.Skia.Mac\Comet.Skia.Mac.csproj", "{00B248D0-382A-4504-A126-76B9C892583E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.Skia.Mac", "..\src\System.Maui.Skia.Mac\System.Maui.Skia.Mac.csproj", "{00B248D0-382A-4504-A126-76B9C892583E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Material", "Material", "{F8795FA5-CF55-44F3-822C-6611EB80E119}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Comet.Android", "..\src\Comet.Android\Comet.Android.csproj", "{0AA42875-15ED-480E-9DAD-F0C3C8661C14}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "System.Maui.Android", "..\src\System.Maui.Android\System.Maui.Android.csproj", "{0AA42875-15ED-480E-9DAD-F0C3C8661C14}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Comet.Mac", "..\src\Comet.Mac\Comet.Mac.csproj", "{B83B53CD-EDC1-461E-A282-C2AE7453143B}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "System.Maui.Mac", "..\src\System.Maui.Mac\System.Maui.Mac.csproj", "{B83B53CD-EDC1-461E-A282-C2AE7453143B}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Comet.iOS.Sample", "..\sample\Comet.iOS.Sample\Comet.iOS.Sample.csproj", "{5B98F2FB-AA8C-47C9-B5F8-346C0BAA6747}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "System.Maui.iOS.Sample", "..\sample\System.Maui.iOS.Sample\System.Maui.iOS.Sample.csproj", "{5B98F2FB-AA8C-47C9-B5F8-346C0BAA6747}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Comet.Mac.Sample", "..\sample\Comet.Mac.Sample\Comet.Mac.Sample.csproj", "{FA0E3F2F-E12C-4862-909D-CE504D0C1B85}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "System.Maui.Mac.Sample", "..\sample\System.Maui.Mac.Sample\System.Maui.Mac.Sample.csproj", "{FA0E3F2F-E12C-4862-909D-CE504D0C1B85}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Comet.Skia.iOS", "..\src\Comet.Skia.iOS\Comet.Skia.iOS.csproj", "{A6FF725C-2DFB-47BC-A036-CEF2914473BD}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "System.Maui.Skia.iOS", "..\src\System.Maui.Skia.iOS\System.Maui.Skia.iOS.csproj", "{A6FF725C-2DFB-47BC-A036-CEF2914473BD}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Comet.Material.iOS", "..\src\Material\Comet.Material.iOS\Comet.Material.iOS.csproj", "{CB10C582-3AF0-4C23-B05C-5D756AFE0632}"
+Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "System.Maui.Material.iOS", "..\src\Material\System.Maui.Material.iOS\System.Maui.Material.iOS.csproj", "{CB10C582-3AF0-4C23-B05C-5D756AFE0632}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

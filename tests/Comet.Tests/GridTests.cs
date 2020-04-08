@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
-using Comet.Tests.Handlers;
+using System.Maui.Tests.Handlers;
 using Xunit;
 
-namespace Comet.Tests
+namespace System.Maui.Tests
 {
 	public class GridTests : TestBase
 	{

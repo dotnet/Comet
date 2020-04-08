@@ -6,12 +6,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
-using Comet.Android;
+using System.Maui.Android;
 
 namespace NewApp.Droid
 {
     [Activity(Label = "NewApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : CometActivity
+    public class MainActivity : System.MauiActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -27,7 +27,7 @@ namespace NewApp.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             #endif
 #if DEBUG
-            Comet.Reload.Init();
+            System.Maui.Reload.Init();
 #endif
 
             Page = new MainPage();

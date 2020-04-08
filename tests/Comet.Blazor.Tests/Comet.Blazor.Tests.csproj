@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Comet.Blazor\Comet.Blazor.csproj" />
+    <ProjectReference Include="..\..\src\System.Maui.Blazor\System.Maui.Blazor.csproj" />
   </ItemGroup>
 
 </Project>

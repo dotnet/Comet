@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 
-namespace Comet.Tests
+namespace System.Maui.Tests
 {
     public class AnimationTests : TestBase
     {

@@ -12,8 +12,8 @@ pr:
 stages:
 - stage: BuildSource
   jobs:
-  - job: BuildCometBlazor
-    displayName: Build Comet Blazor
+  - job: BuildSystem.MauiBlazor
+    displayName: Build System.Maui Blazor
     pool:
       vmImage: 'ubuntu-latest'
     steps:
@@ -28,7 +28,7 @@ stages:
         displayName: 'Build Blazor'
         inputs:
           command: 'build'
-          projects: 'Comet.Blazor.sln'
+          projects: 'System.Maui.Blazor.sln'
           arguments: '-c $(BuildConfiguration)'
           
       - task: Bash@3
@@ -51,13 +51,13 @@ stages:
       #   displayName: 'Test Blazor'
       #   inputs:
       #     command: 'test'
-      #     projects: 'Comet.Blazor.sln'
+      #     projects: 'System.Maui.Blazor.sln'
       #     arguments: '-c $(BuildConfiguration)'
       - task: DotNetCoreCLI@2
         displayName: 'Pack Blazor'
         inputs:
           command: 'pack'
-          packagesToPack: 'src/Comet.Blazor/Comet.Blazor.csproj'
+          packagesToPack: 'src/System.Maui.Blazor/System.Maui.Blazor.csproj'
           includesymbols: true
           versioningScheme: byEnvVar
           versionEnvVar: VERSION
@@ -67,8 +67,8 @@ stages:
           pathtoPublish: '$(Build.ArtifactStagingDirectory)'
           artifactName: drop
 
-  - job: BuildCometMac
-    displayName: Build Comet Mac
+  - job: BuildSystem.MauiMac
+    displayName: Build System.Maui Mac
     pool:
       name: Hosted macOS
       vmImage: 'macOS-latest'
@@ -97,16 +97,16 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/Comet-Mac.sln
+        restoreSolution: build/System.Maui-Mac.sln
             
     - task: MSBuild@1
-      displayName: 'Build Comet'
+      displayName: 'Build System.Maui'
       inputs:
-        solution: 'src/Comet/Comet.csproj'
+        solution: 'src/System.Maui/System.Maui.csproj'
         configuration: '$(BuildConfiguration)'
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet/bin/Debug/netstandard2.0/Comet.*'
+        Contents: 'src/System.Maui/bin/Debug/netstandard2.0/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
@@ -116,80 +116,80 @@ stages:
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Android'
+      displayName: 'Build System.Maui.Android'
       inputs:
-        solution: 'src/Comet.Android/Comet.Android.csproj'
+        solution: 'src/System.Maui.Android/System.Maui.Android.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet.Android/bin/Debug/Comet.*'
+        Contents: 'src/System.Maui.Android/bin/Debug/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.iOS'
+      displayName: 'Build System.Maui.iOS'
       inputs:
-        solution: 'src/Comet.iOS/Comet.iOS.csproj'
+        solution: 'src/System.Maui.iOS/System.Maui.iOS.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet.iOS/bin/Debug/Comet.*'
+        Contents: 'src/System.Maui.iOS/bin/Debug/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Mac'
+      displayName: 'Build System.Maui.Mac'
       inputs:
-        solution: 'src/Comet.Mac/Comet.Mac.csproj'
+        solution: 'src/System.Maui.Mac/System.Maui.Mac.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet.Mac/bin/Debug/Comet.*'
+        Contents: 'src/System.Maui.Mac/bin/Debug/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia'
+      displayName: 'Build System.Maui.Skia'
       inputs:
-        solution: 'src/Comet.Skia/Comet.Skia.csproj'
+        solution: 'src/System.Maui.Skia/System.Maui.Skia.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet.Skia/bin/Debug/netstandard2.0/Comet.*'
+        Contents: 'src/System.Maui.Skia/bin/Debug/netstandard2.0/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
     
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia.Android'
+      displayName: 'Build System.Maui.Skia.Android'
       inputs:
-        solution: 'src/Comet.Skia.Android/Comet.Skia.Android.csproj'
-        configuration: '$(BuildConfiguration)'
-    
-    - task: CopyFiles@2
-      inputs:
-        Contents: 'src/Comet.Skia.Android/bin/Debug/Comet.*'
-        TargetFolder: '$(Build.ArtifactStagingDirectory)'
-
-    - task: MSBuild@1
-      displayName: 'Build Comet.Skia.iOS'
-      inputs:
-        solution: 'src/Comet.Skia.iOS/Comet.Skia.iOS.csproj'
+        solution: 'src/System.Maui.Skia.Android/System.Maui.Skia.Android.csproj'
         configuration: '$(BuildConfiguration)'
     
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet.Skia.iOS/bin/Debug/Comet.*'
+        Contents: 'src/System.Maui.Skia.Android/bin/Debug/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia.Mac'
+      displayName: 'Build System.Maui.Skia.iOS'
       inputs:
-        solution: 'src/Comet.Skia.Mac/Comet.Skia.Mac.csproj'
+        solution: 'src/System.Maui.Skia.iOS/System.Maui.Skia.iOS.csproj'
+        configuration: '$(BuildConfiguration)'
+    
+    - task: CopyFiles@2
+      inputs:
+        Contents: 'src/System.Maui.Skia.iOS/bin/Debug/System.Maui.*'
+        TargetFolder: '$(Build.ArtifactStagingDirectory)'
+
+    - task: MSBuild@1
+      displayName: 'Build System.Maui.Skia.Mac'
+      inputs:
+        solution: 'src/System.Maui.Skia.Mac/System.Maui.Skia.Mac.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet.Skia.Mac/bin/Debug/Comet.*'
+        Contents: 'src/System.Maui.Skia.Mac/bin/Debug/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: PublishBuildArtifacts@1
@@ -198,8 +198,8 @@ stages:
         ArtifactName: 'drop_mac'
         publishLocation: 'Container'
 
-  - job: BuildCometWindows
-    displayName: Build Comet Windows
+  - job: BuildSystem.MauiWindows
+    displayName: Build System.Maui Windows
     pool:
       vmImage: 'windows-2019'
       demands:
@@ -214,50 +214,50 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/Comet-Windows.sln
+        restoreSolution: build/System.Maui-Windows.sln
 
     - task: MSBuild@1
-      displayName: 'Build Comet.UWP'
+      displayName: 'Build System.Maui.UWP'
       inputs:
-        solution: 'src/Comet.UWP/Comet.UWP.csproj'
+        solution: 'src/System.Maui.UWP/System.Maui.UWP.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet.UWP/bin/Debug/Comet.*'
+        Contents: 'src/System.Maui.UWP/bin/Debug/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.WPF'
+      displayName: 'Build System.Maui.WPF'
       inputs:
-        solution: 'src/Comet.WPF/Comet.WPF.csproj'
+        solution: 'src/System.Maui.WPF/System.Maui.WPF.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet.WPF/bin/Debug/Comet.*'
+        Contents: 'src/System.Maui.WPF/bin/Debug/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia.UWP'
+      displayName: 'Build System.Maui.Skia.UWP'
       inputs:
-        solution: 'src/Comet.Skia.UWP/Comet.Skia.UWP.csproj'
+        solution: 'src/System.Maui.Skia.UWP/System.Maui.Skia.UWP.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet.Skia.UWP/bin/Debug/Comet.*'
+        Contents: 'src/System.Maui.Skia.UWP/bin/Debug/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia.WPF'
+      displayName: 'Build System.Maui.Skia.WPF'
       inputs:
-        solution: 'src/Comet.Skia.WPF/Comet.Skia.WPF.csproj'
+        solution: 'src/System.Maui.Skia.WPF/System.Maui.Skia.WPF.csproj'
         configuration: '$(BuildConfiguration)'
     
     - task: CopyFiles@2
       inputs:
-        Contents: 'src/Comet.Skia.WPF/bin/Debug/Comet.*'
+        Contents: 'src/System.Maui.Skia.WPF/bin/Debug/System.Maui.*'
         TargetFolder: '$(Build.ArtifactStagingDirectory)'
 
     - task: PublishBuildArtifacts@1
@@ -268,8 +268,8 @@ stages:
 
 - stage: RunTests
   jobs:
-  - job: RunCometTests
-    displayName: Run Comet Tests
+  - job: RunSystem.MauiTests
+    displayName: Run System.Maui Tests
     pool:
       vmImage: 'windows-2019'
       demands:
@@ -285,19 +285,19 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/Comet-Tests.sln
+        restoreSolution: build/System.Maui-Tests.sln
 
     - task: MSBuild@1
       displayName: 'Build Tests'
       inputs:
-        solution: 'tests/Comet.Tests/Comet.Tests.csproj'
+        solution: 'tests/System.Maui.Tests/System.Maui.Tests.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: VSTest@2
       inputs:
         testSelector: 'testAssemblies'
         testAssemblyVer2: |
-          **\bin\$(BuildConfiguration)\netcoreapp2.1\Comet.Tests.dll
+          **\bin\$(BuildConfiguration)\netcoreapp2.1\System.Maui.Tests.dll
           !**\obj\**
           !**\xunit.runner.visualstudio.testadapter.dll
           !**\xunit.runner.visualstudio.dotnetcore.testadapter.dll
@@ -308,7 +308,7 @@ stages:
 - stage: BuildSamples
   jobs:
   - job: BuildSamplesAndroid
-    displayName: Build Comet Android Samples
+    displayName: Build System.Maui Android Samples
     pool:
       name: Hosted macOS
       vmImage: 'macOS-latest'
@@ -334,28 +334,28 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/Comet-Mac.sln
+        restoreSolution: build/System.Maui-Mac.sln
 
     - task: Boots@1
       displayName: 'Set Xamarin.Android'
       inputs:
         uri: $(XamarinAndroidMac)
     - task: XamarinAndroid@1
-      displayName: 'Build Comet.Android.Sample App'
+      displayName: 'Build System.Maui.Android.Sample App'
       inputs:
-        projectFile: sample/Comet.Android.Sample/Comet.Android.Sample.csproj
+        projectFile: sample/System.Maui.Android.Sample/System.Maui.Android.Sample.csproj
         configuration: '$(BuildConfiguration)'
         createAppPackage: false
 
     # - task: XamarinAndroid@1
-    #   displayName: 'Build Comet.Forms.Android.Sample App'
+    #   displayName: 'Build System.Maui.Forms.Android.Sample App'
     #   inputs:
-    #     projectFile: sample/Forms/Comet.Forms.Sample.Android/Comet.Forms.Sample.Android.csproj
+    #     projectFile: sample/Forms/System.Maui.Forms.Sample.Android/System.Maui.Forms.Sample.Android.csproj
     #     configuration: '$(BuildConfiguration)'
     #     createAppPackage: false
 
-  - job: BuildCometSamplesiOSMac
-    displayName: Build Comet iOS and Mac Samples
+  - job: BuildSystem.MauiSamplesiOSMac
+    displayName: Build System.Maui iOS and Mac Samples
     pool:
       name: Hosted macOS
       vmImage: 'macOS-latest'
@@ -391,7 +391,7 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/Comet-Mac.sln
+        restoreSolution: build/System.Maui-Mac.sln
 
     - task: CmdLine@2
       displayName: 'set Xcode 11.2.1'
@@ -401,18 +401,18 @@ stages:
     - task: MSBuild@1
       displayName: 'Build iOS'
       inputs:
-        solution: 'build/Comet-Mac.sln'
+        solution: 'build/System.Maui-Mac.sln'
         platform: iPhoneSimulator
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
       displayName: 'Build Mac'
       inputs:
-        solution: 'sample/Comet.Mac.Sample/Comet.Mac.Sample.csproj'
+        solution: 'sample/System.Maui.Mac.Sample/System.Maui.Mac.Sample.csproj'
         configuration: '$(BuildConfiguration)'
 
-  - job: BuildCometSamplesWindows
-    displayName: Build Comet UWP and WPF Samples
+  - job: BuildSystem.MauiSamplesWindows
+    displayName: Build System.Maui UWP and WPF Samples
     pool:
       vmImage: 'windows-2019'
       demands:
@@ -426,19 +426,19 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/Comet-Windows.sln
+        restoreSolution: build/System.Maui-Windows.sln
     
     - task: MSBuild@1
       displayName: 'Build UWP Sample'
       inputs:
-        solution: 'sample/Comet.UWP.Sample/Comet.UWP.Sample.csproj'
+        solution: 'sample/System.Maui.UWP.Sample/System.Maui.UWP.Sample.csproj'
         configuration: '$(BuildConfiguration)'
         msbuildArguments: '/p:AppxPackageSigningEnabled=false'
 
     - task: MSBuild@1
       displayName: 'Build WPF Sample'
       inputs:
-        solution: 'sample/Comet.WPF.Sample/Comet.WPF.Sample.csproj'
+        solution: 'sample/System.Maui.WPF.Sample/System.Maui.WPF.Sample.csproj'
         configuration: '$(BuildConfiguration)'
         msbuildArguments: '/p:AppxPackageSigningEnabled=false'
 
@@ -493,17 +493,17 @@ stages:
         versionSpec: $(NugetVersion)
 
     - task: NuGetCommand@2
-      displayName: 'nuget pack Comet.nuspec'
+      displayName: 'nuget pack System.Maui.nuspec'
       inputs:
         command: pack
-        packagesToPack: 'Comet.nuspec'
+        packagesToPack: 'System.Maui.nuspec'
         includeSymbols: true
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 
 
     - bash:
-        nuget pack Comet.Skia.nuspec -Properties "cometVersion=$(VERSION)" -Symbols -version $(VERSION) -NonInteractive -OutputDirectory "$(Build.ArtifactStagingDirectory)"
+        nuget pack System.Maui.Skia.nuspec -Properties "System.MauiVersion=$(VERSION)" -Symbols -version $(VERSION) -NonInteractive -OutputDirectory "$(Build.ArtifactStagingDirectory)"
 
     - task: CopyFiles@2
       inputs:

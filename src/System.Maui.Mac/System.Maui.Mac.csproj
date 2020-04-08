@@ -1,0 +1,133 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{BCAF5569-30DB-4D44-BF46-DFFE93DDCBD0}</ProjectGuid>
+    <ProjectTypeGuids>{A3F8F2AB-B479-4A4A-A458-A89E7DC349F1};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <RootNamespace>System.Maui.Mac</RootNamespace>
+    <AssemblyName>System.Maui.Mac</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkIdentifier>Xamarin.Mac</TargetFrameworkIdentifier>
+    <MonoMacResourcePrefix>Resources</MonoMacResourcePrefix>
+     <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
+    <PublishRepositoryUrl>true</PublishRepositoryUrl> 
+    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>  
+    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
+    <IncludeSymbols>true</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <CreatePackage>false</CreatePackage>
+    <EnablePackageSigning>false</EnablePackageSigning>
+    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <UseSGen>false</UseSGen>
+    <HttpClientHandler>
+    </HttpClientHandler>
+    <LinkMode>
+    </LinkMode>
+    <XamMacArch>
+    </XamMacArch>
+    <AOTMode>None</AOTMode>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <DefineConstants>
+    </DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <EnableCodeSigning>false</EnableCodeSigning>
+    <CreatePackage>false</CreatePackage>
+    <EnablePackageSigning>false</EnablePackageSigning>
+    <IncludeMonoRuntime>false</IncludeMonoRuntime>
+    <UseSGen>false</UseSGen>
+    <HttpClientHandler>
+    </HttpClientHandler>
+    <LinkMode>
+    </LinkMode>
+    <XamMacArch>
+    </XamMacArch>
+    <AOTMode>None</AOTMode>
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="Xamarin.Mac" />
+    <Reference Include="netstandard" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controls\CUIContainerView.cs" />
+    <Compile Include="Controls\CUIImageView.cs" />
+    <Compile Include="Extensions\ControlExtensions.cs" />
+    <Compile Include="Extensions\GraphicsExtensions.cs" />
+    <Compile Include="Extensions\NSViewExtensions.cs" />
+    <Compile Include="Graphics\NSImageBitmap.cs" />
+    <Compile Include="Handlers\AbstractControlHandler.cs" />
+    <Compile Include="Handlers\AbstractHandler.cs" />
+    <Compile Include="Handlers\AbstractLayoutHandler.cs" />
+    <Compile Include="Handlers\GridHandler.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Extensions\MacExtensions.cs" />
+    <Compile Include="Handlers\ButtonHandler.cs" />
+    <Compile Include="Handlers\TextFieldHandler.cs" />
+    <Compile Include="Handlers\ImageHandler.cs" />
+    <Compile Include="Handlers\TextHandler.cs" />
+    <Compile Include="Handlers\ScrollViewHandler.cs" />
+    <Compile Include="Handlers\VStackHandler.cs" />
+    <Compile Include="MacViewHandler.cs" />
+    <Compile Include="Services\MacBitmapService.cs" />
+    <Compile Include="Services\MacGraphicsService.cs" />
+    <Compile Include="UI.cs" />
+    <Compile Include="Handlers\ViewHandler.cs" />
+    <Compile Include="Controls\NSNavigationController.cs" />
+    <Compile Include="Controls\NSColorView.cs" />
+    <Compile Include="Handlers\ContentViewHandler.cs" />
+    <Compile Include="Handlers\HStackHandler.cs" />
+    <Compile Include="Handlers\SpacerHandler.cs" />
+    <Compile Include="Services\MacFontService.cs" />
+    <Compile Include="UIViewRepresentable.cs" />
+    <Compile Include="Handlers\ViewRepresentableHandler.cs" />
+    <Compile Include="ViewChangedEventArgs.cs" />
+    <Compile Include="Handlers\SliderHandler.cs" />
+    <Compile Include="Handlers\ZStackHandler.cs" />
+    <Compile Include="Handlers\SecureFieldHandler.cs" />
+    <Compile Include="Handlers\ToggleHandler.cs" />
+    <Compile Include="Handlers\ShapeViewHandler.cs" />
+    <Compile Include="Controls\CUIShapeView.cs" />
+    <Compile Include="Controls\CUITableView.cs" />
+    <Compile Include="Controls\CUITableViewSource.cs" />
+    <Compile Include="Handlers\ListViewHandler.cs" />
+    <Compile Include="Controls\CUITableViewCell.cs" />
+    <Compile Include="Services\MacTicker.cs" />
+    <Compile Include="Handlers\RadioGroupHandler.cs" />
+    <Compile Include="Handlers\RadioButtonHandler.cs" />
+    <Compile Include="Handlers\ProgressBarHandler.cs" />
+    <Compile Include="CometView.cs" />
+    <Compile Include="CometViewController.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\System.Maui\System.Maui.csproj">
+      <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
+      <Name>System.Maui</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Mac\Xamarin.Mac.CSharp.targets" />
+</Project>

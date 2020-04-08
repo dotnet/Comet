@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>Clancey.System.Maui.Skia</id>
+    <version>0.0.1-alpha</version>
+    <title>System.Maui</title>
+    <authors>James Clancey</authors>
+    <owners>Clancey</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Skia Controls for System.Maui</description>
+    <summary>This allows you to use Skia drawn controls for System.Maui!.</summary>
+    <copyright>James Clancey</copyright>
+    <projectUrl>https://github.com/clancey/System.Maui</projectUrl>
+    <repository type="git" url="https://github.com/clancey/System.Maui"/>
+    <license type="expression">MIT</license>
+    <language>C#</language>
+    <dependencies>
+      <group>
+        <dependency id="Clancey.System.Maui" version="$System.MauiVersion$"/>
+        <dependency id="SkiaSharp" version="1.68.1.1"/>
+        <dependency id="SkiaSharp.Views" version="1.68.1.1"/>
+        <dependency id="Topten.RichTextKit" version="0.1.118"/>
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="src/System.Maui.Skia/bin/Debug/netstandard2.0/System.Maui.Skia.dll" target="lib/netstandard2.0/System.Maui.Skia.dll"/>
+    <file src="src/System.Maui.Skia/bin/Debug/netstandard2.0/System.Maui.Skia.pdb" target="lib/netstandard2.0/System.Maui.Skia.pdb"/>
+    <file src="src/System.Maui.Skia.iOS/bin/Debug/System.Maui.Skia.dll" target="lib/xamarinios10/System.Maui.Skia.dll"/>
+    <file src="src/System.Maui.Skia.iOS/bin/Debug/System.Maui.Skia.pdb" target="lib/xamarinios10/System.Maui.Skia.pdb"/>
+    <file src="src/System.Maui.Skia.iOS/bin/Debug/System.Maui.Skia.iOS.dll" target="lib/xamarinios10/System.Maui.Skia.iOS.dll"/>
+    <file src="src/System.Maui.Skia.iOS/bin/Debug/System.Maui.Skia.iOS.pdb" target="lib/xamarinios10/System.Maui.Skia.iOS.pdb"/>
+    <file src="src/System.Maui.Skia.Android/bin/Debug/System.Maui.Skia.dll" target="lib/monoandroid81/System.Maui.Skia.dll"/>
+    <file src="src/System.Maui.Skia.Android/bin/Debug/System.Maui.Skia.pdb" target="lib/monoandroid81/System.Maui.Skia.pdb"/>
+    <file src="src/System.Maui.Skia.Android/bin/Debug/System.Maui.Skia.Android.dll" target="lib/monoandroid81/System.Maui.Skia.Android.dll"/>
+    <file src="src/System.Maui.Skia.Android/bin/Debug/System.Maui.Skia.Android.pdb" target="lib/monoandroid81/System.Maui.Skia.Android.pdb"/>
+    <file src="src/System.Maui.Skia.Mac/bin/Debug/System.Maui.Skia.dll" target="lib/Xamarin.Mac20/System.Maui.Skia.dll"/>
+    <file src="src/System.Maui.Skia.Mac/bin/Debug/System.Maui.Skia.pdb" target="lib/Xamarin.Mac20/System.Maui.Skia.pdb"/>
+    <file src="src/System.Maui.Skia.Mac/bin/Debug/System.Maui.Skia.Mac.dll" target="lib/Xamarin.Mac20/System.Maui.Skia.Mac.dll"/>
+    <file src="src/System.Maui.Skia.Mac/bin/Debug/System.Maui.Skia.Mac.pdb" target="lib/Xamarin.Mac20/System.Maui.Skia.Mac.pdb"/>
+    <file src="src/System.Maui.Skia.UWP/bin/Debug/System.Maui.Skia.dll" target="lib/uap/System.Maui.Skia.dll"/>
+    <file src="src/System.Maui.Skia.UWP/bin/Debug/System.Maui.Skia.pdb" target="lib/uap/System.Maui.Skia.pdb"/>
+    <file src="src/System.Maui.Skia.UWP/bin/Debug/System.Maui.Skia.UWP.dll" target="lib/uap/System.Maui.Skia.UWP.dll"/>
+    <file src="src/System.Maui.Skia.UWP/bin/Debug/System.Maui.Skia.UWP.pdb" target="lib/uap/System.Maui.Skia.UWP.pdb"/>
+    <file src="src/System.Maui.Skia.WPF/bin/Debug/System.Maui.Skia.dll" target="lib/net45/System.Maui.Skia.dll"/>
+    <file src="src/System.Maui.Skia.WPF/bin/Debug/System.Maui.Skia.pdb" target="lib/net45/System.Maui.Skia.pdb"/>
+    <file src="src/System.Maui.Skia.WPF/bin/Debug/System.Maui.Skia.WPF.dll" target="lib/net45/System.Maui.Skia.WPF.dll"/>
+    <file src="src/System.Maui.Skia.WPF/bin/Debug/System.Maui.Skia.WPF.pdb" target="lib/net45/System.Maui.Skia.WPF.pdb"/>
+  </files>
+</package>

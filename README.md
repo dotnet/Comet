@@ -1,11 +1,11 @@
-# Comet ☄️ 
+# System.Maui ☄️ 
 
-[![Build Status](https://clancey.visualstudio.com/Comet/_apis/build/status/Clancey.Comet?branchName=dev)](https://clancey.visualstudio.com/Comet/_build/latest?definitionId=1&branchName=dev)  [![NuGet](https://img.shields.io/nuget/v/Clancey.Comet.svg)](https://www.nuget.org/packages/Clancey.Comet)
+[![Build Status](https://clancey.visualstudio.com/System.Maui/_apis/build/status/Clancey.System.Maui?branchName=dev)](https://clancey.visualstudio.com/System.Maui/_build/latest?definitionId=1&branchName=dev)  [![NuGet](https://img.shields.io/nuget/v/Clancey.System.Maui.svg)](https://www.nuget.org/packages/Clancey.System.Maui)
 
 [Chat on Discord](https://discord.gg/7Ms7ptM)
 
 
-What is Comet? Comet is a prototype for a new UI Framework/Pattern to write app UI.  It follows the Model View Update (MVU) pattern. It magically databinds for you!  
+What is System.Maui? System.Maui is a prototype for a new UI Framework/Pattern to write app UI.  It follows the Model View Update (MVU) pattern. It magically databinds for you!  
 
 Video Preview:
 
@@ -13,11 +13,11 @@ Video Preview:
 
 ## Getting Started
 
-When you're ready to take a ride on the comet, head over to the wiki and follow the [Getting Started](https://github.com/Clancey/Comet/wiki/Getting-Started) guide.
+When you're ready to take a ride on the System.Maui, head over to the wiki and follow the [Getting Started](https://github.com/Clancey/System.Maui/wiki/Getting-Started) guide.
 
 ## Key Concepts
 
-Comet is an MVU style pattern:
+System.Maui is an MVU style pattern:
 
 ![MVU pattern](art/mvu-pattern.png)
 
@@ -43,15 +43,15 @@ public class MyPage : View {
 
 ## Hot Reload
 
-Hot Reload is included by default! The setup is very easy: a Visual Studio extension and a NuGet. Download both from [Releases](https://github.com/Clancey/Comet/releases) here on GitHub.
+Hot Reload is included by default! The setup is very easy: a Visual Studio extension and a NuGet. Download both from [Releases](https://github.com/Clancey/System.Maui/releases) here on GitHub.
 
-Download and install the VS extension from the [Releases](https://github.com/Clancey/Comet/releases/)
+Download and install the VS extension from the [Releases](https://github.com/Clancey/System.Maui/releases/)
 
 Then add to your `AppDelegate.cs` and/or `MainActivity.cs`, or similar. See the sample projects here for examples.
 
 ``` cs
  #if DEBUG
-            Comet.Reload.Init();
+            System.Maui.Reload.Init();
  #endif
 ```
 
@@ -74,7 +74,7 @@ class MyPage : View {
 
 ### 2. Do you want to use more complex data types?
 
-You can either implement [INotifyPropertyRead](https://github.com/Clancey/Comet/blob/master/src/Comet/BindingObject.cs#L13) or you can use [BindingObject](https://github.com/Clancey/Comet/blob/master/src/Comet/BindingObject.cs) to make it even simpler.
+You can either implement [INotifyPropertyRead](https://github.com/Clancey/System.Maui/blob/master/src/System.Maui/BindingObject.cs#L13) or you can use [BindingObject](https://github.com/Clancey/System.Maui/blob/master/src/System.Maui/BindingObject.cs) to make it even simpler.
 
 Add it as a Field/Property, and add the `[State]` attribute!
 
@@ -158,4 +158,4 @@ public class MyPage : View {
 
 # Disclaimer
 
-Comet is a **proof of concept**. There is **no** official support. Use at your own Risk.
+System.Maui is a **proof of concept**. There is **no** official support. Use at your own Risk.

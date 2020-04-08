@@ -19,7 +19,7 @@ make_package() {
     echo "===Packaging Templates==="
     echo ""
 
-    nuget pack comet-templates.nuspec > /dev/null
+    nuget pack System.Maui.templates.nuspec > /dev/null
 
     echo "Succesfully packaged templates."
     echo ""
@@ -31,7 +31,7 @@ install_package() {
 
     echo ""
 
-    dotnet new --install $root/Comet.Templates.*.nupkg > /dev/null
+    dotnet new --install $root/System.Maui.Templates.*.nupkg > /dev/null
 
     echo ""
     echo "Successfully installed templates."

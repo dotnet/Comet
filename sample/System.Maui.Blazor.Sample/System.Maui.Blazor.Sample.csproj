@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <LangVersion>7.3</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\System.Maui.Blazor\System.Maui.Blazor.csproj" />
+    <ProjectReference Include="..\..\src\System.Maui\System.Maui.csproj" />
+    <ProjectReference Include="..\System.Maui.Samples\System.Maui.Samples.csproj" />
+  </ItemGroup>
+
+</Project>

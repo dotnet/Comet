@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading;
-using Comet.Tests.Handlers;
+using System.Maui.Tests.Handlers;
 
-namespace Comet.Tests
+namespace System.Maui.Tests
 {
 	public static class UI
 	{

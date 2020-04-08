@@ -1,4 +1,4 @@
-﻿using Comet.iOS;
+﻿using System.Maui.iOS;
 using Foundation;
 using UIKit;
 
@@ -28,7 +28,7 @@ namespace NewApp.iOS
         {
 //-:cnd:noEmit
 #if DEBUG
-            Comet.Reload.Init();
+            System.Maui.Reload.Init();
 #endif
 //+:cnd:noEmit
 

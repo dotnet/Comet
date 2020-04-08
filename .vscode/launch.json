@@ -6,7 +6,7 @@
     "configurations": [
         {
             "name": "Launch",
-            "type": "comet",
+            "type": "System.Maui",
             "request": "launch",
             "preLaunchTask": "build"
         }

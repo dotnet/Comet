@@ -74,8 +74,8 @@
     </ItemGroup>
     <ItemGroup>
       <PackageReference Include="Xamarin.Essentials" Version="XamarinEssentialsSdk" />
-      <PackageReference Include="Clancey.Comet.Reload" Version="CometReloadSdk"/>
-      <PackageReference Include="Clancey.Comet" Version="CometSdk"/>
+      <PackageReference Include="System.Maui.Reload" Version="MauiReloadSdk"/>
+      <PackageReference Include="System.Maui" Version="MauiSdk"/>
     </ItemGroup>
     <ItemGroup>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">

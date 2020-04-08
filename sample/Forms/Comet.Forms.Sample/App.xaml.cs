@@ -1,9 +1,9 @@
 ﻿using System;
-using Comet.Samples;
+using System.Maui.Samples;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace Comet.Forms.Sample {
+namespace System.Maui.Forms.Sample {
 	public partial class App : Application {
 		public App ()
 		{

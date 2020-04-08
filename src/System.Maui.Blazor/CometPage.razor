@@ -1,0 +1,87 @@
+@using System.Maui.Blazor.Components
+
+<div class="System.Maui-page" @onmousedown="@OnMouseDown">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            @foreach (var view in _navigationStack.Reverse())
+            {
+                <li class="breadcrumb-item" aria-current="page">
+                    <a href="#" @onclick="@(()=>Back(view))">@GetTitle(view)</a>
+                </li>
+            }
+
+            <li class="breadcrumb-item active" aria-current="page">@GetTitle(View)</li>
+        </ol>
+    </nav>
+    <hr />
+    <BView @key="@View" View="@View" />
+</div>
+
+@code {
+    private readonly Stack<View> _navigationStack = new Stack<View>();
+    private View _view;
+
+    private void OnMouseDown(MouseEventArgs ui)
+    {
+        // Detect back button
+        if (ui.Buttons == 8)
+        {
+            Back();
+        }
+    }
+
+    [Parameter]
+    public View View
+    {
+        get => _view;
+        set
+        {
+            _view = value;
+
+            _view.GetOrCreateViewHandler();
+
+            if (_view?.BuiltView is NavigationView nav)
+            {
+                nav.SetPerformNavigate(toView =>
+                {
+                    _navigationStack.Push(View);
+                    View = toView;
+                    StateHasChanged();
+                });
+                nav.SetPerformPop(() =>
+                {
+                    View = _navigationStack.Pop();
+                    StateHasChanged();
+                });
+            }
+        }
+    }
+
+    private string GetTitle(View view)
+    {
+        return view.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "Unnamed page";
+    }
+
+    private void Back()
+    {
+        if (_navigationStack.Any())
+        {
+            View = _navigationStack.Pop();
+            StateHasChanged();
+        }
+    }
+
+    private void Back(View view)
+    {
+        while (_navigationStack.Any())
+        {
+            View = _navigationStack.Pop();
+
+            if (View == view)
+            {
+                StateHasChanged();
+                return;
+            }
+        }
+    }
+}

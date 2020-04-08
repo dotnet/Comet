@@ -1,0 +1,36 @@
+@inherits System.MauiComponentBase
+
+@using SkiaSharp
+@using System.Maui.Skia
+@using System.Drawing
+
+@inject CanvasWriter Writer;
+
+<canvas @ref="@_canvas" />
+
+@code {
+    private object _canvas;
+
+    [Parameter]
+    public Shape Shape { get; set; }
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        var size = await Writer.GetSizeAsync(_canvas).ConfigureAwait(false);
+        var bounds = new RectangleF(0, 0, size.Width, size.Height);
+
+        using (var surface = SKSurface.Create(new SKImageInfo((int)size.Width, (int)size.Height)))
+        {
+            var image = new SkiaShapeView(Shape);
+
+            image.Draw(surface.Canvas, bounds);
+
+            using (var snapshot = surface.Snapshot())
+            using (var data = snapshot.Encode())
+            {
+                var bytes = data.ToArray();
+                await Writer.DrawImageAsync(_canvas, bytes).ConfigureAwait(false);
+            }
+        }
+    }
+}

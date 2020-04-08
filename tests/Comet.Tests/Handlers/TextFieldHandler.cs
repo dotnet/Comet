@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Comet.Tests.Handlers
+namespace System.Maui.Tests.Handlers
 {
 	public class TextFieldHandler : GenericViewHandler
 	{

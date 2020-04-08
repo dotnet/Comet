@@ -1,13 +1,13 @@
 ﻿{
-    "author": "Comet",
+    "author": "System.Maui",
     "classifications": [
-        "Comet",
+        "Maui",
         "Mobile"
     ],
-    "name": "Comet App",
-    "groupIdentity": "Comet.App",
-    "identity": "Comet.App.CSharp",
-    "shortName": "comet",
+    "name": "System.Maui App",
+    "groupIdentity": "System.Maui.App",
+    "identity": "System.Maui.App.CSharp",
+    "shortName": "Maui",
     "tags": {
         "language": "C#",
         "type": "project"
@@ -56,7 +56,7 @@
             "choices": [
                 {
                     "choice": "quickstart",
-                    "description": "Quick Start Comet iOS app"
+                    "description": "Quick Start Maui mobile app"
                 }
             ]
         },
@@ -147,16 +147,16 @@
             "replaces": "XamarinAndroidDesign",
             "defaultValue": "28.0.0.1"
         },
-        "CometSdk": {
+        "System.MauiSdk": {
             "type": "parameter",
             "dataType": "string",
-            "replaces": "CometSdk",
+            "replaces": "MauiSdk",
             "defaultValue": "0.1.7364-beta"
         },
-        "CometReloadSdk": {
+        "System.MauiReloadSdk": {
             "type": "parameter",
             "dataType": "string",
-            "replaces": "CometReloadSdk",
+            "replaces": "MauiReloadSdk",
             "defaultValue": "0.0.13-alpha"
         },
         "ProjectID": {

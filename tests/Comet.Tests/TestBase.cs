@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Drawing;
-using Comet.Internal;
+using System.Maui.Internal;
 using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
-namespace Comet.Tests
+namespace System.Maui.Tests
 {
 	public class TestBase
 	{
@@ -48,7 +48,7 @@ namespace Comet.Tests
 			view.Frame = new RectangleF(0, 0, width, height);
 		}
 		
-		public static void ResetComet()
+		public static void ResetSystem.Maui()
 		{
 			var v = new View();
 			v.ResetGlobalEnvironment();

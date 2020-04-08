@@ -20,8 +20,8 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Comet\Comet.csproj" />
-    <ProjectReference Include="..\..\..\src\Comet.Forms\Comet.Forms.csproj" />
-    <ProjectReference Include="..\..\Comet.Samples\Comet.Samples.csproj" />
+    <ProjectReference Include="..\..\..\src\System.Maui\System.Maui.csproj" />
+    <ProjectReference Include="..\..\..\src\System.Maui.Forms\System.Maui.Forms.csproj" />
+    <ProjectReference Include="..\..\System.Maui.Samples\System.Maui.Samples.csproj" />
   </ItemGroup>
 </Project>

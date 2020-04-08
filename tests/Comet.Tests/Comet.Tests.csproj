@@ -21,7 +21,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
+    <ProjectReference Include="..\..\src\System.Maui\System.Maui.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Helpers\" />

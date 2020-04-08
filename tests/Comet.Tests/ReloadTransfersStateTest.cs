@@ -1,14 +1,14 @@
 ﻿using System;
-using Comet.Internal;
+using System.Maui.Internal;
 using Xunit;
-namespace Comet.Tests
+namespace System.Maui.Tests
 {
 	public class ReloadTransfersStateTest : TestBase
 	{
 		[Fact]
 		public void StateIsTransferedToReloadedView()
 		{
-			ResetComet();
+			ResetSystem.Maui();
 			const string textValue = "Hello";
 			var orgView = new MyOrgView();
 
@@ -29,7 +29,7 @@ namespace Comet.Tests
 		[Fact]
 		public void StateTransfersOnlyChangedValues()
 		{
-			ResetComet();
+			ResetSystem.Maui();
 			const string textValue = "Hello";
 			var orgView = new MyOrgView();
 

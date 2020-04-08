@@ -2,23 +2,23 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29001.49
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet", "..\src\Comet\Comet.csproj", "{0450BAE0-FE99-4A3E-8E44-B1A90646B99E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Maui", "..\src\System.Maui\System.Maui.csproj", "{0450BAE0-FE99-4A3E-8E44-B1A90646B99E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.UWP", "..\src\Comet.UWP\Comet.UWP.csproj", "{2D337300-B3E9-4A36-8387-76A9A1100C5B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.UWP", "..\src\System.Maui.UWP\System.Maui.UWP.csproj", "{2D337300-B3E9-4A36-8387-76A9A1100C5B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.WPF", "..\src\Comet.WPF\Comet.WPF.csproj", "{F8BA5DE0-AEC0-4423-B036-5F9157E939D0}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.WPF", "..\src\System.Maui.WPF\System.Maui.WPF.csproj", "{F8BA5DE0-AEC0-4423-B036-5F9157E939D0}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet.Skia", "..\src\Comet.Skia\Comet.Skia.csproj", "{1A05E8C7-9CFC-403E-9297-40755370C58E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Maui.Skia", "..\src\System.Maui.Skia\System.Maui.Skia.csproj", "{1A05E8C7-9CFC-403E-9297-40755370C58E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Skia.UWP", "..\src\Comet.Skia.UWP\Comet.Skia.UWP.csproj", "{004EF9A7-6FF7-4ACA-9416-DCFB84A85B04}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.Skia.UWP", "..\src\System.Maui.Skia.UWP\System.Maui.Skia.UWP.csproj", "{004EF9A7-6FF7-4ACA-9416-DCFB84A85B04}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Skia.WPF", "..\src\Comet.Skia.WPF\Comet.Skia.WPF.csproj", "{E7FA15FC-418F-4FFE-9DC1-CF68AFA860AA}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.Skia.WPF", "..\src\System.Maui.Skia.WPF\System.Maui.Skia.WPF.csproj", "{E7FA15FC-418F-4FFE-9DC1-CF68AFA860AA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet.Samples", "..\sample\Comet.Samples\Comet.Samples.csproj", "{C9FEBA56-DAD9-4975-8105-BB8537A2A789}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "System.Maui.Samples", "..\sample\System.Maui.Samples\System.Maui.Samples.csproj", "{C9FEBA56-DAD9-4975-8105-BB8537A2A789}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.UWP.Sample", "..\sample\Comet.UWP.Sample\Comet.UWP.Sample.csproj", "{35664234-EB75-47BA-A082-9F96BDF6FC92}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.UWP.Sample", "..\sample\System.Maui.UWP.Sample\System.Maui.UWP.Sample.csproj", "{35664234-EB75-47BA-A082-9F96BDF6FC92}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.WPF.Sample", "..\sample\Comet.WPF.Sample\Comet.WPF.Sample.csproj", "{0FC87DE5-B5E5-4846-894B-824497118143}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Maui.WPF.Sample", "..\sample\System.Maui.WPF.Sample\System.Maui.WPF.Sample.csproj", "{0FC87DE5-B5E5-4846-894B-824497118143}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Platforms", "Platforms", "{921E431B-19A1-4ABD-B70B-098A370AB8CC}"
 EndProject

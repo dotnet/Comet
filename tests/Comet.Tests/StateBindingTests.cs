@@ -1,8 +1,8 @@
 ﻿using System;
-using Comet.Internal;
+using System.Maui.Internal;
 using Xunit;
 
-namespace Comet.Tests
+namespace System.Maui.Tests
 {
 	public class StateBindingTests : TestBase
 	{

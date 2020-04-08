@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using Comet.Reflection;
+using System.Maui.Reflection;
 
-namespace Comet.Tests.Handlers
+namespace System.Maui.Tests.Handlers
 {
 	public class GenericViewHandler : IViewHandler
 	{

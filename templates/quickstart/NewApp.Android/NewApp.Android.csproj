@@ -60,8 +60,8 @@
       <PackageReference Include="Xamarin.Android.Support.v7.AppCompat" Version="XamarinAndroidAppCompat" />
       <PackageReference Include="Xamarin.Android.Support.Design" Version="XamarinAndroidDesign" />
       <PackageReference Include="Xamarin.Essentials" Version="XamarinEssentialsSdk" />
-      <PackageReference Include="Clancey.Comet.Reload" Version="CometReloadSdk"/>
-      <PackageReference Include="Clancey.Comet" Version="CometSdk"/>
+      <PackageReference Include="System.Maui.Reload" Version="MauiReloadSdk"/>
+      <PackageReference Include="System.Maui" Version="MauiSdk"/>
     </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />

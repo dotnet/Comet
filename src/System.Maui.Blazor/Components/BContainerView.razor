@@ -1,0 +1,13 @@
+@inherits System.MauiComponentBase
+
+<div class="container-fluid System.Maui-containerview">
+    @foreach (var view in Views)
+    {
+        <BView @key="@view" View="@view" />
+    }
+</div>
+
+@code {
+    [Parameter]
+    public IList<View> Views { get; set; }
+}

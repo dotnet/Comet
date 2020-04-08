@@ -1,0 +1,61 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>System.Maui</id>
+    <version>0.1.7364-beta</version>
+    <title>System.Maui</title>
+    <authors>James Clancey</authors>
+    <owners>Clancey</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>System.Maui MVU .net framework</description>
+    <summary>System.Maui is an MVU UI Framework. It lets you build UI quickly and efficiently from C#. It also has HotReload.</summary>
+    <copyright>James Clancey</copyright>
+    <projectUrl>https://github.com/clancey/System.Maui</projectUrl>
+    <repository type="git" url="https://github.com/clancey/System.Maui"/>
+    <license type="expression">MIT</license>
+    <language>C#</language>
+    <dependencies>
+      <group targetFramework="netstandard2.0">
+        <dependency id="System.Maui.Reload" version="0.0.11-alpha"/>
+        <dependency id="Microsoft.VisualStudio.Threading" version="16.4.43"/>
+      </group>
+      <group targetFramework="xamarinios10">
+        <dependency id="Xamarin.FFImageLoading" version="2.4.11.982"/>
+        <dependency id="System.Maui.Reload" version="0.0.11-alpha"/>
+        <dependency id="Xamarin.Essentials" version="1.3.1"/>
+        <dependency id="Microsoft.VisualStudio.Threading" version="16.4.43"/>
+      </group>
+      <group targetFramework="monoandroid81">
+        <dependency id="Xamarin.FFImageLoading" version="2.4.11.982"/>
+        <dependency id="Xamarin.Essentials" version="1.3.1"/>
+        <dependency id="System.Maui.Reload" version="0.0.11-alpha"/>
+        <dependency id="Microsoft.VisualStudio.Threading" version="16.4.43"/>
+        <dependency id="Xamarin.Android.Support.v7.AppCompat" version="28.0.0.1"/>
+        <dependency id="Xamarin.Android.Support.v7.RecyclerView" version="28.0.0.1"/>
+        <dependency id="Xamarin.Android.Support.Design" version="28.0.0.1"/>
+      </group>
+      <group targetFramework="Xamarin.Mac20">
+        <dependency id="Xamarin.FFImageLoading" version="2.4.11.982"/>
+        <dependency id="System.Maui.Reload" version="0.0.11-alpha"/>
+        <dependency id="Xamarin.Essentials" version="1.3.1"/>
+        <dependency id="Microsoft.VisualStudio.Threading" version="16.4.43"/>
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="src/System.Maui/bin/Debug/netstandard2.0/System.Maui.dll" target="lib/netstandard2.0/System.Maui.dll"/>
+    <file src="src/System.Maui/bin/Debug/netstandard2.0/System.Maui.pdb" target="lib/netstandard2.0/System.Maui.pdb"/>
+    <file src="src/System.Maui.iOS/bin/Debug/System.Maui.dll" target="lib/xamarinios10/System.Maui.dll"/>
+    <file src="src/System.Maui.iOS/bin/Debug/System.Maui.pdb" target="lib/xamarinios10/System.Maui.pdb"/>
+    <file src="src/System.Maui.iOS/bin/Debug/System.Maui.iOS.dll" target="lib/xamarinios10/System.Maui.iOS.dll"/>
+    <file src="src/System.Maui.iOS/bin/Debug/System.Maui.iOS.pdb" target="lib/xamarinios10/System.Maui.iOS.pdb"/>
+    <file src="src/System.Maui.Android/bin/Debug/System.Maui.dll" target="lib/monoandroid81/System.Maui.dll"/>
+    <file src="src/System.Maui.Android/bin/Debug/System.Maui.pdb" target="lib/monoandroid81/System.Maui.pdb"/>
+    <file src="src/System.Maui.Android/bin/Debug/System.Maui.Android.dll" target="lib/monoandroid81/System.Maui.Android.dll"/>
+    <file src="src/System.Maui.Android/bin/Debug/System.Maui.Android.pdb" target="lib/monoandroid81/System.Maui.Android.pdb"/>
+    <file src="src/System.Maui.Mac/bin/Debug/System.Maui.dll" target="lib/Xamarin.Mac20/System.Maui.dll"/>
+    <file src="src/System.Maui.Mac/bin/Debug/System.Maui.pdb" target="lib/Xamarin.Mac20/System.Maui.pdb"/>
+    <file src="src/System.Maui.Mac/bin/Debug/System.Maui.Mac.dll" target="lib/Xamarin.Mac20/System.Maui.Mac.dll"/>
+    <file src="src/System.Maui.Mac/bin/Debug/System.Maui.Mac.pdb" target="lib/Xamarin.Mac20/System.Maui.Mac.pdb"/>
+  </files>
+</package>

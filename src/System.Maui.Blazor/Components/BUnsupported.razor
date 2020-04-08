@@ -1,0 +1,10 @@
+@inherits System.MauiComponentBase
+
+<div class="System.Maui-unsupported System.Maui-unsupported-@View.GetType().Name alert alert-danger" role="alert">
+    Unsupported component: @View.GetType().FullName
+</div>
+
+@code {
+    [Parameter]
+    public View View { get; set; }
+}

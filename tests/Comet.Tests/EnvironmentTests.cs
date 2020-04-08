@@ -1,9 +1,9 @@
 ﻿using System;
-using Comet.Internal;
-using Comet.Tests.Handlers;
+using System.Maui.Internal;
+using System.Maui.Tests.Handlers;
 using Xunit;
 
-namespace Comet.Tests
+namespace System.Maui.Tests
 {
 	public class EnvironmentTests : TestBase
 	{
@@ -38,7 +38,7 @@ namespace Comet.Tests
 		[Fact]
 		public void CanSetAndReadGlobalEnvironment()
 		{
-			ResetComet();
+			ResetSystem.Maui();
 
 			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
@@ -60,7 +60,7 @@ namespace Comet.Tests
 		[Fact]
 		public void CanSetAndReadGlobalEnvironmentFromView()
 		{
-			ResetComet();
+			ResetSystem.Maui();
 			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 
@@ -77,7 +77,7 @@ namespace Comet.Tests
 		[Fact]
 		public void ViewEnvironmentOverwritesGlobal()
 		{
-			ResetComet();
+			ResetSystem.Maui();
 			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
@@ -96,7 +96,7 @@ namespace Comet.Tests
 		[Fact]
 		public void NestedViewGetsValueFromParent()
 		{
-			ResetComet();
+			ResetSystem.Maui();
 			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
@@ -124,7 +124,7 @@ namespace Comet.Tests
 		[Fact]
 		public void NestedViewGetsItsVariablesFromItself()
 		{
-			ResetComet();
+			ResetSystem.Maui();
 			const string myStringConstant = "myString";
 			const string myStringKey = "myString";
 			const string parentStringValue = "myParentString";
@@ -156,7 +156,7 @@ namespace Comet.Tests
 		[Fact]
 		public void FieldsWithAttributesPopulateFromEnvironment()
 		{
-			ResetComet();
+			ResetSystem.Maui();
 			View.SetGlobalEnvironment(nameof(StatePage.clickCount), new State<int>(1));
 
 			Text text = null;
@@ -195,7 +195,7 @@ namespace Comet.Tests
 		[Fact]
 		public void LocalContextOverridesCascaded()
 		{
-			ResetComet();
+			ResetSystem.Maui();
 			const string myStringKey = "myString";
 			const string globalValue = "globalValue";
 			const string localValue = "localValue";

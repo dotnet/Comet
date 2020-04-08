@@ -2,7 +2,7 @@ stages:
 - stage: BuildPackSource
   jobs:
   - job: BuildCome
-    displayName: Build Comet
+    displayName: Build System.Maui
     pool:
       vmImage: 'windows-2019'
       demands:
@@ -35,12 +35,12 @@ stages:
     - task: NuGetCommand@2
       displayName: 'NuGet restore'
       inputs:
-        restoreSolution: build/Comet-Nuget.sln
+        restoreSolution: build/System.Maui-Nuget.sln
 
     - task: MSBuild@1
-      displayName: 'Build Comet'
+      displayName: 'Build System.Maui'
       inputs:
-        solution: 'src/Comet/Comet.csproj'
+        solution: 'src/System.Maui/System.Maui.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
@@ -50,78 +50,78 @@ stages:
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Android'
+      displayName: 'Build System.Maui.Android'
       inputs:
-        solution: 'src/Comet.Android/Comet.Android.csproj'
+        solution: 'src/System.Maui.Android/System.Maui.Android.csproj'
         configuration: '$(BuildConfiguration)'
         msbuildArguments: '/p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.iOS'
+      displayName: 'Build System.Maui.iOS'
       inputs:
-        solution: 'src/Comet.iOS/Comet.iOS.csproj'
+        solution: 'src/System.Maui.iOS/System.Maui.iOS.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Mac'
+      displayName: 'Build System.Maui.Mac'
       inputs:
-        solution: 'src/Comet.Mac/Comet.Mac.csproj'
+        solution: 'src/System.Maui.Mac/System.Maui.Mac.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia'
+      displayName: 'Build System.Maui.Skia'
       inputs:
-        solution: 'src/Comet.Skia/Comet.Skia.csproj'
+        solution: 'src/System.Maui.Skia/System.Maui.Skia.csproj'
         configuration: '$(BuildConfiguration)'
     
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia.Android'
+      displayName: 'Build System.Maui.Skia.Android'
       inputs:
-        solution: 'src/Comet.Skia.Android/Comet.Skia.Android.csproj'
+        solution: 'src/System.Maui.Skia.Android/System.Maui.Skia.Android.csproj'
         configuration: '$(BuildConfiguration)'
         msbuildArguments: '/p:JavaSdkDirectory="$(JAVA_HOME_8_X64)"'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia.iOS'
+      displayName: 'Build System.Maui.Skia.iOS'
       inputs:
-        solution: 'src/Comet.Skia.iOS/Comet.Skia.iOS.csproj'
+        solution: 'src/System.Maui.Skia.iOS/System.Maui.Skia.iOS.csproj'
         configuration: '$(BuildConfiguration)'
         
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia.Mac'
+      displayName: 'Build System.Maui.Skia.Mac'
       inputs:
-        solution: 'src/Comet.Skia.Mac/Comet.Skia.Mac.csproj'
+        solution: 'src/System.Maui.Skia.Mac/System.Maui.Skia.Mac.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.UWP'
+      displayName: 'Build System.Maui.UWP'
       inputs:
-        solution: 'src/Comet.UWP/Comet.UWP.csproj'
+        solution: 'src/System.Maui.UWP/System.Maui.UWP.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.WPF'
+      displayName: 'Build System.Maui.WPF'
       inputs:
-        solution: 'src/Comet.WPF/Comet.WPF.csproj'
+        solution: 'src/System.Maui.WPF/System.Maui.WPF.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia.UWP'
+      displayName: 'Build System.Maui.Skia.UWP'
       inputs:
-        solution: 'src/Comet.Skia.UWP/Comet.Skia.UWP.csproj'
+        solution: 'src/System.Maui.Skia.UWP/System.Maui.Skia.UWP.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: MSBuild@1
-      displayName: 'Build Comet.Skia.WPF'
+      displayName: 'Build System.Maui.Skia.WPF'
       inputs:
-        solution: 'src/Comet.Skia.WPF/Comet.Skia.WPF.csproj'
+        solution: 'src/System.Maui.Skia.WPF/System.Maui.Skia.WPF.csproj'
         configuration: '$(BuildConfiguration)'
 
     - task: NuGetCommand@2
-      displayName: 'dotnet pack Comet.nuspec'
+      displayName: 'dotnet pack System.Maui.nuspec'
       inputs:
         command: pack
-        packagesToPack: 'Comet.nuspec'
+        packagesToPack: 'System.Maui.nuspec'
         versioningScheme: byEnvVar
         versionEnvVar: VERSION
 

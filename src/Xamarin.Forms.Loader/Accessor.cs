@@ -11,7 +11,7 @@ using Xamarin.Forms.StyleSheets;
 using Xamarin.Forms.Xaml;
 using Xamarin.Forms;
 
-namespace Comet.Internal
+namespace System.Maui.Internal
 {
 
 	public static class BindingExpression

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Comet.Tests
+namespace System.Maui.Tests
 {
 	public static class ViewExtensions
 	{

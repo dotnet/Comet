@@ -1,0 +1,41 @@
+﻿using System.Maui.iOS.Handlers;
+using System.Drawing;
+
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable MemberCanBePrivate.Global
+
+namespace System.Maui.Skia.iOS
+{
+	public class DrawableControlHandler : AbstractControlHandler<DrawableControl, iOSDrawableControl>
+	{
+		protected override iOSDrawableControl CreateView()
+		{
+			return new iOSDrawableControl();
+		}
+
+		protected override void DisposeView(iOSDrawableControl nativeView)
+		{
+
+		}
+
+		public override void SetView(View view)
+		{
+			base.SetView(view);
+
+			SetMapper(VirtualView.ControlDelegate.Mapper);
+			TypedNativeView.ControlDelegate = VirtualView.ControlDelegate;
+			VirtualView.ControlDelegate.Mapper?.UpdateProperties(this, VirtualView);
+		}
+
+		public override void Remove(View view)
+		{
+			if (TypedNativeView != null)
+				TypedNativeView.ControlDelegate = null;
+			SetMapper(null);
+
+			base.Remove(view);
+		}
+
+		public override SizeF GetIntrinsicSize(SizeF availableSize) => VirtualView?.ControlDelegate?.GetIntrinsicSize(availableSize) ?? availableSize;
+	}
+}
