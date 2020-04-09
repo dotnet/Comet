@@ -62,6 +62,7 @@ namespace Comet.Skia
 			var point = points[0];
 			var percent = (point.X - TrackRect.X) / TrackRect.Width;
 			TypedVirtualView.PercentChanged(percent);
+			this.Invalidate();
 		}
 		public override void CancelInteraction()
 		{
