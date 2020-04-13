@@ -19,6 +19,16 @@ namespace Comet
 				return;
 			UpdateProperty(property, viewRenderer, virtualView);
 		}
+		public void UpdateProperties(IViewHandler viewRenderer, View virtualView)
+		{
+			if (virtualView == null)
+				return;
+			foreach (var key in Keys)
+			{
+				UpdateProperty(key, viewRenderer, virtualView);
+			}
+		}
+		public virtual ICollection<string> Keys => genericMap.Keys;
 	}
 
 	public class PropertyMapper<TVirtualView> : PropertyMapper, IEnumerable
@@ -35,9 +45,8 @@ namespace Comet
 			}
 		}
 
-
 		ICollection<string> cachedKeys;
-		public ICollection<string> Keys => cachedKeys ??= (Chained?.genericMap.Keys.Union(genericMap.Keys).ToList() as ICollection<string> ?? genericMap.Keys);
+		public override ICollection<string> Keys => cachedKeys ??= (Chained?.Keys.Union(genericMap.Keys).ToList() as ICollection<string> ?? genericMap.Keys);
 
 		public int Count => Keys.Count;
 
@@ -57,15 +66,7 @@ namespace Comet
 			Chained = chained;
 		}
 
-		public void UpdateProperties(IViewHandler viewRenderer, View virtualView)
-		{
-			if (virtualView == null)
-				return;
-			foreach (var key in Keys)
-			{
-				UpdateProperty(key, viewRenderer, virtualView);
-			}
-		}
+
 
 		protected override void UpdateProperty(string key, IViewHandler viewRenderer, View virtualView)
 		{
