@@ -18,7 +18,7 @@ namespace Comet
 			Maximum = maximumValue;
 			Minimum = minimumValue;
 			Increment = increment;
-			OnValueChanged = new MulticastAction<double>(value, onValueChanged);
+			OnValueChanged = new MulticastAction<double>(Value, onValueChanged);
 		}
 
 		Binding<double> _value;

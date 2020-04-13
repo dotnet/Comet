@@ -16,7 +16,7 @@ namespace Comet
 			From = from;
 			Through = through;
 			By = by;
-			OnEditingChanged = onEditingChanged;
+			OnEditingChanged = new MulticastAction<float>(Value,onEditingChanged);
 		}
 
 		Binding<float> _value;
@@ -50,10 +50,8 @@ namespace Comet
 		public Action<float> OnEditingChanged { get; private set; }
 
 		public void ValueChanged(float value)
-		{
-			Value.Set(value);
-			OnEditingChanged?.Invoke(value);
-		}
+			=> OnEditingChanged.Invoke(value);
+
 		public void PercentChanged(float percent)
 		{
 			var from = From.CurrentValue;

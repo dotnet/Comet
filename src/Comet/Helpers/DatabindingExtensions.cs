@@ -13,7 +13,7 @@ namespace Comet
 	{
 		public static void SetBindingValue<T>(this View view, ref Binding<T> currentValue, Binding<T> newValue, [CallerMemberName] string propertyName = "")
 		{
-			currentValue = newValue;
+			currentValue = newValue ?? new Binding<T>();
 			newValue?.BindToProperty(view, propertyName);
 		}
 
