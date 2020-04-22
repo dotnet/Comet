@@ -2,7 +2,7 @@
 
 namespace System.Maui.Skia
 {
-	public class SKTextField : TextField
+	public class SKTextField : Entry
 	{
 		public SKTextField()
 		{

@@ -4,11 +4,11 @@ using Android.Widget;
 
 namespace System.Maui.Android.Handlers
 {
-	public class TextFieldHandler : AbstractControlHandler<TextField, EditText>
+	public class TextFieldHandler : AbstractControlHandler<Entry, EditText>
 	{
-		public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
+		public static readonly PropertyMapper<Entry> Mapper = new PropertyMapper<Entry>(ViewHandler.Mapper)
 		{
-			[nameof(TextField.Text)] = MapTextProperty,
+			[nameof(Entry.Text)] = MapTextProperty,
 			[EnvironmentKeys.Colors.Color] = MapColorProperty,
 		};
 
@@ -37,20 +37,20 @@ namespace System.Maui.Android.Handlers
 			VirtualView?.OnCommit?.Invoke(TypedNativeView.Text);
 		}
 
-		public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
+		public static void MapTextProperty(IViewHandler viewHandler, Entry virtualView)
 		{
 			var nativeView = (EditText)viewHandler.NativeView;
 			nativeView.Text = virtualView.Text?.CurrentValue ?? string.Empty;
 		}
 
-		public static void MapColorProperty(IViewHandler viewHandler, TextField virtualView)
+		public static void MapColorProperty(IViewHandler viewHandler, Entry virtualView)
 		{
 			var textView = (EditText)viewHandler.NativeView;
 			var color = virtualView.GetColor(DefaultColor).ToColor();
 			textView.SetTextColor(color);
 		}
 
-		public static void MapTextAlignmentProperty(IViewHandler viewHandler, TextField virtualView)
+		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Entry virtualView)
 		{
 			var nativeView = (EditText)viewHandler.NativeView;
 			var textAlignment = virtualView.GetTextAlignment();

@@ -7,11 +7,9 @@ using Topten.RichTextKit;
 
 namespace System.Maui.Skia
 {
-	public class TextFieldHandler : SkiaAbstractControlHandler<TextField>, ITextFieldHandler
-	{
-		public static new readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(SkiaControl.Mapper)
-		{
-			[nameof(System.Maui.TextField.Text)] = MapResetText,
+	public class TextFieldHandler : SkiaAbstractControlHandler<Entry>, ITextFieldHandler {
+		public static new readonly PropertyMapper<Entry> Mapper = new PropertyMapper<Entry> (SkiaControl.Mapper) {
+			[nameof (System.Maui.Entry.Text)] = MapResetText,
 			[EnvironmentKeys.Colors.Color] = MapResetText
 		};
 		public int CaretPosition { get; set; }

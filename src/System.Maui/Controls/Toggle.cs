@@ -2,9 +2,9 @@
 
 namespace System.Maui
 {
-	public class Toggle : View
+	public class Switch : View
 	{
-		public Toggle(
+		public Switch(
 			Binding<bool> value = null,
 			Action<bool> onChanged = null)
 		{

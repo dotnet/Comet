@@ -2,9 +2,9 @@
 
 namespace System.Maui
 {
-	public class TextField : View
+	public class Entry : View
 	{
-		public TextField(
+		public Entry(
 			Binding<string> value = null,
 			string placeholder = null,
 			Action<string> onEditingChanged = null,
@@ -22,7 +22,7 @@ namespace System.Maui
 			OnEditingChanged = new MulticastAction<string>(value, onEditingChanged);
 			OnCommit = onCommit;
 		}
-		public TextField(
+		public Entry(
 			Func<string> value,
 			string placeholder = null,
 			Action<string> onEditingChanged = null,
@@ -47,8 +47,8 @@ namespace System.Maui
 			private set => this.SetBindingValue(ref _placeholder, value);
 		}
 
-		public Action<TextField> Focused { get; private set; }
-		public Action<TextField> Unfocused { get; private set; }
+		public Action<Entry> Focused { get; private set; }
+		public Action<Entry> Unfocused { get; private set; }
 		public Action<string> OnEditingChanged { get; private set; }
 		public Action<string> OnCommit { get; private set; }
 

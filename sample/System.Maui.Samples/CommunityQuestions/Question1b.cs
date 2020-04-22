@@ -10,9 +10,9 @@ namespace System.Maui.Samples
 				new Image("turtlerock.jpg")
 					.Frame(75, 75)
 					.Padding(4),
-				new Text("Title")
+				new Label("Title")
 					.TextAlignment(TextAlignment.Center),
-				new Text("Description")
+				new Label("Description")
 					.TextAlignment(TextAlignment.Center)
 					.FontSize(12)
 					.Color(Color.Grey),

@@ -38,14 +38,14 @@ namespace System.Maui.Samples
 						.ClipShape(new Circle()),
 					new VStack(HorizontalAlignment.Leading)
 					{
-						new Text(song.Title),
-						new Text(song.Artist),
-						new Text(song.Album),
+						new Label(song.Title),
+						new Label(song.Artist),
+						new Label(song.Album),
 					},
 				}.Frame(alignment: Alignment.Leading),
 				Header = new VStack
 				{
-					new Text("Songs")
+					new Label("Songs")
 				},
 			}.OnSelected((song) => { Console.WriteLine("Song Selected"); });
 		}

@@ -9,7 +9,7 @@ namespace System.Maui.Samples
 			{
 				Count = () => 10,
 				ItemFor = (i) => i,
-				ViewFor = (i) => new Text(i.ToString()),
+				ViewFor = (i) => new Label (i.ToString()),
 			};
 		}
 	}

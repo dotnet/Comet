@@ -5,11 +5,11 @@ using UIKit;
 
 namespace System.Maui.iOS.Handlers
 {
-	public class ToggleHandler : AbstractControlHandler<Toggle, UISwitch>
+	public class ToggleHandler : AbstractControlHandler<Switch, UISwitch>
 	{
-		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle>(ViewHandler.Mapper)
+		public static readonly PropertyMapper<Switch> Mapper = new PropertyMapper<Switch>(ViewHandler.Mapper)
 		{
-			[nameof(Toggle.IsOn)] = MapIsOnProperty
+			[nameof(Switch.IsOn)] = MapIsOnProperty
 		};
 
 		public ToggleHandler() : base(Mapper)
@@ -30,7 +30,7 @@ namespace System.Maui.iOS.Handlers
 
 		void HandleValueChanged(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.On);
 
-		public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
+		public static void MapIsOnProperty(IViewHandler viewHandler, Switch virtualView)
 		{
 			var nativeView = (UISwitch)viewHandler.NativeView;
 			nativeView.On = virtualView.IsOn?.CurrentValue ?? false;

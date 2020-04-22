@@ -3,11 +3,11 @@
 
 namespace System.Maui.WPF.Handlers
 {
-	public class TextHandler : AbstractControlHandler<Text, WPFLabel>
+	public class TextHandler : AbstractControlHandler<Label, WPFLabel>
 	{
-		public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>()
+		public static readonly PropertyMapper<Label> Mapper = new PropertyMapper<Label>()
 		{
-			[nameof(Text.Value)] = MapValueProperty,
+			[nameof(Label.Value)] = MapValueProperty,
 			[nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
 		};
 
@@ -21,14 +21,14 @@ namespace System.Maui.WPF.Handlers
 		{
 		}
 
-		public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapValueProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (WPFLabel)viewHandler.NativeView;
 			nativeView.Content = virtualView.Value?.CurrentValue ?? string.Empty;
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (WPFLabel)viewHandler.NativeView;
 			var textAlignment = virtualView.GetTextAlignment();

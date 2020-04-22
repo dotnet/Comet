@@ -31,7 +31,7 @@ namespace System.Maui.Samples.Comparisons
 		[Body]
 		View body()
 			=> new VStack {
-				new Text(()=> $"({Maui.Rides}) rides taken:{Maui.MauiTrain}")
+				new Label(()=> $"({Maui.Rides}) rides taken:{Maui.MauiTrain}")
 					.Frame(width:300)
 					.LineBreakMode(LineBreakMode.CharacterWrap)
 					,

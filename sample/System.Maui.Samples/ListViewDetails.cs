@@ -12,9 +12,9 @@ namespace System.Maui.Samples
 		{
 			Body = () => new VStack {
 				new Image(() => song.ArtworkUrl),
-				new Text(() => song.Title),
-				new Text(() => song.Artist),
-				new Text(() => song.Album),
+				new Label(() => song.Title),
+				new Label(() => song.Artist),
+				new Label(() => song.Album),
 			};
 		}
 	}

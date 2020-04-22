@@ -11,8 +11,8 @@ namespace System.Maui.Samples
 		[Body]
 		View body() => new VStack()
 		{
-			new Text(_textValue),
-			new TextField(_textValue, "Name"),
+			new Label(_textValue),
+			new Entry(_textValue, "Name"),
 			new SecureField(_textValue, "Name"),
 			new Slider(_sliderValue),
 			new ProgressBar(_sliderValue)

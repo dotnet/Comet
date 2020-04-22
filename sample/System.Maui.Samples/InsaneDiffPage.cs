@@ -16,7 +16,7 @@ namespace System.Maui.Samples
 				};
 			for (var i = 0; i < 100; i++)
 			{
-				stack.Add(new Text(i.ToString()));
+				stack.Add(new Label (i.ToString()));
 			}
 			return new ScrollView { stack };
 		}

@@ -5,11 +5,11 @@ using AppKit;
 
 namespace System.Maui.Mac.Handlers
 {
-	public class ToggleHandler : AbstractControlHandler<Toggle, NSButton>
+	public class ToggleHandler : AbstractControlHandler<Switch, NSButton>
 	{
-		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle>(ViewHandler.Mapper)
+		public static readonly PropertyMapper<Switch> Mapper = new PropertyMapper<Switch>(ViewHandler.Mapper)
 		{
-			[nameof(Toggle.IsOn)] = MapIsOnProperty
+			[nameof(Switch.IsOn)] = MapIsOnProperty
 		};
 
 		public ToggleHandler() : base(Mapper)
@@ -31,7 +31,7 @@ namespace System.Maui.Mac.Handlers
 
 		void HandleValueChanged(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.State == NSCellStateValue.On);
 
-		public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
+		public static void MapIsOnProperty(IViewHandler viewHandler, Switch virtualView)
 		{
 			var nativeView = (NSButton)viewHandler.NativeView;
 			nativeView.State = virtualView.IsOn ? NSCellStateValue.On : NSCellStateValue.Off;

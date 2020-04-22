@@ -41,9 +41,9 @@ namespace System.Maui.Samples
 			new VStack
 			{
 				(state.CanEdit
-					? (View) new TextField(state.Text)
-					: new Text(() => $"{state.Text}: multiText")), // Text will warn you. This should be done by TextBinding
-                new Text(state.Text),
+					? (View) new Entry(state.Text)
+					: new Label(() => $"{state.Text}: multiText")), // Text will warn you. This should be done by TextBinding
+                new Label(state.Text),
 				new HStack
 				{
 					new Button("Toggle Entry/Label",

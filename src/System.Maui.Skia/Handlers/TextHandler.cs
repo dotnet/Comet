@@ -7,11 +7,11 @@ using Topten.RichTextKit;
 
 namespace System.Maui.Skia
 {
-	public class TextHandler : SkiaAbstractControlHandler<Text>, ITextHandler
+	public class TextHandler : SkiaAbstractControlHandler<Label>, ITextHandler
 	{
-		public static new readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(SkiaControl.Mapper)
+		public static new readonly PropertyMapper<Label> Mapper = new PropertyMapper<Label>(SkiaControl.Mapper)
 		{
-			[nameof(System.Maui.Text.Value)] = MapResetText,
+			[nameof(System.Maui.Label.Value)] = MapResetText,
 			[EnvironmentKeys.Colors.Color] = MapResetText
 		};
 

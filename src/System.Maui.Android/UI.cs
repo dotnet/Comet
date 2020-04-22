@@ -23,9 +23,9 @@ namespace System.Maui.Android
 			Registrar.Handlers.Register<Slider, SliderHandler>();
 			Registrar.Handlers.Register<RadioButton, RadioButtonHandler>();
 			// Stepper
-			Registrar.Handlers.Register<Text, TextHandler>();
-			Registrar.Handlers.Register<TextField, TextFieldHandler>();
-			Registrar.Handlers.Register<Toggle, ToggleHandler>();
+			Registrar.Handlers.Register<Label, TextHandler>();
+			Registrar.Handlers.Register<Entry, TextFieldHandler>();
+			Registrar.Handlers.Register<Switch, ToggleHandler>();
 			//Registrar.Handlers.Register<WebView, WebViewHandler> ();
 
 			// Containers

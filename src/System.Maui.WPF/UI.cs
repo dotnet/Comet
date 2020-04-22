@@ -16,9 +16,9 @@ namespace System.Maui.WPF
 			// Controls
 			Registrar.Handlers.Register<Button, ButtonHandler>();
 			Registrar.Handlers.Register<Image, ImageHandler>();
-			Registrar.Handlers.Register<Text, TextHandler>();
-			Registrar.Handlers.Register<TextField, TextFieldHandler>();
-			Registrar.Handlers.Register<Toggle, ToggleHandler>();
+			Registrar.Handlers.Register<Label, TextHandler>();
+			Registrar.Handlers.Register<Entry, TextFieldHandler>();
+			Registrar.Handlers.Register<Switch, ToggleHandler>();
 			Registrar.Handlers.Register<RadioButton, RadioButtonHandler>();
 			//Registrar.Handlers.Register<WebView, WebViewHandler> ();
 

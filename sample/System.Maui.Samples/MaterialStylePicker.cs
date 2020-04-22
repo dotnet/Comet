@@ -35,7 +35,7 @@ namespace System.Maui.Samples
 		[Body]
 		View body() => new ListView<ColorPalette>(colorPalettes)
 		{
-			ViewFor = (colorPalette) => new Text(colorPalette.Name).Background(colorPalette.P900).Color(colorPalette.PD900),
+			ViewFor = (colorPalette) => new Label (colorPalette.Name).Background(colorPalette.P900).Color(colorPalette.PD900),
 		}.OnSelectedNavigate((colorPallete)
 			=> new MaterialSample().ApplyStyle(new MaterialStyle(colorPallete))
 		);

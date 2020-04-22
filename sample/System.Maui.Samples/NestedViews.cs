@@ -9,7 +9,7 @@ namespace System.Maui.Samples
 			{
 				Body = () => new View
 				{
-					Body = () => new Text("Hi!")
+					Body = () => new Label ("Hi!")
 				}
 			};
 		}

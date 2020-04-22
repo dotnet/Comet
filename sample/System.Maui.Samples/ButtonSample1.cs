@@ -11,7 +11,7 @@ namespace System.Maui.Samples
 		View body() => new VStack
 		{
 			new Button("Increment Value", () => count.Value ++ ),
-			new Text(() => $"Value: {count.Value}"),
+			new Label(() => $"Value: {count.Value}"),
 		};
 
 	}

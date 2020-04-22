@@ -38,12 +38,12 @@ namespace System.Maui.Samples
 			[Body]
 			View body() => new HStack(spacing: 8)
 				{
-					new Text(_icon)
+					new Label(_icon)
 						.Frame(width: 20)
 						.Margin(left: 8)
 						.FontFamily("Font Awesome 5 Free"),
 
-					new TextField(_val, _placeholder)
+					new Entry(_val, _placeholder)
 				}
 				.Frame(height: 40)
 				.RoundedBorder(color: Color.Grey);

@@ -9,7 +9,7 @@ namespace System.Maui.Android.Handlers
 	{
 		public static readonly PropertyMapper<SecureField> Mapper = new PropertyMapper<SecureField>(ViewHandler.Mapper)
 		{
-			[nameof(TextField.Text)] = MapTextProperty,
+			[nameof(Entry.Text)] = MapTextProperty,
 			[EnvironmentKeys.Colors.Color] = MapColorProperty,
 		};
 

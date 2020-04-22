@@ -5,14 +5,14 @@ namespace System.Maui
 	/// <summary>
 	/// A view that displays one or more lines of read-only text.
 	/// </summary>
-	public class Text : View
+	public class Label : View
 	{
-		public Text(
+		public Label(
 			Binding<string> value = null)
 		{
 			Value = value;
 		}
-		public Text(
+		public Label(
 			Func<string> value) : this((Binding<string>)value)
 		{
 

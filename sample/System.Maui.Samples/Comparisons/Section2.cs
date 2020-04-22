@@ -23,7 +23,7 @@ namespace System.Maui.Samples.Comparisons
 	{
 		[Body]
 		View body() =>
-				 new Text("Turtle Rock")
+				 new Label ("Turtle Rock")
 					 .Color(Color.Green);
 	}
 

@@ -24,7 +24,7 @@ namespace System.Maui.Samples
 		View body() => new VStack()
 		{
 			new ProgressBar(percentage),
-			new Text(()=>$"{percentage.Value.ToString("P2")}"),
+			new Label(()=>$"{percentage.Value.ToString("P2")}"),
 		};
 
 		protected override void Dispose(bool disposing)

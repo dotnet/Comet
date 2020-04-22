@@ -10,10 +10,10 @@ namespace System.Maui.Samples
 				SectionCount = () => 10,
 				SectionFor = (s) => new Section<int>
 				{
-					Header = new Text($"Header: {s}"),
+					Header = new Label ($"Header: {s}"),
 					Count = () => 10,
 					ItemFor = (index) => index,
-					ViewFor = (i) => new Text($"Row: {i}"),
+					ViewFor = (i) => new Label ($"Row: {i}"),
 				},
 			};
 		}

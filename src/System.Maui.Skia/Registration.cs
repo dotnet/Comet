@@ -12,11 +12,11 @@ namespace System.Maui.Skia.Internal
 		{
 			new SkiaStyle().Apply();
 			Register<SKButton, Button, ButtonHandler>();
-			Register<SKText, Text, TextHandler>();
-			Register<SKTextField, TextField, TextFieldHandler>();
+			Register<SKText, Label, TextHandler>();
+			Register<SKTextField, Entry, TextFieldHandler>();
 			Register<SKSlider, Slider, SliderHandler>();
 			Register<SKProgressBar, ProgressBar, ProgressBarHandler>();
-			Register<SKToggle, Toggle, ToggleHandler>();
+			Register<SKToggle, Switch, ToggleHandler>();
 		}
 
 		static void Register<SKiaView, ReplacementView, Handler>()

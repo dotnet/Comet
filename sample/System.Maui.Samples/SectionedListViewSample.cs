@@ -8,9 +8,9 @@ namespace System.Maui.Samples
 		public SectionedListViewSample()
 		{
 			int total = 10;
-			var sections = Enumerable.Range(0, total).Select(s => new Section(header: new Text(s.ToString()))
+			var sections = Enumerable.Range(0, total).Select(s => new Section(header: new Label (s.ToString()))
 			{
-				Enumerable.Range(0, total).Select(r => new Text(r.ToString())),
+				Enumerable.Range(0, total).Select(r => new Label(r.ToString())),
 
 			}).ToList();
 			Body = () => new SectionedListView(sections);

@@ -10,12 +10,12 @@ namespace System.Maui.Samples
 		[Body]
 		View body() => new VStack()
 		{
-			new TextField(_textValue, "Name"),
+			new Entry(_textValue, "Name"),
 			new HStack()
 			{
-				new Text("Current Value:")
+				new Label("Current Value:")
 					.Color(Color.Grey),
-				new Text(_textValue),
+				new Label(_textValue),
 				new Spacer()
 			},
 		}.FillHorizontal();

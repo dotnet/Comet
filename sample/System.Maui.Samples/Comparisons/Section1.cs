@@ -21,6 +21,6 @@ namespace System.Maui.Samples.Comparisons
 	{
 		[Body]
 		View Body()
-			=> new Text("Hello System.Maui!");
+			=> new Label ("Hello System.Maui!");
 	}
 }

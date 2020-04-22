@@ -66,29 +66,29 @@ namespace System.Maui.Samples
 					columns: new object[]{ 30, 120, "*", 40, 30 }
 				)
 				{
-					new Text("CARD NUMBER")
+					new Label("CARD NUMBER")
 						.FontSize(10)
 						.Color(Color.Silver)
 						.Cell(row:2, column:1, colSpan:2),
-					new Text(Card.Number)
+					new Label(Card.Number)
 						.FontSize(14)
 						.Color(Color.Black)
 						.Cell(row:3, column:1, colSpan:2),
 
-					new Text("EXPIRATION")
+					new Label("EXPIRATION")
 						.FontSize(10)
 						.Color(Color.Silver)
 						.Cell(row:5, column:1),
-					new Text(Card.Expiration)
+					new Label(Card.Expiration)
 						.FontSize(14)
 						.Color(Color.Black)
 						.Cell(row:6, column:1),
 
-					new Text("CVV")
+					new Label("CVV")
 						.FontSize(10)
 						.Color(Color.Silver)
 						.Cell(row:5, column:2),
-					new Text(Card.CVV)
+					new Label(Card.CVV)
 						.FontSize(14)
 						.Color(Color.Black)
 						.Cell(row:6, column:2),
@@ -113,8 +113,8 @@ namespace System.Maui.Samples
 				EntryContainer(Card.CVV, "CVV", "\uf023").Cell(row:2, column: 2),
 				new HStack
 				{
-					new Toggle(remember),
-					new Text("  Remember Me")
+					new Switch(remember),
+					new Label("  Remember Me")
 				}.Cell(row:4,column:0, colSpan: 3),
 				new Button("Or Pay with PayPal").RoundedBorder(22, Color.SlateGrey).Cell(row:6, column:0, colSpan:3).Color(Color.SlateGrey),
 				HRule().Cell(row:8,column:0,colSpan:3),
@@ -132,17 +132,17 @@ namespace System.Maui.Samples
 				.Frame(100, 1);
 		}
 
-		Text CCText(Binding<string> val)
+		Label CCText(Binding<string> val)
 		{
-			return new Text(val)
+			return new Label (val)
 				.Frame(height: 24)
 				.FontSize(12)
 				.Color(ccColor);
 		}
 
-		Text TitleText(Binding<string> val)
+		Label TitleText(Binding<string> val)
 		{
-			return new Text(val)
+			return new Label (val)
 				.FontSize(24)
 				.Color(titleColor);
 		}
@@ -151,11 +151,11 @@ namespace System.Maui.Samples
 		{
 			return new HStack(spacing: 10)
 			{
-					new Text(icon)
+					new Label(icon)
 						.Frame(width:20)
 						.Margin(left:8, top:8)
 						.FontFamily("Font Awesome 5 Free"),
-					new TextField(val, placeholder).Margin(top:9)
+					new Entry(val, placeholder).Margin(top:9)
 
 			}.RoundedBorder(color: Color.Grey).FillHorizontal();
 		}

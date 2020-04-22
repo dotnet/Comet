@@ -1,7 +1,7 @@
 ﻿using System;
 namespace System.Maui.Skia
 {
-	public class SKText : Text
+	public class SKText : Label
 	{
 		public SKText(
 			Binding<string> value = null) : base(value)

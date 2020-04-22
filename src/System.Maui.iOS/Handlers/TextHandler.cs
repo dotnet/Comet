@@ -5,11 +5,11 @@
 
 namespace System.Maui.iOS.Handlers
 {
-	public class TextHandler : AbstractControlHandler<Text, UILabel>
+	public class TextHandler : AbstractControlHandler<Label, UILabel>
 	{
-		public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
+		public static readonly PropertyMapper<Label> Mapper = new PropertyMapper<Label>(ViewHandler.Mapper)
 		{
-			[nameof(System.Maui.Text.Value)] = MapValueProperty,
+			[nameof(System.Maui.Label.Value)] = MapValueProperty,
 			[nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
 			[EnvironmentKeys.Fonts.Family] = MapFontProperty,
 			[EnvironmentKeys.Fonts.Italic] = MapFontProperty,
@@ -52,14 +52,14 @@ namespace System.Maui.iOS.Handlers
 
 		}
 
-		public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapValueProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (UILabel)viewHandler.NativeView;
 			nativeView.Text = virtualView.Value?.CurrentValue ?? string.Empty;
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (UILabel)viewHandler.NativeView;
 			var textAlignment = virtualView.GetTextAlignment();
@@ -67,7 +67,7 @@ namespace System.Maui.iOS.Handlers
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapFontProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapFontProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (UILabel)viewHandler.NativeView;
 			var font = virtualView.GetFont(DefaultFont);
@@ -75,14 +75,14 @@ namespace System.Maui.iOS.Handlers
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapColorProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapColorProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (UILabel)viewHandler.NativeView;
 			var color = virtualView.GetColor(DefaultColor);
 			nativeView.TextColor = color.ToUIColor();
 		}
 
-		public static void MapLineBreakModeProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapLineBreakModeProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (UILabel)viewHandler.NativeView;
 			var mode = virtualView.GetLineBreakMode(DefaultLineBreakMode);

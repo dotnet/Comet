@@ -6,13 +6,13 @@ using UIKit;
 
 namespace System.Maui.iOS.Handlers
 {
-	public class TextFieldHandler : AbstractControlHandler<TextField, UITextField>
+	public class TextFieldHandler : AbstractControlHandler<Entry, UITextField>
 	{
-		public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
+		public static readonly PropertyMapper<Entry> Mapper = new PropertyMapper<Entry>(ViewHandler.Mapper)
 		{
-			[nameof(TextField.Text)] = MapTextProperty,
+			[nameof(Entry.Text)] = MapTextProperty,
 			[nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
-			[nameof(TextField.Placeholder)] = MapPlaceholderProperty,
+			[nameof(Entry.Placeholder)] = MapPlaceholderProperty,
 			[EnvironmentKeys.Colors.Color] = MapColorProperty,
 		};
 
@@ -61,14 +61,14 @@ namespace System.Maui.iOS.Handlers
 			VirtualView?.OnCommit?.Invoke(TypedNativeView.Text);
 		}
 
-		public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
+		public static void MapTextProperty(IViewHandler viewHandler, Entry virtualView)
 		{
 			var nativeView = (UITextField)viewHandler.NativeView;
 			nativeView.Text = virtualView.Text?.CurrentValue ?? string.Empty;
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapTextAlignmentProperty(IViewHandler viewHandler, TextField virtualView)
+		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Entry virtualView)
 		{
 			var nativeView = (UITextField)viewHandler.NativeView;
 			var textAlignment = virtualView.GetTextAlignment();
@@ -76,13 +76,13 @@ namespace System.Maui.iOS.Handlers
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapPlaceholderProperty(IViewHandler viewHandler, TextField virtualView)
+		public static void MapPlaceholderProperty(IViewHandler viewHandler, Entry virtualView)
 		{
 			var nativeView = (UITextField)viewHandler.NativeView;
 			nativeView.Placeholder = virtualView.Placeholder.CurrentValue;
 			virtualView.InvalidateMeasurement();
 		}
-		public static void MapColorProperty(IViewHandler viewHandler, TextField virtualView)
+		public static void MapColorProperty(IViewHandler viewHandler, Entry virtualView)
 		{
 			var nativeView = (UITextField)viewHandler.NativeView;
 			var color = virtualView.GetColor(DefaultColor);

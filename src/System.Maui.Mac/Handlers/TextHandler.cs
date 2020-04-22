@@ -3,11 +3,11 @@ using System.Maui.Mac.Extensions;
 
 namespace System.Maui.Mac.Handlers
 {
-	public class TextHandler : AbstractControlHandler<Text, NSTextField>
+	public class TextHandler : AbstractControlHandler<Label, NSTextField>
 	{
-		public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
+		public static readonly PropertyMapper<Label> Mapper = new PropertyMapper<Label>(ViewHandler.Mapper)
 		{
-			[nameof(Text.Value)] = MapValueProperty,
+			[nameof(Label.Value)] = MapValueProperty,
 			[nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
 			[EnvironmentKeys.Fonts.Family] = MapFontProperty,
 			[EnvironmentKeys.Fonts.Italic] = MapFontProperty,
@@ -46,14 +46,14 @@ namespace System.Maui.Mac.Handlers
 
 		}
 
-		public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapValueProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (NSTextField)viewHandler.NativeView;
 			nativeView.StringValue = virtualView.Value?.CurrentValue ?? string.Empty;
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (NSTextField)viewHandler.NativeView;
 			var textAlignment = virtualView.GetTextAlignment();
@@ -61,7 +61,7 @@ namespace System.Maui.Mac.Handlers
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapFontProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapFontProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (NSTextField)viewHandler.NativeView;
 			var font = virtualView.GetFont(DefaultFont);
@@ -69,7 +69,7 @@ namespace System.Maui.Mac.Handlers
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapColorProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapColorProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (NSTextField)viewHandler.NativeView;
 			var color = virtualView.GetColor(DefaultColor);

@@ -3,11 +3,11 @@ using AppKit;
 
 namespace System.Maui.Mac.Handlers
 {
-	public class SecureFieldHandler : AbstractControlHandler<TextField, NSSecureTextField>
+	public class SecureFieldHandler : AbstractControlHandler<Entry, NSSecureTextField>
 	{
-		public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>(ViewHandler.Mapper)
+		public static readonly PropertyMapper<Entry> Mapper = new PropertyMapper<Entry>(ViewHandler.Mapper)
 		{
-			[nameof(TextField.Text)] = MapTextProperty
+			[nameof(Entry.Text)] = MapTextProperty
 		};
 
 		public SecureFieldHandler() : base(Mapper)
@@ -38,7 +38,7 @@ namespace System.Maui.Mac.Handlers
 			VirtualView?.OnCommit?.Invoke(TypedNativeView.StringValue);
 		}
 
-		public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
+		public static void MapTextProperty(IViewHandler viewHandler, Entry virtualView)
 		{
 			var nativeView = (NSSecureTextField)viewHandler.NativeView;
 			nativeView.StringValue = virtualView.Text;

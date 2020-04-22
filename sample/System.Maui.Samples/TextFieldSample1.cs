@@ -11,17 +11,17 @@ namespace System.Maui.Samples
 		[Body]
 		View body() => new VStack()
 		{
-			new TextField(null, "Name", name1, name2),
+			new Entry(null, "Name", name1, name2),
 			new HStack()
 			{
-				new Text("onEditingChanged:"),
-				new Text(name1),
+				new Label("onEditingChanged:"),
+				new Label(name1),
 				new Spacer()
 			},
 			new HStack()
 			{
-				new Text("onCommit:"),
-				new Text(name2),
+				new Label("onCommit:"),
+				new Label(name2),
 				new Spacer()
 			},
 		}.FillHorizontal();

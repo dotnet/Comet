@@ -3,11 +3,11 @@ using System.Windows.Controls;
 
 namespace System.Maui.WPF.Handlers
 {
-	public class ToggleHandler : AbstractControlHandler<Toggle, CheckBox>
+	public class ToggleHandler : AbstractControlHandler<Switch, CheckBox>
 	{
-		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle>()
+		public static readonly PropertyMapper<Switch> Mapper = new PropertyMapper<Switch>()
 		{
-			[nameof(Toggle.IsOn)] = MapIsOnProperty
+			[nameof(Switch.IsOn)] = MapIsOnProperty
 		};
 
 		public ToggleHandler() : base(Mapper)
@@ -31,7 +31,7 @@ namespace System.Maui.WPF.Handlers
 
 		private void HandleCheckedChanged(object sender, RoutedEventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.IsChecked ?? false);
 
-		public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
+		public static void MapIsOnProperty(IViewHandler viewHandler, Switch virtualView)
 		{
 			var nativeView = (CheckBox)viewHandler.NativeView;
 			nativeView.IsChecked = virtualView.IsOn;

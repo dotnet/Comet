@@ -6,11 +6,11 @@ using AToggle = Android.Widget.ToggleButton;
 
 namespace System.Maui.Android.Handlers
 {
-	public class ToggleHandler : AbstractControlHandler<Toggle, AToggle>
+	public class ToggleHandler : AbstractControlHandler<Switch, AToggle>
 	{
-		public static readonly PropertyMapper<Toggle> Mapper = new PropertyMapper<Toggle>(ViewHandler.Mapper)
+		public static readonly PropertyMapper<Switch> Mapper = new PropertyMapper<Switch>(ViewHandler.Mapper)
 		{
-			[nameof(Toggle.IsOn)] = MapIsOnProperty
+			[nameof(Switch.IsOn)] = MapIsOnProperty
 		};
 
 		public ToggleHandler() : base(Mapper)
@@ -31,7 +31,7 @@ namespace System.Maui.Android.Handlers
 
 		private void HandleClick(object sender, EventArgs e) => VirtualView?.IsOnChanged?.Invoke(TypedNativeView.Checked);
 
-		public static void MapIsOnProperty(IViewHandler viewHandler, Toggle virtualView)
+		public static void MapIsOnProperty(IViewHandler viewHandler, Switch virtualView)
 		{
 			var nativeView = (AToggle)viewHandler.NativeView;
 			nativeView.Checked = virtualView.IsOn;

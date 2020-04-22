@@ -28,12 +28,12 @@ namespace System.Maui.Samples
 		{
 			public BorderedEntry(Binding<String> val, string placeholder, string icon) : base(spacing: 8)
 			{
-				Add(new Text(icon)
+				Add(new Label (icon)
 					.Frame(width: 20)
 					.Margin(left: 8)
 					.FontFamily("Font Awesome 5 Free"));
 
-				Add(new TextField(val, placeholder));
+				Add(new Entry (val, placeholder));
 
 				this.Frame(height: 40).RoundedBorder(color: Color.Grey);
 

@@ -17,13 +17,13 @@ namespace System.Maui.Samples.Skia
 			{
 				new HStack()
 				{
-					new Text("Stroke Width:"),
+					new Label("Stroke Width:"),
 					new Slider(_strokeSize, 1, 10, 1)
 				},
 				new HStack()
 				{
-					new Text("Stroke Color!:"),
-					new TextField(_strokeColor),
+					new Label("Stroke Color!:"),
+					new Entry(_strokeColor),
 				},
                 //new ScrollView{
                     new HStack

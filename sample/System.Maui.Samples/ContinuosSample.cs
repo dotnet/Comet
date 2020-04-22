@@ -13,7 +13,7 @@ namespace System.Maui.Samples
 				columns: new object[] { "*", "*" },
 				rows: null)
 			{
-				new TextField(_strokeColor, "Enter code here").Cell(row:0, column: 0),
+				new Entry(_strokeColor, "Enter code here").Cell(row:0, column: 0),
 				new Button("Controls appear here").Cell(row:0, column:1)
 			};
 		}

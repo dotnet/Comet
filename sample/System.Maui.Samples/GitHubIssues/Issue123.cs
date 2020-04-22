@@ -10,7 +10,7 @@ namespace System.Maui.Samples
 		[Body]
 		View body() => new NavigationView{ new VStack
 			{
-				new Text(() => $"Value: {count.Value}")
+				new Label(() => $"Value: {count.Value}")
 					.Color(Color.Black)
 					.FontSize(32),
 				new Button("Increment", () => count.Value ++ )

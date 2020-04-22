@@ -29,9 +29,9 @@ namespace System.Maui.Samples
 				ViewFor = (item)=>new ContentView{
 					new HStack
 					{
-						new Text(item.Name).Frame(alignment: Alignment.Leading),
+						new Label(item.Name).Frame(alignment: Alignment.Leading),
 						new Spacer(),
-						new Toggle(item.Done).Frame(alignment:Alignment.Center)
+						new Switch(item.Done).Frame(alignment:Alignment.Center)
 					}.Margin(6)
 				}.FillHorizontal()
 			}.Title("Tasky"),

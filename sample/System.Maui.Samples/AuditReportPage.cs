@@ -34,11 +34,11 @@ namespace System.Maui.Samples
 					{
 						new VStack(HorizontalAlignment.Leading)
 						{
-							new Text (report.View).FontSize(20),
-							new Text ($"Handler: {report.Handler}"),
-							new Text ($"Has Map? : {!report.MissingMapper}").Color(report.MissingMapper ? Color.Red : Color.Green),
-							new Text ($"Handled Properties: {report.HandledProperties.Count}").Color(report.HandledProperties.Count == 0 ? Color.Red : Color.Green),
-							new Text ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Color.Green : Color.Red),
+							new Label (report.View).FontSize(20),
+							new Label ($"Handler: {report.Handler}"),
+							new Label ($"Has Map? : {!report.MissingMapper}").Color(report.MissingMapper ? Color.Red : Color.Green),
+							new Label ($"Handled Properties: {report.HandledProperties.Count}").Color(report.HandledProperties.Count == 0 ? Color.Red : Color.Green),
+							new Label ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Color.Green : Color.Red),
 						}.Margin().FontSize(10).OnTapNavigate(()=>new AuditReportPageDetails().SetEnvironment("report", report))
 				 },
 			}.OnSelectedNavigate((report) => new AuditReportPageDetails().SetEnvironment("report", report)); ;
@@ -57,18 +57,18 @@ namespace System.Maui.Samples
 			};//.Frame(alignment:Alignment.Top);
 			if (report.HandledProperties.Count > 0)
 			{
-				stack.Add(new Text("Handled Properties").FontSize(30));
+				stack.Add(new Label ("Handled Properties").FontSize(30));
 				foreach (var prop in report.HandledProperties)
 				{
-					stack.Add(new Text(prop).Color(Color.Green));
+					stack.Add(new Label (prop).Color(Color.Green));
 				}
 			}
 			if (report.UnHandledProperties.Count > 0)
 			{
-				stack.Add(new Text("UnHandled Properties!").FontSize(30));
+				stack.Add(new Label ("UnHandled Properties!").FontSize(30));
 				foreach (var prop in report.UnHandledProperties)
 				{
-					stack.Add(new Text(prop).Color(Color.Red));
+					stack.Add(new Label (prop).Color(Color.Red));
 				}
 			}
 			return stack;

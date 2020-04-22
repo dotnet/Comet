@@ -284,8 +284,8 @@ namespace System.Maui.Styles
 				var key = $"{container.Name}.{keyType}";
 				SetEnvironmentValue(null, control, key, sizing);
 			}
-			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(Label), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(Entry), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
 			setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
 			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
 			setSizing(typeof(Slider), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);

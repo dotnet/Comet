@@ -10,7 +10,7 @@ namespace System.Maui.Samples
 
 		[Body]
 		View body() => new VStack {
-				new Text("AspectFill"),
+				new Label("AspectFill"),
 				new Image("turtlerock.jpg")
 					.ClipShape(new Path(PuzzlePiece,PathScaling.AspectFill))
 					.Overlay(new Rectangle().Stroke(Color.Blue, lineWidth: 1))

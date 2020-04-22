@@ -7,11 +7,11 @@ using System.Maui.Android;
 
 namespace System.Maui.Android.Handlers
 {
-	public class TextHandler : AbstractControlHandler<Text, TextView>
+	public class TextHandler : AbstractControlHandler<Label, TextView>
 	{
-		public static readonly PropertyMapper<Text> Mapper = new PropertyMapper<Text>(ViewHandler.Mapper)
+		public static readonly PropertyMapper<Label> Mapper = new PropertyMapper<Label>(ViewHandler.Mapper)
 		{
-			[nameof(Text.Value)] = MapValueProperty,
+			[nameof(Label.Value)] = MapValueProperty,
 			[nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
 			//TODO: this may cause a lot of font setting
 			[EnvironmentKeys.Fonts.Family] = MapFontProperty,
@@ -48,13 +48,13 @@ namespace System.Maui.Android.Handlers
 		{
 		}
 
-		public static void MapValueProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapValueProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (TextView)viewHandler.NativeView;
 			nativeView.Text = virtualView.Value?.CurrentValue ?? string.Empty;
 		}
 
-		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (TextView)viewHandler.NativeView;
 			var textAlignment = virtualView.GetTextAlignment();
@@ -62,7 +62,7 @@ namespace System.Maui.Android.Handlers
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapFontProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapFontProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var nativeView = (TextView)viewHandler.NativeView;
 			var font = virtualView.GetFont(DefaultFont);
@@ -86,7 +86,7 @@ namespace System.Maui.Android.Handlers
 			virtualView.InvalidateMeasurement();
 		}
 
-		public static void MapColorProperty(IViewHandler viewHandler, Text virtualView)
+		public static void MapColorProperty(IViewHandler viewHandler, Label virtualView)
 		{
 			var textView = viewHandler.NativeView as TextView;
 			var color = virtualView.GetColor(DefaultColor).ToColor();

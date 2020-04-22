@@ -40,7 +40,7 @@ namespace System.Maui.Samples
 		static ApiAuditManager()
 		{
 			Register<View>(ViewProperties);
-			Register<Text>(FontProperties);
+			Register<Label>(FontProperties);
 			Register<Button>(FontProperties);
 		}
 

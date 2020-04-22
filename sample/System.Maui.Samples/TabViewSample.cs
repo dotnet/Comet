@@ -8,11 +8,11 @@ namespace System.Maui.Samples
 		View body() => new TabView
 		{
 			new HStack{
-				new Text("Tab 1")
+				new Label("Tab 1")
 			}.TabText("Tab 1"),
 			new HStack
 			{
-				new Text("Tab 2"),
+				new Label("Tab 2"),
 			}.TabText("Tab 2")
 		};
 	}

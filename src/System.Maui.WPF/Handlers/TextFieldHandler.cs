@@ -5,11 +5,11 @@ using WPFTextField = System.Windows.Controls.TextBox;
 
 namespace System.Maui.WPF.Handlers
 {
-	public class TextFieldHandler : AbstractControlHandler<TextField, WPFTextField>
+	public class TextFieldHandler : AbstractControlHandler<Entry, WPFTextField>
 	{
-		public static readonly PropertyMapper<TextField> Mapper = new PropertyMapper<TextField>()
+		public static readonly PropertyMapper<Entry> Mapper = new PropertyMapper<Entry>()
 		{
-			[nameof(TextField.Text)] = MapTextProperty,
+			[nameof(Entry.Text)] = MapTextProperty,
 			[nameof(EnvironmentKeys.Text.Alignment)] = MapTextAlignmentProperty,
 		};
 
@@ -35,13 +35,13 @@ namespace System.Maui.WPF.Handlers
 			VirtualView?.OnCommit?.Invoke(TypedNativeView.Text);
 		}
 
-		public static void MapTextProperty(IViewHandler viewHandler, TextField virtualView)
+		public static void MapTextProperty(IViewHandler viewHandler, Entry virtualView)
 		{
 			var nativeView = (WPFTextField)viewHandler.NativeView;
 			nativeView.Text = virtualView.Text?.CurrentValue ?? string.Empty;
 			virtualView.InvalidateMeasurement();
 		}
-		public static void MapTextAlignmentProperty(IViewHandler viewHandler, TextField virtualView)
+		public static void MapTextAlignmentProperty(IViewHandler viewHandler, Entry virtualView)
 		{
 			var nativeView = (WPFTextField)viewHandler.NativeView;
 			var textAlignment = virtualView.GetTextAlignment();

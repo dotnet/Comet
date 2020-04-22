@@ -1,7 +1,7 @@
 ﻿using System;
 namespace System.Maui.Skia
 {
-	public class SKToggle : Toggle
+	public class SKToggle : Switch
 	{
 		public SKToggle()
 		{

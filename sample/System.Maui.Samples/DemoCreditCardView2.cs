@@ -29,12 +29,12 @@ namespace System.Maui.Samples
 						.Margin(top: 30, right: 30)
 						.FitHorizontal(),
 
-					new Text("CARD NUMBER")
+					new Label("CARD NUMBER")
 						.FontSize(10)
 						.Color(Color.Silver)
 						.Margin(left: 30),
 
-					new Text(Card.Number)
+					new Label(Card.Number)
 						.FontSize(14)
 						.Color(Color.Black)
 						.Margin(left: 30, bottom:20)
@@ -42,24 +42,24 @@ namespace System.Maui.Samples
 
 					new HStack()
 					{
-						 new Text("EXPIRATION")
+						 new Label("EXPIRATION")
 							.FontSize(10)
 							.Color(Color.Silver)
 							.Frame(width: 200),
 
-						 new Text("CVV")
+						 new Label("CVV")
 							.FontSize(10)
 							.Color(Color.Silver),
 					}.Margin(left:30),
 
 					new HStack()
 					{
-						new Text(Card.Expiration)
+						new Label(Card.Expiration)
 							.FontSize(14)
 							.Color(Color.Black)
 							.Frame(width: 200),
 
-						new Text(Card.CVV)
+						new Label(Card.CVV)
 							.FontSize(14)
 							.Color(Color.Black)
 					}.Margin(left:30, bottom:30).Frame(height: 20),
@@ -85,8 +85,8 @@ namespace System.Maui.Samples
 
 			new HStack
 			{
-				new Toggle(remember),
-				new Text("  Remember Me")
+				new Switch(remember),
+				new Label("  Remember Me")
 			}.Margin(left:20),
 
 			new Button("Purchase for $200")
@@ -94,7 +94,7 @@ namespace System.Maui.Samples
 				.Background(Color.SlateGrey)
 				.Color(Color.White)
 				.Frame(height:44)
-				.Margin(left:20, right:20),
+				.Marginn((left:20, right:20),
 
 			new Separator(),
 
@@ -119,12 +119,12 @@ namespace System.Maui.Samples
 		{
 			public BorderedEntry(Binding<String> val, string placeholder, string icon) : base(spacing: 8)
 			{
-				Add(new Text(icon)
+				Add(new Label (icon)
 					.Frame(width: 20)
 					.Margin(left: 8)
 					.FontFamily("Font Awesome 5 Free"));
 
-				Add(new TextField(val, placeholder));
+				Add(new Entry (val, placeholder));
 
 				this.Frame(height: 40).RoundedBorder(color: Color.Grey);
 

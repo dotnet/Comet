@@ -33,12 +33,12 @@ namespace System.Maui.Samples.Comparisons
 		[Body]
 		View body() =>
 				 new VStack(alignment: HorizontalAlignment.Leading){
-					new Text("Turtle Rock"),
+					new Label("Turtle Rock"),
 					new HStack {
-						new Text("Joshua Tree National Park")
+						new Label("Joshua Tree National Park")
 							.Background(Color.Salmon),
 						new Spacer(),
-						new Text("California")
+						new Label("California")
 							.Background(Color.Green),
 					}
 				 }.Margin();

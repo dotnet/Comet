@@ -25,7 +25,7 @@ namespace System.Maui.Samples
 		View body() => new VStack()
 		{
 			new SecureField(null, "Enter a password", password),
-			new Text(password)
+			new Label(password)
 		}.FillHorizontal();
 	}
 }

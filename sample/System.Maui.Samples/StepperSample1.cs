@@ -12,7 +12,7 @@ namespace System.Maui.Samples
         [Body]
         View body() => new VStack
         {
-            new Text($"{number1.Value}"),
+            new Label($"{number1.Value}"),
             new Stepper(number1,max,min, increment)
         };
     }
