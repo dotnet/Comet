@@ -15,7 +15,7 @@ namespace Comet.Skia
 
 		public override void Draw(SKCanvas canvas, RectangleF rect)
 		{
-			var backgroundColor = this.GetBackgroundColor(Color.White).ToSKColor();
+			var backgroundColor = this.GetBackgroundColor(Color.Transparent).ToSKColor();
 			canvas.Clear(backgroundColor);
 			var drawingStyle = Shape.GetDrawingStyle(this, DrawingStyle.StrokeFill);
 			var strokeColor = Shape.GetStrokeColor(this, Color.Black);

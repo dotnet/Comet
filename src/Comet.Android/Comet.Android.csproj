@@ -120,6 +120,10 @@
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
       <Name>Comet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Comet.Skia\Comet.Skia.csproj">
+      <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
+      <Name>Comet.Skia</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />

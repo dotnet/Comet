@@ -12,6 +12,7 @@ namespace Comet.Android.Handlers
 			[nameof(EnvironmentKeys.Colors.BackgroundColor)] = MapBackgroundColorProperty,
 			[nameof(EnvironmentKeys.View.Shadow)] = MapShadowProperty,
 			[nameof(EnvironmentKeys.View.ClipShape)] = MapClipShapeProperty,
+			[nameof(EnvironmentKeys.View.Overlay)] = MapOverlayProperty,
 		};
 
 		public ViewHandler() : base(Mapper)
@@ -49,6 +50,29 @@ namespace Comet.Android.Handlers
 				}
 			}
 		}
+
+		public static void MapOverlayProperty(IViewHandler handler, View virtualView)
+		{
+			
+			var overlay = virtualView.GetOverlay();
+
+			var viewHandler = handler as AndroidViewHandler;
+
+			// If there is a clip shape, then the shadow should be applied to the clip layer, not the view layer
+			if (overlay != null)
+			{
+				handler.HasContainer = true;
+				if (viewHandler?.ContainerView != null)
+				{
+					viewHandler.ContainerView.View = virtualView;
+					viewHandler.ContainerView.OverlayShapeView = new Skia.SkiaShapeView(overlay);
+					
+				}
+			}
+
+			
+		}
+
 
 		public static void AddGestures(AndroidViewHandler handler, View view)
 		{
