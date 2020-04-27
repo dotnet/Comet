@@ -80,12 +80,13 @@ namespace Comet.iOS
 		}
 		protected override void Dispose(bool disposing)
 		{
-			if(disposing)
+			if (disposing)
 			{
 				CurrentView?.Dispose();
 				CurrentView = null;
 			}
 			base.Dispose(disposing);
+		}
 
 		public void SetView(View view) => CurrentView = view;
 
