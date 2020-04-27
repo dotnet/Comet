@@ -135,6 +135,18 @@
             "replaces": "XamarinEssentialsSdk",
             "defaultValue": "1.3.0-pre"
         },
+        "XamarinAndroidAppCompat": {
+            "type": "parameter",
+            "dataType": "string",
+            "replaces": "XamarinAndroidAppCompat",
+            "defaultValue": "28.0.0.1"
+        },
+        "XamarinAndroidDesign": {
+            "type": "parameter",
+            "dataType": "string",
+            "replaces": "XamarinAndroidDesign",
+            "defaultValue": "28.0.0.1"
+        },
         "CometSdk": {
             "type": "parameter",
             "dataType": "string",
@@ -145,7 +157,7 @@
             "type": "parameter",
             "dataType": "string",
             "replaces": "CometReloadSdk",
-            "defaultValue": "0.0.9-alpha"
+            "defaultValue": "0.0.13-alpha"
         },
         "ProjectID": {
             "type": "generated",

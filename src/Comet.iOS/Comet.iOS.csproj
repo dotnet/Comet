@@ -104,6 +104,8 @@
     <Compile Include="Handlers\ProgressBarHandler.cs" />
     <Compile Include="Services\iOSTicker.cs" />
     <Compile Include="CometAppDelegate.cs" />
+    <Compile Include="Handlers\DatePickerHandler.cs" />
+    <Compile Include="Extensions\DateExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet\Comet.csproj">

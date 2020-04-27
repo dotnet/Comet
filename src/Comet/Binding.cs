@@ -50,10 +50,11 @@ namespace Comet
 		}
 
 		Func<T> Get { get; set; }
+		Action<T> _set;
 		public Action<T> Set
 		{
-			get;
-			internal set;
+			get => _set ?? (_set = (v)=>CurrentValue = v);
+			internal set => _set = value;
 		}
 
 		public T CurrentValue { get => (T)Value; private set => Value = value; }
@@ -212,13 +213,15 @@ namespace Comet
 		}
 		public override void BindingValueChanged(INotifyPropertyRead bindingObject, string propertyName, object value)
 		{
+			var oldValue = CurrentValue;
 			if (IsFunc)
 				CurrentValue = Get();
 			else
 			{
 				CurrentValue = Cast(value);
 			}
-			View?.ViewPropertyChanged(propertyName, value);
+			if(!oldValue.Equals(CurrentValue))
+				View?.ViewPropertyChanged(propertyName, value);
 
 		}
 		T Cast(object value)

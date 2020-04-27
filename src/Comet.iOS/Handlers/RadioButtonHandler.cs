@@ -5,7 +5,7 @@ namespace Comet.iOS.Handlers
 {
 	class RadioButtonHandler : AbstractControlHandler<RadioButton, CUIRadioButton>
 	{
-		public static readonly PropertyMapper<RadioButton> Mapper = new PropertyMapper<RadioButton>()
+		public static readonly PropertyMapper<RadioButton> Mapper = new PropertyMapper<RadioButton>(ViewHandler.Mapper)
 		{
 			[nameof(RadioButton.Label)] = MapLabelProperty,
 			[nameof(RadioButton.Selected)] = MapSelectedProperty

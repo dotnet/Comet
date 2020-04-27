@@ -317,6 +317,13 @@ stages:
       - Xamarin.Android
 
     steps:
+
+    - task: UseDotNet@2
+      displayName: 'Use .NET Core sdk'
+      inputs:
+        packageType: sdk
+        version: $(DotNetVersion)
+
     - task: NuGetToolInstaller@1
       displayName: Use Nuget $(NugetVersion)
       inputs:
@@ -332,13 +339,7 @@ stages:
     - task: Boots@1
       displayName: 'Set Xamarin.Android'
       inputs:
-        uri: 'https://aka.ms/xamarin-android-commercial-d16-3-macos'
-
-    - task: UseDotNet@2
-      displayName: 'Use .NET Core sdk'
-      inputs:
-        packageType: sdk
-        version: $(DotNetVersion)
+        uri: $(XamarinAndroidMac)
     - task: XamarinAndroid@1
       displayName: 'Build Comet.Android.Sample App'
       inputs:

@@ -33,10 +33,8 @@ namespace Comet.iOS.Handlers
 			nativeView.ValueChanged -= HandleValueChanged;
 		}
 
-		private void HandleValueChanged(object sender, EventArgs e)
-		{
+		private void HandleValueChanged(object sender, EventArgs e) =>
 			VirtualView.ValueChanged(TypedNativeView.Value);
-		}
 
 		public static void MapValueProperty(IViewHandler viewHandler, Slider virtualView)
 		{

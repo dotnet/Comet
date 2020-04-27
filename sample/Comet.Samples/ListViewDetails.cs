@@ -5,11 +5,11 @@ namespace Comet.Samples
 {
 	public class ListViewDetails : View
 	{
-		[State]
+		[Environment]
 		readonly Song song;
-		public ListViewDetails(Song song)
+
+		public ListViewDetails()
 		{
-			this.song = song;
 			Body = () => new VStack {
 				new Image(() => song.ArtworkUrl),
 				new Text(() => song.Title),

@@ -35,6 +35,7 @@ namespace Comet.Mac.Extensions
 				navController.PushViewController(vc, false);
 				return navController;
 			}
+			view.ViewHandler = vc;
 			return vc;
 		}
 

@@ -34,9 +34,7 @@ namespace Comet.Android.Handlers
 		}
 
 		private void HandleValueChanged(object sender, EventArgs e)
-		{
-			VirtualView?.OnEditingChanged?.Invoke(TypedNativeView.Progress);
-		}
+			=> VirtualView?.ValueChanged(TypedNativeView.Progress);
 
 		public static void MapValueProperty(IViewHandler viewHandler, Slider virtualView)
 		{

@@ -10,16 +10,9 @@ namespace Comet
 			Action<string> onEditingChanged = null,
 			Action<string> onCommit = null)
 		{
-			Text = value ?? new Binding<string>(
-				() => this.value ??= "",
-				(outVal) => this.value = outVal
-				);
-			Text.Set ??= (v) => {
-				Text.BindingValueChanged(null, nameof(Text), v);
-				this.ViewPropertyChanged(nameof(Text), v);
-			};
+			Text = value;
 			Placeholder = placeholder;
-			OnEditingChanged = new MulticastAction<string>(value, onEditingChanged);
+			OnEditingChanged = new MulticastAction<string>(Text, onEditingChanged);
 			OnCommit = onCommit;
 		}
 		public TextField(
@@ -52,18 +45,7 @@ namespace Comet
 		public Action<string> OnEditingChanged { get; private set; }
 		public Action<string> OnCommit { get; private set; }
 
-		string value;
 		public void ValueChanged(string value)
-		{
-			OnEditingChanged?.Invoke(value);
-
-			//If the value stored is null, there is no real binding.
-			//SO we need to fire the notification ourselves..
-			if (this.value != null)
-			{
-				Text.BindingValueChanged(null, nameof(Text), value);
-				this.ViewPropertyChanged(nameof(Text), value);
-			}
-		}
+			=> OnEditingChanged?.Invoke(value);
 	}
 }

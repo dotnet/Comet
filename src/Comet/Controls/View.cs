@@ -145,7 +145,6 @@ namespace Comet
 				var oldView = BuiltView;
 				var oldParentView = builtView;
 				builtView = null;
-
 				//if (ViewHandler == null)
 				//	return;
 				ViewHandler?.Remove(this);
@@ -158,7 +157,6 @@ namespace Comet
 				ViewHandler?.SetView(view);
 				ReloadHandler?.Reload();
 			}
-
 			finally
 			{
 				//We are done, clean it up.
@@ -194,6 +192,7 @@ namespace Comet
 			if (replaced != this)
 			{
 				replaced.viewThatWasReplaced = this;
+				replaced.ViewHandler = ViewHandler; 
 				replaced.Navigation = this.Navigation;
 				replaced.Parent = this;
 				replaced.ReloadHandler = this.ReloadHandler;

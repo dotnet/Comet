@@ -9,7 +9,7 @@ namespace Comet
 			Action<bool> onChanged = null)
 		{
 			IsOn = value;
-			IsOnChanged = new MulticastAction<bool>(value, onChanged);
+			IsOnChanged = new MulticastAction<bool>(IsOn, onChanged);
 		}
 
 		Binding<bool> _isOn;

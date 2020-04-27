@@ -29,6 +29,7 @@ namespace Comet.Android.Handlers
 		{
 			var nativeView = (CometImageView)viewHandler.NativeView;
 			nativeView.Bitmap = virtualView.Bitmap?.CurrentValue;
+			virtualView.InvalidateMeasurement();
 		}
 	}
 }

@@ -12,6 +12,7 @@ namespace Comet.Samples
 		{
 			new MenuItem("Ride the Comet",()=> new RideSample()),
 			new MenuItem("Text Styles",()=> new TextStylesSample()),
+			new MenuItem("Text Weight",()=> new TextWeightSample()),
 			new MenuItem("Skia Controls Sample",()=> new SkiaControlsSample()),
 			new MenuItem("Material Design",()=> new MaterialStylePicker()),
 			new MenuItem("AuditReportPage",()=> new AuditReportPage()),
@@ -48,6 +49,7 @@ namespace Comet.Samples
 			new MenuItem("ShapeSample2", ()=> new ShapeSample2()),
 			new MenuItem("SliderSample1", ()=> new SliderSample1()),
 			new MenuItem("StepperSample1", ()=> new StepperSample1()),
+			new MenuItem("DatePickerSample", ()=> new DatePickerSample()),
 			new MenuItem("TextFieldSample1", ()=> new TextFieldSample1()),
 			new MenuItem("TextFieldSample2", ()=> new TextFieldSample2()),
 			new MenuItem("TextFieldSample3", ()=> new TextFieldSample3()),

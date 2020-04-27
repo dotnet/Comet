@@ -12,16 +12,13 @@ namespace Comet
 			float by = 1,
 			Action<float> onEditingChanged = null)
 		{
-			Value = value ?? new Binding<float>(
-				() => this.value ?? 50f,
-				(outVal) => this.value = outVal
-				);
+			Value = value;
 			From = from;
 			Through = through;
 			By = by;
-			OnEditingChanged = new MulticastAction<float>(Value, onEditingChanged);
+			OnEditingChanged = new MulticastAction<float>(Value,onEditingChanged);
 		}
-		float? value;
+
 		Binding<float> _value;
 		public Binding<float> Value
 		{
@@ -53,18 +50,8 @@ namespace Comet
 		public Action<float> OnEditingChanged { get; private set; }
 
 		public void ValueChanged(float value)
-		{
-			OnEditingChanged?.Invoke(value);
+			=> OnEditingChanged.Invoke(value);
 
-			//If the value stored is null, there is no real binding.
-			//SO we need to fire the notification ourselves..
-			if (this.value != null){
-				Value.BindingValueChanged(null, nameof(Value), value);
-				this.ViewPropertyChanged(nameof(Value), value);
-			}
-
-			//Value.Set(value);
-		}
 		public void PercentChanged(float percent)
 		{
 			var from = From.CurrentValue;
