@@ -96,6 +96,7 @@ namespace Comet.Skia
 
 		protected override void ControlStateChanged()
 		{
+			base.ControlStateChanged();
 			animationPoint = (CurrentTouchPoint == PointF.Empty ? this.Frame.Center() : CurrentTouchPoint).ToSKPoint();
 			var endPadding = (CurrentState == ControlState.Pressed) ? new Thickness(.5f) : new Thickness();
 

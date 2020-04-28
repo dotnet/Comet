@@ -201,5 +201,15 @@ namespace Comet.Skia {
 			var control = viewHandler as SkiaControl;
 			control.Overlay (virtualView.GetOverlay ());
 		}
+
+		protected override void ControlStateChanged()
+		{
+			if(VirtualView is IControlState control)
+			{
+				control.CurrentState = CurrentState;
+				control.StateChanged?.Invoke(CurrentState);
+			}
+			base.ControlStateChanged();
+		}
 	}
 }
