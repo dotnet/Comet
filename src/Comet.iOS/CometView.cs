@@ -108,7 +108,7 @@ namespace Comet.iOS
 		{
 			if (Bounds.IsEmpty || _nativeView == null || _virtualView == null)
 				return;
-			var iOSHandler = _virtualView?.BuiltView?.ViewHandler as iOSViewHandler;
+			var iOSHandler = (_virtualView?.ViewHandler ?? _virtualView?.BuiltView?.ViewHandler) as iOSViewHandler;
 
 			bool ignoreSafeArea = iOSHandler?.IgnoreSafeArea ?? false;
 
