@@ -12,6 +12,11 @@ namespace Comet.iOS.Handlers
 		{
 			[nameof(Button.Text)] = MapTextProperty,
 			[EnvironmentKeys.Colors.Color] = MapColorProperty,
+			[EnvironmentKeys.Fonts.Family] = MapFontProperty,
+			[EnvironmentKeys.Fonts.Italic] = MapFontProperty,
+			[EnvironmentKeys.Fonts.Size] = MapFontProperty,
+			[EnvironmentKeys.Fonts.Weight] = MapFontProperty,
+			[EnvironmentKeys.Colors.Color] = MapColorProperty,
 		};
 
 		public ButtonHandler() : base(Mapper)
@@ -63,6 +68,14 @@ namespace Comet.iOS.Handlers
 		{
 			var nativeView = (UIButton)viewHandler.NativeView;
 			nativeView.SetTitleColor(virtualView.GetColor(DefaultColor).ToUIColor(), UIControlState.Normal);
+		}
+
+		public static void MapFontProperty(IViewHandler viewHandler, Button virtualView)
+		{
+			var nativeView = (UIButton)viewHandler.NativeView;
+			var font = virtualView.GetFont(DefaultFont);
+			nativeView.Font = font.ToUIFont();
+			virtualView.InvalidateMeasurement();
 		}
 	}
 }
