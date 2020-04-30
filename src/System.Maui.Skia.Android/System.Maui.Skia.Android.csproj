@@ -82,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\System.Maui\System.Maui.csproj">
-      <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
+      <Project>{536443CD-F511-49BC-9ED0-0FFB27361E95}</Project>
       <Name>System.Maui</Name>
     </ProjectReference>
     <ProjectReference Include="..\System.Maui.Android\System.Maui.Android.csproj">

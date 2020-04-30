@@ -18,7 +18,7 @@ namespace System.Maui.Android.Sample
 		{
 			base.OnCreate(savedInstanceState);
 #if DEBUG
-			Comet.Reload.Init();
+			Maui.Reload.Init();
 #endif
 			System.Maui.Skia.UI.Init();
 

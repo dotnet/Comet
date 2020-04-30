@@ -92,6 +92,12 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
   <ItemGroup>
+      <ProjectReference Include="..\NewApp\NewApp.csproj">
+        <Project>{032FBFD0-7AD6-4B97-8372-B94141CEA15C}</Project>
+        <Name>NewApp</Name>
+      </ProjectReference>
+    </ItemGroup>
+  <ItemGroup>
     <Folder Include="Resources\drawable\" />
     <Folder Include="Resources\drawable-hdpi\" />
     <Folder Include="Resources\drawable-xhdpi\" />

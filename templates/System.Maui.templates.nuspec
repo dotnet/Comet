@@ -3,7 +3,7 @@
     <metadata>
         <id>System.Maui.Templates.Multiplatform</id>
         <title>System.Maui Template Pack</title>
-        <version>0.0.2</version>
+        <version>0.0.5</version>
         <authors>James Clancey</authors>
         <description>Templates for building iOS apps with System.Maui.</description>
         <projectUrl>https://github.com/Clancey/System.Maui</projectUrl>

@@ -72,7 +72,7 @@
       <Name>System.Maui.WPF</Name>
     </ProjectReference>
     <ProjectReference Include="..\System.Maui\System.Maui.csproj">
-      <Project>{1817646e-e71e-48cf-80a4-3030ef870d61}</Project>
+      <Project>{536443CD-F511-49BC-9ED0-0FFB27361E95}</Project>
       <Name>System.Maui</Name>
     </ProjectReference>
   </ItemGroup>

@@ -26,12 +26,14 @@ namespace NewApp.iOS
 
         public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
         {
+            UI.Init();
 //-:cnd:noEmit
 #if DEBUG
             System.Maui.Reload.Init();
 #endif
 //+:cnd:noEmit
 
+			new MauiStyle().Apply();
             window = new UIWindow
             {
                 RootViewController = new MainPage().ToViewController()

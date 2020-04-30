@@ -87,25 +87,13 @@
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-20@2x.png">
             <Visible>false</Visible>
         </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-20@2x-1.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-20@2x-2.png">
-            <Visible>false</Visible>
-        </ImageAsset>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-20@3x.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-29@2x-1.png">
             <Visible>false</Visible>
         </ImageAsset>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-29@2x.png">
             <Visible>false</Visible>
         </ImageAsset>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-29@3x.png">
-            <Visible>false</Visible>
-        </ImageAsset>
-        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-40@2x-1.png">
             <Visible>false</Visible>
         </ImageAsset>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\AppIcon-40@2x.png">

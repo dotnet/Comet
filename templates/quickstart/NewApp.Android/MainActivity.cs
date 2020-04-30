@@ -7,25 +7,21 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using System.Maui.Android;
+using System.Maui;
+using NewApp;
 
 namespace NewApp.Droid
 {
     [Activity(Label = "NewApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : System.MauiActivity
+    public class MainActivity : MauiActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
-            TabLayoutResource = Resource.Layout.Tabbar;
-            ToolbarResource = Resource.Layout.Toolbar;
+            //TabLayoutResource = Resource.Layout.Tabbar;
+            //ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
 
-            #if (kind == "shell")
-            global::Xamarin.Forms.Forms.SetFlags("CollectionView_Experimental");
-            #endif
-            #if (IncludeXamarinEssentials)
-            Xamarin.Essentials.Platform.Init(this, savedInstanceState);
-            #endif
 #if DEBUG
             System.Maui.Reload.Init();
 #endif

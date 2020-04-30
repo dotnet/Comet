@@ -32,7 +32,7 @@ namespace System.Maui.iOS.Sample
 		public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
 		{
 #if DEBUG
-			Comet.Reload.Init();
+			///Sysem.Maui.Reload.Init();
 #endif
 			UI.Init();
 			//Adds the material Style
@@ -47,14 +47,15 @@ namespace System.Maui.iOS.Sample
 			//Replaces the native controls with controls from Googles Material Lib
 			//System.Maui.Material.iOS.UI.Init();
 
-			"turtlerock.jpg".LoadImage();
+			new MauiStyle().Apply();
 			window = new UIWindow
 			{
-				RootViewController = new MainPage(new List<MenuItem>
-				{
-					new MenuItem("SwiftUI Tutorial Section 5 (Native)", () => new Section5Native()),
-					new MenuItem("SwiftUI Tutorial Section 5b (Native)", () => new Section5NativeB())
-				}).ToViewController(),
+				RootViewController = new NewTemplate().ToViewController(),
+				//RootViewController = new MainPage(new List<MenuItem>
+				//{
+				//	new MenuItem("SwiftUI Tutorial Section 5 (Native)", () => new Section5Native()),
+				//	new MenuItem("SwiftUI Tutorial Section 5b (Native)", () => new Section5NativeB())
+				//}).ToViewController(),
 				//RootViewController = new NestedViews().ToViewController(),
 			};
 			/*window = new UIWindow

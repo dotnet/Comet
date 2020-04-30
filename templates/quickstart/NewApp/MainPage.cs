@@ -5,20 +5,24 @@ namespace NewApp
 {
     public class MainPage : View
     {
-        readonly State<int> count = 0;
-
-        [Body]
-        View body() => new VStack
+        public MainPage()
         {
-            new Text(() => $"Value: {count.Value}")
-                .Color(Color.Black)
-                .FontSize(32),
-            new Button("Increment", () => count.Value ++ )
-                .Frame(width:320, height:44)
-                .Background(Color.Black)
-                .Color(Color.White)
-                .Padding(20)
-            ,
+            this.Title("Welcome to Maui");
+        }
+        readonly State<int> count = 0;
+        [Body]
+        View body() => new NavigationView
+        {
+            new VStack
+            {
+                new Spacer(),
+                new Label(() => $"Value: {count.Value}")
+                    .Color(Color.Black)
+                    .TextAlignment(TextAlignment.Left)
+                    .FontSize(32),
+                new Spacer(),
+                new Button("+", () => count.Value ++ ).StyleAsCircleButton(),				
+            }
         };
-    }
+	}
 }

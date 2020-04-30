@@ -58,6 +58,12 @@ namespace System.Maui
 			return view;
 		}
 
+		public static T Align<T>(this T view, Alignment alignment) where T : View
+		{
+			view.FrameConstraints(new FrameConstraints(null, null, alignment));
+			return view;
+		}
+
 		public static T Cell<T>(
 			this T view,
 			int row = 0,

@@ -151,7 +151,7 @@
             "type": "parameter",
             "dataType": "string",
             "replaces": "MauiSdk",
-            "defaultValue": "0.1.7364-beta"
+            "defaultValue": "0.1.7365-beta"
         },
         "System.MauiReloadSdk": {
             "type": "parameter",
