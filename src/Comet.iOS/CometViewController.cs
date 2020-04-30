@@ -21,7 +21,7 @@ namespace Comet.iOS
 				else
 					_startingCurrentView = value;
 
-				Title = value?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? value?.BuiltView?.GetEnvironment<string>(EnvironmentKeys.View.Title) ?? "";
+				Title = value?.GetTitle() ?? "";
 
 			}
 		}
@@ -37,6 +37,7 @@ namespace Comet.iOS
 		{
 			base.View = _containerView = new CometView(UIScreen.MainScreen.Bounds);
 			_containerView.CurrentView = _startingCurrentView;
+			Title = _startingCurrentView?.GetTitle() ?? "";
 			_startingCurrentView = null;
 		}
 		public override void ViewDidAppear(bool animated)

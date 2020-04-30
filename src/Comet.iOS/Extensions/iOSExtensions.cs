@@ -42,8 +42,6 @@ namespace Comet.iOS
 					return navController;
 				}
 			}
-
-			view.ViewHandler = vc;
 			return vc;
 		}
 		public static iOSViewHandler GetOrCreateViewHandler(this View view)
