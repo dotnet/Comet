@@ -29,6 +29,65 @@ namespace Comet.WPF
 			return iUIElement;
 		}
 
+		public static double GetWpfFontSize(this Text virtualText)
+		{
+			var styleId = virtualText.StyleId;
+			switch (styleId)
+			{
+				case EnvironmentKeys.Text.Style.H1:
+					return 32;
+				case EnvironmentKeys.Text.Style.H2:
+					return 24;
+				case EnvironmentKeys.Text.Style.H3:
+					return 18.72;
+				case EnvironmentKeys.Text.Style.H4:
+					return 16;
+				case EnvironmentKeys.Text.Style.H5:
+					return 13.27;
+				case EnvironmentKeys.Text.Style.H6:
+					return 10.72;
+				case EnvironmentKeys.Text.Style.Body1:
+					return 12;
+				case EnvironmentKeys.Text.Style.Body2:
+					return 10.50;
+				case EnvironmentKeys.Text.Style.Caption:
+					return 9;
+				case EnvironmentKeys.Text.Style.Subtitle1:
+					return 10;
+				case EnvironmentKeys.Text.Style.Subtitle2:
+					return 10.50;
+				case EnvironmentKeys.Text.Style.Overline:
+					return 7;
+				default:
+					return 12;
+			}
+		}
+
+		public static FontWeight GetWpfFontWeight(this Weight virtualTextWight)
+		{
+			switch(virtualTextWight)
+			{
+				case Weight.Bold:
+					return FontWeights.Bold;
+				case Weight.Heavy:
+					return FontWeights.Heavy;
+				case Weight.Black:
+					return FontWeights.Black;
+				case Weight.Light:
+					return FontWeights.Light;
+				case Weight.Medium:
+					return FontWeights.Medium;
+				case Weight.Semibold:
+					return FontWeights.SemiBold;
+				case Weight.Thin:
+					return FontWeights.Thin;
+				case Weight.Ultralight:
+					return FontWeights.UltraLight;
+				default:
+					return FontWeights.Regular;
+			}
+		}
+
 		public static UIElement ToView(this View view)
 		{
 			var handler = view.GetOrCreateViewHandler();
