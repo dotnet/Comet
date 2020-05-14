@@ -140,7 +140,11 @@ namespace Comet.iOS
 		public void Reload()
 		{
 			//TODO: Fix this!
-			throw new NotImplementedException();
+
+			UIView previousView = _handler?.View;
+			_handler = _virtualView.GetOrCreateViewHandler();
+			HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, previousView, (UIView)_handler?.NativeView));
+
 		}
 	}
 }
