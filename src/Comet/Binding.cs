@@ -27,7 +27,7 @@ namespace Comet
 		}
 
 		public IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> BoundProperties { get; protected set; }
-
+		protected string PropertyName;
 		public virtual void BindingValueChanged(INotifyPropertyRead bindingObject, string propertyName, object value)
 		{
 			Value = value;
@@ -142,6 +142,7 @@ namespace Comet
 
 		public void BindToProperty(View view, string property)
 		{
+			PropertyName = property;
 			View = view;
 			if (IsFunc && BoundProperties?.Count > 0)
 			{
@@ -215,7 +216,16 @@ namespace Comet
 		{
 			var oldValue = CurrentValue;
 			if (IsFunc)
-				CurrentValue = Get();
+			{
+				var oldProps = BoundProperties;
+				StateManager.StartProperty();
+				var result = Get == null ? default : Get.Invoke();
+				var props = StateManager.EndProperty();
+				CurrentValue = result;
+				BoundProperties = props;
+				if(BoundProperties.Except(oldProps).Any())
+					BindToProperty(View, PropertyName);
+			}
 			else
 			{
 				CurrentValue = Cast(value);

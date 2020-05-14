@@ -186,7 +186,8 @@ namespace Comet
 		{
 			if (value?.GetType() == typeof(View))
 				return;
-
+			if (value is INotifyPropertyRead iNotify)
+				StartMonitoring(iNotify);
 			var notify = sender as INotifyPropertyRead;
 			if (notify == null)
 				throw new Exception("Error, this is null!!!");

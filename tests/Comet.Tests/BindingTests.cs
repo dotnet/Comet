@@ -34,6 +34,11 @@ namespace Comet.Tests
 			}
 		}
 
+		public class ParentClassWithState
+		{
+			public State<MyDataModel> CurrentDataModel { get; set; } = new State<MyDataModel>();
+		}
+
 		[Fact]
 		public void MagicDatabinding()
 		{
@@ -292,6 +297,37 @@ namespace Comet.Tests
 			var text1Value = textFieldHandler.ChangedProperties[tfValue];
 			var text2Value = textHandler.ChangedProperties[tValue];
 			Assert.Equal(text1Value, text2Value);
+		}
+
+
+		[Fact]
+		public void BindingWorksWithNestedChildPassedIn()
+		{
+
+			Text text = null;
+			var view = new StatePage();
+			const string startingValue = "0";
+			var model = new ParentClassWithState();
+		
+			view.Body = () => (text = new Text(()=> $"{model.CurrentDataModel.Value?.Count ?? 0}"));
+
+			var viewHandler = new GenericViewHandler();
+			view.ViewHandler = viewHandler;
+
+			var textHandler = new GenericViewHandler();
+			text.ViewHandler = textHandler;
+
+			Assert.Equal(startingValue, text.Value.CurrentValue);
+
+			const string endingValue = "1";
+			model.CurrentDataModel.Value = new MyDataModel { Count = 1 };
+
+			model.CurrentDataModel.Value.Count = 1;
+			Assert.Equal(endingValue, text.Value);
+
+			model.CurrentDataModel.Value.Count = 2;
+			Assert.Equal("2", text.Value);
+
 		}
 
 
