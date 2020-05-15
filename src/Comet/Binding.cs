@@ -230,7 +230,7 @@ namespace Comet
 			{
 				CurrentValue = Cast(value);
 			}
-			if(!oldValue.Equals(CurrentValue))
+			if(!(oldValue?.Equals(CurrentValue) ?? false))
 				View?.ViewPropertyChanged(propertyName, value);
 
 		}
