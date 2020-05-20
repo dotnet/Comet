@@ -57,7 +57,7 @@ namespace Comet
 			internal set => _set = value;
 		}
 
-		public T CurrentValue { get => (T)Value; private set => Value = value; }
+		public T CurrentValue { get => Value == null ? default :  (T)Value; private set => Value = value; }
 
 		public static implicit operator Binding<T>(T value)
 		{
