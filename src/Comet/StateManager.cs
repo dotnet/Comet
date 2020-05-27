@@ -143,7 +143,7 @@ namespace Comet
 			CheckForStateAttributes(obj, null).ToList();
 
 			//if it is a binding object we auto monitor!!!!
-			if (!(obj is BindingObject))
+			if (!(obj is IAutoImplemented))
 			{
 				obj.PropertyChanged += Obj_PropertyChanged;
 				obj.PropertyRead += Obj_PropertyRead;
@@ -154,7 +154,7 @@ namespace Comet
 			if (!MonitoredObjects.Contains(obj))
 				return;
 			MonitoredObjects.Remove(obj);
-			if (!(obj is BindingObject b))
+			if (!(obj is IAutoImplemented b))
 			{
 				obj.PropertyChanged -= Obj_PropertyRead;
 				obj.PropertyRead -= Obj_PropertyRead;
@@ -176,13 +176,13 @@ namespace Comet
 			var value = sender.GetPropertyValue(e.PropertyName);
 			OnPropertyChanged(sender, e.PropertyName, value);
 		}
-		static internal void OnPropertyRead(object sender, string propertyName)
+		public static void OnPropertyRead(object sender, string propertyName)
 		{
 			if (!isBuilding)
 				return;
 			currentReadProperies.Add((sender as INotifyPropertyRead, propertyName));
 		}
-		static internal void OnPropertyChanged(object sender, string propertyName, object value)
+		public static void OnPropertyChanged(object sender, string propertyName, object value)
 		{
 			if (value?.GetType() == typeof(View))
 				return;

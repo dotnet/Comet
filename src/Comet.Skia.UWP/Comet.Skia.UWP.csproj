@@ -139,14 +139,14 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>6.2.9</Version>
+      <Version>6.2.10</Version>
     </PackageReference>
     <PackageReference Include="SkiaSharp.Views">
-      <Version>1.68.1.1</Version>
+      <Version>1.68.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
     <PackageReference Include="Topten.RichTextKit">
-      <Version>0.1.118</Version>
+      <Version>0.2.123</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
