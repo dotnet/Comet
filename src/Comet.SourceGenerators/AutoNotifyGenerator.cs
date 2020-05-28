@@ -8,7 +8,7 @@ using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 
-namespace Analyzer1
+namespace Comet.Generators
 {
     [Generator]
     public class AutoNotifyGenerator : ISourceGenerator
