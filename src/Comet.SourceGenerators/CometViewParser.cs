@@ -9,16 +9,23 @@ namespace Comet.SourceGenerators
 {
 	public class CometViewParser
 	{
-		public IEnumerable<ClassObject> ParseCode(string source)
+		INamedTypeSymbol _cometView;
+
+		public IEnumerable<ClassObject> ParseCode(Compilation compilation)
 		{
-			var tree = CSharpSyntaxTree.ParseText(source);
-			var root = tree.GetRoot() as CompilationUnitSyntax;
-			var classes = root.Members.OfType<ClassDeclarationSyntax>();
-			foreach (var cd in classes)
-				yield return Parse(cd);
+			_cometView = compilation.GetTypeByMetadataName("Comet.View");
+
+			foreach (var tree in compilation.SyntaxTrees)
+			{
+				var model = compilation.GetSemanticModel(tree);
+				var root = tree.GetRoot() as CompilationUnitSyntax;
+				var classes = root.Members.OfType<ClassDeclarationSyntax>();
+				foreach (var cd in classes)
+					yield return Parse(cd, model);
+			}
 		}
 
-		public ClassObject Parse(ClassDeclarationSyntax cd)
+		public ClassObject Parse(ClassDeclarationSyntax cd, SemanticModel model)
 		{
 			var result = new ClassObject
 			{
@@ -33,22 +40,28 @@ namespace Comet.SourceGenerators
 			var constructors = cd.Members.OfType<ConstructorDeclarationSyntax>().ToList();//.Select(ParseMethods).Where(x => x != null).ToList();
 			foreach (var constructor in constructors)
 			{
-				Parse(constructor, result);
+				Parse(constructor, model, result);
 			}
 
 			return result;
 		}
 
-		public void Parse(ConstructorDeclarationSyntax md, ClassObject classObject)
+		public void Parse(ConstructorDeclarationSyntax md, SemanticModel model, ClassObject classObject)
 		{
 			var body = md.Body?.Statements.Cast<SyntaxNode>().ToList() ?? new List<SyntaxNode> { md.ExpressionBody?.Expression };
 
 			foreach (var node in body)
 			{
 				var assignment = FindAssignment(node);
-				if (assignment != null && assignment.Left is IdentifierNameSyntax id && id.Identifier.Text == "Body")
+				if (assignment != null && assignment.Left is IdentifierNameSyntax id)
 				{
-					ParseNode(assignment.Right, classObject);
+					var symbol = model.GetSymbolInfo(id);
+
+					if (symbol.Symbol.Name == "Body" &&
+						SymbolEqualityComparer.Default.Equals(symbol.Symbol.ContainingType, _cometView))
+					{
+						ParseNode(assignment.Right, classObject);
+					}
 				}
 			}
 
@@ -58,7 +71,6 @@ namespace Comet.SourceGenerators
 				AssignmentExpressionSyntax assignment => assignment,
 				_ => null
 			};
-
 		}
 
 		public void Parse(MethodDeclarationSyntax md, ClassObject classObject)

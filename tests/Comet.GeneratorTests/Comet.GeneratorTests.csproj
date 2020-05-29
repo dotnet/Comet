@@ -25,6 +25,9 @@
     <None Include="CodeParsingSamples\ExpressionBody_Constructor.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="CodeParsingSamples\StatementBody_Constructor_With_Decoy_Constructor.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="CodeParsingSamples\StatementBody_Constructor.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -44,9 +47,13 @@
     <Compile Remove="CodeParsingSamples\ExpressionBody_Attribute.cs" />
     <Compile Remove="CodeParsingSamples\ExpressionBody_Constructor.cs" />
     <Compile Remove="CodeParsingSamples\StatementBody_Constructor.cs" />
+    <Compile Remove="CodeParsingSamples\StatementBody_Constructor_With_Decoy_Constructor.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Update="CodeParsingSamples\ExpressionBody_Constructor.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeParsingSamples\StatementBody_Constructor_With_Decoy_Constructor.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="CodeParsingSamples\StatementBody_Constructor.txt">

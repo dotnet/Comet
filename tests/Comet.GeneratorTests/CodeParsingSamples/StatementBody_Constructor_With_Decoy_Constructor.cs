@@ -21,7 +21,9 @@ public class MyView : View
 	public MyView(int blah)
 	{
 		Func<View> Body = () => new Text(() => $"{count} times");
-
+		
+		// This has the exact same syntax as above (its an assignment to a thing called "Body", of type Func<View>)
+		// but we don't want to process it
 		Body = () => new Text(() => $"{count} times");
 	}
 }
