@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -34,7 +35,7 @@ namespace Comet.SourceGenerators
 			var methods = cd.Members.OfType<MethodDeclarationSyntax>().ToList();//.Select(ParseMethods).Where(x => x != null).ToList();
 			foreach (var method in methods)
 			{
-				Parse(method, result);
+				Parse(method, model, result);
 			}
 
 			var constructors = cd.Members.OfType<ConstructorDeclarationSyntax>().ToList();//.Select(ParseMethods).Where(x => x != null).ToList();
@@ -60,7 +61,7 @@ namespace Comet.SourceGenerators
 					if (symbol.Symbol.Name == "Body" &&
 						SymbolEqualityComparer.Default.Equals(symbol.Symbol.ContainingType, _cometView))
 					{
-						ParseNode(assignment.Right, classObject);
+						ParseNode(assignment.Right, model, classObject);
 					}
 				}
 			}
@@ -73,7 +74,7 @@ namespace Comet.SourceGenerators
 			};
 		}
 
-		public void Parse(MethodDeclarationSyntax md, ClassObject classObject)
+		public void Parse(MethodDeclarationSyntax md, SemanticModel model, ClassObject classObject)
 		{
 			if (!md.AttributeLists.OfType<AttributeListSyntax>()
 				.Any(x => x.Attributes.FirstOrDefault(y => y.ToString() == "Body") != null))
@@ -87,7 +88,7 @@ namespace Comet.SourceGenerators
 
 			foreach (var node in body)
 			{
-				ParseNode(node, classObject);
+				ParseNode(node, model, classObject);
 			}
 
 		}
@@ -111,8 +112,14 @@ namespace Comet.SourceGenerators
 		{
 			public List<string> BoundProperties { get; set; } = new List<string>();
 		}
-		ObjectCreation Parse(ObjectCreationExpressionSyntax node, ClassObject classObject)
+		ObjectCreation Parse(ObjectCreationExpressionSyntax node, SemanticModel model, ClassObject classObject)
 		{
+			var symbol = model.GetSymbolInfo(node.Type);
+			if (!(symbol.Symbol is INamedTypeSymbol typeSymbol) || !RoslynHelpers.IsDerivedFrom(typeSymbol, _cometView))
+			{
+				return null;
+			}
+
 			var result = new ObjectCreation
 			{
 				Name = node.Type.ToString(),
@@ -133,17 +140,17 @@ namespace Comet.SourceGenerators
 			if(node.Initializer != null)
 			{
 				foreach (var n in node.Initializer.Expressions)
-					ParseNode(n, classObject);
+					ParseNode(n, model, classObject);
 			}
 
 			return result;
 		}
 
-		void ParseNode( SyntaxNode node, ClassObject classObject)
+		void ParseNode( SyntaxNode node, SemanticModel model, ClassObject classObject)
 		{
 			if (node is ObjectCreationExpressionSyntax oce)
 			{
-				var obj = Parse(oce, classObject);
+				var obj = Parse(oce, model, classObject);
 				if (obj != null)
 				{
 					classObject.BodyCreation.Add(obj);
@@ -151,25 +158,25 @@ namespace Comet.SourceGenerators
 			}
 			else if (node is ReturnStatementSyntax rss)
 			{
-				ParseNode(rss.Expression, classObject);
+				ParseNode(rss.Expression, model, classObject);
 			}
 			else if (node is CastExpressionSyntax ces)
 			{
-				ParseNode(ces.Expression, classObject);
+				ParseNode(ces.Expression, model, classObject);
 			}
 			else if (node is ConditionalExpressionSyntax conditional)
 			{
 				classObject.GlobalBoundItems.AddRange(FindIdentifierNameSyntax(conditional.Condition).Select(x => x.Identifier.ToString()));
-				ParseNode(conditional.WhenTrue, classObject);
-				ParseNode(conditional.WhenFalse, classObject);
+				ParseNode(conditional.WhenTrue, model, classObject);
+				ParseNode(conditional.WhenFalse, model, classObject);
 			}
 			else if (node is ParenthesizedExpressionSyntax pes)
 			{
-				ParseNode(pes.Expression, classObject);
+				ParseNode(pes.Expression, model, classObject);
 			}
 			else if (node is ParenthesizedLambdaExpressionSyntax ples)
 			{
-				ParseNode(ples.Body, classObject);
+				ParseNode(ples.Body, model, classObject);
 			}
 			else
 			{
