@@ -52,6 +52,5 @@ namespace GeneratorTests
 
 			Assert.Equal(jsonExpected, text);
 		}
-
 	}
 }

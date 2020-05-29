@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
@@ -11,10 +13,12 @@ namespace Comet.SourceGenerators
 	public class CometViewParser
 	{
 		INamedTypeSymbol _cometView;
+		INamedTypeSymbol _iNotifyPropertyChanged;
 
 		public IEnumerable<ClassObject> ParseCode(Compilation compilation)
 		{
 			_cometView = compilation.GetTypeByMetadataName("Comet.View");
+			_iNotifyPropertyChanged = compilation.GetTypeByMetadataName(typeof(INotifyPropertyChanged).FullName);
 
 			foreach (var tree in compilation.SyntaxTrees)
 			{
@@ -130,14 +134,30 @@ namespace Comet.SourceGenerators
 				foreach (var arg in node.ArgumentList?.Arguments)
 				{
 					var identifiers = FindIdentifierNameSyntax(arg).ToList();
+
+					List<string> boundProperties = new List<string>();
+					foreach (var id in identifiers)
+					{
+						symbol = model.GetSymbolInfo(id);
+						var type = symbol.Symbol switch
+						{
+							IFieldSymbol field => field.Type,
+							IPropertySymbol prop => prop.Type,
+							_ => null
+						};
+						if (type != null && RoslynHelpers.ImplementsInterface(type, _iNotifyPropertyChanged))
+						{
+							boundProperties.Add(id.Identifier.Text);
+						}
+					}
 					result.ObjectParameters.Add(
 						new ObjectParameter
 						{
-							BoundProperties = identifiers.Select(x => x.ToString()).ToList()
+							BoundProperties = boundProperties
 						});
 				}
 			}
-			if(node.Initializer != null)
+			if (node.Initializer != null)
 			{
 				foreach (var n in node.Initializer.Expressions)
 					ParseNode(n, model, classObject);
@@ -146,7 +166,7 @@ namespace Comet.SourceGenerators
 			return result;
 		}
 
-		void ParseNode( SyntaxNode node, SemanticModel model, ClassObject classObject)
+		void ParseNode(SyntaxNode node, SemanticModel model, ClassObject classObject)
 		{
 			if (node is ObjectCreationExpressionSyntax oce)
 			{

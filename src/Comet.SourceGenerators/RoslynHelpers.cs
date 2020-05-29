@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Microsoft.CodeAnalysis;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace Comet.SourceGenerators
 {
@@ -24,6 +26,11 @@ namespace Comet.SourceGenerators
 			}
 
 			return false;
+		}
+
+		internal static bool ImplementsInterface(ITypeSymbol typeSymbol, INamedTypeSymbol interfaceType)
+		{
+			return typeSymbol.AllInterfaces.Any(iface => SymbolEqualityComparer.Default.Equals(iface, interfaceType));
 		}
 	}
 }
