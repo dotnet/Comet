@@ -11,7 +11,6 @@ namespace Comet.SourceGenerators
 	{
 		public IEnumerable<ClassObject> ParseCode(string source)
 		{
-
 			var tree = CSharpSyntaxTree.ParseText(source);
 			var root = tree.GetRoot() as CompilationUnitSyntax;
 			var classes = root.Members.OfType<ClassDeclarationSyntax>();
@@ -30,7 +29,36 @@ namespace Comet.SourceGenerators
 			{
 				Parse(method, result);
 			}
+
+			var constructors = cd.Members.OfType<ConstructorDeclarationSyntax>().ToList();//.Select(ParseMethods).Where(x => x != null).ToList();
+			foreach (var constructor in constructors)
+			{
+				Parse(constructor, result);
+			}
+
 			return result;
+		}
+
+		public void Parse(ConstructorDeclarationSyntax md, ClassObject classObject)
+		{
+			var body = md.Body?.Statements.Cast<SyntaxNode>().ToList() ?? new List<SyntaxNode> { md.ExpressionBody?.Expression };
+
+			foreach (var node in body)
+			{
+				var assignment = FindAssignment(node);
+				if (assignment != null && assignment.Left is IdentifierNameSyntax id && id.Identifier.Text == "Body")
+				{
+					ParseNode(assignment.Right, classObject);
+				}
+			}
+
+			AssignmentExpressionSyntax FindAssignment(SyntaxNode node) => node switch
+			{
+				ExpressionStatementSyntax ess => FindAssignment(ess.Expression),
+				AssignmentExpressionSyntax assignment => assignment,
+				_ => null
+			};
+
 		}
 
 		public void Parse(MethodDeclarationSyntax md, ClassObject classObject)
@@ -113,19 +141,23 @@ namespace Comet.SourceGenerators
 			{
 				ParseNode(rss.Expression, classObject);
 			}
-			else if(node is CastExpressionSyntax ces)
+			else if (node is CastExpressionSyntax ces)
 			{
 				ParseNode(ces.Expression, classObject);
 			}
-			else if(node is ConditionalExpressionSyntax conditional)
+			else if (node is ConditionalExpressionSyntax conditional)
 			{
 				classObject.GlobalBoundItems.AddRange(FindIdentifierNameSyntax(conditional.Condition).Select(x => x.Identifier.ToString()));
 				ParseNode(conditional.WhenTrue, classObject);
 				ParseNode(conditional.WhenFalse, classObject);
 			}
-			else if(node is ParenthesizedExpressionSyntax pes)
+			else if (node is ParenthesizedExpressionSyntax pes)
 			{
 				ParseNode(pes.Expression, classObject);
+			}
+			else if (node is ParenthesizedLambdaExpressionSyntax ples)
+			{
+				ParseNode(ples.Body, classObject);
 			}
 			else
 			{

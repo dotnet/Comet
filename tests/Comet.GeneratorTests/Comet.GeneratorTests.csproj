@@ -22,6 +22,12 @@
     <ProjectReference Include="..\..\src\Comet.SourceGenerators\Comet.SourceGenerators.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CodeParsingSamples\ExpressionBody_Constructor.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="CodeParsingSamples\StatementBody_Constructor.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="CodeParsingSamples\ExpressionBody_Attribute.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -36,8 +42,16 @@
     <Compile Remove="CodeParsingSamples\CodeSample1.cs" />
     <Compile Remove="CodeParsingSamples\CodeSample2.cs" />
     <Compile Remove="CodeParsingSamples\ExpressionBody_Attribute.cs" />
+    <Compile Remove="CodeParsingSamples\ExpressionBody_Constructor.cs" />
+    <Compile Remove="CodeParsingSamples\StatementBody_Constructor.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="CodeParsingSamples\ExpressionBody_Constructor.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeParsingSamples\StatementBody_Constructor.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="CodeParsingSamples\ExpressionBody_Attribute.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
