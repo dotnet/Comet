@@ -1,26 +1,20 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Reflection;
 
-using Comet;
 using Comet.SourceGenerators;
 
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.CodeAnalysis.Text;
 
 using Newtonsoft.Json;
 
 using Xunit;
 
-using Path = System.IO.Path;
-
 namespace GeneratorTests
 {
-	public class UnitTest1 : BaseTest
+	public class CometViewParserTests : BaseTest
 	{
 
 		[Theory]
