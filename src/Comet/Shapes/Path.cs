@@ -25,7 +25,7 @@ namespace Comet
 		{
 			var bounds = _path.Bounds;
 
-			AffineTransformF transform = null;
+			AffineTransformF transform;
 
 			if (_scaling == PathScaling.AspectFit)
 			{

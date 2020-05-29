@@ -29,9 +29,4 @@ public class MyView : View
 			new Button("Click Me!", ()=> count.Value++),
 		};
 	}
-
-	public MyView(object MyModel)
-	{
-		Body = () => new Text(MyModel.ToString());
-	}
 }

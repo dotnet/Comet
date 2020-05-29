@@ -58,7 +58,7 @@ namespace Comet
 		public static void Disposing(View view)
 		{
 			//TODO: Clean up and unsusbscribe from bindings objects
-			if (ViewObjectMappings.TryGetValue(view.Id, out var mappings))
+			if (ViewObjectMappings.TryGetValue(view.Id, out var _))
 			{
 				//TODO: clean up mappings
 			}
