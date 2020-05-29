@@ -22,6 +22,9 @@
     <ProjectReference Include="..\..\src\Comet.SourceGenerators\Comet.SourceGenerators.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="CodeParsingSamples\ExpressionBody_Attribute.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="CodeParsingSamples\CodeSample1.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
@@ -30,13 +33,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="CodeParsingSamples\" />
-  </ItemGroup>
-  <ItemGroup>
     <Compile Remove="CodeParsingSamples\CodeSample1.cs" />
     <Compile Remove="CodeParsingSamples\CodeSample2.cs" />
+    <Compile Remove="CodeParsingSamples\ExpressionBody_Attribute.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="CodeParsingSamples\ExpressionBody_Attribute.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="CodeParsingSamples\CodeSample1.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

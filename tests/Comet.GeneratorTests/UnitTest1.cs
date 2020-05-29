@@ -12,21 +12,17 @@ using Path = System.IO.Path;
 
 namespace GeneratorTests {
 	public class UnitTest1 :BaseTest {
-		[Fact]
-		public void CodeSample1Test() => TestCodeSample("CodeSample1");
-
-		[Fact]
-		public void CodeSample2Test() => TestCodeSample("CodeSample2");
 		
-
-		void TestCodeSample(string fileName)
+		[Theory]
+		[MemberData(nameof(GetAllTestData))]
+		[System.Diagnostics.CodeAnalysis.SuppressMessage("Usage", "xUnit1026:Theory methods should use all of their parameters", Justification = "Makes the test look nice in Test Explorer")]
+		public void TestCodeSample(string testName, string source, string jsonExpected)
 		{
 			var codeParser = new CometViewParser();
-			var data = GetTestData(fileName);
-			var parse = codeParser.ParseCode(data.Source).ToList();
+			var parse = codeParser.ParseCode(source).ToList();
 			var text = JsonConvert.SerializeObject(parse);
 
-			Assert.Equal(data.JsonExpectedResult, text);
+			Assert.Equal(jsonExpected, text);
 		}
 
 	}
