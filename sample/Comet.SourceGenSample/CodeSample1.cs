@@ -24,7 +24,7 @@ public class MyView : View
 	{
 		return new VStack
 		{
-			//(shouldCelebrate ?(View)new Text("Celebrate!!!!") : new Spacer()),
+			(shouldCelebrate ?(View)new Text($"{count.Value}") : new Spacer()),
 			new Text(()=>$"{count} times"),
 			new Button("Click Me!", ()=> count.Value++),
 		};

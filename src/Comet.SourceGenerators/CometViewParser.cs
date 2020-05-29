@@ -28,19 +28,17 @@ namespace Comet.SourceGenerators
 			var methods = cd.Members.OfType<MethodDeclarationSyntax>().ToList();//.Select(ParseMethods).Where(x => x != null).ToList();
 			foreach (var method in methods)
 			{
-				var body = Parse(method);
-				if (body != null)
-					result.BodyCreation.AddRange(body);
+				Parse(method, result);
 			}
 			return result;
 		}
 
-		public List<ObjectCreation> Parse(MethodDeclarationSyntax md)
+		public void Parse(MethodDeclarationSyntax md, ClassObject classObject)
 		{
 			if (!md.AttributeLists.OfType<AttributeListSyntax>()
 				.Any(x => x.Attributes.FirstOrDefault(y => y.ToString() == "Body") != null))
 			{
-				return null;
+				return;
 			}
 			//We found a method with  [Body] !!!!
 			var foundItems = new List<IdentifierNameSyntax>();
@@ -49,9 +47,8 @@ namespace Comet.SourceGenerators
 
 			foreach (var node in body)
 			{
-				ParseNode(node, objectCreations);
+				ParseNode(node, classObject);
 			}
-			return objectCreations;
 
 		}
 
@@ -74,7 +71,7 @@ namespace Comet.SourceGenerators
 		{
 			public List<string> BoundProperties { get; set; } = new List<string>();
 		}
-		ObjectCreation Parse(ObjectCreationExpressionSyntax node, List<ObjectCreation> objects)
+		ObjectCreation Parse(ObjectCreationExpressionSyntax node, ClassObject classObject)
 		{
 			var result = new ObjectCreation
 			{
@@ -96,25 +93,39 @@ namespace Comet.SourceGenerators
 			if(node.Initializer != null)
 			{
 				foreach (var n in node.Initializer.Expressions)
-					ParseNode(n, objects);
+					ParseNode(n, classObject);
 			}
 
 			return result;
 		}
 
-		void ParseNode( SyntaxNode node, List<ObjectCreation> objects)
+		void ParseNode( SyntaxNode node, ClassObject classObject)
 		{
 			if (node is ObjectCreationExpressionSyntax oce)
 			{
-				var obj = Parse(oce, objects);
+				var obj = Parse(oce, classObject);
 				if (obj != null)
 				{
-					objects.Add(obj);
+					classObject.BodyCreation.Add(obj);
 				}
 			}
 			else if (node is ReturnStatementSyntax rss)
 			{
-				ParseNode(rss.Expression, objects);
+				ParseNode(rss.Expression, classObject);
+			}
+			else if(node is CastExpressionSyntax ces)
+			{
+				ParseNode(ces.Expression, classObject);
+			}
+			else if(node is ConditionalExpressionSyntax conditional)
+			{
+				classObject.GlobalBoundItems.AddRange(FindIdentifierNameSyntax(conditional.Condition).Select(x => x.Identifier.ToString()));
+				ParseNode(conditional.WhenTrue, classObject);
+				ParseNode(conditional.WhenFalse, classObject);
+			}
+			else if(node is ParenthesizedExpressionSyntax pes)
+			{
+				ParseNode(pes.Expression, classObject);
 			}
 			else
 			{

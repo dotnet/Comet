@@ -13,14 +13,21 @@ using Path = System.IO.Path;
 namespace GeneratorTests {
 	public class UnitTest1 :BaseTest {
 		[Fact]
-		public void Test1 ()
+		public void CodeSample1Test() => TestCodeSample("CodeSample1");
+
+		[Fact]
+		public void CodeSample2Test() => TestCodeSample("CodeSample2");
+		
+
+		void TestCodeSample(string fileName)
 		{
 			var codeParser = new CometViewParser();
-			var data = GetTestData("CodeSample1");
+			var data = GetTestData(fileName);
 			var parse = codeParser.ParseCode(data.Source).ToList();
 			var text = JsonConvert.SerializeObject(parse);
 
 			Assert.Equal(data.JsonExpectedResult, text);
 		}
+
 	}
 }

@@ -25,15 +25,22 @@
     <None Include="CodeParsingSamples\CodeSample1.cs">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <None Include="CodeParsingSamples\CodeSample2.cs">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="CodeParsingSamples\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="CodeParsingSamples\CodeSample1.cs" />
+    <Compile Remove="CodeParsingSamples\CodeSample2.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Update="CodeParsingSamples\CodeSample1.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="CodeParsingSamples\CodeSample2.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
