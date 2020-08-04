@@ -220,7 +220,7 @@ namespace Comet
 					State.AddGlobalProperties(props);
 				}
 				UpdateBuiltViewContext(view);
-				return builtView = view;
+				return builtView = view.GetRenderView();
 			}
 		}
 
