@@ -35,8 +35,8 @@ namespace Comet
 
 				var width = bounds.Width * factor;
 				var height = bounds.Height * factor;
-				var translateX = (rect.Width - width) / 2;
-				var translateY = (rect.Height - height) / 2;
+				var translateX = (rect.Width - width) / 2 + rect.X;
+				var translateY = (rect.Height - height) / 2 + rect.Y;
 
 				transform = AffineTransformF.GetTranslateInstance(-bounds.X, -bounds.Y);
 				transform.Translate(translateX, translateY);
@@ -50,8 +50,8 @@ namespace Comet
 
 				var width = bounds.Width * factor;
 				var height = bounds.Height * factor;
-				var translateX = (rect.Width - width) / 2;
-				var translateY = (rect.Height - height) / 2;
+				var translateX = (rect.Width - width) / 2 + rect.X;
+				var translateY = (rect.Height - height) / 2 + rect.Y;
 
 				transform = AffineTransformF.GetTranslateInstance(-bounds.X, -bounds.Y);
 				transform.Translate(translateX, translateY);
@@ -63,16 +63,16 @@ namespace Comet
 				var factorY = rect.Height / bounds.Height;
 				transform = AffineTransformF.GetScaleInstance(factorX, factorY);
 
-				var translateX = bounds.X * factorX;
-				var translateY = bounds.Y * factorY;
+				var translateX = bounds.X * factorX + rect.X;
+				var translateY = bounds.Y * factorY + rect.Y;
 				transform.Translate(translateX, translateY);
 			}
 			else
 			{
 				var width = bounds.Width;
 				var height = bounds.Height;
-				var translateX = (rect.Width - width) / 2;
-				var translateY = (rect.Height - height) / 2;
+				var translateX = (rect.Width - width) / 2 + rect.X;
+				var translateY = (rect.Height - height) / 2 + rect.Y;
 
 				transform = AffineTransformF.GetTranslateInstance(-bounds.X, -bounds.Y);
 				transform.Translate(translateX, translateY);
