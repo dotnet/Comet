@@ -14,6 +14,14 @@ namespace Comet.Graphics
 
 		}
 
+		public Shadow(Color color, SizeF offset, float radius = 10, float opacity = .5f)
+		{
+			Color = color;
+			Offset = offset;
+			Radius = radius;
+			Opacity = opacity;
+		}
+
 		protected Shadow(Shadow prototype)
 		{
 			Color = prototype.Color;

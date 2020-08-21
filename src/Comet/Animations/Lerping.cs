@@ -107,6 +107,10 @@ namespace Comet
 					return start.Lerp(end, progress);
 				}
 			},
+			[typeof(object)] = new Lerp
+			{
+				Calculate = (s, e, progress) => (s).GenericLerp(e, progress)
+			},
 		};
 
 		public static Lerp GetLerp(Type type)

@@ -14,7 +14,8 @@ namespace Comet
 		where T : View
 		{
 			var animation = CreateAnimation(view, easing, action, completed, duration, delay, repeats, autoReverses, id, lerp);
-			view.AddAnimation(animation);
+			if(animation != null)
+				view.AddAnimation(animation);
 			return view;
 		}
 
@@ -66,7 +67,8 @@ namespace Comet
 					return animation;
 				animations.Add(animation);
 			}
-
+			if (animations.Count == 0)
+				return null;
 			return new Animation(animations)
 			{
 				Id = id,

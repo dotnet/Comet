@@ -49,7 +49,7 @@ namespace Comet.Skia
 
 		public VerticalAlignment VerticalAlignment => VerticalAlignment.Center;
 
-
+		
 		public TextBlock CreateTextBlock()
 		{
 			var font = VirtualView.GetFont(defaultFont);

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using Comet.Skia.Internal;
 using SkiaSharp;
@@ -111,6 +112,38 @@ namespace Comet.Skia {
 		}
 
 		public abstract string AccessibilityText ();
+
+		Dictionary<string, TextBlock> textBlocks;
+		protected TextBlock GetTextBlock(string key)
+		{
+			textBlocks ??= new Dictionary<string, TextBlock>();
+			if (!textBlocks.TryGetValue(key, out var textBlock))
+				textBlocks[key] = textBlock = createTextBlock(key);
+			return textBlock;
+		}
+		protected void ResetTextBlock(string key)
+		{
+			if (textBlocks?.TryGetValue(key, out var tb) ?? false)
+				textBlocks[key] = null;
+		}
+		TextBlock createTextBlock(string key)
+		{
+			var text = this.GetEnvironment<string>(key) ?? GetValueForState<string>(key);
+			var font = VirtualView.GetFont(GetValueForState<FontAttributes>($"{key}.Font"));
+			var color = VirtualView.GetColor(GetValueForState<Color>($"{key}.Color") ?? Color.Black);
+			var alignment = VirtualView.GetTextAlignment(GetValueForState<TextAlignment?>($"{key}.TextAlignment")) ?? TextAlignment.Center;
+			var tb = new TextBlock();
+			tb.AddText(text, font.ToStyle(color));
+			tb.MaxWidth = VirtualView.Frame.Width;
+			tb.MaxHeight = VirtualView.Frame.Height;
+			tb.MaxLines = null;
+			tb.Alignment = alignment.ToTextAlignment();
+			tb.Layout();
+			return tb;
+		}
+
+		public virtual T GetValueForState<T>(string key) => default;
+
 
 		public static void ClipCanvas (SKCanvas canvas, RectangleF dirtyRect, SkiaControl control, View view)
 		{

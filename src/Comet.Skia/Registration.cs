@@ -11,12 +11,12 @@ namespace Comet.Skia.Internal
 		static Registration()
 		{
 			new SkiaStyle().Apply();
-			Register<SKButton, Button, ButtonHandler>();
+			Register<SKButton, Button, FluentButtonHandler>();
 			Register<SKText, Text, TextHandler>();
 			Register<SKTextField, TextField, TextFieldHandler>();
 			Register<SKSlider, Slider, SliderHandler>();
 			Register<SKProgressBar, ProgressBar, ProgressBarHandler>();
-			Register<SKToggle, Toggle, ToggleHandler>();
+			Register<SKToggle, Toggle, FluentToggleHandler>();
 		}
 
 		static void Register<SKiaView, ReplacementView, Handler>()

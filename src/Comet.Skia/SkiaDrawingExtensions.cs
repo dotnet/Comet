@@ -7,14 +7,30 @@ namespace Comet.Skia
 {
 	public static class SkiaDrawingExtensions
 	{
+		public static SKPaint ApplyShadow(this SKPaint paint, Shadow shadow)
+		{
+			if (paint == null || shadow == null)
+				return paint;
+			paint.ImageFilter = SKImageFilter.CreateDropShadow(
+						shadow.Offset.Width,
+						shadow.Offset.Height,
+						shadow.Radius,
+						shadow.Radius,
+						shadow.Color.ToSKColor(),
+						SKDropShadowImageFilterShadowMode.DrawShadowAndForeground
+						);
+			return paint;
+		}
+
 		public static void DrawShape(
 			this SKCanvas canvas, 
 			Shape shape, 
 			RectangleF rect, 
 			DrawingStyle drawingStyle = DrawingStyle.Fill, 
 			float strokeWidth = 1, 
-			Color strokeColor = null, 
-			object fill = null)
+			Color strokeColor = null,
+			object fill = null,
+			Shadow fillShadow = null)
 		{
 			if (shape == null)
 				return;
@@ -32,7 +48,9 @@ namespace Comet.Skia
 						StrokeWidth = lineWidth = strokeWidth,
 						Color = (strokeColor ?? Color.Black).ToSKColor(),
 						Style = SKPaintStyle.Stroke
+						
 					};
+					
 					fillPaint = new SKPaint
 					{
 						IsAntialias = true,
@@ -72,6 +90,7 @@ namespace Comet.Skia
 
 			if (fill != null && fillPaint != null)
 			{
+				fillPaint.ApplyShadow(fillShadow);
 				if (fill is Color color)
 				{
 					fillPaint.Color = color.ToSKColor();
@@ -133,7 +152,10 @@ namespace Comet.Skia
 			}
 
 			if (strokePaint != null)
+			{
+				//strokePaint.ApplyShadow(strokeShadow);
 				canvas.DrawPath(path, strokePaint);
+			}
 
 			strokePaint?.Dispose();
 			fillPaint?.Dispose();
