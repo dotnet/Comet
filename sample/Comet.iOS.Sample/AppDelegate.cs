@@ -20,14 +20,15 @@ namespace Comet.iOS.Sample
 #if DEBUG
 			Comet.Reload.Init();
 #endif
-			//Adds the material Style
-			//new MaterialStyle(ColorPalette.Blue).Apply();
-
+			
 			//Enables Skia
 			Comet.Skia.UI.Init();
 
 			//Replaces Native controls with Skia Controls
-			//Comet.Skia.Controls.Init();
+			Comet.Skia.Controls.Init();
+
+			//Adds the material Style
+			new MaterialStyle(ColorPalette.Purple).Apply();
 
 			//Replaces the native controls with controls from Googles Material Lib
 			//Comet.Material.iOS.UI.Init();

@@ -181,6 +181,12 @@ namespace Comet.Styles
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.Colors.BackgroundColor, Button?.BackgroundColor);
 
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.Shadow, Button?.Shadow);
+
+			//Sets the fonts
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.Fonts.Size, Button?.TextFont, (f) => (f as FontAttributes)?.Size);
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.Fonts.Family, Button?.TextFont, (f) => (f as FontAttributes)?.Family);
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.Fonts.Italic, Button?.TextFont, (f) => (f as FontAttributes)?.Italic);
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.Fonts.Weight, Button?.TextFont, (f) => (f as FontAttributes)?.Weight);
 		}
 
 
@@ -246,6 +252,8 @@ namespace Comet.Styles
 				SetEnvironmentValue(view, styleId, newKey, pair.value);
 			}
 		}
+		protected void SetEnvironment(ContextualObject view, Type type, string key, StyleAwareValue value, Func<object, object> getProperty)
+			=> SetEnvironment(view, type.Name.ToString(), key, value, getProperty);
 		protected void SetEnvironment(ContextualObject view, string styleId, string key, StyleAwareValue value, Func<object, object> getProperty)
 		{
 			if (value == null)

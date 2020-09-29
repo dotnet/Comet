@@ -10,10 +10,10 @@ namespace Comet.Samples
 		{
 			new SKText("Text"),
 			new SKTextField("Text Field"),
-			new SKButton("Hello!"),
-			new SKSlider(progress,0,1,.01f),
-			new SKProgressBar(progress),
-			new SKToggle(),
+			new Button("Hello!"),
+			new Slider(progress,0,1,.01f),
+			new ProgressBar(progress),
+			new Toggle(),
 		};
 	}
 }

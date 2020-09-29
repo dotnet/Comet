@@ -17,6 +17,7 @@ namespace Comet.Skia
 		{
 			[nameof(ProgressBar.Value)] = Redraw,
 		};
+
 		public static DrawMapper<ProgressBar> ProgressBarDrawMapper = new DrawMapper<ProgressBar>(SkiaControl.DrawMapper)
 		{
 			[SkiaEnvironmentKeys.Slider.Layers.Track] = DrawTrack,

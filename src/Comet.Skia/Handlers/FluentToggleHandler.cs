@@ -27,7 +27,7 @@ namespace Comet.Skia
 			
 			var isOnText = currentState ? "On" : "Off";
 			var isDisabled = state == ControlState.Disabled ? " (disabled)" : "";
-			var newKey = $"{isOnText}{isDisabled}.{key}";
+			var newKey = $"{key}.{isOnText}{isDisabled}";
 			if (stateDefaultValues.TryGetValue(newKey, out var r))
 				return r;
 			return null;

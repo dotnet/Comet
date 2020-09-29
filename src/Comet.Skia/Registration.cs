@@ -15,7 +15,7 @@ namespace Comet.Skia.Internal
 			Register<SKText, Text, TextHandler>();
 			Register<SKTextField, TextField, TextFieldHandler>();
 			Register<SKSlider, Slider, SliderHandler>();
-			Register<SKProgressBar, ProgressBar, ProgressBarHandler>();
+			Register<SKProgressBar, ProgressBar, FluentProgressHandler>();
 			Register<SKToggle, Toggle, FluentToggleHandler>();
 		}
 

@@ -38,32 +38,34 @@ namespace Comet.Skia
 		{
 			foreach (var key in stateKeys)
 			{
-				var value = GetValueForState<object>(key);
+				var value = TypedVirtualView.GetEnvironment<object>(key);
+				if(value == null)
+					value = GetValueForState<object>(key);
 				this.SetEnvironment(key, value);
 			}
 		}
 
-		static string textKey => "Default.Content✏️ Label";
+		static string textKey => "Content✏️ Label";
 
 		public override T GetValueForState<T>(string key)
 		{
 			if (key == textKey)
-				return (T)(object)TypedVirtualView.Text; 
+				return (T)(object)TypedVirtualView.Text?.CurrentValue; 
 			var state = CurrentState switch
 			{
-				ControlState.Pressed => "Pressed",
-				ControlState.Disabled => "Disabled",
-				_ => "Default",
+				ControlState.Pressed => ".Pressed",
+				ControlState.Disabled => ".Disabled",
+				_ => "",
 			};
 			//var isOnText = currentState ? "On" : "Off";
 			//var isDisabled = state == ControlState.Disabled ? " (disabled)" : "";
-			var newKey = $"{state}.{key}";
+			var newKey = $"{key}{state}";
 			if (stateDefaultValues.TryGetValue(newKey, out var r) && r is T t)
 				return t;
 			return default;
 		}
 
-		public override void EndInteraction(PointF[] points, bool contained)
+		public override void EndInteraction(PointF [] points, bool contained)
 		{
 			if (contained)
 				TypedVirtualView?.OnClick?.Invoke();

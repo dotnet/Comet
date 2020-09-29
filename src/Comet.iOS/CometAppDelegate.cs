@@ -34,15 +34,15 @@ namespace Comet.iOS
 
 		public void Reload()
 		{
-			var oldVC = window.RootViewController;
-			window.RootViewController = App.ToViewController();
-			if(oldVC is CometViewController cvc)
-			{
-				if (cvc.CurrentView == App)
-					cvc.CurrentView = null;
+			//var oldVC = window.RootViewController;
+			//window.RootViewController = App.ToViewController();
+			//if(oldVC is CometViewController cvc)
+			//{
+			//	if (cvc.CurrentView == App)
+			//		cvc.CurrentView = null;
 
-			}
-			oldVC?.Dispose();
+			//}
+			//oldVC?.Dispose();
 		}
 	}
 }
