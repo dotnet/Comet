@@ -106,6 +106,7 @@
     <Compile Include="CometAppDelegate.cs" />
     <Compile Include="Handlers\DatePickerHandler.cs" />
     <Compile Include="Extensions\DateExtensions.cs" />
+    <Compile Include="Handlers\BodyHandler.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet\Comet.csproj">

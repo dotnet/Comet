@@ -10,7 +10,7 @@ namespace Comet.Samples
 		readonly State<bool> isLoading = false;
 
 		[Body]
-		View body()
+		View body() 
 		{
 			//if (isLoading) return new Text(() => "Loading...");
 			if (isLoading) return new ActivityIndicator().Color(Color.Fuchsia);

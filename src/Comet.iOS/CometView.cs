@@ -1,4 +1,5 @@
 ﻿using System;
+using Comet.Internal;
 using CoreGraphics;
 using UIKit;
 
@@ -29,7 +30,7 @@ namespace Comet.iOS
 					return;
 
 				UIView previousView = null;
-				if (_virtualView != null)
+				if (_virtualView != null) 
 				{
 					previousView = (UIView)_virtualView.ViewHandler?.NativeView;
 					_virtualView.ViewHandlerChanged -= HandleViewHandlerChanged;
@@ -39,7 +40,7 @@ namespace Comet.iOS
 				}
 
 				_virtualView = value;
-				_handler = _virtualView.GetOrCreateViewHandler();
+				_handler = _virtualView?.GetOrCreateViewHandler();
 
 				if (_virtualView != null)
 				{
@@ -54,6 +55,10 @@ namespace Comet.iOS
 			}
 		}
 
+		public void ViewWillAppear()
+		{
+
+		}
 		private void HandleNeedsLayout(object sender, EventArgs e)
 		{
 			SetNeedsLayout();
