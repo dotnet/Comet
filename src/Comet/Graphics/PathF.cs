@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,13 +10,13 @@ namespace Comet.Graphics
 {
 	public class PathF : IDisposable
 	{
-		private readonly List<PointF> _points;
+		private readonly List<Xamarin.Forms.Point> _points;
 		private readonly List<PathOperation> _operations;
 
-		private List<float> _arcAngles;
+		private List<double> _arcAngles;
 		private List<bool> _arcClockwise;
 
-		private RectangleF? _cachedBounds;
+		private Xamarin.Forms.Rectangle? _cachedBounds;
 		private object _nativePath;
 
 		public PathF(PathF prototype, AffineTransformF transform = null) : this()
@@ -33,7 +33,7 @@ namespace Comet.Graphics
 			}
 			if (prototype._arcAngles != null)
 			{
-				_arcAngles = new List<float>();
+				_arcAngles = new List<double>();
 				_arcClockwise = new List<bool>();
 
 				_arcAngles.AddRange(prototype._arcAngles);
@@ -41,18 +41,18 @@ namespace Comet.Graphics
 			}
 		}
 
-		public PathF(PointF point) : this()
+		public PathF(Xamarin.Forms.Point point) : this()
 		{
 			MoveTo(point);
 		}
 
-		public PathF(float x, float y) : this(new PointF(x, y))
+		public PathF(double x, double y) : this(new Xamarin.Forms.Point(x, y))
 		{
 		}
 
 		public PathF()
 		{
-			_points = new List<PointF>();
+			_points = new List<Xamarin.Forms.Point>();
 			_operations = new List<PathOperation>();
 		}
 
@@ -67,7 +67,7 @@ namespace Comet.Graphics
 			}
 		}
 
-		public PointF? FirstPoint
+		public Xamarin.Forms.Point? FirstPoint
 		{
 			get
 			{
@@ -87,7 +87,7 @@ namespace Comet.Graphics
 			}
 		}
 
-		public IEnumerable<PointF> Points
+		public IEnumerable<Xamarin.Forms.Point> Points
 		{
 			get
 			{
@@ -96,12 +96,12 @@ namespace Comet.Graphics
 			}
 		}
 
-		public RectangleF Bounds
+		public Xamarin.Forms.Rectangle Bounds
 		{
 			get
 			{
 				if (_cachedBounds != null)
-					return (RectangleF)_cachedBounds;
+					return (Xamarin.Forms.Rectangle)_cachedBounds;
 
 				_cachedBounds = CalculateBounds();
 
@@ -113,14 +113,14 @@ namespace Comet.Graphics
                     
                 }*/
 
-				return (RectangleF)_cachedBounds;
+				return (Xamarin.Forms.Rectangle)_cachedBounds;
 			}
 		}
 
-		private RectangleF CalculateBounds()
+		private Xamarin.Forms.Rectangle CalculateBounds()
 		{
-			var xValues = new List<float>();
-			var yValues = new List<float>();
+			var xValues = new List<double>();
+			var yValues = new List<double>();
 
 			int pointIndex = 0;
 			int arcAngleIndex = 0;
@@ -173,8 +173,8 @@ namespace Comet.Graphics
 				{
 					var topLeft = _points[pointIndex++];
 					var bottomRight = _points[pointIndex++];
-					float startAngle = GetArcAngle(arcAngleIndex++);
-					float endAngle = GetArcAngle(arcAngleIndex++);
+					double startAngle = GetArcAngle(arcAngleIndex++);
+					double endAngle = GetArcAngle(arcAngleIndex++);
 					var clockwise = IsArcClockwise(arcClockwiseIndex++);
 
 					var bounds = GraphicsOperations.GetBoundsOfArc(topLeft.X, topLeft.Y, bottomRight.X - topLeft.X, bottomRight.Y - topLeft.Y, startAngle, endAngle, clockwise);
@@ -191,10 +191,10 @@ namespace Comet.Graphics
 			var maxX = xValues.Max();
 			var maxY = yValues.Max();
 
-			return new RectangleF(minX, minY, maxX - minX, maxY - minY);
+			return new Xamarin.Forms.Rectangle(minX, minY, maxX - minX, maxY - minY);
 		}
 
-		public PointF? LastPoint
+		public Xamarin.Forms.Point? LastPoint
 		{
 			get
 			{
@@ -205,7 +205,7 @@ namespace Comet.Graphics
 			}
 		}
 
-		public PointF this[int index]
+		public Xamarin.Forms.Point this[int index]
 		{
 			get
 			{
@@ -225,7 +225,7 @@ namespace Comet.Graphics
 			return _operations[index];
 		}
 
-		public float GetArcAngle(int index)
+		public double GetArcAngle(int index)
 		{
 			if (_arcAngles != null && _arcAngles.Count > index)
 				return _arcAngles[index];
@@ -241,12 +241,12 @@ namespace Comet.Graphics
 			return false;
 		}
 
-		public PathF MoveTo(float x, float y)
+		public PathF MoveTo(double x, double y)
 		{
-			return MoveTo(new PointF(x, y));
+			return MoveTo(new Xamarin.Forms.Point(x, y));
 		}
 
-		public PathF MoveTo(PointF point)
+		public PathF MoveTo(Xamarin.Forms.Point point)
 		{
 			_points.Add(point);
 			_operations.Add(PathOperation.MoveTo);
@@ -262,12 +262,12 @@ namespace Comet.Graphics
 			Invalidate();
 		}
 
-		public PathF LineTo(float x, float y)
+		public PathF LineTo(double x, double y)
 		{
-			return LineTo(new PointF(x, y));
+			return LineTo(new Xamarin.Forms.Point(x, y));
 		}
 
-		public PathF LineTo(PointF point)
+		public PathF LineTo(Xamarin.Forms.Point point)
 		{
 			if (_points.Count == 0)
 			{
@@ -285,16 +285,16 @@ namespace Comet.Graphics
 			return this;
 		}
 
-		public PathF AddArc(float x1, float y1, float x2, float y2, float startAngle, float endAngle, bool clockwise)
+		public PathF AddArc(double x1, double y1, double x2, double y2, double startAngle, double endAngle, bool clockwise)
 		{
-			return AddArc(new PointF(x1, y1), new PointF(x2, y2), startAngle, endAngle, clockwise);
+			return AddArc(new Xamarin.Forms.Point(x1, y1), new Xamarin.Forms.Point(x2, y2), startAngle, endAngle, clockwise);
 		}
 
-		public PathF AddArc(PointF topLeft, PointF bottomRight, float startAngle, float endAngle, bool clockwise)
+		public PathF AddArc(Xamarin.Forms.Point topLeft, Xamarin.Forms.Point bottomRight, double startAngle, double endAngle, bool clockwise)
 		{
 			if (_arcAngles == null)
 			{
-				_arcAngles = new List<float>();
+				_arcAngles = new List<double>();
 				_arcClockwise = new List<bool>();
 			}
 			_points.Add(topLeft);
@@ -307,12 +307,12 @@ namespace Comet.Graphics
 			return this;
 		}
 
-		public PathF QuadTo(float cx, float cy, float x, float y)
+		public PathF QuadTo(double cx, double cy, double x, double y)
 		{
-			return QuadTo(new PointF(cx, cy), new PointF(x, y));
+			return QuadTo(new Xamarin.Forms.Point(cx, cy), new Xamarin.Forms.Point(x, y));
 		}
 
-		public PathF QuadTo(PointF controlPoint, PointF point)
+		public PathF QuadTo(Xamarin.Forms.Point controlPoint, Xamarin.Forms.Point point)
 		{
 			_points.Add(controlPoint);
 			_points.Add(point);
@@ -321,12 +321,12 @@ namespace Comet.Graphics
 			return this;
 		}
 
-		public PathF CurveTo(float c1X, float c1Y, float c2X, float c2Y, float x, float y)
+		public PathF CurveTo(double c1X, double c1Y, double c2X, double c2Y, double x, double y)
 		{
-			return CurveTo(new PointF(c1X, c1Y), new PointF(c2X, c2Y), new PointF(x, y));
+			return CurveTo(new Xamarin.Forms.Point(c1X, c1Y), new Xamarin.Forms.Point(c2X, c2Y), new Xamarin.Forms.Point(x, y));
 		}
 
-		public PathF CurveTo(PointF controlPoint1, PointF controlPoint2, PointF point)
+		public PathF CurveTo(Xamarin.Forms.Point controlPoint1, Xamarin.Forms.Point controlPoint2, Xamarin.Forms.Point point)
 		{
 			_points.Add(controlPoint1);
 			_points.Add(controlPoint2);
@@ -336,13 +336,13 @@ namespace Comet.Graphics
 			return this;
 		}
 
-		public PathF Rotate(float angle)
+		public PathF Rotate(double angle)
 		{
 			var center = Bounds.Center();
 			return Rotate(angle, center);
 		}
 
-		public PathF Rotate(float angle, PointF pivotPoint)
+		public PathF Rotate(double angle, Xamarin.Forms.Point pivotPoint)
 		{
 			var path = new PathF();
 
@@ -394,18 +394,18 @@ namespace Comet.Graphics
 			return path;
 		}
 
-		private PointF GetRotatedPoint(int index, PointF center, float angleInDegrees)
+		private Xamarin.Forms.Point GetRotatedPoint(int index, Xamarin.Forms.Point center, double angleInDegrees)
 		{
 			var point = _points[index];
 			return GraphicsOperations.RotatePoint(center, point, angleInDegrees);
 		}
 
-		public void AppendEllipse(RectangleF rect)
+		public void AppendEllipse(Xamarin.Forms.Rectangle rect)
 		{
 			AppendEllipse(rect.X, rect.Y, rect.Width, rect.Height);
 		}
 
-		public void AppendEllipse(float x, float y, float w, float h)
+		public void AppendEllipse(double x, double y, double w, double h)
 		{
 			var minx = x;
 			var miny = y;
@@ -416,43 +416,43 @@ namespace Comet.Graphics
 			var offsetY = h / 2 * .55f;
 			var offsetX = w / 2 * .55f;
 
-			MoveTo(new PointF(minx, midy));
-			CurveTo(new PointF(minx, midy - offsetY), new PointF(midx - offsetX, miny), new PointF(midx, miny));
-			CurveTo(new PointF(midx + offsetX, miny), new PointF(maxx, midy - offsetY), new PointF(maxx, midy));
-			CurveTo(new PointF(maxx, midy + offsetY), new PointF(midx + offsetX, maxy), new PointF(midx, maxy));
-			CurveTo(new PointF(midx - offsetX, maxy), new PointF(minx, midy + offsetY), new PointF(minx, midy));
+			MoveTo(new Xamarin.Forms.Point(minx, midy));
+			CurveTo(new Xamarin.Forms.Point(minx, midy - offsetY), new Xamarin.Forms.Point(midx - offsetX, miny), new Xamarin.Forms.Point(midx, miny));
+			CurveTo(new Xamarin.Forms.Point(midx + offsetX, miny), new Xamarin.Forms.Point(maxx, midy - offsetY), new Xamarin.Forms.Point(maxx, midy));
+			CurveTo(new Xamarin.Forms.Point(maxx, midy + offsetY), new Xamarin.Forms.Point(midx + offsetX, maxy), new Xamarin.Forms.Point(midx, maxy));
+			CurveTo(new Xamarin.Forms.Point(midx - offsetX, maxy), new Xamarin.Forms.Point(minx, midy + offsetY), new Xamarin.Forms.Point(minx, midy));
 			Close();
 		}
 
-		public void AppendRectangle(RectangleF rect, bool includeLast = false)
+		public void AppendRectangle(Xamarin.Forms.Rectangle rect, bool includeLast = false)
 		{
 			AppendRectangle(rect.X, rect.Y, rect.Width, rect.Height, includeLast);
 		}
 
-		public void AppendRectangle(float x, float y, float w, float h, bool includeLast = false)
+		public void AppendRectangle(double x, double y, double w, double h, bool includeLast = false)
 		{
 			var minx = x;
 			var miny = y;
 			var maxx = minx + w;
 			var maxy = miny + h;
 
-			MoveTo(new PointF(minx, miny));
-			LineTo(new PointF(maxx, miny));
-			LineTo(new PointF(maxx, maxy));
-			LineTo(new PointF(minx, maxy));
+			MoveTo(new Xamarin.Forms.Point(minx, miny));
+			LineTo(new Xamarin.Forms.Point(maxx, miny));
+			LineTo(new Xamarin.Forms.Point(maxx, maxy));
+			LineTo(new Xamarin.Forms.Point(minx, maxy));
 
 			if (includeLast)
-				LineTo(new PointF(minx, miny));
+				LineTo(new Xamarin.Forms.Point(minx, miny));
 
 			Close();
 		}
 
-		public void AppendRoundedRectangle(RectangleF rect, float cornerRadius, bool includeLast = false)
+		public void AppendRoundedRectangle(Xamarin.Forms.Rectangle rect, double cornerRadius, bool includeLast = false)
 		{
 			AppendRoundedRectangle(rect.X, rect.Y, rect.Width, rect.Height, cornerRadius, includeLast);
 		}
 
-		public void AppendRoundedRectangle(float x, float y, float w, float h, float cornerRadius, bool includeLast = false)
+		public void AppendRoundedRectangle(double x, double y, double w, double h, double cornerRadius, bool includeLast = false)
 		{
 			if (cornerRadius > h / 2)
 				cornerRadius = h / 2;
@@ -468,17 +468,17 @@ namespace Comet.Graphics
 			var handleOffset = cornerRadius * .55f;
 			var cornerOffset = cornerRadius - handleOffset;
 
-			MoveTo(new PointF(minx, miny + cornerRadius));
-			CurveTo(new PointF(minx, miny + cornerOffset), new PointF(minx + cornerOffset, miny), new PointF(minx + cornerRadius, miny));
-			LineTo(new PointF(maxx - cornerRadius, miny));
-			CurveTo(new PointF(maxx - cornerOffset, miny), new PointF(maxx, miny + cornerOffset), new PointF(maxx, miny + cornerRadius));
-			LineTo(new PointF(maxx, maxy - cornerRadius));
-			CurveTo(new PointF(maxx, maxy - cornerOffset), new PointF(maxx - cornerOffset, maxy), new PointF(maxx - cornerRadius, maxy));
-			LineTo(new PointF(minx + cornerRadius, maxy));
-			CurveTo(new PointF(minx + cornerOffset, maxy), new PointF(minx, maxy - cornerOffset), new PointF(minx, maxy - cornerRadius));
+			MoveTo(new Xamarin.Forms.Point(minx, miny + cornerRadius));
+			CurveTo(new Xamarin.Forms.Point(minx, miny + cornerOffset), new Xamarin.Forms.Point(minx + cornerOffset, miny), new Xamarin.Forms.Point(minx + cornerRadius, miny));
+			LineTo(new Xamarin.Forms.Point(maxx - cornerRadius, miny));
+			CurveTo(new Xamarin.Forms.Point(maxx - cornerOffset, miny), new Xamarin.Forms.Point(maxx, miny + cornerOffset), new Xamarin.Forms.Point(maxx, miny + cornerRadius));
+			LineTo(new Xamarin.Forms.Point(maxx, maxy - cornerRadius));
+			CurveTo(new Xamarin.Forms.Point(maxx, maxy - cornerOffset), new Xamarin.Forms.Point(maxx - cornerOffset, maxy), new Xamarin.Forms.Point(maxx - cornerRadius, maxy));
+			LineTo(new Xamarin.Forms.Point(minx + cornerRadius, maxy));
+			CurveTo(new Xamarin.Forms.Point(minx + cornerOffset, maxy), new Xamarin.Forms.Point(minx, maxy - cornerOffset), new Xamarin.Forms.Point(minx, maxy - cornerRadius));
 
 			if (includeLast)
-				LineTo(new PointF(minx, miny + cornerRadius));
+				LineTo(new Xamarin.Forms.Point(minx, miny + cornerRadius));
 
 			Close();
 		}

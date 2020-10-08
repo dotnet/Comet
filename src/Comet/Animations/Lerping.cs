@@ -80,12 +80,12 @@ namespace Comet
 					return start.Lerp(end, progress);
 				}
 			},
-			[typeof(RectangleF)] = new Lerp
+			[typeof(Xamarin.Forms.Rectangle)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
 
-					var start = (RectangleF)s;
-					var end = (RectangleF)e;
+					var start = (Xamarin.Forms.Rectangle)s;
+					var end = (Xamarin.Forms.Rectangle)e;
 					return start.Lerp(end, progress);
 				}
 			},

@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using Comet.Graphics;
 
@@ -21,7 +21,7 @@ namespace Comet
 			_scaling = scaling;
 		}
 
-		public override PathF PathForBounds(RectangleF rect)
+		public override PathF PathForBounds(Xamarin.Forms.Rectangle rect)
 		{
 			var bounds = _path.Bounds;
 

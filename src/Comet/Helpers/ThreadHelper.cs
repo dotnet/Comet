@@ -51,7 +51,9 @@ namespace Comet
 		//     on our caller's callstack, // be sure we yield even if we're on the UI thread.
 		//     await this.JoinableTaskFactory.SwitchToMainThreadAsync(alwaysYield: true); STAService.DoSomething();
 		//     }
+#pragma warning disable VSTHRD004 // Await SwitchToMainThreadAsync
 		public static JoinableTaskFactory.MainThreadAwaitable SwitchToMainThreadAsync(bool alwaysYield, CancellationToken cancellationToken = default) => JoinableTaskContext.Factory.SwitchToMainThreadAsync(alwaysYield, cancellationToken);
+#pragma warning restore VSTHRD004 // Await SwitchToMainThreadAsync
 
 		//
 		// Summary:
@@ -81,7 +83,9 @@ namespace Comet
 		//     // Now switch to a threadpool thread explicitly. await TaskScheduler.Default;
 		//     // Now switch to the Main thread to talk to some STA object. await this.JobContext.SwitchToMainThreadAsync();
 		//     STAService.DoSomething(); }
+#pragma warning disable VSTHRD004 // Await SwitchToMainThreadAsync
 		public static JoinableTaskFactory.MainThreadAwaitable SwitchToMainThreadAsync(CancellationToken cancellationToken = default) => JoinableTaskContext.Factory.SwitchToMainThreadAsync(cancellationToken);
+#pragma warning restore VSTHRD004 // Await SwitchToMainThreadAsync
 		public static void SetFireOnMainThread(Action<Action> action) => FireOnMainThread = action;
 		static Action<Action> FireOnMainThread;
 		public static async void RunOnMainThread(Action action)

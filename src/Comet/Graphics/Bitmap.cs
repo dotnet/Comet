@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace Comet.Graphics
 {
@@ -7,7 +6,7 @@ namespace Comet.Graphics
 	{
 		private bool _disposed;
 
-		public abstract SizeF Size { get; }
+		public abstract Xamarin.Forms.Size Size { get; }
 		public abstract object NativeBitmap { get; }
 		protected abstract void DisposeNative();
 

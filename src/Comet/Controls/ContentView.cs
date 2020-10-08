@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
 
 namespace Comet
 {
@@ -39,12 +38,12 @@ namespace Comet
 			base.Dispose(disposing);
 		}
 
-		public override void LayoutSubviews(RectangleF frame)
+		public override void LayoutSubviews(Xamarin.Forms.Rectangle frame)
 		{
 			if (Content != null)
 			{
 				var margin = Content.GetMargin();
-				var bounds = new RectangleF(
+				var bounds = new Xamarin.Forms.Rectangle(
 					frame.Left + margin.Left,
 					frame.Top + margin.Top,
 					frame.Width - margin.HorizontalThickness,
@@ -53,7 +52,7 @@ namespace Comet
 			}
 		}
 
-		public override SizeF GetIntrinsicSize(SizeF availableSize)
+		public override Xamarin.Forms.Size GetDesiredSize(Xamarin.Forms.Size availableSize)
 		{
 			if (Content != null)
 			{
@@ -64,7 +63,7 @@ namespace Comet
 				return measuredSize;
 			}
 
-			return base.GetIntrinsicSize(availableSize);
+			return base.GetDesiredSize(availableSize);
 		}
 		internal override void Reload(bool isHotReload)
 		{

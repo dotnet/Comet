@@ -103,10 +103,6 @@
       <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
       <Name>Comet.Samples</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.Mac\Comet.Mac.csproj">
-      <Project>{BCAF5569-30DB-4D44-BF46-DFFE93DDCBD0}</Project>
-      <Name>Comet.Mac</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Comet.Skia\Comet.Skia.csproj">
       <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
       <Name>Comet.Skia</Name>
@@ -120,18 +116,18 @@
     <BundleResource Include="Resources\turtlerock.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="1.68.1.1" />
-    <PackageReference Include="SkiaSharp.Views" Version="1.68.1.1" />
+    <PackageReference Include="SkiaSharp" Version="2.80.2" />
+    <PackageReference Include="SkiaSharp.Views" Version="2.80.2" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
     <PackageReference Include="SkiaSharp.HarfBuzz">
-      <Version>1.68.1.1</Version>
+      <Version>2.80.2</Version>
     </PackageReference>
     <PackageReference Include="Topten.RichTextKit">
-      <Version>0.1.118</Version>
+      <Version>0.3.133</Version>
     </PackageReference>
     <PackageReference Include="HarfBuzzSharp">
-      <Version>2.6.1.1</Version>
-    </PackageReference><PackageReference Include="System.Memory" Version="4.5.3" IncludeAssets="None" />
+      <Version>2.6.1.7</Version>
+    </PackageReference><PackageReference Include="System.Memory" Version="4.5.4" IncludeAssets="None" />
 <PackageReference Include="Clancey.Comet.Reload">
   <Version>0.0.12-alpha</Version>
 </PackageReference>

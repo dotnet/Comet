@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Drawing;
 using Comet.Graphics;
 
@@ -6,7 +6,7 @@ namespace Comet
 {
 	public class Circle : Shape
 	{
-		public override PathF PathForBounds(RectangleF rect)
+		public override PathF PathForBounds(Xamarin.Forms.Rectangle rect)
 		{
 			var size = Math.Min(rect.Width, rect.Height);
 			var x = rect.X + (rect.Width - size) / 2;

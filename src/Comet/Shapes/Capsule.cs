@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using Comet.Graphics;
 
 namespace Comet
@@ -10,7 +9,7 @@ namespace Comet
 	/// </summary>
 	public class Capsule : Shape
 	{
-		public override PathF PathForBounds(RectangleF rect)
+		public override PathF PathForBounds(Xamarin.Forms.Rectangle rect)
 		{
 			var path = new PathF();
 			var cornerSize = Math.Min(rect.Width, rect.Height) / 2;

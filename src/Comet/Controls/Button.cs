@@ -1,8 +1,10 @@
 ﻿using System;
+using Xamarin.Forms;
+using Xamarin.Platform;
 
 namespace Comet
 {
-	public class Button : View
+	public class Button : View, IButton
 	{
 		public Button(
 			Binding<string> text = null,
@@ -27,5 +29,29 @@ namespace Comet
 		}
 
 		public Action OnClick { get; private set; }
+
+		string IText.Text => Text?.CurrentValue;
+
+		Xamarin.Forms.Color IText.Color => this.GetColor(Color.Black);
+
+		Font IText.Font => default;
+
+		TextTransform IText.TextTransform => default;
+
+		double IText.CharacterSpacing => default;
+
+		Xamarin.Forms.FontAttributes IFont.FontAttributes => default;
+
+		string IFont.FontFamily => default;
+
+		double IFont.FontSize => default;
+
+		Xamarin.Forms.TextAlignment ITextAlignment.HorizontalTextAlignment => default;
+
+		Xamarin.Forms.TextAlignment ITextAlignment.VerticalTextAlignment => default;
+
+		void IButton.Pressed() {}
+		void IButton.Released() {}
+		void IButton.Clicked() => OnClick?.Invoke();
 	}
 }

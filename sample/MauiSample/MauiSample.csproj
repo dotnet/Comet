@@ -1,0 +1,16 @@
+<Project Sdk="MSBuild.Sdk.Extras">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.1;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
+  </PropertyGroup>  
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
+    <ProjectReference Include="..\..\..\Xamarin.Forms\src\Platform.Handlers\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj" />
+  </ItemGroup>
+  <Import Project="..\..\.nuspec\Xamarin.Forms.MultiTargeting.targets" />
+</Project>

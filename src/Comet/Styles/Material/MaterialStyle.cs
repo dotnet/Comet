@@ -50,7 +50,7 @@ namespace Comet.Styles.Material
 					[ControlState.Hovered] = colorPalette.P800,
 					[ControlState.Pressed] = colorPalette.P700,
 				},
-				Shadow = new Graphics.Shadow().WithColor(Color.Grey).WithRadius(1).WithOffset(new SizeF(1, 1)),
+				Shadow = new Graphics.Shadow().WithColor(Color.Grey).WithRadius(1).WithOffset(new Xamarin.Forms.Size(1, 1)),
 				Padding = new Thickness(16, 0, 16, 0),
 			};
 

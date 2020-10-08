@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Text;
@@ -23,8 +23,8 @@ namespace Comet.Graphics
 		private bool _closeWhenDone;
 		private char _lastCommand = '~';
 
-		private PointF? _lastCurveControlPoint;
-		private PointF? _relativePoint;
+		private Xamarin.Forms.Point? _lastCurveControlPoint;
+		private Xamarin.Forms.Point? _relativePoint;
 
 		private PathF _path;
 
@@ -73,7 +73,7 @@ namespace Comet.Graphics
 				_lastCurveControlPoint = null;
 				_path = null;
 				_commandStack.Clear();
-				_relativePoint = new PointF(0, 0);
+				_relativePoint = new Xamarin.Forms.Point(0, 0);
 				_closeWhenDone = false;
 
 				pathAsString = pathAsString.Replace("Infinity", "0");
@@ -398,7 +398,7 @@ namespace Comet.Graphics
 
 		private void SmoothCurveTo(bool isRelative)
 		{
-			var point1 = new PointF();
+			var point1 = new Xamarin.Forms.Point();
 			var point2 = NewPoint(NextValue, NextValue, isRelative, false);
 
 			// ReSharper disable ConvertIfStatementToNullCoalescingExpression
@@ -407,11 +407,11 @@ namespace Comet.Graphics
 				if (_lastCurveControlPoint == null)
 				{
 					// ReSharper restore ConvertIfStatementToNullCoalescingExpression
-					point1 = GraphicsOperations.GetOppositePoint((PointF)_relativePoint, point2);
+					point1 = GraphicsOperations.GetOppositePoint((Xamarin.Forms.Point)_relativePoint, point2);
 				}
 				else if (_relativePoint != null)
 				{
-					point1 = GraphicsOperations.GetOppositePoint((PointF)_relativePoint, (PointF)_lastCurveControlPoint);
+					point1 = GraphicsOperations.GetOppositePoint((Xamarin.Forms.Point)_relativePoint, (Xamarin.Forms.Point)_lastCurveControlPoint);
 				}
 			}
 
@@ -425,18 +425,18 @@ namespace Comet.Graphics
 			throw new NotImplementedException();
 		}
 
-		private PointF NewPoint(float x, float y, bool isRelative, bool isReference)
+		private Xamarin.Forms.Point NewPoint(float x, float y, bool isRelative, bool isReference)
 		{
-			PointF point;
+			Xamarin.Forms.Point point;
 
 			if (isRelative && _relativePoint != null)
 			{
 
-				point = new PointF(((PointF)_relativePoint).X + x, ((PointF)_relativePoint).Y + y);
+				point = new Xamarin.Forms.Point(((Xamarin.Forms.Point)_relativePoint).X + x, ((Xamarin.Forms.Point)_relativePoint).Y + y);
 			}
 			else
 			{
-				point = new PointF(x, y);
+				point = new Xamarin.Forms.Point(x, y);
 			}
 
 			// If this is the reference point, we want to store the location before
@@ -450,17 +450,17 @@ namespace Comet.Graphics
 			return point;
 		}
 
-		private PointF NewVerticalPoint(float y, bool isRelative, bool isReference)
+		private Xamarin.Forms.Point NewVerticalPoint(float y, bool isRelative, bool isReference)
 		{
-			var point = new PointF();
+			var point = new Xamarin.Forms.Point();
 
 			if (isRelative && _relativePoint != null)
 			{
-				point = new PointF(((PointF)_relativePoint).X, ((PointF)_relativePoint).Y + y);
+				point = new Xamarin.Forms.Point(((Xamarin.Forms.Point)_relativePoint).X, ((Xamarin.Forms.Point)_relativePoint).Y + y);
 			}
 			else if (_relativePoint != null)
 			{
-				point = new PointF(((PointF)_relativePoint).X, y);
+				point = new Xamarin.Forms.Point(((Xamarin.Forms.Point)_relativePoint).X, y);
 			}
 
 			if (isReference)
@@ -469,17 +469,17 @@ namespace Comet.Graphics
 			return point;
 		}
 
-		private PointF NewHorizontalPoint(float x, bool isRelative, bool isReference)
+		private Xamarin.Forms.Point NewHorizontalPoint(float x, bool isRelative, bool isReference)
 		{
-			var point = new PointF();
+			var point = new Xamarin.Forms.Point();
 
 			if (isRelative && _relativePoint != null)
 			{
-				point = new PointF(((PointF)_relativePoint).X + x, ((PointF)_relativePoint).Y);
+				point = new Xamarin.Forms.Point(((Xamarin.Forms.Point)_relativePoint).X + x, ((Xamarin.Forms.Point)_relativePoint).Y);
 			}
 			else if (_relativePoint != null)
 			{
-				point = new PointF(x, ((PointF)_relativePoint).Y);
+				point = new Xamarin.Forms.Point(x, ((Xamarin.Forms.Point)_relativePoint).Y);
 			}
 
 			if (isReference)

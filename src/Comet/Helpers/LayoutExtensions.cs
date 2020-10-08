@@ -1,5 +1,4 @@
-﻿using Comet.Layout;
-using System.Drawing;
+﻿using System.Drawing;
 
 // ReSharper disable once CheckNamespace
 namespace Comet
@@ -58,96 +57,21 @@ namespace Comet
 			return view;
 		}
 
-		public static T Cell<T>(
-			this T view,
-			int row = 0,
-			int column = 0,
-			int rowSpan = 1,
-			int colSpan = 1,
-			float weightX = 1,
-			float weightY = 1,
-			float positionX = 0,
-			float positionY = 0) where T : View
-		{
-			view.LayoutConstraints(new GridConstraints(row, column, rowSpan, colSpan, weightX, weightY, positionX, positionY));
-			return view;
-		}
+		//public static T Cell<T>(
+		//	this T view,
+		//	int row = 0,
+		//	int column = 0,
+		//	int rowSpan = 1,
+		//	int colSpan = 1,
+		//	float weightX = 1,
+		//	float weightY = 1,
+		//	float positionX = 0,
+		//	float positionY = 0) where T : View
+		//{
+		//	view.LayoutConstraints(new GridConstraints(row, column, rowSpan, colSpan, weightX, weightY, positionX, positionY));
+		//	return view;
+		//}
 
-		public static void SetFrameFromNativeView(
-			this View view,
-			RectangleF frame)
-		{
-			if (view == null)
-				return;
-			var margin = view.GetMargin();
-			if (!margin.IsEmpty)
-			{
-				frame.X += margin.Left;
-				frame.Y += margin.Top;
-				frame.Width -= margin.HorizontalThickness;
-				frame.Height -= margin.VerticalThickness;
-			}
-
-			var sizeThatFits = view.Measure(frame.Size);
-			view.MeasuredSize = sizeThatFits;
-			view.MeasurementValid = true;
-
-			var width = sizeThatFits.Width;
-			var height = sizeThatFits.Height;
-
-			var frameConstraints = view.GetFrameConstraints();
-
-			if (frameConstraints?.Width != null)
-			{
-				width = (float)frameConstraints.Width;
-			}
-			else
-			{
-				var horizontalSizing = view.GetHorizontalSizing(view.Parent as ContainerView, Sizing.Fit);
-				if (horizontalSizing == Sizing.Fill)
-					width = frame.Width;
-			}
-
-			if (frameConstraints?.Height != null)
-			{
-				height = (float)frameConstraints.Height;
-			}
-			else
-			{
-				var verticalSizing = view.GetVerticalSizing(view.Parent as ContainerView, Sizing.Fit);
-				if (verticalSizing == Sizing.Fill)
-					height = frame.Height;
-			}
-
-			var alignment = frameConstraints?.Alignment ?? Alignment.Center;
-
-			var xFactor = .5f;
-			switch (alignment.Horizontal)
-			{
-				case HorizontalAlignment.Leading:
-					xFactor = 0;
-					break;
-				case HorizontalAlignment.Trailing:
-					xFactor = 1;
-					break;
-			}
-
-			var yFactor = .5f;
-			switch (alignment.Vertical)
-			{
-				case VerticalAlignment.Bottom:
-					yFactor = 1;
-					break;
-				case VerticalAlignment.Top:
-					yFactor = 0;
-					break;
-			}
-
-			var x = frame.X + ((frame.Width - width) * xFactor);
-			var y = frame.Y + ((frame.Height - height) * yFactor);
-			view.Frame = new RectangleF((float)x, (float)y, width, height);
-			view.RequestLayout();
-		}
 
 		public static T FillHorizontal<T>(this T view, bool cascades = true) where T : View
 		{
@@ -241,7 +165,7 @@ namespace Comet
 			return constraints ?? defaultValue;
 		}
 
-		public static SizeF Measure(this View view, SizeF availableSize, bool includeMargin)
+		public static Xamarin.Forms.Size Measure(this View view, Xamarin.Forms.Size availableSize, bool includeMargin)
 		{
 			if (availableSize.Width <= 0 || availableSize.Height <= 0)
 				return availableSize;
@@ -252,13 +176,13 @@ namespace Comet
 				availableSize.Width -= margin.HorizontalThickness;
 				availableSize.Height -= margin.VerticalThickness;
 
-				var measuredSize = view.Measure(availableSize);
+				var measuredSize = view.Measure(availableSize.Width,availableSize.Height);
 				measuredSize.Width += margin.HorizontalThickness;
 				measuredSize.Height += margin.VerticalThickness;
 				return measuredSize;
 			}
 
-			return view.Measure(availableSize);
+			return view.Measure(availableSize.Width,availableSize.Height);
 		}
 
 		public static T IgnoreSafeArea<T>(this T view) where T : View

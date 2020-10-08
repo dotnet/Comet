@@ -1,18 +1,22 @@
-﻿using Comet.Layout;
+﻿using Xamarin.Platform;
+using Xamarin.Platform.Layouts;
 
 namespace Comet
 {
-	public class RadioGroup : AbstractLayout
+	public class RadioGroup : AbstractLayout, IStackLayout
 	{
-		public RadioGroup(Orientation orientation = Orientation.Vertical) 
-			: base(orientation == Orientation.Vertical
-				  ? (ILayoutManager)new VStackLayoutManager()
-				  : (ILayoutManager)new HStackLayoutManager())
+		public RadioGroup(Orientation orientation = Orientation.Vertical)
 		{
 			Orientation = orientation;
 		}
 
 		public Orientation Orientation { get; }
+
+		int IStackLayout.Spacing => 0;
+
+		public override ILayoutManager CreateLayoutManager() => Orientation == Orientation.Vertical
+				  ? (ILayoutManager)new VerticalStackLayoutManager(this)
+				  : new HorizontalStackLayoutManager(this);
 
 		protected override void OnAdded(View view)
 		{

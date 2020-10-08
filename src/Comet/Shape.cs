@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using Comet.Graphics;
 
@@ -16,6 +16,6 @@ namespace Comet
 
 		}
 
-		public abstract PathF PathForBounds(RectangleF rect);
+		public abstract PathF PathForBounds(Xamarin.Forms.Rectangle rect);
 	}
 }

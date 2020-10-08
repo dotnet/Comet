@@ -169,7 +169,7 @@ namespace Comet
 
 		public virtual void ReloadData()
 		{
-			ViewHandler?.UpdateValue(nameof(ReloadData), null);
+			ViewHandler?.UpdateValue(nameof(ReloadData));
 		}
 
 		protected virtual void OnSelected(int section, int index)

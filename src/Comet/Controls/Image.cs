@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using Comet.Graphics;
 namespace Comet
 {
@@ -46,12 +45,12 @@ namespace Comet
 			}
 		}
 
-		public override SizeF GetIntrinsicSize(SizeF availableSize)
+		public override Xamarin.Forms.Size GetDesiredSize(Xamarin.Forms.Size availableSize)
 		{
 			if (Bitmap?.Value != null)
 				return Bitmap.GetValueOrDefault().Size;
 
-			return SizeF.Empty;
+			return Xamarin.Forms.Size.Zero;
 		}
 
 		private async void LoadBitmapFromSource(string source)

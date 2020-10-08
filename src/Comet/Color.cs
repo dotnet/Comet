@@ -108,5 +108,8 @@ namespace Comet
 
 			return stringValue;
 		}
+
+		public static implicit operator Xamarin.Forms.Color (Color c)
+			=> c == null ? Xamarin.Forms.Color.Default : new Xamarin.Forms.Color(c.R,c.G,c.B,c.A);
 	}
 }

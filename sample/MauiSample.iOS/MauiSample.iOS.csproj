@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <Platform Condition=" '$(Platform)' == '' ">iPhoneSimulator</Platform>
+        <ProjectGuid>{EA8660EB-7E55-4E7F-85A5-979FAEDE209C}</ProjectGuid>
+        <ProjectTypeGuids>{FEACFBD2-3405-455C-9665-78FE426C6842};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+        <TemplateGuid>{edc1b0fa-90cd-4038-8fad-98fe74adb368}</TemplateGuid>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>MauiSample.iOS</RootNamespace>
+        <AssemblyName>MauiSample.iOS</AssemblyName>
+        <IPhoneResourcePrefix>Resources</IPhoneResourcePrefix>
+        <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
+        <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
+        <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+        <ProvisioningType>automatic</ProvisioningType>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\iPhoneSimulator\Debug</OutputPath>
+        <DefineConstants>DEBUG</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <MtouchArch>x86_64</MtouchArch>
+        <MtouchLink>None</MtouchLink>
+        <MtouchDebug>true</MtouchDebug>
+        <MtouchProfiling>true</MtouchProfiling>
+<CodesignKey>iPhone Developer</CodesignKey>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
+        <DebugType>none</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\iPhoneSimulator\Release</OutputPath>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <MtouchLink>None</MtouchLink>
+        <MtouchArch>x86_64</MtouchArch>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
+        <DebugSymbols>true</DebugSymbols>
+        <DebugType>full</DebugType>
+        <Optimize>false</Optimize>
+        <OutputPath>bin\iPhone\Debug</OutputPath>
+        <DefineConstants>DEBUG</DefineConstants>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <MtouchArch>ARM64</MtouchArch>
+        <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+        <CodesignKey>iPhone Developer</CodesignKey>
+        <MtouchDebug>true</MtouchDebug>
+        <MtouchLink>SdkOnly</MtouchLink>
+    </PropertyGroup>
+    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
+        <DebugType>none</DebugType>
+        <Optimize>true</Optimize>
+        <OutputPath>bin\iPhone\Release</OutputPath>
+        <ErrorReport>prompt</ErrorReport>
+        <WarningLevel>4</WarningLevel>
+        <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+        <MtouchArch>ARM64</MtouchArch>
+        <CodesignKey>iPhone Developer</CodesignKey>
+        <MtouchLink>SdkOnly</MtouchLink>
+    </PropertyGroup>
+    <ItemGroup>
+        <Reference Include="System" />
+        <Reference Include="System.Xml" />
+        <Reference Include="System.Core" />
+        <Reference Include="Xamarin.iOS" />
+        <Reference Include="System.Numerics" />
+        <Reference Include="System.Numerics.Vectors" />
+    </ItemGroup>
+    <ItemGroup>
+      <PackageReference Include="Xamarin.Essentials" Version="1.5.3.2" />
+      <PackageReference Include="Xamarin.TestCloud.Agent">
+        <Version>0.21.9</Version>
+      </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+        <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
+            <Visible>false</Visible>
+        </ImageAsset>
+    </ItemGroup>
+    <ItemGroup>
+        <Folder Include="Resources\" />
+    </ItemGroup>
+    <ItemGroup>
+        <InterfaceDefinition Include="LaunchScreen.storyboard" />
+    </ItemGroup>
+    <ItemGroup>
+        <None Include="Info.plist" />
+        <None Include="Entitlements.plist" />
+    </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Main.cs" />
+        <Compile Include="AppDelegate.cs" />
+    </ItemGroup>
+    <ItemGroup>
+      <ProjectReference Include="..\..\src\Comet\Comet.csproj">
+        <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
+        <Name>Comet</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\MauiSample\MauiSample.csproj">
+        <Project>{18885EDF-7A6E-4E08-9F67-ACE5D8938436}</Project>
+        <Name>MauiSample</Name>
+      </ProjectReference>
+      <ProjectReference Include="..\..\..\Xamarin.Forms\src\Platform.Handlers\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj">
+        <Project>{FBD05A46-CADE-4A38-97E2-B30A417EB8A0}</Project>
+        <Name>Xamarin.Platform.Handlers</Name>
+      </ProjectReference>
+    </ItemGroup>
+    <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
+</Project>

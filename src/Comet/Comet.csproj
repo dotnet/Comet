@@ -1,42 +1,23 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
-     <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
-    <PublishRepositoryUrl>true</PublishRepositoryUrl> 
-    <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
-    <EmbedUntrackedSources>true</EmbedUntrackedSources>  
-    <!-- Optional: Build symbol package (.snupkg) to distribute the PDB containing Source Link -->
-    <IncludeSymbols>true</IncludeSymbols>
-    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>pdbonly</DebugType>
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DebugSymbols>true</DebugSymbols>
-    <LangVersion>8.0</LangVersion>
+    <TargetFrameworks>netstandard2.1;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
+  </PropertyGroup>  
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType></DebugType>
-    <DefineConstants>TRACE;RELEASE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
-    <LangVersion>8.0</LangVersion>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Gestures\" />
-    <Folder Include="Exceptions\" />
-    <Folder Include="Animations\" />
+    <ProjectReference Include="..\..\..\Xamarin.Forms\src\Platform.Handlers\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.4.43" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.7.56" />
   </ItemGroup>
-  <ProjectExtensions>
-    <MonoDevelop>
-      <Properties>
-        <Policies>
-          <DotNetNamingPolicy DirectoryNamespaceAssociation="None" ResourceNamePolicy="FileFormatDefault" />
-        </Policies>
-      </Properties>
-    </MonoDevelop>
-  </ProjectExtensions>
+  <ItemGroup>
+    <Compile Update="CometPlatform.cs">
+      <SubType></SubType>
+    </Compile>
+  </ItemGroup>
+  <Import Project="..\..\.nuspec\Xamarin.Forms.MultiTargeting.targets" />
 </Project>

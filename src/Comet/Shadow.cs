@@ -1,4 +1,4 @@
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace Comet.Graphics
 {
@@ -7,7 +7,7 @@ namespace Comet.Graphics
 		public Color Color { get; private set; } = Color.Black;
 		public float Opacity { get; private set; } = .5f;
 		public float Radius { get; private set; } = 10;
-		public SizeF Offset { get; private set; } = SizeF.Empty;
+		public Xamarin.Forms.Size Offset { get; private set; } = Xamarin.Forms.Size.Zero;
 
 		public Shadow()
 		{
@@ -43,7 +43,7 @@ namespace Comet.Graphics
 			return shadow;
 		}
 
-		public Shadow WithOffset(SizeF offset)
+		public Shadow WithOffset(Xamarin.Forms.Size offset)
 		{
 			var shadow = new Shadow(this);
 			shadow.Offset = offset;

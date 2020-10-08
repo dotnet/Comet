@@ -1,47 +1,52 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
-using Comet.Layout;
+using Xamarin.Platform;
+using Xamarin.Platform.Layouts;
 
 namespace Comet
 {
-	public abstract class AbstractLayout : ContainerView
+	public abstract class AbstractLayout : ContainerView, ILayout
 	{
-		private readonly ILayoutManager _layout;
+		private ILayoutManager _layout;
 
-		protected AbstractLayout(ILayoutManager layoutManager)
+		public ILayoutManager LayoutManager => _layout??= CreateLayoutManager();
+
+		IReadOnlyList<IView> ILayout.Children => this.GetChildren();
+
+		protected override void OnAdded(View view) => this.InvalidateMeasurement();
+
+		protected override void OnClear() => this.InvalidateMeasurement();
+
+		protected override void OnRemoved(View view) => this.InvalidateMeasurement();
+
+		protected override void OnInsert(int index, View item) => this.InvalidateMeasurement();
+
+		public override void LayoutSubviews(Xamarin.Forms.Rectangle frame)
 		{
-			_layout = layoutManager;
-		}
-
-		public ILayoutManager LayoutManager => _layout;
-
-		protected override void OnAdded(View view) => _layout?.Invalidate();
-
-		protected override void OnClear() => _layout?.Invalidate();
-
-		protected override void OnRemoved(View view) => _layout?.Invalidate();
-
-		protected override void OnInsert(int index, View item) => _layout?.Invalidate();
-
-		public override void LayoutSubviews(RectangleF frame)
-		{
+			base.LayoutSubviews(frame);
 			var padding = this.GetPadding();
-			var bounds = new RectangleF(
+			var bounds = new Xamarin.Forms.Rectangle(
 				padding.Left,
 				padding.Right,
 				frame.Width - padding.HorizontalThickness,
 				frame.Height - padding.VerticalThickness);
-			_layout?.Layout(this, bounds);
+			_layout.Arrange(bounds);
+			//_layout?.Layout(this, bounds);
 		}
 
-		public override SizeF GetIntrinsicSize(SizeF availableSize) => _layout.Measure(this, availableSize);
-
-		protected override void Dispose(bool disposing)
+		public override Xamarin.Forms.Size GetDesiredSize(Xamarin.Forms.Size availableSize)
 		{
-			base.Dispose(disposing);
-			_layout?.Invalidate();
+			if (IsMeasureValid)
+			{
+				return MeasuredSize;
+			}
+			MeasuredSize = LayoutManager.Measure(availableSize.Width, availableSize.Height);
+			IsMeasureValid = true;
+			return MeasuredSize;
 		}
+
+		public abstract ILayoutManager CreateLayoutManager();
+
 	}
 }

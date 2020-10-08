@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 // ReSharper disable CompareOfFloatsByEqualityOperator
 // ReSharper disable MemberCanBePrivate.Global
 
@@ -7,14 +6,14 @@ namespace Comet.Graphics
 {
 	public class AffineTransformF
 	{
-		private const float Zero = 1E-10f;
+		private const double Zero = 1E-10f;
 
-		private float _m00;
-		private float _m01;
-		private float _m02;
-		private float _m10;
-		private float _m11;
-		private float _m12;
+		private double _m00;
+		private double _m01;
+		private double _m02;
+		private double _m10;
+		private double _m11;
+		private double _m12;
 
 		public AffineTransformF()
 		{
@@ -32,7 +31,7 @@ namespace Comet.Graphics
 			_m12 = t._m12;
 		}
 
-		public AffineTransformF(float m00, float m10, float m01, float m11, float m02, float m12)
+		public AffineTransformF(double m00, double m10, double m01, double m11, double m02, double m12)
 		{
 			_m00 = m00;
 			_m10 = m10;
@@ -42,7 +41,7 @@ namespace Comet.Graphics
 			_m12 = m12;
 		}
 
-		public AffineTransformF(float[] matrix)
+		public AffineTransformF(double[] matrix)
 		{
 			_m00 = matrix[0];
 			_m10 = matrix[1];
@@ -55,7 +54,7 @@ namespace Comet.Graphics
 			}
 		}
 
-		public void SetTransform(float m00, float m10, float m01, float m11, float m02, float m12)
+		public void SetTransform(double m00, double m10, double m01, double m11, double m02, double m12)
 		{
 			_m00 = m00;
 			_m10 = m10;
@@ -76,7 +75,7 @@ namespace Comet.Graphics
 			_m10 = _m01 = _m02 = _m12 = 0.0f;
 		}
 
-		public void SetToTranslation(float mx, float my)
+		public void SetToTranslation(double mx, double my)
 		{
 			_m00 = _m11 = 1.0f;
 			_m01 = _m10 = 0.0f;
@@ -84,14 +83,14 @@ namespace Comet.Graphics
 			_m12 = my;
 		}
 
-		public void SetToScale(float scx, float scy)
+		public void SetToScale(double scx, double scy)
 		{
 			_m00 = scx;
 			_m11 = scy;
 			_m10 = _m01 = _m02 = _m12 = 0.0f;
 		}
 
-		public void SetToShear(float shx, float shy)
+		public void SetToShear(double shx, double shy)
 		{
 			_m00 = _m11 = 1.0f;
 			_m02 = _m12 = 0.0f;
@@ -99,10 +98,10 @@ namespace Comet.Graphics
 			_m10 = shy;
 		}
 
-		public void SetToRotation(float angle)
+		public void SetToRotation(double angle)
 		{
-			float sin = (float)Math.Sin(angle);
-			float cos = (float)Math.Cos(angle);
+			double sin = (double)Math.Sin(angle);
+			double cos = (double)Math.Cos(angle);
 			if (Math.Abs(cos) < Zero)
 			{
 				cos = 0.0f;
@@ -120,79 +119,79 @@ namespace Comet.Graphics
 			_m02 = _m12 = 0.0f;
 		}
 
-		public void SetToRotation(float angle, float px, float py)
+		public void SetToRotation(double angle, double px, double py)
 		{
 			SetToRotation(angle);
 			_m02 = px * (1.0f - _m00) + py * _m10;
 			_m12 = py * (1.0f - _m00) - px * _m10;
 		}
 
-		public static AffineTransformF GetTranslateInstance(float mx, float my)
+		public static AffineTransformF GetTranslateInstance(double mx, double my)
 		{
 			var t = new AffineTransformF();
 			t.SetToTranslation(mx, my);
 			return t;
 		}
 
-		public static AffineTransformF GetScaleInstance(float scx, float scY)
+		public static AffineTransformF GetScaleInstance(double scx, double scY)
 		{
 			var t = new AffineTransformF();
 			t.SetToScale(scx, scY);
 			return t;
 		}
 
-		public static AffineTransformF GetShearInstance(float shx, float shy)
+		public static AffineTransformF GetShearInstance(double shx, double shy)
 		{
 			var m = new AffineTransformF();
 			m.SetToShear(shx, shy);
 			return m;
 		}
 
-		public static AffineTransformF GetRotateInstance(float angle)
+		public static AffineTransformF GetRotateInstance(double angle)
 		{
 			var t = new AffineTransformF();
 			t.SetToRotation(angle);
 			return t;
 		}
 
-		public static AffineTransformF GetRotateInstance(float angle, float x, float y)
+		public static AffineTransformF GetRotateInstance(double angle, double x, double y)
 		{
 			var t = new AffineTransformF();
 			t.SetToRotation(angle, x, y);
 			return t;
 		}
 
-		public void Translate(float mx, float my)
+		public void Translate(double mx, double my)
 		{
 			Concatenate(GetTranslateInstance(mx, my));
 		}
 
-		public void Scale(float scx, float scy)
+		public void Scale(double scx, double scy)
 		{
 			Concatenate(GetScaleInstance(scx, scy));
 		}
 
-		public void Shear(float shx, float shy)
+		public void Shear(double shx, double shy)
 		{
 			Concatenate(GetShearInstance(shx, shy));
 		}
 
-		public void RotateInDegrees(float angleInDegrees)
+		public void RotateInDegrees(double angleInDegrees)
 		{
 			Rotate(GraphicsOperations.DegreesToRadians(angleInDegrees));
 		}
 
-		public void RotateInDegrees(float angleInDegrees, float px, float py)
+		public void RotateInDegrees(double angleInDegrees, double px, double py)
 		{
 			Rotate(GraphicsOperations.DegreesToRadians(angleInDegrees), px, py);
 		}
 
-		public void Rotate(float angleInRadians)
+		public void Rotate(double angleInRadians)
 		{
 			Concatenate(GetRotateInstance(angleInRadians));
 		}
 
-		public void Rotate(float angleInRadians, float px, float py)
+		public void Rotate(double angleInRadians, double px, double py)
 		{
 			Concatenate(GetRotateInstance(angleInRadians, px, py));
 		}
@@ -213,14 +212,14 @@ namespace Comet.Graphics
 			SetTransform(Multiply(t, this));
 		}
 
-		public PointF Transform(PointF src)
+		public Xamarin.Forms.Point Transform(Xamarin.Forms.Point src)
 		{
 			return Transform(src.X, src.Y);
 		}
 
-		public PointF Transform(float x, float y)
+		public Xamarin.Forms.Point Transform(double x, double y)
 		{
-			return new PointF(x * _m00 + y * _m01 + _m02, x * _m10 + y * _m11 + _m12);
+			return new Xamarin.Forms.Point(x * _m00 + y * _m01 + _m02, x * _m10 + y * _m11 + _m12);
 		}
 
 		public bool IsIdentity => _m00 == 1.0f && _m11 == 1.0f && _m10 == 0.0f && _m01 == 0.0f && _m02 == 0.0f && _m12 == 0.0f;

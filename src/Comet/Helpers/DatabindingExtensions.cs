@@ -5,7 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Comet.Reflection;
-
+using Xamarin.Platform;
 // ReSharper disable once CheckNamespace
 namespace Comet
 {
@@ -238,7 +238,7 @@ namespace Comet
 			var areSame = AreSameType(view, compareView);
 			if (areSame && checkRenderers && compareView.ViewHandler != null)
 			{
-				var renderType = Registrar.Handlers.GetRendererType(view.GetType());
+				var renderType = Xamarin.Platform.Registrar.Handlers.GetRendererType(view.GetType());
 				areSame = renderType == compareView.ViewHandler.GetType();
 			}
 			return areSame;

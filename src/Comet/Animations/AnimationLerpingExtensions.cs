@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Drawing;
-
 namespace Comet
 {
 	public static class AnimationLerpingExtensions
@@ -18,14 +16,14 @@ namespace Comet
 			return new Color(r, g, b, a);
 		}
 
-		public static SizeF Lerp(this SizeF start, SizeF end, double progress) =>
-			new SizeF(start.Width.Lerp(end.Width, progress), start.Height.Lerp(end.Height, progress));
+		public static Xamarin.Forms.Size Lerp(this Xamarin.Forms.Size start, Xamarin.Forms.Size end, double progress) =>
+			new Xamarin.Forms.Size(start.Width.Lerp(end.Width, progress), start.Height.Lerp(end.Height, progress));
 
-		public static PointF Lerp(this PointF start, PointF end, double progress) =>
-			new PointF(start.X.Lerp(end.X, progress), start.Y.Lerp(end.Y, progress));
+		public static Xamarin.Forms.Point Lerp(this Xamarin.Forms.Point start, Xamarin.Forms.Point end, double progress) =>
+			new Xamarin.Forms.Point(start.X.Lerp(end.X, progress), start.Y.Lerp(end.Y, progress));
 
-		public static RectangleF Lerp(this RectangleF start, RectangleF end, double progress)
-			=> new RectangleF(start.Location.Lerp(end.Location, progress), start.Size.Lerp(end.Size, progress));
+		public static Xamarin.Forms.Rectangle Lerp(this Xamarin.Forms.Rectangle start, Xamarin.Forms.Rectangle end, double progress)
+			=> new Xamarin.Forms.Rectangle(start.Location.Lerp(end.Location, progress), start.Size.Lerp(end.Size, progress));
 
 
 		public static float Lerp(this float start, float end, double progress) =>
@@ -33,6 +31,13 @@ namespace Comet
 
 		//IF there is a null, we toggle at the half way. If both values are set, we can lerp
 		public static float? Lerp(this float? start, float? end, double progress)
+			=> start.HasValue && end.HasValue ? start.Value.Lerp(end.Value, progress) : start.GenericLerp(end, progress);
+
+		public static double Lerp(this double start, double end, double progress) =>
+		(float)((end - start) * progress) + start;
+
+		//IF there is a null, we toggle at the half way. If both values are set, we can lerp
+		public static double? Lerp(this double? start, double? end, double progress)
 			=> start.HasValue && end.HasValue ? start.Value.Lerp(end.Value, progress) : start.GenericLerp(end, progress);
 
 		public static T GenericLerp<T>(this T start, T end, double progress, double toggleThreshold = .5)
