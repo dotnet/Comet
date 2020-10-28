@@ -76,6 +76,9 @@
       <PackageReference Include="Xamarin.TestCloud.Agent">
         <Version>0.21.9</Version>
       </PackageReference>
+      <PackageReference Include="Clancey.Comet.Reload">
+        <Version>0.0.13-alpha</Version>
+      </PackageReference>
     </ItemGroup>
     <ItemGroup>
         <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">

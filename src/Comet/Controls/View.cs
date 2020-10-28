@@ -14,7 +14,7 @@ using Xamarin.Platform.Layouts;
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView
+	public class View : ContextualObject, IDisposable, IView, IReplaceableView
 	{
 		static View()
 		{
@@ -25,13 +25,7 @@ namespace Comet
 		internal readonly static WeakList<View> ActiveViews = new WeakList<View>();
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
 
-		public event EventHandler<EventArgs> NeedsLayout;
-
-		public IReadOnlyList<Gesture> Gestures
-		{
-			get => GetPropertyFromContext<List<Gesture>>();
-			internal set => SetPropertyInContext(value);
-		}
+		
 		IReloadHandler reloadHandler;
 		public IReloadHandler ReloadHandler {
 			get => reloadHandler;
@@ -108,17 +102,12 @@ namespace Comet
 			{
 				if (viewHandler == value)
 					return;
-
-				measurementValid = false;
-				_measuredSize = Xamarin.Forms.Size.Zero;
-				Frame = Xamarin.Forms.Rectangle.Zero;
-
+				InvalidateMeasurement();
 				var oldViewHandler = viewHandler;
 				//viewHandler?.Remove(this);
 				viewHandler = value;
 				if (replacedView != null)
 					replacedView.ViewHandler = value;
-				WillUpdateView();
 				viewHandler?.SetView(this.GetRenderView());
 			}
 		}
@@ -132,7 +121,6 @@ namespace Comet
 
 			}
 			var oldView = view.ViewHandler;
-			this.Gestures = view.Gestures;
 			this.ReloadHandler = view.ReloadHandler;
 			view.ViewHandler = null;
 			view.replacedView?.Dispose();
@@ -177,6 +165,7 @@ namespace Comet
 					oldReplacedView.ViewHandler = null;
 					oldReplacedView.Dispose();
 				}
+				InvalidateMeasurement();
 			}
 		}
 
@@ -196,6 +185,7 @@ namespace Comet
 
 		///
 		public bool HasContent => Body != null && (HotReloadHelper.IsEnabled || hasGlobalState);
+
 		bool hasGlobalState => State.GlobalProperties.Any();
 		internal View GetView() => GetRenderView();
 		View replacedView;
@@ -244,7 +234,8 @@ namespace Comet
 			/// We need to make this check if there are global views. If so, return itself so it can be in a container view
 			/// If HotReload never collapse!
 			/// If not collapse down to the built view.
-			return HotReloadHelper.IsEnabled || hasGlobalState ? this : BuiltView;
+			//return HotReloadHelper.IsEnabled || hasGlobalState ? this : BuiltView;
+			return BuiltView;
 		}
 
 		bool didCheckForBody;
@@ -261,11 +252,6 @@ namespace Comet
 			var bodyMethod = this.GetBody();
 			if (bodyMethod != null)
 				Body = bodyMethod;
-		}
-
-		protected virtual void WillUpdateView()
-		{
-
 		}
 
 		internal void BindingPropertyChanged(INotifyPropertyRead bindingObject, string property, string fullProperty, object value)
@@ -397,12 +383,7 @@ namespace Comet
 				return;
 
 			ActiveViews.Remove(this);
-			var gestures = Gestures;
-			if (gestures?.Any() ?? false)
-			{
-				foreach (var g in gestures)
-					ViewHandler?.UpdateValue(Gesture.RemoveGestureProperty);
-			}
+			
 			Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
 
 			HotReloadHelper.UnRegister(this);
@@ -461,7 +442,6 @@ namespace Comet
 		{
 			MeasurementValid = false;			
 			Parent?.InvalidateMeasurement();
-			NeedsLayout?.Invoke(this, EventArgs.Empty);
 		}
 
 		private Xamarin.Forms.Size _measuredSize;
@@ -488,7 +468,7 @@ namespace Comet
 		{
 
 			if (BuiltView != null)
-				return BuiltView.Measure(widthConstraint, heightConstraint);
+				return MeasuredSize = BuiltView.Measure(widthConstraint, heightConstraint);
 
 			if (!IsMeasureValid)
 			{
@@ -509,6 +489,10 @@ namespace Comet
 				heightConstraint = LayoutManager.ResolveConstraints(heightConstraint, frameworkElement.Height);
 
 				MeasuredSize = GetDesiredSize(new Xamarin.Forms.Size(widthConstraint, heightConstraint));
+				if(MeasuredSize.Width <=0 || MeasuredSize.Height <= 0)
+				{
+					Console.WriteLine("Why :(");
+				}
 			}
 
 			IsMeasureValid = true;
@@ -519,10 +503,9 @@ namespace Comet
 
 		public virtual void LayoutSubviews(Xamarin.Forms.Rectangle frame)
 		{
+			Frame = frame;
 			if (BuiltView != null)
 				BuiltView.Frame = frame;
-			else
-				Frame = frame;
 		}
 		public override string ToString() => $"{this.GetType()} - {this.Id}";
 
@@ -566,6 +549,8 @@ namespace Comet
 
 		double IFrameworkElement.Width => this.GetFrameConstraints()?.Width ?? -1;
 		double IFrameworkElement.Height => this.GetFrameConstraints()?.Height ?? -1;
+
+		public IView ReplacedView => HasContent ? this : BuiltView ?? this;
 
 		public void AddAnimation(Animation animation)
 		{

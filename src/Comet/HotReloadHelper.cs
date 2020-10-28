@@ -134,8 +134,10 @@ namespace Comet
 					roots = View.ActiveViews.Where(x =>
 					//All Root Views
 					(x.Parent is CometApp) ||
-					//Replace the app only if it was changed. This resets app state.
-					(x.Parent == null && CurrentReplacedTypesNames.Contains(x.GetType().FullName))).ToList();
+					 //Replace the app only if it was changed. This resets app state.
+					 CurrentReplacedTypesNames.Contains(x.GetType().FullName)).ToList();
+
+
 					//roots = View.ActiveViews.Where(x=> CurrentReplacedTypesNames.Contains(x.GetType().FullName)).ToList();
 					//roots = View.ActiveViews.Where(x => x.Parent == null).ToList();
 				}

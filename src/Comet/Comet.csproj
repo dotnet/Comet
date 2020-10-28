@@ -18,6 +18,15 @@
     <Compile Update="CometPlatform.cs">
       <SubType></SubType>
     </Compile>
+    <Compile Update="Handlers\CometViewHandler.cs">
+      <SubType></SubType>
+    </Compile>
+    <Compile Update="Handlers\CometViewContainer.net.cs">
+      <SubType></SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Handlers\" />
   </ItemGroup>
   <Import Project="..\..\.nuspec\Xamarin.Forms.MultiTargeting.targets" />
 </Project>

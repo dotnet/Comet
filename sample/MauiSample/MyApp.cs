@@ -11,6 +11,9 @@ namespace MauiSample
 		public MyApp()
 		{
 			CometPlatform.Init();
+#if DEBUG
+			Comet.Reload.Init();
+#endif
 			var v = new View
 			{
 				Body = () => new Text("Hey"),
@@ -18,18 +21,7 @@ namespace MauiSample
 			
 		}
 
-		public IView CreateView() => new VStack(spacing:5)
-		{
-			new Text("This top part is a Xamarin.Platform.VerticalStackLayout"),
-			new HStack(spacing:2)
-			{
-				new Button("A Button").Frame(width:100).Color(Comet.Color.White),
-				new Button("Hello I'm a button")
-					.Color(Comet.Color.Green)
-					.Background(Comet.Color.Purple),
-				new Text("And these buttons are in a HorizontalStackLayout"),
-			}
-		}.Background(Comet.Color.Beige);
+		public IView CreateView() => new MainPage();
 		
 	}
 

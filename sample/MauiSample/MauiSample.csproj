@@ -12,5 +12,16 @@
     <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
     <ProjectReference Include="..\..\..\Xamarin.Forms\src\Platform.Handlers\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Compile Update="MainPage.cs">
+      <SubType></SubType>
+    </Compile>
+    <Compile Update="SecondView.cs">
+      <SubType></SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Clancey.Comet.Reload" Version="0.0.13-alpha" />
+  </ItemGroup>
   <Import Project="..\..\.nuspec\Xamarin.Forms.MultiTargeting.targets" />
 </Project>
