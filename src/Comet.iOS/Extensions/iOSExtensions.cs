@@ -52,23 +52,15 @@ namespace Comet.iOS
 			if (handler == null)
 			{
 				var builtView = view.GetView();
-				if (view.HasContent)
-				{
-					handler = new BodyHandler();
-					view.ViewHandler = handler;
-				}
-				else
-				{
-					handler = Registrar.Handlers.GetHandler(builtView.GetType()) as IViewHandler;
-					builtView.ViewHandler = handler;
-				}
+				handler = Registrar.Handlers.GetHandler(builtView.GetType()) as IViewHandler;
+				builtView.ViewHandler = handler;
 			}
 			var iUIView = handler as iOSViewHandler;
 			return iUIView;
 		}
 		public static UIView ToView(this View view)
 		{
-			var handler = view?.GetOrCreateViewHandler();
+			var handler = view.GetOrCreateViewHandler();
 			return handler?.View;
 		}
 

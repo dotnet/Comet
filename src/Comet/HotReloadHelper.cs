@@ -72,7 +72,6 @@ namespace Comet
 		static Dictionary<string, Type> replacedViews = new Dictionary<string, Type>();
 		static Dictionary<View, object[]> currentViews = new Dictionary<View, object[]>();
 		static Dictionary<string, List<KeyValuePair<Type, Type>>> replacedHandlers = new Dictionary<string, List<KeyValuePair<Type, Type>>>();
-		static HashSet<string> CurrentReplacedTypesNames = new HashSet<string>();
 		public static void RegisterReplacedView(string oldViewType, Type newViewType)
 		{
 			if (!IsEnabled || oldViewType == newViewType.FullName)
@@ -81,10 +80,7 @@ namespace Comet
 			Console.WriteLine($"{oldViewType} - {newViewType}");
 
 			if (newViewType.IsSubclassOf(typeof(View)))
-			{
 				replacedViews[oldViewType] = newViewType;
-				CurrentReplacedTypesNames.Add(oldViewType);
-			}
 
 			if (typeof(IViewHandler).IsAssignableFrom(newViewType))
 			{
@@ -129,13 +125,8 @@ namespace Comet
 			{
 				try
 				{
-					roots = View.ActiveViews.Where(x =>
-					//All Root Views
-					(x.Parent is CometApp) ||
-					//Replace the app only if it was changed. This resets app state.
-					(x.Parent == null && CurrentReplacedTypesNames.Contains(x.GetType().FullName))).ToList();
-					//roots = View.ActiveViews.Where(x=> CurrentReplacedTypesNames.Contains(x.GetType().FullName)).ToList();
-					//roots = View.ActiveViews.Where(x => x.Parent == null).ToList();
+					//roots = View.ActiveViews.Where(x => (x.Parent is CometApp) || (x.Parent == null && !(x is CometApp) )).ToList();
+					roots = View.ActiveViews.Where(x => x.Parent == null).ToList();
 				}
 				catch
 				{
@@ -146,10 +137,8 @@ namespace Comet
 			await ThreadHelper.SwitchToMainThreadAsync();
 			foreach (var view in roots)
 			{
-				 
 				view.Reload(true);
 			}
-			CurrentReplacedTypesNames.Clear();
 		}
 	}
 }

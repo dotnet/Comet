@@ -10,7 +10,7 @@ namespace Comet.Samples
 		}
 		readonly State<bool> shouldAnimate = true;
 		Text animatedText;
-		Button button; 
+		Button button;
 		View Build() =>
 			new VStack
 			{

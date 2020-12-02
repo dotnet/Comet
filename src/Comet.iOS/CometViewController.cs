@@ -49,7 +49,6 @@ namespace Comet.iOS
 		public override void ViewWillAppear(bool animated)
 		{
 			base.ViewWillAppear(animated);
-			_containerView?.ViewWillAppear();
 			ApplyStyle();
 		}
 

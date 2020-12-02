@@ -29,9 +29,9 @@ namespace Comet.Samples.Comparisons
 		readonly Comet comet;
 
 		[Body]
-		View body()           
+		View body()
 			=> new VStack {
-				new Text(()=> $"({comet.Rides}) rides taken:{comet.CometTrain}!!!")
+				new Text(()=> $"({comet.Rides}) rides taken:{comet.CometTrain}")
 					.Frame(width:300)
 					.LineBreakMode(LineBreakMode.CharacterWrap)
 					,

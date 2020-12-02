@@ -27,13 +27,7 @@ namespace Comet
 			get => GetPropertyFromContext<List<Gesture>>();
 			internal set => SetPropertyInContext(value);
 		}
-		IReloadHandler reloadHandler;
-		public IReloadHandler ReloadHandler {
-			get => reloadHandler;
-			set {
-				reloadHandler = value;
-			}
-		}
+		public IReloadHandler ReloadHandler { get; set; }
 		WeakReference parent;
 
 		public string Id { get; } = IDGenerator.Instance.Next;
@@ -157,10 +151,8 @@ namespace Comet
 				var view = this.GetRenderView();
 				if (oldView != null)
 					view = view.Diff(oldView, isHotReload);
-				if(view != oldView)
-					oldView?.Dispose();
-				if(view != oldParentView)
-					oldParentView?.Dispose();
+				oldView?.Dispose();
+				oldParentView?.Dispose();
 				animations?.ForEach(x => x.Dispose());
 				ViewHandler?.SetView(view);
 				ReloadHandler?.Reload();
@@ -190,9 +182,6 @@ namespace Comet
 			}
 		}
 
-		///
-		public bool HasContent => Body != null && (HotReloadHelper.IsEnabled || hasGlobalState);
-		bool hasGlobalState => State.GlobalProperties.Any();
 		internal View GetView() => GetRenderView();
 		View replacedView;
 		protected virtual View GetRenderView()
@@ -215,32 +204,24 @@ namespace Comet
 			CheckForBody();
 			if (Body == null)
 				return this;
-
-
-			if (BuiltView == null)
+			if (BuiltView != null)
+				return BuiltView;
+			Debug.WriteLine($"Building View: {this.GetType().Name}");
+			using (new StateBuilder(this))
 			{
-				Debug.WriteLine($"Building View: {this.GetType().Name}");
-				using (new StateBuilder(this))
+				var view = Body.Invoke();
+				view.Parent = this;
+				if (view is NavigationView navigationView)
+					Navigation = navigationView;
+				var props = StateManager.EndProperty();
+				var propCount = props.Count;
+				if (propCount > 0)
 				{
-					var view = Body.Invoke();
-					view.Parent = this;
-					if (view is NavigationView navigationView)
-						Navigation = navigationView;
-					var props = StateManager.EndProperty();
-					var propCount = props.Count;
-					if (propCount > 0)
-					{
-						State.AddGlobalProperties(props);
-					}
-					UpdateBuiltViewContext(view);
-					builtView = view.GetRenderView();
+					State.AddGlobalProperties(props);
 				}
+				UpdateBuiltViewContext(view);
+				return builtView = view.GetRenderView();
 			}
-
-			/// We need to make this check if there are global views. If so, return itself so it can be in a container view
-			/// If HotReload never collapse!
-			/// If not collapse down to the built view.
-			return HotReloadHelper.IsEnabled || hasGlobalState ? this : BuiltView;
 		}
 
 		bool didCheckForBody;
