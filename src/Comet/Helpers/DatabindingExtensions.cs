@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Comet.Reflection;
+using Xamarin.Platform;
 
 // ReSharper disable once CheckNamespace
 namespace Comet

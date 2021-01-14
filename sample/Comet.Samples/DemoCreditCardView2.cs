@@ -36,7 +36,7 @@ namespace Comet.Samples
 
 					new Text(Card.Number)
 						.FontSize(14)
-						.Color(Color.Black)
+						.Color(Colors.Black)
 						.Margin(left: 30, bottom:20)
 						.Frame(height:20),
 
@@ -56,12 +56,12 @@ namespace Comet.Samples
 					{
 						new Text(Card.Expiration)
 							.FontSize(14)
-							.Color(Color.Black)
+							.Color(Colors.Black)
 							.Frame(width: 200),
 
 						new Text(Card.CVV)
 							.FontSize(14)
-							.Color(Color.Black)
+							.Color(Colors.Black)
 					}.Margin(left:30, bottom:30).Frame(height: 20),
 
 				}.RoundedBorder(radius: 8, color: "#3177CB", filled: true).Margin(30)
@@ -92,7 +92,7 @@ namespace Comet.Samples
 			new Button("Purchase for $200")
 				.RoundedBorder(22, Color.SlateGrey)
 				.Background(Color.SlateGrey)
-				.Color(Color.White)
+				.Color(Colors.White)
 				.Frame(height:44)
 				.Margin(left:20, right:20),
 

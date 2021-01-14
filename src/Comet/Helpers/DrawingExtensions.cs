@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using System.Graphics;
 using Comet.Graphics;
 
 // ReSharper disable once CheckNamespace
@@ -139,7 +139,7 @@ namespace Comet
 
 		public static T RoundedBorder<T>(this T view, float radius = 4, Color color = null, float strokeSize = 1, bool filled = false, Type type = null) where T : View
 		{
-			var finalColor = color ?? Color.Black;
+			var finalColor = color ?? Colors.Black;
 			view.Border(new RoundedRectangle(radius).Stroke(finalColor, strokeSize));
 			if (filled)
 				view.Background(color);
@@ -148,7 +148,7 @@ namespace Comet
 
 		public static T RoundedBorder<T>(this T view, float radius = 4, string color = null, float strokeSize = 1, bool filled = false, Type type = null) where T : View
 		{
-			var finalColor = color != null ? new Color(color) : Color.Black;
+			var finalColor = color != null ? new Color(color) : Colors.Black;
 			view.Border(new RoundedRectangle(radius).Stroke(finalColor, strokeSize));
 			if (filled)
 				view.Background(color);

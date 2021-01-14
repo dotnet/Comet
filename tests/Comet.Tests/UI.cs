@@ -28,7 +28,7 @@ namespace Comet.Tests
 			Registrar.Handlers.Register<VStack, GenericViewHandler>();
 			Registrar.Handlers.Register<ZStack, GenericViewHandler>();
 
-			ThreadHelper.JoinableTaskContext = new Microsoft.VisualStudio.Threading.JoinableTaskContext();
+			ThreadHelper.Setup((a) => a?.Invoke());
 			HotReloadHelper.IsEnabled = true;
 
 			//Set Default Style

@@ -79,10 +79,6 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Comet.Mac\Comet.Mac.csproj">
-      <Project>{bcaf5569-30db-4d44-bf46-dffe93ddcbd0}</Project>
-      <Name>Comet.Mac</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Comet\Comet.csproj">
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
       <Name>Comet</Name>

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Comet.Samples.Comparisons;
 using Comet.Samples.LiveStreamIssues;
-using Comet.Samples.Skia;
+//using Comet.Samples.Skia;
 
 namespace Comet.Samples
 {
@@ -13,7 +13,7 @@ namespace Comet.Samples
 			new MenuItem("Ride the Comet",()=> new RideSample()),
 			new MenuItem("Text Styles",()=> new TextStylesSample()),
 			new MenuItem("Text Weight",()=> new TextWeightSample()),
-			new MenuItem("Skia Controls Sample",()=> new SkiaControlsSample()),
+			//new MenuItem("Skia Controls Sample",()=> new SkiaControlsSample()),
 			new MenuItem("Material Design",()=> new MaterialStylePicker()),
 			new MenuItem("AuditReportPage",()=> new AuditReportPage()),
 			new MenuItem("VStackSample",()=> new VStackSample()),
@@ -24,7 +24,7 @@ namespace Comet.Samples
 			new MenuItem("Virtual Sectioned List View",()=>new VirtualSectionedListViewSample()),
 			new MenuItem("Virtual List View",()=>new VirtualListViewSample()),
 			new MenuItem("Binding Sample!",()=> new BindingSample()),
-			new MenuItem("Animated Skia Sample",()=> new SkiaButtonSample()),
+			//new MenuItem("Animated Skia Sample",()=> new SkiaButtonSample()),
 			new MenuItem("Nested View", ()=> new NestedViews()),
 			new MenuItem("Animation Sample",()=> new AnimationSample()),
 			new MenuItem("TabView",()=> new TabViewSample()),
@@ -39,7 +39,7 @@ namespace Comet.Samples
 			new MenuItem("ClipSample_AspectFill", ()=> new ClipSample_AspectFill()),
 			new MenuItem("ClipSample_Fill", ()=> new ClipSample_Fill()),
 			new MenuItem("ClipSample_None", ()=> new ClipSample_None()),
-			new MenuItem("GridSample1", ()=> new GridSample1()),
+			//new MenuItem("GridSample1", ()=> new GridSample1()),
 			new MenuItem("ProgressBarSample1", ()=> new ProgressBarSample1()),
 			new MenuItem("ProgressBarSample2", ()=> new ProgressBarSample2()),
 			new MenuItem("SecureFieldSample1", ()=> new SecureFieldSample1()),
@@ -55,13 +55,13 @@ namespace Comet.Samples
 			new MenuItem("TextFieldSample3", ()=> new TextFieldSample3()),
 			new MenuItem("TextFieldSample4", ()=> new TextFieldSample4()),
 			new MenuItem("RadioButtonSample", ()=> new RadioButtonSample()),
-			new MenuItem("SkiaSample1 (FingerPaint)", ()=> new SkiaSample1()),
-			new MenuItem("SkiaSample2 (FingerPaint)", ()=> new SkiaSample2()),
-			new MenuItem("SkiaSample3 (BindableFingerPaint)", ()=> new SkiaSample3()),
-			new MenuItem("SkiaSample3WithScrollView (BindableFingerPaint)", ()=> new SkiaSample3WithScrollView()),
-			new MenuItem("SkiaSample4 (BindableFingerPaint)", ()=> new SkiaSample4()),
-			new MenuItem("SkiaSample5 (Shapes) ",() => new SkiaSample5()),
-			new MenuItem("SkiaSample6 (Shapes w/ Gradient) ",() => new SkiaSample6()),
+			//new MenuItem("SkiaSample1 (FingerPaint)", ()=> new SkiaSample1()),
+			//new MenuItem("SkiaSample2 (FingerPaint)", ()=> new SkiaSample2()),
+			//new MenuItem("SkiaSample3 (BindableFingerPaint)", ()=> new SkiaSample3()),
+			//new MenuItem("SkiaSample3WithScrollView (BindableFingerPaint)", ()=> new SkiaSample3WithScrollView()),
+			//new MenuItem("SkiaSample4 (BindableFingerPaint)", ()=> new SkiaSample4()),
+			//new MenuItem("SkiaSample5 (Shapes) ",() => new SkiaSample5()),
+			//new MenuItem("SkiaSample6 (Shapes w/ Gradient) ",() => new SkiaSample6()),
 			new MenuItem("SwiftUI Tutorial Section 1", ()=> new Section1()),
 			new MenuItem("SwiftUI Tutorial Section 2", ()=> new Section2()),
 			new MenuItem("SwiftUI Tutorial Section 3", ()=> new Section3()),

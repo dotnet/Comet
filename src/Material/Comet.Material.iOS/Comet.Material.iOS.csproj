@@ -56,12 +56,6 @@
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
       <Name>Comet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Comet.iOS\Comet.iOS.csproj">
-      <Project>{9DF36DBF-AFE6-438D-B7A6-1B5FB3D1D6D1}</Project>
-      <Name>Comet.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
 </Project>

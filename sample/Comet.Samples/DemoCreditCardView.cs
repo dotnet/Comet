@@ -72,7 +72,7 @@ namespace Comet.Samples
 						.Cell(row:2, column:1, colSpan:2),
 					new Text(Card.Number)
 						.FontSize(14)
-						.Color(Color.Black)
+						.Color(Colors.Black)
 						.Cell(row:3, column:1, colSpan:2),
 
 					new Text("EXPIRATION")
@@ -81,7 +81,7 @@ namespace Comet.Samples
 						.Cell(row:5, column:1),
 					new Text(Card.Expiration)
 						.FontSize(14)
-						.Color(Color.Black)
+						.Color(Colors.Black)
 						.Cell(row:6, column:1),
 
 					new Text("CVV")
@@ -90,11 +90,11 @@ namespace Comet.Samples
 						.Cell(row:5, column:2),
 					new Text(Card.CVV)
 						.FontSize(14)
-						.Color(Color.Black)
+						.Color(Colors.Black)
 						.Cell(row:6, column:2),
 					new HStack
 					{
-						new ShapeView(new RoundedRectangle(4.0f).Fill(Color.Black)).Frame(40,30)
+						new ShapeView(new RoundedRectangle(4.0f).Fill(Colors.Black)).Frame(40,30)
 					}.Cell(row: 1, column: 3)
 
 
@@ -118,7 +118,7 @@ namespace Comet.Samples
 				}.Cell(row:4,column:0, colSpan: 3),
 				new Button("Or Pay with PayPal").RoundedBorder(22, Color.SlateGrey).Cell(row:6, column:0, colSpan:3).Color(Color.SlateGrey),
 				HRule().Cell(row:8,column:0,colSpan:3),
-				new Button("Purchase for $200").RoundedBorder(22, Color.SlateGrey).Background(Color.SlateGrey).Cell(row:10,column:0,colSpan:3).Color(Color.White)
+				new Button("Purchase for $200").RoundedBorder(22, Color.SlateGrey).Background(Color.SlateGrey).Cell(row:10,column:0,colSpan:3).Color(Colors.White)
 			}.Cell(row:2, column:1),
 
 		};

@@ -1,6 +1,9 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netstandard2.0;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
+    
+    <RootNamespace>Comet</RootNamespace>
+    <AssemblyName>Comet</AssemblyName>
      <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
     <PublishRepositoryUrl>true</PublishRepositoryUrl> 
     <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->
@@ -9,26 +12,30 @@
     <IncludeSymbols>true</IncludeSymbols>
     <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DebugType>pdbonly</DebugType>
-    <DefineConstants>TRACE;DEBUG;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
-    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-    <DebugSymbols>true</DebugSymbols>
-    <LangVersion>8.0</LangVersion>
+   <PropertyGroup>
+    <PackageId>Clancey.Comet</PackageId>
+    <Product>Comet</Product>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType></DebugType>
-    <DefineConstants>TRACE;RELEASE;NETSTANDARD;NETSTANDARD2_0</DefineConstants>
-    <LangVersion>8.0</LangVersion>
-  </PropertyGroup>
+   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+     <LangVersion>latestmajor</LangVersion>
+   </PropertyGroup>
+   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+     <LangVersion>latestmajor</LangVersion>
+   </PropertyGroup>
   <ItemGroup>
-    <Folder Include="Gestures\" />
-    <Folder Include="Exceptions\" />
-    <Folder Include="Animations\" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+    <PackageReference Include="JonLipsky.System.Graphics" Version="0.1.32" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.4.43" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+    <Compile Update="Helpers\GraphicsExtensions.cs">
+      <SubType></SubType>
+    </Compile>
+    <Compile Update="Helpers\MauiExtensions.cs">
+      <SubType></SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\external\Maui\src\Platform.Handlers\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -39,4 +46,5 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
+  <Import Project="..\..\external\Maui\.nuspec\Xamarin.Forms.MultiTargeting.targets" />
 </Project>

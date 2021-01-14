@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using System.Graphics;
 using Comet.Reflection;
 
 namespace Comet.Tests.Handlers

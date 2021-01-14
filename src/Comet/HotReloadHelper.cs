@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Comet.Reflection;
+using Xamarin.Platform;
+
 namespace Comet
 {
 	public static class HotReloadHelper
@@ -118,7 +120,7 @@ namespace Comet
 			Registrar.Handlers.Register(view, newType);
 		}
 
-		public static async void TriggerReload()
+		public static void TriggerReload()
 		{
 			List<View> roots = null;
 			while (roots == null)
@@ -134,11 +136,12 @@ namespace Comet
 				}
 			}
 
-			await ThreadHelper.SwitchToMainThreadAsync();
-			foreach (var view in roots)
-			{
-				view.Reload(true);
-			}
+			ThreadHelper.RunOnMainThread(() => {
+				foreach (var view in roots)
+				{
+					view.Reload(true);
+				}
+			});
 		}
 	}
 }
