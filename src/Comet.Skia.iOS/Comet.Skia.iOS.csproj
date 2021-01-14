@@ -62,12 +62,6 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Comet.iOS\Comet.iOS.csproj">
-      <Project>{9df36dbf-afe6-438d-b7a6-1b5fb3d1d6d1}</Project>
-      <Name>Comet.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
-    </ProjectReference>
     <ProjectReference Include="..\Comet.Skia\Comet.Skia.csproj">
       <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
       <Name>Comet.Skia</Name>

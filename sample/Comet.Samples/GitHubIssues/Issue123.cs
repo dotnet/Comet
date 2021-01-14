@@ -11,12 +11,12 @@ namespace Comet.Samples
 		View body() => new NavigationView{ new VStack
 			{
 				new Text(() => $"Value: {count.Value}")
-					.Color(Color.Black)
+					.Color(Colors.Black)
 					.FontSize(32),
 				new Button("Increment", () => count.Value ++ )
 					.Frame(width:320, height:44)
-					.Background(Color.Black)
-					.Color(Color.White)
+					.Background(Colors.Black)
+					.Color(Colors.White)
 					.Margin(20)
 				,
 			}

@@ -1,67 +1,67 @@
-using System.Collections.Generic;
-using System.Drawing;
-using Comet.Skia;
-using SkiaSharp;
+﻿//using System.Collections.Generic;
+//using System.Graphics;
+//using Comet.Skia;
+//using SkiaSharp;
 
-namespace Comet.Samples.Skia
-{
-	public class SimpleFingerPaint : AbstractControlDelegate
-	{
-		private readonly List<List<PointF>> _pointsLists = new List<List<PointF>>();
+//namespace Comet.Samples.Skia
+//{
+//	public class SimpleFingerPaint : AbstractControlDelegate
+//	{
+//		private readonly List<List<PointF>> _pointsLists = new List<List<PointF>>();
 
-		public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
-		{
-			canvas.Clear(SKColors.White);
+//		public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
+//		{
+//			canvas.Clear(SKColors.White);
 
-			var paint = new SKPaint()
-			{
-				Color = SKColors.Blue,
-				StrokeWidth = 2
-			};
+//			var paint = new SKPaint()
+//			{
+//				Color = SKColors.Blue,
+//				StrokeWidth = 2
+//			};
 
-			foreach (var pointsList in _pointsLists)
-			{
-				for (var i = 0; i < pointsList.Count; i++)
-				{
-					var point = pointsList[i];
-					if (i > 0)
-					{
-						var lastPoint = pointsList[i - 1];
-						canvas.DrawLine(lastPoint.X, lastPoint.Y, point.X, point.Y, paint);
-					}
-				}
-			}
-		}
+//			foreach (var pointsList in _pointsLists)
+//			{
+//				for (var i = 0; i < pointsList.Count; i++)
+//				{
+//					var point = pointsList[i];
+//					if (i > 0)
+//					{
+//						var lastPoint = pointsList[i - 1];
+//						canvas.DrawLine(lastPoint.X, lastPoint.Y, point.X, point.Y, paint);
+//					}
+//				}
+//			}
+//		}
 
-		public override bool StartInteraction(PointF[] points)
-		{
-			var pointsList = new List<PointF> { points[0] };
-			_pointsLists.Add(pointsList);
+//		public override bool StartInteraction(PointF[] points)
+//		{
+//			var pointsList = new List<PointF> { points[0] };
+//			_pointsLists.Add(pointsList);
 
-			Invalidate();
-			return true;
-		}
+//			Invalidate();
+//			return true;
+//		}
 
-		public override void DragInteraction(PointF[] points)
-		{
-			var pointsList = _pointsLists[_pointsLists.Count - 1];
-			pointsList.Add(points[0]);
+//		public override void DragInteraction(PointF[] points)
+//		{
+//			var pointsList = _pointsLists[_pointsLists.Count - 1];
+//			pointsList.Add(points[0]);
 
-			Invalidate();
-		}
+//			Invalidate();
+//		}
 
-		public override void EndInteraction(PointF[] points)
-		{
-			var pointsList = _pointsLists[_pointsLists.Count - 1];
-			pointsList.Add(points[0]);
+//		public override void EndInteraction(PointF[] points)
+//		{
+//			var pointsList = _pointsLists[_pointsLists.Count - 1];
+//			pointsList.Add(points[0]);
 
-			Invalidate();
-		}
+//			Invalidate();
+//		}
 
-		public void Reset()
-		{
-			_pointsLists.Clear();
-			Invalidate();
-		}
-	}
-}
+//		public void Reset()
+//		{
+//			_pointsLists.Clear();
+//			Invalidate();
+//		}
+//	}
+//}

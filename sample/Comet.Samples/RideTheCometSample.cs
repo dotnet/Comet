@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Comet.Skia;
 
 /*
  
@@ -21,7 +20,7 @@ namespace Comet.Samples.Comparisons
 	{
 		public RideSample()
 		{
-			//View.SetGlobalEnvironment(EnvironmentKeys.Colors.Color, Color.Black);
+			//View.SetGlobalEnvironment(EnvironmentKeys.Colors.Color, Colors.Black);
 			comet = new Comet();
 		}
 
@@ -41,7 +40,7 @@ namespace Comet.Samples.Comparisons
 				})
 					.Frame(height:44)
 					.Margin(8)
-					.Color(Color.White)
+					.Color(Colors.White)
 					.Background(Color.Green)
 				.RoundedBorder(color:Color.Blue)
 				.Shadow(Color.Grey,4,2,2),

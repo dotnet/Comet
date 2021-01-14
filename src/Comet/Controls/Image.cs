@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Drawing;
 using Comet.Graphics;
+using System.Graphics;
 namespace Comet
 {
 	public class Image : View
@@ -51,7 +51,7 @@ namespace Comet
 			if (Bitmap?.Value != null)
 				return Bitmap.GetValueOrDefault().Size;
 
-			return SizeF.Empty;
+			return SizeF.Zero;
 		}
 
 		private async void LoadBitmapFromSource(string source)

@@ -151,35 +151,17 @@
     <Compile Include="AppDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Comet.Skia.iOS\Comet.Skia.iOS.csproj">
-      <Project>{9acc68a5-5a5c-409d-a379-d62220a9f49f}</Project>
-      <Name>Comet.Skia.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.Skia\Comet.Skia.csproj">
-      <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
-      <Name>Comet.Skia</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\src\Comet\Comet.csproj">
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
       <Name>Comet</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.iOS\Comet.iOS.csproj">
-      <Project>{9DF36DBF-AFE6-438D-B7A6-1B5FB3D1D6D1}</Project>
-      <Name>Comet.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
     </ProjectReference>
     <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
       <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
       <Name>Comet.Samples</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Material\Comet.Material.iOS\Comet.Material.iOS.csproj">
-      <Project>{86DE0847-5552-4103-AA9F-53A5C8BDDAAE}</Project>
-      <Name>Comet.Material.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
+    <ProjectReference Include="..\..\external\Maui\src\Platform.Handlers\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj">
+      <Project>{9C19FAED-2BCB-44E7-B33D-90ECD30D236B}</Project>
+      <Name>Xamarin.Platform.Handlers</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

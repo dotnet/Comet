@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using System.Graphics;
 
 namespace Comet.Graphics
 {

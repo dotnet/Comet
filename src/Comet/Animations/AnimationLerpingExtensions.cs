@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using System.Graphics;
 
 namespace Comet
 {
@@ -7,14 +7,14 @@ namespace Comet
 	{
 		public static Color Lerp(this Color color, Color endColor, double progress)
 		{
-			color ??= Color.Black;
-			endColor ??= Color.Black;
+			color ??= Colors.Black;
+			endColor ??= Colors.Black;
 			float Lerp(float start, float end, double progress) => (float)(((end - start) * progress) + start);
 
-			var r = Lerp(color.R, endColor.R, progress);
-			var b = Lerp(color.B, endColor.B, progress);
-			var g = Lerp(color.G, endColor.G, progress);
-			var a = Lerp(color.A, endColor.A, progress);
+			var r = Lerp(color.Red, endColor.Red, progress);
+			var b = Lerp(color.Blue, endColor.Blue, progress);
+			var g = Lerp(color.Green, endColor.Green, progress);
+			var a = Lerp(color.Alpha, endColor.Alpha, progress);
 			return new Color(r, g, b, a);
 		}
 

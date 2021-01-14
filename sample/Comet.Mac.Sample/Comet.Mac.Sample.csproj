@@ -103,18 +103,6 @@
       <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
       <Name>Comet.Samples</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.Mac\Comet.Mac.csproj">
-      <Project>{BCAF5569-30DB-4D44-BF46-DFFE93DDCBD0}</Project>
-      <Name>Comet.Mac</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.Skia\Comet.Skia.csproj">
-      <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
-      <Name>Comet.Skia</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.Skia.Mac\Comet.Skia.Mac.csproj">
-      <Project>{00B248D0-382A-4504-A126-76B9C892583E}</Project>
-      <Name>Comet.Skia.Mac</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\turtlerock.jpg" />

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Graphics;
 
 // ReSharper disable once CheckNamespace
 namespace Comet
@@ -7,7 +8,7 @@ namespace Comet
 	{
 
 		public static Color WithAlpha(this Color color, float alpha)
-			=> new Color(color.R, color.G, color.B, alpha);
+			=> new Color(color.Red, color.Green, color.Blue, alpha);
 
 		/// <summary>
 		/// Set the color

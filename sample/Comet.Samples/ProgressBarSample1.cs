@@ -11,11 +11,8 @@ namespace Comet.Samples
 		{
 			_timer = new Timer(async state => {
 				var p = (State<float>)state;
-				await ThreadHelper.SwitchToMainThreadAsync();
-
 				var current = p.Value;
 				var value = current < 1 ? current + .001f : 0;
-
 				p.Value = value;
 			}, percentage, 100, 100);
 		}

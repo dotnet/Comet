@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Drawing;
+using System.Graphics;
 using Comet.Tests.Handlers;
 using Xunit;
 

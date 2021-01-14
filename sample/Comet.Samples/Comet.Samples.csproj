@@ -11,7 +11,6 @@
     <LangVersion>7.2</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Comet.Skia\Comet.Skia.csproj" />
     <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
   </ItemGroup>
   <ItemGroup>

@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Drawing;
+using System.Graphics;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Comet.Helpers;
 using Comet.Internal;
 //using System.Reflection;
 using Comet.Reflection;
+using Xamarin.Platform;
 
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable
+	public class View : ContextualObject, IDisposable, Xamarin.Platform.IView
 	{
 		public static readonly SizeF UseAvailableWidthAndHeight = new SizeF(-1, -1);
 
 		internal readonly static WeakList<View> ActiveViews = new WeakList<View>();
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
-
-		public event EventHandler<ViewHandlerChangedEventArgs> ViewHandlerChanged;
-		public event EventHandler<EventArgs> NeedsLayout;
 
 		public IReadOnlyList<Gesture> Gestures
 		{
@@ -99,17 +97,16 @@ namespace Comet
 					return;
 
 				measurementValid = false;
-				_measuredSize = SizeF.Empty;
-				Frame = RectangleF.Empty;
+				_measuredSize = SizeF.Zero;
+				Frame = RectangleF.Zero;
 
 				var oldViewHandler = viewHandler;
-				viewHandler?.Remove(this);
+				viewHandler?.DisconnectHandler();
 				viewHandler = value;
 				if (replacedView != null)
 					replacedView.ViewHandler = value;
 				WillUpdateView();
-				viewHandler?.SetView(this.GetRenderView());
-				ViewHandlerChanged?.Invoke(this, new ViewHandlerChangedEventArgs(this, oldViewHandler, value));
+				viewHandler?.SetVirtualView(this.GetRenderView());
 			}
 		}
 
@@ -147,14 +144,14 @@ namespace Comet
 				builtView = null;
 				//if (ViewHandler == null)
 				//	return;
-				ViewHandler?.Remove(this);
+				ViewHandler?.DisconnectHandler();
 				var view = this.GetRenderView();
 				if (oldView != null)
 					view = view.Diff(oldView, isHotReload);
 				oldView?.Dispose();
 				oldParentView?.Dispose();
 				animations?.ForEach(x => x.Dispose());
-				ViewHandler?.SetView(view);
+				ViewHandler?.SetVirtualView(view);
 				ReloadHandler?.Reload();
 			}
 			finally
@@ -272,7 +269,7 @@ namespace Comet
 				Debug.WriteLine(ex);
 			}
 
-			ViewHandler?.UpdateValue(property, value);
+			ViewHandler?.UpdateValue(property);
 			replacedView?.ViewPropertyChanged(property, value);
 		}
 
@@ -286,28 +283,32 @@ namespace Comet
 			ViewPropertyChanged(property, value);
 		}
 
-		public static async void SetGlobalEnvironment(string key, object value)
+		public static void SetGlobalEnvironment(string key, object value)
 		{
 			Environment.SetValue(key, value,true);
-			await ThreadHelper.SwitchToMainThreadAsync();
-			ActiveViews.ForEach(x => x.ViewPropertyChanged(key, value));
+			ThreadHelper.RunOnMainThread(() => {
+				ActiveViews.ForEach(x => x.ViewPropertyChanged(key, value));
+			});
+
 
 		}
-		public static async void SetGlobalEnvironment(string styleId, string key, object value)
+		public static void SetGlobalEnvironment(string styleId, string key, object value)
 		{
 			//If there is no style, set the default key
 			var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
 			Environment.SetValue(typedKey, value, true);
-			await ThreadHelper.SwitchToMainThreadAsync();
-			ActiveViews.ForEach(x => x.ViewPropertyChanged(typedKey, value));
+			ThreadHelper.RunOnMainThread(() => {
+				ActiveViews.ForEach(x => x.ViewPropertyChanged(typedKey, value));
+			});
 		}
 
 		public static async void SetGlobalEnvironment(Type type, string key, object value)
 		{
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			Environment.SetValue(typedKey, value, true);
-			await ThreadHelper.SwitchToMainThreadAsync();
-			ActiveViews.ForEach(x => x.ViewPropertyChanged(typedKey, value));
+			ThreadHelper.RunOnMainThread(() => {
+				ActiveViews.ForEach(x => x.ViewPropertyChanged(typedKey, value));
+			});
 		}
 
 		public static void SetGlobalEnvironment(IDictionary<string, object> data)
@@ -383,7 +384,7 @@ namespace Comet
 			if (gestures?.Any() ?? false)
 			{
 				foreach (var g in gestures)
-					ViewHandler?.UpdateValue(Gesture.RemoveGestureProperty, g);
+					ViewHandler?.UpdateValue(Gesture.RemoveGestureProperty);
 			}
 			Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
 
@@ -419,7 +420,7 @@ namespace Comet
 
 		public virtual RectangleF Frame
 		{
-			get => this.GetEnvironment<RectangleF?>(nameof(Frame), false) ?? RectangleF.Empty;
+			get => this.GetEnvironment<RectangleF?>(nameof(Frame), false) ?? RectangleF.Zero;
 			set => this.SetEnvironment(nameof(Frame), value, false);
 		}
 
@@ -440,7 +441,7 @@ namespace Comet
 		{
 			MeasurementValid = false;			
 			Parent?.InvalidateMeasurement();
-			NeedsLayout?.Invoke(this, EventArgs.Empty);
+			//NeedsLayout?.Invoke(this, EventArgs.Empty);
 		}
 
 		private SizeF _measuredSize;
@@ -495,7 +496,7 @@ namespace Comet
 			if (BuiltView != null)
 				return BuiltView.GetIntrinsicSize(availableSize);
 
-			return viewHandler?.GetIntrinsicSize(availableSize) ?? UseAvailableWidthAndHeight;
+			return viewHandler?.GetDesiredSize(availableSize) ?? UseAvailableWidthAndHeight;
 		}
 
 		public virtual void RequestLayout()
@@ -586,6 +587,29 @@ namespace Comet
 		List<Animation> animations;
 		List<Animation> GetAnimations(bool create) => !create ? animations : animations ?? (animations = new List<Animation>());
 		public List<Animation> Animations => animations;
+
+		bool Xamarin.Platform.IFrameworkElement.IsEnabled => this.GetEnvironment<bool?>(nameof(Xamarin.Platform.IFrameworkElement.IsEnabled)) ?? true;
+
+		Color Xamarin.Platform.IFrameworkElement.BackgroundColor => this.GetBackgroundColor();
+
+		RectangleF Xamarin.Platform.IFrameworkElement.Frame => this.Frame;
+
+		Xamarin.Platform.IViewHandler Xamarin.Platform.IFrameworkElement.Handler { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+		Xamarin.Platform.IFrameworkElement Xamarin.Platform.IFrameworkElement.Parent => throw new NotImplementedException();
+
+		SizeF Xamarin.Platform.IFrameworkElement.DesiredSize => throw new NotImplementedException();
+
+		bool Xamarin.Platform.IFrameworkElement.IsMeasureValid => throw new NotImplementedException();
+
+		bool Xamarin.Platform.IFrameworkElement.IsArrangeValid => throw new NotImplementedException();
+
+		float Xamarin.Platform.IFrameworkElement.Width => throw new NotImplementedException();
+
+		float Xamarin.Platform.IFrameworkElement.Height => throw new NotImplementedException();
+
+		Xamarin.Forms.Thickness Xamarin.Platform.IFrameworkElement.Margin => throw new NotImplementedException();
+
 		public void AddAnimation(Animation animation)
 		{
 			animation.Parent = new WeakReference<View>(this);
@@ -614,5 +638,10 @@ namespace Comet
 			GetAnimations(false)?.ForEach(x => x.Resume());
 			notificationView?.ResumeAnimations();
 		}
+
+		void Xamarin.Platform.IFrameworkElement.Arrange(RectangleF bounds) => throw new NotImplementedException();
+		SizeF Xamarin.Platform.IFrameworkElement.Measure(float widthConstraint, float heightConstraint) => throw new NotImplementedException();
+		void Xamarin.Platform.IFrameworkElement.InvalidateMeasure() => throw new NotImplementedException();
+		void Xamarin.Platform.IFrameworkElement.InvalidateArrange() => throw new NotImplementedException();
 	}
 }
