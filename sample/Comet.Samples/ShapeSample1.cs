@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Graphics;
 using System.Text;
 
 namespace Comet.Samples
@@ -11,12 +12,12 @@ namespace Comet.Samples
 		[Body]
 		View body() => new VStack
 		{
-			new ShapeView(new Circle().Stroke(Color.Blue, 2)).Frame(100,60),
-			new ShapeView(new Rectangle().Stroke(Color.Magenta, 2)).Frame(100,60),
-			new ShapeView(new RoundedRectangle(6).Stroke(Color.Purple, 2)).Frame(100,60),
-			new ShapeView(new Capsule().Stroke(Color.Orange, 2)).Frame(100,30),
-			new ShapeView(new Ellipse().Stroke(Color.Green, 2)).Frame(100,60),
-			new ShapeView(new Path(PuzzlePiece).Stroke(Color.Red, 2)).Frame(60,60),
+			new ShapeView(new Circle().Stroke(Colors.Blue, 2)).Frame(100,60),
+			new ShapeView(new Rectangle().Stroke(Colors.Magenta, 2)).Frame(100,60),
+			new ShapeView(new RoundedRectangle(6).Stroke(Colors.Purple, 2)).Frame(100,60),
+			new ShapeView(new Capsule().Stroke(Colors.Orange, 2)).Frame(100,30),
+			new ShapeView(new Ellipse().Stroke(Colors.Green, 2)).Frame(100,60),
+			new ShapeView(new Path(PuzzlePiece).Stroke(Colors.Red, 2)).Frame(60,60),
 		};
 	}
 }

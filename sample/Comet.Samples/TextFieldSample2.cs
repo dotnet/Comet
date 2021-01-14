@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Graphics;
 
 namespace Comet.Samples
 {
@@ -14,7 +15,7 @@ namespace Comet.Samples
 			new HStack()
 			{
 				new Text("Current Value:")
-					.Color(Color.Grey),
+					.Color(Colors.Grey),
 				new Text(_textValue),
 				new Spacer()
 			},

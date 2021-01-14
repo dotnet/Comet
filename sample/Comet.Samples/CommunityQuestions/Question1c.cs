@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Graphics;
 
 namespace Comet.Samples
 {
@@ -15,7 +16,7 @@ namespace Comet.Samples
 				new Text("Description")
 					.FitHorizontal()
 					.FontSize(12)
-					.Color(Color.Grey),
+					.Color(Colors.Grey),
 			}.FillHorizontal();
 	}
 }

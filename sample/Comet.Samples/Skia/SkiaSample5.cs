@@ -10,7 +10,7 @@
 //		[Body]
 //		View body() => new VStack
 //		{
-//			new SkiaShapeView(new Circle().Stroke(Color.Blue,2)).Frame(100,60),
+//			new SkiaShapeView(new Circle().Stroke(Colors.Blue,2)).Frame(100,60),
 
 //			new SkiaShapeView(new Rectangle().Stroke(Color.Magenta,2)).Frame(100,60),
 
@@ -18,9 +18,9 @@
 
 //			new SkiaShapeView(new Capsule().Stroke(Color.Orange,2)).Frame(100,30),
 
-//			new SkiaShapeView(new Ellipse().Stroke(Color.Green, 2)).Frame(100,60),
+//			new SkiaShapeView(new Ellipse().Stroke(Colors.Green, 2)).Frame(100,60),
 
-//			new SkiaShapeView(new Path(PuzzlePiece).Stroke(Color.Red,2)).Frame(60,60)
+//			new SkiaShapeView(new Path(PuzzlePiece).Stroke(Colors.Red,2)).Frame(60,60)
 //		};
 //	}
 //}

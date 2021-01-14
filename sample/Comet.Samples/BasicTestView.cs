@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Graphics;
 
 namespace Comet.Samples
 {
@@ -48,7 +49,7 @@ namespace Comet.Samples
 				{
 					new Button("Toggle Entry/Label",
 						() => state.CanEdit = !state.CanEdit)
-						.Background(Color.Salmon),
+						.Background(Colors.Salmon),
 					new Button("Update Text",
 						() => state.Text = $"Click Count: {clickCount.Value++}" )
 				}

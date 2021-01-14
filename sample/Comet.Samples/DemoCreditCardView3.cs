@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Graphics;
 
 namespace Comet.Samples
 {
@@ -24,14 +25,14 @@ namespace Comet.Samples
 				{
 					new ShapeView(new RoundedRectangle(4.0f)
 						.Style(Graphics.DrawingStyle.Fill)
-						.Fill(Color.Grey))
+						.Fill(Colors.Grey))
 						.Frame(40,30,alignment: Alignment.Trailing)
 						.Margin(top: 30, right: 30)
 						.FitHorizontal(),
 
 					new Text("CARD NUMBER")
 						.FontSize(10)
-						.Color(Color.Silver)
+						.Color(Colors.Silver)
 						.Margin(left: 30),
 
 					new Text(Card.Number)
@@ -44,12 +45,12 @@ namespace Comet.Samples
 					{
 						 new Text("EXPIRATION")
 							.FontSize(10)
-							.Color(Color.Silver)
+							.Color(Colors.Silver)
 							.Frame(width: 200),
 
 						 new Text("CVV")
 							.FontSize(10)
-							.Color(Color.Silver),
+							.Color(Colors.Silver),
 					}.Margin(left:30),
 
 					new HStack()
@@ -90,8 +91,8 @@ namespace Comet.Samples
 			}.Margin(left:20),
 
 			new Button("Purchase for $200")
-				.RoundedBorder(22, Color.SlateGrey)
-				.Background(Color.SlateGrey)
+				.RoundedBorder(22, Colors.SlateGrey)
+				.Background(Colors.SlateGrey)
 				.Color(Colors.White)
 				.Frame(height:44)
 				.Margin(left:20, right:20),
@@ -99,8 +100,8 @@ namespace Comet.Samples
 			new Separator(),
 
 			new Button("Or Pay with PayPal")
-				.RoundedBorder(22, Color.SlateGrey)
-				.Color(Color.SlateGrey)
+				.RoundedBorder(22, Colors.SlateGrey)
+				.Color(Colors.SlateGrey)
 				.Frame(height: 44)
 				.Margin(left:20, right:20),
 
@@ -109,7 +110,7 @@ namespace Comet.Samples
 
 		public class Separator : ShapeView
 		{
-			public Separator() : base(new Rectangle().Stroke(Color.Grey, 2))
+			public Separator() : base(new Rectangle().Stroke(Colors.Grey, 2))
 			{
 				this.Frame(height: 1);
 			}
@@ -139,7 +140,7 @@ namespace Comet.Samples
 				new TextField(_val, _placeholder)
 			}
 			.Frame(height: 40)
-			.RoundedBorder(color: Color.Grey);
+			.RoundedBorder(color: Colors.Grey);
 		}
 	}
 }

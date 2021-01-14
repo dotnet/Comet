@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Graphics;
 using System.Text;
 
 
@@ -24,7 +25,7 @@ namespace Comet.Samples.Comparisons
 		[Body]
 		View body() =>
 				 new Text("Turtle Rock")
-					 .Color(Color.Green);
+					 .Color(Colors.Green);
 	}
 
 }
