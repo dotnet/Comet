@@ -95,10 +95,10 @@ namespace Comet
 
 				var assemblies = System.AppDomain.CurrentDomain.GetAssemblies();
 				var t = assemblies.Select(x => x.GetType(oldViewType)).FirstOrDefault(x => x != null);
-				var views = Registrar.Handlers.GetViewType(t);
+				var views = Xamarin.Platform.Registrar.Handlers.GetViewType(t);
 				if (views.Count == 0)
 				{					
-					views = Registrar.Handlers.GetViewType(t);
+					views = Xamarin.Platform.Registrar.Handlers.GetViewType(t);
 				}
 				replacedHandlers[oldViewType] = views;
 				foreach (var h in views)
@@ -117,7 +117,7 @@ namespace Comet
 			var newType = newHandler;
 			if (pair.Value.IsGenericType)
 				newType = pair.Value.GetGenericTypeDefinition().MakeGenericType(newHandler);
-			Registrar.Handlers.Register(view, newType);
+			Xamarin.Platform.Registrar.Handlers.Register(view, newType);
 		}
 
 		public static void TriggerReload()
