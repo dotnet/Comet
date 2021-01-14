@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Graphics;
 using Comet.Internal;
+using Xamarin.Platform;
 using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
@@ -20,7 +21,7 @@ namespace Comet.Tests
 			var handler = view.ViewHandler;
 			if (handler == null)
 			{
-				handler = Registrar.Handlers.GetHandler(view.GetType()) as IViewHandler;
+				handler = Registrar.Handlers.GetHandler(view.GetType());
 				view.ViewHandler = handler;
 			}
 

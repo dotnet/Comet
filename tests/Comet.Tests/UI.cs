@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Comet.Tests.Handlers;
+using Xamarin.Platform;
 
 namespace Comet.Tests
 {
