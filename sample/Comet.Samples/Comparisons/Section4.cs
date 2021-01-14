@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Graphics;
 using System.Text;
 
 
@@ -28,7 +29,7 @@ namespace Comet.Samples.Comparisons
 			new Image("turtlerock.jpg")
 				.ClipShape(new Circle())
 				.Overlay(new Circle().Stroke(Colors.White, lineWidth: 4))
-				.Shadow(radius: 10).Background(Color.Green);
+				.Shadow(radius: 10).Background(Colors.Green);
 	}
 
 }

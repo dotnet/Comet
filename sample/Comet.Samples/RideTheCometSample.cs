@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Graphics;
 using System.Text;
 
 /*
@@ -41,9 +42,9 @@ namespace Comet.Samples.Comparisons
 					.Frame(height:44)
 					.Margin(8)
 					.Color(Colors.White)
-					.Background(Color.Green)
-				.RoundedBorder(color:Color.Blue)
-				.Shadow(Color.Grey,4,2,2),
+					.Background(Colors.Green)
+				.RoundedBorder(color:Colors.Blue)
+				.Shadow(Colors.Grey,4,2,2),
 			};
 
 		public class Comet : BindingObject

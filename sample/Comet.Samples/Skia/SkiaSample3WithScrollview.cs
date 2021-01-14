@@ -35,15 +35,15 @@
 //						}),
 //						new Button("Blue", () =>
 //						{
-//							_strokeColor.Value = Color.Blue.ToHexString();
+//							_strokeColor.Value = Colors.Blue.ToHexString();
 //						}),
 //						new Button("Red", () =>
 //						{
-//							_strokeColor.Value = Color.Red.ToHexString();
+//							_strokeColor.Value = Colors.Red.ToHexString();
 //						}),
 //						new Button("Green", () =>
 //						{
-//							_strokeColor.Value = Color.Green.ToHexString();
+//							_strokeColor.Value = Colors.Green.ToHexString();
 //						}),
 //						new Button("Orange", () =>
 //						{
@@ -59,7 +59,7 @@
 //						}),
 //						new Button("Salmon", () =>
 //						{
-//							_strokeColor.Value = Color.Salmon.ToHexString();
+//							_strokeColor.Value = Colors.Salmon.ToHexString();
 //						}),
 //						new Button("Magenta", () =>
 //						{

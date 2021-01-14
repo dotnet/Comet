@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Graphics;
 using Comet.Reflection;
+using Xamarin.Platform;
 
 namespace Comet.Tests.Handlers
 {
@@ -11,12 +12,12 @@ namespace Comet.Tests.Handlers
 		{
 		}
 
-		public View CurrentView { get; private set; }
+		public IView CurrentView { get; private set; }
 
 		public object NativeView => throw new NotImplementedException();
 
 		public bool HasContainer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		
+
 		public SizeF GetIntrinsicSize(SizeF availableSize) => OnGetIntrinsicSize?.Invoke(availableSize) ?? View.UseAvailableWidthAndHeight;
 
 		public void SetFrame(RectangleF frame)
@@ -33,20 +34,11 @@ namespace Comet.Tests.Handlers
 		}
 
 		public readonly Dictionary<string, object> ChangedProperties = new Dictionary<string, object>();
-		public void Remove(View view)
-		{
-			CurrentView = null;
-		}
 
-		public void SetView(View view)
-		{
-			ChangedProperties.Clear();
-			CurrentView = view;
-		}
 
-		public void UpdateValue(string property, object value)
+		public void UpdateValue(string property)
 		{
-			ChangedProperties[property] = value;
+			ChangedProperties[property] = CurrentView?.GetPropValue<object>(property);
 
 			var val = CurrentView.GetPropertyValue(property) as Binding;
 
@@ -61,5 +53,14 @@ namespace Comet.Tests.Handlers
 		{
 			ChangedProperties?.Clear();
 		}
+
+		public void SetVirtualView(IView view)
+		{
+
+			ChangedProperties.Clear();
+			CurrentView = view;
+		}
+		public void DisconnectHandler() =>			CurrentView = null;
+		public SizeF GetDesiredSize(float widthConstraint, float heightConstraint) => OnGetIntrinsicSize?.Invoke(new SizeF(widthConstraint, heightConstraint)) ?? View.UseAvailableWidthAndHeight;
 	}
 }

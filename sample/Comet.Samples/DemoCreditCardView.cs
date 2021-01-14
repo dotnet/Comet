@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Graphics;
 
 namespace Comet.Samples
 {
@@ -68,7 +69,7 @@ namespace Comet.Samples
 				{
 					new Text("CARD NUMBER")
 						.FontSize(10)
-						.Color(Color.Silver)
+						.Color(Colors.Silver)
 						.Cell(row:2, column:1, colSpan:2),
 					new Text(Card.Number)
 						.FontSize(14)
@@ -77,7 +78,7 @@ namespace Comet.Samples
 
 					new Text("EXPIRATION")
 						.FontSize(10)
-						.Color(Color.Silver)
+						.Color(Colors.Silver)
 						.Cell(row:5, column:1),
 					new Text(Card.Expiration)
 						.FontSize(14)
@@ -86,7 +87,7 @@ namespace Comet.Samples
 
 					new Text("CVV")
 						.FontSize(10)
-						.Color(Color.Silver)
+						.Color(Colors.Silver)
 						.Cell(row:5, column:2),
 					new Text(Card.CVV)
 						.FontSize(14)
@@ -116,9 +117,9 @@ namespace Comet.Samples
 					new Toggle(remember),
 					new Text("  Remember Me")
 				}.Cell(row:4,column:0, colSpan: 3),
-				new Button("Or Pay with PayPal").RoundedBorder(22, Color.SlateGrey).Cell(row:6, column:0, colSpan:3).Color(Color.SlateGrey),
+				new Button("Or Pay with PayPal").RoundedBorder(22, Colors.SlateGrey).Cell(row:6, column:0, colSpan:3).Color(Colors.SlateGrey),
 				HRule().Cell(row:8,column:0,colSpan:3),
-				new Button("Purchase for $200").RoundedBorder(22, Color.SlateGrey).Background(Color.SlateGrey).Cell(row:10,column:0,colSpan:3).Color(Colors.White)
+				new Button("Purchase for $200").RoundedBorder(22, Colors.SlateGrey).Background(Colors.SlateGrey).Cell(row:10,column:0,colSpan:3).Color(Colors.White)
 			}.Cell(row:2, column:1),
 
 		};
@@ -127,7 +128,7 @@ namespace Comet.Samples
 		{
 			return new ShapeView(
 				new Rectangle()
-					.Stroke(Color.Grey, 2)
+					.Stroke(Colors.Grey, 2)
 				)
 				.Frame(100, 1);
 		}
@@ -157,7 +158,7 @@ namespace Comet.Samples
 						.FontFamily("Font Awesome 5 Free"),
 					new TextField(val, placeholder).Margin(top:9)
 
-			}.RoundedBorder(color: Color.Grey).FillHorizontal();
+			}.RoundedBorder(color: Colors.Grey).FillHorizontal();
 		}
 
 		//class CCText : Text

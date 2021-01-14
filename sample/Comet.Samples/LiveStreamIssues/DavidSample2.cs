@@ -1,4 +1,6 @@
-﻿namespace Comet.Samples.LiveStreamIssues
+﻿using System.Graphics;
+
+namespace Comet.Samples.LiveStreamIssues
 {
 	public class DavidSample2 : View
 	{

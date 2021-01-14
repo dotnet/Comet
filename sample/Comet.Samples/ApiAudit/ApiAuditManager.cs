@@ -4,6 +4,7 @@ using Comet.Reflection;
 using Comet.Internal;
 using System.Linq;
 using System.Reflection;
+using Xamarin.Platform;
 
 namespace Comet.Samples
 {
@@ -68,7 +69,7 @@ namespace Comet.Samples
 		public static List<AuditReport> GenerateReport()
 		{
 			var reports = new List<AuditReport>();
-			var pairs = Registrar.Handlers.GetAllRenderers();
+			var pairs = Xamarin.Platform.Registrar.Handlers.GetAllRenderers();
 			foreach (var pair in pairs)
 			{
 				reports.Add(GenerateReport(pair.Key, pair.Value));

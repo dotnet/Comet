@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Graphics;
 using Comet.Samples.Models;
 
 namespace Comet.Samples
@@ -31,8 +32,8 @@ namespace Comet.Samples
 				new VStack(HorizontalAlignment.Leading, spacing:2)
 				{
 					new Text (song.Title).FontSize(17),
-					new Text (song.Artist).Color(Color.Grey),
-					new Text (song.Album).Color(Color.Grey),
+					new Text (song.Artist).Color(Colors.Grey),
+					new Text (song.Album).Color(Colors.Grey),
 				}.FontSize(12)
 			}.Frame(height: 60, alignment: Alignment.Leading),
 		}.OnSelectedNavigate((song) => new ListViewDetails().SetEnvironment("song",song));

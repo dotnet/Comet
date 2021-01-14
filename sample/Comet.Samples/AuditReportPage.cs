@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Graphics;
 using System.Threading.Tasks;
 
 namespace Comet.Samples
@@ -13,7 +14,7 @@ namespace Comet.Samples
 		View body()
 		{
 			//if (isLoading) return new Text(() => "Loading...");
-			if (isLoading) return new ActivityIndicator().Color(Color.Fuchsia);
+			if (isLoading) return new ActivityIndicator().Color(Colors.Fuchsia);
 
 			if (reports.Value.Count == 0) return new Button(() => "Generate Report", async () => {
 				isLoading.Value = true;
@@ -36,9 +37,9 @@ namespace Comet.Samples
 						{
 							new Text (report.View).FontSize(20),
 							new Text ($"Handler: {report.Handler}"),
-							new Text ($"Has Map? : {!report.MissingMapper}").Color(report.MissingMapper ? Color.Red : Color.Green),
-							new Text ($"Handled Properties: {report.HandledProperties.Count}").Color(report.HandledProperties.Count == 0 ? Color.Red : Color.Green),
-							new Text ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Color.Green : Color.Red),
+							new Text ($"Has Map? : {!report.MissingMapper}").Color(report.MissingMapper ? Colors.Red : Colors.Green),
+							new Text ($"Handled Properties: {report.HandledProperties.Count}").Color(report.HandledProperties.Count == 0 ? Colors.Red : Colors.Green),
+							new Text ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Colors.Green : Colors.Red),
 						}.Margin().FontSize(10).OnTapNavigate(()=>new AuditReportPageDetails().SetEnvironment("report", report))
 				 },
 			}.OnSelectedNavigate((report) => new AuditReportPageDetails().SetEnvironment("report", report)); ;
@@ -60,7 +61,7 @@ namespace Comet.Samples
 				stack.Add(new Text("Handled Properties").FontSize(30));
 				foreach (var prop in report.HandledProperties)
 				{
-					stack.Add(new Text(prop).Color(Color.Green));
+					stack.Add(new Text(prop).Color(Colors.Green));
 				}
 			}
 			if (report.UnHandledProperties.Count > 0)
@@ -68,7 +69,7 @@ namespace Comet.Samples
 				stack.Add(new Text("UnHandled Properties!").FontSize(30));
 				foreach (var prop in report.UnHandledProperties)
 				{
-					stack.Add(new Text(prop).Color(Color.Red));
+					stack.Add(new Text(prop).Color(Colors.Red));
 				}
 			}
 			return stack;

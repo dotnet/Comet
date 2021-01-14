@@ -34,12 +34,12 @@
 //						}).Color(Colors.Black),
 //						new Button("Blue", () =>
 //						{
-//							_strokeColor.Value = Color.Blue.ToHexString();
-//						}).Color(Color.Blue),
+//							_strokeColor.Value = Colors.Blue.ToHexString();
+//						}).Color(Colors.Blue),
 //						new Button("Red", () =>
 //						{
-//							_strokeColor.Value = Color.Red.ToHexString();
-//						}).Color(Color.Red),
+//							_strokeColor.Value = Colors.Red.ToHexString();
+//						}).Color(Colors.Red),
 //					},
 //                //},
 //                new BindableFingerPaint(
