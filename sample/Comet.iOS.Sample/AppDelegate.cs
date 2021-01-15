@@ -6,6 +6,7 @@ using MapKit;
 using UIKit;
 using Comet.Styles;
 using Comet.Styles.Material;
+using Xamarin.Platform;
 
 namespace Comet.iOS.Sample
 {
@@ -14,12 +15,26 @@ namespace Comet.iOS.Sample
 	[Register("AppDelegate")]
 	public class AppDelegate : UIApplicationDelegate
 	{
-		
+
+		UIWindow _window;
 		public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
 		{
 #if DEBUG
 			Comet.Reload.Init();
 #endif
+
+			CometPlatform.Init();
+			_window = new UIWindow();
+			var app = new SampleApp();
+
+			IView content = app;
+
+			_window.RootViewController = new UIViewController
+			{
+				View = content.ToNative()
+			};
+
+			_window.MakeKeyAndVisible();
 			//Adds the material Style
 			//new MaterialStyle(ColorPalette.Blue).Apply();
 
@@ -31,8 +46,8 @@ namespace Comet.iOS.Sample
 
 			//Replaces the native controls with controls from Googles Material Lib
 			//Comet.Material.iOS.UI.Init();
-
-			return base.FinishedLaunching(application, launchOptions);
+			return true;
+			//return base.FinishedLaunching(application, launchOptions);
 		}
 
 		//protected override CometApp CreateApp() => new SampleApp();

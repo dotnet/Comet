@@ -8,24 +8,34 @@ using Comet.Helpers;
 using Comet.Internal;
 //using System.Reflection;
 using Comet.Reflection;
+using Xamarin.Forms;
 using Xamarin.Platform;
+using Xamarin.Platform.Layouts;
 
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, Xamarin.Platform.IView
+	public class View : ContextualObject, IDisposable, IView, IReplaceableView
 	{
+		static View()
+		{
+			CometPlatform.Init();
+		}
 		public static readonly SizeF UseAvailableWidthAndHeight = new SizeF(-1, -1);
 
 		internal readonly static WeakList<View> ActiveViews = new WeakList<View>();
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
 
-		public IReadOnlyList<Gesture> Gestures
+
+		IReloadHandler reloadHandler;
+		public IReloadHandler ReloadHandler
 		{
-			get => GetPropertyFromContext<List<Gesture>>();
-			internal set => SetPropertyInContext(value);
+			get => reloadHandler;
+			set
+			{
+				reloadHandler = value;
+			}
 		}
-		public IReloadHandler ReloadHandler { get; set; }
 		WeakReference parent;
 
 		public string Id { get; } = IDGenerator.Instance.Next;
@@ -93,21 +103,23 @@ namespace Comet
 			get => viewHandler;
 			set
 			{
-				if (viewHandler == value)
-					return;
-
-				measurementValid = false;
-				_measuredSize = SizeF.Zero;
-				Frame = RectangleF.Zero;
-
-				var oldViewHandler = viewHandler;
-				viewHandler?.DisconnectHandler();
-				viewHandler = value;
-				if (replacedView != null)
-					replacedView.ViewHandler = value;
-				WillUpdateView();
-				viewHandler?.SetVirtualView(this.GetRenderView());
+				SetViewHandler(value);
+					viewHandler?.SetVirtualView(this.GetRenderView());
 			}
+		}
+
+		bool SetViewHandler(IViewHandler handler)
+		{
+			if (viewHandler == handler)
+				return false;
+			InvalidateMeasurement();
+			var oldViewHandler = viewHandler;
+			//viewHandler?.Remove(this);
+			viewHandler = handler;
+			if (replacedView != null)
+				replacedView.ViewHandler = handler;
+			return true;
+
 		}
 
 		internal void UpdateFromOldView(View view)
@@ -119,7 +131,6 @@ namespace Comet
 
 			}
 			var oldView = view.ViewHandler;
-			this.Gestures = view.Gestures;
 			this.ReloadHandler = view.ReloadHandler;
 			view.ViewHandler = null;
 			view.replacedView?.Dispose();
@@ -144,12 +155,14 @@ namespace Comet
 				builtView = null;
 				//if (ViewHandler == null)
 				//	return;
-				ViewHandler?.DisconnectHandler();
+				//ViewHandler?.Remove(this);
 				var view = this.GetRenderView();
 				if (oldView != null)
 					view = view.Diff(oldView, isHotReload);
-				oldView?.Dispose();
-				oldParentView?.Dispose();
+				if (view != oldView)
+					oldView?.Dispose();
+				if (view != oldParentView)
+					oldParentView?.Dispose();
 				animations?.ForEach(x => x.Dispose());
 				ViewHandler?.SetVirtualView(view);
 				ReloadHandler?.Reload();
@@ -162,6 +175,7 @@ namespace Comet
 					oldReplacedView.ViewHandler = null;
 					oldReplacedView.Dispose();
 				}
+				InvalidateMeasurement();
 			}
 		}
 
@@ -173,12 +187,16 @@ namespace Comet
 			{
 				var wasSet = body != null;
 				body = value;
-				if(wasSet)
+				if (wasSet)
 					ResetView();
 				//   this.SetBindingValue(State, ref body, value, ResetPropertyString);
 			}
 		}
 
+		///
+		public bool HasContent => Body != null && (HotReloadHelper.IsEnabled || hasGlobalState);
+
+		bool hasGlobalState => State.GlobalProperties.Any();
 		internal View GetView() => GetRenderView();
 		View replacedView;
 		protected virtual View GetRenderView()
@@ -189,7 +207,7 @@ namespace Comet
 			if (replaced != this)
 			{
 				replaced.viewThatWasReplaced = this;
-				replaced.ViewHandler = ViewHandler; 
+				replaced.ViewHandler = ViewHandler;
 				replaced.Navigation = this.Navigation;
 				replaced.Parent = this;
 				replaced.ReloadHandler = this.ReloadHandler;
@@ -201,24 +219,33 @@ namespace Comet
 			CheckForBody();
 			if (Body == null)
 				return this;
-			if (BuiltView != null)
-				return BuiltView;
-			Debug.WriteLine($"Building View: {this.GetType().Name}");
-			using (new StateBuilder(this))
+
+
+			if (BuiltView == null)
 			{
-				var view = Body.Invoke();
-				view.Parent = this;
-				if (view is NavigationView navigationView)
-					Navigation = navigationView;
-				var props = StateManager.EndProperty();
-				var propCount = props.Count;
-				if (propCount > 0)
+				Debug.WriteLine($"Building View: {this.GetType().Name}");
+				using (new StateBuilder(this))
 				{
-					State.AddGlobalProperties(props);
+					var view = Body.Invoke();
+					view.Parent = this;
+					if (view is NavigationView navigationView)
+						Navigation = navigationView;
+					var props = StateManager.EndProperty();
+					var propCount = props.Count;
+					if (propCount > 0)
+					{
+						State.AddGlobalProperties(props);
+					}
+					UpdateBuiltViewContext(view);
+					builtView = view.GetRenderView();
 				}
-				UpdateBuiltViewContext(view);
-				return builtView = view.GetRenderView();
 			}
+
+			/// We need to make this check if there are global views. If so, return itself so it can be in a container view
+			/// If HotReload never collapse!
+			/// If not collapse down to the built view.
+			//return HotReloadHelper.IsEnabled || hasGlobalState ? this : BuiltView;
+			return BuiltView;
 		}
 
 		bool didCheckForBody;
@@ -235,11 +262,6 @@ namespace Comet
 			var bodyMethod = this.GetBody();
 			if (bodyMethod != null)
 				Body = bodyMethod;
-		}
-
-		protected virtual void WillUpdateView()
-		{
-
 		}
 
 		internal void BindingPropertyChanged(INotifyPropertyRead bindingObject, string property, string fullProperty, object value)
@@ -275,21 +297,15 @@ namespace Comet
 
 		internal override void ContextPropertyChanged(string property, object value, bool cascades)
 		{
-			if (property == nameof(Frame))
-			{
-				ViewHandler?.SetFrame((RectangleF)value);
-				RequestLayout();
-			}
 			ViewPropertyChanged(property, value);
 		}
 
 		public static void SetGlobalEnvironment(string key, object value)
 		{
-			Environment.SetValue(key, value,true);
+			Environment.SetValue(key, value, true);
 			ThreadHelper.RunOnMainThread(() => {
 				ActiveViews.ForEach(x => x.ViewPropertyChanged(key, value));
 			});
-
 
 		}
 		public static void SetGlobalEnvironment(string styleId, string key, object value)
@@ -302,7 +318,7 @@ namespace Comet
 			});
 		}
 
-		public static async void SetGlobalEnvironment(Type type, string key, object value)
+		public static void SetGlobalEnvironment(Type type, string key, object value)
 		{
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			Environment.SetValue(typedKey, value, true);
@@ -380,12 +396,7 @@ namespace Comet
 				return;
 
 			ActiveViews.Remove(this);
-			var gestures = Gestures;
-			if (gestures?.Any() ?? false)
-			{
-				foreach (var g in gestures)
-					ViewHandler?.UpdateValue(Gesture.RemoveGestureProperty);
-			}
+
 			Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
 
 			HotReloadHelper.UnRegister(this);
@@ -421,7 +432,10 @@ namespace Comet
 		public virtual RectangleF Frame
 		{
 			get => this.GetEnvironment<RectangleF?>(nameof(Frame), false) ?? RectangleF.Zero;
-			set => this.SetEnvironment(nameof(Frame), value, false);
+			set
+			{
+				this.SetEnvironment(nameof(Frame), value, false);
+			}
 		}
 
 
@@ -439,9 +453,8 @@ namespace Comet
 
 		public void InvalidateMeasurement()
 		{
-			MeasurementValid = false;			
+			MeasurementValid = false;
 			Parent?.InvalidateMeasurement();
-			//NeedsLayout?.Invoke(this, EventArgs.Empty);
 		}
 
 		private SizeF _measuredSize;
@@ -455,117 +468,59 @@ namespace Comet
 					BuiltView.MeasuredSize = value;
 			}
 		}
-
-		public SizeF Measure(SizeF availableSize)
-		{
-			if (availableSize.Width <= 0 || availableSize.Height <= 0)
-				return availableSize;
-			
-			if (BuiltView != null)
-				return BuiltView.Measure(availableSize);
-
-			var constraints = this.GetFrameConstraints();
-			var width = constraints?.Width;
-			var height = constraints?.Height;
-
-			// If we have both width and height constraints, we can skip measuring the control and
-			// return the constrained values.
-			if (width != null && height != null)
-				return new SizeF((float)width, (float)height);
-
-			var intrinsicSize = GetIntrinsicSize(availableSize);
-
-			// If the intrinsic width is less than 0, then default to the available width
-			if (intrinsicSize.Width < 0)
-				intrinsicSize.Width = availableSize.Width;
-
-			// If the intrinsic height is less than 0, then default to the available height
-			if (intrinsicSize.Height < 0)
-				intrinsicSize.Height = availableSize.Height;
-
-			// If we have a constraint for just one of the values, then combine the constrained value
-			// with the measured value for our size.
-			if (width != null || height != null)
-				return new SizeF(width ?? intrinsicSize.Width, height ?? intrinsicSize.Height);
-
-			return intrinsicSize;
-		}
-
-		public virtual SizeF GetIntrinsicSize(SizeF availableSize)
+		public virtual SizeF GetDesiredSize(SizeF availableSize)
 		{
 			if (BuiltView != null)
-				return BuiltView.GetIntrinsicSize(availableSize);
-
-			return viewHandler?.GetDesiredSize(availableSize) ?? UseAvailableWidthAndHeight;
+				return BuiltView.GetDesiredSize(availableSize);
+			if(!IsMeasureValid)
+			{
+				MeasuredSize = this.ComputeDesiredSize(availableSize.Width, availableSize.Height);
+			}
+			IsMeasureValid = true;
+			return MeasuredSize;
 		}
 
-		public virtual void RequestLayout()
+
+		public SizeF Measure(float widthConstraint, float heightConstraint)
 		{
-			var constraints = this.GetFrameConstraints();
-			var frame = Frame;
-			var width = constraints?.Width ?? frame.Width;
-			var height = constraints?.Height ?? frame.Height;
 
-			if (width > 0 && height > 0)
+			if (BuiltView != null)
+				return MeasuredSize = BuiltView.Measure(widthConstraint, heightConstraint);
+
+			if (!IsMeasureValid)
 			{
-				var margin = BuiltView?.GetMargin();
-				if (margin != null)
-				{
-					width -= ((Thickness)margin).HorizontalThickness;
-					height -= ((Thickness)margin).VerticalThickness;
-				}
+				// TODO ezhart Adjust constraints to account for margins
 
-				if (!MeasurementValid)
-				{
-					MeasuredSize = Measure(new SizeF(width, height));
-					MeasurementValid = true;
-				}
+				// TODO ezhart If we can find reason to, we may need to add a MeasureFlags parameter to IFrameworkElement.Measure
+				// Forms has and (very occasionally) uses one. I'd rather not muddle this up with it, but if it's necessary
+				// we can add it. The default is MeasureFlags.None, but nearly every use of it is MeasureFlags.IncludeMargins,
+				// so it's an awkward default. 
 
-				Layout();
+				// I'd much rather just get rid of all the uses of it which don't include the margins, and have "with margins"
+				// be the default. It's more intuitive and less code to write. Also, I sort of suspect that the uses which
+				// _don't_ include the margins are actually bugs.
+
+				var frameworkElement = this as IFrameworkElement;
+
+				widthConstraint = LayoutManager.ResolveConstraints(widthConstraint, frameworkElement.Width);
+				heightConstraint = LayoutManager.ResolveConstraints(heightConstraint, frameworkElement.Height);
+
+				MeasuredSize = GetDesiredSize(new SizeF(widthConstraint, heightConstraint));
+				if (MeasuredSize.Width <= 0 || MeasuredSize.Height <= 0)
+				{
+					Console.WriteLine("Why :(");
+				}
 			}
+
+			IsMeasureValid = true;
+			return MeasuredSize;
 		}
 
-		private void Layout()
-		{
-			var frame = Frame;
-			var width = frame.Width;
-			var height = frame.Height;
 
-			var constraints = this.GetFrameConstraints();
-			var alignment = constraints?.Alignment ?? Alignment.Center;
-			var xFactor = .5f;
-			switch (alignment.Horizontal)
-			{
-				case HorizontalAlignment.Leading:
-					xFactor = 0;
-					break;
-				case HorizontalAlignment.Trailing:
-					xFactor = 1;
-					break;
-			}
-
-			var yFactor = .5f;
-			switch (alignment.Vertical)
-			{
-				case VerticalAlignment.Bottom:
-					yFactor = 1;
-					break;
-				case VerticalAlignment.Top:
-					yFactor = 0;
-					break;
-			}
-
-			// Make sure the final width is not larger than the frame we're allocated. 
-			var finalWidth = Math.Min(width, MeasuredSize.Width);
-			var finalHeight = Math.Min(height, MeasuredSize.Height);
-
-			var x = (width - finalWidth) * xFactor;
-			var y = (height - finalHeight) * yFactor;
-			LayoutSubviews(new RectangleF(frame.X + x, frame.Y + y, finalWidth, finalHeight));
-		}
 
 		public virtual void LayoutSubviews(RectangleF frame)
 		{
+			Frame = frame;
 			if (BuiltView != null)
 				BuiltView.Frame = frame;
 		}
@@ -588,27 +543,34 @@ namespace Comet
 		List<Animation> GetAnimations(bool create) => !create ? animations : animations ?? (animations = new List<Animation>());
 		public List<Animation> Animations => animations;
 
-		bool Xamarin.Platform.IFrameworkElement.IsEnabled => this.GetEnvironment<bool?>(nameof(Xamarin.Platform.IFrameworkElement.IsEnabled)) ?? true;
+		bool IFrameworkElement.IsEnabled => this.GetEnvironment<bool>("IsEnabled");
 
-		Color Xamarin.Platform.IFrameworkElement.BackgroundColor => this.GetBackgroundColor();
+		Color IFrameworkElement.BackgroundColor => this.GetBackgroundColor();
 
-		RectangleF Xamarin.Platform.IFrameworkElement.Frame => this.Frame;
+		RectangleF IFrameworkElement.Frame => Frame;
 
-		Xamarin.Platform.IViewHandler Xamarin.Platform.IFrameworkElement.Handler { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		IViewHandler IFrameworkElement.Handler
+		{
+			get => this.ViewHandler;
+			set => SetViewHandler(value);
+		}
 
-		Xamarin.Platform.IFrameworkElement Xamarin.Platform.IFrameworkElement.Parent => throw new NotImplementedException();
+		IFrameworkElement IFrameworkElement.Parent => this.Parent;
 
-		SizeF Xamarin.Platform.IFrameworkElement.DesiredSize => throw new NotImplementedException();
+		SizeF IFrameworkElement.DesiredSize => MeasuredSize;
 
-		bool Xamarin.Platform.IFrameworkElement.IsMeasureValid => throw new NotImplementedException();
+		protected bool IsMeasureValid;
+		bool IFrameworkElement.IsMeasureValid => IsMeasureValid;
 
-		bool Xamarin.Platform.IFrameworkElement.IsArrangeValid => throw new NotImplementedException();
+		protected bool IsArrangeValid;
+		bool IFrameworkElement.IsArrangeValid => IsArrangeValid;
 
-		float Xamarin.Platform.IFrameworkElement.Width => throw new NotImplementedException();
+		float IFrameworkElement.Width => this.GetFrameConstraints()?.Width ?? -1;
+		float IFrameworkElement.Height => this.GetFrameConstraints()?.Height ?? -1;
 
-		float Xamarin.Platform.IFrameworkElement.Height => throw new NotImplementedException();
+		public IView ReplacedView => this.GetView();// HasContent ? this : BuiltView ?? this;
 
-		Xamarin.Forms.Thickness Xamarin.Platform.IFrameworkElement.Margin => throw new NotImplementedException();
+		Thickness IFrameworkElement.Margin => this.GetMargin();
 
 		public void AddAnimation(Animation animation)
 		{
@@ -638,10 +600,12 @@ namespace Comet
 			GetAnimations(false)?.ForEach(x => x.Resume());
 			notificationView?.ResumeAnimations();
 		}
-
-		void Xamarin.Platform.IFrameworkElement.Arrange(RectangleF bounds) => throw new NotImplementedException();
-		SizeF Xamarin.Platform.IFrameworkElement.Measure(float widthConstraint, float heightConstraint) => throw new NotImplementedException();
-		void Xamarin.Platform.IFrameworkElement.InvalidateMeasure() => throw new NotImplementedException();
-		void Xamarin.Platform.IFrameworkElement.InvalidateArrange() => throw new NotImplementedException();
+		void IFrameworkElement.Arrange(RectangleF bounds) => LayoutSubviews(bounds);
+		SizeF IFrameworkElement.Measure(float widthConstraint, float heightConstraint)
+			=>
+			//Measure(new SizeF(widthConstraint, heightConstraint));
+			Measure(widthConstraint, heightConstraint);
+		void IFrameworkElement.InvalidateMeasure() => InvalidateMeasurement();
+		void IFrameworkElement.InvalidateArrange() => IsArrangeValid = false;
 	}
 }

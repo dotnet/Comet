@@ -3,27 +3,26 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Graphics;
 using Comet.Layout;
+using Xamarin.Platform;
+using Xamarin.Platform.Layouts;
 
 namespace Comet
 {
-	public abstract class AbstractLayout : ContainerView
+	public abstract class AbstractLayout : ContainerView, ILayout
 	{
-		private readonly ILayoutManager _layout;
+		ILayoutManager layout;
+		protected abstract ILayoutManager CreateLayoutManager();
+		public ILayoutManager LayoutManager => layout ??= CreateLayoutManager();
 
-		protected AbstractLayout(ILayoutManager layoutManager)
-		{
-			_layout = layoutManager;
-		}
+		IReadOnlyList<IView> ILayout.Children => this.GetChildren();
 
-		public ILayoutManager LayoutManager => _layout;
+		protected override void OnAdded(View view) { }// _layout?.Invalidate();
 
-		protected override void OnAdded(View view) => _layout?.Invalidate();
+		protected override void OnClear() { }// _layout?.Invalidate();
 
-		protected override void OnClear() => _layout?.Invalidate();
+		protected override void OnRemoved(View view) { }// _layout?.Invalidate();
 
-		protected override void OnRemoved(View view) => _layout?.Invalidate();
-
-		protected override void OnInsert(int index, View item) => _layout?.Invalidate();
+		protected override void OnInsert(int index, View item) { }// _layout?.Invalidate();
 
 		public override void LayoutSubviews(RectangleF frame)
 		{
@@ -33,15 +32,22 @@ namespace Comet
 				padding.Right,
 				frame.Width - padding.HorizontalThickness,
 				frame.Height - padding.VerticalThickness);
-			_layout?.Layout(this, bounds);
+			LayoutManager?.Arrange(bounds);
 		}
 
-		public override SizeF GetIntrinsicSize(SizeF availableSize) => _layout.Measure(this, availableSize);
+		public override SizeF GetDesiredSize(SizeF availableSize)
+		{
+			if (IsMeasureValid)
+				return MeasuredSize;
+			MeasuredSize = LayoutManager.Measure(availableSize.Width, availableSize.Height);
+			IsMeasureValid = true;
+			return MeasuredSize;
+		}
 
 		protected override void Dispose(bool disposing)
 		{
 			base.Dispose(disposing);
-			_layout?.Invalidate();
+			//LayoutManager?.Invalidate();
 		}
 	}
 }

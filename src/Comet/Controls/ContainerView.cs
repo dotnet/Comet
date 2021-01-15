@@ -191,15 +191,15 @@ namespace Comet
 			base.ViewDidDisappear();
 		}
 
-        public override void PauseAnimations()
+		public override void PauseAnimations()
 		{
 			Views?.ForEach(v => v.PauseAnimations());
 			base.PauseAnimations();
-        }
-        public override void ResumeAnimations()
+		}
+		public override void ResumeAnimations()
 		{
 			Views?.ForEach(v => v.ResumeAnimations());
 			base.ResumeAnimations();
-        }
-    }
+		}
+	}
 }

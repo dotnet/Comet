@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Graphics;
 using System.Linq;
+using Xamarin.Platform.Layouts;
 
 namespace Comet.Layout
 {
@@ -19,10 +20,12 @@ namespace Comet.Layout
 		private float _height;
 
 		private readonly float _spacing;
+		private readonly Grid grid;
 
-		public GridLayoutManager(
+		public GridLayoutManager(Grid grid,
 			float? spacing)
 		{
+			this.grid = grid;
 			_spacing = spacing ?? 4;
 		}
 
@@ -39,8 +42,10 @@ namespace Comet.Layout
 			_heights = null;
 		}
 
-		public SizeF Measure(AbstractLayout layout, SizeF available)
+		public SizeF Measure(float widthConstraint, float heightConstraint)
 		{
+			var available = new SizeF(widthConstraint, heightConstraint);
+			var layout = grid;
 			if (_constraints.Count == 0)
 			{
 				var maxRow = 0;
@@ -90,7 +95,7 @@ namespace Comet.Layout
 					var viewSize = view.MeasuredSize;
 
 					if (!view.MeasurementValid)
-						viewSize = view.Measure(available);
+						viewSize = view.Measure(widthConstraint,heightConstraint);
 
 					var cellWidth = w;
 					var cellHeight = h;
@@ -127,8 +132,9 @@ namespace Comet.Layout
 			return new SizeF(_width, _height);
 		}
 
-		public void Layout(AbstractLayout layout, RectangleF rect)
+		public void Arrange(RectangleF rect)
 		{
+			var layout = grid;
 			var measured = rect.Size;
 			var size = rect.Size;
 			if (_gridX == null || !_lastSize.Equals(size))
@@ -145,7 +151,7 @@ namespace Comet.Layout
 				var viewSize = view.MeasuredSize;
 				if (!view.MeasurementValid)
 				{
-					view.MeasuredSize = viewSize = view.Measure(measured);
+					view.MeasuredSize = viewSize = view.Measure(measured.Width, measured.Height);
 					view.MeasurementValid = true;
 				}
 
@@ -450,5 +456,6 @@ namespace Comet.Layout
 
 			return height;
 		}
+
 	}
 }

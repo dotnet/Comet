@@ -37,9 +37,9 @@ namespace Comet
 			}
 		}
 
-		public override SizeF GetIntrinsicSize(SizeF availableSize)
+		public override SizeF GetDesiredSize(SizeF availableSize)
 		{
-			var intrinsicSize = base.GetIntrinsicSize(availableSize);
+			var intrinsicSize = base.GetDesiredSize(availableSize);
 			if (Orientation == Orientation.Horizontal)
 			{
 				if (View != null)
@@ -47,7 +47,7 @@ namespace Comet
 					var contentSize = View.MeasuredSize;
 					if (!View.MeasurementValid)
 					{
-						contentSize = View.Measure(availableSize);
+						contentSize = View.Measure(availableSize.Width,availableSize.Height);
 						View.MeasuredSize = contentSize;
 						View.MeasurementValid = true;
 					}

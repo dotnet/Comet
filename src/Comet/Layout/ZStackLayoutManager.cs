@@ -1,24 +1,21 @@
 ﻿using System.Graphics;
+using Xamarin.Platform;
+using Xamarin.Platform.Layouts;
 
 namespace Comet.Layout
 {
 	public class ZStackLayoutManager : ILayoutManager
 	{
-		public void Invalidate()
-		{
+		public ZStackLayoutManager(ILayout layout) => this.layout = layout;
 
-		}
+		ILayout layout;
 
-		public SizeF Measure(AbstractLayout layout, SizeF available)
+		public SizeF Measure(float widthConstraint, float heightConstraint) => new(widthConstraint, heightConstraint);
+		public void Arrange(RectangleF bounds)
 		{
-			return available;
-		}
-
-		public void Layout(AbstractLayout layout, RectangleF rect)
-		{
-			foreach (var v in layout)
+			foreach (var v in layout.Children)
 			{
-				v.Frame = rect;
+				v.Arrange(bounds);
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 ﻿using Comet.Layout;
 using System.Graphics;
+using Xamarin.Forms;
 
 // ReSharper disable once CheckNamespace
 namespace Comet
@@ -88,7 +89,7 @@ namespace Comet
 				frame.Height -= margin.VerticalThickness;
 			}
 
-			var sizeThatFits = view.Measure(frame.Size);
+			var sizeThatFits = view.Measure(frame.Size.Width,frame.Size.Height);
 			view.MeasuredSize = sizeThatFits;
 			view.MeasurementValid = true;
 
@@ -146,7 +147,8 @@ namespace Comet
 			var x = frame.X + ((frame.Width - width) * xFactor);
 			var y = frame.Y + ((frame.Height - height) * yFactor);
 			view.Frame = new RectangleF((float)x, (float)y, width, height);
-			view.RequestLayout();
+			//TODO: Redo this!
+			//view.RequestLayout();
 		}
 
 		public static T FillHorizontal<T>(this T view, bool cascades = true) where T : View
@@ -213,7 +215,7 @@ namespace Comet
 		public static Thickness GetMargin(this View view, Thickness? defaultValue = null)
 		{
 			var margin = view.GetEnvironment<Thickness?>(view, EnvironmentKeys.Layout.Margin);
-			return margin ?? defaultValue ?? Thickness.Empty;
+			return margin ?? defaultValue ?? Thickness.Zero;
 		}
 
 		public static T Padding<T>(this T view, Thickness padding, bool cascades = false) where T : View
@@ -225,7 +227,7 @@ namespace Comet
 		public static Thickness GetPadding(this View view, Thickness? defaultValue = null)
 		{
 			var margin = view.GetEnvironment<Thickness?>(view, EnvironmentKeys.Layout.Padding);
-			return margin ?? defaultValue ?? Thickness.Empty;
+			return margin ?? defaultValue ?? Thickness.Zero;
 		}
 
 
@@ -252,13 +254,13 @@ namespace Comet
 				availableSize.Width -= margin.HorizontalThickness;
 				availableSize.Height -= margin.VerticalThickness;
 
-				var measuredSize = view.Measure(availableSize);
+				var measuredSize = view.Measure(availableSize.Width,availableSize.Height);
 				measuredSize.Width += margin.HorizontalThickness;
 				measuredSize.Height += margin.VerticalThickness;
 				return measuredSize;
 			}
 
-			return view.Measure(availableSize);
+			return view.Measure(availableSize.Width, availableSize.Height);
 		}
 
 		public static T IgnoreSafeArea<T>(this T view) where T : View
