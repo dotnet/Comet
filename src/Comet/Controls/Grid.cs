@@ -1,4 +1,5 @@
 ﻿using Comet.Layout;
+using Xamarin.Platform.Layouts;
 
 namespace Comet
 {
@@ -9,7 +10,7 @@ namespace Comet
 			object[] rows = null,
 			float? spacing = null,
 			object defaultRowHeight = null,
-			object defaultColumnWidth = null) : base(new GridLayoutManager(spacing))
+			object defaultColumnWidth = null)
 		{
 			var layout = (GridLayoutManager)LayoutManager;
 
@@ -21,6 +22,11 @@ namespace Comet
 
 			if (rows != null)
 				layout.AddRows(rows);
+			Spacing = spacing;
 		}
+
+		public float? Spacing { get; }
+
+		protected override ILayoutManager CreateLayoutManager() => new GridLayoutManager(this,Spacing);
 	}
 }

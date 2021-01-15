@@ -1,4 +1,5 @@
 ﻿using System;
+using Xamarin.Forms;
 
 // ReSharper disable once CheckNamespace
 namespace Comet

@@ -1,9 +1,10 @@
 ﻿using System;
 using Comet.Internal;
+using Xamarin.Platform;
 
 namespace Comet
 {
-	public class Slider : View
+	public class Slider : View, ISlider
 	{
 		public Slider(
 			Binding<float> value = null,
@@ -16,7 +17,7 @@ namespace Comet
 			From = from;
 			Through = through;
 			By = by;
-			OnEditingChanged = new MulticastAction<float>(Value,onEditingChanged);
+			OnEditingChanged = new MulticastAction<float>(Value, onEditingChanged);
 		}
 
 		Binding<float> _value;
@@ -49,14 +50,29 @@ namespace Comet
 
 		public Action<float> OnEditingChanged { get; private set; }
 
+		float ISlider.Minimum => From;
+
+		float ISlider.Maximum => Through;
+
+		float ISlider.Value { get => Value; set => Value.Set(value); }
+
+		System.Graphics.Color ISlider.MinimumTrackColor => this.GetTrackColor();
+
+		System.Graphics.Color ISlider.MaximumTrackColor => this.GetProgressColor();
+
+		System.Graphics.Color ISlider.ThumbColor => this.GetThumbColor();
+
 		public void ValueChanged(float value)
 			=> OnEditingChanged.Invoke(value);
 
 		public void PercentChanged(float percent)
 		{
 			var from = From.CurrentValue;
-			var value = ((Through.CurrentValue - from) * percent.Clamp(0,1)) + from;
+			var value = ((Through.CurrentValue - from) * percent.Clamp(0, 1)) + from;
 			ValueChanged(value);
 		}
+
+		void ISlider.DragStarted() {}
+		void ISlider.DragCompleted() { }
 	}
 }

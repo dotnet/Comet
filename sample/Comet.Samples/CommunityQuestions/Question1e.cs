@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Graphics;
+using Xamarin.Forms;
 
 namespace Comet.Samples
 {

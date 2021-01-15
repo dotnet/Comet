@@ -34,23 +34,23 @@ namespace Comet
 
 		public Func<object> DataBinding { get; private set; }
 
-		protected override void WillUpdateView()
-		{
-			base.WillUpdateView();
-			//TODO Why is there DataBinding like this still? Kill it!!!
-			//if (DataBinding != null)
-			//         {
-			//	base.State.StartProperty ();
-			//	var text = DataBinding.Invoke ();
-			//	var props = base.State.EndProperty ();
-			//	var propCount = props.Length;
-			//	if (propCount > 0)
-			//             {
-			//		base.State.BindingState.AddViewProperty (props, this, nameof(DataBinding));
-			//	}
-			//	Data = text;
-			//}
-		}
+		//protected override void WillUpdateView()
+		//{
+		//	base.WillUpdateView();
+		//	//TODO Why is there DataBinding like this still? Kill it!!!
+		//	//if (DataBinding != null)
+		//	//         {
+		//	//	base.State.StartProperty ();
+		//	//	var text = DataBinding.Invoke ();
+		//	//	var props = base.State.EndProperty ();
+		//	//	var propCount = props.Length;
+		//	//	if (propCount > 0)
+		//	//             {
+		//	//		base.State.BindingState.AddViewProperty (props, this, nameof(DataBinding));
+		//	//	}
+		//	//	Data = text;
+		//	//}
+		//}
 		public override void ViewPropertyChanged(string property, object value)
 		{
 			if (property == nameof(DataBinding))

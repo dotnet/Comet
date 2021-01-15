@@ -52,8 +52,7 @@ namespace Comet
 				Content.Frame = bounds;
 			}
 		}
-
-		public override SizeF GetIntrinsicSize(SizeF availableSize)
+		public override SizeF GetDesiredSize(SizeF availableSize)
 		{
 			if (Content != null)
 			{
@@ -64,7 +63,7 @@ namespace Comet
 				return measuredSize;
 			}
 
-			return base.GetIntrinsicSize(availableSize);
+			return base.GetDesiredSize(availableSize);
 		}
 		internal override void Reload(bool isHotReload)
 		{

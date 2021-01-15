@@ -46,7 +46,7 @@ namespace Comet
 			}
 		}
 
-		public override SizeF GetIntrinsicSize(SizeF availableSize)
+		public override SizeF GetDesiredSize(SizeF availableSize)
 		{
 			if (Bitmap?.Value != null)
 				return Bitmap.GetValueOrDefault().Size;

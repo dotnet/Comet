@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Graphics;
 using System.Text;
+using Xamarin.Forms;
 
 namespace Comet.Styles.Material
 {

@@ -205,8 +205,9 @@ namespace Comet
 					break;
 				}
 			}
-
-			newView.UpdateFromOldView(oldView);
+			ThreadHelper.RunOnMainThread(() => {
+				newView.UpdateFromOldView(oldView);
+			});
 
 
 			return newView;

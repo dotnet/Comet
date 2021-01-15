@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Graphics;
+using Xamarin.Forms;
 
 namespace Comet
 {
@@ -102,8 +103,8 @@ namespace Comet
 			{
 				Calculate = (s, e, progress) => {
 
-					var start = (Thickness)(s ?? Thickness.Empty);
-					var end = (Thickness)(e ?? Thickness.Empty);
+					var start = (Thickness)(s ?? Thickness.Zero);
+					var end = (Thickness)(e ?? Thickness.Zero);
 					return start.Lerp(end, progress);
 				}
 			},
