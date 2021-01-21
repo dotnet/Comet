@@ -23,7 +23,8 @@ namespace Comet
 			{
 				FireOnMainThread(action);
 			}
-			action();
+			else
+				action();
 		}
 
 	}
