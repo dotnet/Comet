@@ -26,6 +26,7 @@ namespace Comet
 
 		public override void LayoutSubviews(RectangleF frame)
 		{
+			base.LayoutSubviews(frame);
 			var padding = this.GetPadding();
 			var bounds = new RectangleF(
 				padding.Left,
