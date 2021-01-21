@@ -32,7 +32,7 @@ namespace Comet
 
 		string IText.Text => Value?.CurrentValue;
 
-		Color IText.Color => throw new NotImplementedException();
+		Color IText.Color => this.GetColor(null);
 
 		Font IText.Font => throw new NotImplementedException();
 
