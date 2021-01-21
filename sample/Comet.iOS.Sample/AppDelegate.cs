@@ -29,9 +29,9 @@ namespace Comet.iOS.Sample
 
 			IView content = app;
 
-			_window.RootViewController = new UIViewController
+			_window.RootViewController = new RootViewController
 			{
-				View = content.ToNative()
+				ContentView = content,
 			};
 
 			_window.MakeKeyAndVisible();
@@ -51,6 +51,22 @@ namespace Comet.iOS.Sample
 		}
 
 		//protected override CometApp CreateApp() => new SampleApp();
+	}
+
+	public class RootViewController : UIViewController
+	{
+		public IView ContentView { get; set; }
+		UIView _contentView;
+		public override void LoadView()
+		{
+			base.LoadView();
+			View.AddSubview(_contentView = ContentView?.ToNative());
+		}
+		public override void ViewDidLayoutSubviews()
+		{
+			base.ViewDidLayoutSubviews();
+			_contentView.Frame = View.Bounds;
+		}
 	}
 
 	//public class Section5Native : View
