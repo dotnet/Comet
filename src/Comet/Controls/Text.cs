@@ -27,8 +27,8 @@ namespace Comet
 			get => _value;
 			private set => this.SetBindingValue(ref _value, value);
 		}
-		public override string ToString() => _value?.Value?.ToString() ?? string.Empty;
 
+		public override string ToString() => _value?.Value?.ToString() ?? string.Empty;
 
 		string IText.Text => Value?.CurrentValue;
 
@@ -38,7 +38,7 @@ namespace Comet
 
 		TextTransform IText.TextTransform => throw new NotImplementedException();
 
-		float IText.CharacterSpacing => throw new NotImplementedException();
+		float IText.CharacterSpacing => this.GetEnvironment<float>(nameof(IText.CharacterSpacing));
 
 		Xamarin.Forms.FontAttributes IFont.FontAttributes => throw new NotImplementedException();
 
@@ -46,8 +46,8 @@ namespace Comet
 
 		float IFont.FontSize => throw new NotImplementedException();
 
-		TextAlignment ITextAlignment.HorizontalTextAlignment => throw new NotImplementedException();
+		TextAlignment ITextAlignment.HorizontalTextAlignment => this.GetTextAlignment() ?? TextAlignment.Start;
 
-		TextAlignment ITextAlignment.VerticalTextAlignment => throw new NotImplementedException();
+		TextAlignment ITextAlignment.VerticalTextAlignment => this.GetVerticalTextAlignment() ?? TextAlignment.Start;
 	}
 }
