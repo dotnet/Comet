@@ -11,11 +11,12 @@ using Comet.Reflection;
 using Xamarin.Forms;
 using Xamarin.Platform;
 using Xamarin.Platform.Layouts;
+using Xamarin.Platform.Shapes;
 
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IReplaceableView
+	public class View : ContextualObject, IDisposable, IView, IReplaceableView, IClipShapeView
 	{
 		static View()
 		{
@@ -571,6 +572,9 @@ namespace Comet
 		public IView ReplacedView => this.GetView();// HasContent ? this : BuiltView ?? this;
 
 		Thickness IFrameworkElement.Margin => this.GetMargin();
+
+
+		public IShape ClipShape => this.GetClipShape();
 
 		public void AddAnimation(Animation animation)
 		{

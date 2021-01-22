@@ -75,6 +75,7 @@ namespace Comet
 		public static class Text
 		{
 			public const string Alignment = "Text.Alignment";
+			public const string VerticalAlignment = "Text.VerticalAlignment";
 			public static class Style
 			{
 				public const string H1 = nameof(H1);

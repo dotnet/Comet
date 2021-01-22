@@ -17,5 +17,10 @@ namespace Comet
 			var value = view.GetEnvironment<TextAlignment?>(view, EnvironmentKeys.Text.Alignment);
 			return value ?? defaultValue;
 		}
+		public static TextAlignment? GetVerticalTextAlignment(this View view, TextAlignment? defaultValue = null)
+		{
+			var value = view.GetEnvironment<TextAlignment?>(view, EnvironmentKeys.Text.VerticalAlignment);
+			return value ?? defaultValue;
+		}
 	}
 }
