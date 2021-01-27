@@ -50,11 +50,11 @@ namespace Comet
 
 		public Action<float> OnEditingChanged { get; private set; }
 
-		float ISlider.Minimum => From;
+		double ISlider.Minimum => From;
 
-		float ISlider.Maximum => Through;
+		double ISlider.Maximum => Through;
 
-		float ISlider.Value { get => Value; set => Value.Set(value); }
+		double ISlider.Value { get => Value; set => Value.Set(value); }
 
 		System.Graphics.Color ISlider.MinimumTrackColor => this.GetTrackColor();
 

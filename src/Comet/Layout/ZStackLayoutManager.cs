@@ -10,8 +10,8 @@ namespace Comet.Layout
 
 		ILayout layout;
 
-		public SizeF Measure(float widthConstraint, float heightConstraint) => new(widthConstraint, heightConstraint);
-		public void Arrange(RectangleF bounds)
+		public Size Measure(double widthConstraint, double heightConstraint) => new(widthConstraint, heightConstraint);
+		public void Arrange(Rectangle bounds)
 		{
 			foreach (var v in layout.Children)
 			{

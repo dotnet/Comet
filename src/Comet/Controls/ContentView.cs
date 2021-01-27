@@ -39,12 +39,12 @@ namespace Comet
 			base.Dispose(disposing);
 		}
 
-		public override void LayoutSubviews(RectangleF frame)
+		public override void LayoutSubviews(Rectangle frame)
 		{
 			if (Content != null)
 			{
 				var margin = Content.GetMargin();
-				var bounds = new RectangleF(
+				var bounds = new Rectangle(
 					frame.Left + margin.Left,
 					frame.Top + margin.Top,
 					frame.Width - margin.HorizontalThickness,
@@ -52,7 +52,7 @@ namespace Comet
 				Content.Frame = bounds;
 			}
 		}
-		public override SizeF GetDesiredSize(SizeF availableSize)
+		public override Size GetDesiredSize(Size availableSize)
 		{
 			if (Content != null)
 			{

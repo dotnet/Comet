@@ -21,7 +21,7 @@ namespace Comet
 			_scaling = scaling;
 		}
 
-		public override PathF PathForBounds(RectangleF rect)
+		public override PathF PathForBounds(Rectangle rect)
 		{
 
 			//TODO: Bring back soon;

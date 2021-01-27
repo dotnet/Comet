@@ -16,6 +16,8 @@ namespace Comet
 
 		IReadOnlyList<IView> ILayout.Children => this.GetChildren();
 
+		ILayoutHandler ILayout.LayoutHandler => throw new NotImplementedException();
+
 		protected override void OnAdded(View view) { }// _layout?.Invalidate();
 
 		protected override void OnClear() { }// _layout?.Invalidate();
@@ -24,11 +26,11 @@ namespace Comet
 
 		protected override void OnInsert(int index, View item) { }// _layout?.Invalidate();
 
-		public override void LayoutSubviews(RectangleF frame)
+		public override void LayoutSubviews(Rectangle frame)
 		{
 			base.LayoutSubviews(frame);
 			var padding = this.GetPadding();
-			var bounds = new RectangleF(
+			var bounds = new Rectangle(
 				padding.Left,
 				padding.Right,
 				frame.Width - padding.HorizontalThickness,
@@ -36,7 +38,7 @@ namespace Comet
 			LayoutManager?.Arrange(bounds);
 		}
 
-		public override SizeF GetDesiredSize(SizeF availableSize)
+		public override Size GetDesiredSize(Size availableSize)
 		{
 			if (IsMeasureValid)
 				return MeasuredSize;
@@ -50,5 +52,8 @@ namespace Comet
 			base.Dispose(disposing);
 			//LayoutManager?.Invalidate();
 		}
+
+		void ILayout.Add(IView child) => this.Add(child);
+		void ILayout.Remove(IView child) => this.Remove(child);
 	}
 }

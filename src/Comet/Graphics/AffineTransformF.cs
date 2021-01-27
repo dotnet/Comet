@@ -213,14 +213,14 @@
 //			SetTransform(Multiply(t, this));
 //		}
 
-//		public PointF Transform(PointF src)
+//		public Point Transform(Point src)
 //		{
 //			return Transform(src.X, src.Y);
 //		}
 
-//		public PointF Transform(float x, float y)
+//		public Point Transform(float x, float y)
 //		{
-//			return new PointF(x * _m00 + y * _m01 + _m02, x * _m10 + y * _m11 + _m12);
+//			return new Point(x * _m00 + y * _m01 + _m02, x * _m10 + y * _m11 + _m12);
 //		}
 
 //		public bool IsIdentity => _m00 == 1.0f && _m11 == 1.0f && _m10 == 0.0f && _m01 == 0.0f && _m02 == 0.0f && _m12 == 0.0f;

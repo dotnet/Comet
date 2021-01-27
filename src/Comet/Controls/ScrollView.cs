@@ -37,7 +37,7 @@ namespace Comet
 			}
 		}
 
-		public override SizeF GetDesiredSize(SizeF availableSize)
+		public override Size GetDesiredSize(Size availableSize)
 		{
 			var intrinsicSize = base.GetDesiredSize(availableSize);
 			if (Orientation == Orientation.Horizontal)

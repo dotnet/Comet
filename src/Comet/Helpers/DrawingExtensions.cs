@@ -21,7 +21,7 @@ namespace Comet
 			{
 				var newX = x ?? shadow.Offset.Width;
 				var newY = y ?? shadow.Offset.Height;
-				shadow = shadow.WithOffset(new SizeF(newX, newY));
+				shadow = shadow.WithOffset(new Size(newX, newY));
 			}
 			if (type != null)
 				view.SetEnvironment(type, EnvironmentKeys.View.Shadow, shadow, true);
