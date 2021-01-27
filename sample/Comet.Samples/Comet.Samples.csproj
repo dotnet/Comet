@@ -12,6 +12,7 @@
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
+    <ProjectReference Include="..\..\external\Maui\src\Platform.Handlers\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Comet.Samples.Comparisons;
 using Comet.Samples.LiveStreamIssues;
+using Xamarin.Platform;
 //using Comet.Samples.Skia;
 
 namespace Comet.Samples
