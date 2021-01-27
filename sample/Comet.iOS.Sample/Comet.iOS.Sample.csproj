@@ -76,11 +76,11 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
-    <PackageReference Include="Clancey.Comet.Reload">
-      <Version>0.0.13-alpha</Version>
-    </PackageReference>
     <PackageReference Include="JonLipsky.System.Graphics">
-      <Version>0.1.33</Version>
+      <Version>0.1.34</Version>
+    </PackageReference>
+    <PackageReference Include="Reloadify3000">
+      <Version>0.0.13-alpha</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -145,7 +145,7 @@
       <Name>Comet</Name>
     </ProjectReference>
     <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
-      <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
+      <Project>{1057EEAD-899D-4BC2-BA73-6BC526AD3F19}</Project>
       <Name>Comet.Samples</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\external\Maui\src\Platform.Handlers\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj">

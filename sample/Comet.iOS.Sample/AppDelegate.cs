@@ -20,7 +20,10 @@ namespace Comet.iOS.Sample
 		public override bool FinishedLaunching(UIApplication application, NSDictionary launchOptions)
 		{
 #if DEBUG
-			Comet.Reload.Init();
+			Reloadify.Reload.Instance.ReplaceType = (d) => HotReloadHelper.RegisterReplacedView(d.ClassName, d.Type);
+			Reloadify.Reload.Instance.FinishedReload = () => HotReloadHelper.TriggerReload();
+			Reloadify.Reload.Init();
+			//Comet.Reload.Init();
 #endif
 
 			CometPlatform.Init();
