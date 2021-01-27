@@ -46,12 +46,12 @@ namespace Comet
 			}
 		}
 
-		public override SizeF GetDesiredSize(SizeF availableSize)
+		public override Size GetDesiredSize(Size availableSize)
 		{
 			if (Bitmap?.Value != null)
 				return Bitmap.GetValueOrDefault().Size;
 
-			return SizeF.Zero;
+			return Size.Zero;
 		}
 
 		private async void LoadBitmapFromSource(string source)

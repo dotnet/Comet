@@ -81,12 +81,12 @@ namespace Comet
 					return start.Lerp(end, progress);
 				}
 			},
-			[typeof(RectangleF)] = new Lerp
+			[typeof(Rectangle)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
 
-					var start = (RectangleF)s;
-					var end = (RectangleF)e;
+					var start = (Rectangle)s;
+					var end = (Rectangle)e;
 					return start.Lerp(end, progress);
 				}
 			},

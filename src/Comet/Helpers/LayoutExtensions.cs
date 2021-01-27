@@ -76,7 +76,7 @@ namespace Comet
 
 		public static void SetFrameFromNativeView(
 			this View view,
-			RectangleF frame)
+			Rectangle frame)
 		{
 			if (view == null)
 				return;
@@ -146,7 +146,7 @@ namespace Comet
 
 			var x = frame.X + ((frame.Width - width) * xFactor);
 			var y = frame.Y + ((frame.Height - height) * yFactor);
-			view.Frame = new RectangleF((float)x, (float)y, width, height);
+			view.Frame = new Rectangle((float)x, (float)y, width, height);
 			//TODO: Redo this!
 			//view.RequestLayout();
 		}
@@ -243,7 +243,7 @@ namespace Comet
 			return constraints ?? defaultValue;
 		}
 
-		public static SizeF Measure(this View view, SizeF availableSize, bool includeMargin)
+		public static Size Measure(this View view, Size availableSize, bool includeMargin)
 		{
 			if (availableSize.Width <= 0 || availableSize.Height <= 0)
 				return availableSize;

@@ -10,13 +10,13 @@
 //{
 //	public class PathF : IDisposable
 //	{
-//		private readonly List<PointF> _points;
+//		private readonly List<Point> _points;
 //		private readonly List<PathOperation> _operations;
 
 //		private List<float> _arcAngles;
 //		private List<bool> _arcClockwise;
 
-//		private RectangleF? _cachedBounds;
+//		private Rectangle? _cachedBounds;
 //		private object _nativePath;
 
 //		public PathF(PathF prototype, AffineTransform transform = null) : this()
@@ -41,18 +41,18 @@
 //			}
 //		}
 
-//		public PathF(PointF point) : this()
+//		public PathF(Point point) : this()
 //		{
 //			MoveTo(point);
 //		}
 
-//		public PathF(float x, float y) : this(new PointF(x, y))
+//		public PathF(float x, float y) : this(new Point(x, y))
 //		{
 //		}
 
 //		public PathF()
 //		{
-//			_points = new List<PointF>();
+//			_points = new List<Point>();
 //			_operations = new List<PathOperation>();
 //		}
 
@@ -67,7 +67,7 @@
 //			}
 //		}
 
-//		public PointF? FirstPoint
+//		public Point? FirstPoint
 //		{
 //			get
 //			{
@@ -87,7 +87,7 @@
 //			}
 //		}
 
-//		public IEnumerable<PointF> Points
+//		public IEnumerable<Point> Points
 //		{
 //			get
 //			{
@@ -96,12 +96,12 @@
 //			}
 //		}
 
-//		public RectangleF Bounds
+//		public Rectangle Bounds
 //		{
 //			get
 //			{
 //				if (_cachedBounds != null)
-//					return (RectangleF)_cachedBounds;
+//					return (Rectangle)_cachedBounds;
 
 //				_cachedBounds = CalculateBounds();
 
@@ -113,11 +113,11 @@
                     
 //                }*/
 
-//				return (RectangleF)_cachedBounds;
+//				return (Rectangle)_cachedBounds;
 //			}
 //		}
 
-//		private RectangleF CalculateBounds()
+//		private Rectangle CalculateBounds()
 //		{
 //			var xValues = new List<float>();
 //			var yValues = new List<float>();
@@ -191,10 +191,10 @@
 //			var maxX = xValues.Max();
 //			var maxY = yValues.Max();
 
-//			return new RectangleF(minX, minY, maxX - minX, maxY - minY);
+//			return new Rectangle(minX, minY, maxX - minX, maxY - minY);
 //		}
 
-//		public PointF? LastPoint
+//		public Point? LastPoint
 //		{
 //			get
 //			{
@@ -205,7 +205,7 @@
 //			}
 //		}
 
-//		public PointF this[int index]
+//		public Point this[int index]
 //		{
 //			get
 //			{
@@ -243,10 +243,10 @@
 
 //		public PathF MoveTo(float x, float y)
 //		{
-//			return MoveTo(new PointF(x, y));
+//			return MoveTo(new Point(x, y));
 //		}
 
-//		public PathF MoveTo(PointF point)
+//		public PathF MoveTo(Point point)
 //		{
 //			_points.Add(point);
 //			_operations.Add(PathOperation.MoveTo);
@@ -264,10 +264,10 @@
 
 //		public PathF LineTo(float x, float y)
 //		{
-//			return LineTo(new PointF(x, y));
+//			return LineTo(new Point(x, y));
 //		}
 
-//		public PathF LineTo(PointF point)
+//		public PathF LineTo(Point point)
 //		{
 //			if (_points.Count == 0)
 //			{
@@ -287,10 +287,10 @@
 
 //		public PathF AddArc(float x1, float y1, float x2, float y2, float startAngle, float endAngle, bool clockwise)
 //		{
-//			return AddArc(new PointF(x1, y1), new PointF(x2, y2), startAngle, endAngle, clockwise);
+//			return AddArc(new Point(x1, y1), new Point(x2, y2), startAngle, endAngle, clockwise);
 //		}
 
-//		public PathF AddArc(PointF topLeft, PointF bottomRight, float startAngle, float endAngle, bool clockwise)
+//		public PathF AddArc(Point topLeft, Point bottomRight, float startAngle, float endAngle, bool clockwise)
 //		{
 //			if (_arcAngles == null)
 //			{
@@ -309,10 +309,10 @@
 
 //		public PathF QuadTo(float cx, float cy, float x, float y)
 //		{
-//			return QuadTo(new PointF(cx, cy), new PointF(x, y));
+//			return QuadTo(new Point(cx, cy), new Point(x, y));
 //		}
 
-//		public PathF QuadTo(PointF controlPoint, PointF point)
+//		public PathF QuadTo(Point controlPoint, Point point)
 //		{
 //			_points.Add(controlPoint);
 //			_points.Add(point);
@@ -323,10 +323,10 @@
 
 //		public PathF CurveTo(float c1X, float c1Y, float c2X, float c2Y, float x, float y)
 //		{
-//			return CurveTo(new PointF(c1X, c1Y), new PointF(c2X, c2Y), new PointF(x, y));
+//			return CurveTo(new Point(c1X, c1Y), new Point(c2X, c2Y), new Point(x, y));
 //		}
 
-//		public PathF CurveTo(PointF controlPoint1, PointF controlPoint2, PointF point)
+//		public PathF CurveTo(Point controlPoint1, Point controlPoint2, Point point)
 //		{
 //			_points.Add(controlPoint1);
 //			_points.Add(controlPoint2);
@@ -342,7 +342,7 @@
 //			return Rotate(angle, center);
 //		}
 
-//		public PathF Rotate(float angle, PointF pivotPoint)
+//		public PathF Rotate(float angle, Point pivotPoint)
 //		{
 //			var path = new PathF();
 
@@ -394,13 +394,13 @@
 //			return path;
 //		}
 
-//		private PointF GetRotatedPoint(int index, PointF center, float angleInDegrees)
+//		private Point GetRotatedPoint(int index, Point center, float angleInDegrees)
 //		{
 //			var point = _points[index];
 //			return GraphicsOperations.RotatePoint(center, point, angleInDegrees);
 //		}
 
-//		public void AppendEllipse(RectangleF rect)
+//		public void AppendEllipse(Rectangle rect)
 //		{
 //			AppendEllipse(rect.X, rect.Y, rect.Width, rect.Height);
 //		}
@@ -416,15 +416,15 @@
 //			var offsetY = h / 2 * .55f;
 //			var offsetX = w / 2 * .55f;
 
-//			MoveTo(new PointF(minx, midy));
-//			CurveTo(new PointF(minx, midy - offsetY), new PointF(midx - offsetX, miny), new PointF(midx, miny));
-//			CurveTo(new PointF(midx + offsetX, miny), new PointF(maxx, midy - offsetY), new PointF(maxx, midy));
-//			CurveTo(new PointF(maxx, midy + offsetY), new PointF(midx + offsetX, maxy), new PointF(midx, maxy));
-//			CurveTo(new PointF(midx - offsetX, maxy), new PointF(minx, midy + offsetY), new PointF(minx, midy));
+//			MoveTo(new Point(minx, midy));
+//			CurveTo(new Point(minx, midy - offsetY), new Point(midx - offsetX, miny), new Point(midx, miny));
+//			CurveTo(new Point(midx + offsetX, miny), new Point(maxx, midy - offsetY), new Point(maxx, midy));
+//			CurveTo(new Point(maxx, midy + offsetY), new Point(midx + offsetX, maxy), new Point(midx, maxy));
+//			CurveTo(new Point(midx - offsetX, maxy), new Point(minx, midy + offsetY), new Point(minx, midy));
 //			Close();
 //		}
 
-//		public void AppendRectangle(RectangleF rect, bool includeLast = false)
+//		public void AppendRectangle(Rectangle rect, bool includeLast = false)
 //		{
 //			AppendRectangle(rect.X, rect.Y, rect.Width, rect.Height, includeLast);
 //		}
@@ -436,18 +436,18 @@
 //			var maxx = minx + w;
 //			var maxy = miny + h;
 
-//			MoveTo(new PointF(minx, miny));
-//			LineTo(new PointF(maxx, miny));
-//			LineTo(new PointF(maxx, maxy));
-//			LineTo(new PointF(minx, maxy));
+//			MoveTo(new Point(minx, miny));
+//			LineTo(new Point(maxx, miny));
+//			LineTo(new Point(maxx, maxy));
+//			LineTo(new Point(minx, maxy));
 
 //			if (includeLast)
-//				LineTo(new PointF(minx, miny));
+//				LineTo(new Point(minx, miny));
 
 //			Close();
 //		}
 
-//		public void AppendRoundedRectangle(RectangleF rect, float cornerRadius, bool includeLast = false)
+//		public void AppendRoundedRectangle(Rectangle rect, float cornerRadius, bool includeLast = false)
 //		{
 //			AppendRoundedRectangle(rect.X, rect.Y, rect.Width, rect.Height, cornerRadius, includeLast);
 //		}
@@ -468,17 +468,17 @@
 //			var handleOffset = cornerRadius * .55f;
 //			var cornerOffset = cornerRadius - handleOffset;
 
-//			MoveTo(new PointF(minx, miny + cornerRadius));
-//			CurveTo(new PointF(minx, miny + cornerOffset), new PointF(minx + cornerOffset, miny), new PointF(minx + cornerRadius, miny));
-//			LineTo(new PointF(maxx - cornerRadius, miny));
-//			CurveTo(new PointF(maxx - cornerOffset, miny), new PointF(maxx, miny + cornerOffset), new PointF(maxx, miny + cornerRadius));
-//			LineTo(new PointF(maxx, maxy - cornerRadius));
-//			CurveTo(new PointF(maxx, maxy - cornerOffset), new PointF(maxx - cornerOffset, maxy), new PointF(maxx - cornerRadius, maxy));
-//			LineTo(new PointF(minx + cornerRadius, maxy));
-//			CurveTo(new PointF(minx + cornerOffset, maxy), new PointF(minx, maxy - cornerOffset), new PointF(minx, maxy - cornerRadius));
+//			MoveTo(new Point(minx, miny + cornerRadius));
+//			CurveTo(new Point(minx, miny + cornerOffset), new Point(minx + cornerOffset, miny), new Point(minx + cornerRadius, miny));
+//			LineTo(new Point(maxx - cornerRadius, miny));
+//			CurveTo(new Point(maxx - cornerOffset, miny), new Point(maxx, miny + cornerOffset), new Point(maxx, miny + cornerRadius));
+//			LineTo(new Point(maxx, maxy - cornerRadius));
+//			CurveTo(new Point(maxx, maxy - cornerOffset), new Point(maxx - cornerOffset, maxy), new Point(maxx - cornerRadius, maxy));
+//			LineTo(new Point(minx + cornerRadius, maxy));
+//			CurveTo(new Point(minx + cornerOffset, maxy), new Point(minx, maxy - cornerOffset), new Point(minx, maxy - cornerRadius));
 
 //			if (includeLast)
-//				LineTo(new PointF(minx, miny + cornerRadius));
+//				LineTo(new Point(minx, miny + cornerRadius));
 
 //			Close();
 //		}

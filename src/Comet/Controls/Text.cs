@@ -38,13 +38,13 @@ namespace Comet
 
 		TextTransform IText.TextTransform => throw new NotImplementedException();
 
-		float IText.CharacterSpacing => this.GetEnvironment<float>(nameof(IText.CharacterSpacing));
+		double IText.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
 
 		Xamarin.Forms.FontAttributes IFont.FontAttributes => throw new NotImplementedException();
 
 		string IFont.FontFamily => throw new NotImplementedException();
 
-		float IFont.FontSize => throw new NotImplementedException();
+		double IFont.FontSize => throw new NotImplementedException();
 
 		TextAlignment ITextAlignment.HorizontalTextAlignment => this.GetTextAlignment() ?? TextAlignment.Start;
 

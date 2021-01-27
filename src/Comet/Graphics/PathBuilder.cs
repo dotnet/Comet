@@ -23,8 +23,8 @@
 //		private bool _closeWhenDone;
 //		private char _lastCommand = '~';
 
-//		private PointF? _lastCurveControlPoint;
-//		private PointF? _relativePoint;
+//		private Point? _lastCurveControlPoint;
+//		private Point? _relativePoint;
 
 //		private PathF _path;
 
@@ -73,7 +73,7 @@
 //				_lastCurveControlPoint = null;
 //				_path = null;
 //				_commandStack.Clear();
-//				_relativePoint = new PointF(0, 0);
+//				_relativePoint = new Point(0, 0);
 //				_closeWhenDone = false;
 
 //				pathAsString = pathAsString.Replace("Infinity", "0");
@@ -398,7 +398,7 @@
 
 //		private void SmoothCurveTo(bool isRelative)
 //		{
-//			var point1 = new PointF();
+//			var point1 = new Point();
 //			var point2 = NewPoint(NextValue, NextValue, isRelative, false);
 
 //			// ReSharper disable ConvertIfStatementToNullCoalescingExpression
@@ -407,11 +407,11 @@
 //				if (_lastCurveControlPoint == null)
 //				{
 //					// ReSharper restore ConvertIfStatementToNullCoalescingExpression
-//					point1 = GraphicsOperations.GetOppositePoint((PointF)_relativePoint, point2);
+//					point1 = GraphicsOperations.GetOppositePoint((Point)_relativePoint, point2);
 //				}
 //				else if (_relativePoint != null)
 //				{
-//					point1 = GraphicsOperations.GetOppositePoint((PointF)_relativePoint, (PointF)_lastCurveControlPoint);
+//					point1 = GraphicsOperations.GetOppositePoint((Point)_relativePoint, (Point)_lastCurveControlPoint);
 //				}
 //			}
 
@@ -425,18 +425,18 @@
 //			throw new NotImplementedException();
 //		}
 
-//		private PointF NewPoint(float x, float y, bool isRelative, bool isReference)
+//		private Point NewPoint(float x, float y, bool isRelative, bool isReference)
 //		{
-//			PointF point;
+//			Point point;
 
 //			if (isRelative && _relativePoint != null)
 //			{
 
-//				point = new PointF(((PointF)_relativePoint).X + x, ((PointF)_relativePoint).Y + y);
+//				point = new Point(((Point)_relativePoint).X + x, ((Point)_relativePoint).Y + y);
 //			}
 //			else
 //			{
-//				point = new PointF(x, y);
+//				point = new Point(x, y);
 //			}
 
 //			// If this is the reference point, we want to store the location before
@@ -450,17 +450,17 @@
 //			return point;
 //		}
 
-//		private PointF NewVerticalPoint(float y, bool isRelative, bool isReference)
+//		private Point NewVerticalPoint(float y, bool isRelative, bool isReference)
 //		{
-//			var point = new PointF();
+//			var point = new Point();
 
 //			if (isRelative && _relativePoint != null)
 //			{
-//				point = new PointF(((PointF)_relativePoint).X, ((PointF)_relativePoint).Y + y);
+//				point = new Point(((Point)_relativePoint).X, ((Point)_relativePoint).Y + y);
 //			}
 //			else if (_relativePoint != null)
 //			{
-//				point = new PointF(((PointF)_relativePoint).X, y);
+//				point = new Point(((Point)_relativePoint).X, y);
 //			}
 
 //			if (isReference)
@@ -469,17 +469,17 @@
 //			return point;
 //		}
 
-//		private PointF NewHorizontalPoint(float x, bool isRelative, bool isReference)
+//		private Point NewHorizontalPoint(float x, bool isRelative, bool isReference)
 //		{
-//			var point = new PointF();
+//			var point = new Point();
 
 //			if (isRelative && _relativePoint != null)
 //			{
-//				point = new PointF(((PointF)_relativePoint).X + x, ((PointF)_relativePoint).Y);
+//				point = new Point(((Point)_relativePoint).X + x, ((Point)_relativePoint).Y);
 //			}
 //			else if (_relativePoint != null)
 //			{
-//				point = new PointF(x, ((PointF)_relativePoint).Y);
+//				point = new Point(x, ((Point)_relativePoint).Y);
 //			}
 
 //			if (isReference)

@@ -7,7 +7,7 @@ namespace Comet.Graphics
 	{
 		private bool _disposed;
 
-		public abstract SizeF Size { get; }
+		public abstract Size Size { get; }
 		public abstract object NativeBitmap { get; }
 		protected abstract void DisposeNative();
 

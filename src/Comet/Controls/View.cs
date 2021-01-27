@@ -10,21 +10,23 @@ using Comet.Internal;
 using Comet.Reflection;
 using Xamarin.Forms;
 using Xamarin.Platform;
+using Xamarin.Platform.Core;
 using Xamarin.Platform.Layouts;
 using Xamarin.Platform.Shapes;
+using Rectangle = System.Graphics.Rectangle;
 
 namespace Comet
 {
 
 	public class View : ContextualObject, IDisposable, IView, IReplaceableView, IClipShapeView
 	{
+		internal static WeakList<IReplaceableView> ActiveViews => HotReloadHelper.ActiveViews;
 		static View()
 		{
 			CometPlatform.Init();
 		}
-		public static readonly SizeF UseAvailableWidthAndHeight = new SizeF(-1, -1);
+		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
-		internal readonly static WeakList<View> ActiveViews = new WeakList<View>();
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
 
 
@@ -81,8 +83,8 @@ namespace Comet
 
 		public View()
 		{
-			ActiveViews.Add(this);
-			Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
+			HotReloadHelper.ActiveViews.Add(this);
+			Debug.WriteLine($"Active View Count: {HotReloadHelper.ActiveViews.Count}");
 			HotReloadHelper.Register(this);
 			//TODO: Should this need its view?
 			State = new BindingState();
@@ -105,7 +107,7 @@ namespace Comet
 			set
 			{
 				SetViewHandler(value);
-					viewHandler?.SetVirtualView(this.GetRenderView());
+				viewHandler?.SetVirtualView(this.GetRenderView());
 			}
 		}
 
@@ -204,7 +206,7 @@ namespace Comet
 		{
 			if (replacedView != null)
 				return replacedView.GetRenderView();
-			var replaced = HotReloadHelper.GetReplacedView(this);
+			var replaced = HotReloadHelper.GetReplacedView(this) as View;
 			if (replaced != this)
 			{
 				replaced.viewThatWasReplaced = this;
@@ -305,7 +307,7 @@ namespace Comet
 		{
 			Environment.SetValue(key, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				ActiveViews.ForEach(x => x.ViewPropertyChanged(key, value));
+				HotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(key, value));
 			});
 
 		}
@@ -315,7 +317,7 @@ namespace Comet
 			var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
 			Environment.SetValue(typedKey, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				ActiveViews.ForEach(x => x.ViewPropertyChanged(typedKey, value));
+				HotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
 
@@ -324,7 +326,7 @@ namespace Comet
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			Environment.SetValue(typedKey, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				ActiveViews.ForEach(x => x.ViewPropertyChanged(typedKey, value));
+				HotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
 
@@ -396,9 +398,9 @@ namespace Comet
 			if (!disposing)
 				return;
 
-			ActiveViews.Remove(this);
+			HotReloadHelper.ActiveViews.Remove(this);
 
-			Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
+			Debug.WriteLine($"Active View Count: {HotReloadHelper.ActiveViews.Count}");
 
 			HotReloadHelper.UnRegister(this);
 			var vh = ViewHandler;
@@ -430,9 +432,9 @@ namespace Comet
 			OnDispose(true);
 		}
 
-		public virtual RectangleF Frame
+		public virtual Rectangle Frame
 		{
-			get => this.GetEnvironment<RectangleF?>(nameof(Frame), false) ?? RectangleF.Zero;
+			get => this.GetEnvironment<Rectangle?>(nameof(Frame), false) ?? Rectangle.Zero;
 			set
 			{
 				this.SetEnvironment(nameof(Frame), value, false);
@@ -458,8 +460,8 @@ namespace Comet
 			Parent?.InvalidateMeasurement();
 		}
 
-		private SizeF _measuredSize;
-		public SizeF MeasuredSize
+		private Size _measuredSize;
+		public Size MeasuredSize
 		{
 			get => _measuredSize;
 			set
@@ -469,11 +471,11 @@ namespace Comet
 					BuiltView.MeasuredSize = value;
 			}
 		}
-		public virtual SizeF GetDesiredSize(SizeF availableSize)
+		public virtual Size GetDesiredSize(Size availableSize)
 		{
 			if (BuiltView != null)
 				return BuiltView.GetDesiredSize(availableSize);
-			if(!IsMeasureValid)
+			if (!IsMeasureValid)
 			{
 				MeasuredSize = this.ComputeDesiredSize(availableSize.Width, availableSize.Height);
 			}
@@ -482,7 +484,7 @@ namespace Comet
 		}
 
 
-		public SizeF Measure(float widthConstraint, float heightConstraint)
+		public Size Measure(double widthConstraint, double heightConstraint)
 		{
 
 			if (BuiltView != null)
@@ -506,7 +508,7 @@ namespace Comet
 				widthConstraint = LayoutManager.ResolveConstraints(widthConstraint, frameworkElement.Width);
 				heightConstraint = LayoutManager.ResolveConstraints(heightConstraint, frameworkElement.Height);
 
-				MeasuredSize = GetDesiredSize(new SizeF(widthConstraint, heightConstraint));
+				MeasuredSize = GetDesiredSize(new Size(widthConstraint, heightConstraint));
 				if (MeasuredSize.Width <= 0 || MeasuredSize.Height <= 0)
 				{
 					Console.WriteLine("Why :(");
@@ -519,7 +521,7 @@ namespace Comet
 
 
 
-		public virtual void LayoutSubviews(RectangleF frame)
+		public virtual void LayoutSubviews(Rectangle frame)
 		{
 			Frame = frame;
 			if (BuiltView != null)
@@ -548,7 +550,7 @@ namespace Comet
 
 		Color IFrameworkElement.BackgroundColor => this.GetBackgroundColor();
 
-		RectangleF IFrameworkElement.Frame => Frame;
+		Rectangle IFrameworkElement.Frame => Frame;
 
 		IViewHandler IFrameworkElement.Handler
 		{
@@ -558,7 +560,7 @@ namespace Comet
 
 		IFrameworkElement IFrameworkElement.Parent => this.Parent;
 
-		SizeF IFrameworkElement.DesiredSize => MeasuredSize;
+		Size IFrameworkElement.DesiredSize => MeasuredSize;
 
 		protected bool IsMeasureValid;
 		bool IFrameworkElement.IsMeasureValid => IsMeasureValid;
@@ -566,15 +568,18 @@ namespace Comet
 		protected bool IsArrangeValid;
 		bool IFrameworkElement.IsArrangeValid => IsArrangeValid;
 
-		float IFrameworkElement.Width => this.GetFrameConstraints()?.Width ?? -1;
-		float IFrameworkElement.Height => this.GetFrameConstraints()?.Height ?? -1;
+		double IFrameworkElement.Width => this.GetFrameConstraints()?.Width ?? -1;
+		double IFrameworkElement.Height => this.GetFrameConstraints()?.Height ?? -1;
 
 		public IView ReplacedView => this.GetView();// HasContent ? this : BuiltView ?? this;
 
 		Thickness IFrameworkElement.Margin => this.GetMargin();
 
+		public bool RequiresContainer => HasContent;
 
 		public IShape ClipShape => this.GetClipShape();
+
+		IView IReplaceableView.ReplacedView => this.ReplacedView;
 
 		public void AddAnimation(Animation animation)
 		{
@@ -604,12 +609,21 @@ namespace Comet
 			GetAnimations(false)?.ForEach(x => x.Resume());
 			notificationView?.ResumeAnimations();
 		}
-		void IFrameworkElement.Arrange(RectangleF bounds) => LayoutSubviews(bounds);
-		SizeF IFrameworkElement.Measure(float widthConstraint, float heightConstraint)
+		void IFrameworkElement.Arrange(Rectangle bounds) => LayoutSubviews(bounds);
+		Size IFrameworkElement.Measure(double widthConstraint, double heightConstraint)
 			=>
-			//Measure(new SizeF(widthConstraint, heightConstraint));
+			//Measure(new Size(widthConstraint, heightConstraint));
 			Measure(widthConstraint, heightConstraint);
 		void IFrameworkElement.InvalidateMeasure() => InvalidateMeasurement();
 		void IFrameworkElement.InvalidateArrange() => IsArrangeValid = false;
+		void IReplaceableView.TransferState(IView newView) {
+			var oldState = this.GetState();
+			var changes = oldState.ChangedProperties;
+			foreach (var change in changes)
+			{
+				newView.SetDeepPropertyValue(change.Key, change.Value);
+			}
+		}
+		void IReplaceableView.Reload() => ThreadHelper.RunOnMainThread(()=>Reload(true));
 	}
 }
