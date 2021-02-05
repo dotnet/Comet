@@ -7,6 +7,7 @@ using UIKit;
 using Comet.Styles;
 using Comet.Styles.Material;
 using Xamarin.Platform;
+using Xamarin.Platform.HotReload;
 
 namespace Comet.iOS.Sample
 {

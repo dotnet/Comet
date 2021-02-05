@@ -72,9 +72,9 @@ namespace Comet.Graphics
 		}
 
 		public static Rectangle GetBoundsOfQuadraticCurve(
-			float x0, float y0,
-			float x1, float y1,
-			float x2, float y2)
+			double x0, double y0,
+			double x1, double y1,
+			double x2, double y2)
 		{
 			var cpx0 = x0 + 2.0f * (x1 - x0) / 3.0f;
 			var cpy0 = y0 + 2.0f * (y1 - y0) / 3.0f;
@@ -98,21 +98,22 @@ namespace Comet.Graphics
 		}
 
 
-		public static Rectangle GetBoundsOfCubicCurve(
-			float x0, float y0,
-			float x1, float y1,
-			float x2, float y2,
-			float x3, float y3)
-		{
-			var tValues = new List<float>();
 
-			float t;
+		public static Rectangle GetBoundsOfCubicCurve(
+			double x0, double y0,
+			double x1, double y1,
+			double x2, double y2,
+			double x3, double y3)
+		{
+			var tValues = new List<double>();
+
+			double t;
 
 			for (var i = 0; i < 2; ++i)
 			{
-				float b;
-				float c;
-				float a;
+				double b;
+				double c;
+				double a;
 
 				if (i == 0)
 				{
@@ -144,7 +145,7 @@ namespace Comet.Graphics
 				}
 
 				var b2ac = b * b - 4 * c * a;
-				var sqrtb2ac = (float)Math.Sqrt(b2ac);
+				var sqrtb2ac = Math.Sqrt(b2ac);
 				if (b2ac < 0)
 				{
 					continue;
@@ -163,8 +164,8 @@ namespace Comet.Graphics
 				}
 			}
 
-			var xValues = new List<float>();
-			var yValues = new List<float>();
+			var xValues = new List<double>();
+			var yValues = new List<double>();
 
 			for (var j = tValues.Count - 1; j >= 0; j--)
 			{
@@ -190,19 +191,19 @@ namespace Comet.Graphics
 			return new Rectangle(minX, minY, maxX - minX, maxY - minY);
 		}
 
-		public static Point GetPointAtAngle(float x, float y, float distance, float radians)
+		public static Point GetPointAtAngle(double x, double y, double distance, double radians)
 		{
 			var x2 = x + (Math.Cos(radians) * distance);
 			var y2 = y + (Math.Sin(radians) * distance);
-			return new Point((float)x2, (float)y2);
+			return new Point(x2, y2);
 		}
 
 		public static Point GetPointOnOval(
-			float x,
-			float y,
-			float width,
-			float height,
-			float angle)
+			double x,
+			double y,
+			double width,
+			double height,
+			double angle)
 		{
 			var cx = x + (width / 2);
 			var cy = y + (height / 2);
@@ -217,7 +218,7 @@ namespace Comet.Graphics
 
 			angle *= -1;
 
-			var radians = (float)DegreesToRadians(angle);
+			var radians = DegreesToRadians(angle);
 			var point = GetPointAtAngle(0, 0, d2, radians);
 			point.X = cx + (point.X * fx);
 			point.Y = cy + (point.Y * fy);
@@ -237,12 +238,12 @@ namespace Comet.Graphics
 		}
 
 		public static Rectangle GetBoundsOfArc(
-			float x,
-			float y,
-			float width,
-			float height,
-			float angle1,
-			float angle2,
+			double x,
+			double y,
+			double width,
+			double height,
+			double angle1,
+			double angle2,
 			bool clockwise)
 		{
 			var x1 = x;

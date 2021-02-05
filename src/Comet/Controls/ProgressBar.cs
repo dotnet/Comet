@@ -5,17 +5,17 @@ namespace Comet
 	public class ProgressBar : View
 	{
 		public ProgressBar(
-			Binding<float> value = null)
+			Binding<double> value = null)
 		{
 			Value = value;
 		}
 
 		public ProgressBar(
-			Func<float> value) : this((Binding<float>)value)
+			Func<double> value) : this((Binding<double>)value)
 		{ }
 
-		Binding<float> _value;
-		public Binding<float> Value
+		Binding<double> _value;
+		public Binding<double> Value
 		{
 			get => _value;
 			set => this.SetBindingValue(ref _value, value);

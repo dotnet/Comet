@@ -7,48 +7,48 @@ namespace Comet
 	public class Slider : View, ISlider
 	{
 		public Slider(
-			Binding<float> value = null,
-			float from = 0,
-			float through = 100,
-			float by = 1,
-			Action<float> onEditingChanged = null)
+			Binding<double> value = null,
+			double from = 0,
+			double through = 100,
+			double by = 1,
+			Action<double> onEditingChanged = null)
 		{
 			Value = value;
 			From = from;
 			Through = through;
 			By = by;
-			OnEditingChanged = new MulticastAction<float>(Value, onEditingChanged);
+			OnEditingChanged = new MulticastAction<double>(Value, onEditingChanged);
 		}
 
-		Binding<float> _value;
-		public Binding<float> Value
+		Binding<double> _value;
+		public Binding<double> Value
 		{
 			get => _value;
 			private set => this.SetBindingValue(ref _value, value);
 		}
 
-		Binding<float> _from;
-		public Binding<float> From
+		Binding<double> _from;
+		public Binding<double> From
 		{
 			get => _from;
 			private set => this.SetBindingValue(ref _from, value);
 		}
 
-		Binding<float> _through;
-		public Binding<float> Through
+		Binding<double> _through;
+		public Binding<double> Through
 		{
 			get => _through;
 			private set => this.SetBindingValue(ref _through, value);
 		}
 
-		Binding<float> _by;
-		public Binding<float> By
+		Binding<double> _by;
+		public Binding<double> By
 		{
 			get => _by;
 			private set => this.SetBindingValue(ref _by, value);
 		}
 
-		public Action<float> OnEditingChanged { get; private set; }
+		public Action<double> OnEditingChanged { get; private set; }
 
 		double ISlider.Minimum => From;
 
@@ -62,10 +62,10 @@ namespace Comet
 
 		System.Graphics.Color ISlider.ThumbColor => this.GetThumbColor();
 
-		public void ValueChanged(float value)
+		public void ValueChanged(double value)
 			=> OnEditingChanged.Invoke(value);
 
-		public void PercentChanged(float percent)
+		public void PercentChanged(double percent)
 		{
 			var from = From.CurrentValue;
 			var value = ((Through.CurrentValue - from) * percent.Clamp(0, 1)) + from;

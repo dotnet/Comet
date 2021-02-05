@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Xamarin.Platform;
+
 namespace Comet
 {
 	public class ContainerView : View, IList<View>, IContainerView
 	{
 		readonly protected List<View> Views = new List<View>();
 
-		public event EventHandler<LayoutEventArgs> ChildrenChanged;
-		public event EventHandler<LayoutEventArgs> ChildrenAdded;
-		public event EventHandler<LayoutEventArgs> ChildrenRemoved;
 
-
+		public void Add(IView iView)
+		{
+			//TODO: Add wrapper
+			if (iView is View v)
+				Add(v);
+			throw new NotImplementedException();
+		}
 		public void Add(View view)
 		{
 			if (view == null)
@@ -20,7 +25,6 @@ namespace Comet
 			view.Navigation = Parent as NavigationView ?? Parent?.Navigation;
 			Views.Add(view);
 			OnAdded(view);
-			ChildrenChanged?.Invoke(this, new LayoutEventArgs(Views.Count - 1, 1));
 		}
 
 		protected virtual void OnAdded(View view)
@@ -35,12 +39,11 @@ namespace Comet
 			{
 				var removed = new List<View>(Views);
 				Views.Clear();
-				OnClear();
-				ChildrenRemoved?.Invoke(this, new LayoutEventArgs(0, count, removed));
+				OnClear(removed);
 			}
 		}
 
-		protected virtual void OnClear()
+		protected virtual void OnClear(List<View> views)
 		{
 
 		}
@@ -50,8 +53,15 @@ namespace Comet
 		public void CopyTo(View[] array, int arrayIndex)
 		{
 			Views.CopyTo(array, arrayIndex);
+		}
 
-			ChildrenAdded?.Invoke(this, new LayoutEventArgs(arrayIndex, array.Length));
+		public bool Remove(IView iView)
+		{
+
+			//TODO: Add wrapper
+			if (iView is View v)
+				return Remove(v);
+			throw new NotImplementedException();
 		}
 
 		public bool Remove(View item)
@@ -68,7 +78,7 @@ namespace Comet
 				Views.Remove(item);
 
 				OnRemoved(item);
-				ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1, removed));
+				//ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1, removed));
 				return true;
 			}
 
@@ -102,7 +112,6 @@ namespace Comet
 
 			item.Parent = this;
 			item.Navigation = Parent as NavigationView ?? Parent?.Navigation;
-			ChildrenAdded?.Invoke(this, new LayoutEventArgs(index, 1));
 		}
 
 		protected virtual void OnInsert(int index, View item)
@@ -122,7 +131,6 @@ namespace Comet
 				Views.RemoveAt(index);
 				OnRemoved(item);
 
-				ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1, removed));
 			}
 		}
 
@@ -141,7 +149,7 @@ namespace Comet
 				value.Parent = null;
 				value.Navigation = null;
 
-				ChildrenChanged?.Invoke(this, new LayoutEventArgs(index, 1, removed));
+//				ChildrenChanged?.Invoke(this, new LayoutEventArgs(index, 1, removed));
 			}
 		}
 

@@ -11,6 +11,7 @@ using Comet.Reflection;
 using Xamarin.Forms;
 using Xamarin.Platform;
 using Xamarin.Platform.Core;
+using Xamarin.Platform.HotReload;
 using Xamarin.Platform.Layouts;
 using Xamarin.Platform.Shapes;
 using Rectangle = System.Graphics.Rectangle;
@@ -616,7 +617,7 @@ namespace Comet
 			Measure(widthConstraint, heightConstraint);
 		void IFrameworkElement.InvalidateMeasure() => InvalidateMeasurement();
 		void IFrameworkElement.InvalidateArrange() => IsArrangeValid = false;
-		void IReplaceableView.TransferState(IView newView) {
+		void IReplaceableView. TransferState(IView newView) {
 			var oldState = this.GetState();
 			var changes = oldState.ChangedProperties;
 			foreach (var change in changes)

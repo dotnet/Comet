@@ -12,7 +12,7 @@ namespace Comet
 			var x = rect.X + (rect.Width - size) / 2;
 			var y = rect.Y + (rect.Height - size) / 2;
 			var path = new PathF();
-			path.AppendEllipse(x, y, size, size);
+			path.AppendEllipse((float)x, (float)y, (float)size, (float)size);
 			return path;
 		}
 	}

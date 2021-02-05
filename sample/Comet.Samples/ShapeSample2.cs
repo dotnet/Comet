@@ -12,8 +12,8 @@ namespace Comet.Samples
 
 		private static readonly LinearGradient LinearGradient = new LinearGradient(
 			new[] { Colors.Salmon, Colors.CornflowerBlue },
-			new PointF(0, 0),
-			new PointF(1, 0));
+			new Point(0, 0),
+			new Point(1, 0));
 
 		[Body]
 		View body() => new VStack(spacing: 10)
@@ -21,7 +21,7 @@ namespace Comet.Samples
 			new ShapeView(new Circle()
 				.Fill(LinearGradient)
 				.Style(DrawingStyle.Fill)).Frame(200,100),
-			new ShapeView(new Rectangle()
+			new ShapeView(new Shapes.Rectangle()
 				.Fill(LinearGradient)
 				.Style(DrawingStyle.Fill)).Frame(200,100),
 			new ShapeView(new RoundedRectangle(6)
