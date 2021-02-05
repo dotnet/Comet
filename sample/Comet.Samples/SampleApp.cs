@@ -10,6 +10,8 @@ namespace Comet.Samples
 			//Body = () => new MainPage();
 			Body = () => new VStack(spacing: 20)
 			{
+				new Text("Hey!!"),
+				//new Text("Hey!!"),
 				new Text("TEST PADDING").Frame(height:30).Margin(top:100),
 				new Text("This top part is a Xamarin.Platform.VerticalStackLayout"),
 				new HStack(spacing:2)
@@ -20,7 +22,8 @@ namespace Comet.Samples
 						.Background(Colors.Purple),
 					new Text("And these buttons are in a HorizontalStackLayout"),
 				},
-				new Text("Hey!"),
+				new Text("Hey!!"),
+				new Text("Hey!!"),
 				//new SecondView(),
 
 			}.Background(Colors.Beige).Margin(top:30);

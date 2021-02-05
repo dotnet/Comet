@@ -36,6 +36,14 @@ namespace Comet
 		public static float? Lerp(this float? start, float? end, double progress)
 			=> start.HasValue && end.HasValue ? start.Value.Lerp(end.Value, progress) : start.GenericLerp(end, progress);
 
+
+		public static double Lerp(this double start, double end, double progress) =>
+			((end - start) * progress) + start;
+
+		//IF there is a null, we toggle at the half way. If both values are set, we can lerp
+		public static double? Lerp(this double? start, double? end, double progress)
+			=> start.HasValue && end.HasValue ? start.Value.Lerp(end.Value, progress) : start.GenericLerp(end, progress);
+
 		public static T GenericLerp<T>(this T start, T end, double progress, double toggleThreshold = .5)
 			=> progress < toggleThreshold ? start : end;
 

@@ -19,7 +19,7 @@ namespace Comet.Samples
 {
 	public class SliderSample1 : View
 	{
-		readonly State<float> celsius = 50;
+		readonly State<double> celsius = 50;
 
 		[Body]
 		View body() => new VStack

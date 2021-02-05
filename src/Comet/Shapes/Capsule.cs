@@ -13,7 +13,7 @@ namespace Comet
 		public override PathF PathForBounds(Rectangle rect)
 		{
 			var path = new PathF();
-			var cornerSize = Math.Min(rect.Width, rect.Height) / 2;
+			var cornerSize = (float) Math.Min(rect.Width, rect.Height) / 2;
 			path.AppendRoundedRectangle(rect, cornerSize);
 			return path;
 		}

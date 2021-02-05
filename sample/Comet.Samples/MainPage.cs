@@ -94,7 +94,7 @@ namespace Comet.Samples
 		public MainPage(List<MenuItem> additionalPage = null)
 		{
 			//This is only required since there is a parameter for the view
-			HotReloadHelper.Register(this, additionalPage);
+			Xamarin.Platform.HotReload.HotReloadHelper.Register(this, additionalPage);
 			if (additionalPage != null)
 				pages.AddRange(additionalPage);
 

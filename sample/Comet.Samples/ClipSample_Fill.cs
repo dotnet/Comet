@@ -14,7 +14,7 @@ namespace Comet.Samples
 				new Text("AspectFill"),
 				new Image("turtlerock.jpg")
 					.ClipShape(new Path(PuzzlePiece,PathScaling.Fill))
-					.Overlay(new Rectangle().Stroke(Colors.Blue, lineWidth: 1))
+					.Overlay(new Shapes.Rectangle().Stroke(Colors.Blue, lineWidth: 1))
 					.Shadow(radius: 10)
 			};
 

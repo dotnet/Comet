@@ -13,18 +13,34 @@ namespace Comet
 		ILayoutManager layout;
 		protected abstract ILayoutManager CreateLayoutManager();
 		public ILayoutManager LayoutManager => layout ??= CreateLayoutManager();
+		public ILayoutHandler LayoutHandler => ViewHandler as ILayoutHandler;
 
 		IReadOnlyList<IView> ILayout.Children => this.GetChildren();
 
 		ILayoutHandler ILayout.LayoutHandler => throw new NotImplementedException();
 
-		protected override void OnAdded(View view) { }// _layout?.Invalidate();
+		protected override void OnAdded(View view)
+		{
+			LayoutHandler?.Add(view);
+			InvalidateMeasurement();
+		}
 
-		protected override void OnClear() { }// _layout?.Invalidate();
+		protected override void OnClear(List<View> views)
+		{
+			views?.ForEach(x => LayoutHandler?.Remove(x));
+			InvalidateMeasurement();
+		}
 
-		protected override void OnRemoved(View view) { }// _layout?.Invalidate();
+		protected override void OnRemoved(View view)
+		{
+			LayoutHandler?.Remove(view);
+			InvalidateMeasurement();
+		}
 
-		protected override void OnInsert(int index, View item) { }// _layout?.Invalidate();
+		protected override void OnInsert(int index, View item) {
+			LayoutHandler.Add(item);
+			InvalidateMeasurement();
+		}
 
 		public override void LayoutSubviews(Rectangle frame)
 		{

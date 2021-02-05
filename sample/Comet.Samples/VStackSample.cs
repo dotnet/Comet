@@ -6,7 +6,7 @@ namespace Comet.Samples
 	public class VStackSample : View
 	{
 		readonly State<string> _textValue = "Edit Me";
-		readonly State<float> _sliderValue = 50;
+		readonly State<double> _sliderValue = 50;
 
 		[Body]
 		View body() => new VStack()

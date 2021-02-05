@@ -5,8 +5,8 @@ namespace Comet
 {
 	public static class GraphicsExtensions
 	{
-		public static void AppendRectangle(this PathF path, Rectangle rect) => path.AppendRectangle(rect.X,rect.Y,rect.Width,rect.Height);
-		public static void AppendRoundedRectangle(this PathF path, Rectangle rect, float radius) => path.AppendRoundedRectangle(rect.X, rect.Y, rect.Width, rect.Height, radius);
+		public static void AppendRectangle(this PathF path, Rectangle rect) => path.AppendRectangle((float)rect.X, (float)rect.Y, (float)rect.Width, (float)rect.Height);
+		public static void AppendRoundedRectangle(this PathF path, Rectangle rect, float radius) => path.AppendRoundedRectangle((float)rect.X, (float)rect.Y, (float)rect.Width, (float)rect.Height, radius);
 
 	}
 }

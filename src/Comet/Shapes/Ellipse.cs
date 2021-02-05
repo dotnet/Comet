@@ -8,7 +8,7 @@ namespace Comet
 		public override PathF PathForBounds(Rectangle rect)
 		{
 			var path = new PathF();
-			path.AppendEllipse(rect);
+			path.AppendEllipse(new RectangleF((float)rect.X, (float)rect.Y, (float)rect.Width, (float)rect.Height));
 			return path;
 		}
 	}

@@ -15,7 +15,7 @@ namespace Comet
 
 		public override PathF PathForBounds(Rectangle rect)
 		{
-			var cornerRadius = (Orientation == Orientation.Horizontal ? rect.Height : rect.Width) / 2f;
+			var cornerRadius = (float)(Orientation == Orientation.Horizontal ? rect.Height : rect.Width) / 2f;
 			var path = new PathF();
 			path.AppendRoundedRectangle(rect, cornerRadius);
 			return path;
