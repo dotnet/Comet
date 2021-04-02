@@ -1,6 +1,6 @@
 ﻿using Comet.Layout;
-using Xamarin.Platform;
-using Xamarin.Platform.Layouts;
+using Microsoft.Maui;
+using Microsoft.Maui.Layouts;
 
 namespace Comet
 {

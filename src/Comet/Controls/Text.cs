@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Graphics;
-using Xamarin.Forms;
-using Xamarin.Platform;
+
+using Microsoft.Maui;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -32,22 +33,27 @@ namespace Comet
 
 		string IText.Text => Value?.CurrentValue;
 
-		Color IText.Color => this.GetColor(null);
 
 		Font IText.Font => throw new NotImplementedException();
 
-		TextTransform IText.TextTransform => throw new NotImplementedException();
 
 		double IText.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
 
-		Xamarin.Forms.FontAttributes IFont.FontAttributes => throw new NotImplementedException();
-
-		string IFont.FontFamily => throw new NotImplementedException();
-
-		double IFont.FontSize => throw new NotImplementedException();
 
 		TextAlignment ITextAlignment.HorizontalTextAlignment => this.GetTextAlignment() ?? TextAlignment.Start;
 
-		TextAlignment ITextAlignment.VerticalTextAlignment => this.GetVerticalTextAlignment() ?? TextAlignment.Start;
+		//TextAlignment ITextAlignment.VerticalTextAlignment => this.GetVerticalTextAlignment() ?? TextAlignment.Start;
+
+		Microsoft.Maui.LineBreakMode ILabel.LineBreakMode => this.GetLineBreakMode(LineBreakMode.NoWrap);
+
+		int ILabel.MaxLines => this.GetEnvironment<int>(nameof(ILabel.MaxLines));
+
+		TextDecorations ILabel.TextDecorations => throw new NotImplementedException();
+
+		double ILabel.LineHeight => throw new NotImplementedException();
+
+		Color IText.TextColor => this.GetColor(null);
+
+		Thickness IPadding.Padding => this.GetPadding();
 	}
 }

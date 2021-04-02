@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Graphics;
+
 using System.Threading.Tasks;
+using Microsoft.Maui.Graphics;
 
 namespace Comet.Samples
 {

@@ -1,5 +1,6 @@
 ﻿using Comet.Layout;
-using Xamarin.Platform.Layouts;
+using Microsoft.Maui;
+using Microsoft.Maui.Layouts;
 
 namespace Comet
 {
@@ -13,20 +14,20 @@ namespace Comet
 			object defaultColumnWidth = null)
 		{
 			var layout = (GridLayoutManager)LayoutManager;
+			
+			//layout.DefaultRowHeight = defaultRowHeight ?? "*";
+			//layout.DefaultColumnWidth = defaultColumnWidth ?? "*";
 
-			layout.DefaultRowHeight = defaultRowHeight ?? "*";
-			layout.DefaultColumnWidth = defaultColumnWidth ?? "*";
+			//if (columns != null)
+			//	layout.AddColumns(columns);
 
-			if (columns != null)
-				layout.AddColumns(columns);
-
-			if (rows != null)
-				layout.AddRows(rows);
+			//if (rows != null)
+			//	layout.AddRows(rows);
 			Spacing = spacing;
 		}
 
 		public float? Spacing { get; }
 
-		protected override ILayoutManager CreateLayoutManager() => new GridLayoutManager(this,Spacing);
+		protected override ILayoutManager CreateLayoutManager() => new GridLayoutManager((IGridLayout)this);
 	}
 }

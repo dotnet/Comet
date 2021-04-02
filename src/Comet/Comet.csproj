@@ -24,7 +24,6 @@
    </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-    <PackageReference Include="JonLipsky.System.Graphics" Version="0.1.36" />
   </ItemGroup>
   <ItemGroup>
     <Compile Update="Helpers\GraphicsExtensions.cs">
@@ -33,9 +32,12 @@
     <Compile Update="Helpers\MauiExtensions.cs">
       <SubType></SubType>
     </Compile>
+    <Compile Update="AppHostBuilderExtensions.cs">
+      <SubType></SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\external\Maui\src\Platform.Handlers\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj" />
+    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>
@@ -46,5 +48,5 @@
       </Properties>
     </MonoDevelop>
   </ProjectExtensions>
-  <Import Project="..\..\external\Maui\.nuspec\Xamarin.Forms.MultiTargeting.targets" />
+  <Import Project="..\..\external\Maui\.nuspec\Microsoft.Maui.Controls.MultiTargeting.targets" />
 </Project>

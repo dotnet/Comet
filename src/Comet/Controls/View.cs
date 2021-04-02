@@ -1,27 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Graphics;
+
 using System.Linq;
 using System.Runtime.CompilerServices;
 using Comet.Helpers;
 using Comet.Internal;
 //using System.Reflection;
 using Comet.Reflection;
-using Xamarin.Forms;
-using Xamarin.Platform;
-using Xamarin.Platform.Core;
-using Xamarin.Platform.HotReload;
-using Xamarin.Platform.Layouts;
-using Xamarin.Platform.Shapes;
-using Rectangle = System.Graphics.Rectangle;
+using Microsoft.Maui;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.HotReload;
+using Microsoft.Maui.Layouts;
+using Microsoft.Maui.Primitives;
+using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IReplaceableView, IClipShapeView
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView//, IClipShapeView
 	{
-		internal static WeakList<IReplaceableView> ActiveViews => HotReloadHelper.ActiveViews;
 		static View()
 		{
 			CometPlatform.Init();
@@ -84,9 +83,9 @@ namespace Comet
 
 		public View()
 		{
-			HotReloadHelper.ActiveViews.Add(this);
-			Debug.WriteLine($"Active View Count: {HotReloadHelper.ActiveViews.Count}");
-			HotReloadHelper.Register(this);
+			//HotReloadHelper.ActiveViews.Add(this);
+			//Debug.WriteLine($"Active View Count: {HotReloadHelper.ActiveViews.Count}");
+			//HotReloadHelper.Register(this);
 			//TODO: Should this need its view?
 			State = new BindingState();
 			StateManager.ConstructingView(this);
@@ -198,7 +197,7 @@ namespace Comet
 		}
 
 		///
-		public bool HasContent => Body != null && (HotReloadHelper.IsEnabled || hasGlobalState);
+		public bool HasContent => Body != null && (MauiHotReloadHelper.IsEnabled || hasGlobalState);
 
 		bool hasGlobalState => State.GlobalProperties.Any();
 		internal View GetView() => GetRenderView();
@@ -207,7 +206,7 @@ namespace Comet
 		{
 			if (replacedView != null)
 				return replacedView.GetRenderView();
-			var replaced = HotReloadHelper.GetReplacedView(this) as View;
+			var replaced = MauiHotReloadHelper.GetReplacedView(this) as View;
 			if (replaced != this)
 			{
 				replaced.viewThatWasReplaced = this;
@@ -308,7 +307,7 @@ namespace Comet
 		{
 			Environment.SetValue(key, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				HotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(key, value));
+				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(key, value));
 			});
 
 		}
@@ -318,7 +317,7 @@ namespace Comet
 			var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
 			Environment.SetValue(typedKey, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				HotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
+				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
 
@@ -327,7 +326,7 @@ namespace Comet
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			Environment.SetValue(typedKey, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				HotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
+				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
 
@@ -399,11 +398,11 @@ namespace Comet
 			if (!disposing)
 				return;
 
-			HotReloadHelper.ActiveViews.Remove(this);
+			//MauiHotReloadHelper.ActiveViews.Remove(this);
 
-			Debug.WriteLine($"Active View Count: {HotReloadHelper.ActiveViews.Count}");
+			//Debug.WriteLine($"Active View Count: {HotReloadHelper.ActiveViews.Count}");
 
-			HotReloadHelper.UnRegister(this);
+			MauiHotReloadHelper.UnRegister(this);
 			var vh = ViewHandler;
 			ViewHandler = null;
 			//TODO: Ditch the cast
@@ -547,40 +546,7 @@ namespace Comet
 		List<Animation> GetAnimations(bool create) => !create ? animations : animations ?? (animations = new List<Animation>());
 		public List<Animation> Animations => animations;
 
-		bool IFrameworkElement.IsEnabled => this.GetEnvironment<bool>("IsEnabled");
-
-		Color IFrameworkElement.BackgroundColor => this.GetBackgroundColor();
-
-		Rectangle IFrameworkElement.Frame => Frame;
-
-		IViewHandler IFrameworkElement.Handler
-		{
-			get => this.ViewHandler;
-			set => SetViewHandler(value);
-		}
-
-		IFrameworkElement IFrameworkElement.Parent => this.Parent;
-
-		Size IFrameworkElement.DesiredSize => MeasuredSize;
-
-		protected bool IsMeasureValid;
-		bool IFrameworkElement.IsMeasureValid => IsMeasureValid;
-
-		protected bool IsArrangeValid;
-		bool IFrameworkElement.IsArrangeValid => IsArrangeValid;
-
-		double IFrameworkElement.Width => this.GetFrameConstraints()?.Width ?? -1;
-		double IFrameworkElement.Height => this.GetFrameConstraints()?.Height ?? -1;
-
-		public IView ReplacedView => this.GetView();// HasContent ? this : BuiltView ?? this;
-
-		Thickness IFrameworkElement.Margin => this.GetMargin();
-
-		public bool RequiresContainer => HasContent;
-
-		public IShape ClipShape => this.GetClipShape();
-
-		IView IReplaceableView.ReplacedView => this.ReplacedView;
+		
 
 		public void AddAnimation(Animation animation)
 		{
@@ -610,6 +576,52 @@ namespace Comet
 			GetAnimations(false)?.ForEach(x => x.Resume());
 			notificationView?.ResumeAnimations();
 		}
+
+		bool IFrameworkElement.IsEnabled => this.GetEnvironment<bool>("IsEnabled");
+
+		Color IFrameworkElement.BackgroundColor => this.GetBackgroundColor();
+
+		Rectangle IFrameworkElement.Frame => Frame;
+
+		IViewHandler IFrameworkElement.Handler
+		{
+			get => this.ViewHandler;
+			set => SetViewHandler(value);
+		}
+
+		IFrameworkElement IFrameworkElement.Parent => this.Parent;
+
+		Size IFrameworkElement.DesiredSize => MeasuredSize;
+
+		protected bool IsMeasureValid;
+		bool IFrameworkElement.IsMeasureValid => IsMeasureValid;
+
+		protected bool IsArrangeValid;
+		bool IFrameworkElement.IsArrangeValid => IsArrangeValid;
+
+		double IFrameworkElement.Width => this.GetFrameConstraints()?.Width ?? -1;
+		double IFrameworkElement.Height => this.GetFrameConstraints()?.Height ?? -1;
+
+		public IView ReplacedView => this.GetView();// HasContent ? this : BuiltView ?? this;
+
+
+		public bool RequiresContainer => HasContent;
+
+		//public IShape ClipShape => this.GetClipShape();
+
+		IView IReplaceableView.ReplacedView => this.ReplacedView;
+
+		Thickness IView.Margin => this.GetMargin();
+
+		string IFrameworkElement.AutomationId => this.GetAutomationId();
+
+		//TODO: lets update these to be actual property
+		FlowDirection IFrameworkElement.FlowDirection => this.GetEnvironment<FlowDirection>(nameof(IFrameworkElement.FlowDirection));
+
+		LayoutAlignment IFrameworkElement.HorizontalLayoutAlignment => this.GetEnvironment<LayoutAlignment>(nameof(IFrameworkElement.HorizontalLayoutAlignment));
+
+		LayoutAlignment IFrameworkElement.VerticalLayoutAlignment => this.GetEnvironment<LayoutAlignment>(nameof(IFrameworkElement.VerticalLayoutAlignment));
+
 		void IFrameworkElement.Arrange(Rectangle bounds) => LayoutSubviews(bounds);
 		Size IFrameworkElement.Measure(double widthConstraint, double heightConstraint)
 			=>
@@ -617,7 +629,7 @@ namespace Comet
 			Measure(widthConstraint, heightConstraint);
 		void IFrameworkElement.InvalidateMeasure() => InvalidateMeasurement();
 		void IFrameworkElement.InvalidateArrange() => IsArrangeValid = false;
-		void IReplaceableView. TransferState(IView newView) {
+		void IHotReloadableView. TransferState(IView newView) {
 			var oldState = this.GetState();
 			var changes = oldState.ChangedProperties;
 			foreach (var change in changes)
@@ -625,6 +637,6 @@ namespace Comet
 				newView.SetDeepPropertyValue(change.Key, change.Value);
 			}
 		}
-		void IReplaceableView.Reload() => ThreadHelper.RunOnMainThread(()=>Reload(true));
+		void IHotReloadableView.Reload() => ThreadHelper.RunOnMainThread(()=>Reload(true));
 	}
 }

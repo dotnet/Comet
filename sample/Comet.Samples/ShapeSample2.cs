@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Graphics;
+
 using System.Text;
 using Comet.Graphics;
+using Microsoft.Maui.Graphics;
 
 namespace Comet.Samples
 {

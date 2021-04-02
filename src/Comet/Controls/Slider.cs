@@ -1,6 +1,7 @@
 ﻿using System;
 using Comet.Internal;
-using Xamarin.Platform;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -50,17 +51,17 @@ namespace Comet
 
 		public Action<double> OnEditingChanged { get; private set; }
 
-		double ISlider.Minimum => From;
+		Color ISlider.MinimumTrackColor => this.GetTrackColor();
 
-		double ISlider.Maximum => Through;
+		Color ISlider.MaximumTrackColor => this.GetProgressColor();
 
-		double ISlider.Value { get => Value; set => Value.Set(value); }
+		Color ISlider.ThumbColor => this.GetThumbColor();
 
-		System.Graphics.Color ISlider.MinimumTrackColor => this.GetTrackColor();
+		double IRange.Minimum => From;
 
-		System.Graphics.Color ISlider.MaximumTrackColor => this.GetProgressColor();
+		double IRange.Maximum => Through;
 
-		System.Graphics.Color ISlider.ThumbColor => this.GetThumbColor();
+		double IRange.Value { get => Value; set => Value.Set(value); }
 
 		public void ValueChanged(double value)
 			=> OnEditingChanged.Invoke(value);

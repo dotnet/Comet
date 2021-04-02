@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Graphics;
-using Xamarin.Forms;
-using Xamarin.Platform;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -31,28 +30,16 @@ namespace Comet
 
 		public Action OnClick { get; private set; }
 
-
-		//TODO:Audit and fill these out.
-
 		string IText.Text => _text?.CurrentValue;
-
-		Color IText.Color => this.GetColor(null);
 
 		Font IText.Font => Font.Default;
 
-		TextTransform IText.TextTransform => TextTransform.Default;
 
 		double IText.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
 
-		Xamarin.Forms.FontAttributes IFont.FontAttributes => throw new NotImplementedException();
+		Color IText.TextColor => this.GetColor(null);
 
-		string IFont.FontFamily => null;
-
-		double IFont.FontSize => this.GetEnvironment<double>(nameof(IText.FontSize));
-
-		Xamarin.Forms.TextAlignment ITextAlignment.HorizontalTextAlignment => this.GetTextAlignment() ?? default;
-
-		Xamarin.Forms.TextAlignment ITextAlignment.VerticalTextAlignment => this.GetTextAlignment() ?? default;
+		Thickness IPadding.Padding => this.GetPadding();
 
 		void IButton.Pressed() { }
 		void IButton.Released() { }

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Graphics;
-using Comet.Layout;
-using Xamarin.Platform;
-using Xamarin.Platform.Layouts;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Layouts;
 
 namespace Comet
 {
@@ -15,9 +14,7 @@ namespace Comet
 		public ILayoutManager LayoutManager => layout ??= CreateLayoutManager();
 		public ILayoutHandler LayoutHandler => ViewHandler as ILayoutHandler;
 
-		IReadOnlyList<IView> ILayout.Children => this.GetChildren();
-
-		ILayoutHandler ILayout.LayoutHandler => throw new NotImplementedException();
+		IReadOnlyList<IView> IContainer.Children => this.GetChildren();
 
 		protected override void OnAdded(View view)
 		{
@@ -51,7 +48,7 @@ namespace Comet
 				padding.Right,
 				frame.Width - padding.HorizontalThickness,
 				frame.Height - padding.VerticalThickness);
-			LayoutManager?.Arrange(bounds);
+			LayoutManager?.ArrangeChildren(bounds);
 		}
 
 		public override Size GetDesiredSize(Size availableSize)

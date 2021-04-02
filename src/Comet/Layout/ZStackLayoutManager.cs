@@ -1,6 +1,7 @@
-﻿using System.Graphics;
-using Xamarin.Platform;
-using Xamarin.Platform.Layouts;
+﻿
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Layouts;
 
 namespace Comet.Layout
 {
@@ -11,7 +12,7 @@ namespace Comet.Layout
 		ILayout layout;
 
 		public Size Measure(double widthConstraint, double heightConstraint) => new(widthConstraint, heightConstraint);
-		public void Arrange(Rectangle bounds)
+		public void ArrangeChildren(Rectangle bounds)
 		{
 			foreach (var v in layout.Children)
 			{

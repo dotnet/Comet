@@ -140,17 +140,17 @@
     <Compile Include="AppDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Comet\Comet.csproj">
-      <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
-      <Name>Comet</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
       <Project>{1057EEAD-899D-4BC2-BA73-6BC526AD3F19}</Project>
       <Name>Comet.Samples</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\external\Maui\src\Platform.Handlers\src\Xamarin.Platform.Handlers\Xamarin.Platform.Handlers.csproj">
-      <Project>{9C19FAED-2BCB-44E7-B33D-90ECD30D236B}</Project>
-      <Name>Xamarin.Platform.Handlers</Name>
+    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj">
+      <Project>{8A53D192-072F-4EF2-8547-932D7538FFB9}</Project>
+      <Name>Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\src\Comet\Comet.csproj">
+      <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
+      <Name>Comet</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

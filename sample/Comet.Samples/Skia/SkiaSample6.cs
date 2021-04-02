@@ -1,6 +1,6 @@
 ﻿//using Comet.Graphics;
 //using Comet.Skia;
-//using System.Graphics;
+//
 
 //namespace Comet.Samples.Skia
 //{

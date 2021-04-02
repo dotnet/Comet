@@ -182,9 +182,9 @@ namespace Comet
 		{
 			views?.ForEach(v => v.Dispose());
 			//TODO: Verify. I don't think we need to check all active views anymore
-			var cells = ActiveViews.Where(x => x.Parent == this).OfType<View>().ToList();
-			foreach (var cell in cells)
-				cell.Dispose();
+			//var cells = ActiveViews.Where(x => x.Parent == this).OfType<View>().ToList();
+			//foreach (var cell in cells)
+			//	cell.Dispose();
 			base.Dispose(disposing);
 		}
 

@@ -1,5 +1,5 @@
 ﻿//using System;
-//using System.Graphics;
+//
 //// ReSharper disable CompareOfFloatsByEqualityOperator
 //// ReSharper disable MemberCanBePrivate.Global
 

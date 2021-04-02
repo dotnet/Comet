@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Graphics;
+using Microsoft.Maui.Graphics;
 
-namespace Xamarin.Platform
+namespace Microsoft.Maui
 {
 	public static class MauiExtensions
 	{
