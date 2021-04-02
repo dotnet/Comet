@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using Xamarin.Platform;
+using Microsoft.Maui;
 
 namespace Comet
 {
-	public class ContainerView : View, IList<View>, IContainerView
+	public class ContainerView : View, IList<View>, IContainerView, IContainer
 	{
 		readonly protected List<View> Views = new List<View>();
 
@@ -93,6 +93,8 @@ namespace Comet
 		public int Count => Views.Count;
 
 		public bool IsReadOnly => false;
+
+		IReadOnlyList<IView> IContainer.Children => GetChildren();
 
 		public IEnumerator<View> GetEnumerator() => Views.GetEnumerator();
 
@@ -209,5 +211,6 @@ namespace Comet
 			Views?.ForEach(v => v.ResumeAnimations());
 			base.ResumeAnimations();
 		}
+
 	}
 }

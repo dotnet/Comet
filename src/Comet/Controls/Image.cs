@@ -1,6 +1,7 @@
 ﻿using System;
 using Comet.Graphics;
-using System.Graphics;
+using Microsoft.Maui.Graphics;
+
 namespace Comet
 {
 	public class Image : View

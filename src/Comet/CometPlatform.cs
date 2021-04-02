@@ -1,7 +1,7 @@
 ﻿using System;
-using Xamarin.Platform;
-using Xamarin.Platform.Handlers;
-using RegistrarHandlers = Xamarin.Platform.Registrar;
+//using Xamarin.Platform;
+//using Xamarin.Platform.Handlers;
+//using RegistrarHandlers = Xamarin.Platform.Registrar;
 namespace Comet
 {
 	public static class CometPlatform
@@ -15,13 +15,13 @@ namespace Comet
 		{
 			if (HasInit)
 				return;
-			RegistrarHandlers.Handlers.Register<Button, ButtonHandler>();
-			RegistrarHandlers.Handlers.Register<Text, LabelHandler>();
-			RegistrarHandlers.Handlers.Register<Slider, SliderHandler>();
-			RegistrarHandlers.Handlers.Register<VStack, LayoutHandler>();
-			RegistrarHandlers.Handlers.Register<HStack, LayoutHandler>();
-			RegistrarHandlers.Handlers.Register<ZStack, LayoutHandler>();
-			RegistrarHandlers.Handlers.Register<Grid, LayoutHandler>();
+			//RegistrarHandlers.Handlers.Register<Button, ButtonHandler>();
+			//RegistrarHandlers.Handlers.Register<Text, LabelHandler>();
+			//RegistrarHandlers.Handlers.Register<Slider, SliderHandler>();
+			//RegistrarHandlers.Handlers.Register<VStack, LayoutHandler>();
+			//RegistrarHandlers.Handlers.Register<HStack, LayoutHandler>();
+			//RegistrarHandlers.Handlers.Register<ZStack, LayoutHandler>();
+			//RegistrarHandlers.Handlers.Register<Grid, LayoutHandler>();
 #if __IOS__
 			// Device Features
 			//ModalView.PerformPresent = (o) => {

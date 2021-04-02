@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Graphics;
+using Microsoft.Maui.Graphics;
 
 namespace Comet.Samples
 {

@@ -1,6 +1,7 @@
 ﻿using Comet.Layout;
-using System.Graphics;
-using Xamarin.Forms;
+
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 // ReSharper disable once CheckNamespace
 namespace Comet

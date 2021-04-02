@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using Comet.Samples.Comparisons;
 using Comet.Samples.LiveStreamIssues;
-using Xamarin.Platform;
+using Microsoft.Maui;
+using Microsoft.Maui.HotReload;
 //using Comet.Samples.Skia;
 
 namespace Comet.Samples
@@ -94,7 +95,7 @@ namespace Comet.Samples
 		public MainPage(List<MenuItem> additionalPage = null)
 		{
 			//This is only required since there is a parameter for the view
-			Xamarin.Platform.HotReload.HotReloadHelper.Register(this, additionalPage);
+			MauiHotReloadHelper.Register(this, additionalPage);
 			if (additionalPage != null)
 				pages.AddRange(additionalPage);
 

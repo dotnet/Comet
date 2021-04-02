@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Graphics;
+
 using System.Text;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 /*
  

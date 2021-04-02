@@ -56,6 +56,7 @@ namespace Comet
 			public const string Title = "Title";
 			public const string Border = "Border";
 			public const string StyleId = "StyleId";
+			public const string AutomationId = nameof(AutomationId);
 		}
 
 		public static class Shape

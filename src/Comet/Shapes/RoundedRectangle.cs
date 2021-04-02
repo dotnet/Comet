@@ -1,5 +1,5 @@
 ﻿using Comet.Graphics;
-using System.Graphics;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {

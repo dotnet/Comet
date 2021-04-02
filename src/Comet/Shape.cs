@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Graphics;
+
 using Comet.Graphics;
-using Xamarin.Platform.Shapes;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
-	public abstract class Shape : ContextualObject, IShape
+	public abstract class Shape : ContextualObject//, IShape
 	{
 		protected Shape()
 		{

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Graphics;
+using Microsoft.Maui.Graphics;
+
 namespace Comet
 {
 	public static class GraphicsExtensions

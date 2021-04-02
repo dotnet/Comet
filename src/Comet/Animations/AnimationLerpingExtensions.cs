@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Graphics;
-using Xamarin.Forms;
+
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {

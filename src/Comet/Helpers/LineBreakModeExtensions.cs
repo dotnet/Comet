@@ -1,5 +1,5 @@
 ﻿using System;
-using static Comet.EnvironmentKeys;
+using Microsoft.Maui;
 
 namespace Comet
 {

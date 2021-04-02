@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Graphics;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -83,15 +83,15 @@ namespace Comet
 			base.ViewDidDisappear();
 		}
 
-        public override void PauseAnimations()
-        {
+		public override void PauseAnimations()
+		{
 			Content?.PauseAnimations();
-            base.PauseAnimations();
-        }
-        public override void ResumeAnimations()
-        {
+			base.PauseAnimations();
+		}
+		public override void ResumeAnimations()
+		{
 			Content?.ResumeAnimations();
-            base.ResumeAnimations();
-        }
-    }
+			base.ResumeAnimations();
+		}
+	}
 }

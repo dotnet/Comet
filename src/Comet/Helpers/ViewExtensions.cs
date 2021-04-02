@@ -114,5 +114,10 @@ namespace Comet
 			var resultView = view.FindParentOfType<ResultView<T>>();
 			resultView.SetException(ex);
 		}
+
+		public static string GetAutomationId(this View view)
+			=> view.GetEnvironment<string>(view, EnvironmentKeys.View.AutomationId,cascades:false);
+		public static void SetAutomationId(this View view, string automationId)
+			=> view.SetEnvironment(EnvironmentKeys.View.AutomationId, automationId, cascades: false);
 	}
 }
