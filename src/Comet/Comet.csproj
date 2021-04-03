@@ -35,9 +35,18 @@
     <Compile Update="AppHostBuilderExtensions.cs">
       <SubType></SubType>
     </Compile>
+    <Compile Update="Maui\CometWindow.cs">
+      <SubType></SubType>
+    </Compile>
+    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Maui\CometApp.cs">
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Maui\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

@@ -8,7 +8,7 @@ namespace Comet
 {
 	public static class AppHostBuilderExtensions
 	{
-		public static IAppHostBuilder UseMauiHandlers(this IAppHostBuilder builder)
+		public static IAppHostBuilder UseCometHandlers(this IAppHostBuilder builder)
 		{
 
 			//AnimationManger.SetTicker(new iOSTicker());
