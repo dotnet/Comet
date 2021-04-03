@@ -75,12 +75,11 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Essentials" Version="1.6.0" />
     <PackageReference Include="JonLipsky.System.Graphics">
       <Version>0.1.36</Version>
     </PackageReference>
     <PackageReference Include="Reloadify3000">
-      <Version>0.0.13-alpha</Version>
+      <Version>1.0.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

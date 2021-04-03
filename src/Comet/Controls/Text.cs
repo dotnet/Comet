@@ -34,7 +34,7 @@ namespace Comet
 		string IText.Text => Value?.CurrentValue;
 
 
-		Font IText.Font => throw new NotImplementedException();
+		Font IText.Font => this.GetFont(null);
 
 
 		double IText.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
@@ -48,9 +48,9 @@ namespace Comet
 
 		int ILabel.MaxLines => this.GetEnvironment<int>(nameof(ILabel.MaxLines));
 
-		TextDecorations ILabel.TextDecorations => throw new NotImplementedException();
+		TextDecorations ILabel.TextDecorations => this.GetEnvironment<TextDecorations>(nameof(ILabel.TextDecorations));
 
-		double ILabel.LineHeight => throw new NotImplementedException();
+		double ILabel.LineHeight => this.GetEnvironment<double>(nameof(ILabel.LineHeight));
 
 		Color IText.TextColor => this.GetColor(null);
 

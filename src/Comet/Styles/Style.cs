@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Maui;
 
 namespace Comet.Styles
 {
@@ -22,121 +23,121 @@ namespace Comet.Styles
 		public TextStyle H1 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H1),
-			Font = new FontAttributes
-			{
-				Size = 96,
-				Weight = Weight.Light,
-			},
+			Font = Font.Default.WithSize(96)
+			//{
+			//	Size = 96,
+			//	Weight = Weight.Light,
+			//},
 		};
 
 		public TextStyle H2 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H2),
-			Font = new FontAttributes
-			{
-				Size = 60,
-				Weight = Weight.Light,
-			},
+			Font = Font.Default.WithSize(60)
+			//{
+			//	Size = 60,
+			//	Weight = Weight.Light,
+			//},
 		};
 
 		public TextStyle H3 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H3),
-			Font = new FontAttributes
-			{
-				Size = 48,
-				Weight = Weight.Regular,
-			},
+			Font = Font.Default.WithSize(48)
+			//{
+			//	Size = 48,
+			//	Weight = Weight.Regular,
+			//},
 		};
 
 		public TextStyle H4 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H4),
-			Font = new FontAttributes
-			{
-				Size = 34,
-				Weight = Weight.Regular,
-			},
+			Font = Font.Default.WithSize(48)
+			//{
+			//	Size = 34,
+			//	Weight = Weight.Regular,
+			//},
 		};
 
 		public TextStyle H5 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H5),
-			Font = new FontAttributes
-			{
-				Size = 24,
-				Weight = Weight.Regular,
-			},
+			Font = Font.Default.WithSize(24)
+			//{
+			//	Size = 24,
+			//	Weight = Weight.Regular,
+			//},
 		};
 
 		public TextStyle H6 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H6),
-			Font = new FontAttributes
-			{
-				Size = 20,
-				Weight = Weight.Medium,
-			},
+			Font = Font.Default.WithSize(20)
+			//{
+			//	Size = 20,
+			//	Weight = Weight.Medium,
+			//},
 		};
 
 		public TextStyle Subtitle1 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Subtitle1),
-			Font = new FontAttributes
-			{
-				Size = 16,
-				Weight = Weight.Regular,
-			},
+			Font = Font.Default.WithSize(16)
+			//{
+			//	Size = 16,
+			//	Weight = Weight.Regular,
+			//},
 		};
 
 		public TextStyle Subtitle2 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Subtitle2),
-			Font = new FontAttributes
-			{
-				Size = 13,
-				Weight = Weight.Medium,
-			},
+			Font = Font.Default.WithSize(13)
+			//{
+			//	Size = 13,
+			//	Weight = Weight.Medium,
+			//},
 		};
 
 		public TextStyle Body1 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Body1),
-			Font = new FontAttributes
-			{
-				Size = 16,
-				Weight = Weight.Regular,
-			},
+			Font = Font.Default.WithSize(16)
+			//{
+			//	Size = 16,
+			//	Weight = Weight.Regular,
+			//},
 		};
 
 		public TextStyle Body2 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Body2),
-			Font = new FontAttributes
-			{
-				Size = 14,
-				Weight = Weight.Medium,
-			},
+			Font = Font.Default.WithSize(14)
+			//{
+			//	Size = 14,
+			//	Weight = Weight.Medium,
+			//},
 		};
 
 		public TextStyle Caption { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Caption),
-			Font = new FontAttributes
-			{
-				Size = 12,
-				Weight = Weight.Regular,
-			},
+			Font = Font.Default.WithSize(12)
+			//{
+			//	Size = 12,
+			//	Weight = Weight.Regular,
+			//},
 		};
 
 		public TextStyle Overline { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Overline),
-			Font = new FontAttributes
-			{
-				Size = 10,
-				Weight = Weight.Regular,
-			},
+			Font = Font.Default.WithSize(10)
+			//{
+			//	Size = 10,
+			//	Weight = Weight.Regular,
+			//},
 		};
 
 		public virtual void Apply(ContextualObject view = null)
@@ -166,10 +167,10 @@ namespace Comet.Styles
 		protected virtual void ApplyTextStyle(ContextualObject view, TextStyle textStyle)
 		{
 			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Colors.Color, textStyle.Color);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font, (f) => (f as FontAttributes)?.Size);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Family, textStyle?.Font, (f) => (f as FontAttributes)?.Family);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Italic, textStyle?.Font, (f) => (f as FontAttributes)?.Italic);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Weight, textStyle?.Font, (f) => (f as FontAttributes)?.Weight);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font, (f) => (f is Font font) ? font.FontSize : null);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Family, textStyle?.Font, (f) => (f is Font font) ? font.FontFamily : null);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Attributes, textStyle?.Font, (f) => (f is Font font) ? font.FontAttributes : null);
+
 		}
 
 		protected virtual void ApplyButton(ContextualObject view)

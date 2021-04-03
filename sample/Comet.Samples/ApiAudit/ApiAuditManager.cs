@@ -24,9 +24,8 @@ namespace Comet.Samples
 		static string[] FontProperties =
 		{
 			EnvironmentKeys.Fonts.Family,
-			EnvironmentKeys.Fonts.Italic,
 			EnvironmentKeys.Fonts.Size,
-			EnvironmentKeys.Fonts.Weight,
+			EnvironmentKeys.Fonts.Attributes,
 			EnvironmentKeys.Colors.Color,
 		};
 
