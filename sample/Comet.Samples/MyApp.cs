@@ -10,9 +10,9 @@ namespace Comet.Samples
 		[Body]
 		View view() => new VStack(spacing: 20)
 			{
-				new Text("Hey!!"),
+				new Text("Hey!!").Margin(top: 100),
 				//new Text("Hey!!"),
-				new Text("TEST PADDING!!!").Frame(height:30).Margin(top:100),
+				//new Text("TEST PADDING!!!").Frame(height:30).Margin(top:100),
 				new Text("This top part is a Microsoft.Maui.VerticalStackLayout"),
 				new HStack(spacing:2)
 				{
@@ -26,7 +26,7 @@ namespace Comet.Samples
 				new Text("Hey!!"),
 				//new SecondView(),
 
-			}.Background(Colors.Beige).Margin(top: 30);
+			}.Background(Colors.Beige);
 
 		public override void Configure(IAppHostBuilder appBuilder)
 		{

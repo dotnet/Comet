@@ -107,7 +107,6 @@ namespace Comet
 			set
 			{
 				SetViewHandler(value);
-				viewHandler?.SetVirtualView(this.GetRenderView());
 			}
 		}
 
@@ -146,8 +145,6 @@ namespace Comet
 		{
 			// We save the old replaced view so we can clean it up after the diff
 			var oldReplacedView = replacedView;
-			//Null it out, so it isnt replaced by this.GetRenderView();
-			replacedView = null;
 			try
 			{
 				if (usedEnvironmentData.Any())
@@ -156,6 +153,9 @@ namespace Comet
 				var oldView = BuiltView;
 				var oldParentView = builtView;
 				builtView = null;
+				//Null it out, so it isnt replaced by this.GetRenderView();
+				replacedView = null;
+
 				//if (ViewHandler == null)
 				//	return;
 				//ViewHandler?.Remove(this);
