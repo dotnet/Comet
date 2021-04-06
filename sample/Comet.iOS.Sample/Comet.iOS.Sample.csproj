@@ -151,6 +151,10 @@
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
       <Name>Comet</Name>
     </ProjectReference>
+    <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj">
+      <Project>{E2F234D6-3B2C-4F5E-B815-6D61B8AA5DC6}</Project>
+      <Name>Essentials</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\turtlerock.jpg" />

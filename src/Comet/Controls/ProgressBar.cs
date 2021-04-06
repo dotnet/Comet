@@ -1,8 +1,8 @@
 ﻿using System;
-
+using Microsoft.Maui;
 namespace Comet
 {
-	public class ProgressBar : View
+	public class ProgressBar : View, IProgress
 	{
 		public ProgressBar(
 			Binding<double> value = null)
@@ -20,5 +20,7 @@ namespace Comet
 			get => _value;
 			set => this.SetBindingValue(ref _value, value);
 		}
+
+		double IProgress.Progress => Value;
 	}
 }

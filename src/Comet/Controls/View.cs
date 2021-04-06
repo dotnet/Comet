@@ -10,6 +10,7 @@ using Comet.Internal;
 using Comet.Reflection;
 using Microsoft.Maui;
 using Microsoft.Maui;
+using Microsoft.Maui.Essentials;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.HotReload;
 using Microsoft.Maui.Layouts;
@@ -20,11 +21,7 @@ namespace Comet
 {
 
 	public class View : ContextualObject, IDisposable, IView, IHotReloadableView//, IClipShapeView
-	{
-		static View()
-		{
-			CometPlatform.Init();
-		}
+	{		
 		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
@@ -306,7 +303,7 @@ namespace Comet
 		public static void SetGlobalEnvironment(string key, object value)
 		{
 			Environment.SetValue(key, value, true);
-			ThreadHelper.RunOnMainThread(() => {
+			MainThread.BeginInvokeOnMainThread(() => {
 				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(key, value));
 			});
 
@@ -316,7 +313,7 @@ namespace Comet
 			//If there is no style, set the default key
 			var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
 			Environment.SetValue(typedKey, value, true);
-			ThreadHelper.RunOnMainThread(() => {
+			MainThread.BeginInvokeOnMainThread(() => {
 				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
@@ -325,7 +322,7 @@ namespace Comet
 		{
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			Environment.SetValue(typedKey, value, true);
-			ThreadHelper.RunOnMainThread(() => {
+			MainThread.BeginInvokeOnMainThread(() => {
 				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
@@ -577,7 +574,7 @@ namespace Comet
 			notificationView?.ResumeAnimations();
 		}
 
-		bool IFrameworkElement.IsEnabled => this.GetEnvironment<bool>("IsEnabled");
+		bool IFrameworkElement.IsEnabled => this.GetEnvironment<bool?>(nameof(IFrameworkElement.IsEnabled)) ?? true;
 
 		Color IFrameworkElement.BackgroundColor => this.GetBackgroundColor();
 
@@ -637,6 +634,6 @@ namespace Comet
 				newView.SetDeepPropertyValue(change.Key, change.Value);
 			}
 		}
-		void IHotReloadableView.Reload() => ThreadHelper.RunOnMainThread(()=>Reload(true));
+		void IHotReloadableView.Reload() => MainThread.BeginInvokeOnMainThread(()=>Reload(true));
 	}
 }

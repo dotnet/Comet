@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using Comet.Reflection;
 using Microsoft.Maui;
+using Microsoft.Maui.Essentials;
 using Microsoft.Maui.HotReload;
 
 // ReSharper disable once CheckNamespace
@@ -207,7 +208,7 @@ namespace Comet
 					break;
 				}
 			}
-			ThreadHelper.RunOnMainThread(() => {
+			MainThread.BeginInvokeOnMainThread(() => {
 				newView.UpdateFromOldView(oldView);
 			});
 
@@ -239,11 +240,11 @@ namespace Comet
 				return viewView?.GetType() == compareViewView?.GetType();
 			}
 			var areSame = AreSameType(view, compareView);
-			//if (areSame && checkRenderers && compareView.ViewHandler != null)
-			//{
-			//	var renderType = Microsoft.Maui.Registrar.Handlers.GetRendererType(view.GetType());
-			//	areSame = renderType == compareView.ViewHandler.GetType();
-			//}
+			if (areSame && checkRenderers && compareView.ViewHandler != null)
+			{
+				var renderType = CometApp.MauiContext.Handlers.GetHandlerType(view.GetType());
+				areSame = renderType == compareView.ViewHandler.GetType();
+			}
 			return areSame;
 		}
 	}

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading;
+using Microsoft.Maui.Essentials;
 
 namespace Comet
 {
@@ -210,7 +211,7 @@ namespace Comet
 			var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
 			contextualObject.SetValue(typedKey, value, cascades);
 			//TODO: Verify this is needed 
-			ThreadHelper.RunOnMainThread(() => {
+			MainThread.BeginInvokeOnMainThread(() => {
 				contextualObject.ContextPropertyChanged(typedKey, value, cascades);
 			});
 			return contextualObject;
@@ -223,7 +224,7 @@ namespace Comet
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			contextualObject.SetValue(typedKey, value, cascades);
 			//TODO: Verify this is needed 
-			ThreadHelper.RunOnMainThread(() => {
+			MainThread.BeginInvokeOnMainThread(() => {
 				contextualObject.ContextPropertyChanged(typedKey, value, cascades);
 			});
 			return contextualObject;
@@ -235,7 +236,7 @@ namespace Comet
 			key = ContextualObject.GetControlStateKey(state, key);
 			if (!contextualObject.SetValue(key, value, cascades))
 				return contextualObject;
-			ThreadHelper.RunOnMainThread(() => {
+			MainThread.BeginInvokeOnMainThread(() => {
 				contextualObject.ContextPropertyChanged(key, value, cascades);
 			});
 			return contextualObject;

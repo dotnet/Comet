@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Comet.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
@@ -28,12 +29,18 @@ namespace Comet
 				{ typeof(Text), typeof(LabelHandler) },
 				{ typeof(AbstractLayout), typeof(LayoutHandler) },
 				//{ typeof(Picker), typeof(PickerHandler) },
-				//{ typeof(Progress), typeof(ProgressBarHandler) },
+				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
 				//{ typeof(SearchBar), typeof(SearchBarHandler) },
+				{ typeof(SecureField), typeof(EntryHandler) },
 				{ typeof(Slider), typeof(SliderHandler) },
 				{ typeof(Stepper), typeof(StepperHandler) },
+				{ typeof(Spacer), typeof(SpacerHandler) },
 				//{ typeof(Switch), typeof(SwitchHandler) },
 				//{ typeof(TimePicker), typeof(TimePickerHandler) },
+#if __IOS__
+				{typeof(ListView),typeof(ListViewHandler) }
+
+#endif
 			});
 
 			return builder;
