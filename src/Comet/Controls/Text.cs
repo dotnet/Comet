@@ -52,7 +52,7 @@ namespace Comet
 
 		double ILabel.LineHeight => this.GetEnvironment<double>(nameof(ILabel.LineHeight));
 
-		Color IText.TextColor => this.GetColor(null);
+		Color IText.TextColor => this.GetColor();
 
 		Thickness IPadding.Padding => this.GetPadding();
 	}

@@ -1,8 +1,10 @@
 ﻿using System;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
-	public class Toggle : View
+	public class Toggle : View, ISwitch, IThumbView
 	{
 		public Toggle(
 			Binding<bool> value = null,
@@ -20,5 +22,10 @@ namespace Comet
 		}
 
 		public Action<bool> IsOnChanged { get; private set; }
+		bool ISwitch.IsToggled { get => IsOn; set => IsOn.Set(value); }
+
+		Color ISwitch.TrackColor => this.GetColor();
+
+		Color ISwitch.ThumbColor => this.GetThumbColor();
 	}
 }

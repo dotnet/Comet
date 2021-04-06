@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Maui;
 
 namespace Comet
 {
-	public class Stepper : View
+	public class Stepper : View, IStepper
 	{
 		public Stepper(Binding<double> value = null,
 			Binding<double> maximumValue = null,
@@ -50,5 +51,13 @@ namespace Comet
 		}
 
 		public Action<double> OnValueChanged { get; private set; }
+
+		double IStepper.Interval => Increment;
+
+		double IRange.Minimum => Minimum;
+
+		double IRange.Maximum => Maximum;
+
+		double IRange.Value { get => Value; set => Value.Set(value); }
 	}
 }
