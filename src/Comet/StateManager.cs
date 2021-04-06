@@ -7,6 +7,7 @@ using System.Reflection;
 using Comet.Helpers;
 using Comet.Internal;
 using Comet.Reflection;
+using Microsoft.Maui.Essentials;
 
 namespace Comet
 {
@@ -219,7 +220,7 @@ namespace Comet
 				}
 				var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
 				//TODO: Change this to use notify and property name
-				ThreadHelper.RunOnMainThread(()=>
+				MainThread.BeginInvokeOnMainThread(()=>
 				view.BindingPropertyChanged(notify, propertyName, prop, value));
 
 				//TODO: Make sure we handle nested binding objects

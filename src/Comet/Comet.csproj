@@ -26,27 +26,16 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="Helpers\GraphicsExtensions.cs">
-      <SubType></SubType>
-    </Compile>
-    <Compile Update="Helpers\MauiExtensions.cs">
-      <SubType></SubType>
-    </Compile>
-    <Compile Update="AppHostBuilderExtensions.cs">
-      <SubType></SubType>
-    </Compile>
-    <Compile Update="Maui\CometWindow.cs">
-      <SubType></SubType>
-    </Compile>
-    <Compile Condition=" '$(EnableDefaultCompileItems)' == 'true' " Update="Maui\CometApp.cs">
-      <SubType>Code</SubType>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
+    <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Maui\" />
+    <Folder Include="Handlers\" />
+    <Folder Include="Handlers\ListView\" />
+    <Folder Include="Platform\" />
+    <Folder Include="Platform\iOS\" />
+    <Folder Include="Handlers\Spacer\" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

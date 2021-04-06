@@ -101,18 +101,17 @@ namespace Comet.Samples
 
 			this.Title("UI Samples");
 
-			Body = () => new NavigationView
-			{
-				new ListView<MenuItem> (pages)
+			Body = () =>
+				new ListView<MenuItem>(pages)
 				{
-					ViewFor = (page) =>  new HStack()
+					ViewFor = (page) => new HStack()
 					{
 						new Text(page.Title),
 						new Spacer()
-					}.Frame(height:44).Margin(left:10),
+					}.Frame(height: 44).Margin(left: 10),
 					//ViewFor = (page) => new Text(page.Title).FillHorizontal().TextAlignment(TextAlignment.Left).Frame(height:44).Margin(left:10),
-				}.OnSelectedNavigate( page => page.Page().Title(page.Title))
-			};
+				}.OnSelectedNavigate(page => page.Page().Title(page.Title));
+			
 		}
 	}
 }
