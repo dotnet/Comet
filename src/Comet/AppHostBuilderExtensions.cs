@@ -35,6 +35,7 @@ namespace Comet
 				{ typeof(Slider), typeof(SliderHandler) },
 				{ typeof(Stepper), typeof(StepperHandler) },
 				{ typeof(Spacer), typeof(SpacerHandler) },
+				{ typeof(Toggle), typeof(SwitchHandler) },
 				//{ typeof(Switch), typeof(SwitchHandler) },
 				//{ typeof(TimePicker), typeof(TimePickerHandler) },
 #if __IOS__

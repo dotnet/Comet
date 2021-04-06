@@ -1,7 +1,9 @@
 ﻿using System;
+using Microsoft.Maui;
+
 namespace Comet
 {
-	public class DatePicker : View
+	public class DatePicker : View, IDatePicker
 	{
 		public DatePicker(Binding<DateTime> date = null,
 			Binding < DateTime> maximumDate = null,
@@ -48,5 +50,11 @@ namespace Comet
 		}
 
 		public Action<DateTime> OnDateChanged { get; private set; }
+		string IDatePicker.Format { get => this.GetEnvironment<string>(nameof(IDatePicker.Format)); set => this.SetEnvironment(nameof(IDatePicker.Format),value); }
+		DateTime IDatePicker.Date { get => Date; set => Date.Set(value); }
+
+		DateTime IDatePicker.MinimumDate => MinimumDate;
+
+		DateTime IDatePicker.MaximumDate => MaximumDate;
 	}
 }

@@ -5,7 +5,7 @@ using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
-	public class Slider : View, ISlider
+	public class Slider : View, ISlider, IThumbView
 	{
 		public Slider(
 			Binding<double> value = null,

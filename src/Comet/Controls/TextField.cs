@@ -67,7 +67,7 @@ namespace Comet
 
 		string IText.Text => Text;
 
-		Color IText.TextColor => this.GetColor(null);
+		Color IText.TextColor => this.GetColor();
 
 		Font IText.Font => this.GetFont(null);
 

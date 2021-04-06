@@ -29,13 +29,13 @@ namespace Comet
 			return view;
 		}
 
-		public static Color GetColor<T>(this T view, Color defaultColor, ControlState state = ControlState.Default) where T : View
+		public static Color GetColor<T>(this T view, Color defaultColor = null, ControlState state = ControlState.Default) where T : View
 		{
 			var color = view.GetEnvironment<Color>(EnvironmentKeys.Colors.Color,state);
 			return color ?? defaultColor;
 		}
 
-		public static Color GetColor<T>(this T view, Type type, Color defaultColor) where T : View
+		public static Color GetColor<T>(this T view, Type type, Color defaultColor = null) where T : View
 		{
 			var color = view.GetEnvironment<Color>(type, EnvironmentKeys.Colors.Color);
 			return color ?? defaultColor;
@@ -131,9 +131,9 @@ namespace Comet
 			return color ?? defaultColor;
 		}
 
-		public static T ThumbColor<T>(this T view, Color color, ControlState state = ControlState.Default) where T : Slider
+		public static T ThumbColor<T>(this T view, Color color, ControlState state = ControlState.Default) where T : View, IThumbView
 		{
-			view.SetEnvironment(EnvironmentKeys.Slider.ThumbColor, color, cascades:false, state);
+			view.SetEnvironment(EnvironmentKeys.Slider.ThumbColor, color, cascades: false, state);
 			return view;
 		}
 
@@ -145,6 +145,13 @@ namespace Comet
 			return color ?? defaultColor;
 		}
 
+		public static Color GetThumbColor(this Toggle view, Color defaultColor = null, ControlState state = ControlState.Default)
+		{
+			var color = view?.GetEnvironment<Color>(EnvironmentKeys.Slider.ThumbColor, state);
+			//Fall back to the default state before using the default color
+			color ??= view?.GetEnvironment<Color>(EnvironmentKeys.Slider.ThumbColor);
+			return color ?? defaultColor;
+		}
 
 		public static T TrackColor<T>(this T view, Color color, ControlState state = ControlState.Default, bool cascades = false)
 			where T : ProgressBar

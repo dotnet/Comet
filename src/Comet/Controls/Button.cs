@@ -37,7 +37,7 @@ namespace Comet
 
 		double IText.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
 
-		Color IText.TextColor => this.GetColor(null);
+		Color IText.TextColor => this.GetColor();
 
 		Thickness IPadding.Padding => this.GetPadding();
 
