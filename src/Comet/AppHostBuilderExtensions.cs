@@ -22,7 +22,7 @@ namespace Comet
 			{
 				{ typeof(ActivityIndicator), typeof(ActivityIndicatorHandler) },
 				{ typeof(Button), typeof(ButtonHandler) },
-				//{ typeof(ICheck), typeof(CheckBoxHandler) },
+				{ typeof(CheckBox), typeof(CheckBoxHandler) },
 				{ typeof(DatePicker), typeof(DatePickerHandler) },
 				//{ typeof(Editor), typeof(EditorHandler) },
 				{ typeof(TextField), typeof(EntryHandler) },
@@ -36,7 +36,6 @@ namespace Comet
 				{ typeof(Stepper), typeof(StepperHandler) },
 				{ typeof(Spacer), typeof(SpacerHandler) },
 				{ typeof(Toggle), typeof(SwitchHandler) },
-				//{ typeof(Switch), typeof(SwitchHandler) },
 				//{ typeof(TimePicker), typeof(TimePickerHandler) },
 #if __IOS__
 				{typeof(ListView),typeof(ListViewHandler) }
