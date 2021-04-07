@@ -1,4 +1,4 @@
-﻿using System.Graphics;
+﻿using Microsoft.Maui.Graphics;
 
 namespace Comet.Tests.Handlers
 {
@@ -11,6 +11,6 @@ namespace Comet.Tests.Handlers
 
 		public Slider VirtualView => (Slider)CurrentView;
 
-		private SizeF HandleOnGetIntrinsicSize(SizeF arg) => new SizeF(100, 20);
+		private Size HandleOnGetIntrinsicSize(Size arg) => new Size(100, 20);
 	}
 }

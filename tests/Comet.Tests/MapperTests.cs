@@ -1,5 +1,5 @@
 ﻿using System;
-using Xamarin.Platform;
+using Microsoft.Maui;
 using Xunit;
 
 namespace Comet.Tests

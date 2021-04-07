@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Graphics;
+using Microsoft.Maui.Graphics;
 using Comet.Reflection;
-using Xamarin.Platform;
+using Microsoft.Maui;
 
 namespace Comet.Tests.Handlers
 {
 	public class GenericViewHandler : IViewHandler
 	{
+		public IMauiContext MauiContext { get; private set; }
 		public GenericViewHandler()
 		{
 		}
@@ -18,18 +19,18 @@ namespace Comet.Tests.Handlers
 
 		public bool HasContainer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-		public SizeF GetIntrinsicSize(SizeF availableSize) => OnGetIntrinsicSize?.Invoke(availableSize) ?? View.UseAvailableWidthAndHeight;
+		public SizeF GetIntrinsicSize(Size availableSize) => OnGetIntrinsicSize?.Invoke(availableSize) ?? View.UseAvailableWidthAndHeight;
 
 		public void SetFrame(RectangleF frame)
 		{
 			Frame = frame;
 		}
 
-		public Func<SizeF, SizeF> OnGetIntrinsicSize { get; set; }
+		public Func<Size, Size> OnGetIntrinsicSize { get; set; }
 
-		public RectangleF Frame
+		public Rectangle Frame
 		{
-			get => (RectangleF)ChangedProperties[nameof(Frame)];
+			get => (Rectangle)ChangedProperties[nameof(Frame)];
 			set => ChangedProperties[nameof(Frame)] = value;
 		}
 
@@ -38,15 +39,11 @@ namespace Comet.Tests.Handlers
 
 		public void UpdateValue(string property)
 		{
-			ChangedProperties[property] = CurrentView?.GetPropValue<object>(property);
-
-			var val = CurrentView.GetPropertyValue(property) as Binding;
-
-			//TODO: This may break things
-			//if (val != null)
-			//    val.GetValue();
-
-
+			var val = CurrentView?.GetPropValue<object>(property);
+			if (val is Binding b)
+				ChangedProperties[property] = b.Value;
+			else
+				ChangedProperties[property] = val;
 		}
 
 		public void Dispose()
@@ -60,7 +57,9 @@ namespace Comet.Tests.Handlers
 			ChangedProperties.Clear();
 			CurrentView = view;
 		}
-		public void DisconnectHandler() =>			CurrentView = null;
-		public SizeF GetDesiredSize(float widthConstraint, float heightConstraint) => OnGetIntrinsicSize?.Invoke(new SizeF(widthConstraint, heightConstraint)) ?? View.UseAvailableWidthAndHeight;
+		public void DisconnectHandler() => CurrentView = null;
+		void IViewHandler.SetMauiContext(IMauiContext mauiContext) => MauiContext = mauiContext;
+		Size IViewHandler.GetDesiredSize(double widthConstraint, double heightConstraint) => OnGetIntrinsicSize?.Invoke(new Size(widthConstraint, heightConstraint)) ?? View.UseAvailableWidthAndHeight;
+		void IViewHandler.SetFrame(Rectangle frame) => Frame = frame;
 	}
 }

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Graphics;
+using Microsoft.Maui.Graphics;
 using Comet.Tests.Handlers;
 using Xunit;
 
@@ -27,9 +27,9 @@ namespace Comet.Tests
 			var stack = view.GetViewWithTag("stack");
 			var text = view.GetViewWithTag("text");
 			
-			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
-			Assert.Equal(new RectangleF(0, 294, 320, 12), stack.Frame);
-			Assert.Equal(new RectangleF(0, 0, 320, 12), text.Frame);
+			Assert.Equal(new Rectangle(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new Rectangle(0, 294, 320, 12), stack.Frame);
+			Assert.Equal(new Rectangle(0, 0, 320, 12), text.Frame);
 		}
 		
 		public class TextFieldInVStackTestView : View
@@ -52,9 +52,9 @@ namespace Comet.Tests
 			var stack = view.GetViewWithTag("stack");
 			var textfield = view.GetViewWithTag("textfield");
 			
-			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
-			Assert.Equal(new RectangleF(0, 294, 320, 12), stack.Frame);
-			Assert.Equal(new RectangleF(0, 0, 320, 12), textfield.Frame);
+			Assert.Equal(new Rectangle(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new Rectangle(0, 294, 320, 12), stack.Frame);
+			Assert.Equal(new Rectangle(0, 0, 320, 12), textfield.Frame);
 		}
 		
 		public class SecureFieldInVStackTestView : View
@@ -77,9 +77,9 @@ namespace Comet.Tests
 			var stack = view.GetViewWithTag("stack");
 			var securefield = view.GetViewWithTag("securefield");
 			
-			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
-			Assert.Equal(new RectangleF(0, 294, 320, 12), stack.Frame);
-			Assert.Equal(new RectangleF(0, 0, 320, 12), securefield.Frame);
+			Assert.Equal(new Rectangle(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new Rectangle(0, 294, 320, 12), stack.Frame);
+			Assert.Equal(new Rectangle(0, 0, 320, 12), securefield.Frame);
 		}
 		
 		public class SliderInVStackTestView : View
@@ -100,9 +100,9 @@ namespace Comet.Tests
 			var stack = view.GetViewWithTag("stack");
 			var slider = view.GetViewWithTag("slider");
 			
-			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
-			Assert.Equal(new RectangleF(0, 290, 320, 20), stack.Frame);
-			Assert.Equal(new RectangleF(0, 0, 320, 20), slider.Frame);
+			Assert.Equal(new Rectangle(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new Rectangle(0, 290, 320, 20), stack.Frame);
+			Assert.Equal(new Rectangle(0, 0, 320, 20), slider.Frame);
 		}
 		
 		public class ProgressBarInVStackTestView : View
@@ -123,9 +123,9 @@ namespace Comet.Tests
 			var stack = view.GetViewWithTag("stack");
 			var progressbar = view.GetViewWithTag("progressbar");
 			
-			Assert.Equal(new RectangleF(0, 0, 320, 600), view.Frame);
-			Assert.Equal(new RectangleF(0, 290, 320, 20), stack.Frame);
-			Assert.Equal(new RectangleF(0, 0, 320, 20), progressbar.Frame);
+			Assert.Equal(new Rectangle(0, 0, 320, 600), view.Frame);
+			Assert.Equal(new Rectangle(0, 290, 320, 20), stack.Frame);
+			Assert.Equal(new Rectangle(0, 0, 320, 20), progressbar.Frame);
 		}
 		
 		[Fact]

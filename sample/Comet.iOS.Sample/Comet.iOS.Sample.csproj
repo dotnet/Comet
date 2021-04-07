@@ -75,12 +75,10 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="JonLipsky.System.Graphics">
-      <Version>0.1.36</Version>
-    </PackageReference>
     <PackageReference Include="Reloadify3000">
       <Version>1.0.4</Version>
     </PackageReference>
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.29" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">

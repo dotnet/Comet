@@ -20,7 +20,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Samples", "sample\Com
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "external\Maui\src\Core\src\Core.csproj", "{8A53D192-072F-4EF2-8547-932D7538FFB9}"
 EndProject
-Project("{9344BDBB-3E7F-41FC-A0DD-8665D75EE146}") = "Comet.Tests", "tests\Comet.Tests\Comet.Tests.csproj", "{A94A318E-1F79-4AE9-9620-58D941382410}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Tests", "tests\Comet.Tests\Comet.Tests.csproj", "{A94A318E-1F79-4AE9-9620-58D941382410}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essentials", "external\Maui\src\Essentials\src\Essentials.csproj", "{E2F234D6-3B2C-4F5E-B815-6D61B8AA5DC6}"
 EndProject
