@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 
@@ -6,6 +7,10 @@ namespace Comet
 {
 	public class SecureField : View, IEntry
 	{
+		protected static Dictionary<string, string> TextHandlerPropertyMapper = new(HandlerPropertyMapper)
+		{
+			[nameof(Color)] = nameof(IText.TextColor),
+		};
 		public SecureField(
 			Binding<string> value = null,
 			Binding<string> placeholder = null,
@@ -69,5 +74,8 @@ namespace Comet
 
 		public void ValueChanged(string value)
 			=> OnCommit?.Invoke(value);
+
+		protected override string GetHandlerPropertyName(string property)
+			=> TextHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}
 }

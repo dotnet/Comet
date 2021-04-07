@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using Microsoft.Maui;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
@@ -11,6 +11,10 @@ namespace Comet
 	/// </summary>
 	public class Text : View, ILabel
 	{
+		protected static Dictionary<string, string> TextHandlerPropertyMapper = new(HandlerPropertyMapper)
+		{
+			[nameof(Color)] = nameof(IText.TextColor),
+		};
 		public Text(
 			Binding<string> value = null)
 		{
@@ -55,5 +59,8 @@ namespace Comet
 		Color IText.TextColor => this.GetColor();
 
 		Thickness IPadding.Padding => this.GetPadding();
+
+		protected override string GetHandlerPropertyName(string property)
+			=> TextHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}
 }

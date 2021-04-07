@@ -7,6 +7,11 @@ namespace Comet
 {
 	public class Stepper : View, IStepper
 	{
+		protected static Dictionary<string, string> StepperHandlerPropertyMapper = new()
+		{
+			[nameof(Increment)] = nameof(IStepper.Interval),
+		};
+
 		public Stepper(Binding<double> value = null,
 			Binding<double> maximumValue = null,
 			Binding<double> minimumValue = null,
@@ -59,5 +64,8 @@ namespace Comet
 		double IRange.Maximum => Maximum;
 
 		double IRange.Value { get => Value; set => Value.Set(value); }
+
+		protected override string GetHandlerPropertyName(string property)
+			=> StepperHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}
 }

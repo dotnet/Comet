@@ -7,26 +7,32 @@ namespace Comet.Samples
 {
 	public class MyApp : CometApp
 	{
+		readonly State<int> clickCount = 0;
+		readonly State<double> progress = .5;
 		[Body]
-		View view() => new VStack(spacing: 20)
+		View view() =>
+			 
+			new VStack(spacing: 20)
 			{
-				new Text("Hey!!").Margin(top: 100),
-				//new Text("Hey!!"),
-				//new Text("TEST PADDING!!!").Frame(height:30).Margin(top:100),
-				new Text("This top part is a Microsoft.Maui.VerticalStackLayout"),
-				new HStack(spacing:2)
+				new Text("Welcome to Comet!!!").Margin(top: 100),
+				new HStack()
 				{
-					new Button("A Button").Frame(width:100).Color(Colors.White),
-					new Button("Hello I'm a button")
-						.Color(Colors.Green)
-						.Background(Colors.Purple),
-					new Text("And these buttons are in a HorizontalStackLayout"),
+					new Text("Label 1"),
+					new Text("Label 2"),
 				},
-				new Text("Hey!!"),
-				new Text("Hey!!"),
-				//new SecondView(),
+				new Button(()=> $"I was Clicked: {clickCount}",()=>{
+					clickCount.Value++;
+				}).Color(Colors.Yellow)
+					.Background(Colors.Blue),
+				new ActivityIndicator(),
+				new CheckBox(),
+				new DatePicker(),
+				new ProgressBar(progress),
+				new Slider(progress),
 
-			}.Background(Colors.Beige);
+
+			//}
+		}.Background(Colors.Beige);
 
 		public override void Configure(IAppHostBuilder appBuilder)
 		{

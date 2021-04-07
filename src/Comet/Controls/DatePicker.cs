@@ -13,7 +13,7 @@ namespace Comet
 		{
 			if (minimumDate?.CurrentValue >= maximumDate?.CurrentValue)
 				throw new ArgumentOutOfRangeException(nameof(minimumDate), "Minimum date is greater than the maximum date");
-			Date = date;
+			Date = date ?? DateTime.Today;
 			MaximumDate = maximumDate;
 			MinimumDate = minimumDate;
 			Format = format;
@@ -50,11 +50,22 @@ namespace Comet
 		}
 
 		public Action<DateTime> OnDateChanged { get; private set; }
-		string IDatePicker.Format { get => this.GetEnvironment<string>(nameof(IDatePicker.Format)); set => this.SetEnvironment(nameof(IDatePicker.Format),value); }
-		DateTime IDatePicker.Date { get => Date; set => Date.Set(value); }
+
+		string IDatePicker.Format {
+			get => Format;
+			set => Format.Set(value);
+		}
+		DateTime IDatePicker.Date {
+			get => Date;
+			set => Date.Set(value);
+		}
 
 		DateTime IDatePicker.MinimumDate => MinimumDate;
 
 		DateTime IDatePicker.MaximumDate => MaximumDate;
+
+		double IDatePicker.CharacterSpacing => this.GetEnvironment<double>(nameof(IDatePicker.CharacterSpacing));
+
+		Font IDatePicker.Font => this.GetFont(null);
 	}
 }

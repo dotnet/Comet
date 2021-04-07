@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 
@@ -6,6 +7,10 @@ namespace Comet
 {
 	public class TextField : View, IEntry
 	{
+		protected static Dictionary<string, string> TextHandlerPropertyMapper = new(HandlerPropertyMapper)
+		{
+			[nameof(Color)] = nameof(IText.TextColor),
+		};
 		public TextField(
 			Binding<string> value = null,
 			string placeholder = null,
@@ -63,7 +68,7 @@ namespace Comet
 
 		bool ITextInput.IsReadOnly => this.GetEnvironment<bool>(nameof(IEntry.IsReadOnly));
 
-		int ITextInput.MaxLength => this.GetEnvironment<int>(nameof(IEntry.MaxLength));
+		int ITextInput.MaxLength => this.GetEnvironment<int?>(nameof(IEntry.MaxLength)) ?? -1;
 
 		string IText.Text => Text;
 
@@ -79,5 +84,8 @@ namespace Comet
 
 		public void ValueChanged(string value)
 			=> OnEditingChanged?.Invoke(value);
+
+		protected override string GetHandlerPropertyName(string property)
+			=> TextHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}
 }

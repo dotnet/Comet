@@ -2,10 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui;
 
 namespace Comet
 {
-	public class ScrollView : View, IEnumerable
+	public class ScrollView : View, IEnumerable, IContainer
 	{
 		public ScrollView(Orientation orientation = Orientation.Vertical)
 		{
@@ -15,6 +16,9 @@ namespace Comet
 		public Orientation Orientation { get; }
 
 		public View View { get; internal set; }
+
+		IReadOnlyList<IView> IContainer.Children => new List<IView> {View };
+
 		public void Add(View view)
 		{
 			if (view == null)

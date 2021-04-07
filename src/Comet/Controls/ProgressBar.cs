@@ -5,7 +5,7 @@ namespace Comet
 {
 	public class ProgressBar : View, IProgress
 	{
-		protected static Dictionary<string, string> ProgressBarHandlerPropertyMapper = new()
+		protected static Dictionary<string, string> ProgressBarHandlerPropertyMapper = new(HandlerPropertyMapper)
 		{
 			[nameof(Value)] = nameof(IProgress.Progress),
 		};
@@ -30,6 +30,6 @@ namespace Comet
 		double IProgress.Progress => Value;
 
 		protected override string GetHandlerPropertyName(string property) =>
-			ProgressBarHandlerPropertyMapper.TryGetValue(property, out var value) ? value : base.GetHandlerPropertyName(property);
+			ProgressBarHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}
 }

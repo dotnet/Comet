@@ -18,7 +18,8 @@ namespace Comet
 			var style = new Styles.Style();
 			style.Apply();
 
-			builder.RegisterHandlers(new Dictionary<Type, Type>
+			
+			builder.ConfigureMauiHandlers((_, handlersCollection) => handlersCollection.AddHandlers(new Dictionary<Type, Type>
 			{
 				{ typeof(ActivityIndicator), typeof(ActivityIndicatorHandler) },
 				{ typeof(Button), typeof(ButtonHandler) },
@@ -42,7 +43,7 @@ namespace Comet
 				{typeof(ScrollView), typeof(ScrollViewHandler) },
 
 #endif
-			});
+			}));
 
 			return builder;
 		}
