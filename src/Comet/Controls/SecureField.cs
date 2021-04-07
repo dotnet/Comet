@@ -58,7 +58,7 @@ namespace Comet
 
 		bool ITextInput.IsReadOnly => this.GetEnvironment<bool>(nameof(IEntry.IsReadOnly));
 
-		int ITextInput.MaxLength => this.GetEnvironment<int>(nameof(IEntry.MaxLength));
+		int ITextInput.MaxLength => this.GetEnvironment<int?>(nameof(IEntry.MaxLength)) ?? -1;
 
 		string IText.Text => Text;
 
