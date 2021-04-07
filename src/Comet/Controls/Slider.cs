@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Comet.Internal;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
@@ -7,11 +8,19 @@ namespace Comet
 {
 	public class Slider : View, ISlider, IThumbView
 	{
+		protected static Dictionary<string, string> SliderHandlerPropertyMapper = new()
+		{
+			[nameof(EnvironmentKeys.Slider.TrackColor)] = nameof(ISlider.MinimumTrackColor),
+			[nameof(EnvironmentKeys.Slider.ProgressColor)] = nameof(ISlider.MaximumTrackColor),
+			[nameof(From)] = nameof(IRange.Minimum),
+			[nameof(Through)] = nameof(IRange.Maximum),
+		};
+
 		public Slider(
 			Binding<double> value = null,
 			double from = 0,
-			double through = 100,
-			double by = 1,
+			double through = 1,
+			double by = .1,
 			Action<double> onEditingChanged = null)
 		{
 			Value = value;
@@ -61,7 +70,14 @@ namespace Comet
 
 		double IRange.Maximum => Through;
 
-		double IRange.Value { get => Value; set => Value.Set(value); }
+		double IRange.Value {
+			get => Value;
+			set
+			{
+				Value.Set(value);
+				ValueChanged(value);
+			}
+		}
 
 		public void ValueChanged(double value)
 			=> OnEditingChanged.Invoke(value);
@@ -75,5 +91,8 @@ namespace Comet
 
 		void ISlider.DragStarted() {}
 		void ISlider.DragCompleted() { }
+
+		protected override string GetHandlerPropertyName(string property) =>
+			SliderHandlerPropertyMapper.TryGetValue(property, out var value) ? value : base.GetHandlerPropertyName(property);
 	}
 }

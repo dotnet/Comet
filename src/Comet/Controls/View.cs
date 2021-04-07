@@ -25,7 +25,10 @@ namespace Comet
 		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
-
+		protected static Dictionary<string, string> HandlerPropertyMapper = new()
+		{
+			[nameof(MeasuredSize)] = nameof(IFrameworkElement.DesiredSize),
+		};
 
 		IReloadHandler reloadHandler;
 		public IReloadHandler ReloadHandler
@@ -290,10 +293,13 @@ namespace Comet
 				Debug.WriteLine($"Error setting property:{property} : {value} on :{this}");
 				Debug.WriteLine(ex);
 			}
-
-			ViewHandler?.UpdateValue(property);
+			ViewHandler?.UpdateValue(GetHandlerPropertyName(property));
 			replacedView?.ViewPropertyChanged(property, value);
 		}
+
+		protected virtual string GetHandlerPropertyName(string property) =>
+			HandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
+		
 
 		internal override void ContextPropertyChanged(string property, object value, bool cascades)
 		{

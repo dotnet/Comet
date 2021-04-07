@@ -38,7 +38,8 @@ namespace Comet
 				{ typeof(Toggle), typeof(SwitchHandler) },
 				//{ typeof(TimePicker), typeof(TimePickerHandler) },
 #if __IOS__
-				{typeof(ListView),typeof(ListViewHandler) }
+				{typeof(ListView),typeof(ListViewHandler) },
+				{typeof(ScrollView), typeof(ScrollViewHandler) },
 
 #endif
 			});
