@@ -9,7 +9,7 @@ namespace Comet
 			Binding < DateTime> maximumDate = null,
 			Binding<DateTime> minimumDate = null,
 			Binding<string> format = null,
-			Action<DateTime> onDateChnaged = null)
+			Action<DateTime> onDateChanged = null)
 		{
 			if (minimumDate?.CurrentValue >= maximumDate?.CurrentValue)
 				throw new ArgumentOutOfRangeException(nameof(minimumDate), "Minimum date is greater than the maximum date");
@@ -17,7 +17,7 @@ namespace Comet
 			MaximumDate = maximumDate;
 			MinimumDate = minimumDate;
 			Format = format;
-			OnDateChanged = new MulticastAction<DateTime>(date, onDateChnaged);
+			OnDateChanged = new MulticastAction<DateTime>(date, onDateChanged);
 		}
 
 

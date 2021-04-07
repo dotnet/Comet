@@ -25,7 +25,7 @@ namespace Comet
 		}
 
 		public Action<bool> IsOnChanged { get; private set; }
-		bool ICheckBox.IsChecked { get => IsOn; set => IsOn.Set(value); }
+		bool ICheckBox.IsChecked { get => IsOn; set => IsOnChanged?.Invoke(value); }
 		protected override string GetHandlerPropertyName(string property)
 			=> CheckBoxHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}

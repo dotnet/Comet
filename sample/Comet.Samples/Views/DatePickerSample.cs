@@ -8,7 +8,7 @@ namespace Comet.Samples
 		{
 			new DatePicker(minimumDate: new DateTime(2015, 10, 1),
 				maximumDate: new DateTime(2018, 10, 01),
-				format: "dd/MM/yyyy", onDateChnaged: SampleDateChanged)
+				format: "dd/MM/yyyy", onDateChanged: SampleDateChanged)
 			.Frame(width: 200)
 		};
 

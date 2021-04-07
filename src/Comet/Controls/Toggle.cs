@@ -30,7 +30,7 @@ namespace Comet
 		}
 
 		public Action<bool> IsOnChanged { get; private set; }
-		bool ISwitch.IsToggled { get => IsOn; set => IsOn.Set(value); }
+		bool ISwitch.IsToggled { get => IsOn; set => IsOnChanged.Invoke(value); }
 
 		Color ISwitch.TrackColor => this.GetColor();
 
