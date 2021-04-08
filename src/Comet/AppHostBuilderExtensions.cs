@@ -21,14 +21,12 @@ namespace Comet
 			
 			builder.ConfigureMauiHandlers((_, handlersCollection) => handlersCollection.AddHandlers(new Dictionary<Type, Type>
 			{
+				{ typeof(AbstractLayout), typeof(LayoutHandler) },
 				{ typeof(ActivityIndicator), typeof(ActivityIndicatorHandler) },
 				{ typeof(Button), typeof(ButtonHandler) },
 				{ typeof(CheckBox), typeof(CheckBoxHandler) },
 				{ typeof(DatePicker), typeof(DatePickerHandler) },
-				{ typeof(TextEditor), typeof(EditorHandler) },
-				{ typeof(TextField), typeof(EntryHandler) },
-				{ typeof(Text), typeof(LabelHandler) },
-				{ typeof(AbstractLayout), typeof(LayoutHandler) },
+				{typeof(ListView),typeof(ListViewHandler) },
 				//{ typeof(Picker), typeof(PickerHandler) },
 				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
 				//{ typeof(SearchBar), typeof(SearchBarHandler) },
@@ -36,10 +34,12 @@ namespace Comet
 				{ typeof(Slider), typeof(SliderHandler) },
 				{ typeof(Stepper), typeof(StepperHandler) },
 				{ typeof(Spacer), typeof(SpacerHandler) },
-				{ typeof(Toggle), typeof(SwitchHandler) },
+				{ typeof(TextEditor), typeof(EditorHandler) },
+				{ typeof(TextField), typeof(EntryHandler) },
+				{ typeof(Text), typeof(LabelHandler) },
 				{ typeof(TimePicker), typeof(TimePickerHandler) },
+				{ typeof(Toggle), typeof(SwitchHandler) },
 #if __IOS__
-				{typeof(ListView),typeof(ListViewHandler) },
 				{typeof(ScrollView), typeof(ScrollViewHandler) },
 
 #endif

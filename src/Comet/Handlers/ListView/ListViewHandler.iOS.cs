@@ -8,27 +8,18 @@ using Comet.iOS;
 
 namespace Comet.Handlers
 {
-	public class ListViewHandler : ViewHandler<ListView, CUITableView>
+	public partial class ListViewHandler : ViewHandler<IListView, CUITableView>
 	{
-		public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>(ViewHandler.ViewMapper)
-		{
-			["ListView"] = MapListViewProperty,
-			[nameof(ListView.ReloadData)] = MapReloadData
-		};
+		
 
-		public ListViewHandler() : base(Mapper)
-		{
-			
-		}
-
-		public static void MapListViewProperty(IViewHandler viewHandler, ListView virtualView)
+		public static void MapListViewProperty(IViewHandler viewHandler, IListView virtualView)
 		{
 			var nativeView = (CUITableView)viewHandler.NativeView;
 			nativeView.ListView = virtualView;
 			nativeView.SizeToFit();
 		}
 
-		public static void MapReloadData(IViewHandler viewHandler, ListView virtualView)
+		public static void MapReloadData(IViewHandler viewHandler, IListView virtualView)
 		{
 			var nativeView = (CUITableView)viewHandler.NativeView;
 			nativeView?.ReloadData();

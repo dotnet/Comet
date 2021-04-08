@@ -25,6 +25,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.29" />
+		<PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
@@ -37,6 +38,13 @@
     <Folder Include="Platform\" />
     <Folder Include="Platform\iOS\" />
     <Folder Include="Handlers\Spacer\" />
+    <Folder Include="Handlers\Image\" />
+    <Folder Include="Handlers\RadioButton\" />
+    <Folder Include="Handlers\TabView\" />
+    <Folder Include="Platform\Android\" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid10.0'">
+    <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView" Version="28.0.0.3" />
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

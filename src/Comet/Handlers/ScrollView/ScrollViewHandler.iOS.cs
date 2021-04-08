@@ -8,7 +8,7 @@ using Microsoft.Maui.Graphics;
 
 namespace Comet.Handlers
 {
-	public class ScrollViewHandler : ViewHandler<ScrollView, UIScrollView>
+	public partial class ScrollViewHandler : ViewHandler<ScrollView, UIScrollView>
 	{
 		public ScrollViewHandler() : base(ViewHandler.ViewMapper)
 		{
