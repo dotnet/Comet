@@ -42,6 +42,7 @@
     <Folder Include="Handlers\RadioButton\" />
     <Folder Include="Handlers\TabView\" />
     <Folder Include="Platform\Android\" />
+    <Folder Include="Platform\Standard\" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid10.0'">
     <PackageReference Include="Xamarin.Android.Support.v7.RecyclerView" Version="28.0.0.3" />
