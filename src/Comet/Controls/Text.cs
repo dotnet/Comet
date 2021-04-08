@@ -14,6 +14,7 @@ namespace Comet
 		protected static Dictionary<string, string> TextHandlerPropertyMapper = new(HandlerPropertyMapper)
 		{
 			[nameof(Color)] = nameof(IText.TextColor),
+			[nameof(Value)] = nameof(IText.Text),
 		};
 		public Text(
 			Binding<string> value = null)

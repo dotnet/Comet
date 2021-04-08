@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Comet.Internal;
+using Microsoft.Maui;
 
 namespace Comet
 {
-	public interface IListView
+	public interface IListView : IView
 	{
 		int Sections();
 		int Rows(int section);
