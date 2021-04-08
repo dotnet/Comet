@@ -54,7 +54,7 @@ namespace Comet
 
 
 		//TODO: Expose these properties
-		bool IEditor.IsTextPredictionEnabled => this.GetEnvironment<bool>(nameof(IEditor.IsTextPredictionEnabled));
+		bool ITextInput.IsTextPredictionEnabled => this.GetEnvironment<bool>(nameof(IEditor.IsTextPredictionEnabled));
 
 
 		string ITextInput.Text
@@ -69,11 +69,11 @@ namespace Comet
 
 		string IText.Text => Text;
 
-		Color IText.TextColor => this.GetColor();
+		Color ITextStyle.TextColor => this.GetColor();
 
-		Font IText.Font => this.GetFont(null);
+		Font ITextStyle.Font => this.GetFont(null);
 
-		double IText.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
+		double ITextStyle.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
 
 		string IPlaceholder.Placeholder => this.Placeholder;
 

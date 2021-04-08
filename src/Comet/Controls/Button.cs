@@ -37,12 +37,12 @@ namespace Comet
 
 		string IText.Text => Text;
 
-		Font IText.Font => this.GetFont(null);
+		Font ITextStyle.Font => this.GetFont(null);
 
 
-		double IText.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
+		double ITextStyle.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
 
-		Color IText.TextColor => this.GetColor();
+		Color ITextStyle.TextColor => this.GetColor();
 
 		Thickness IPadding.Padding => this.GetPadding();
 

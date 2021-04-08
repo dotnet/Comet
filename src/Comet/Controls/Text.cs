@@ -38,10 +38,10 @@ namespace Comet
 		string IText.Text => Value?.CurrentValue;
 
 
-		Font IText.Font => this.GetFont(null);
+		Font ITextStyle.Font => this.GetFont(null);
 
 
-		double IText.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
+		double ITextStyle.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));
 
 
 		TextAlignment ITextAlignment.HorizontalTextAlignment => this.GetTextAlignment() ?? TextAlignment.Start;
@@ -56,7 +56,7 @@ namespace Comet
 
 		double ILabel.LineHeight => this.GetEnvironment<double>(nameof(ILabel.LineHeight));
 
-		Color IText.TextColor => this.GetColor();
+		Color ITextStyle.TextColor => this.GetColor();
 
 		Thickness IPadding.Padding => this.GetPadding();
 

@@ -1,5 +1,7 @@
 ﻿using System;
 using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+
 namespace Comet
 {
 	public class TimePicker : View, ITimePicker
@@ -51,8 +53,10 @@ namespace Comet
 			set => OnTimeChanged?.Invoke(value);
 		 }
 
-		double ITimePicker.CharacterSpacing => this.GetEnvironment<double>(nameof(IDatePicker.CharacterSpacing));
+		double ITextStyle.CharacterSpacing => this.GetEnvironment<double>(nameof(IDatePicker.CharacterSpacing));
 
-		Font ITimePicker.Font => this.GetFont(null);
+		Font ITextStyle.Font => this.GetFont(null);
+
+		Color ITextStyle.TextColor => this.GetColor();
 	}
 }

@@ -9,28 +9,28 @@ namespace Comet.Samples
 	{
 		readonly State<int> clickCount = 0;
 		readonly State<double> progress = .5;
+		readonly State<bool> isToggled = false;
+		readonly State<string> textValue = "Test";
+		readonly State<TimeSpan> timePickerTime = TimeSpan.FromSeconds(0);
 		[Body]
 		View view() =>
 			 
-			new VStack(spacing: 20)
+			new VStack(spacing: 6)
 			{
 				new Text("Welcome to Comet!!!").Margin(top: 100),
-				new HStack()
-				{
-					new Text("Label 1"),
-					new Text("Label 2"),
-				},
 				new Button(()=> $"I was Clicked: {clickCount}",()=>{
 					clickCount.Value++;
 				}).Color(Colors.Yellow)
 					.Background(Colors.Blue),
 				new ActivityIndicator(),
-				new CheckBox(),
-				new DatePicker(),
+				new CheckBox(isToggled),
+				new Toggle(isToggled),
+				new TextEditor(textValue),
 				new ProgressBar(progress),
 				new Slider(progress),
-
-
+				new Text(textValue),
+				new TextField(textValue),
+				new SecureField(textValue),
 			//}
 		}.Background(Colors.Beige);
 

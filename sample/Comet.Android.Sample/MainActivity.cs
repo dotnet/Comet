@@ -1,32 +1,13 @@
-﻿using System;
-using Android.App;
-using Android.OS;
-using Android.Runtime;
-using Android.Support.Design.Widget;
-using Android.Support.V7.App;
-using Android.Views;
-using Android.Widget;
-using Comet.Samples;
+﻿using Android.App;
+using Microsoft.Maui;
 
 namespace Comet.Android.Sample
 {
-	[Activity(Label = "@string/app_name", MainLauncher = true)]
-	public class MainActivity : CometActivity
-	{
-
-		protected override void OnCreate(Bundle savedInstanceState)
-		{
-			base.OnCreate(savedInstanceState);
-#if DEBUG
-			Comet.Reload.Init();
-#endif
-			Comet.Skia.UI.Init();
-
-			//Replaces native controls with Skia drawn controls
-			//Comet.Skia.Controls.Init ();
-
-			Page = new MainPage();
-		}
-	}
+	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+	[IntentFilter(
+		new[] { Microsoft.Maui.Essentials.Platform.Intent.ActionAppAction },
+		Categories = new[] { global::Android.Content.Intent.CategoryDefault })]
+	public class MainActivity : MauiAppCompatActivity
+	{	}
 }
 

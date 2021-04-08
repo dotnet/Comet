@@ -625,6 +625,8 @@ namespace Comet
 
 		LayoutAlignment IFrameworkElement.VerticalLayoutAlignment => this.GetEnvironment<LayoutAlignment>(nameof(IFrameworkElement.VerticalLayoutAlignment));
 
+		Semantics IFrameworkElement.Semantics => this.GetEnvironment<Semantics>(nameof(IFrameworkElement.Semantics));
+
 		void IFrameworkElement.Arrange(Rectangle bounds) => LayoutSubviews(bounds);
 		Size IFrameworkElement.Measure(double widthConstraint, double heightConstraint)
 			=>

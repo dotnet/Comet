@@ -17,7 +17,7 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
@@ -66,6 +66,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MainApplication.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -110,16 +111,13 @@
   <ItemGroup>
     <PackageReference Include="SkiaSharp" Version="1.68.1.1" />
     <PackageReference Include="SkiaSharp.Views" Version="1.68.1.1" />
-    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
-    <PackageReference Include="Xamarin.FFImageLoading">
-      <Version>2.4.11.982</Version>
-    </PackageReference>
-    <PackageReference Include="Clancey.Comet.Reload">
-      <Version>0.0.12-alpha</Version>
-    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData" />
+    <PackageReference Include="Xamarin.Google.Android.Material" />
+    <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4" />
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.29" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.0.0" />
     <PackageReference Include="Topten.RichTextKit">
       <Version>0.1.118</Version>
     </PackageReference>
@@ -133,8 +131,16 @@
       <Name>Comet</Name>
     </ProjectReference>
     <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
-      <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
+      <Project>{1057EEAD-899D-4BC2-BA73-6BC526AD3F19}</Project>
       <Name>Comet.Samples</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj">
+      <Name>Core</Name>
+      <Project>{8A53D192-072F-4EF2-8547-932D7538FFB9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj">
+      <Name>Essentials</Name>
+      <Project>{E2F234D6-3B2C-4F5E-B815-6D61B8AA5DC6}</Project>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

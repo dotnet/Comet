@@ -14,7 +14,7 @@ using NativeView = System.Object;
 
 namespace Comet.Handlers
 {
-	public partial class SpacerHandler : AbstractViewHandler<Spacer, NativeView>
+	public partial class SpacerHandler : ViewHandler<Spacer, NativeView>
 	{
 		public static readonly PropertyMapper<Spacer> Mapper = new PropertyMapper<Spacer>(ViewHandler.ViewMapper);
 		public SpacerHandler() : base(Mapper)

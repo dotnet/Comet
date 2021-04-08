@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -64,8 +65,10 @@ namespace Comet
 
 		DateTime IDatePicker.MaximumDate => MaximumDate;
 
-		double IDatePicker.CharacterSpacing => this.GetEnvironment<double>(nameof(IDatePicker.CharacterSpacing));
+		double ITextStyle.CharacterSpacing => this.GetEnvironment<double>(nameof(IDatePicker.CharacterSpacing));
 
-		Font IDatePicker.Font => this.GetFont(null);
+		Font ITextStyle.Font => this.GetFont(null);
+
+		Color ITextStyle.TextColor => this.GetColor();
 	}
 }

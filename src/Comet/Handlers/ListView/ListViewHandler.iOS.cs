@@ -8,7 +8,7 @@ using Comet.iOS;
 
 namespace Comet.Handlers
 {
-	public class ListViewHandler : AbstractViewHandler<ListView, CUITableView>
+	public class ListViewHandler : ViewHandler<ListView, CUITableView>
 	{
 		public static readonly PropertyMapper<ListView> Mapper = new PropertyMapper<ListView>(ViewHandler.ViewMapper)
 		{
