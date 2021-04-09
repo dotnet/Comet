@@ -52,7 +52,7 @@ namespace Comet
 			if (Bitmap?.Value != null)
 				return Bitmap.GetValueOrDefault().Size;
 
-			return Size.Zero;
+			return base.GetDesiredSize(availableSize);
 		}
 
 		private async void LoadBitmapFromSource(string source)
@@ -70,6 +70,7 @@ namespace Comet
 					var bitmap = await loadBitmapTask;
 					Bitmap = bitmap;
 					this.ViewPropertyChanged(nameof(Bitmap), bitmap);
+					this.InvalidateMeasurement();
 				}
 			}
 			catch (Exception exc)

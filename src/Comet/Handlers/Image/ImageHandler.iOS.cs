@@ -10,16 +10,6 @@ namespace Comet.Handlers
 {
 	public partial class ImageHandler : ViewHandler<Image, CUIImageView>
 	{
-		public static readonly PropertyMapper<Image> Mapper = new PropertyMapper<Image>(ViewHandler.ViewMapper)
-		{
-			[nameof(Image.Bitmap)] = MapBitmapProperty
-		};
-
-		public ImageHandler() : base(Mapper)
-		{
-
-		}
-
 		protected override CUIImageView CreateNativeView()
 		{
 			return new CUIImageView(new CGRect(0, 0, 44, 44));
@@ -30,7 +20,7 @@ namespace Comet.Handlers
 		{
 			var nativeView = (CUIImageView)viewHandler.NativeView;
 			nativeView.Bitmap = virtualView.Bitmap?.CurrentValue;
-			virtualView.InvalidateMeasurement();
+			((IView)virtualView).InvalidateMeasure();
 		}
 	}
 }

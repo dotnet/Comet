@@ -10,6 +10,6 @@ namespace Comet
 	{
 		public static IFontService FontService = new FallbackFontService();
 		public static IGraphicsService GraphicsService;
-		public static IBitmapService BitmapService;
+		public static IBitmapService BitmapService = new BitmapService();
 	}
 }

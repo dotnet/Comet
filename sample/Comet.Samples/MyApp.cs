@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Linq;
+using Comet.Samples.Models;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Hosting;
@@ -17,8 +19,10 @@ namespace Comet.Samples
 			 
 			new VStack(spacing: 6)
 			{
-				new Text("Welcome to Comet!!!").Margin(top: 100),
-				new Button(()=> $"I was Clicked: {clickCount}",()=>{
+				new Text("Welcome to Comet!").Margin(top: 100),
+				new Image("turtlerock.jpg").Frame(100,100), 
+				new Text(() => !isToggled ?  "Off" : "Hey I am toggled"),
+				new Button(()=>  $"I was Clicked: {clickCount}!",()=>{
 					clickCount.Value++;
 				}).Color(Colors.Yellow)
 					.Background(Colors.Blue),

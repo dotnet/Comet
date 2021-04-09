@@ -19,6 +19,7 @@ namespace Comet
 			style.Apply();
 
 			
+
 			builder.ConfigureMauiHandlers((_, handlersCollection) => handlersCollection.AddHandlers(new Dictionary<Type, Type>
 			{
 				{ typeof(AbstractLayout), typeof(LayoutHandler) },
@@ -26,7 +27,8 @@ namespace Comet
 				{ typeof(Button), typeof(ButtonHandler) },
 				{ typeof(CheckBox), typeof(CheckBoxHandler) },
 				{ typeof(DatePicker), typeof(DatePickerHandler) },
-				{typeof(ListView),typeof(ListViewHandler) },
+				{ typeof(Image) , typeof(ImageHandler) },
+				{ typeof(ListView),typeof(ListViewHandler) },
 				//{ typeof(Picker), typeof(PickerHandler) },
 				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
 				//{ typeof(SearchBar), typeof(SearchBarHandler) },

@@ -460,7 +460,7 @@ namespace Comet
 		public void InvalidateMeasurement()
 		{
 			MeasurementValid = false;
-			Parent?.InvalidateMeasurement();
+			(Parent as IView)?.InvalidateMeasure();
 		}
 
 		private Size _measuredSize;
@@ -480,7 +480,13 @@ namespace Comet
 				return BuiltView.GetDesiredSize(availableSize);
 			if (!IsMeasureValid)
 			{
-				MeasuredSize = this.ComputeDesiredSize(availableSize.Width, availableSize.Height);
+				var fe = (IFrameworkElement)this;
+				var ms = this.ComputeDesiredSize(availableSize.Width, availableSize.Height);
+				if(fe.Width != -1)
+					ms.Width = fe.Width;
+				if (fe.Height != -1)
+					ms.Height = fe.Height;
+				MeasuredSize = ms;
 			}
 			IsMeasureValid = true;
 			return MeasuredSize;
@@ -514,7 +520,7 @@ namespace Comet
 				MeasuredSize = GetDesiredSize(new Size(widthConstraint, heightConstraint));
 				if (MeasuredSize.Width <= 0 || MeasuredSize.Height <= 0)
 				{
-					Console.WriteLine("Why :(");
+					Console.WriteLine($"Why :( - {this}");
 				}
 			}
 
