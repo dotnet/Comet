@@ -131,12 +131,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Comet\Comet.csproj">
-      <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
-      <Name>Comet</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
-      <Project>{1057EEAD-899D-4BC2-BA73-6BC526AD3F19}</Project>
+      <Project>{1308AF4B-C0CC-4919-A483-35E761E208CB}</Project>
       <Name>Comet.Samples</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj">

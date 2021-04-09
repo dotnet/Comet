@@ -5,20 +5,19 @@
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <LangVersion>7.2</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
-    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
-  </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
     <Folder Include="ApiAudit\" />
     <Folder Include="GitHubIssues\" />
     <Folder Include="CommunityQuestions\" />
     <Folder Include="Views\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.Threading, Version=16.4.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </ItemGroup>
 </Project>

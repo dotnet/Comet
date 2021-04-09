@@ -1,7 +1,6 @@
-﻿<Project Sdk="MSBuild.Sdk.Extras">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
-    
+    <TargetFrameworks>net6.0;$(MauiPlatforms)</TargetFrameworks>
     <RootNamespace>Comet</RootNamespace>
     <AssemblyName>Comet</AssemblyName>
      <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
@@ -26,10 +25,6 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
 		<PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.29" />
 		<PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
-    <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Maui\" />
@@ -57,4 +52,13 @@
     </MonoDevelop>
   </ProjectExtensions>
   <Import Project="..\..\external\Maui\.nuspec\Microsoft.Maui.Controls.MultiTargeting.targets" />
+
+  <ItemGroup>
+    <None Include=".\..\external\Maui\.nuspec\Microsoft.Maui.Core.targets" Visible="False" Pack="True" PackagePath="build;buildTransitive" />
+    <None Include=".\..\external\Maui\.nuspec\Microsoft.Maui.Core.props" Visible="False" Pack="True" PackagePath="build;buildTransitive" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core-net6.csproj" />
+    <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials-net6.csproj" />
+  </ItemGroup>
 </Project>

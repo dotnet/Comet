@@ -25,7 +25,7 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <MtouchExtraArgs>--enable-repl</MtouchExtraArgs>
     <MtouchProfiling>true</MtouchProfiling>
   </PropertyGroup>
@@ -37,7 +37,7 @@
     <WarningLevel>4</WarningLevel>
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>9.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -51,9 +51,10 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <CodesignKey>iPhone Distribution: INTERACTIVE INNOVATIVE SOLUTIONS LLC</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>9.0</LangVersion>
     <MtouchExtraArgs>--interpreter</MtouchExtraArgs>
     <CodesignProvision>WildCard</CodesignProvision>
+    <MtouchLink>SdkOnly</MtouchLink>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhone' ">
     <DebugType>none</DebugType>
@@ -64,7 +65,8 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchArch>ARM64</MtouchArch>
     <CodesignKey>iPhone Developer</CodesignKey>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>9.0</LangVersion>
+    <MtouchLink>SdkOnly</MtouchLink>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -138,16 +140,12 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
-      <Project>{1057EEAD-899D-4BC2-BA73-6BC526AD3F19}</Project>
+      <Project>{1308AF4B-C0CC-4919-A483-35E761E208CB}</Project>
       <Name>Comet.Samples</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj">
       <Project>{8A53D192-072F-4EF2-8547-932D7538FFB9}</Project>
       <Name>Core</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet\Comet.csproj">
-      <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
-      <Name>Comet</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj">
       <Project>{E2F234D6-3B2C-4F5E-B815-6D61B8AA5DC6}</Project>

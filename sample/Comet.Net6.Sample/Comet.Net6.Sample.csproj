@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>net6.0-ios;net6.0-android</TargetFrameworks>
+    <TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('osx')) Or Exists('$(MSBuildExtensionsPath)..\..\packs\Microsoft.MacCatalyst.Sdk')">$(TargetFrameworks);net6.0-maccatalyst</TargetFrameworks>
+    <RuntimeIdentifier Condition="'$(TargetFramework)' == 'net6.0-ios'">iossimulator-x64</RuntimeIdentifier>
+    <RuntimeIdentifier Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">maccatalyst-x64</RuntimeIdentifier>
+    <OutputType>Exe</OutputType>
+    <SingleProject>true</SingleProject>
+    <ApplicationTitle>Comet</ApplicationTitle>
+    <ApplicationId>com.microsoft.Comet</ApplicationId>
+    <ApplicationVersion>1.0</ApplicationVersion>
+    <AndroidVersionCode>1</AndroidVersionCode>
+    <IsPackable>false</IsPackable>
+  <!-- Debugger workaround -->
+    <MtouchExtraArgs Condition="'$(TargetFramework)' == 'net6.0-ios' Or '$(TargetFramework)' == 'net6.0-maccatalyst'">$(MtouchExtraArgs) --setenv:MONO_THREADS_SUSPEND=preemptive</MtouchExtraArgs>
+  </PropertyGroup>
+  <ItemGroup>
+    <MauiImage Include="Resources\AppIcons\appicon.svg" ForegroundFile="Resources\AppIcons\appiconfg.svg" IsAppIcon="true" />
+    <MauiImage Include="Resources\Images\*" />
+    <MauiFont Include="Resources\Fonts\*" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />
+    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core-net6.csproj" />
+    <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials-net6.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\.nuspec\Microsoft.Maui.Core.targets" Visible="False" Pack="True" PackagePath="build;buildTransitive" />
+    <None Include="..\..\..\.nuspec\Microsoft.Maui.Core.props" Visible="False" Pack="True" PackagePath="build;buildTransitive" />
+  </ItemGroup>
+</Project>

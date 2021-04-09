@@ -23,11 +23,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
-    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
-    <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj" />
-  </ItemGroup>
-  <ItemGroup>
     <Folder Include="Helpers\" />
     <Folder Include="Animations\" />
   </ItemGroup>
