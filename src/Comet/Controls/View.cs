@@ -319,7 +319,7 @@ namespace Comet
 			//If there is no style, set the default key
 			var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
 			Environment.SetValue(typedKey, value, true);
-			MainThread.BeginInvokeOnMainThread(() => {
+			ThreadHelper.RunOnMainThread(() => {
 				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
@@ -328,7 +328,7 @@ namespace Comet
 		{
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			Environment.SetValue(typedKey, value, true);
-			MainThread.BeginInvokeOnMainThread(() => {
+			ThreadHelper.RunOnMainThread(() => {
 				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
@@ -648,6 +648,6 @@ namespace Comet
 				newView.SetDeepPropertyValue(change.Key, change.Value);
 			}
 		}
-		void IHotReloadableView.Reload() => MainThread.BeginInvokeOnMainThread(()=>Reload(true));
+		void IHotReloadableView.Reload() => ThreadHelper.RunOnMainThread(() => Reload(true));
 	}
 }

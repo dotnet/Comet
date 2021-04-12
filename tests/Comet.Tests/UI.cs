@@ -5,6 +5,7 @@ using Comet.Tests.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
+using Microsoft.Maui.Hosting.Internal;
 using Microsoft.Maui.HotReload;
 
 namespace Comet.Tests
@@ -18,6 +19,7 @@ namespace Comet.Tests
 			if (hasInit && !force)
 				return;
 			hasInit = true;
+			ThreadHelper.SetFireOnMainThread((a) => a?.Invoke()); 
 			var handlers = new Dictionary<Type, Type> {
 					{ typeof(Button), typeof(GenericViewHandler)},
 					{ typeof(ContentView), typeof(GenericViewHandler)},

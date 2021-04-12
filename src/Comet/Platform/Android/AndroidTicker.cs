@@ -48,7 +48,7 @@ namespace Comet.Services
 		public override void Start() => _val.Start();
 		public override void Stop()
 		{
-			MainThread.BeginInvokeOnMainThread(() => _val?.Cancel());
+			ThreadHelper.RunOnMainThread(() => _val?.Cancel());
 		}
 	}
 }

@@ -211,7 +211,7 @@ namespace Comet
 			var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
 			contextualObject.SetValue(typedKey, value, cascades);
 			//TODO: Verify this is needed 
-			MainThread.BeginInvokeOnMainThread(() => {
+			ThreadHelper.RunOnMainThread(() => {
 				contextualObject.ContextPropertyChanged(typedKey, value, cascades);
 			});
 			return contextualObject;
@@ -224,7 +224,7 @@ namespace Comet
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			contextualObject.SetValue(typedKey, value, cascades);
 			//TODO: Verify this is needed 
-			MainThread.BeginInvokeOnMainThread(() => {
+			ThreadHelper.RunOnMainThread(() => {
 				contextualObject.ContextPropertyChanged(typedKey, value, cascades);
 			});
 			return contextualObject;
@@ -236,7 +236,7 @@ namespace Comet
 			key = ContextualObject.GetControlStateKey(state, key);
 			if (!contextualObject.SetValue(key, value, cascades))
 				return contextualObject;
-			MainThread.BeginInvokeOnMainThread(() => {
+			ThreadHelper.RunOnMainThread(() => {
 				contextualObject.ContextPropertyChanged(key, value, cascades);
 			});
 			return contextualObject;

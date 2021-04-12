@@ -220,7 +220,7 @@ namespace Comet
 				}
 				var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
 				//TODO: Change this to use notify and property name
-				MainThread.BeginInvokeOnMainThread(()=>
+				ThreadHelper.RunOnMainThread(()=>
 				view.BindingPropertyChanged(notify, propertyName, prop, value));
 
 				//TODO: Make sure we handle nested binding objects

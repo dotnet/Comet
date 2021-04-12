@@ -34,6 +34,8 @@ namespace Comet.Tests.Handlers
 			set => ChangedProperties[nameof(Frame)] = value;
 		}
 
+		IView IViewHandler.VirtualView => CurrentView;
+
 		public readonly Dictionary<string, object> ChangedProperties = new Dictionary<string, object>();
 
 
