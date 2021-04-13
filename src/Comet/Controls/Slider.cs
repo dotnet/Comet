@@ -72,11 +72,7 @@ namespace Comet
 
 		double IRange.Value {
 			get => Value;
-			set
-			{
-				Value.Set(value);
-				ValueChanged(value);
-			}
+			set => ValueChanged(value);
 		}
 
 		public void ValueChanged(double value)

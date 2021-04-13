@@ -7,7 +7,7 @@ namespace Comet
 {
 	public class Toggle : View, ISwitch, IThumbView
 	{
-		protected static Dictionary<string, string> SliderHandlerPropertyMapper = new()
+		protected static Dictionary<string, string> ToggleHandlerPropertyMapper = new()
 		{
 			[nameof(Color)] = nameof(ISwitch.TrackColor),
 			[nameof(EnvironmentKeys.Slider.ThumbColor)] = nameof(ISwitch.ThumbColor),
@@ -35,5 +35,8 @@ namespace Comet
 		Color ISwitch.TrackColor => this.GetColor();
 
 		Color ISwitch.ThumbColor => this.GetThumbColor();
+
+		protected override string GetHandlerPropertyName(string property)
+			=> ToggleHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}
 }
