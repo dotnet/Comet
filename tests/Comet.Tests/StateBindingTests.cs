@@ -58,7 +58,7 @@ namespace Comet.Tests
 			InitializeHandlers(parentView);
 			Assert.False(StateManager.IsBuilding);
 			var parentGlobalState = parentView.InternalGetState().GlobalProperties;
-			Assert.Equal(1, parentGlobalState.Count);
+			Assert.Single(parentGlobalState);
 
 
 			var childGlobalState = parentView.BuiltView.InternalGetState().GlobalProperties.Count;

@@ -486,6 +486,20 @@ namespace Comet
 					ms.Width = fe.Width;
 				if (fe.Height != -1)
 					ms.Height = fe.Height;
+				//TODO: Remove this when we get some LayoutOptions...
+				//This check ignores MArgin which is bad
+				var hSizing = this.GetHorizontalSizing(this.Parent as ContainerView);
+				var vSizing = this.GetVerticalSizing(this.Parent as ContainerView);
+				if (hSizing == Sizing.Fill)
+				{
+					ms.Width = availableSize.Width;
+				}
+				if (vSizing == Sizing.Fill)
+				{
+					ms.Height = availableSize.Height;
+				}
+			
+
 				MeasuredSize = ms;
 			}
 			IsMeasureValid = true;
