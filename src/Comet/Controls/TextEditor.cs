@@ -82,6 +82,8 @@ namespace Comet
 			set => throw new NotImplementedException();
 		}
 
+		Keyboard ITextInput.Keyboard => this.GetEnvironment<Keyboard>(nameof(ITextInput.Keyboard));
+
 		public void ValueChanged(string value)
 			=> OnEditingChanged?.Invoke(value);
 
