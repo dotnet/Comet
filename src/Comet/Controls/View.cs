@@ -309,7 +309,7 @@ namespace Comet
 		public static void SetGlobalEnvironment(string key, object value)
 		{
 			Environment.SetValue(key, value, true);
-			MainThread.BeginInvokeOnMainThread(() => {
+			ThreadHelper.RunOnMainThread(() => {
 				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(key, value));
 			});
 
