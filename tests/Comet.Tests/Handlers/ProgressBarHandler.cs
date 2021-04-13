@@ -11,6 +11,6 @@ namespace Comet.Tests.Handlers
 
 		public Slider VirtualView => (Slider)CurrentView;
 
-		private Size HandleOnGetIntrinsicSize(Size arg) => new SizeF(100, 20);
+		private Size HandleOnGetIntrinsicSize(double widthConstraint, double heightConstraint) => new SizeF(100, 20);
 	}
 }

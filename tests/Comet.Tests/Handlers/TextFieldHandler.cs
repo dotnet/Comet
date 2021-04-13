@@ -11,7 +11,7 @@ namespace Comet.Tests.Handlers
 
 		public TextField VirtualView => (TextField)CurrentView;
 
-		private Size HandleOnGetIntrinsicSize(Size arg)
+		private Size HandleOnGetIntrinsicSize(double widthConstraint, double heightConstraint)
 		{
 			var length = VirtualView.Text?.CurrentValue?.Length ?? 0;
 			return new SizeF(10 * length, 12);

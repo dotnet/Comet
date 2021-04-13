@@ -19,14 +19,14 @@ namespace Comet.Tests.Handlers
 
 		public bool HasContainer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-		public SizeF GetIntrinsicSize(Size availableSize) => OnGetIntrinsicSize?.Invoke(availableSize) ?? View.UseAvailableWidthAndHeight;
+		public SizeF GetIntrinsicSize(double widthConstraint, double heightConstraint) => OnGetIntrinsicSize?.Invoke(widthConstraint,heightConstraint) ?? View.UseAvailableWidthAndHeight;
 
 		public void SetFrame(RectangleF frame)
 		{
 			Frame = frame;
 		}
 
-		public Func<Size, Size> OnGetIntrinsicSize { get; set; }
+		public Func<double, double, Size> OnGetIntrinsicSize { get; set; }
 
 		public Rectangle Frame
 		{
@@ -61,7 +61,7 @@ namespace Comet.Tests.Handlers
 		}
 		public void DisconnectHandler() => CurrentView = null;
 		void IViewHandler.SetMauiContext(IMauiContext mauiContext) => MauiContext = mauiContext;
-		Size IViewHandler.GetDesiredSize(double widthConstraint, double heightConstraint) => OnGetIntrinsicSize?.Invoke(new Size(widthConstraint, heightConstraint)) ?? View.UseAvailableWidthAndHeight;
+		Size IViewHandler.GetDesiredSize(double widthConstraint, double heightConstraint) => GetIntrinsicSize(widthConstraint, heightConstraint);
 		void IViewHandler.SetFrame(Rectangle frame) => Frame = frame;
 	}
 }

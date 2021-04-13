@@ -548,7 +548,7 @@ namespace Comet
 		{
 			Frame = frame;
 			if (BuiltView != null)
-				BuiltView.Frame = frame;
+				BuiltView.LayoutSubviews(frame);
 		}
 		public override string ToString() => $"{this.GetType()} - {this.Id}";
 
