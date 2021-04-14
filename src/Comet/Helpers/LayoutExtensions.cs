@@ -2,6 +2,7 @@
 
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Primitives;
 
 // ReSharper disable once CheckNamespace
 namespace Comet
@@ -105,8 +106,8 @@ namespace Comet
 			}
 			else
 			{
-				var horizontalSizing = view.GetHorizontalSizing(view.Parent as ContainerView, Sizing.Fit);
-				if (horizontalSizing == Sizing.Fill)
+				var horizontalSizing = view.GetHorizontalLayoutAlignment(view.Parent as ContainerView, LayoutAlignment.Start);
+				if (horizontalSizing == LayoutAlignment.Fill)
 					width = frame.Width;
 			}
 
@@ -116,8 +117,8 @@ namespace Comet
 			}
 			else
 			{
-				var verticalSizing = view.GetVerticalSizing(view.Parent as ContainerView, Sizing.Fit);
-				if (verticalSizing == Sizing.Fill)
+				var verticalSizing = view.GetVerticalLayoutAlignment(view.Parent as ContainerView, LayoutAlignment.Start);
+				if (verticalSizing == LayoutAlignment.Fill)
 					height = frame.Height;
 			}
 
@@ -154,45 +155,45 @@ namespace Comet
 
 		public static T FillHorizontal<T>(this T view, bool cascades = true) where T : View
 		{
-			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill, cascades);
+			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill, cascades);
 			return view;
 		}
 
 		public static T FillVertical<T>(this T view, bool cascades = true) where T : View
 		{
-			view.SetEnvironment(EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill, cascades);
+			view.SetEnvironment(EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill, cascades);
 			return view;
 		}
 
 		public static T FitHorizontal<T>(this T view, bool cascades = true) where T : View
 		{
-			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fit, cascades);
+			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Start, cascades);
 			return view;
 		}
 
 		public static T FitVertical<T>(this T view, bool cascades = true) where T : View
 		{
-			view.SetEnvironment(EnvironmentKeys.Layout.VerticalSizing, Sizing.Fit, cascades);
+			view.SetEnvironment(EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Start, cascades);
 			return view;
 		}
 
-		public static Sizing GetHorizontalSizing(this View view, ContainerView container, Sizing defaultSizing = Sizing.Fit)
+		public static LayoutAlignment GetHorizontalLayoutAlignment(this View view, ContainerView container, LayoutAlignment defaultSizing = LayoutAlignment.Start)
 		{
-			var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.HorizontalSizing);
-			if (sizing != null) return (Sizing)sizing;
+			var sizing = view.GetEnvironment<LayoutAlignment?>(view, EnvironmentKeys.Layout.HorizontalLayoutAlignment);
+			if (sizing != null) return (LayoutAlignment)sizing;
 
 			if (container != null)
-				sizing = view.GetEnvironment<Sizing?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.HorizontalSizing}");
+				sizing = view.GetEnvironment<LayoutAlignment?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.HorizontalLayoutAlignment}");
 			return sizing ?? defaultSizing;
 		}
 
-		public static Sizing GetVerticalSizing(this View view, ContainerView container, Sizing defaultSizing = Sizing.Fit)
+		public static LayoutAlignment GetVerticalLayoutAlignment(this View view, ContainerView container, LayoutAlignment defaultSizing = LayoutAlignment.Start)
 		{
-			var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.VerticalSizing);
-			if (sizing != null) return (Sizing)sizing;
+			var sizing = view.GetEnvironment<LayoutAlignment?>(view, EnvironmentKeys.Layout.VerticalLayoutAlignment);
+			if (sizing != null) return (LayoutAlignment)sizing;
 
 			if (container != null)
-				sizing = view.GetEnvironment<Sizing?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.VerticalSizing}");
+				sizing = view.GetEnvironment<LayoutAlignment?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.VerticalLayoutAlignment}");
 			return sizing ?? defaultSizing;
 		}
 

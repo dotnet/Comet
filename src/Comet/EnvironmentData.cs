@@ -41,8 +41,8 @@ namespace Comet
 			public const string Margin = "Layout.Margin";
 			public const string Padding = "Layout.Padding";
 			public const string Constraints = "Layout.Constraints";
-			public const string HorizontalSizing = "Layout.HorizontalSizing";
-			public const string VerticalSizing = "Layout.VerticalSizing";
+			public const string HorizontalLayoutAlignment = "Layout.HorizontalSizing";
+			public const string VerticalLayoutAlignment = "Layout.VerticalSizing";
 			public const string FrameConstraints = "Layout.FrameConstraints";
 			public const string IgnoreSafeArea = "Layout.IgnoreSafeArea";
 		}

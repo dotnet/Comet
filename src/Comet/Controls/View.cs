@@ -641,9 +641,9 @@ namespace Comet
 		//TODO: lets update these to be actual property
 		FlowDirection IFrameworkElement.FlowDirection => this.GetEnvironment<FlowDirection>(nameof(IFrameworkElement.FlowDirection));
 
-		LayoutAlignment IFrameworkElement.HorizontalLayoutAlignment => this.GetEnvironment<LayoutAlignment>(nameof(IFrameworkElement.HorizontalLayoutAlignment));
+		LayoutAlignment IFrameworkElement.HorizontalLayoutAlignment => this.GetHorizontalSizing(this.Parent as ContainerView);
 
-		LayoutAlignment IFrameworkElement.VerticalLayoutAlignment => this.GetEnvironment<LayoutAlignment>(nameof(IFrameworkElement.VerticalLayoutAlignment));
+		LayoutAlignment IFrameworkElement.VerticalLayoutAlignment => this.GetVerticalSizing(this.Parent as ContainerView);
 
 		Semantics IFrameworkElement.Semantics => this.GetEnvironment<Semantics>(nameof(IFrameworkElement.Semantics));
 

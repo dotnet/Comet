@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Microsoft.Maui;
+using Microsoft.Maui.Primitives;
 
 namespace Comet.Styles
 {
@@ -280,28 +281,28 @@ namespace Comet.Styles
 
 		void SetDefaultControlSizingForLayouts()
 		{
-			void setSizing(Type control, Type container, string keyType, Sizing sizing)
+			void setSizing(Type control, Type container, string keyType, LayoutAlignment sizing)
 			{
 				var key = $"{container.Name}.{keyType}";
 				SetEnvironmentValue(null, control, key, sizing);
 			}
-			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(Slider), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(Slider), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
 		}
 	}
 }
