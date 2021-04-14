@@ -488,13 +488,13 @@ namespace Comet
 					ms.Height = fe.Height;
 				//TODO: Remove this when we get some LayoutOptions...
 				//This check ignores MArgin which is bad
-				var hSizing = this.GetHorizontalSizing(this.Parent as ContainerView);
-				var vSizing = this.GetVerticalSizing(this.Parent as ContainerView);
-				if (hSizing == Sizing.Fill)
+				var hSizing = this.GetHorizontalLayoutAlignment(this.Parent as ContainerView);
+				var vSizing = this.GetVerticalLayoutAlignment(this.Parent as ContainerView);
+				if (hSizing == LayoutAlignment.Fill)
 				{
 					ms.Width = availableSize.Width;
 				}
-				if (vSizing == Sizing.Fill)
+				if (vSizing == LayoutAlignment.Fill)
 				{
 					ms.Height = availableSize.Height;
 				}
@@ -641,9 +641,9 @@ namespace Comet
 		//TODO: lets update these to be actual property
 		FlowDirection IFrameworkElement.FlowDirection => this.GetEnvironment<FlowDirection>(nameof(IFrameworkElement.FlowDirection));
 
-		LayoutAlignment IFrameworkElement.HorizontalLayoutAlignment => this.GetHorizontalSizing(this.Parent as ContainerView);
+		LayoutAlignment IFrameworkElement.HorizontalLayoutAlignment => this.GetHorizontalLayoutAlignment(this.Parent as ContainerView);
 
-		LayoutAlignment IFrameworkElement.VerticalLayoutAlignment => this.GetVerticalSizing(this.Parent as ContainerView);
+		LayoutAlignment IFrameworkElement.VerticalLayoutAlignment => this.GetVerticalLayoutAlignment(this.Parent as ContainerView);
 
 		Semantics IFrameworkElement.Semantics => this.GetEnvironment<Semantics>(nameof(IFrameworkElement.Semantics));
 

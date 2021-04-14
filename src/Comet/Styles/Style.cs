@@ -286,23 +286,23 @@ namespace Comet.Styles
 				var key = $"{container.Name}.{keyType}";
 				SetEnvironmentValue(null, control, key, sizing);
 			}
-			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(Slider), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, LayoutAlignment.Fill);
-			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, LayoutAlignment.Fill);
+			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(Slider), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 		}
 	}
 }
