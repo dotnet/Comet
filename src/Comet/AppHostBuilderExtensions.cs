@@ -32,6 +32,7 @@ namespace Comet
 				//{ typeof(Picker), typeof(PickerHandler) },
 				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
 				//{ typeof(SearchBar), typeof(SearchBarHandler) },
+				{typeof(ShapeView), typeof(ShapeViewHandler)},
 				{ typeof(SecureField), typeof(EntryHandler) },
 				{ typeof(Slider), typeof(SliderHandler) },
 				{ typeof(Stepper), typeof(StepperHandler) },
