@@ -1,7 +1,7 @@
 ﻿using System;
 using Android.Views;
 using Android.Widget;
-using Android.Support.V7.Widget;
+using AndroidX.RecyclerView.Widget;
 using AView = Android.Views.View;
 using Comet.Android.Controls;
 using System.Drawing;
