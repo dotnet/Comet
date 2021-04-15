@@ -126,23 +126,7 @@ namespace Comet
 			}
 			ViewUpdateProperties.Clear();
 		}
-		/// <summary>
-		/// This returns true, if it updated the UI based on the changes
-		/// False, if it couldnt update, or the value was global so the whole UI needs refreshed
-		/// </summary>
-		/// <param name="updates"></param>
-		/// <returns></returns>
-		//public bool UpdateValues(IEnumerable<((INotifyPropertyRead BindingObject, string PropertyName) property, object value)> updates)
-		//{
-		//    bool didUpdate = true;
-		//    foreach (var update in updates)
-		//    {
 
-		//        UpdateValue(update.property,update.value);
-
-		//    }
-		//    return didUpdate;
-		//}
 		protected void UpdatePropertyChangeProperty(View view, string fullProperty, object value)
 		{
 			if (view.Parent != null)

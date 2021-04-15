@@ -243,9 +243,9 @@ namespace Comet
 				}
 			}
 
-			/// We need to make this check if there are global views. If so, return itself so it can be in a container view
-			/// If HotReload never collapse!
-			/// If not collapse down to the built view.
+			// We need to make this check if there are global views. If so, return itself so it can be in a container view
+			// If HotReload never collapse!
+			// If not collapse down to the built view.
 			//return HotReloadHelper.IsEnabled || hasGlobalState ? this : BuiltView;
 			return BuiltView;
 		}

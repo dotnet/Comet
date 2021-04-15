@@ -10,15 +10,22 @@ namespace Comet.Services
 	{
 		public override async Task<Bitmap> LoadBitmapFromUrlAsync(string url)
 		{
+#if NET6_0
+			return await Task.FromResult<Bitmap>(null);
+#else
 			var image = await ImageService.Instance
 				.LoadUrl(url)
 				.AsBitmapDrawableAsync();
 
 			return new AndroidBitmap(image.Bitmap);
+#endif
 		}
 
 		public override async Task<Bitmap> LoadBitmapFromFileAsync(string file)
 		{
+#if NET6_0
+			return await Task.FromResult<Bitmap>(null);
+#else
 			try
 			{
 				var image = await ImageService.Instance
@@ -32,6 +39,7 @@ namespace Comet.Services
 				var image = await ImageService.Instance.LoadCompiledResource(file).AsBitmapDrawableAsync();
 				return new AndroidBitmap(image.Bitmap);
 			}
+#endif
 		}
 	}
 }

@@ -10,20 +10,28 @@ namespace Comet.Services
 	{
 		public override async Task<Bitmap> LoadBitmapFromUrlAsync(string url)
 		{
+#if NET6_0
+			return await Task.FromResult<Bitmap>(null);
+#else
 			var image = await ImageService.Instance
 				.LoadUrl(url)
 				.AsUIImageAsync();
 
 			return new UIImageBitmap(image);
+#endif
 		}
 
 		public override async Task<Bitmap> LoadBitmapFromFileAsync(string file)
 		{
+#if NET6_0
+			return await Task.FromResult<Bitmap>(null);
+#else
 			var image = await ImageService.Instance
 				.LoadFile(file)
 				.AsUIImageAsync();
 
 			return new UIImageBitmap(image);
+#endif
 		}
 	}
 }

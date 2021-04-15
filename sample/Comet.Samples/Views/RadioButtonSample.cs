@@ -3,7 +3,7 @@
 	public class RadioButtonSample : View
 	{
 		[Body]
-		View Body() => new VStack
+		View body() => new VStack
 		{
 			new RadioGroup
 			{

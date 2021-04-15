@@ -20,7 +20,7 @@ namespace Comet.Samples.Comparisons
 	public class Section1 : View
 	{
 		[Body]
-		View Body()
+		View body()
 			=> new Text("Hello Comet!");
 	}
 }

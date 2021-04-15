@@ -6,7 +6,7 @@ namespace Comet.Android.Controls
 {
 	public class CometRecyclerView : RecyclerView
 	{
-		private ListView listView;
+		//private ListView listView;
 
 		public CometRecyclerView(IMauiContext mauiContext) : base(mauiContext.Context)
 		{
