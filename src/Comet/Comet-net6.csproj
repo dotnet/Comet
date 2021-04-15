@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>$(MauiPlatforms)</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;netstandard2.0;$(MauiPlatforms)</TargetFrameworks>
     <RootNamespace>Comet</RootNamespace>
     <AssemblyName>Comet</AssemblyName>
   </PropertyGroup>
@@ -18,6 +18,8 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
 		<PackageReference Include="Microsoft.Maui.Graphics" />
     <PackageReference Include="Reloadify3000" Version="1.0.4" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
   </ItemGroup>
   <ItemGroup Condition="$([MSBuild]::IsOSPlatform('windows'))">
     <None Include="bin\$(Configuration)\$(WindowsTargetFramework)\Microsoft.Maui.pri" Visible="False" Pack="True" PackagePath="runtimes\$(WindowsTargetFramework)\native" />

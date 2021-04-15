@@ -17,7 +17,7 @@ namespace Comet
 
 		public static Rectangle ApplyPadding(this Rectangle rect, Thickness thickness)
 		{
-			if (thickness == null)
+			if (thickness == Thickness.Zero)
 				return rect;
 			rect.X += thickness.Left;
 			rect.Y += thickness.Top;

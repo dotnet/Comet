@@ -9,7 +9,6 @@ using Comet.Internal;
 //using System.Reflection;
 using Comet.Reflection;
 using Microsoft.Maui;
-using Microsoft.Maui;
 using Microsoft.Maui.Essentials;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.HotReload;
