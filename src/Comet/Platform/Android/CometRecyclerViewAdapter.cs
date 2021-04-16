@@ -30,9 +30,8 @@ namespace Comet.Android.Controls
 				//		cometParent.CurrentView = null;
 
 				var parent = rvh.Parent;
-				//TODO: Bring back DisplayScale
-				var density = 1f;// AndroidContext.DisplayScale;
-
+				var density = CometApp.DisplayScale;
+			
 				var scaledSize = new Size(parent.Width / density, parent.Height / density);
 				var measuredSize = view.Measure(scaledSize, true);
 				view.MeasuredSize = measuredSize;

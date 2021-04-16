@@ -17,6 +17,9 @@ namespace Comet
 		public static CometApp CurrentApp { get; protected set; }
 		public static CometWindow CurrentWindow { get; protected set; }
 		public static IMauiContext MauiContext => CurrentWindow?.MauiContext;
+
+		public static float DisplayScale => CurrentWindow?.DisplayScale ?? 1;
+
 		IView IPage.View { get => this.ReplacedView; set => throw new NotImplementedException(); }
 
 		public virtual void Configure(IAppHostBuilder appBuilder)
