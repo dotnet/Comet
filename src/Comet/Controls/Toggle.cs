@@ -11,7 +11,7 @@ namespace Comet
 		{
 			[nameof(Color)] = nameof(ISwitch.TrackColor),
 			[nameof(EnvironmentKeys.Slider.ThumbColor)] = nameof(ISwitch.ThumbColor),
-			[nameof(IsOn)] = nameof(ISwitch.IsToggled),
+			[nameof(IsOn)] = nameof(ISwitch.IsOn),
 		};
 
 		public Toggle(
@@ -30,7 +30,7 @@ namespace Comet
 		}
 
 		public Action<bool> IsOnChanged { get; private set; }
-		bool ISwitch.IsToggled { get => IsOn; set => IsOnChanged.Invoke(value); }
+		bool ISwitch.IsOn { get => IsOn; set => IsOnChanged.Invoke(value); }
 
 		Color ISwitch.TrackColor => this.GetColor();
 

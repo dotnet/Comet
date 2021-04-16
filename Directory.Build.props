@@ -1,5 +1,5 @@
 <Project>
-  <Import Project="External\Maui\eng\Version.props" />
+  <Import Project="External\Maui\eng\Versions.props" />
   <PropertyGroup>
     <BuildForWinUI Condition="'$(SolutionFileName)' == 'Comet.WinUI.sln'">true</BuildForWinUI>
     <BuildForNet6 Condition="'$(SolutionFileName)' == 'Comet-net6.sln' or '$(BuildForWinUI)' == 'true'">true</BuildForNet6>
