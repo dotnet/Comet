@@ -8,6 +8,8 @@
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <LangVersion>9.0</LangVersion>
+    <DebugType></DebugType>
+    <NoWarn>1701;1702;0649;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
