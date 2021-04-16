@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Comet.Graphics;
 using Comet.Samples.Models;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
@@ -21,7 +22,8 @@ namespace Comet.Samples
 			{
 				new Text("Welcome to Comet!").Margin(top: 100).Color(Colors.Blue),
 				// new Image("turtlerock.jpg").Frame(100,100), 
-				new ShapeView(new Circle().Stroke(Colors.Fuchsia,2)).Frame(100,100).Background(Colors.White),
+				new ShapeView(new Circle().Stroke(Colors.Fuchsia,2).Fill(new RadialGradient(new Color[] { Colors.LightGray, Colors.Black}, new Point(.5, .5), 0, 100))).Frame(100,100).Background(Colors.White),
+				new ShapeView(new Shapes.Rectangle().Stroke(Colors.Fuchsia,2).Fill(new LinearGradient(new Color[] { Colors.LightGray, Colors.Black}, new Point(0, 0), new Point(1,1)))).Frame(100,100).Background(Colors.White),
 				new ShapeView(new Ellipse().Stroke(Colors.Fuchsia,2).Fill(Colors.Blue)).Frame(100,100).Background(Colors.White),
 				new Text(() => !isToggled ?  "Off" : "Hey I am toggled"),
 				new Button(()=>  $"I was Clicked: {clickCount}!!!!!",()=>{

@@ -71,8 +71,7 @@ namespace Comet
 			{
 				if (fill is Color color)
 				{
-					fillPaint.BackgroundColor = color;
-					canvas.SetFillPaint(fillPaint, shapeBounds);
+					canvas.FillColor = color;
 					canvas.FillPath(path);
 				}
 				else if (fill is Gradient gradient)
@@ -90,27 +89,28 @@ namespace Comet
 
 					if (gradient is LinearGradient linearGradient)
 					{
-						var x1 = rect.X + rect.Width * linearGradient.StartPoint.X;
-						var y1 = rect.Y + rect.Height * linearGradient.StartPoint.Y;
+						var x1 = (float)(rect.X + rect.Width * linearGradient.StartPoint.X);
+						var y1 = (float)(rect.Y + rect.Height * linearGradient.StartPoint.Y);
 
-						var x2 = rect.X + rect.Width * linearGradient.EndPoint.X;
-						var y2 = rect.Y + rect.Height * linearGradient.EndPoint.Y;
+						var x2 = (float)(rect.X + rect.Width * linearGradient.EndPoint.X);
+						var y2 = (float)(rect.Y + rect.Height * linearGradient.EndPoint.Y);
+
 						fillPaint.PaintType = PaintType.LinearGradient;
 						fillPaint.Stops = colors;
-						canvas.SetFillPaint(fillPaint, shapeBounds);
+						canvas.SetFillPaint(fillPaint, x1, y1, x2, y2);
 						canvas.FillPath(path);
 					}
 					else if (gradient is RadialGradient radialGradient)
 					{
-						var x1 = rect.X + rect.Width * radialGradient.Center.X;
-						var y1 = rect.Y + rect.Height * radialGradient.Center.Y;
-						var r = radialGradient.EndRadius;
-
+						var x1 = (float)(rect.X + rect.Width * radialGradient.Center.X);
+						var y1 = (float)(rect.Y + rect.Height * radialGradient.Center.Y);
+						var x2 = x1;
+						var y2 = (float)(y1  + radialGradient.EndRadius);
 
 						fillPaint.PaintType = PaintType.RadialGradient;
 						fillPaint.Stops = colors;
-
-						canvas.SetFillPaint(fillPaint, shapeBounds);
+						
+						canvas.SetFillPaint(fillPaint, x1, y1, x2, y2);
 						canvas.FillPath(path);
 					}
 
