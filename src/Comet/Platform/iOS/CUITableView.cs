@@ -15,6 +15,7 @@ namespace Comet.iOS
 			_delegate = new CUITableViewSource(mauiContext);
 			WeakDataSource = _delegate;
 			WeakDelegate = _delegate;
+			this.RegisterClassForCellReuse(typeof(CUITableViewCell), "CUIViewCell");
 		}
 
 		public IListView ListView

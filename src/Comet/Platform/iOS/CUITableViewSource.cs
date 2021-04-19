@@ -63,9 +63,11 @@ namespace Comet.iOS
 		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
 		{
 			var cellIdentifier = CellType;
-			var cell = tableView.DequeueReusableCell(cellIdentifier) as CUITableViewCell ?? new CUITableViewCell(Context, UITableViewCellStyle.Default, cellIdentifier);
+			var cell = tableView.DequeueReusableCell(cellIdentifier, indexPath) as CUITableViewCell;
+			cell.SetFromContext(Context);
 			var v = _listView?.ViewFor(indexPath.Section, indexPath.Row);
 			cell.SetView(v);
+			Console.WriteLine(v.ToString());
 			return cell;
 		}
 
