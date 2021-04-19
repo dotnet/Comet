@@ -67,7 +67,6 @@ namespace Comet.iOS
 			cell.SetFromContext(Context);
 			var v = _listView?.ViewFor(indexPath.Section, indexPath.Row);
 			cell.SetView(v);
-			Console.WriteLine(v.ToString());
 			return cell;
 		}
 
