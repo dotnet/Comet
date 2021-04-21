@@ -3,6 +3,8 @@ using Microsoft.Maui.Graphics;
 using UIKit;
 using Bitmap = Comet.Graphics.Bitmap;
 using Microsoft.Maui.Graphics.CoreGraphics;
+using Microsoft.Maui.Graphics.Native;
+
 namespace Comet.iOS.Graphics
 {
 	public class UIImageBitmap : Bitmap

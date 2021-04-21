@@ -17,7 +17,11 @@ namespace Comet.Samples
 		readonly State<TimeSpan> timePickerTime = TimeSpan.FromSeconds(0);
 		[Body]
 		View view() =>
-			 
+			//new ListView<int>(Enumerable.Range(0,1000).ToList())
+			//{
+			//	ViewFor = (i) =>  new Text($"Cell: {i}"),
+				
+			//};
 			new VStack(spacing: 6)
 			{
 				new Text("Welcome to Comet!").Margin(top: 100).Color(Colors.Blue),

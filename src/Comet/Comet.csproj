@@ -24,7 +24,7 @@
    </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.34" />
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.39" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
   </ItemGroup>
   <ItemGroup>
@@ -45,7 +45,18 @@
     <Folder Include="Platform\Standard\" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid10.0'">
-    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.0" />
+    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0.8-net6preview01" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Platform\iOS\CUITableViewCell.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Controls\GraphicsView.cs">
+      <SubType></SubType>
+    </Compile>
+    <Compile Update="Controls\GraphicsControl.cs">
+      <SubType></SubType>
+    </Compile>
   </ItemGroup>
   <ProjectExtensions>
     <MonoDevelop>

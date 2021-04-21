@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.Maui.Handlers;
-using Microsoft.Maui.Graphics.Android;
 using Microsoft.Maui;
+using Microsoft.Maui.Graphics.Native;
 
 namespace Comet.Handlers
 {

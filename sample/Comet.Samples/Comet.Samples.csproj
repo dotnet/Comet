@@ -21,6 +21,6 @@
     <Folder Include="GitHubIssues\" />
     <Folder Include="CommunityQuestions\" />
     <Folder Include="Views\" />
-    <Folder Include="Skia\" />
+    <Folder Include="Graphics\" />
   </ItemGroup> 
 </Project>

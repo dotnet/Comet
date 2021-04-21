@@ -63,7 +63,7 @@ namespace Comet
 		/// <returns></returns>
 		public static T Background<T>(this T view, string color, bool cascades = false) where T : View
 		{
-			view.SetEnvironment(EnvironmentKeys.Colors.BackgroundColor, new Color(color), cascades);
+			view.SetEnvironment(EnvironmentKeys.Colors.BackgroundColor, Microsoft.Maui.Graphics.Color.FromHex(color), cascades);
 			return view;
 		}
 

@@ -20,7 +20,7 @@ namespace Comet
 
 		public static float DisplayScale => CurrentWindow?.DisplayScale ?? 1;
 
-		IView IPage.View { get => this.ReplacedView; set => throw new NotImplementedException(); }
+		IView IPage.Content { get => this.ReplacedView; }
 
 		public virtual void Configure(IAppHostBuilder appBuilder)
 		{

@@ -646,7 +646,11 @@ namespace Comet
 
 		Semantics IFrameworkElement.Semantics => this.GetEnvironment<Semantics>(nameof(IFrameworkElement.Semantics));
 
-		void IFrameworkElement.Arrange(Rectangle bounds) => LayoutSubviews(bounds);
+		Size IFrameworkElement.Arrange(Rectangle bounds)
+		{
+			LayoutSubviews(bounds);
+			return Frame.Size;
+		}
 		Size IFrameworkElement.Measure(double widthConstraint, double heightConstraint)
 			=>
 			//Measure(new Size(widthConstraint, heightConstraint));

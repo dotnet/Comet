@@ -36,8 +36,8 @@ namespace Comet.Samples
 		readonly State<string> number = "";
 		readonly State<bool> remember = false;
 
-		Color titleColor = new Color("#1d1d1d");
-		Color ccColor = new Color("#999999");
+		Color titleColor = Color.FromHex("#1d1d1d");
+		Color ccColor = Color.FromHex("#999999");
 
 		public DemoCreditCardView()
 		{
@@ -57,7 +57,7 @@ namespace Comet.Samples
                 // cc background
                 new ShapeView(
 					new RoundedRectangle(8)
-						.Fill(new Color("#3177CB"))
+						.Fill(Color.FromHex("#3177CB"))
 						.Style(Graphics.DrawingStyle.Fill)
 				).Cell(row:1, column:1),
 
@@ -103,7 +103,7 @@ namespace Comet.Samples
 
 			}
 			.Cell(row:0, column:0, colSpan:3)
-			.Background(new Color("#E5E9EE"))
+			.Background(Color.FromHex("#E5E9EE"))
 			.Frame(height:250),
 			new Grid(
 				rows: new object[] { 40, 20, 40, 20, 40, 20, 44, 20, 1, 20, 44 },

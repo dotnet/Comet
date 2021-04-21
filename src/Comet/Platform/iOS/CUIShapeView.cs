@@ -3,8 +3,8 @@ using CoreGraphics;
 using Comet.Graphics;
 using UIKit;
 using Microsoft.Maui.Graphics;
-using Microsoft.Maui.Graphics.CoreGraphics;
 using Microsoft.Maui;
+using Microsoft.Maui.Graphics.Native;
 
 namespace Comet.iOS
 {
