@@ -5,16 +5,15 @@ using Microsoft.Maui.Graphics;
 
 namespace Comet.GraphicsControls
 {
-	public abstract class ButtonHandler : GraphicsControlHandler<ButtonHandler, IButton>
+	public class ButtonHandler : GraphicsControlHandler<IButtonDrawable, IButton>
 	{
-		protected ButtonHandler(DrawMapper drawMapper, PropertyMapper mapper) : base(drawMapper, mapper)
+		public ButtonHandler() :this(ViewHandler.DrawMapper, ViewHandler.Mapper)
 		{
 
 		}
-		public override Size GetDesiredSize(double widthConstraint, double heightConstraint)
+		protected ButtonHandler(DrawMapper drawMapper, PropertyMapper mapper) : base(drawMapper, mapper)
 		{
-			var size = GraphicsPlatform.CurrentService.GetStringSize(VirtualView.Text, VirtualView.Font.FontFamily, (float)VirtualView.Font.FontSize);
-			return new Size(Math.Min(size.Width, widthConstraint), Math.Min(size.Height, heightConstraint));
+			  
 		}
 
 		public override void EndInteraction(PointF[] points, bool inside)
@@ -23,5 +22,8 @@ namespace Comet.GraphicsControls
 				VirtualView?.Clicked();
 			base.EndInteraction(points, inside);
 		}
+
+		protected override IButtonDrawable CreateDrawable() => new MaterialButtonHandler();
+		public override string[] LayerDrawingOrder() => ViewHandler.DefaultLayerDrawingOrder;
 	}
 }

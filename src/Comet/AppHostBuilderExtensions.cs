@@ -51,5 +51,17 @@ namespace Comet
 			return builder;
 		}
 
+
+		public static IAppHostBuilder UseGraphicControls(this IAppHostBuilder builder)
+		{
+			builder.ConfigureMauiHandlers((_, handlersCollection) => handlersCollection.AddHandlers(new Dictionary<Type, Type>
+			{
+				{ typeof(Button), typeof(Comet.GraphicsControls.ButtonHandler) },
+			}));
+
+			return builder;
+		}
+
+
 	}
 }

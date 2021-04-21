@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui;
-namespace Comet.Handlers
+namespace Comet.GraphicsControls
 {
-	public partial class GraphicsControlHandler<TViewHandler, TVirtualView> : ViewHandler<TVirtualView, object>
+	public partial class GraphicsControlHandler<TViewDrawable, TVirtualView> : ViewHandler<TVirtualView, object>
 	{
 		protected override object CreateNativeView() => throw new NotImplementedException();
 		public void Invalidate() => throw new NotImplementedException();

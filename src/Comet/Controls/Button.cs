@@ -37,7 +37,7 @@ namespace Comet
 
 		string IText.Text => Text;
 
-		Font ITextStyle.Font => this.GetFont(null);
+		Font ITextStyle.Font => this.GetFont(Font.Default);
 
 
 		double ITextStyle.CharacterSpacing => this.GetEnvironment<double>(nameof(IText.CharacterSpacing));

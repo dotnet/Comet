@@ -1,42 +1,42 @@
-﻿using Comet.Handlers;
-using Microsoft.Maui;
-using Microsoft.Maui.Graphics;
+﻿//using Comet.Handlers;
+//using Microsoft.Maui;
+//using Microsoft.Maui.Graphics;
 
-namespace Comet.GraphicsControls
-{
-	public abstract class SliderHandler : GraphicsControlHandler<SliderHandler, ISlider>
-	{
-		bool _isDragging;
+//namespace Comet.GraphicsControls
+//{
+//	public abstract class SliderHandler : GraphicsControlHandler<SliderHandler, ISlider>
+//	{
+//		bool _isDragging;
 
-		protected SliderHandler(DrawMapper drawMapper, PropertyMapper mapper) : base(drawMapper, mapper)
-		{
+//		protected SliderHandler(DrawMapper drawMapper, PropertyMapper mapper) : base(drawMapper, mapper)
+//		{
 
-		}
+//		}
 
-		public override bool StartInteraction(PointF[] points)
-		{
-			_isDragging = false;
-			return base.StartInteraction(points);
-		}
+//		public override bool StartInteraction(PointF[] points)
+//		{
+//			_isDragging = false;
+//			return base.StartInteraction(points);
+//		}
 
-		public override void DragInteraction(PointF[] points)
-		{
-			_isDragging = true;
+//		public override void DragInteraction(PointF[] points)
+//		{
+//			_isDragging = true;
 
-			if (!_isDragging)
-				VirtualView?.DragStarted();
+//			if (!_isDragging)
+//				VirtualView?.DragStarted();
 
-			base.DragInteraction(points);
-		}
+//			base.DragInteraction(points);
+//		}
 
-		public override void EndInteraction(PointF[] points, bool inside)
-		{
-			_isDragging = false;
+//		public override void EndInteraction(PointF[] points, bool inside)
+//		{
+//			_isDragging = false;
 
-			if (_isDragging)
-				VirtualView?.DragCompleted();
+//			if (_isDragging)
+//				VirtualView?.DragCompleted();
 
-			base.EndInteraction(points, inside);
-		}
-	}
-}
+//			base.EndInteraction(points, inside);
+//		}
+//	}
+//}
