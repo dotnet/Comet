@@ -43,6 +43,10 @@
     <Folder Include="Handlers\TabView\" />
     <Folder Include="Platform\Android\" />
     <Folder Include="Platform\Standard\" />
+    <Folder Include="Handlers\GraphicsView\" />
+    <Folder Include="GraphicsControls\" />
+    <Folder Include="GraphicsControls\Button\" />
+    <Folder Include="GraphicsControls\View\" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid10.0'">
     <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0.8-net6preview01" />
