@@ -57,6 +57,7 @@ namespace Comet
 			builder.ConfigureMauiHandlers((_, handlersCollection) => handlersCollection.AddHandlers(new Dictionary<Type, Type>
 			{
 				{ typeof(Button), typeof(Comet.GraphicsControls.ButtonHandler) },
+				{ typeof(Slider), typeof(Comet.GraphicsControls.SliderHandler) },
 			}));
 
 			return builder;

@@ -105,6 +105,7 @@ namespace Comet.GraphicsControls
 		{
 			base.SetVirtualView(view);
 			Drawable.View = VirtualView;
+			Invalidate();
 		}
 		public virtual void Draw(ICanvas canvas, RectangleF dirtyRect)
 		{

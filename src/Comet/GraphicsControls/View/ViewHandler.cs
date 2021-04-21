@@ -35,11 +35,13 @@ namespace Comet.GraphicsControls
 
 		public new static readonly PropertyMapper<IView> Mapper = new PropertyMapper<IView>(Microsoft.Maui.Handlers.ViewHandler.ViewMapper)
 		{
-			[nameof(IView.AutomationId)] = MapInvalidate,
-			[nameof(IView.BackgroundColor)] = MapInvalidate,
-			[nameof(IView.IsEnabled)] = MapInvalidate,
-			[nameof(IText.Text)] = MapInvalidate,
-			[nameof(IText.Font)] = MapInvalidate,
+			Actions = {
+				[nameof(IView.AutomationId)] = MapInvalidate,
+				[nameof(IView.BackgroundColor)] = MapInvalidate,
+				[nameof(IView.IsEnabled)] = MapInvalidate,
+				[nameof(IText.Text)] = MapInvalidate,
+				[nameof(IText.Font)] = MapInvalidate,
+			}
 		};
 
 		public static void MapInvalidate(IViewHandler handler, IView view) => (handler as IGraphicsControl)?.Invalidate();

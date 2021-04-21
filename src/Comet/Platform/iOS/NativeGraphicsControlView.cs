@@ -11,6 +11,7 @@ namespace Comet
 	{
 		public NativeGraphicsControlView()
 		{
+			this.BackgroundColor = UIColor.Clear;
 		}
 		IGraphicsControl graphicsControl;
 		public IGraphicsControl GraphicsControl {

@@ -6,13 +6,13 @@ using GVerticalAlignment = Microsoft.Maui.Graphics.VerticalAlignment;
 
 namespace Comet.GraphicsControls
 {
-	public class CupertinoSliderHandler : ViewDrawable<ISlider>, ISliderDrawable
+	public class FluentSliderDrawable : ViewDrawable<ISlider>, ISliderDrawable
 	{
+
 		static readonly Dictionary<string, object> stateDefaultValues = new Dictionary<string, object>
 		{
 			["TextSize"] = 36f
 		};
-
 
 		RectangleF trackRect = new RectangleF();
 		public RectangleF TrackRect => trackRect;
@@ -38,6 +38,7 @@ namespace Comet.GraphicsControls
 
 			trackRect.X = x;
 			trackRect.Width = width;
+
 			canvas.FillRoundedRectangle(x, y, width, height, 0);
 
 			canvas.RestoreState();
@@ -49,12 +50,12 @@ namespace Comet.GraphicsControls
 
 			var slider = VirtualView;
 
+
 			canvas.FillColor = slider.MinimumTrackColor;
 
 			var x = dirtyRect.X;
 
 			var value = ((double)slider.Value).Clamp(0, 1);
-
 			stateDefaultValues.TryGetValue("TextSize", out var textSize);
 			var width = (float)((dirtyRect.Width - (float)textSize) * value);
 
@@ -92,17 +93,17 @@ namespace Comet.GraphicsControls
 
 			var y = (float)((dirtyRect.Height - size) / 2);
 
+			touchTargetRect.Center(new PointF(x, y));
+
 			canvas.FillColor = Colors.Black;
 
-			touchTargetRect.Center(new PointF(x, y));
 			canvas.FillEllipse(x, y, size, size);
 			canvas.DrawEllipse(x, y, size, size);
 
 			canvas.RestoreState();
 		}
 
-
-		public virtual void DrawText(ICanvas canvas, RectangleF dirtyRect, ISlider text) 
+		public virtual void DrawText(ICanvas canvas, RectangleF dirtyRect, ISlider text)
 		{
 			canvas.SaveState();
 
@@ -128,8 +129,7 @@ namespace Comet.GraphicsControls
 			canvas.RestoreState();
 		}
 
-
-		public override Size GetDesiredSize(IView view, double widthConstraint, double heightConstraint) => new Size(widthConstraint, 20f);
+		public override Size GetDesiredSize(IView view, double widthConstraint, double heightConstraint) => new Size(widthConstraint,20f);
 
 	}
 }

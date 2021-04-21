@@ -13,7 +13,7 @@ namespace Comet.GraphicsControls
 		}
 		protected ButtonHandler(DrawMapper drawMapper, PropertyMapper mapper) : base(drawMapper, mapper)
 		{
-			  
+
 		}
 
 		public override void EndInteraction(PointF[] points, bool inside)
