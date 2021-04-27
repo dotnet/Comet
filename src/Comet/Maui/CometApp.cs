@@ -19,6 +19,8 @@ namespace Comet
 		public static IMauiContext MauiContext => CurrentWindow?.MauiContext;
 
 		public static float DisplayScale => CurrentWindow?.DisplayScale ?? 1;
+		List<IWindow> windows = new List<IWindow>();
+		public IReadOnlyList<IWindow> Windows => windows;
 
 		IView IPage.Content { get => this.ReplacedView; }
 
@@ -35,10 +37,14 @@ namespace Comet
 
 
 		IWindow IApplication.CreateWindow(IActivationState activationState)
-			=> CurrentWindow = new CometWindow
+		{
+			windows.Add(CurrentWindow = new CometWindow
 			{
-				Page = this,
-			};
+				MauiContext = activationState.Context,
+				Content = this,
+			}) ;
+			return CurrentWindow;
+		}
 
 
 	}

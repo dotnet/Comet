@@ -3,7 +3,7 @@ using Microsoft.Maui;
 
 namespace Comet
 {
-	public class CometWindow : IWindow
+	public class CometWindow : ContentView, IWindow
 	{
 		public float DisplayScale { get; private set; } = 1;
 		private IMauiContext mauiContext;
@@ -20,6 +20,10 @@ namespace Comet
 #endif
 			}
 		}
-		public IPage Page { get; set; }
+		IView IWindow.View
+		{
+			get => this.Content;
+			set => Content = (View)value;
+		}
 	}
 }

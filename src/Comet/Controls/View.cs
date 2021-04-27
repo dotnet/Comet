@@ -568,8 +568,6 @@ namespace Comet
 		List<Animation> GetAnimations(bool create) => !create ? animations : animations ?? (animations = new List<Animation>());
 		public List<Animation> Animations => animations;
 
-		
-
 		public void AddAnimation(Animation animation)
 		{
 			animation.Parent = new WeakReference<View>(this);
@@ -616,10 +614,10 @@ namespace Comet
 		Size IFrameworkElement.DesiredSize => MeasuredSize;
 
 		protected bool IsMeasureValid;
-		bool IFrameworkElement.IsMeasureValid => IsMeasureValid;
+		//bool IFrameworkElement.IsMeasureValid => IsMeasureValid;
 
 		protected bool IsArrangeValid;
-		bool IFrameworkElement.IsArrangeValid => IsArrangeValid;
+		//bool IFrameworkElement.IsArrangeValid => IsArrangeValid;
 
 		double IFrameworkElement.Width => this.GetFrameConstraints()?.Width ?? -1;
 		double IFrameworkElement.Height => this.GetFrameConstraints()?.Height ?? -1;
