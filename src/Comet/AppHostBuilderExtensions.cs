@@ -44,7 +44,8 @@ namespace Comet
 				{ typeof(Toggle), typeof(SwitchHandler) },
 #if __IOS__
 				{typeof(ScrollView), typeof(ScrollViewHandler) },
-
+				{typeof(NavigationView), typeof (NavigationViewHandler)},
+				{typeof(View), typeof(CometViewHandler)},
 #endif
 			}));
 

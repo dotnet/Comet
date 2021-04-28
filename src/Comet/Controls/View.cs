@@ -19,7 +19,7 @@ using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IHotReloadableView//, IClipShapeView
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage//, IClipShapeView
 	{		
 		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
@@ -643,6 +643,10 @@ namespace Comet
 		LayoutAlignment IFrameworkElement.VerticalLayoutAlignment => this.GetVerticalLayoutAlignment(this.Parent as ContainerView);
 
 		Semantics IFrameworkElement.Semantics => this.GetEnvironment<Semantics>(nameof(IFrameworkElement.Semantics));
+
+		IView IPage.Content => this.ReplacedView;
+
+		string IPage.Title => this.GetTitle();
 
 		Size IFrameworkElement.Arrange(Rectangle bounds)
 		{

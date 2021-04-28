@@ -24,6 +24,8 @@ namespace Comet
 
 		IView IPage.Content { get => this.ReplacedView; }
 
+		string IPage.Title => this.GetTitle();
+
 		public virtual void Configure(IAppHostBuilder appBuilder)
 		{
 			appBuilder.ConfigureServices((context, collection) => {
