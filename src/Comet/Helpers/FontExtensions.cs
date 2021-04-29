@@ -8,12 +8,14 @@ namespace Comet
 	{
 		public static Font GetFont(this View view, Font? defaultFont)
 		{
+			Font font = Font.Default;
 			var size = view.GetEnvironment<double?>(EnvironmentKeys.Fonts.Size) ?? defaultFont?.FontSize;
 			var name = view.GetEnvironment<string>(EnvironmentKeys.Fonts.Family) ?? defaultFont?.FontFamily;
 			var attributes = view.GetEnvironment<FontAttributes?>(EnvironmentKeys.Fonts.Attributes) ?? defaultFont?.FontAttributes;
-			Font font = Font.Default;
 			if (!string.IsNullOrWhiteSpace(name))
 				font = Font.OfSize(name, size ?? font.FontSize);
+			else if(size > 0)
+				font = font.WithSize(size.Value);
 			if (attributes != null)
 				font = font.WithAttributes(attributes.Value);
 			return font;
