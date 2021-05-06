@@ -90,5 +90,6 @@ namespace Comet
 
 		protected override string GetHandlerPropertyName(string property)
 			=> TextHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
+		void IEntry.Completed() => OnCommit?.Invoke(Text);
 	}
 }

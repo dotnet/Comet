@@ -77,6 +77,8 @@ namespace Comet
 		public void ValueChanged(string value)
 			=> OnCommit?.Invoke(value);
 
+		void IEntry.Completed() => OnCommit?.Invoke(Text);
+
 		protected override string GetHandlerPropertyName(string property)
 			=> TextHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}

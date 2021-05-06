@@ -19,7 +19,7 @@ using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage//, IClipShapeView
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage, ISafeAreaView//, IClipShapeView
 	{		
 		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
@@ -439,7 +439,11 @@ namespace Comet
 			get => this.GetEnvironment<Rectangle?>(nameof(Frame), false) ?? Rectangle.Zero;
 			set
 			{
+				var f = Frame;
+				if (f == value)
+					return;
 				this.SetEnvironment(nameof(Frame), value, false);
+				ViewHandler?.NativeArrange(value);
 			}
 		}
 
@@ -527,10 +531,11 @@ namespace Comet
 
 				var frameworkElement = this as IFrameworkElement;
 
-				widthConstraint = LayoutManager.ResolveConstraints(widthConstraint, frameworkElement.Width);
-				heightConstraint = LayoutManager.ResolveConstraints(heightConstraint, frameworkElement.Height);
+				var size = GetDesiredSize(new Size(widthConstraint, heightConstraint));
+				widthConstraint = LayoutManager.ResolveConstraints(widthConstraint, frameworkElement.Width, size.Width);
+				heightConstraint = LayoutManager.ResolveConstraints(heightConstraint, frameworkElement.Height, size.Height);
 
-				MeasuredSize = GetDesiredSize(new Size(widthConstraint, heightConstraint));
+				MeasuredSize = new Size(widthConstraint,heightConstraint);
 				if (MeasuredSize.Width <= 0 || MeasuredSize.Height <= 0)
 				{
 					Console.WriteLine($"Why :( - {this}");
@@ -647,6 +652,8 @@ namespace Comet
 		IView IPage.Content => this.ReplacedView;
 
 		string IPage.Title => this.GetTitle();
+
+		bool ISafeAreaView.IgnoreSafeArea => this.GetIgnoreSafeArea(false);
 
 		Size IFrameworkElement.Arrange(Rectangle bounds)
 		{
