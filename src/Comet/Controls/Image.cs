@@ -7,9 +7,9 @@ namespace Comet
 {
 	public class Image : View, Microsoft.Maui.IImage
 	{
-		public Image(Binding<IImageSource> bitmap = null)
+		public Image(Binding<IImageSource> imageSource = null)
 		{
-			IImageSource = bitmap;
+			ImageSource = imageSource;
 		}
 
 		public Image(Binding<string> source)
@@ -21,11 +21,11 @@ namespace Comet
 
 		public Image(Func<string> source) : this((Binding<string>)source) { }
 
-		private Binding<IImageSource> _bitmap;
-		public Binding<IImageSource> IImageSource
+		private Binding<IImageSource> _imageSource;
+		public Binding<IImageSource> ImageSource
 		{
-			get => _bitmap;
-			private set => this.SetBindingValue(ref _bitmap, value);
+			get => _imageSource;
+			private set => this.SetBindingValue(ref _imageSource, value);
 		}
 
 		private Binding<string> _source;
@@ -48,23 +48,16 @@ namespace Comet
 			}
 		}
 
-		private async void CreateImageSource(string source)
+		private void CreateImageSource(string source)
 		{
 			try
 			{
 				if (string.IsNullOrWhiteSpace(source))
 				{
-					IImageSource = null;
+					ImageSource = null;
 					return;
 				}
-				//var loadBitmapTask = Device.BitmapService?.LoadBitmapAsync(source);
-				//if (loadBitmapTask != null)
-				//{
-				//	var bitmap = await loadBitmapTask;
-				//	IImageSource = bitmap;
-				//	this.ViewPropertyChanged(nameof(IImageSource), bitmap);
-				//	this.InvalidateMeasurement();
-				//}
+				ImageSource = (ImageSource)source;
 			}
 			catch (Exception exc)
 			{
@@ -72,13 +65,16 @@ namespace Comet
 			}
 		}
 
-		void IImageSourcePart.UpdateIsLoading(bool isLoading) => throw new NotImplementedException();
+		void IImageSourcePart.UpdateIsLoading(bool isLoading)
+		{
+
+		}
 
 		Aspect Microsoft.Maui.IImage.Aspect => this.GetEnvironment<Aspect>(nameof(Aspect));
 
 		bool Microsoft.Maui.IImage.IsOpaque => this.GetEnvironment<bool>(nameof(Microsoft.Maui.IImage.IsOpaque));
 
-		IImageSource IImageSourcePart.Source => this.GetEnvironment<IImageSource>(nameof(IImageSourcePart.Source));
+		IImageSource IImageSourcePart.Source => ImageSource?.CurrentValue;
 
 		bool IImageSourcePart.IsAnimationPlaying => this.GetEnvironment<bool>(nameof(Microsoft.Maui.IImage.IsAnimationPlaying));
 	}
