@@ -25,7 +25,7 @@ namespace Comet.Samples
 		{
 			EnvironmentKeys.Fonts.Family,
 			EnvironmentKeys.Fonts.Size,
-			EnvironmentKeys.Fonts.Attributes,
+			EnvironmentKeys.Fonts.Weight,
 			EnvironmentKeys.Colors.Color,
 		};
 

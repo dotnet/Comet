@@ -12,7 +12,7 @@ namespace Comet.Styles
 	{
 		public StyleAwareValue<ControlState,Color> TextColor { get; set; }
 
-		public StyleAwareValue<ControlState, FontAttributes> TextFont { get; set; }
+		public StyleAwareValue<ControlState, Font> TextFont { get; set; }
 
 		public StyleAwareValue<ControlState, Thickness> Padding { get; set; }
 

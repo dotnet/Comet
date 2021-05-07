@@ -35,8 +35,7 @@ namespace Comet.Samples.Comparisons
 			=> new VStack {
 				new Text(()=> $"({comet.Rides}) rides taken:{comet.CometTrain}")
 					.Frame(width:300)
-					.LineBreakMode(LineBreakMode.CharacterWrap)
-					,
+					.LineBreakMode(LineBreakMode.CharacterWrap),
 
 				new Button("Ride the Comet! ☄️", ()=>{
 					comet.Rides++;

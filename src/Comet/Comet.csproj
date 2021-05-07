@@ -26,6 +26,7 @@
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
     <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.39" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="$(_MicrosoftMauiGraphics)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
@@ -38,7 +39,6 @@
     <Folder Include="Platform\" />
     <Folder Include="Platform\iOS\" />
     <Folder Include="Handlers\Spacer\" />
-    <Folder Include="Handlers\Image\" />
     <Folder Include="Handlers\RadioButton\" />
     <Folder Include="Handlers\TabView\" />
     <Folder Include="Platform\Android\" />
@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid10.0'">
     <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0.8-net6preview01" />
+    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.0-$(_AndroidXVersion)" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Platform\iOS\CUITableViewCell.cs" />

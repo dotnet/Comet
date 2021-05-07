@@ -50,7 +50,8 @@ namespace Comet.iOS
 			if (currentNativeView == newNativeView)
 				return;
 			currentNativeView?.RemoveFromSuperview();
-			AddSubview(currentNativeView = newNativeView);
+			if (newNativeView != this)
+				AddSubview(currentNativeView = newNativeView);
 		}
 
 

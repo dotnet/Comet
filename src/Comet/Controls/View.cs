@@ -228,18 +228,29 @@ namespace Comet
 				Debug.WriteLine($"Building View: {this.GetType().Name}");
 				using (new StateBuilder(this))
 				{
-					var view = Body.Invoke();
-					view.Parent = this;
-					if (view is NavigationView navigationView)
-						Navigation = navigationView;
-					var props = StateManager.EndProperty();
-					var propCount = props.Count;
-					if (propCount > 0)
+					try
 					{
-						State.AddGlobalProperties(props);
+						var view = Body.Invoke();
+						view.Parent = this;
+						if (view is NavigationView navigationView)
+							Navigation = navigationView;
+						var props = StateManager.EndProperty();
+						var propCount = props.Count;
+						if (propCount > 0)
+						{
+							State.AddGlobalProperties(props);
+						}
+						UpdateBuiltViewContext(view);
+						builtView = view.GetRenderView();
 					}
-					UpdateBuiltViewContext(view);
-					builtView = view.GetRenderView();
+					catch(Exception ex)
+					{
+						if (Debugger.IsAttached)
+						{
+							builtView = new Text(ex.Message.ToString());
+						}
+						else throw ex;
+					}
 				}
 			}
 
@@ -530,7 +541,7 @@ namespace Comet
 				// _don't_ include the margins are actually bugs.
 
 				var frameworkElement = this as IFrameworkElement;
-
+				
 				var size = GetDesiredSize(new Size(widthConstraint, heightConstraint));
 				widthConstraint = LayoutManager.ResolveConstraints(widthConstraint, frameworkElement.Width, size.Width);
 				heightConstraint = LayoutManager.ResolveConstraints(heightConstraint, frameworkElement.Height, size.Height);

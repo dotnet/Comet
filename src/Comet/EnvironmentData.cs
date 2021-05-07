@@ -16,8 +16,10 @@ namespace Comet
 		{
 			//public const string Font = "Font";
 			public const string Size = "Font.Size";
+			public const string Weight = "Font.Weight";
 			public const string Family = "Font.Family";
-			public const string Attributes = "Font.Attributes";
+			public const string Slant = "Font.Slant";
+			//public const string Attributes = "Font.Attributes";
 		}
 
 		public static class LineBreakMode

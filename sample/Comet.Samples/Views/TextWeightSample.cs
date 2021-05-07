@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Maui;
 
 namespace Comet.Samples
 {
@@ -7,24 +8,24 @@ namespace Comet.Samples
 		[Body]
 		View body() => new VStack
 		{
-			//new Text($"Black {(int)Weight.Black}").FontWeight (Weight.Black),
-			//new Text($"Heavy {(int)Weight.Heavy}").FontWeight (Weight.Heavy),
-			//new Text($"Bold {(int)Weight.Bold}").FontWeight (Weight.Bold),
-			//new Text($"Semibold {(int)Weight.Semibold}").FontWeight (Weight.Semibold),
-			//new Text($"Medium {(int)Weight.Medium}").FontWeight (Weight.Medium),
-			//new Text($"Regular {(int)Weight.Regular}").FontWeight (Weight.Regular),
-			//new Text($"Light {(int)Weight.Ultralight}").FontWeight (Weight.Light),
-			//new Text($"Ultralight {(int)Weight.Ultralight}").FontWeight (Weight.Ultralight),
-			//new Text($"Thin {(int)Weight.Thin}").FontWeight (Weight.Thin),
-			//new Text($"Black Italic {(int)Weight.Black}").FontWeight (Weight.Black).FontItalic (true),
-			//new Text($"Heavy Italic {(int)Weight.Heavy}").FontWeight (Weight.Heavy).FontItalic (true),
-			//new Text($"Bold Italic {(int)Weight.Bold}").FontWeight (Weight.Bold).FontItalic (true),
-			//new Text($"Semibold Italic Italic {(int)Weight.Semibold}").FontWeight (Weight.Semibold).FontItalic (true),
-			//new Text($"Medium Italic {(int)Weight.Medium}").FontWeight (Weight.Medium).FontItalic (true),
-			//new Text($"Regular Italic {(int)Weight.Regular}").FontWeight (Weight.Regular).FontItalic (true),
-			//new Text($"Light Italic {(int)Weight.Ultralight}").FontWeight (Weight.Light).FontItalic (true),
-			//new Text($"Ultralight Italic {(int)Weight.Ultralight}").FontWeight (Weight.Ultralight).FontItalic (true),
-			//new Text($"Thin Italic {(int)Weight.Thin}").FontWeight (Weight.Thin).FontItalic (true),
+			new Text($"Black {(int)FontWeight.Black}").FontWeight (FontWeight.Black),
+			new Text($"Heavy {(int)FontWeight.Heavy}").FontWeight (FontWeight.Heavy),
+			new Text($"Bold {(int)FontWeight.Bold}").FontWeight (FontWeight.Bold),
+			new Text($"Semibold {(int)FontWeight.Semibold}").FontWeight (FontWeight.Semibold),
+			new Text($"Medium {(int)FontWeight.Medium}").FontWeight (FontWeight.Medium),
+			new Text($"Regular {(int)FontWeight.Regular}").FontWeight (FontWeight.Regular),
+			new Text($"Light {(int)FontWeight.Ultralight}").FontWeight (FontWeight.Light),
+			new Text($"Ultralight {(int)FontWeight.Ultralight}").FontWeight (FontWeight.Ultralight),
+			new Text($"Thin {(int)FontWeight.Thin}").FontWeight (FontWeight.Thin),
+			new Text($"Black Oblique {(int)FontWeight.Black}").FontWeight (FontWeight.Black).FontSlant (FontSlant.Oblique),
+			new Text($"Heavy Oblique {(int)FontWeight.Heavy}").FontWeight (FontWeight.Heavy).FontSlant (FontSlant.Oblique),
+			new Text($"Bold Italic {(int)FontWeight.Bold}").FontWeight (FontWeight.Bold).FontSlant (FontSlant.Italic),
+			new Text($"Semibold Oblique {(int)FontWeight.Semibold}").FontWeight (FontWeight.Semibold).FontSlant (FontSlant.Oblique),
+			new Text($"Medium Oblique {(int)FontWeight.Medium}").FontWeight (FontWeight.Medium).FontSlant (FontSlant.Oblique),
+			new Text($"Regular Italic {(int)FontWeight.Regular}").FontWeight (FontWeight.Regular).FontSlant (FontSlant.Italic),
+			new Text($"Light Oblique {(int)FontWeight.Ultralight}").FontWeight (FontWeight.Light).FontSlant (FontSlant.Oblique),
+			new Text($"Ultralight Oblique {(int)FontWeight.Ultralight}").FontWeight (FontWeight.Ultralight).FontSlant (FontSlant.Oblique),
+			new Text($"Thin Oblique {(int)FontWeight.Thin}").FontWeight (FontWeight.Thin).FontSlant (FontSlant.Oblique),
 		};
 	}
 }

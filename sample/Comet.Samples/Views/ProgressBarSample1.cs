@@ -10,7 +10,7 @@ namespace Comet.Samples
 		public ProgressBarSample1()
 		{
 			_timer = new Timer(state => {
-				var p = (State<float>)state;
+				var p = (State<double>)state;
 				var current = p.Value;
 				var value = current < 1 ? current + .001f : 0;
 				p.Value = value;
