@@ -15,7 +15,7 @@ namespace Comet
 			this.spacing = spacing;
 		}
 
-		int IStackLayout.Spacing => (int)(spacing ?? -1);
+		int IStackLayout.Spacing => (int)(spacing ?? 6);
 
 		protected override ILayoutManager CreateLayoutManager() => new VerticalStackLayoutManager(this);
 	}
