@@ -37,6 +37,7 @@ namespace Comet
 				{ typeof(Slider), typeof(SliderHandler) },
 				{ typeof(Stepper), typeof(StepperHandler) },
 				{ typeof(Spacer), typeof(SpacerHandler) },
+				{ typeof(TabView), typeof(TabViewHandler) },
 				{ typeof(TextEditor), typeof(EditorHandler) },
 				{ typeof(TextField), typeof(EntryHandler) },
 				{ typeof(Text), typeof(LabelHandler) },

@@ -27,10 +27,7 @@ namespace Comet
 			OnAdded(view);
 		}
 
-		protected virtual void OnAdded(View view)
-		{
-
-		}
+		protected virtual void OnAdded(View view) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
 
 		public void Clear()
 		{
@@ -43,10 +40,7 @@ namespace Comet
 			}
 		}
 
-		protected virtual void OnClear(List<View> views)
-		{
-
-		}
+		protected virtual void OnClear(List<View> views) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
 
 		public bool Contains(View item) => Views.Contains(item);
 
@@ -85,10 +79,7 @@ namespace Comet
 			return false;
 		}
 
-		protected virtual void OnRemoved(View view)
-		{
-
-		}
+		protected virtual void OnRemoved(View view) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
 
 		public int Count => Views.Count;
 
@@ -116,10 +107,7 @@ namespace Comet
 			item.Navigation = Parent as NavigationView ?? Parent?.Navigation;
 		}
 
-		protected virtual void OnInsert(int index, View item)
-		{
-
-		}
+		protected virtual void OnInsert(int index, View item) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
 
 		public void RemoveAt(int index)
 		{
@@ -132,7 +120,6 @@ namespace Comet
 				var removed = new List<View> { item };
 				Views.RemoveAt(index);
 				OnRemoved(item);
-
 			}
 		}
 

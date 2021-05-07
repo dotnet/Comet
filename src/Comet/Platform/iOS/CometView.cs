@@ -58,6 +58,8 @@ namespace Comet.iOS
 		public override void LayoutSubviews()
 		{
 			base.LayoutSubviews();
+			if (currentNativeView == null)
+				return;
 			currentNativeView.Frame = Bounds;
 		}
 
