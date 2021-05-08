@@ -6,7 +6,7 @@ using Microsoft.Maui;
 
 namespace Comet
 {
-	public class ScrollView : View, IEnumerable, IContainer
+	public class ScrollView : ContentView, IEnumerable
 	{
 		public ScrollView(Orientation orientation = Orientation.Vertical)
 		{
@@ -14,46 +14,20 @@ namespace Comet
 		}
 
 		public Orientation Orientation { get; }
-
-		public View View { get; internal set; }
-
-		IReadOnlyList<IView> IContainer.Children => new List<IView> {View };
-
-		public void Add(View view)
-		{
-			if (view == null)
-				return;
-			if (View != null)
-				throw new Exception("You can only add one view to the ScrollView, Try wrapping in a Stack");
-			View = view;
-			view.Parent = this;
-			view.Navigation = this.Navigation;
-		}
-
-		public IEnumerator GetEnumerator() => new View[] { View }.GetEnumerator();
-		protected override void OnParentChange(View parent)
-		{
-			base.OnParentChange(parent);
-			if (View != null)
-			{
-				View.Parent = this.Parent;
-				View.Navigation = this.Parent?.Navigation;
-			}
-		}
-
+		
 		public override Size GetDesiredSize(Size availableSize)
 		{
 			var intrinsicSize = base.GetDesiredSize(availableSize);
 			if (Orientation == Orientation.Horizontal)
 			{
-				if (View != null)
+				if (Content != null)
 				{
-					var contentSize = View.MeasuredSize;
-					if (!View.MeasurementValid)
+					var contentSize = Content.MeasuredSize;
+					if (!Content.MeasurementValid)
 					{
-						contentSize = View.Measure(availableSize.Width,availableSize.Height);
-						View.MeasuredSize = contentSize;
-						View.MeasurementValid = true;
+						contentSize = Content.Measure(availableSize.Width,availableSize.Height);
+						Content.MeasuredSize = contentSize;
+						Content.MeasurementValid = true;
 					}
 
 					intrinsicSize.Height = contentSize.Height;
@@ -66,7 +40,7 @@ namespace Comet
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
-				View?.Dispose();
+				Content?.Dispose();
 			base.Dispose(disposing);
 		}
 	}

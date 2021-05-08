@@ -5,10 +5,11 @@ using Microsoft.Maui.Handlers;
 using Microsoft.Maui;
 using Comet.iOS;
 using Microsoft.Maui.Graphics;
+using CoreGraphics;
 
 namespace Comet.Handlers
 {
-	public partial class ScrollViewHandler : ViewHandler<ScrollView, UIScrollView>
+	public partial class ScrollViewHandler : ViewHandler<ScrollView, CUIScrollView>
 	{
 		public ScrollViewHandler() : base(ViewHandler.ViewMapper)
 		{
@@ -17,24 +18,35 @@ namespace Comet.Handlers
 
 		private UIView _content;
 
-		protected override UIScrollView CreateNativeView() 
-			=> NativeView as UIScrollView ?? new UIScrollView
-			{
+		protected override CUIScrollView CreateNativeView() =>
+			new CUIScrollView {
 				ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always,
+				CrossPlatformArrange = Arange,
 			};
+
+		void Arange(Rectangle rect)
+		{
+			var measuredSize = VirtualView.Content.Measure(float.PositiveInfinity, float.PositiveInfinity);
+			//Make sure we at least fit the scroll view
+			measuredSize.Width = Math.Max(measuredSize.Width, rect.Width);
+			measuredSize.Height = Math.Max(measuredSize.Height, rect.Height);
+
+			NativeView.ContentSize = measuredSize.ToCGSize();
+			_content.Frame = new CGRect(CGPoint.Empty, measuredSize);
+		}
 
 		public override void SetVirtualView(IView view)
 		{
+			if (view == VirtualView)
+				return;
 			base.SetVirtualView(view);
 
-			_content = VirtualView?.View?.ToNative(MauiContext);
+
+			_content = VirtualView?.Content?.ToNative(MauiContext);
 			if (_content != null)
 			{
-				_content.SizeToFit();
+				//_content.SizeToFit();
 				NativeView.Add(_content);
-
-				var measuredSize = VirtualView.View.Measure(float.PositiveInfinity, float.PositiveInfinity);
-				NativeView.ContentSize = measuredSize.ToCGSize();
 			}
 
 			if (VirtualView.Orientation == Orientation.Horizontal)
@@ -48,14 +60,6 @@ namespace Comet.Handlers
 				NativeView.ShowsHorizontalScrollIndicator = false;
 			}
 		}
-		public override Size GetDesiredSize(double widthConstraint, double heightConstraint)
-		{
-			var measuredSize = VirtualView.View.Measure(float.PositiveInfinity, float.PositiveInfinity);
-			NativeView.ContentSize = measuredSize.ToCGSize();
-			return new Size(widthConstraint, heightConstraint);
-		}
-
-
-
+		
 	}
 }

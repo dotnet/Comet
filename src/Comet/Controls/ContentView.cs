@@ -5,7 +5,7 @@ using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
-	public class ContentView : View, IEnumerable
+	public class ContentView : View, IEnumerable, IContainerView
 	{
 		IEnumerator IEnumerable.GetEnumerator() => new[] { Content }.GetEnumerator();
 		public View Content { get; set; }
@@ -93,5 +93,7 @@ namespace Comet
 			Content?.ResumeAnimations();
 			base.ResumeAnimations();
 		}
+
+		public IReadOnlyList<View> GetChildren() => new []{ Content };
 	}
 }
