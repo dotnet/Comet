@@ -504,16 +504,17 @@ namespace Comet
 				//This check ignores MArgin which is bad
 				var hSizing = this.GetHorizontalLayoutAlignment(this.Parent as ContainerView);
 				var vSizing = this.GetVerticalLayoutAlignment(this.Parent as ContainerView);
-				if (hSizing == LayoutAlignment.Fill)
+				if (hSizing == LayoutAlignment.Fill && !double.IsInfinity(availableSize.Width))
 				{
 					ms.Width = availableSize.Width;
 				}
-				if (vSizing == LayoutAlignment.Fill)
+				if (vSizing == LayoutAlignment.Fill && !double.IsInfinity(availableSize.Height))
 				{
 					ms.Height = availableSize.Height;
 				}
-			
 
+				ms.Width = Math.Min(ms.Width, availableSize.Width);
+				ms.Height = Math.Min(ms.Height, availableSize.Height);
 				MeasuredSize = ms;
 			}
 			IsMeasureValid = true;

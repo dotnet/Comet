@@ -239,6 +239,9 @@ namespace Comet.Styles
 				SetEnvironmentValue(null, control, key, sizing);
 			}
 			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Start);
+			setSizing(typeof(Text), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Start);
+			setSizing(typeof(Text), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);

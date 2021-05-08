@@ -43,7 +43,6 @@ namespace Comet.Samples
 			new MenuItem("ClipSample_None", ()=> new ClipSample_None()),
 			//new MenuItem("GridSample1", ()=> new GridSample1()),
 			new MenuItem("ProgressBarSample1", ()=> new ProgressBarSample1()),
-			new MenuItem("ProgressBarSample2", ()=> new ProgressBarSample2()),
 			new MenuItem("SecureFieldSample1", ()=> new SecureFieldSample1()),
 			new MenuItem("SecureFieldSample2", ()=> new SecureFieldSample2()),
 			new MenuItem("SecureFieldSample3", ()=> new SecureFieldSample3()),

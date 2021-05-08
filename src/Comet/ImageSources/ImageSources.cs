@@ -1,4 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Net.Http;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 
@@ -25,9 +29,9 @@ namespace Comet
 
 	}
 
-	public class UriImageSource : ImageSource, IUriImageSource
+	public class UriImageSource : ImageSource, IUriImageSource, IStreamImageSource
 	{
-
+		static HttpClient client = new HttpClient();
 		public override bool IsEmpty => Uri == null;
 
 		public Uri Uri { get; set; }
@@ -37,6 +41,8 @@ namespace Comet
 		public TimeSpan CacheValidity { get => cacheValidity ?? DefaultCacheValidity; set => cacheValidity = value; }
 
 		public bool CachingEnabled { get; set; } = true;
+
+		Task<Stream> IStreamImageSource.GetStreamAsync(CancellationToken cancellationToken) => client.GetStreamAsync(Uri);
 	}
 
 	public class FontImageSource : ImageSource, IFontImageSource
