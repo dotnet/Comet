@@ -3,7 +3,6 @@ using AndroidX.RecyclerView.Widget;
 using Android.Views;
 using Android.Widget;
 using Microsoft.Maui;
-using MContainerView = Microsoft.Maui.ContainerView;
 namespace Comet.Android.Controls
 {
 	public class CometRecyclerViewHolder : RecyclerView.ViewHolder
@@ -11,11 +10,11 @@ namespace Comet.Android.Controls
 		private readonly IListView listView;
 		public IMauiContext MauiContext {get;set;}
 		public ViewGroup Parent { get; }
-		public MContainerView CometView => (MContainerView)ItemView;
+		public CometView CometView => (CometView)ItemView;
 
 		public CometRecyclerViewHolder(
 			ViewGroup parent,
-			IListView listView, IMauiContext mauiContext) : base(new MContainerView(mauiContext))
+			IListView listView, IMauiContext mauiContext) : base(new CometView(mauiContext))
 		{
 			MauiContext  = MauiContext;
 			Parent = parent;
