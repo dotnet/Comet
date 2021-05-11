@@ -118,7 +118,7 @@ namespace Comet.Samples
 
 		public class BorderedEntry : HStack
 		{
-			public BorderedEntry(Binding<String> val, string placeholder, string icon) : base(spacing: 8)
+			public BorderedEntry(Binding<string> val, string placeholder, string icon) : base(spacing: 8)
 			{
 				Add(new Text(icon)
 					.Frame(width: 20)

@@ -1,4 +1,5 @@
-﻿using Comet.Layout;
+﻿using System.Collections.Generic;
+using Comet.Layout;
 using Microsoft.Maui;
 using Microsoft.Maui.Layouts;
 
@@ -13,21 +14,22 @@ namespace Comet
 			object defaultRowHeight = null,
 			object defaultColumnWidth = null)
 		{
-			var layout = (GridLayoutManager)LayoutManager;
-			
-			//layout.DefaultRowHeight = defaultRowHeight ?? "*";
-			//layout.DefaultColumnWidth = defaultColumnWidth ?? "*";
+			var layout = (Layout.GridLayoutManager)LayoutManager;
 
-			//if (columns != null)
-			//	layout.AddColumns(columns);
+			layout.DefaultRowHeight = defaultRowHeight ?? "*";
+			layout.DefaultColumnWidth = defaultColumnWidth ?? "*";
 
-			//if (rows != null)
-			//	layout.AddRows(rows);
+			if (columns != null)
+				layout.AddColumns(columns);
+
+			if (rows != null)
+				layout.AddRows(rows);
 			Spacing = spacing;
 		}
 
 		public float? Spacing { get; }
 
-		protected override ILayoutManager CreateLayoutManager() => new GridLayoutManager((IGridLayout)this);
+
+		protected override ILayoutManager CreateLayoutManager() => new Comet.Layout.GridLayoutManager(this, Spacing);
 	}
 }
