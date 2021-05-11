@@ -35,8 +35,9 @@ namespace Comet.Android
 			if (view is View v && _view is View pv && v.AreSameType(pv, true) && currentHandler != null)
 			{
 				_view = view;
-				v.ViewHandler = currentHandler;
-				currentHandler.SetVirtualView(view);
+				var rView = v.ReplacedView;
+				rView.Handler = currentHandler;
+				currentHandler.SetVirtualView(rView);
 				return;
 			}
 
