@@ -17,24 +17,43 @@ namespace Comet
 		
 		public override Size GetDesiredSize(Size availableSize)
 		{
-			var intrinsicSize = base.GetDesiredSize(availableSize);
-			if (Orientation == Orientation.Horizontal)
+			var contentMeasureSize = availableSize;
+			if (Orientation == Orientation.Vertical)
+				contentMeasureSize.Height = double.PositiveInfinity;
+			else
+				contentMeasureSize.Width = double.PositiveInfinity;
+			
+			if (Content != null)
 			{
-				if (Content != null)
+				var contentSize = Content.MeasuredSize;
+				if (!Content.MeasurementValid)
 				{
-					var contentSize = Content.MeasuredSize;
-					if (!Content.MeasurementValid)
-					{
-						contentSize = Content.Measure(availableSize.Width,availableSize.Height);
-						Content.MeasuredSize = contentSize;
-						Content.MeasurementValid = true;
-					}
-
-					intrinsicSize.Height = contentSize.Height;
+					contentSize = Content.Measure(contentMeasureSize.Width, contentMeasureSize.Height);
+					Content.MeasuredSize = contentSize;
+					Content.MeasurementValid = true;
 				}
-			}
 
-			return intrinsicSize;
+				return MeasuredSize = new Size(
+					Math.Min(availableSize.Width, contentSize.Width),
+					Math.Min(availableSize.Height, contentSize.Height));
+				
+			}
+			return MeasuredSize = availableSize;
+		}
+		public override void LayoutSubviews(Rectangle frame)
+		{
+			this.Frame = frame;
+			if (Content != null)
+			{
+				var margin = Content.GetMargin();
+				frame = new Rectangle(Point.Zero, Content.MeasuredSize);
+				var bounds = new Rectangle(
+					frame.Left + margin.Left,
+					frame.Top + margin.Top,
+					frame.Width - margin.HorizontalThickness,
+					frame.Height - margin.VerticalThickness);
+				Content.Frame = bounds;
+			}
 		}
 
 		protected override void Dispose(bool disposing)
