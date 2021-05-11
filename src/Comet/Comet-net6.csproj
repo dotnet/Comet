@@ -17,9 +17,8 @@
     <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
     <PackageReference Include="Microsoft.Maui.Graphics" />
-    <PackageReference Include="Reloadify3000" Version="1.0.4" />
+    <PackageReference Include="Reloadify3000" Version="1.0.6" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
   </ItemGroup>
  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
     <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0.8-net6preview02.4535000" />
