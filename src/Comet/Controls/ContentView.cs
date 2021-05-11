@@ -41,6 +41,7 @@ namespace Comet
 
 		public override void LayoutSubviews(Rectangle frame)
 		{
+			this.Frame = frame;
 			if (Content != null)
 			{
 				var margin = Content.GetMargin();
@@ -59,8 +60,8 @@ namespace Comet
 				var margin = Content.GetMargin();
 				availableSize.Width -= margin.HorizontalThickness;
 				availableSize.Height -= margin.VerticalThickness;
-				var measuredSize = Content.Measure(availableSize, true);
-				return measuredSize;
+				MeasuredSize = Content.Measure(availableSize, true);
+				return MeasuredSize;
 			}
 
 			return base.GetDesiredSize(availableSize);

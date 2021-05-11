@@ -33,6 +33,7 @@ namespace Comet
 				//{ typeof(Picker), typeof(PickerHandler) },
 				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
 				//{ typeof(SearchBar), typeof(SearchBarHandler) },
+				{typeof(ScrollView), typeof(ScrollViewHandler) },
 				{typeof(ShapeView), typeof(ShapeViewHandler)},
 				{ typeof(SecureField), typeof(EntryHandler) },
 				{ typeof(Slider), typeof(SliderHandler) },
@@ -45,7 +46,6 @@ namespace Comet
 				{ typeof(TimePicker), typeof(TimePickerHandler) },
 				{ typeof(Toggle), typeof(SwitchHandler) },
 #if __IOS__
-				{typeof(ScrollView), typeof(ScrollViewHandler) },
 				{typeof(View), typeof(CometViewHandler)},
 #endif
 			}));

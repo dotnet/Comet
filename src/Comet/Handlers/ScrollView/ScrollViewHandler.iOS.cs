@@ -11,10 +11,6 @@ namespace Comet.Handlers
 {
 	public partial class ScrollViewHandler : ViewHandler<ScrollView, CUIScrollView>
 	{
-		public ScrollViewHandler() : base(ViewHandler.ViewMapper)
-		{
-
-		}
 
 		private UIView _content;
 

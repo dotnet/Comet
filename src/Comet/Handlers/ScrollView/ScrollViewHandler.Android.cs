@@ -3,26 +3,16 @@ using AView = Android.Views.View;
 using AScrollView = Android.Widget.ScrollView;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui;
+using static Android.Views.ViewGroup;
 
 namespace Comet.Handlers
 {
 	public partial class ScrollViewHandler : ViewHandler<ScrollView, AScrollView>
 	{
-		public static readonly PropertyMapper<ScrollView> Mapper = new PropertyMapper<ScrollView>(ViewHandler.ViewMapper)
-		{
-		};
 
 		private AView _content;
 
-		public ScrollViewHandler() : base(Mapper)
-		{
-		}
-
-		protected override AScrollView CreateNativeView()
-		{
-			return new AScrollView(Context);
-		}
-
+		protected override AScrollView CreateNativeView() => new AScrollView(Context);
 		
 		protected override void DisconnectHandler(AScrollView view)
 		{
@@ -39,7 +29,7 @@ namespace Comet.Handlers
 		{
 			base.SetVirtualView(view);
 
-			var newContent = view?.ToNative(MauiContext);
+			var newContent = VirtualView.Content?.ToNative(MauiContext);
 			if (_content == null || newContent != _content)
 			{
 				if (_content != null)
