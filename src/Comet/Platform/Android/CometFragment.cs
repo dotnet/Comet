@@ -14,11 +14,18 @@ namespace Comet.Android.Controls
 		IView startingCurrentView;
 
 		public IMauiContext MauiContext { get; set; }
+
 		public CometFragment()
 		{
+
 		}
 
-		public CometFragment(View view)
+		public CometFragment(IMauiContext mauiContext)
+		{
+			MauiContext = mauiContext;
+		}
+
+		public CometFragment(View view, IMauiContext mauiContext) : this(mauiContext)
 		{
 			this.CurrentView = view;
 		}
@@ -46,8 +53,9 @@ namespace Comet.Android.Controls
 			if (CurrentView == null && savedInstanceState != null)
 			{
 				var oldViewId = savedInstanceState.GetString(currentViewID);
-				//var oldView = Comet.Internal.Extensions.FindViewById(null, oldViewId);
-				//startingCurrentView = oldView;
+				var oldView = Comet.Internal.Extensions.FindViewById(null, oldViewId);
+				startingCurrentView = oldView;
+				MauiContext = oldView.ViewHandler?.MauiContext;
 			}
 
 			containerView ??= new CometView(MauiContext);

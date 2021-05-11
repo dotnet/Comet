@@ -48,14 +48,24 @@ namespace Comet.Android
 				ihr.ReloadHandler = this;
 				MauiHotReloadHelper.AddActiveView(ihr);
 			}
-			var newNativeView = _view.ToNative(MauiContext);
-			currentHandler = _view.Handler;
+			var newNativeView = _view?.ToNative(MauiContext);
+
+			if (view is IReplaceableView ir)
+				currentHandler = ir.ReplacedView.Handler;
+			else
+				currentHandler = _view?.Handler;
 			if (currentNativeView == newNativeView)
 				return;
 			if (currentNativeView != null)
 				RemoveView(currentNativeView);
+			if (_view == null)
+				return;
 
 			currentNativeView = currentHandler.NativeView as AView ?? new AView(MauiContext.Context);
+			if (currentNativeView.Parent == this)
+				return;
+			if (currentNativeView.Parent != null)
+				(currentNativeView.Parent as AViewGroup).RemoveView(currentNativeView);
 			AddView(currentNativeView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
 
 		}
@@ -65,6 +75,15 @@ namespace Comet.Android
 			RequestLayout();
 		}
 
+		protected override void OnMeasure(int widthMeasureSpec, int heightMeasureSpec)
+		{
+			var deviceIndependentWidth = widthMeasureSpec.ToDouble(Context);
+			var deviceIndependentHeight = heightMeasureSpec.ToDouble(Context);
+			var size = CurrentView.Measure(deviceIndependentWidth, deviceIndependentHeight);
+			var nativeWidth = Context.ToPixels(size.Width);
+			var nativeHeight = Context.ToPixels(size.Height);
+			SetMeasuredDimension((int)nativeWidth, (int)nativeHeight);
+		}
 
 		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
 		{

@@ -7,10 +7,7 @@ namespace Comet.Handlers
 {
 	public partial class NavigationViewHandler : ViewHandler<NavigationView, UIView>, INativeViewHandler
 	{
-		public NavigationViewHandler() : base(ViewHandler.ViewMapper)
-		{
-
-		}
+		
 		UIViewController viewController;
 		UIViewController INativeViewHandler.ViewController => viewController;
 		protected override UIView CreateNativeView()

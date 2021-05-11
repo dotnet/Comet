@@ -7,6 +7,9 @@ namespace Comet.Handlers
 {
 	public partial class NavigationViewHandler
 	{
-		
+		public NavigationViewHandler() : base(ViewHandler.ViewMapper)
+		{
+
+		}
 	}
 }

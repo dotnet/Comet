@@ -3,13 +3,24 @@ using System.Collections.Generic;
 using System.Linq;
 using Comet.Reflection;
 using Microsoft.Maui;
+using Microsoft.Maui.HotReload;
 
 namespace Comet.Internal
 {
 	public static class Extensions
 	{
-		//public static View FindViewById(this View view, string id)
-		//	=> View.ActiveViews.OfType<View>().FirstOrDefault(x => x.Id == id);
+		public static View FindViewById(this View view, string id)
+		{
+			if(view == null)
+				return MauiHotReloadHelper.ActiveViews.OfType<View>().Select(x=> x.FindViewById(id)).FirstOrDefault();
+			if (view.Id == id)
+				return view;
+			if(view is IContainerView ic)
+				return ic.GetChildren().Select(x => x.FindViewById(id)).FirstOrDefault();
+			return null;
+		}
+
+	
 
 		public static Func<View> GetBody(this View view)
 		{

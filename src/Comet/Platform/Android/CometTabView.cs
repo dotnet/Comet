@@ -38,7 +38,7 @@ namespace Comet.Android.Controls
 
 		public void CreateTabs(List<View> views)
 		{
-			_fragments = views.Select(v => new CometFragment(v) { MauiContext = MauiContext }).ToList();
+			_fragments = views.Select(v => new CometFragment(v,MauiContext )).ToList();
 			_bottomNavigationView.Menu.Clear();
 
 			if (views == null)
@@ -49,7 +49,7 @@ namespace Comet.Android.Controls
 			for (int i = 0; i < views.Count(); i++)
 			{
 				var view = views[i];
-				var fragment = new CometFragment(view) { MauiContext = MauiContext };
+				var fragment = new CometFragment(view,MauiContext);
 
 				var title = view.GetEnvironment<string>(EnvironmentKeys.TabView.Title);
 				var imagePath = view.GetEnvironment<string>(EnvironmentKeys.TabView.Image);
