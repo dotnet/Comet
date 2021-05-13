@@ -62,6 +62,6 @@ namespace Comet.Tests.Handlers
 		public void DisconnectHandler() => CurrentView = null;
 		void IViewHandler.SetMauiContext(IMauiContext mauiContext) => MauiContext = mauiContext;
 		Size IViewHandler.GetDesiredSize(double widthConstraint, double heightConstraint) => GetIntrinsicSize(widthConstraint, heightConstraint);
-		void IViewHandler.SetFrame(Rectangle frame) => Frame = frame;
+		void IViewHandler.NativeArrange(Rectangle frame) => Frame = frame;
 	}
 }

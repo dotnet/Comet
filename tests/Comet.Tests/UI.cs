@@ -37,7 +37,7 @@ namespace Comet.Tests
 					{ typeof(VStack), typeof(GenericViewHandler)},
 					{ typeof(ZStack), typeof(GenericViewHandler)},
 				};
-			var handlerCollection = new MauiServiceCollection();
+			var handlerCollection = new MauiHandlersCollection();
 			foreach (var handler in handlers)
 			{
 				handlerCollection.AddTransient(handler.Key, handler.Value);
