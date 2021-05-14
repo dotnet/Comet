@@ -1,6 +1,6 @@
 name: main-build
 
-## this publishes to nuget.org
+#this drops to nuget
 
 on:
   push:
