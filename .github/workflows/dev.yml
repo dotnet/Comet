@@ -29,10 +29,10 @@ jobs:
       #   uses: microsoft/setup-msbuild@v1.0.2
 
       - name: Install and Run maui-check Tool
-        shell: pwsh
         run: |
           dotnet tool install -g Redth.Net.Maui.Check
-          maui-check --ci --fix --non-interactive --verbose --skip openjdk
+          maui-check --dev --ci --fix --non-interactive --verbose --skip androidemulator
+          maui-check --ci --fix --non-interactive --verbose --skip androidemulator
 
       - name: dotnet Restore Comet.sln
         run: dotnet restore Comet.sln
@@ -43,8 +43,10 @@ jobs:
       - name: dotnet Restore Comet-net6-Nuget.sln
         run: dotnet restore build/Comet-net6-Nuget.sln
 
+      - name: Build Comet-net6-Nuget.sln
+        run: dotnet build build/Comet-net6-Nuget.sln
+
       - name: Build Comet-Nuget.sln
         run: msbuild build/Comet-Nuget.sln
  
-      - name: Build Comet-net6-Nuget.sln
-        run: dotnet build build/Comet-net6-Nuget.sln
+      
