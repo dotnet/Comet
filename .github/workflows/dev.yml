@@ -1,8 +1,10 @@
 name: dev-prcheck-build
 
+##this drops to github
+
 on:
   push:
-    branches: [ dev, sweek/ci-fix ]
+    branches: [ dev, , sweek/ci-fix ]
   pull_request:
     branches: [ dev, master ]
 
@@ -28,3 +30,15 @@ jobs:
         run: |
           dotnet tool install -g Redth.Net.Maui.Check
           maui-check --ci --fix --non-interactive --verbose --skip openjdk
+
+      - name: Nuget Restore Comet-Nuget.sln
+        run: dotnet restore build/Comet-Nuget.sln
+
+      - name: Nuget Restore Comet-net6-Nuget.sln
+        run: dotnet restore build/Comet-net6-Nuget.sln
+
+      - name: Build Comet-Nuget.sln
+        run: msbuild build/Comet-Nuget.sln
+ 
+      - name: Build Comet-net6-Nuget.sln
+        run: dotnet build build/Comet-net6-Nuget.sln
