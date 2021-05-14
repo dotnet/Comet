@@ -23,7 +23,7 @@ jobs:
       - name: Setup .NET Core
         uses: actions/setup-dotnet@v1
         with:
-          dotnet-version: 3.1.100
+          dotnet-version: 3.1.x
 
       # - name: Add msbuild to PATH
       #   uses: microsoft/setup-msbuild@v1.0.2
@@ -32,16 +32,15 @@ jobs:
         run: |
           dotnet tool install -g Redth.Net.Maui.Check
           maui-check --dev --ci --fix --non-interactive --verbose --skip androidemulator --skip xcode
-          maui-check --ci --fix --non-interactive --verbose --skip androidemulator --skip xcode
 
-      - name: dotnet Restore Comet.sln
-        run: dotnet restore Comet.sln
+      - name: Restore Comet.sln
+        run: nuget restore Comet.sln
 
-      - name: dotnet Restore Comet-Nuget.sln
-        run: dotnet restore build/Comet-Nuget.sln
+      - name: Restore Comet-Nuget.sln
+        run: nuget restore build/Comet-Nuget.sln
 
-      - name: dotnet Restore Comet-net6-Nuget.sln
-        run: dotnet restore build/Comet-net6-Nuget.sln
+      - name: Restore Comet-net6-Nuget.sln
+        run: nuget restore build/Comet-net6-Nuget.sln
 
       - name: Build Comet-net6-Nuget.sln
         run: dotnet build build/Comet-net6-Nuget.sln
