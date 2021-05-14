@@ -25,6 +25,9 @@ jobs:
         with:
           dotnet-version: 3.1.100
 
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+
       - name: Install and Run maui-check Tool
         shell: pwsh
         run: |
