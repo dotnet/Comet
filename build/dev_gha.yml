@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [ dev, sweek/ci-fix ]
+  pull_request:
+    branches: [ dev, master ]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Comet-Nuget
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.100
+
+      - name: Install and Run maui-check Tool
+          shell: pwsh
+          run: |
+            dotnet tool install -g Redth.Net.Maui.Check
+            maui-check --ci --fix --non-interactive --verbose --skip openjdk
