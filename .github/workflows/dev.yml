@@ -35,7 +35,7 @@ jobs:
           maui-check --ci --fix --non-interactive --verbose --skip openjdk
 
       - name: Nuget Restore Comet-Nuget.sln
-        run: dotnet restore build/Comet-Nuget.sln
+        run: nuget restore build/Comet-Nuget.sln
 
       - name: Nuget Restore Comet-net6-Nuget.sln
         run: dotnet restore build/Comet-net6-Nuget.sln
