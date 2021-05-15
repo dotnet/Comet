@@ -31,7 +31,7 @@ jobs:
       - name: Install and Run maui-check Tool
         run: |
           dotnet tool install -g Redth.Net.Maui.Check
-          maui-check --dev --ci --fix --non-interactive --verbose --skip androidemulator --skip xcode
+          maui-check --ci --fix --non-interactive --verbose --skip androidemulator --skip xcode
 
       - name: Restore Comet.sln
         run: nuget restore Comet.sln
