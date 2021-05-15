@@ -4,7 +4,7 @@ name: main-build
 
 on:
   push:
-    branches: [ main, sweek/ci-fix ]
+    branches: [ main ]
 
   workflow_dispatch:
 

@@ -25,8 +25,13 @@ jobs:
         with:
           dotnet-version: 3.1.x
 
-      # - name: Add msbuild to PATH
-      #   uses: microsoft/setup-msbuild@v1.0.2
+      - name: Install previews with boots
+        run: |
+          dotnet tool install -g boots
+          boots --preview Mono
+          boots --preview Xamarin.Android
+          boots --preview Xamarin.iOS
+          boots --preview Xamarin.Mac
 
       - name: Install and Run maui-check Tool
         run: |
