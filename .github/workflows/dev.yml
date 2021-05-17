@@ -24,7 +24,7 @@ jobs:
         run : git submodule update --init --recursive
 
       - name: directory listing
-        run: cd ls -a
+        run: ls -a
 
       - name : directory check External 
         run: |
