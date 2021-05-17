@@ -32,14 +32,14 @@ jobs:
       #     vs-version: '[16.9,16.10)'
 
       - name: directory listing
-        run: cd ls -a
+        run: cd ls
 
       - name : directory check External 
         run: |
           cd External
-          ls -a
+          ls
           cd Maui\eng\
-          ls -a
+          ls
 
 
       - name: Install and Run maui-check Tool
