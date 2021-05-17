@@ -30,7 +30,9 @@ jobs:
         run: |
           cd External
           ls -a
-          cd Maui\eng\
+          cd Maui
+          ls -a
+          cd eng
           ls -a
 
       # - name: Setup .NET Core
