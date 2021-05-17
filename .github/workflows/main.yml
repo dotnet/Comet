@@ -35,13 +35,8 @@ jobs:
         shell: pwsh
         run: |
           dotnet tool install -g Redth.Net.Maui.Check
-          maui-check --ci --fix --non-interactive --verbose 
-
-      - name: Install and Run maui-check Tool AGAIN
-        shell: pwsh
-        run: |
-          dotnet tool install -g Redth.Net.Maui.Check
-          maui-check --ci --fix --non-interactive --verbose 
+          maui-check --ci --fix --non-interactive --verbose --skip openjdk
+          & maui-check --ci --fix --non-interactive --verbose --skip openjdk
 
       - name: Restore Comet.sln
         run: nuget restore Comet.sln
