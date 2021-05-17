@@ -4,7 +4,7 @@ name: dev-prcheck-build
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ dev , sweek/ci-fix ]
   pull_request:
     branches: [ dev, master ]
 
@@ -20,10 +20,23 @@ jobs:
         with:
           submodules: true
 
-      - name: Setup .NET Core
-        uses: actions/setup-dotnet@v1
-        with:
-          dotnet-version: 3.1.x
+      - name: git submodules command again
+        run : git submodule update --init --recursive
+
+      - name: directory listing
+        run: cd ls -a
+
+      - name : directory check External 
+        run: |
+          cd External
+          ls -a
+          cd Maui\eng\
+          ls -a
+
+      # - name: Setup .NET Core
+      #   uses: actions/setup-dotnet@v1
+      #   with:
+      #     dotnet-version: 3.1.x
 
       - name: Install and Run maui-check Tool
         run: |

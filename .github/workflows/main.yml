@@ -4,7 +4,7 @@ name: main-build
 
 on:
   push:
-    branches: [ main, sweek/ci-fix ]
+    branches: [ main ]
 
   workflow_dispatch:
 
@@ -26,21 +26,10 @@ jobs:
       #   with:
       #     dotnet-version: 3.1.x
 
-      # - name: Add msbuild to PATH
-      #   uses: microsoft/setup-msbuild@v1.0.2
-      #   with:
-      #     vs-version: '[16.9,16.10)'
-
-      - name: directory listing
-        run: cd ls
-
-      - name : directory check External 
-        run: |
-          cd External
-          ls
-          cd Maui\eng\
-          ls
-
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+        with:
+          vs-version: '[16.9,16.10)'
 
       - name: Install and Run maui-check Tool
         shell: pwsh
