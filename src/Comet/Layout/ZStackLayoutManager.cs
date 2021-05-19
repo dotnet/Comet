@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
@@ -11,8 +12,17 @@ namespace Comet.Layout
 
 		ILayout layout;
 
-		public Size Measure(double widthConstraint, double heightConstraint) =>
-			layout.Children.Max(x => x.Measure(widthConstraint, heightConstraint));
+		public Size Measure(double widthConstraint, double heightConstraint) {
+			Size measuredSize = new ();
+			foreach(var c in layout.Children)
+			{
+				var s = c.Measure(widthConstraint, heightConstraint);
+				measuredSize.Height = Math.Max(measuredSize.Height, s.Height);
+				measuredSize.Width = Math.Max(measuredSize.Width, s.Width);
+			};
+			return measuredSize;
+		}
+
 		public void ArrangeChildren(Rectangle bounds)
 		{
 			foreach (var v in layout.Children)
