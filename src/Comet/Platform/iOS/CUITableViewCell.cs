@@ -14,6 +14,7 @@ namespace Comet.iOS
 		public CUITableViewCell(IntPtr ptr) : base(ptr)
 		{
 			ContentView.Tag = _instanceCount++;
+			BackgroundColor = UIColor.Clear;
 		}
 
 		public void SetFromContext(IMauiContext context)
