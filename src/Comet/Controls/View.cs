@@ -616,8 +616,6 @@ namespace Comet
 
 		bool IFrameworkElement.IsEnabled => this.GetEnvironment<bool?>(nameof(IFrameworkElement.IsEnabled)) ?? true;
 
-		Color IFrameworkElement.BackgroundColor => this.GetBackgroundColor();
-
 		Rectangle IFrameworkElement.Frame => Frame;
 
 		IViewHandler IFrameworkElement.Handler
@@ -666,6 +664,12 @@ namespace Comet
 		string IPage.Title => this.GetTitle();
 
 		bool ISafeAreaView.IgnoreSafeArea => this.GetIgnoreSafeArea(false);
+
+		Visibility IFrameworkElement.Visibility => Visibility.Visible;
+
+		double IFrameworkElement.Opacity => this.GetOpacity();
+
+		Paint IFrameworkElement.Background => this.GetBackground();
 
 		Size IFrameworkElement.Arrange(Rectangle bounds)
 		{

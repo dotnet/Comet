@@ -30,32 +30,26 @@ namespace Comet
 			switch (drawingStyle)
 			{
 				case DrawingStyle.StrokeFill:
-					strokePaint = new Paint
+					strokePaint = new SolidPaint
 					{
-						PaintType = PaintType.Solid,
 						BackgroundColor = strokeColor,
 					};
 
-					fillPaint = new Paint
+					fillPaint = new SolidPaint
 					{
-						PaintType = PaintType.Solid,
 						//BackgroundColor = strokeColor,
 					};
 					break;
 				case DrawingStyle.Stroke:
-					strokePaint = new Paint
+					strokePaint = new SolidPaint
 					{
 
-						PaintType = PaintType.Solid,
 						BackgroundColor = strokeColor,
 					};
-					fillPaint = new Paint
-					{
-						PaintType = PaintType.Solid,
-					};
+					fillPaint = new SolidPaint();
 					break;
 				case DrawingStyle.Fill:
-					fillPaint = new();
+					fillPaint = new SolidPaint();
 					break;
 			}
 
@@ -94,10 +88,11 @@ namespace Comet
 
 						var x2 = (float)(rect.X + rect.Width * linearGradient.EndPoint.X);
 						var y2 = (float)(rect.Y + rect.Height * linearGradient.EndPoint.Y);
-
-						fillPaint.PaintType = PaintType.LinearGradient;
-						fillPaint.Stops = colors;
-						canvas.SetFillPaint(fillPaint, x1, y1, x2, y2);
+						fillPaint = new LinearGradientPaint
+						{
+							GradientStops = colors,
+						};
+						canvas.SetFillPaint(fillPaint,new RectangleF( x1, y1, x2, y2));
 						canvas.FillPath(path);
 					}
 					else if (gradient is RadialGradient radialGradient)
@@ -106,11 +101,12 @@ namespace Comet
 						var y1 = (float)(rect.Y + rect.Height * radialGradient.Center.Y);
 						var x2 = x1;
 						var y2 = (float)(y1  + radialGradient.EndRadius);
+						fillPaint = new RadialGradientPaint
+						{
+							GradientStops = colors,
+						};
 
-						fillPaint.PaintType = PaintType.RadialGradient;
-						fillPaint.Stops = colors;
-						
-						canvas.SetFillPaint(fillPaint, x1, y1, x2, y2);
+						canvas.SetFillPaint(fillPaint, new RectangleF(x1, y1, x2, y2));
 						canvas.FillPath(path);
 					}
 

@@ -132,7 +132,7 @@ namespace Comet.Styles
 			//Set the BorderStyle
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.ClipShape, Button?.Border);
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.Overlay, Button?.Border);
-			SetEnvironment(view, typeof(Button), EnvironmentKeys.Colors.BackgroundColor, Button?.BackgroundColor);
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.Colors.Background, Button?.BackgroundColor);
 
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.Shadow, Button?.Shadow);
 		}
@@ -167,7 +167,7 @@ namespace Comet.Styles
 			SetEnvironment(view, viewType, EnvironmentKeys.View.ClipShape, style?.ClipShape);
 			SetEnvironment(view, viewType, EnvironmentKeys.View.Overlay, style?.Overlay);
 			SetEnvironment(view, viewType, EnvironmentKeys.View.Border, style?.Border);
-			SetEnvironment(view, viewType, EnvironmentKeys.Colors.BackgroundColor, style?.BackgroundColor);
+			SetEnvironment(view, viewType, EnvironmentKeys.Colors.Background, style?.BackgroundColor);
 			SetEnvironment(view, viewType, EnvironmentKeys.View.Shadow, style?.Shadow);
 		}
 
