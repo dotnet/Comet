@@ -247,7 +247,7 @@ namespace Comet
 					{
 						if (Debugger.IsAttached)
 						{
-							builtView = new Text(ex.Message.ToString());
+							builtView = new VStack {new Text(ex.Message.ToString()).LineBreakMode(LineBreakMode.WordWrap) };
 						}
 						else throw ex;
 					}
