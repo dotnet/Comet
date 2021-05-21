@@ -28,6 +28,7 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="Xamarin.iOS1.0">
@@ -35,6 +36,8 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework=".NETStandard2.0">
@@ -42,6 +45,8 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework=".NETStandard2.1">
@@ -49,6 +54,8 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-android">
@@ -64,6 +71,8 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-ios">
@@ -71,6 +80,8 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-maccatalyst">
@@ -78,6 +89,8 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
+        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
     </dependencies>
