@@ -680,6 +680,8 @@ namespace Comet
 		void IFrameworkElement.InvalidateArrange() => IsArrangeValid = false;
 		void IHotReloadableView. TransferState(IView newView) {
 			var oldState = this.GetState();
+			if (oldState == null)
+				return;
 			var changes = oldState.ChangedProperties;
 			foreach (var change in changes)
 			{
