@@ -16,7 +16,7 @@
     <language>C#</language>
     <dependencies>
       <group targetFramework="MonoAndroid10.0">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.3.61" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Xamarin.AndroidX.Legacy.Support.V4" version="1.0.0.7-net6preview03.4680155" exclude="Build,Analyzers" />
         <dependency id="Xamarin.AndroidX.Lifecycle.LiveData" version="2.3.1-net6preview03.4680155" exclude="Build,Analyzers" />
         <dependency id="Xamarin.AndroidX.Navigation.Common" version="2.3.5-net6preview03.4680155" exclude="Build,Analyzers" />
@@ -33,7 +33,7 @@
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="Xamarin.iOS1.0">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.3.61" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
@@ -42,7 +42,7 @@
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework=".NETStandard2.0">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.3.61" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
@@ -51,7 +51,7 @@
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework=".NETStandard2.1">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.3.61" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
@@ -60,7 +60,7 @@
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-android">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.3.61" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Xamarin.AndroidX.Legacy.Support.V4" version="1.0.0.7-net6preview03.4680155" exclude="Build,Analyzers" />
         <dependency id="Xamarin.AndroidX.Lifecycle.LiveData" version="2.3.1-net6preview03.4680155" exclude="Build,Analyzers" />
         <dependency id="Xamarin.AndroidX.Navigation.Common" version="2.3.5-net6preview03.4680155" exclude="Build,Analyzers" />
@@ -77,7 +77,7 @@
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-ios">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.3.61" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
@@ -86,7 +86,7 @@
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-maccatalyst">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.3.61" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
