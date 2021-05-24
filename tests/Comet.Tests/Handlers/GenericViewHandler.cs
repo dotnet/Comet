@@ -36,6 +36,8 @@ namespace Comet.Tests.Handlers
 
 		IView IViewHandler.VirtualView => CurrentView;
 
+		public object ContainerView => throw new NotImplementedException();
+
 		public readonly Dictionary<string, object> ChangedProperties = new Dictionary<string, object>();
 
 
