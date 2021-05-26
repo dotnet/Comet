@@ -62,10 +62,10 @@ jobs:
         run: dotnet restore External/Maui/Microsoft.Maui-net6.sln
 
       - name: Restore Comet-Nuget.sln
-        run: nuget restore Comet.sln
+        run: nuget restore build/Comet-Nuget.sln
 
       - name: dotnet Restore Comet-net6-Nuget.sln
-        run: dotnet restore Comet-net6.sln
+        run: dotnet restore build/Comet-net6.sln
 
       - name: Build Comet-Nuget.sln
         run: msbuild build/Comet-Nuget.sln
