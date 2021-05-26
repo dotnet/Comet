@@ -4,31 +4,40 @@ name: dev-prcheck-build
 
 on:
   push:
-    branches: [ dev ]
+    branches: [ dev, sweek/ci-fix ]
   pull_request:
-    branches: [ dev, master ]
+    branches: [ dev, main ]
 
   workflow_dispatch:
 
 jobs:
   build:
     name: Build Comet-Nuget
-    runs-on: macos-latest
+    runs-on: windows-latest
 
     steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
+      
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+        with:
+          vs-version: '[16.9,16.10)'
 
-      # - name: Setup .NET Core
-      #   uses: actions/setup-dotnet@v1
-      #   with:
-      #     dotnet-version: 3.1.x
-
-      - name: Install and Run maui-check Tool
+      - name:  install .NET 6.0.100-preview.4.21255.9
+        shell: pwsh
         run: |
-          dotnet tool install -g Redth.Net.Maui.Check
-          maui-check --ci --fix --non-interactive --verbose --skip androidemulator --skip xcode
+          $ProgressPreference = 'SilentlyContinue'
+          Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
+          & .\dotnet-install.ps1 -Version 6.0.100-preview.4.21255.9 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+          & dotnet --list-sdks
+      
+      - name: Install and Run maui-check Tool
+        shell: pwsh
+        run: |
+          & dotnet tool update --global redth.net.maui.check --version 0.4.1 --add-source https://api.nuget.org/v3/index.json
+          & maui-check --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --manifest https://raw.githubusercontent.com/Redth/dotnet-maui-check/main/manifests/maui-dev.manifest.json
 
       - name: Restore Comet-Nuget.sln
         run: nuget restore build/Comet-Nuget.sln
@@ -41,6 +50,19 @@ jobs:
  
       - name: Build Comet-net6-Nuget.sln
         run: dotnet build build/Comet-net6-Nuget.sln
+        
+      - name: Nuget Pack step
+        run: nuget pack Comet.nuspec
+        
+      - uses: actions/upload-artifact@v2
+        with:
+          name: nuget-dev-artifact
+          path: |
+            **\*.nupkg
+            **\*.snupkg
+            **/*.symbols.nupkg
+        
+      
 
       
  
