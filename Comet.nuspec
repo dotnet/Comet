@@ -59,7 +59,7 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
-      <group targetFramework="net6.0-android">
+      <group targetFramework="net6.0-android30.0">
         <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Xamarin.AndroidX.Legacy.Support.V4" version="1.0.0.7-net6preview03.4680155" exclude="Build,Analyzers" />
         <dependency id="Xamarin.AndroidX.Lifecycle.LiveData" version="2.3.1-net6preview03.4680155" exclude="Build,Analyzers" />
@@ -76,7 +76,7 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
-      <group targetFramework="net6.0-ios">
+      <group targetFramework="net6.0-ios13.6">
         <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
@@ -85,7 +85,7 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
-      <group targetFramework="net6.0-maccatalyst">
+      <group targetFramework="net6.0-maccatalyst13.5">
         <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
@@ -121,23 +121,23 @@
     <file src="src/Comet/bin/Debug/monoandroid10.0/Microsoft.Maui.pdb" target="lib/monoandroid10/Microsoft.Maui.pdb"/>
     <file src="src/Comet/bin/Debug/monoandroid10.0/Microsoft.Maui.Essentials.dll" target="lib/monoandroid10/Microsoft.Maui.Essentials.dll"/>
     <file src="src/Comet/bin/Debug/monoandroid10.0/Microsoft.Maui.Essentials.pdb" target="lib/monoandroid10/Microsoft.Maui.Essentials.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-ios/Comet.dll" target="lib/net6.0-ios/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-ios/Comet.pdb" target="lib/net6.0-ios/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.dll" target="lib/net6.0-ios/Microsoft.Maui.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.pdb" target="lib/net6.0-ios/Microsoft.Maui.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.Essentials.dll" target="lib/net6.0-ios/Microsoft.Maui.Essentials.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.Essentials.pdb" target="lib/net6.0-ios/Microsoft.Maui.Essentials.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-android/Comet.dll" target="lib/net6.0-android/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-android/Comet.pdb" target="lib/net6.0-android/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.dll" target="lib/net6.0-android/Microsoft.Maui.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.pdb" target="lib/net6.0-android/Microsoft.Maui.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.Essentials.dll" target="lib/net6.0-android/Microsoft.Maui.Essentials.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.Essentials.pdb" target="lib/net6.0-android/Microsoft.Maui.Essentials.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.dll" target="lib/net6.0-maccatalyst/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.pdb" target="lib/net6.0-maccatalyst/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.dll" target="lib/net6.0-maccatalyst/Microsoft.Maui.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.pdb" target="lib/net6.0-maccatalyst/Microsoft.Maui.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.Essentials.dll" target="lib/net6.0-maccatalyst/Microsoft.Maui.Essentials.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.Essentials.pdb" target="lib/net6.0-maccatalyst/Microsoft.Maui.Essentials.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0-ios/Comet.dll" target="lib/net6.0-ios13.6/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-ios/Comet.pdb" target="lib/net6.0-ios13.6/Comet.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.dll" target="lib/net6.0-ios13.6/Microsoft.Maui.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.pdb" target="lib/net6.0-ios13.6/Microsoft.Maui.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.Essentials.dll" target="lib/net6.0-ios13.6/Microsoft.Maui.Essentials.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.Essentials.pdb" target="lib/net6.0-ios13.6/Microsoft.Maui.Essentials.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0-android/Comet.dll" target="lib/net6.0-android30.0/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-android/Comet.pdb" target="lib/net6.0-android30.0/Comet.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.dll" target="lib/net6.0-android30.0/Microsoft.Maui.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.pdb" target="lib/net6.0-android30.0/Microsoft.Maui.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.Essentials.dll" target="lib/net6.0-android30.0/Microsoft.Maui.Essentials.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.Essentials.pdb" target="lib/net6.0-android30.0/Microsoft.Maui.Essentials.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.dll" target="lib/net6.0-maccatalyst13.5/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.pdb" target="lib/net6.0-maccatalyst13.5/Comet.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.dll" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.pdb" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.Essentials.dll" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.Essentials.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.Essentials.pdb" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.Essentials.pdb"/>
   </files>
 </package>
