@@ -23,11 +23,11 @@ jobs:
         shell: bash
         run: |
           VERSION=$NUPKG_MAJOR-ci$GITHUB_RUN_ID
-          echo "::set-output name=pkgverci::$VERSION"
           echo "PACKAGE VERSION: $VERSION"
           arrTag=(${GITHUB_REF//\// })
-          VERSION="${arrTag[2]}"
-          echo "::set-output name=pkgverrelease::$VERSION"
+          VERSION2="${arrTag[2]}"
+          echo "ANOTHER VERSION ARRTag 2:$VERSION2"
+          
           
 #       - uses: actions/checkout@v2
 #         with:
