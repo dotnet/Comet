@@ -50,4 +50,16 @@ jobs:
       - name: Build Comet-net6-Nuget.sln
         run: dotnet build build/Comet-net6-Nuget.sln
         
+      - name: Nuget Pack step
+        run: nuget pack Comet.nuspec
+        
+      - uses: actions/upload-artifact@v2
+        name: Upload Nuget Artifact
+        with:
+          name: nuget-dev-artifact
+          path: |
+            **\*.nupkg
+            **\*.snupkg
+            **/*.symbols.nupkg
+        
       
