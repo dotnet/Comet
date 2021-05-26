@@ -64,7 +64,7 @@ namespace Comet.Graphics
 			return angle2 - angle1;
 		}
 
-		public static Rectangle GetBoundsOfQuadraticCurve(
+		public static RectangleF GetBoundsOfQuadraticCurve(
 			Point startPoint,
 			Point controlPoint,
 			Point endPoint)
@@ -72,7 +72,7 @@ namespace Comet.Graphics
 			return GetBoundsOfQuadraticCurve(startPoint.X, startPoint.Y, controlPoint.X, controlPoint.Y, endPoint.X, endPoint.Y);
 		}
 
-		public static Rectangle GetBoundsOfQuadraticCurve(
+		public static RectangleF GetBoundsOfQuadraticCurve(
 			double x0, double y0,
 			double x1, double y1,
 			double x2, double y2)
@@ -89,7 +89,7 @@ namespace Comet.Graphics
 				x2, y2);
 		}
 
-		public static Rectangle GetBoundsOfCubicCurve(
+		public static RectangleF GetBoundsOfCubicCurve(
 			Point startPoint,
 			Point controlPoint1,
 			Point controlPoint2,
@@ -100,7 +100,7 @@ namespace Comet.Graphics
 
 
 
-		public static Rectangle GetBoundsOfCubicCurve(
+		public static RectangleF GetBoundsOfCubicCurve(
 			double x0, double y0,
 			double x1, double y1,
 			double x2, double y2,
@@ -238,7 +238,7 @@ namespace Comet.Graphics
 			return 180 - degrees;
 		}
 
-		public static Rectangle GetBoundsOfArc(
+		public static RectangleF GetBoundsOfArc(
 			double x,
 			double y,
 			double width,

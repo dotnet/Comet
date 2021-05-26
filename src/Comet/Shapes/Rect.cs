@@ -3,9 +3,9 @@ using Microsoft.Maui.Graphics;
 
 namespace Comet.Shapes
 {
-	public class Rectangle : Shape
+	public class Rect : Shape
 	{
-		public override PathF PathForBounds(Microsoft.Maui.Graphics.Rectangle rect)
+		public override PathF PathForBounds(Rectangle rect, float density = 1)
 		{
 			var path = new PathF();
 			path.AppendRectangle(rect);

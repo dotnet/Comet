@@ -56,7 +56,7 @@ namespace Comet.Samples
 			{
                 // cc background
                 new ShapeView(
-					new RoundedRectangle(8)
+					new RoundedRect(8)
 						.Fill(Color.FromHex("#3177CB"))
 						.Style(Graphics.DrawingStyle.Fill)
 				).Cell(row:1, column:1),
@@ -95,7 +95,7 @@ namespace Comet.Samples
 						.Cell(row:6, column:2),
 					new HStack
 					{
-						new ShapeView(new RoundedRectangle(4.0f).Fill(Colors.Black)).Frame(40,30)
+						new ShapeView(new RoundedRect(4.0f).Fill(Colors.Black)).Frame(40,30)
 					}.Cell(row: 1, column: 3)
 
 
@@ -127,7 +127,7 @@ namespace Comet.Samples
 		View HRule()
 		{
 			return new ShapeView(
-				new Shapes.Rectangle()
+				new Shapes.Rect()
 					.Stroke(Colors.Grey, 2)
 				)
 				.Frame(100, 1);

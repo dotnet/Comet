@@ -31,7 +31,7 @@ namespace Comet.Styles.Material
 			Button = OutlinedButton = new ButtonStyle
 			{
 				TextColor = colorPalette.P900,
-				Border = new RoundedRectangle(4f).Stroke(Colors.Grey, 1f, true),
+				Border = new RoundedRect(4f).Stroke(Colors.Grey, 1f, true),
 				BackgroundColor = new StyleAwareValue<ControlState, Color>
 				{
 					[ControlState.Default] = colorPalette.PD900,
@@ -45,7 +45,7 @@ namespace Comet.Styles.Material
 			ContainedButton = new ButtonStyle
 			{
 				TextColor = colorPalette.PD900,
-				Border = new RoundedRectangle(4f).Stroke(Colors.Grey, 1f, true),
+				Border = new RoundedRect(4f).Stroke(Colors.Grey, 1f, true),
 				BackgroundColor = new StyleAwareValue<ControlState, Color>
 				{
 					[ControlState.Default] = colorPalette.P900,

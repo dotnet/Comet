@@ -10,7 +10,7 @@ namespace Comet.Samples
 	{
 		[Body]
 		View body() => new VStack {
-				new Image("turtlerock.jpg")
+				new Image("turtlerock.jpg").Background(Colors.Blue)
 					.ClipShape(new Circle())
 					.Overlay(new Circle().Stroke(Colors.White, lineWidth: 4))
 					.Shadow(radius: 10)

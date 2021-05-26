@@ -642,7 +642,6 @@ namespace Comet
 
 		public bool RequiresContainer => HasContent;
 
-		//public IShape ClipShape => this.GetClipShape();
 
 		IView IReplaceableView.ReplacedView => this.ReplacedView;
 
@@ -670,6 +669,8 @@ namespace Comet
 		double IFrameworkElement.Opacity => this.GetOpacity();
 
 		Paint IFrameworkElement.Background => this.GetBackground();
+
+		IShape IFrameworkElement.ClipShape => this.GetClipShape();
 
 		Size IFrameworkElement.Arrange(Rectangle bounds)
 		{

@@ -23,7 +23,7 @@ namespace Comet.Samples
 			{
 				new VStack()
 				{
-					new ShapeView(new RoundedRectangle(4.0f)
+					new ShapeView(new RoundedRect(4.0f)
 						.Style(Graphics.DrawingStyle.Fill)
 						.Fill(Colors.Grey))
 						.Frame(40,30,alignment: Alignment.Trailing)
@@ -110,7 +110,7 @@ namespace Comet.Samples
 
 		public class Separator : ShapeView
 		{
-			public Separator() : base(new Shapes.Rectangle().Stroke(Colors.Grey, 2))
+			public Separator() : base(new Shapes.Rect().Stroke(Colors.Grey, 2))
 			{
 				this.Frame(height: 1);
 			}

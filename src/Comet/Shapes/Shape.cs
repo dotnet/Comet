@@ -5,7 +5,7 @@ using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
-	public abstract class Shape : ContextualObject//, IShape
+	public abstract class Shape : ContextualObject, IShape
 	{
 		protected Shape()
 		{
@@ -17,6 +17,6 @@ namespace Comet
 
 		}
 
-		public abstract PathF PathForBounds(Rectangle rect);
+		public abstract PathF PathForBounds(Rectangle rect, float density = 1);
 	}
 }

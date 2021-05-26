@@ -14,8 +14,8 @@ namespace Comet.Samples
 		View body() => new VStack
 		{
 			new ShapeView(new Circle().Stroke(Colors.Blue, 2)).Frame(100,60),
-			new ShapeView(new Shapes.Rectangle().Stroke(Colors.Magenta, 2)).Frame(100,60),
-			new ShapeView(new RoundedRectangle(6).Stroke(Colors.Purple, 2)).Frame(100,60),
+			new ShapeView(new Shapes.Rect().Stroke(Colors.Magenta, 2)).Frame(100,60),
+			new ShapeView(new RoundedRect(6).Stroke(Colors.Purple, 2)).Frame(100,60),
 			new ShapeView(new Capsule().Stroke(Colors.Orange, 2)).Frame(100,30),
 			new ShapeView(new Ellipse().Stroke(Colors.Green, 2)).Frame(100,60),
 			new ShapeView(new Path(PuzzlePiece).Stroke(Colors.Red, 2)).Frame(60,60),

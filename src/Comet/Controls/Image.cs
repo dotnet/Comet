@@ -70,7 +70,7 @@ namespace Comet
 
 		}
 
-		Aspect Microsoft.Maui.IImage.Aspect => this.GetEnvironment<Aspect>(nameof(Aspect));
+		Aspect Microsoft.Maui.IImage.Aspect => this.GetEnvironment<Aspect?>(nameof(Aspect)) ?? Aspect.AspectFill;
 
 		bool Microsoft.Maui.IImage.IsOpaque => this.GetEnvironment<bool>(nameof(Microsoft.Maui.IImage.IsOpaque));
 

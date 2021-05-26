@@ -1,6 +1,6 @@
 ﻿using Comet.Graphics;
 using Microsoft.Maui.Graphics;
-using Rectangle = Comet.Shapes.Rectangle;
+using Rectangle = Comet.Shapes.Rect;
 namespace Comet.Samples.Skia
 {
 	public class GraphicsSample6 : View
@@ -28,7 +28,7 @@ namespace Comet.Samples.Skia
 				.Frame(100, 60),
 
 			new ShapeView(
-					new RoundedRectangle(6)
+					new RoundedRect(6)
 						.Fill(LinearGradient)
 						.Style(DrawingStyle.Fill))
 				.Frame(100, 60),

@@ -5,7 +5,7 @@ namespace Comet
 {
 	public class Ellipse : Shape
 	{
-		public override PathF PathForBounds(Rectangle rect)
+		public override PathF PathForBounds(Rectangle rect, float density = 1)
 		{
 			var path = new PathF();
 			path.AppendEllipse(new RectangleF((float)rect.X, (float)rect.Y, (float)rect.Width, (float)rect.Height));
