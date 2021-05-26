@@ -26,7 +26,6 @@ namespace Comet
 		}
 
 		void IDrawable.Draw(ICanvas canvas, RectangleF dirtyRect) {
-			var backgroundColor = this.GetBackgroundColor(Colors.White);
 			var padding = this.GetPadding();
 			dirtyRect = dirtyRect.ApplyPadding(padding);
 

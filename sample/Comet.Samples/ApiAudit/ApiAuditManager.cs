@@ -31,7 +31,7 @@ namespace Comet.Samples
 
 		static string[] ViewProperties =
 		{
-			EnvironmentKeys.Colors.BackgroundColor,
+			EnvironmentKeys.Colors.Background,
 			EnvironmentKeys.View.ClipShape,
 			EnvironmentKeys.View.Overlay,
 			EnvironmentKeys.View.Shadow,

@@ -32,6 +32,7 @@ namespace Comet.Tests
 			var text2 = view.GetViewWithTag<Text>("text2");
 
 			view.Frame = new Rectangle(0, 0, 320, 600);
+			view.Measure(view.Frame.Width, view.Frame.Height);
 
 			Assert.True(view.MeasurementValid);
 			Assert.Equal(new Size(320, 40), view.MeasuredSize);

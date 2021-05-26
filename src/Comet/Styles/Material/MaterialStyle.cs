@@ -107,7 +107,7 @@ namespace Comet.Styles.Material
 
 			SetEnvironment(view, styleId, EnvironmentKeys.View.Border, style?.Border);
 			SetEnvironment(view, styleId, EnvironmentKeys.View.Overlay, style?.Border);
-			SetEnvironment(view, styleId, EnvironmentKeys.Colors.BackgroundColor, style?.BackgroundColor);
+			SetEnvironment(view, styleId, EnvironmentKeys.Colors.Background, style?.BackgroundColor);
 
 			SetEnvironment(view, styleId, EnvironmentKeys.View.Shadow, style?.Shadow);
 		}

@@ -12,7 +12,7 @@ namespace Comet.Handlers
 		public static PropertyMapper<View, CometViewHandler> CometViewMapper = new ()
 		{
 			[nameof(IPage.Title)] = MapTitle,
-			[nameof(IView.BackgroundColor)] = MapBackgroundColor,
+			[nameof(IView.Background)] = MapBackgroundColor,
 		};
 
 
@@ -42,7 +42,7 @@ namespace Comet.Handlers
 			var vc = handler?.viewController;
 			if (vc == null)
 				return;
-			vc.View.BackgroundColor = view.GetBackgroundColor(UIColor.SystemBackgroundColor.ToColor()).ToNative();
+			vc.View.UpdateBackground(view);
 		}
 
 	}

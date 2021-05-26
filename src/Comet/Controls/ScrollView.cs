@@ -32,7 +32,7 @@ namespace Comet
 					Content.MeasuredSize = contentSize;
 					Content.MeasurementValid = true;
 				}
-
+				MeasurementValid = true;
 				return MeasuredSize = new Size(
 					Math.Min(availableSize.Width, contentSize.Width),
 					Math.Min(availableSize.Height, contentSize.Height));

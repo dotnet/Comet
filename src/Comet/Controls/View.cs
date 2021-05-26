@@ -247,7 +247,7 @@ namespace Comet
 					{
 						if (Debugger.IsAttached)
 						{
-							builtView = new Text(ex.Message.ToString());
+							builtView = new VStack {new Text(ex.Message.ToString()).LineBreakMode(LineBreakMode.WordWrap) };
 						}
 						else throw ex;
 					}
@@ -616,8 +616,6 @@ namespace Comet
 
 		bool IFrameworkElement.IsEnabled => this.GetEnvironment<bool?>(nameof(IFrameworkElement.IsEnabled)) ?? true;
 
-		Color IFrameworkElement.BackgroundColor => this.GetBackgroundColor();
-
 		Rectangle IFrameworkElement.Frame => Frame;
 
 		IViewHandler IFrameworkElement.Handler
@@ -667,6 +665,12 @@ namespace Comet
 
 		bool ISafeAreaView.IgnoreSafeArea => this.GetIgnoreSafeArea(false);
 
+		Visibility IFrameworkElement.Visibility => Visibility.Visible;
+
+		double IFrameworkElement.Opacity => this.GetOpacity();
+
+		Paint IFrameworkElement.Background => this.GetBackground();
+
 		Size IFrameworkElement.Arrange(Rectangle bounds)
 		{
 			LayoutSubviews(bounds);
@@ -680,6 +684,8 @@ namespace Comet
 		void IFrameworkElement.InvalidateArrange() => IsArrangeValid = false;
 		void IHotReloadableView. TransferState(IView newView) {
 			var oldState = this.GetState();
+			if (oldState == null)
+				return;
 			var changes = oldState.ChangedProperties;
 			foreach (var change in changes)
 			{

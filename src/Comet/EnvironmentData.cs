@@ -30,7 +30,7 @@ namespace Comet
 		public static class Colors
 		{
 			public const string Color = "Color";
-			public const string BackgroundColor = "BackgroundColor";
+			public const string Background = nameof(Background);
 		}
 
 		public static class Animations
@@ -58,6 +58,7 @@ namespace Comet
 			public const string Border = "Border";
 			public const string StyleId = "StyleId";
 			public const string AutomationId = nameof(AutomationId);
+			public const string Opacity = nameof(Opacity);
 		}
 
 		public static class Shape
