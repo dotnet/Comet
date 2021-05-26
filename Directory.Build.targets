@@ -1,6 +1,4 @@
 <Project>
-  <Import Condition="'$(SampleProject)' != 'true' and '$(CI)' == 'true'" Project="External\Maui\eng\Git.Build.targets" />
-  <Import Condition="'$(SampleProject)' != 'true' and '$(CI)' == 'true' " Project="External\Maui\eng\Version.targets" />
   <Import Project="External\Maui\eng\AndroidX.targets" />
   <Import Project="External\Maui\eng\Microsoft.Extensions.targets" />
 </Project>
