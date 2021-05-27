@@ -22,7 +22,8 @@ jobs:
       - name: Nuget Pack step
         shell: bash
         run: |
-          MINOR_VERSION= $(( 334 + $GITHUB_RUN_NUMBER ))
+          base=334
+          MINOR_VERSION= $(( $base + $GITHUB_RUN_NUMBER ))
           VERSION=$NUPKG_MAJOR.$MINOR_VERSION-beta
           echo "PACKAGE VERSION: $VERSION"
         
