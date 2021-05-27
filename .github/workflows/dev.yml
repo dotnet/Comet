@@ -23,7 +23,7 @@ jobs:
         shell: bash
         run: |
           base=334
-          MINOR_VERSION= $(( $base + $GITHUB_RUN_NUMBER ))
+          MINOR_VERSION= $(( 10 + $GITHUB_RUN_NUMBER ))
           VERSION=$NUPKG_MAJOR.$MINOR_VERSION-beta
           echo "PACKAGE VERSION: $VERSION"
         
