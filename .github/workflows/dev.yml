@@ -24,10 +24,11 @@ jobs:
         run: |
           VERSION=$NUPKG_MAJOR-ci$GITHUB_RUN_ID
           echo "PACKAGE VERSION: $VERSION"
-          arrTag=(${GITHUB_REF//\// })
+          arrTag=(${GITHUB_RUN_ID//\// })
           VERSION2="${arrTag[2]}"
           echo "ANOTHER VERSION ARRTag 2:$VERSION2"
-          
+          arrTag2=$GITHUB_RUN_NUMBER
+          echo "GITHUB RUN NUMBER: $arrTag2"
           
 #       - uses: actions/checkout@v2
 #         with:
