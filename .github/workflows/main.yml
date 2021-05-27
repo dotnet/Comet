@@ -72,10 +72,35 @@ jobs:
       needs: build
       runs-on: windows-latest
       steps:
-        - name: Download Artifacts
-          uses: actions/download-artifact@v1
+        - uses: actions/checkout@v2
           with:
-            name: nuget-artifact
+            submodules: true
+      
+        - name: Add msbuild to PATH
+          uses: microsoft/setup-msbuild@v1.0.2
+          with:
+            vs-version: '[16.9,16.10)'
+
+        - name:  install .NET 6.0.100-preview.4.21255.9
+          shell: pwsh
+          run: |
+            $ProgressPreference = 'SilentlyContinue'
+            Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
+            & .\dotnet-install.ps1 -Version 6.0.100-preview.4.21255.9 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+            & dotnet --list-sdks
+        - name: Install and Run maui-check Tool
+          shell: pwsh
+          run: |
+            & dotnet tool update --global redth.net.maui.check --version 0.4.1 --add-source https://api.nuget.org/v3/index.json
+            & maui-check --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --manifest https://raw.githubusercontent.com/Redth/dotnet-maui-check/main/manifests/maui-dev.manifest.json
+        - name: Restore Comet-Tests.sln
+          run: nuget restore build/Comet-Tests.sln
+
+        - name: Build Tests Project
+          run: msbuild tests/Comet.Tests/Comet.Tests.csproj /p:Configuration=Release
+          
+        - name: Run Tests Project
+          run: dotnet test tests/Comet.Tests/Comet.Tests.csproj
             
   publish:
       name: Publish
