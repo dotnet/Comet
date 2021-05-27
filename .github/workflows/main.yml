@@ -51,15 +51,54 @@ jobs:
         run: dotnet build build/Comet-net6-Nuget.sln
         
       - name: Nuget Pack step
-        run: nuget pack Comet.nuspec
+        shell: bash
+        run: |
+          MINOR_VERSION=$(( $BASE + $GITHUB_RUN_NUMBER ))
+          VERSION=$NUPKG_MAJOR.$MINOR_VERSION
+          echo "PACKAGE VERSION: $VERSION"
+          nuget pack Comet.nuspec -version $VERSION
         
       - uses: actions/upload-artifact@v2
         name: Upload Nuget Artifact
         with:
-          name: nuget-dev-artifact
+          name: nuget-artifact
           path: |
             **\*.nupkg
             **\*.snupkg
             **/*.symbols.nupkg
+  
+  test:
+      name: Run Tests
+      needs: build
+      runs-on: windows-latest
+      steps:
+        - name: Download Artifacts
+          uses: actions/download-artifact@v1
+          with:
+            name: nuget-artifact
+            
+  publish:
+      name: Publish
+      needs:
+        - test
+      runs-on: windows-latest
+      steps:
+        - name: Download Artifacts
+          uses: actions/download-artifact@v1
+          with:
+            name: nuget-artifact
         
-      
+        - name: Setup .NET Core
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: 3.1.100
+            
+        - name: Setup NuGet
+          uses: nuget/setup-nuget@v1
+          with:
+            nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+            nuget-version: 'latest'
+            
+        - name: Push nuget to Nuget.org
+          run: |
+            nuget push nuget-artifact\*.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey ${{ secrets.NUGET_ORG_API_KEY }} -SkipDuplicate
