@@ -20,8 +20,6 @@ jobs:
 
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
-        with:
-          vs-version: '[16.9,16.10)'
 
       - name:  install .NET 6.0.100-preview.4.21255.9
         shell: pwsh
