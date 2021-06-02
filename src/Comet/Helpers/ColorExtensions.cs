@@ -41,6 +41,18 @@ namespace Comet
 			return color ?? defaultColor;
 		}
 
+		public static Paint GetPaintColor<T>(this T view, Paint defaultColor = null, ControlState state = ControlState.Default) where T : View
+		{
+			var color = view.GetEnvironment<Paint>(EnvironmentKeys.Colors.Color, state);
+			return color ?? defaultColor;
+		}
+
+		public static Paint GetPaintColor<T>(this T view, Type type, Paint defaultColor = null) where T : View
+		{
+			var color = view.GetEnvironment<Paint>(type, EnvironmentKeys.Colors.Color);
+			return color ?? defaultColor;
+		}
+
 		/// <summary>
 		/// Set the background color
 		/// </summary>

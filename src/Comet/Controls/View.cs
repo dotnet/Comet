@@ -673,6 +673,26 @@ namespace Comet
 
 		Paint IFrameworkElement.Background => this.GetBackground();
 
+		double ITransform.TranslationX => this.GetEnvironment<double>(nameof(ITransform.TranslationX));
+
+		double ITransform.TranslationY => this.GetEnvironment<double>(nameof(ITransform.TranslationY));
+
+		double ITransform.Scale => this.GetEnvironment<double?>(nameof(ITransform.Scale)) ?? 1;
+
+		double ITransform.ScaleX => this.GetEnvironment<double?>(nameof(ITransform.ScaleX)) ?? 1;
+
+		double ITransform.ScaleY => this.GetEnvironment<double?>(nameof(ITransform.ScaleY)) ?? 1;
+
+		double ITransform.Rotation => this.GetEnvironment<double>(nameof(ITransform.Rotation));
+
+		double ITransform.RotationX => this.GetEnvironment<double>(nameof(ITransform.RotationX));
+
+		double ITransform.RotationY => this.GetEnvironment<double>(nameof(ITransform.RotationY));
+
+		double ITransform.AnchorX => this.GetEnvironment<double?>(nameof(ITransform.AnchorX)) ?? .5;
+
+		double ITransform.AnchorY => this.GetEnvironment<double?>(nameof(ITransform.AnchorY)) ?? .5;
+
 		Size IFrameworkElement.Arrange(Rectangle bounds)
 		{
 			LayoutSubviews(bounds);

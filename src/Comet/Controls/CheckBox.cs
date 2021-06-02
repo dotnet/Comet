@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+
 namespace Comet
 {
 	public class CheckBox : View, ICheckBox
@@ -26,6 +28,9 @@ namespace Comet
 
 		public Action<bool> IsOnChanged { get; private set; }
 		bool ICheckBox.IsChecked { get => IsOn; set => IsOnChanged?.Invoke(value); }
+
+		Paint ICheckBox.Foreground => this.GetPaintColor();
+
 		protected override string GetHandlerPropertyName(string property)
 			=> CheckBoxHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}
