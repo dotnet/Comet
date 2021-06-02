@@ -117,6 +117,8 @@ namespace Comet
 			var oldViewHandler = viewHandler;
 			//viewHandler?.Remove(this);
 			viewHandler = handler;
+			if(viewHandler?.VirtualView != this)
+				viewHandler?.SetVirtualView(this);
 			if (replacedView != null)
 				replacedView.ViewHandler = handler;
 			return true;
