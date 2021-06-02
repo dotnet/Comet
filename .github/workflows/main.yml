@@ -52,7 +52,7 @@ jobs:
         shell: bash
         run: |
           MINOR_VERSION=$(( $BASE + $GITHUB_RUN_NUMBER ))
-          VERSION=$0.3.$MINOR_VERSION-beta
+          VERSION=0.3.$MINOR_VERSION-beta
           echo "PACKAGE VERSION: $VERSION"
           nuget pack Comet.nuspec -version $VERSION
         
