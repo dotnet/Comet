@@ -1,5 +1,6 @@
 ﻿using System;
 using Comet.Internal;
+using Microsoft.Maui.HotReload;
 using Xunit;
 
 namespace Comet.Tests
@@ -11,7 +12,7 @@ namespace Comet.Tests
 			public const string TextValue = "Hello!";
 			public MyOrgView(string text)
 			{
-				HotReloadHelper.Register(this, text);
+				MauiHotReloadHelper.Register(this, text);
 				this.Body = () => new Text(text);
 			}
 		}
@@ -19,7 +20,7 @@ namespace Comet.Tests
 		{
 			public MyNewView(string text)
 			{
-				HotReloadHelper.Register(this, text);
+				MauiHotReloadHelper.Register(this, text);
 				this.Body = () => new Text(text);
 			}
 		}
@@ -29,7 +30,7 @@ namespace Comet.Tests
 			public const string TextValue = "Hello!";
 			public MyOrgView1(string text = TextValue)
 			{
-				HotReloadHelper.Register(this, text);
+				MauiHotReloadHelper.Register(this, text);
 				this.Body = () => new Text(text);
 			}
 		}
@@ -38,14 +39,14 @@ namespace Comet.Tests
 			public const string TextValue = "Hello!";
 			public MyNewView1(string text = TextValue)
 			{
-				HotReloadHelper.Register(this, text);
+				MauiHotReloadHelper.Register(this, text);
 				this.Body = () => new Text(text);
 			}
 		}
 
 		public HotReloadWithParameters()
 		{
-			HotReloadHelper.IsEnabled = true;
+			MauiHotReloadHelper.IsEnabled = true;
 		}
 
 		[Fact]
@@ -55,7 +56,7 @@ namespace Comet.Tests
 			var orgText = orgView.GetView() as Text;
 			Assert.Equal(MyOrgView.TextValue, orgText.Value);
 
-			HotReloadHelper.RegisterReplacedView(typeof(MyOrgView).FullName, typeof(MyNewView));
+			MauiHotReloadHelper.RegisterReplacedView(typeof(MyOrgView).FullName, typeof(MyNewView));
 			var newText = orgView.GetView() as Text;
 
 			Assert.Equal(MyOrgView.TextValue, newText.Value);
@@ -69,7 +70,7 @@ namespace Comet.Tests
 			var orgText = orgView.GetView() as Text;
 			Assert.Equal(MyOrgView1.TextValue, orgText.Value);
 
-			HotReloadHelper.RegisterReplacedView(typeof(MyOrgView1).FullName, typeof(MyNewView));
+			MauiHotReloadHelper.RegisterReplacedView(typeof(MyOrgView1).FullName, typeof(MyNewView));
 			var newText = orgView.GetView() as Text;
 
 			Assert.Equal(MyOrgView1.TextValue, newText.Value);

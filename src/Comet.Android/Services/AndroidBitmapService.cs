@@ -19,11 +19,19 @@ namespace Comet.Android.Services
 
 		public override async Task<Bitmap> LoadBitmapFromFileAsync(string file)
 		{
-			var image = await ImageService.Instance
-				.LoadFile(file)
-				.AsBitmapDrawableAsync();
+			try
+			{
+				var image = await ImageService.Instance
+					.LoadFile(file)
+					.AsBitmapDrawableAsync();
 
-			return new AndroidBitmap(image.Bitmap);
+				return new AndroidBitmap(image.Bitmap);
+			}
+			catch
+			{
+				var image = await ImageService.Instance.LoadCompiledResource(file).AsBitmapDrawableAsync();
+				return new AndroidBitmap(image.Bitmap);
+			}
 		}
 	}
 }

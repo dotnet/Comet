@@ -31,7 +31,8 @@ namespace Comet.Skia
 
 		public void Invalidate()
 		{
-			Invalidated?.Invoke();
+			if(Invalidated != null)
+				ThreadHelper.RunOnMainThread(Invalidated);
 		}
 		public bool PointsContained(PointF[] points) => points.Any(p => Bounds.BoundsContains(p));
 
@@ -94,7 +95,7 @@ namespace Comet.Skia
 
 		protected virtual void ControlStateChanged()
 		{
-
+			
 		}
 
 		public virtual void Resized(RectangleF bounds)

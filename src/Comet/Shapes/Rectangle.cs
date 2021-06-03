@@ -1,11 +1,11 @@
-using Comet.Graphics;
-using System.Drawing;
+﻿using Comet.Graphics;
+using Microsoft.Maui.Graphics;
 
-namespace Comet
+namespace Comet.Shapes
 {
 	public class Rectangle : Shape
 	{
-		public override PathF PathForBounds(RectangleF rect)
+		public override PathF PathForBounds(Microsoft.Maui.Graphics.Rectangle rect)
 		{
 			var path = new PathF();
 			path.AppendRectangle(rect);

@@ -110,11 +110,8 @@ namespace Comet.Tests
 				Body = () => (text = new Text())
 			}.SetEnvironment(myStringKey, parentStringValue, cascades:true);
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
-
-			var textHandler = new GenericViewHandler();
-			text.ViewHandler = textHandler;
+			var viewHandler = view.SetViewHandlerToGeneric();
+			var textHandler = text.SetViewHandlerToGeneric();
 
 			var environmentEntry = text.GetEnvironment<string>(myStringKey);
 			Assert.Equal(parentStringValue, environmentEntry);
@@ -143,8 +140,8 @@ namespace Comet.Tests
 				}.SetEnvironment(myStringKey, parentStringValue, cascades: true)
 			};
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
+
+			var viewHandler = view.SetViewHandlerToGeneric();
 
 			var text1Value = text1.GetEnvironment<string>(myStringKey);
 			Assert.Equal(testStringValue, text1Value);
@@ -168,12 +165,9 @@ namespace Comet.Tests
 			Assert.NotNull(view.clickCount);
 			Assert.Equal(1, view.clickCount.Value);
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
 
-
-			var textHandler = new GenericViewHandler();
-			text.ViewHandler = textHandler;
+			var viewHandler = view.SetViewHandlerToGeneric();
+			var textHandler = text.SetViewHandlerToGeneric();
 
 			view.clickCount.Value++;
 			Assert.Equal(2, view.clickCount.Value);
@@ -223,8 +217,7 @@ namespace Comet.Tests
 			};
 
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
+			var viewHandler = view.SetViewHandlerToGeneric();
 
 
 			void CheckView(View v, string expectedValue)

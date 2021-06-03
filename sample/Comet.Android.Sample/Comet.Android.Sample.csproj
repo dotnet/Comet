@@ -17,7 +17,7 @@
     <AndroidResgenFile>Resources\Resource.designer.cs</AndroidResgenFile>
     <AndroidResgenClass>Resource</AndroidResgenClass>
     <GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
-    <TargetFrameworkVersion>v9.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v11.0</TargetFrameworkVersion>
     <AndroidManifest>Properties\AndroidManifest.xml</AndroidManifest>
     <MonoAndroidResourcePrefix>Resources</MonoAndroidResourcePrefix>
     <MonoAndroidAssetsPrefix>Assets</MonoAndroidAssetsPrefix>
@@ -66,6 +66,7 @@
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="MainApplication.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
@@ -102,25 +103,31 @@
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\ic_launcher_round.png" />
+    <AndroidResource Include="Resources\drawable\turtlerock.jpg">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="1.68.1.1" />
-    <PackageReference Include="SkiaSharp.Views" Version="1.68.1.1" />
-    <PackageReference Include="Xamarin.Android.Support.Design" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.Core.Utils" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Android.Support.CustomTabs" Version="28.0.0.3" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
-    <PackageReference Include="Xamarin.FFImageLoading">
-      <Version>2.4.11.982</Version>
+    <PackageReference Include="SkiaSharp" Version="2.80.2" />
+    <PackageReference Include="SkiaSharp.Views" Version="2.80.2" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection">
+      <Version>5.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Clancey.Comet.Reload">
-      <Version>0.0.12-alpha</Version>
+    <PackageReference Include="Xamarin.AndroidX.Lifecycle.LiveData">
+      <Version>2.3.1</Version>
     </PackageReference>
+    <PackageReference Include="Xamarin.Google.Android.Material">
+      <Version>1.3.0.1</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4">
+      <Version>1.0.0.7</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.34" />
+    <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
+    <PackageReference Include="Xamarin.AndroidX.Browser" Version="1.3.0.5" />
     <PackageReference Include="Topten.RichTextKit">
-      <Version>0.1.118</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading">
-      <Version>16.4.43</Version>
+      <Version>0.4.138</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
@@ -128,22 +135,21 @@
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
       <Name>Comet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.Android\Comet.Android.csproj">
-      <Project>{1E8FBBC2-9E06-4960-A116-65CDEFEFE11D}</Project>
-      <Name>Comet.Android</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
-      <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
+      <Project>{1057EEAD-899D-4BC2-BA73-6BC526AD3F19}</Project>
       <Name>Comet.Samples</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.Skia\Comet.Skia.csproj">
-      <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
-      <Name>Comet.Skia</Name>
+    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj">
+      <Name>Core</Name>
+      <Project>{8A53D192-072F-4EF2-8547-932D7538FFB9}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.Skia.Android\Comet.Skia.Android.csproj">
-      <Project>{F5FFBB2C-23BE-4029-BFD1-1028F1461F86}</Project>
-      <Name>Comet.Skia.Android</Name>
+    <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj">
+      <Name>Essentials</Name>
+      <Project>{E2F234D6-3B2C-4F5E-B815-6D61B8AA5DC6}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

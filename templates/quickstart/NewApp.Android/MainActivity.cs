@@ -6,11 +6,12 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Comet.Android;
 
 namespace NewApp.Droid
 {
     [Activity(Label = "NewApp", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
+    public class MainActivity : CometActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -25,8 +26,11 @@ namespace NewApp.Droid
             #if (IncludeXamarinEssentials)
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             #endif
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+#if DEBUG
+            Comet.Reload.Init();
+#endif
+
+            Page = new MainPage();
         }
         #if(IncludeXamarinEssentials)
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)

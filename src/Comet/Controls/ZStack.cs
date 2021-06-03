@@ -1,11 +1,10 @@
 ﻿using Comet.Layout;
+using Microsoft.Maui.Layouts;
 
 namespace Comet
 {
 	public class ZStack : AbstractLayout
 	{
-		public ZStack() : base(new ZStackLayoutManager())
-		{
-		}
+		protected override ILayoutManager CreateLayoutManager() => new ZStackLayoutManager(this);
 	}
 }

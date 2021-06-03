@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui;
 
 namespace Comet
 {
-	public class ScrollView : View, IEnumerable
+	public class ScrollView : ContentView, IEnumerable
 	{
 		public ScrollView(Orientation orientation = Orientation.Vertical)
 		{
@@ -13,56 +14,52 @@ namespace Comet
 		}
 
 		public Orientation Orientation { get; }
-
-		public View View { get; internal set; }
-		public void Add(View view)
+		
+		public override Size GetDesiredSize(Size availableSize)
 		{
-			if (view == null)
-				return;
-			if (View != null)
-				throw new Exception("You can only add one view to the ScrollView, Try wrapping in a Stack");
-			View = view;
-			view.Parent = this;
-			view.Navigation = this.Navigation;
-		}
-
-		public IEnumerator GetEnumerator() => new View[] { View }.GetEnumerator();
-		protected override void OnParentChange(View parent)
-		{
-			base.OnParentChange(parent);
-			if (View != null)
+			var contentMeasureSize = availableSize;
+			if (Orientation == Orientation.Vertical)
+				contentMeasureSize.Height = double.PositiveInfinity;
+			else
+				contentMeasureSize.Width = double.PositiveInfinity;
+			
+			if (Content != null)
 			{
-				View.Parent = this.Parent;
-				View.Navigation = this.Parent?.Navigation;
-			}
-		}
-
-		public override SizeF GetIntrinsicSize(SizeF availableSize)
-		{
-			var intrinsicSize = base.GetIntrinsicSize(availableSize);
-			if (Orientation == Orientation.Horizontal)
-			{
-				if (View != null)
+				var contentSize = Content.MeasuredSize;
+				if (!Content.MeasurementValid)
 				{
-					var contentSize = View.MeasuredSize;
-					if (!View.MeasurementValid)
-					{
-						contentSize = View.Measure(availableSize);
-						View.MeasuredSize = contentSize;
-						View.MeasurementValid = true;
-					}
-
-					intrinsicSize.Height = contentSize.Height;
+					contentSize = Content.Measure(contentMeasureSize.Width, contentMeasureSize.Height);
+					Content.MeasuredSize = contentSize;
+					Content.MeasurementValid = true;
 				}
+				MeasurementValid = true;
+				return MeasuredSize = new Size(
+					Math.Min(availableSize.Width, contentSize.Width),
+					Math.Min(availableSize.Height, contentSize.Height));
+				
 			}
-
-			return intrinsicSize;
+			return MeasuredSize = availableSize;
+		}
+		public override void LayoutSubviews(Rectangle frame)
+		{
+			this.Frame = frame;
+			if (Content != null)
+			{
+				var margin = Content.GetMargin();
+				frame = new Rectangle(Point.Zero, Content.MeasuredSize);
+				var bounds = new Rectangle(
+					frame.Left + margin.Left,
+					frame.Top + margin.Top,
+					frame.Width - margin.HorizontalThickness,
+					frame.Height - margin.VerticalThickness);
+				Content.Frame = bounds;
+			}
 		}
 
 		protected override void Dispose(bool disposing)
 		{
 			if (disposing)
-				View?.Dispose();
+				Content?.Dispose();
 			base.Dispose(disposing);
 		}
 	}

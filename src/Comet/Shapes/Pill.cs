@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Drawing;
+
 using Comet.Graphics;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -13,9 +14,9 @@ namespace Comet
 
 		public Orientation Orientation { get; }
 
-		public override PathF PathForBounds(RectangleF rect)
+		public override PathF PathForBounds(Rectangle rect)
 		{
-			var cornerRadius = (Orientation == Orientation.Horizontal ? rect.Height : rect.Width) / 2f;
+			var cornerRadius = (float)(Orientation == Orientation.Horizontal ? rect.Height : rect.Width) / 2f;
 			var path = new PathF();
 			path.AppendRoundedRectangle(rect, cornerRadius);
 			return path;

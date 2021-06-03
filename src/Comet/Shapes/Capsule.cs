@@ -1,6 +1,7 @@
-using System;
-using System.Drawing;
+﻿using System;
+
 using Comet.Graphics;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -10,10 +11,10 @@ namespace Comet
 	/// </summary>
 	public class Capsule : Shape
 	{
-		public override PathF PathForBounds(RectangleF rect)
+		public override PathF PathForBounds(Rectangle rect)
 		{
 			var path = new PathF();
-			var cornerSize = Math.Min(rect.Width, rect.Height) / 2;
+			var cornerSize = (float) Math.Min(rect.Width, rect.Height) / 2;
 			path.AppendRoundedRectangle(rect, cornerSize);
 			return path;
 		}

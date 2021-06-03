@@ -1,4 +1,6 @@
 ﻿using System;
+using Microsoft.Maui.Graphics;
+
 namespace Comet.Styles
 {
 	public class SliderStyle : ViewStyle

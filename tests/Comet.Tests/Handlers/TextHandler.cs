@@ -1,4 +1,4 @@
-﻿using System.Drawing;
+﻿using Microsoft.Maui.Graphics;
 
 namespace Comet.Tests.Handlers
 {
@@ -11,7 +11,7 @@ namespace Comet.Tests.Handlers
 
 		public Text VirtualView => (Text)CurrentView;
 
-		private SizeF HandleOnGetIntrinsicSize(SizeF arg)
+		private Size HandleOnGetIntrinsicSize(double widthConstraint, double heightConstraint)
 		{
 			var length = VirtualView.Value?.CurrentValue?.Length ?? 0;
 			return new SizeF(10 * length, 12);

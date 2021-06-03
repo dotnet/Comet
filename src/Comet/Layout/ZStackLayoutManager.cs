@@ -1,24 +1,33 @@
-using System.Drawing;
+﻿using System;
+using System.Linq;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Layouts;
 
 namespace Comet.Layout
 {
 	public class ZStackLayoutManager : ILayoutManager
 	{
-		public void Invalidate()
-		{
+		public ZStackLayoutManager(ILayout layout) => this.layout = layout;
 
-		}
+		ILayout layout;
 
-		public SizeF Measure(AbstractLayout layout, SizeF available)
-		{
-			return available;
-		}
-
-		public void Layout(AbstractLayout layout, RectangleF rect)
-		{
-			foreach (var v in layout)
+		public Size Measure(double widthConstraint, double heightConstraint) {
+			Size measuredSize = new ();
+			foreach(var c in layout.Children)
 			{
-				v.Frame = rect;
+				var s = c.Measure(widthConstraint, heightConstraint);
+				measuredSize.Height = Math.Max(measuredSize.Height, s.Height);
+				measuredSize.Width = Math.Max(measuredSize.Width, s.Width);
+			};
+			return measuredSize;
+		}
+
+		public void ArrangeChildren(Rectangle bounds)
+		{
+			foreach (var v in layout.Children)
+			{
+				v.Arrange(bounds);
 			}
 		}
 	}

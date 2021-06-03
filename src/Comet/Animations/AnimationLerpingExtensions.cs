@@ -1,5 +1,7 @@
 ﻿using System;
-using System.Drawing;
+
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -7,25 +9,25 @@ namespace Comet
 	{
 		public static Color Lerp(this Color color, Color endColor, double progress)
 		{
-			color ??= Color.Black;
-			endColor ??= Color.Black;
+			color ??= Colors.Black;
+			endColor ??= Colors.Black;
 			float Lerp(float start, float end, double progress) => (float)(((end - start) * progress) + start);
 
-			var r = Lerp(color.R, endColor.R, progress);
-			var b = Lerp(color.B, endColor.B, progress);
-			var g = Lerp(color.G, endColor.G, progress);
-			var a = Lerp(color.A, endColor.A, progress);
+			var r = Lerp(color.Red, endColor.Red, progress);
+			var b = Lerp(color.Blue, endColor.Blue, progress);
+			var g = Lerp(color.Green, endColor.Green, progress);
+			var a = Lerp(color.Alpha, endColor.Alpha, progress);
 			return new Color(r, g, b, a);
 		}
 
-		public static SizeF Lerp(this SizeF start, SizeF end, double progress) =>
-			new SizeF(start.Width.Lerp(end.Width, progress), start.Height.Lerp(end.Height, progress));
+		public static Size Lerp(this Size start, Size end, double progress) =>
+			new Size(start.Width.Lerp(end.Width, progress), start.Height.Lerp(end.Height, progress));
 
-		public static PointF Lerp(this PointF start, PointF end, double progress) =>
-			new PointF(start.X.Lerp(end.X, progress), start.Y.Lerp(end.Y, progress));
+		public static Point Lerp(this Point start, Point end, double progress) =>
+			new Point(start.X.Lerp(end.X, progress), start.Y.Lerp(end.Y, progress));
 
-		public static RectangleF Lerp(this RectangleF start, RectangleF end, double progress)
-			=> new RectangleF(start.Location.Lerp(end.Location, progress), start.Size.Lerp(end.Size, progress));
+		public static Rectangle Lerp(this Rectangle start, Rectangle end, double progress)
+			=> new Rectangle(start.Location.Lerp(end.Location, progress), start.Size.Lerp(end.Size, progress));
 
 
 		public static float Lerp(this float start, float end, double progress) =>
@@ -33,6 +35,14 @@ namespace Comet
 
 		//IF there is a null, we toggle at the half way. If both values are set, we can lerp
 		public static float? Lerp(this float? start, float? end, double progress)
+			=> start.HasValue && end.HasValue ? start.Value.Lerp(end.Value, progress) : start.GenericLerp(end, progress);
+
+
+		public static double Lerp(this double start, double end, double progress) =>
+			((end - start) * progress) + start;
+
+		//IF there is a null, we toggle at the half way. If both values are set, we can lerp
+		public static double? Lerp(this double? start, double? end, double progress)
 			=> start.HasValue && end.HasValue ? start.Value.Lerp(end.Value, progress) : start.GenericLerp(end, progress);
 
 		public static T GenericLerp<T>(this T start, T end, double progress, double toggleThreshold = .5)

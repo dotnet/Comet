@@ -5,6 +5,9 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Comet.Reflection;
+using Microsoft.Maui;
+using Microsoft.Maui.Essentials;
+using Microsoft.Maui.HotReload;
 
 // ReSharper disable once CheckNamespace
 namespace Comet
@@ -13,7 +16,7 @@ namespace Comet
 	{
 		public static void SetBindingValue<T>(this View view, ref Binding<T> currentValue, Binding<T> newValue, [CallerMemberName] string propertyName = "")
 		{
-			currentValue = newValue;
+			currentValue = newValue ?? new Binding<T>();
 			newValue?.BindToProperty(view, propertyName);
 		}
 
@@ -205,8 +208,9 @@ namespace Comet
 					break;
 				}
 			}
-
-			newView.UpdateFromOldView(oldView);
+			ThreadHelper.RunOnMainThread(() => {
+				newView.UpdateFromOldView(oldView);
+			});
 
 
 			return newView;
@@ -224,13 +228,13 @@ namespace Comet
 		{
 			static bool AreSameType(View view, View compareView)
 			{
-				if (HotReloadHelper.IsReplacedView(view, compareView))
+				if (MauiHotReloadHelper.IsReplacedView(view, compareView))
 					return true;
 				//Add in more edge cases
 				var viewView = view?.GetView();
 				var compareViewView = compareView?.GetView();
 
-				if (HotReloadHelper.IsReplacedView(viewView, compareViewView))
+				if (MauiHotReloadHelper.IsReplacedView(viewView, compareViewView))
 					return true;
 
 				return viewView?.GetType() == compareViewView?.GetType();
@@ -238,7 +242,7 @@ namespace Comet
 			var areSame = AreSameType(view, compareView);
 			if (areSame && checkRenderers && compareView.ViewHandler != null)
 			{
-				var renderType = Registrar.Handlers.GetRendererType(view.GetType());
+				var renderType = CometApp.MauiContext.Handlers.GetHandlerType(view.GetType());
 				areSame = renderType == compareView.ViewHandler.GetType();
 			}
 			return areSame;

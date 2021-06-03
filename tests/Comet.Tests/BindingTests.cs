@@ -1,5 +1,6 @@
 ﻿using System;
 using Comet.Tests.Handlers;
+using Microsoft.Maui;
 using Xunit;
 namespace Comet.Tests
 {
@@ -34,6 +35,11 @@ namespace Comet.Tests
 			}
 		}
 
+		public class ParentClassWithState
+		{
+			public State<MyDataModel> CurrentDataModel { get; set; } = new State<MyDataModel>();
+		}
+
 		[Fact]
 		public void MagicDatabinding()
 		{
@@ -45,7 +51,7 @@ namespace Comet.Tests
 				(textField = new TextField(view.text)),
 				(text = new Text(view.text)),
 			};
-			view.ViewHandler = new GenericViewHandler();
+			view.SetViewHandlerToGeneric();
 
 			textField.OnEditingChanged("Test");
 			Assert.Equal("Test", textField.Text);
@@ -59,8 +65,7 @@ namespace Comet.Tests
 			Assert.Throws<ReadonlyRequiresException>(() => {
 				var view = new BadStateView();
 
-				var viewHandler = new GenericViewHandler();
-				view.ViewHandler = viewHandler;
+				view.SetViewHandlerToGeneric();
 			});
 		}
 
@@ -76,11 +81,9 @@ namespace Comet.Tests
 
 			view.Body = () => (text = new Text(view.text.Value));
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
+			var viewHandler = view.SetViewHandlerToGeneric();
 
-			var textHandler = new GenericViewHandler();
-			text.ViewHandler = textHandler;
+			var textHandler = text.SetViewHandlerToGeneric();
 
 			Assert.Equal(startingValue, text.Value);
 
@@ -89,8 +92,7 @@ namespace Comet.Tests
 
 			Assert.Equal(endingValue, text.Value);
 			//Also make sure the Handler got the update
-			Assert.True(textHandler.ChangedProperties.TryGetValue(nameof(Text.Value), out var changedText), "Text.Value Change was not set to Text handler");
-			Assert.Equal(endingValue, changedText);
+			Assert.True(textHandler.ChangedProperties.TryGetValue(nameof(IText.Text), out var changedText), "Text.Value Change was not set to Text handler");
 		}
 
 		[Fact]
@@ -103,11 +105,10 @@ namespace Comet.Tests
 			view.text.Value = startingValue;
 			view.Body = () => (text = new Text(() => view.text.Value));
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
 
-			var textHandler = new GenericViewHandler();
-			text.ViewHandler = textHandler;
+			var viewHandler = view.SetViewHandlerToGeneric();
+
+			var textHandler = text.SetViewHandlerToGeneric();
 
 			Assert.Equal(startingValue, text.Value);
 
@@ -116,8 +117,7 @@ namespace Comet.Tests
 
 			Assert.Equal(endingValue, text.Value);
 			//Also make sure the Handler got the update
-			Assert.True(textHandler.ChangedProperties.TryGetValue(nameof(Text.Value), out var changedText), "Text.Value Change was not set to Text handler");
-			Assert.Equal(endingValue, changedText);
+			Assert.True(textHandler.ChangedProperties.TryGetValue(nameof(IText.Text), out var changedText), "Text.Value Change was not set to Text handler");
 		}
 
 
@@ -139,12 +139,9 @@ namespace Comet.Tests
 				return text;
 			};
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
+			var viewHandler = view.SetViewHandlerToGeneric();
 
-
-			var textHandler = new GenericViewHandler();
-			text.ViewHandler = textHandler;
+			var textHandler = text.SetViewHandlerToGeneric();
 
 
 			Assert.Equal(1, buildCount);
@@ -177,12 +174,9 @@ namespace Comet.Tests
 				return text;
 			};
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
+			var viewHandler = view.SetViewHandlerToGeneric();
 
-
-			var textHandler = new GenericViewHandler();
-			text.ViewHandler = textHandler;
+			var textHandler = text.SetViewHandlerToGeneric();
 
 
 			Assert.Equal(1, buildCount);
@@ -218,12 +212,9 @@ namespace Comet.Tests
 				return text;
 			};
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
+			var viewHandler = view.SetViewHandlerToGeneric();
 
-
-			var textHandler = new GenericViewHandler();
-			text.ViewHandler = textHandler;
+			var textHandler = text.SetViewHandlerToGeneric();
 
 
 			Assert.Equal(1, buildCount);
@@ -266,24 +257,17 @@ namespace Comet.Tests
 				return stack;
 			};
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
+			var viewHandler = view.SetViewHandlerToGeneric();
+			var textHandler = text.SetViewHandlerToGeneric();
 
-			var stackHandler = new GenericViewHandler();
-			stack.ViewHandler = stackHandler;
+			var stackHandler = stack.SetViewHandlerToGeneric();
+			var textFieldHandler = textField.SetViewHandlerToGeneric();
 
-
-			var textFieldHandler = new GenericViewHandler();
-			textField.ViewHandler = textFieldHandler;
-
-
-			var textHandler = new GenericViewHandler();
-			text.ViewHandler = textHandler;
 
 			view.text.Value = "Good bye";
 
-			const string tfValue = nameof(TextField.Text);
-			const string tValue = nameof(Text.Value);
+			const string tfValue = nameof(IEntry.Text);
+			const string tValue = nameof(ILabel.Text);
 
 			Assert.True(textFieldHandler.ChangedProperties.ContainsKey(tfValue), "TextField Value didnt change");
 
@@ -291,7 +275,36 @@ namespace Comet.Tests
 
 			var text1Value = textFieldHandler.ChangedProperties[tfValue];
 			var text2Value = textHandler.ChangedProperties[tValue];
-			Assert.Equal(text1Value, text2Value);
+			Assert.Equal(text.Value.CurrentValue, textField.Text.CurrentValue);
+		}
+
+
+		[Fact]
+		public void BindingWorksWithNestedChildPassedIn()
+		{
+
+			Text text = null;
+			var view = new StatePage();
+			const string startingValue = "0";
+			var model = new ParentClassWithState();
+		
+			view.Body = () => (text = new Text(()=> $"{model.CurrentDataModel.Value?.Count ?? 0}"));
+
+
+			var viewHandler = view.SetViewHandlerToGeneric();
+			var textHandler = text.SetViewHandlerToGeneric();
+
+			Assert.Equal(startingValue, text.Value.CurrentValue);
+
+			const string endingValue = "1";
+			model.CurrentDataModel.Value = new MyDataModel { Count = 1 };
+
+			model.CurrentDataModel.Value.Count = 1;
+			Assert.Equal(endingValue, text.Value);
+
+			model.CurrentDataModel.Value.Count = 2;
+			Assert.Equal("2", text.Value);
+
 		}
 
 

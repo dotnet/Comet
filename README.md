@@ -17,7 +17,9 @@ When you're ready to take a ride on the comet, head over to the wiki and follow 
 
 ## Key Concepts
 
-Comet is an MVU style pattern.
+Comet is an MVU style pattern:
+
+![MVU pattern](art/mvu-pattern.png)
 
 `View` is a screen. Views have a `Body` method that you can assign either by an attribute `[Body]`:
 

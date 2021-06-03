@@ -1,0 +1,125 @@
+name: main-build
+
+#this drops to nuget
+
+on:
+  push:
+    branches: [ main]
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build Comet-Nuget
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
+
+      - name:  install .NET 6.0.100-preview.4.21255.9
+        shell: pwsh
+        run: |
+          $ProgressPreference = 'SilentlyContinue'
+          Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
+          & .\dotnet-install.ps1 -Version 6.0.100-preview.4.21255.9 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+          & dotnet --list-sdks
+      
+
+      - name: Install and Run maui-check Tool
+        shell: pwsh
+        run: |
+          & dotnet tool update --global redth.net.maui.check --version 0.4.1 --add-source https://api.nuget.org/v3/index.json
+          & maui-check --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --manifest https://raw.githubusercontent.com/Redth/dotnet-maui-check/main/manifests/maui-dev.manifest.json
+
+      - name: Restore Comet-Nuget.sln
+        run: nuget restore build/Comet-Nuget.sln
+
+      - name: Build Comet-Nuget.sln
+        run: msbuild build/Comet-Nuget.sln
+
+      - name: Restore Comet-net6-Nuget.sln
+        run: dotnet restore build/Comet-net6-Nuget.sln
+ 
+      - name: Build Comet-net6-Nuget.sln
+        run: dotnet build build/Comet-net6-Nuget.sln
+        
+      - name: Nuget Pack step
+        shell: bash
+        run: |
+          MINOR_VERSION=$(( $BASE + $GITHUB_RUN_NUMBER ))
+          VERSION=0.3.$MINOR_VERSION-beta
+          echo "PACKAGE VERSION: $VERSION"
+          nuget pack Comet.nuspec -version $VERSION -Symbols -SymbolPackageFormat snupkg
+        
+      - uses: actions/upload-artifact@v2
+        name: Upload Nuget Artifact
+        with:
+          name: nuget-artifact
+          path: |
+            **\*.nupkg
+            **\*.snupkg
+            **\*.symbols.nupkg
+  
+  test:
+      name: Run Tests
+      needs: build
+      runs-on: windows-latest
+      steps:
+        - uses: actions/checkout@v2
+          with:
+            submodules: true
+      
+        - name: Add msbuild to PATH
+          uses: microsoft/setup-msbuild@v1.0.2
+
+        - name:  install .NET 6.0.100-preview.4.21255.9
+          shell: pwsh
+          run: |
+            $ProgressPreference = 'SilentlyContinue'
+            Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
+            & .\dotnet-install.ps1 -Version 6.0.100-preview.4.21255.9 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+            & dotnet --list-sdks
+        - name: Install and Run maui-check Tool
+          shell: pwsh
+          run: |
+            & dotnet tool update --global redth.net.maui.check --version 0.4.1 --add-source https://api.nuget.org/v3/index.json
+            & maui-check --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --manifest https://raw.githubusercontent.com/Redth/dotnet-maui-check/main/manifests/maui-dev.manifest.json
+        - name: Restore Comet-Tests.sln
+          run: nuget restore build/Comet-Tests.sln
+
+        - name: Build Tests Project
+          run: msbuild tests/Comet.Tests/Comet.Tests.csproj /p:Configuration=Release
+          
+        - name: Run Tests Project
+          run: dotnet test tests/Comet.Tests/Comet.Tests.csproj
+            
+  publish:
+      name: Publish
+      needs:
+        - test
+      runs-on: windows-latest
+      steps:
+        - name: Download Artifacts
+          uses: actions/download-artifact@v1
+          with:
+            name: nuget-artifact
+        
+        - name: Setup .NET Core
+          uses: actions/setup-dotnet@v1
+          with:
+            dotnet-version: 3.1.100
+            
+        - name: Setup NuGet
+          uses: nuget/setup-nuget@v1
+          with:
+            nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+            nuget-version: 'latest'
+            
+        - name: Push nuget to Nuget.org
+          run: |
+            nuget push nuget-artifact\*.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey ${{ secrets.NUGET_ORG_API_KEY }} -SkipDuplicate

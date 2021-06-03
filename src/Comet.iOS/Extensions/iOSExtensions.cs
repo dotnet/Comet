@@ -42,7 +42,6 @@ namespace Comet.iOS
 					return navController;
 				}
 			}
-
 			return vc;
 		}
 		public static iOSViewHandler GetOrCreateViewHandler(this View view)
@@ -90,35 +89,94 @@ namespace Comet.iOS
 			return new CGColor(color.R, color.G, color.B, color.A);
 		}
 
+		// UIFontWeight[Constant] is internal in Xamarin.iOS but the convertion from
+		// the public (int-based) enum is not helpful in this case.
+		// -1.0 (Thin / 100) to 1.0 (Black / 900) with 0 being Regular (400)
+		// which is not quite the center, not are the constant values linear
+		static readonly (float value, Weight weight)[] map = new(float, Weight)[] {
+			(-0.80f, Weight.Ultralight),
+			(-0.60f, Weight.Thin),
+			(-0.40f, Weight.Light),
+			(0.0f, Weight.Regular),
+			(0.23f, Weight.Medium),
+			(0.30f, Weight.Semibold),
+			(0.40f, Weight.Bold),
+			(0.56f, Weight.Heavy),
+			(0.62f, Weight.Black)
+		};
+
+		static Weight ToClosestWeight(this float? self)
+		{
+			foreach (var (value, weight) in map)
+			{
+				if (value <= self)
+					return weight;
+			}
+			return Weight.Black;
+		}
+
 		public static FontAttributes ToFont(this UIFont font)
 		{
-			//TODO: Add set a default;
 			if (font == null)
-				throw new ArgumentNullException("font");
-
-			// todo: implement support for attributes other than name and size.
-			return new FontAttributes
 			{
-				Family = font.Name,
-				Size = (float)font.PointSize,
-			};
+				return new FontAttributes()
+				{
+					Family = Device.FontService.SystemFontName,
+					Size = (float)UIFont.SystemFontSize,
+					Weight = Weight.Regular,
+					Italic = false
+				};
+			}
+			else
+			{
+				var fat = font.FontDescriptor.FontAttributes.Traits;
+				return new FontAttributes
+				{
+					Family = font.Name,
+					Size = (float)font.PointSize,
+					Weight = fat == null ? Weight.Regular : fat.Weight.ToClosestWeight(),
+					Italic = fat == null ? false : fat.Slant >= 30.0f,
+				};
+			}
+		}
+
+		static float ToConstant (this Weight self)
+		{
+			foreach (var (value, weight) in map)
+			{
+				if (self <= weight)
+					return value;
+			}
+			return 1.0f;
 		}
 
 		public static UIFont ToUIFont(this FontAttributes attributes)
 		{
 			if (attributes == null)
-				return UIFont.SystemFontOfSize(12);
+				return UIFont.SystemFontOfSize(UIFont.SystemFontSize);
 
-			if (attributes.Family == Device.FontService.SystemFontName)
+			UIFont font = (attributes.Family == Device.FontService.SystemFontName)
+				? UIFont.SystemFontOfSize(attributes.Size)
+				: UIFont.FromName(attributes.Family, attributes.Size);
+
+			// the above gets us a regular, non italic font - which might be just what we need
+			if (!attributes.Italic && attributes.Weight == Weight.Regular)
+				return font;
+
+			var a = new UIFontAttributes()
 			{
-				var weight = (int)attributes.Weight;
-				if (weight > (int)Weight.Regular)
-					return UIFont.BoldSystemFontOfSize(attributes.Size);
+				Traits = new UIFontTraits()
+				{
+					Weight = attributes.Weight.ToConstant(),
+					Slant = attributes.Italic ? 30.0f : 0.0f
+				}
+			};
 
-				return UIFont.SystemFontOfSize(attributes.Size);
+			using (font)
+			{
+				using var d = font.FontDescriptor.CreateWithAttributes(a);
+				return UIFont.FromDescriptor(d, attributes.Size);
 			}
-
-			return UIFont.FromName(attributes.Family, attributes.Size);
 		}
 
 		public static UIViewController GetViewController(this UIView view)

@@ -75,24 +75,10 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="SkiaSharp" Version="1.68.1.1" />
-    <PackageReference Include="SkiaSharp.Views" Version="1.68.1.1" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
-    <PackageReference Include="Xamarin.FFImageLoading">
-      <Version>2.4.11.982</Version>
+    <PackageReference Include="Reloadify3000">
+      <Version>1.0.4</Version>
     </PackageReference>
-    <PackageReference Include="Clancey.Comet.Reload">
-      <Version>0.0.12-alpha</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Threading">
-      <Version>16.4.43</Version>
-    </PackageReference>
-    <PackageReference Include="Topten.RichTextKit">
-      <Version>0.1.118</Version>
-    </PackageReference>
-    <PackageReference Include="Xamarin.iOS.MaterialComponents">
-      <Version>72.2.0.1</Version>
-    </PackageReference>
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.34" />
   </ItemGroup>
   <ItemGroup>
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
@@ -151,35 +137,21 @@
     <Compile Include="AppDelegate.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Comet.Skia.iOS\Comet.Skia.iOS.csproj">
-      <Project>{9acc68a5-5a5c-409d-a379-d62220a9f49f}</Project>
-      <Name>Comet.Skia.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
+    <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
+      <Project>{1057EEAD-899D-4BC2-BA73-6BC526AD3F19}</Project>
+      <Name>Comet.Samples</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.Skia\Comet.Skia.csproj">
-      <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
-      <Name>Comet.Skia</Name>
+    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj">
+      <Project>{8A53D192-072F-4EF2-8547-932D7538FFB9}</Project>
+      <Name>Core</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\src\Comet\Comet.csproj">
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
       <Name>Comet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\src\Comet.iOS\Comet.iOS.csproj">
-      <Project>{9DF36DBF-AFE6-438D-B7A6-1B5FB3D1D6D1}</Project>
-      <Name>Comet.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
-    </ProjectReference>
-    <ProjectReference Include="..\Comet.Samples\Comet.Samples.csproj">
-      <Project>{D058A769-9AE6-438F-960C-2ECC287F6D1E}</Project>
-      <Name>Comet.Samples</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\src\Material\Comet.Material.iOS\Comet.Material.iOS.csproj">
-      <Project>{86DE0847-5552-4103-AA9F-53A5C8BDDAAE}</Project>
-      <Name>Comet.Material.iOS</Name>
-      <IsAppExtension>false</IsAppExtension>
-      <IsWatchApp>false</IsWatchApp>
+    <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj">
+      <Project>{E2F234D6-3B2C-4F5E-B815-6D61B8AA5DC6}</Project>
+      <Name>Essentials</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

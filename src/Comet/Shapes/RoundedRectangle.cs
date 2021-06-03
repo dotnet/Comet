@@ -1,5 +1,5 @@
-using Comet.Graphics;
-using System.Drawing;
+﻿using Comet.Graphics;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -14,7 +14,7 @@ namespace Comet
 
 		public float CornerRadius => _cornerRadius;
 
-		public override PathF PathForBounds(RectangleF rect)
+		public override PathF PathForBounds(Rectangle rect)
 		{
 			var path = new PathF();
 			path.AppendRoundedRectangle(rect, _cornerRadius);

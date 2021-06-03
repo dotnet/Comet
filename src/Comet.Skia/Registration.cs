@@ -24,12 +24,21 @@ namespace Comet.Skia.Internal
 			DefaultRegistrarTypes[typeof(SKiaView)] = typeof(Handler);
 			ReplacementRegistrarTypes[typeof(ReplacementView)] = typeof(Handler);
 		}
-
+		public static Type GenericType;
 		public static void RegisterDefaultViews(Type genericType)
 		{
+			GenericType = genericType;
 			foreach (var pair in DefaultRegistrarTypes)
 				Registrar.Handlers.Register(pair.Key, genericType.MakeGenericType(pair.Value));
 		}
+
+		public static void Register<SKiaView, Handler>()
+		{
+			if (GenericType == null)
+				throw new Exception("Please call Comet.Skia.UI.Init() first!");
+			Registrar.Handlers.Register(typeof(SKiaView), GenericType.MakeGenericType(typeof(Handler)));
+		}
+
 		public static void RegisterReplacementViews(Type genericType)
 		{
 			foreach (var pair in ReplacementRegistrarTypes)

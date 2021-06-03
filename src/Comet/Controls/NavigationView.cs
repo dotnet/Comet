@@ -7,7 +7,10 @@ namespace Comet
 		{
 			view.Navigation = this;
 			view.UpdateNavigation();
-			PerformNavigate(view);
+			if (PerformNavigate == null && Navigation != null)
+				Navigation.Navigate(view);
+			else
+				PerformNavigate(view);
 		}
 
 		public void SetPerformPop(Action action) => PerformPop = action;
@@ -23,7 +26,13 @@ namespace Comet
 		protected Action<View> PerformNavigate { get; set; }
 
 
-		public void Pop() => PerformPop();
+		public void Pop()
+		{
+			if (PerformPop == null && Navigation != null)
+				Navigation.Pop();
+			else
+				PerformPop();
+		}
 
 		public override void Add(View view)
 		{

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Text;
+using Microsoft.Maui.Graphics;
 
 
 /*
@@ -27,8 +29,8 @@ namespace Comet.Samples.Comparisons
 		View body() =>
 			new Image("turtlerock.jpg")
 				.ClipShape(new Circle())
-				.Overlay(new Circle().Stroke(Color.White, lineWidth: 4))
-				.Shadow(radius: 10).Background(Color.Green);
+				.Overlay(new Circle().Stroke(Colors.White, lineWidth: 4))
+				.Shadow(radius: 10).Background(Colors.Green);
 	}
 
 }

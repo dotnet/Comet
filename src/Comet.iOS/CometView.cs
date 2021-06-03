@@ -4,7 +4,7 @@ using UIKit;
 
 namespace Comet.iOS
 {
-	public class CometView : UIView
+	public class CometView : UIView, IReloadHandler
 	{
 		private View _virtualView;
 		private iOSViewHandler _handler;
@@ -43,6 +43,7 @@ namespace Comet.iOS
 
 				if (_virtualView != null)
 				{
+					_virtualView.ReloadHandler ??= this;
 					_virtualView.ViewHandlerChanged += HandleViewHandlerChanged;
 					_virtualView.NeedsLayout += HandleNeedsLayout;
 					if (_handler is iOSViewHandler viewHandler)
@@ -61,8 +62,8 @@ namespace Comet.iOS
 		private void HandleViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
 		{
 			Logger.Debug($"[{GetType().Name}] HandleViewHandlerChanged: [{sender.GetType()}] From:[{e.OldViewHandler?.GetType()}] To:[{e.NewViewHandler?.GetType()}]");
-
-			if (e.OldViewHandler is iOSViewHandler oldHandler)
+			var oldHandler = e.OldViewHandler as iOSViewHandler ?? _handler;
+			if (oldHandler != null)
 			{
 				oldHandler.NativeViewChanged -= HandleNativeViewChanged;
 				_nativeView?.RemoveFromSuperview();
@@ -107,7 +108,7 @@ namespace Comet.iOS
 		{
 			if (Bounds.IsEmpty || _nativeView == null || _virtualView == null)
 				return;
-			var iOSHandler = _virtualView?.BuiltView?.ViewHandler as iOSViewHandler;
+			var iOSHandler = (_virtualView?.ViewHandler ?? _virtualView?.BuiltView?.ViewHandler) as iOSViewHandler;
 
 			bool ignoreSafeArea = iOSHandler?.IgnoreSafeArea ?? false;
 
@@ -134,6 +135,16 @@ namespace Comet.iOS
 			if (disposing)
 				CurrentView?.Dispose();
 			base.Dispose(disposing);
+		}
+
+		public void Reload()
+		{
+			//TODO: Fix this!
+
+			UIView previousView = _handler?.View;
+			_handler = _virtualView.GetOrCreateViewHandler();
+			HandleNativeViewChanged(this, new ViewChangedEventArgs(_virtualView, previousView, (UIView)_handler?.NativeView));
+
 		}
 	}
 }

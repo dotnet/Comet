@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-      <TargetFramework>netstandard2.0</TargetFramework>
+      <TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>
       <!-- Optional: Publish the repository URL in the built .nupkg (in the NuSpec <Repository> element) -->
       <PublishRepositoryUrl>true</PublishRepositoryUrl> 
       <!-- Optional: Embed source files that are not tracked by the source control manager in the PDB -->

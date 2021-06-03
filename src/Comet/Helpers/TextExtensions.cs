@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Maui;
 
 // ReSharper disable once CheckNamespace
 namespace Comet
@@ -14,6 +15,11 @@ namespace Comet
 		public static TextAlignment? GetTextAlignment(this View view, TextAlignment? defaultValue = null)
 		{
 			var value = view.GetEnvironment<TextAlignment?>(view, EnvironmentKeys.Text.Alignment);
+			return value ?? defaultValue;
+		}
+		public static TextAlignment? GetVerticalTextAlignment(this View view, TextAlignment? defaultValue = null)
+		{
+			var value = view.GetEnvironment<TextAlignment?>(view, EnvironmentKeys.Text.VerticalAlignment);
 			return value ?? defaultValue;
 		}
 	}

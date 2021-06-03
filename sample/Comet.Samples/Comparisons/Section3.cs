@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+
 using System.Text;
+using Microsoft.Maui.Graphics;
 
 
 /*
@@ -36,10 +38,10 @@ namespace Comet.Samples.Comparisons
 					new Text("Turtle Rock"),
 					new HStack {
 						new Text("Joshua Tree National Park")
-							.Background(Color.Salmon),
+							.Background(Colors.Salmon),
 						new Spacer(),
 						new Text("California")
-							.Background(Color.Green),
+							.Background(Colors.Green),
 					}
 				 }.Margin();
 

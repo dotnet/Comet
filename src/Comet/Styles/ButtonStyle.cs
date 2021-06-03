@@ -1,7 +1,10 @@
 ﻿using Comet.Graphics;
 using System;
 using System.Collections.Generic;
+
 using System.Text;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet.Styles
 {
@@ -9,7 +12,7 @@ namespace Comet.Styles
 	{
 		public StyleAwareValue<ControlState,Color> TextColor { get; set; }
 
-		public StyleAwareValue<ControlState, FontAttributes> TextFont { get; set; }
+		public StyleAwareValue<ControlState, Font> TextFont { get; set; }
 
 		public StyleAwareValue<ControlState, Thickness> Padding { get; set; }
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Maui.Graphics;
 
 namespace Comet.Samples
 {
@@ -46,7 +47,7 @@ namespace Comet.Samples
 					new TextField(_val, _placeholder)
 				}
 				.Frame(height: 40)
-				.RoundedBorder(color: Color.Grey);
+				.RoundedBorder(color: Colors.Grey);
 		}
 	}
 }

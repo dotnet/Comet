@@ -1,6 +1,7 @@
-using System;
-using System.Drawing;
+﻿using System;
+
 using Comet.Graphics;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -21,65 +22,67 @@ namespace Comet
 			_scaling = scaling;
 		}
 
-		public override PathF PathForBounds(RectangleF rect)
+		public override PathF PathForBounds(Rectangle rect)
 		{
-			var bounds = _path.Bounds;
 
-			AffineTransformF transform = null;
+			//TODO: Bring back soon;
+			//var bounds = _path.Bounds;
 
-			if (_scaling == PathScaling.AspectFit)
-			{
-				var factorX = rect.Width / bounds.Width;
-				var factorY = rect.Height / bounds.Height;
-				var factor = Math.Min(factorX, factorY);
+			//AffineTransform transform = null;
 
-				var width = bounds.Width * factor;
-				var height = bounds.Height * factor;
-				var translateX = (rect.Width - width) / 2;
-				var translateY = (rect.Height - height) / 2;
+			//if (_scaling == PathScaling.AspectFit)
+			//{
+			//	var factorX = rect.Width / bounds.Width;
+			//	var factorY = rect.Height / bounds.Height;
+			//	var factor = Math.Min(factorX, factorY);
 
-				transform = AffineTransformF.GetTranslateInstance(-bounds.X, -bounds.Y);
-				transform.Translate(translateX, translateY);
-				transform.Scale(factor, factor);
-			}
-			else if (_scaling == PathScaling.AspectFill)
-			{
-				var factorX = rect.Width / bounds.Width;
-				var factorY = rect.Height / bounds.Height;
-				var factor = Math.Max(factorX, factorY);
+			//	var width = bounds.Width * factor;
+			//	var height = bounds.Height * factor;
+			//	var translateX = (rect.Width - width) / 2 + rect.X;
+			//	var translateY = (rect.Height - height) / 2 + rect.Y;
 
-				var width = bounds.Width * factor;
-				var height = bounds.Height * factor;
-				var translateX = (rect.Width - width) / 2;
-				var translateY = (rect.Height - height) / 2;
+			//	transform = AffineTransform.GetTranslateInstance(-bounds.X, -bounds.Y);
+			//	transform.Translate(translateX, translateY);
+			//	transform.Scale(factor, factor);
+			//}
+			//else if (_scaling == PathScaling.AspectFill)
+			//{
+			//	var factorX = rect.Width / bounds.Width;
+			//	var factorY = rect.Height / bounds.Height;
+			//	var factor = Math.Max(factorX, factorY);
 
-				transform = AffineTransformF.GetTranslateInstance(-bounds.X, -bounds.Y);
-				transform.Translate(translateX, translateY);
-				transform.Scale(factor, factor);
-			}
-			else if (_scaling == PathScaling.Fill)
-			{
-				var factorX = rect.Width / bounds.Width;
-				var factorY = rect.Height / bounds.Height;
-				transform = AffineTransformF.GetScaleInstance(factorX, factorY);
+			//	var width = bounds.Width * factor;
+			//	var height = bounds.Height * factor;
+			//	var translateX = (rect.Width - width) / 2 + rect.X;
+			//	var translateY = (rect.Height - height) / 2 + rect.Y;
 
-				var translateX = bounds.X * factorX;
-				var translateY = bounds.Y * factorY;
-				transform.Translate(translateX, translateY);
-			}
-			else
-			{
-				var width = bounds.Width;
-				var height = bounds.Height;
-				var translateX = (rect.Width - width) / 2;
-				var translateY = (rect.Height - height) / 2;
+			//	transform = AffineTransform.GetTranslateInstance(-bounds.X, -bounds.Y);
+			//	transform.Translate(translateX, translateY);
+			//	transform.Scale(factor, factor);
+			//}
+			//else if (_scaling == PathScaling.Fill)
+			//{
+			//	var factorX = rect.Width / bounds.Width;
+			//	var factorY = rect.Height / bounds.Height;
+			//	transform = AffineTransform.GetScaleInstance(factorX, factorY);
 
-				transform = AffineTransformF.GetTranslateInstance(-bounds.X, -bounds.Y);
-				transform.Translate(translateX, translateY);
-			}
+			//	var translateX = bounds.X * factorX + rect.X;
+			//	var translateY = bounds.Y * factorY + rect.Y;
+			//	transform.Translate(translateX, translateY);
+			//}
+			//else
+			//{
+			//	var width = bounds.Width;
+			//	var height = bounds.Height;
+			//	var translateX = (rect.Width - width) / 2 + rect.X;
+			//	var translateY = (rect.Height - height) / 2 + rect.Y;
 
-			if (!transform?.IsIdentity ?? false)
-				return _path.Transform(transform);
+			//	transform = AffineTransform.GetTranslateInstance(-bounds.X, -bounds.Y);
+			//	transform.Translate(translateX, translateY);
+			//}
+
+			//if (!transform?.IsIdentity ?? false)
+			//	_path.Transform(transform);
 
 			return _path;
 		}

@@ -1,7 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+
 using System.Linq;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Layouts;
 
 namespace Comet.Layout
 {
@@ -10,19 +12,21 @@ namespace Comet.Layout
 		private readonly List<GridConstraints> _constraints = new List<GridConstraints>();
 		private readonly List<object> _definedRows = new List<object>();
 		private readonly List<object> _definedColumns = new List<object>();
-		private SizeF _lastSize;
-		private float[] _gridX;
-		private float[] _gridY;
-		private float[] _widths;
-		private float[] _heights;
-		private float _width;
-		private float _height;
+		private Size _lastSize;
+		private double[] _gridX;
+		private double[] _gridY;
+		private double[] _widths;
+		private double[] _heights;
+		private double _width;
+		private double _height;
 
-		private readonly float _spacing;
+		private readonly double _spacing;
+		private readonly Grid grid;
 
-		public GridLayoutManager(
-			float? spacing)
+		public GridLayoutManager(Grid grid,
+			double? spacing)
 		{
+			this.grid = grid;
 			_spacing = spacing ?? 4;
 		}
 
@@ -39,8 +43,10 @@ namespace Comet.Layout
 			_heights = null;
 		}
 
-		public SizeF Measure(AbstractLayout layout, SizeF available)
+		public Size Measure(double widthConstraint, double heightConstraint)
 		{
+			var available = new Size(widthConstraint, heightConstraint);
+			var layout = grid;
 			if (_constraints.Count == 0)
 			{
 				var maxRow = 0;
@@ -77,11 +83,11 @@ namespace Comet.Layout
 				var x = _gridX[position.Column];
 				var y = _gridY[position.Row];
 
-				var w = 0f;
+				double w = 0;
 				for (var i = 0; i < position.ColumnSpan; i++)
 					w += GetColumnWidth(position.Column + i);
 
-				var h = 0f;
+				double h = 0;
 				for (var i = 0; i < position.RowSpan; i++)
 					h += GetRowHeight(position.Row + i);
 
@@ -90,7 +96,7 @@ namespace Comet.Layout
 					var viewSize = view.MeasuredSize;
 
 					if (!view.MeasurementValid)
-						viewSize = view.Measure(available);
+						viewSize = view.Measure(widthConstraint, heightConstraint);
 
 					var cellWidth = w;
 					var cellHeight = h;
@@ -108,27 +114,28 @@ namespace Comet.Layout
 					if (position.PositionX > 0)
 					{
 						var availWidth = cellWidth - w;
-						x += (float)Math.Round(availWidth * position.PositionX);
+						x += (double)Math.Round(availWidth * position.PositionX);
 					}
 
 					if (position.PositionY > 0)
 					{
 						var availHeight = cellHeight - h;
-						y += (float)Math.Round(availHeight * position.PositionY);
+						y += (double)Math.Round(availHeight * position.PositionY);
 					}
 
-					view.MeasuredSize = new SizeF(w, h);
+					view.MeasuredSize = new Size(w, h);
 					view.MeasurementValid = true;
 				}
 
-				view.Frame = new RectangleF(x, y, w, h);
+				view.Frame = new Rectangle(x, y, w, h);
 			}
 
-			return new SizeF(_width, _height);
+			return new Size(_width, _height);
 		}
 
-		public void Layout(AbstractLayout layout, RectangleF rect)
+		public void ArrangeChildren(Rectangle rect)
 		{
+			var layout = grid;
 			var measured = rect.Size;
 			var size = rect.Size;
 			if (_gridX == null || !_lastSize.Equals(size))
@@ -145,18 +152,18 @@ namespace Comet.Layout
 				var viewSize = view.MeasuredSize;
 				if (!view.MeasurementValid)
 				{
-					view.MeasuredSize = viewSize = view.Measure(measured);
+					view.MeasuredSize = viewSize = view.Measure(measured.Width, measured.Height);
 					view.MeasurementValid = true;
 				}
 
 				var x = _gridX[position.Column];
 				var y = _gridY[position.Row];
 
-				var w = 0f;
+				double w = 0;
 				for (var i = 0; i < position.ColumnSpan; i++)
 					w += GetColumnWidth(position.Column + i);
 
-				var h = 0f;
+				double h = 0;
 				for (var i = 0; i < position.RowSpan; i++)
 					h += GetRowHeight(position.Row + i);
 
@@ -178,13 +185,13 @@ namespace Comet.Layout
 					if (position.PositionX > 0)
 					{
 						var availWidth = cellWidth - w;
-						x += (float)Math.Round(availWidth * position.PositionX);
+						x += (double)Math.Round(availWidth * position.PositionX);
 					}
 
 					if (position.PositionY > 0)
 					{
 						var availHeight = cellHeight - h;
-						y += (float)Math.Round(availHeight * position.PositionY);
+						y += (double)Math.Round(availHeight * position.PositionY);
 					}
 				}
 
@@ -197,7 +204,7 @@ namespace Comet.Layout
 					h -= margin.VerticalThickness;
 				}
 
-				view.Frame = new RectangleF(x, y, w, h);
+				view.Frame = new Rectangle(x, y, w, h);
 			}
 		}
 
@@ -263,37 +270,37 @@ namespace Comet.Layout
 			}
 		}
 
-		private float GetColumnWidth(int column)
+		private double GetColumnWidth(int column)
 		{
 			return _widths[column];
 		}
 
-		private float GetRowHeight(int row)
+		private double GetRowHeight(int row)
 		{
 			return _heights[row];
 		}
 
-		private void ComputeGrid(float width, float height)
+		private void ComputeGrid(double width, double height)
 		{
 			var rows = _definedRows.Count;
 			var columns = _definedColumns.Count;
 
-			_gridX = new float[columns];
-			_gridY = new float[rows];
-			_widths = new float[columns];
-			_heights = new float[rows];
+			_gridX = new double[columns];
+			_gridY = new double[rows];
+			_widths = new double[columns];
+			_heights = new double[rows];
 			_width = 0;
 			_height = 0;
 
-			float takenX = 0;
+			double takenX = 0;
 			var calculatedColumns = new List<int>();
-			var calculatedColumnFactors = new List<float>();
+			var calculatedColumnFactors = new List<double>();
 			for (var c = 0; c < columns; c++)
 			{
 				var w = _definedColumns[c];
 				if (!w.ToString().EndsWith("*", StringComparison.Ordinal))
 				{
-					if (float.TryParse(w.ToString(), out var value))
+					if (double.TryParse(w.ToString(), out var value))
 					{
 						takenX += value;
 						_widths[c] = value;
@@ -320,15 +327,15 @@ namespace Comet.Layout
 				_widths[c] = columnWidth * calculatedColumnFactors[factorIndex++];
 			}
 
-			float takenY = 0;
+			double takenY = 0;
 			var calculatedRows = new List<int>();
-			var calculatedRowFactors = new List<float>();
+			var calculatedRowFactors = new List<double>();
 			for (var r = 0; r < rows; r++)
 			{
 				var h = _definedRows[r];
 				if (!h.ToString().EndsWith("*", StringComparison.Ordinal))
 				{
-					if (float.TryParse(h.ToString(), out var value))
+					if (double.TryParse(h.ToString(), out var value))
 					{
 						takenY += value;
 						_heights[r] = value;
@@ -355,14 +362,14 @@ namespace Comet.Layout
 				_heights[r] = rowHeight * calculatedRowFactors[factorIndex++];
 			}
 
-			float x = 0;
+			double x = 0;
 			for (var c = 0; c < columns; c++)
 			{
 				_gridX[c] = x;
 				x += _widths[c];
 			}
 
-			float y = 0;
+			double y = 0;
 			for (var r = 0; r < rows; r++)
 			{
 				_gridY[r] = y;
@@ -373,7 +380,7 @@ namespace Comet.Layout
 			_height = _heights.Sum();
 		}
 
-		private float GetFactor(object value)
+		private double GetFactor(object value)
 		{
 			if (value != null)
 			{
@@ -381,7 +388,7 @@ namespace Comet.Layout
 				if (str.EndsWith("*", StringComparison.Ordinal))
 				{
 					str = str.Substring(0, str.Length - 1);
-					if (float.TryParse(str, out var f))
+					if (double.TryParse(str, out var f))
 					{
 						return f;
 					}
@@ -391,9 +398,9 @@ namespace Comet.Layout
 			return 1;
 		}
 
-		public float CalculateWidth()
+		public double CalculateWidth()
 		{
-			float width = 0;
+			double width = 0;
 
 			if (_widths != null)
 			{
@@ -410,7 +417,7 @@ namespace Comet.Layout
 					var w = _definedColumns[c];
 					if (!"*".Equals(w))
 					{
-						if (float.TryParse(w.ToString(), out var value))
+						if (double.TryParse(w.ToString(), out var value))
 						{
 							width += value;
 						}
@@ -421,9 +428,9 @@ namespace Comet.Layout
 			return width;
 		}
 
-		public float CalculateHeight()
+		public double CalculateHeight()
 		{
-			float height = 0;
+			double height = 0;
 
 			if (_heights != null)
 			{
@@ -440,7 +447,7 @@ namespace Comet.Layout
 					var h = _definedRows[r];
 					if (!"*".Equals(h))
 					{
-						if (float.TryParse(h.ToString(), out var value))
+						if (double.TryParse(h.ToString(), out var value))
 						{
 							height += value;
 						}
@@ -450,5 +457,6 @@ namespace Comet.Layout
 
 			return height;
 		}
+
 	}
 }

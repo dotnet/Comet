@@ -24,11 +24,11 @@ namespace Comet.Android.Handlers
 		public override void SetView(View view)
 		{
 			var nav = view as NavigationView;
-			if (navigationView != null)
+			if (navigationView != null && VirtualView!=null)
 			{
 				navigationView.SetRoot(nav.Content);
-				VirtualView.SetPerformNavigate(navigationView.NavigateTo);
-				VirtualView.SetPerformPop(navigationView.Pop);
+				VirtualView?.SetPerformNavigate(navigationView.NavigateTo);
+				VirtualView?.SetPerformPop(navigationView.Pop);
 			}
 			base.SetView(view);
 		}

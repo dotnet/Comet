@@ -1,65 +1,69 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+using Microsoft.Maui.Graphics;
 using Comet.Reflection;
+using Microsoft.Maui;
 
 namespace Comet.Tests.Handlers
 {
 	public class GenericViewHandler : IViewHandler
 	{
+		public IMauiContext MauiContext { get; private set; }
 		public GenericViewHandler()
 		{
 		}
 
-		public View CurrentView { get; private set; }
+		public IView CurrentView { get; private set; }
 
 		public object NativeView => throw new NotImplementedException();
 
 		public bool HasContainer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-		
-		public SizeF GetIntrinsicSize(SizeF availableSize) => OnGetIntrinsicSize?.Invoke(availableSize) ?? View.UseAvailableWidthAndHeight;
+
+		public SizeF GetIntrinsicSize(double widthConstraint, double heightConstraint) => OnGetIntrinsicSize?.Invoke(widthConstraint,heightConstraint) ?? View.UseAvailableWidthAndHeight;
 
 		public void SetFrame(RectangleF frame)
 		{
 			Frame = frame;
 		}
 
-		public Func<SizeF, SizeF> OnGetIntrinsicSize { get; set; }
+		public Func<double, double, Size> OnGetIntrinsicSize { get; set; }
 
-		public RectangleF Frame
+		public Rectangle Frame
 		{
-			get => (RectangleF)ChangedProperties[nameof(Frame)];
+			get => (Rectangle)ChangedProperties[nameof(Frame)];
 			set => ChangedProperties[nameof(Frame)] = value;
 		}
 
+		IView IViewHandler.VirtualView => CurrentView;
+
+		public object ContainerView => throw new NotImplementedException();
+
 		public readonly Dictionary<string, object> ChangedProperties = new Dictionary<string, object>();
-		public void Remove(View view)
+
+
+		public void UpdateValue(string property)
 		{
-			CurrentView = null;
-		}
-
-		public void SetView(View view)
-		{
-			ChangedProperties.Clear();
-			CurrentView = view;
-		}
-
-		public void UpdateValue(string property, object value)
-		{
-			ChangedProperties[property] = value;
-
-			var val = CurrentView.GetPropertyValue(property) as Binding;
-
-			//TODO: This may break things
-			//if (val != null)
-			//    val.GetValue();
-
-
+			var val = CurrentView?.GetPropValue<object>(property);
+			if (val is Binding b)
+				ChangedProperties[property] = b.Value;
+			else
+				ChangedProperties[property] = val;
 		}
 
 		public void Dispose()
 		{
 			ChangedProperties?.Clear();
 		}
+
+		public void SetVirtualView(IView view)
+		{
+
+			ChangedProperties.Clear();
+			CurrentView = view;
+		}
+		public void DisconnectHandler() => CurrentView = null;
+		void IViewHandler.SetMauiContext(IMauiContext mauiContext) => MauiContext = mauiContext;
+		Size IViewHandler.GetDesiredSize(double widthConstraint, double heightConstraint) => GetIntrinsicSize(widthConstraint, heightConstraint);
+		void IViewHandler.NativeArrange(Rectangle frame) => Frame = frame;
 	}
 }

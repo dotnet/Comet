@@ -1,0 +1,3 @@
+[submodule "External/Maui"]
+	path = External/Maui
+	url = https://github.com/Clancey/Maui.git

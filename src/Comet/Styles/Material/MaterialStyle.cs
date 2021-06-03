@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+
 using System.Text;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet.Styles.Material
 {
@@ -29,12 +31,12 @@ namespace Comet.Styles.Material
 			Button = OutlinedButton = new ButtonStyle
 			{
 				TextColor = colorPalette.P900,
-				Border = new RoundedRectangle(4f).Stroke(Color.Grey, 1f, true),
+				Border = new RoundedRectangle(4f).Stroke(Colors.Grey, 1f, true),
 				BackgroundColor = new StyleAwareValue<ControlState, Color>
 				{
 					[ControlState.Default] = colorPalette.PD900,
-					[ControlState.Hovered] = Color.Grey.WithAlpha(.6f),
-					[ControlState.Pressed] = Color.Grey.WithAlpha(.4f),
+					[ControlState.Hovered] = Colors.Grey.WithAlpha(.6f),
+					[ControlState.Pressed] = Colors.Grey.WithAlpha(.4f),
 				},
 				Padding = new Thickness(16, 0, 16, 0),
 				Shadow = null,
@@ -43,14 +45,14 @@ namespace Comet.Styles.Material
 			ContainedButton = new ButtonStyle
 			{
 				TextColor = colorPalette.PD900,
-				Border = new RoundedRectangle(4f).Stroke(Color.Grey, 1f, true),
+				Border = new RoundedRectangle(4f).Stroke(Colors.Grey, 1f, true),
 				BackgroundColor = new StyleAwareValue<ControlState, Color>
 				{
 					[ControlState.Default] = colorPalette.P900,
 					[ControlState.Hovered] = colorPalette.P800,
 					[ControlState.Pressed] = colorPalette.P700,
 				},
-				Shadow = new Graphics.Shadow().WithColor(Color.Grey).WithRadius(1).WithOffset(new SizeF(1, 1)),
+				Shadow = new Graphics.Shadow().WithColor(Colors.Grey).WithRadius(1).WithOffset(new Size(1, 1)),
 				Padding = new Thickness(16, 0, 16, 0),
 			};
 
@@ -60,9 +62,9 @@ namespace Comet.Styles.Material
 				Padding = new Thickness(16, 0, 16, 0),
 				BackgroundColor = new StyleAwareValue<ControlState, Color>
 				{
-					[ControlState.Default] = Color.Transparent,
-					[ControlState.Hovered] = Color.Grey.WithAlpha(.6f),
-					[ControlState.Pressed] = Color.Grey.WithAlpha(.4f),
+					[ControlState.Default] = Colors.Transparent,
+					[ControlState.Hovered] = Colors.Grey.WithAlpha(.6f),
+					[ControlState.Pressed] = Colors.Grey.WithAlpha(.4f),
 				},
 				Shadow = null,
 				Border = null,
@@ -105,7 +107,7 @@ namespace Comet.Styles.Material
 
 			SetEnvironment(view, styleId, EnvironmentKeys.View.Border, style?.Border);
 			SetEnvironment(view, styleId, EnvironmentKeys.View.Overlay, style?.Border);
-			SetEnvironment(view, styleId, EnvironmentKeys.Colors.BackgroundColor, style?.BackgroundColor);
+			SetEnvironment(view, styleId, EnvironmentKeys.Colors.Background, style?.BackgroundColor);
 
 			SetEnvironment(view, styleId, EnvironmentKeys.View.Shadow, style?.Shadow);
 		}

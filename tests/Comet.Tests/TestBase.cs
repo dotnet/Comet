@@ -1,7 +1,9 @@
 ﻿using System;
-using System.Drawing;
+using Microsoft.Maui.Graphics;
 using Comet.Internal;
 using Xunit;
+using Microsoft.Maui.HotReload;
+using Microsoft.Maui;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace Comet.Tests
@@ -20,8 +22,11 @@ namespace Comet.Tests
 			var handler = view.ViewHandler;
 			if (handler == null)
 			{
-				handler = Registrar.Handlers.GetHandler(view.GetType()) as IViewHandler;
+				var v = view.ReplacedView;
+				handler = UI.Handlers.GetHandler(view.GetType());
 				view.ViewHandler = handler;
+				handler.SetVirtualView(view);
+
 			}
 
 			if (view is AbstractLayout layout)
@@ -45,16 +50,19 @@ namespace Comet.Tests
 		public static void InitializeHandlers(View view, float width, float height)
 		{
 			InitializeHandlers(view);
-			view.Frame = new RectangleF(0, 0, width, height);
+			var frame = new Rectangle(0, 0, width, height);
+			var iView = (IView)view;
+			iView.Measure(frame.Width, frame.Height);
+			iView.Arrange(new Rectangle(0, 0, width, height));
 		}
 		
 		public static void ResetComet()
 		{
 			var v = new View();
 			v.ResetGlobalEnvironment();
-			v.DisposeAllViews();
+			//v.DisposeAllViews();
 			UI.Init(true);
-			HotReloadHelper.Reset();
+			MauiHotReloadHelper.Reset();
 			v?.Dispose();
 		}
 	}

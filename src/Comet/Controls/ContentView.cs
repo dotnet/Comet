@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Drawing;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
-	public class ContentView : View, IEnumerable
+	public class ContentView : View, IEnumerable, IContainerView
 	{
 		IEnumerator IEnumerable.GetEnumerator() => new[] { Content }.GetEnumerator();
 		public View Content { get; set; }
@@ -39,12 +39,13 @@ namespace Comet
 			base.Dispose(disposing);
 		}
 
-		public override void LayoutSubviews(RectangleF frame)
+		public override void LayoutSubviews(Rectangle frame)
 		{
+			this.Frame = frame;
 			if (Content != null)
 			{
 				var margin = Content.GetMargin();
-				var bounds = new RectangleF(
+				var bounds = new Rectangle(
 					frame.Left + margin.Left,
 					frame.Top + margin.Top,
 					frame.Width - margin.HorizontalThickness,
@@ -52,19 +53,19 @@ namespace Comet
 				Content.Frame = bounds;
 			}
 		}
-
-		public override SizeF GetIntrinsicSize(SizeF availableSize)
+		public override Size GetDesiredSize(Size availableSize)
 		{
 			if (Content != null)
 			{
 				var margin = Content.GetMargin();
 				availableSize.Width -= margin.HorizontalThickness;
 				availableSize.Height -= margin.VerticalThickness;
-				var measuredSize = Content.Measure(availableSize, true);
-				return measuredSize;
+				MeasuredSize = Content.Measure(availableSize, true);
+				MeasurementValid = true;
+				return MeasuredSize;
 			}
 
-			return base.GetIntrinsicSize(availableSize);
+			return base.GetDesiredSize(availableSize);
 		}
 		internal override void Reload(bool isHotReload)
 		{
@@ -84,15 +85,17 @@ namespace Comet
 			base.ViewDidDisappear();
 		}
 
-        public override void PauseAnimations()
-        {
+		public override void PauseAnimations()
+		{
 			Content?.PauseAnimations();
-            base.PauseAnimations();
-        }
-        public override void ResumeAnimations()
-        {
+			base.PauseAnimations();
+		}
+		public override void ResumeAnimations()
+		{
 			Content?.ResumeAnimations();
-            base.ResumeAnimations();
-        }
-    }
+			base.ResumeAnimations();
+		}
+
+		public IReadOnlyList<View> GetChildren() => new []{ Content };
+	}
 }

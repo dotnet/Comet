@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Comet.Internal;
+using Microsoft.Maui;
 
 namespace Comet
 {
-	public interface IListView
+	public interface IListView : IView
 	{
 		int Sections();
 		int Rows(int section);
@@ -169,7 +170,7 @@ namespace Comet
 
 		public virtual void ReloadData()
 		{
-			ViewHandler?.UpdateValue(nameof(ReloadData), null);
+			ViewHandler?.UpdateValue(nameof(ReloadData));
 		}
 
 		protected virtual void OnSelected(int section, int index)
@@ -182,9 +183,9 @@ namespace Comet
 		{
 			views?.ForEach(v => v.Dispose());
 			//TODO: Verify. I don't think we need to check all active views anymore
-			var cells = ActiveViews.Where(x => x.Parent == this).ToList();
-			foreach (var cell in cells)
-				cell.Dispose();
+			//var cells = ActiveViews.Where(x => x.Parent == this).OfType<View>().ToList();
+			//foreach (var cell in cells)
+			//	cell.Dispose();
 			base.Dispose(disposing);
 		}
 

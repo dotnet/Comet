@@ -1,13 +1,15 @@
 ﻿using System;
-using System.Drawing;
 using Comet.Graphics;
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+
 namespace Comet
 {
-	public class Image : View
+	public class Image : View, Microsoft.Maui.IImage
 	{
-		public Image(Binding<Bitmap> bitmap = null)
+		public Image(Binding<IImageSource> imageSource = null)
 		{
-			Bitmap = bitmap;
+			ImageSource = imageSource;
 		}
 
 		public Image(Binding<string> source)
@@ -15,25 +17,25 @@ namespace Comet
 			Source = source;
 		}
 
-		public Image(Func<Bitmap> bitmap) : this((Binding<Bitmap>)bitmap) { }
+		public Image(Func<IImageSource> bitmap) : this((Binding<IImageSource>)bitmap) { }
 
 		public Image(Func<string> source) : this((Binding<string>)source) { }
 
-		private Binding<Bitmap> _bitmap;
-		public Binding<Bitmap> Bitmap
+		private Binding<IImageSource> _imageSource;
+		public Binding<IImageSource> ImageSource
 		{
-			get => _bitmap;
-			private set => this.SetBindingValue(ref _bitmap, value);
+			get => _imageSource;
+			private set => this.SetBindingValue(ref _imageSource, value);
 		}
 
 		private Binding<string> _source;
 		public Binding<string> Source
 		{
 			get => _source;
-			private set
+			protected set
 			{
 				this.SetBindingValue(ref _source, value);
-				LoadBitmapFromSource(_source.CurrentValue);
+				CreateImageSource(_source.CurrentValue);
 			}
 		}
 
@@ -42,39 +44,38 @@ namespace Comet
 			base.ViewPropertyChanged(property, value);
 			if (property == nameof(Source))
 			{
-				LoadBitmapFromSource((string)value);
+				CreateImageSource((string)value);
 			}
 		}
 
-		public override SizeF GetIntrinsicSize(SizeF availableSize)
-		{
-			if (Bitmap?.Value != null)
-				return Bitmap.GetValueOrDefault().Size;
-
-			return SizeF.Empty;
-		}
-
-		private async void LoadBitmapFromSource(string source)
+		private void CreateImageSource(string source)
 		{
 			try
 			{
 				if (string.IsNullOrWhiteSpace(source))
 				{
-					Bitmap = null;
+					ImageSource = null;
 					return;
 				}
-				var loadBitmapTask = Device.BitmapService?.LoadBitmapAsync(source);
-				if (loadBitmapTask != null)
-				{
-					var bitmap = await loadBitmapTask;
-					Bitmap = bitmap;
-					this.ViewPropertyChanged(nameof(Bitmap), bitmap);
-				}
+				ImageSource = (ImageSource)source;
 			}
 			catch (Exception exc)
 			{
 				Logger.Warn("An unexpected error occurred loading a bitmap.", exc);
 			}
 		}
+
+		void IImageSourcePart.UpdateIsLoading(bool isLoading)
+		{
+
+		}
+
+		Aspect Microsoft.Maui.IImage.Aspect => this.GetEnvironment<Aspect>(nameof(Aspect));
+
+		bool Microsoft.Maui.IImage.IsOpaque => this.GetEnvironment<bool>(nameof(Microsoft.Maui.IImage.IsOpaque));
+
+		IImageSource IImageSourcePart.Source => ImageSource?.CurrentValue;
+
+		bool IImageSourcePart.IsAnimationPlaying => this.GetEnvironment<bool>(nameof(Microsoft.Maui.IImage.IsAnimationPlaying));
 	}
 }

@@ -1,17 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Maui;
+
 namespace Comet
 {
-	public class ContainerView : View, IList<View>, IContainerView
+	public class ContainerView : View, IList<View>, IContainerView, IContainer
 	{
 		readonly protected List<View> Views = new List<View>();
 
-		public event EventHandler<LayoutEventArgs> ChildrenChanged;
-		public event EventHandler<LayoutEventArgs> ChildrenAdded;
-		public event EventHandler<LayoutEventArgs> ChildrenRemoved;
 
-
+		public void Add(IView iView)
+		{
+			//TODO: Add wrapper
+			if (iView is View v)
+				Add(v);
+			throw new NotImplementedException();
+		}
 		public void Add(View view)
 		{
 			if (view == null)
@@ -20,13 +25,9 @@ namespace Comet
 			view.Navigation = Parent as NavigationView ?? Parent?.Navigation;
 			Views.Add(view);
 			OnAdded(view);
-			ChildrenChanged?.Invoke(this, new LayoutEventArgs(Views.Count - 1, 1));
 		}
 
-		protected virtual void OnAdded(View view)
-		{
-
-		}
+		protected virtual void OnAdded(View view) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
 
 		public void Clear()
 		{
@@ -35,23 +36,26 @@ namespace Comet
 			{
 				var removed = new List<View>(Views);
 				Views.Clear();
-				OnClear();
-				ChildrenRemoved?.Invoke(this, new LayoutEventArgs(0, count, removed));
+				OnClear(removed);
 			}
 		}
 
-		protected virtual void OnClear()
-		{
-
-		}
+		protected virtual void OnClear(List<View> views) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
 
 		public bool Contains(View item) => Views.Contains(item);
 
 		public void CopyTo(View[] array, int arrayIndex)
 		{
 			Views.CopyTo(array, arrayIndex);
+		}
 
-			ChildrenAdded?.Invoke(this, new LayoutEventArgs(arrayIndex, array.Length));
+		public bool Remove(IView iView)
+		{
+
+			//TODO: Add wrapper
+			if (iView is View v)
+				return Remove(v);
+			throw new NotImplementedException();
 		}
 
 		public bool Remove(View item)
@@ -68,21 +72,20 @@ namespace Comet
 				Views.Remove(item);
 
 				OnRemoved(item);
-				ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1, removed));
+				//ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1, removed));
 				return true;
 			}
 
 			return false;
 		}
 
-		protected virtual void OnRemoved(View view)
-		{
-
-		}
+		protected virtual void OnRemoved(View view) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
 
 		public int Count => Views.Count;
 
 		public bool IsReadOnly => false;
+
+		IReadOnlyList<IView> IContainer.Children => GetChildren();
 
 		public IEnumerator<View> GetEnumerator() => Views.GetEnumerator();
 
@@ -102,13 +105,9 @@ namespace Comet
 
 			item.Parent = this;
 			item.Navigation = Parent as NavigationView ?? Parent?.Navigation;
-			ChildrenAdded?.Invoke(this, new LayoutEventArgs(index, 1));
 		}
 
-		protected virtual void OnInsert(int index, View item)
-		{
-
-		}
+		protected virtual void OnInsert(int index, View item) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
 
 		public void RemoveAt(int index)
 		{
@@ -121,8 +120,6 @@ namespace Comet
 				var removed = new List<View> { item };
 				Views.RemoveAt(index);
 				OnRemoved(item);
-
-				ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1, removed));
 			}
 		}
 
@@ -141,7 +138,7 @@ namespace Comet
 				value.Parent = null;
 				value.Navigation = null;
 
-				ChildrenChanged?.Invoke(this, new LayoutEventArgs(index, 1, removed));
+//				ChildrenChanged?.Invoke(this, new LayoutEventArgs(index, 1, removed));
 			}
 		}
 
@@ -191,15 +188,16 @@ namespace Comet
 			base.ViewDidDisappear();
 		}
 
-        public override void PauseAnimations()
+		public override void PauseAnimations()
 		{
 			Views?.ForEach(v => v.PauseAnimations());
 			base.PauseAnimations();
-        }
-        public override void ResumeAnimations()
+		}
+		public override void ResumeAnimations()
 		{
 			Views?.ForEach(v => v.ResumeAnimations());
 			base.ResumeAnimations();
-        }
-    }
+		}
+
+	}
 }

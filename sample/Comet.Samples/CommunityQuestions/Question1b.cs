@@ -1,5 +1,8 @@
 ﻿using System;
 
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+
 namespace Comet.Samples
 {
 	public class Question1b : View
@@ -15,7 +18,7 @@ namespace Comet.Samples
 				new Text("Description")
 					.TextAlignment(TextAlignment.Center)
 					.FontSize(12)
-					.Color(Color.Grey),
+					.Color(Colors.Grey),
 			}.FillHorizontal();
 	}
 }

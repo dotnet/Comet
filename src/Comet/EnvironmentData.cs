@@ -16,9 +16,10 @@ namespace Comet
 		{
 			//public const string Font = "Font";
 			public const string Size = "Font.Size";
-			public const string Family = "Font.Family";
 			public const string Weight = "Font.Weight";
-			public const string Italic = "Font.Italic";
+			public const string Family = "Font.Family";
+			public const string Slant = "Font.Slant";
+			//public const string Attributes = "Font.Attributes";
 		}
 
 		public static class LineBreakMode
@@ -29,7 +30,7 @@ namespace Comet
 		public static class Colors
 		{
 			public const string Color = "Color";
-			public const string BackgroundColor = "BackgroundColor";
+			public const string Background = nameof(Background);
 		}
 
 		public static class Animations
@@ -42,8 +43,8 @@ namespace Comet
 			public const string Margin = "Layout.Margin";
 			public const string Padding = "Layout.Padding";
 			public const string Constraints = "Layout.Constraints";
-			public const string HorizontalSizing = "Layout.HorizontalSizing";
-			public const string VerticalSizing = "Layout.VerticalSizing";
+			public const string HorizontalLayoutAlignment = "Layout.HorizontalSizing";
+			public const string VerticalLayoutAlignment = "Layout.VerticalSizing";
 			public const string FrameConstraints = "Layout.FrameConstraints";
 			public const string IgnoreSafeArea = "Layout.IgnoreSafeArea";
 		}
@@ -56,6 +57,8 @@ namespace Comet
 			public const string Title = "Title";
 			public const string Border = "Border";
 			public const string StyleId = "StyleId";
+			public const string AutomationId = nameof(AutomationId);
+			public const string Opacity = nameof(Opacity);
 		}
 
 		public static class Shape
@@ -75,6 +78,7 @@ namespace Comet
 		public static class Text
 		{
 			public const string Alignment = "Text.Alignment";
+			public const string VerticalAlignment = "Text.VerticalAlignment";
 			public static class Style
 			{
 				public const string H1 = nameof(H1);

@@ -1,13 +1,15 @@
-using System.Drawing;
+﻿
+
+using Microsoft.Maui.Graphics;
 
 namespace Comet.Graphics
 {
 	public class Shadow
 	{
-		public Color Color { get; private set; } = Color.Black;
+		public Color Color { get; private set; } = Colors.Black;
 		public float Opacity { get; private set; } = .5f;
 		public float Radius { get; private set; } = 10;
-		public SizeF Offset { get; private set; } = SizeF.Empty;
+		public Size Offset { get; private set; } = Size.Zero;
 
 		public Shadow()
 		{
@@ -43,7 +45,7 @@ namespace Comet.Graphics
 			return shadow;
 		}
 
-		public Shadow WithOffset(SizeF offset)
+		public Shadow WithOffset(Size offset)
 		{
 			var shadow = new Shadow(this);
 			shadow.Offset = offset;

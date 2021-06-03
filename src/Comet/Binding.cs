@@ -27,7 +27,7 @@ namespace Comet
 		}
 
 		public IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> BoundProperties { get; protected set; }
-
+		protected string PropertyName;
 		public virtual void BindingValueChanged(INotifyPropertyRead bindingObject, string propertyName, object value)
 		{
 			Value = value;
@@ -50,13 +50,14 @@ namespace Comet
 		}
 
 		Func<T> Get { get; set; }
+		Action<T> _set;
 		public Action<T> Set
 		{
-			get;
-			internal set;
+			get => _set ?? (_set = (v)=>CurrentValue = v);
+			internal set => _set = value;
 		}
 
-		public T CurrentValue { get => (T)Value; private set => Value = value; }
+		public T CurrentValue { get => Value == null ? default :  (T)Value; private set => Value = value; }
 
 		public static implicit operator Binding<T>(T value)
 		{
@@ -141,6 +142,7 @@ namespace Comet
 
 		public void BindToProperty(View view, string property)
 		{
+			PropertyName = property;
 			View = view;
 			if (IsFunc && BoundProperties?.Count > 0)
 			{
@@ -212,13 +214,24 @@ namespace Comet
 		}
 		public override void BindingValueChanged(INotifyPropertyRead bindingObject, string propertyName, object value)
 		{
+			var oldValue = CurrentValue;
 			if (IsFunc)
-				CurrentValue = Get();
+			{
+				var oldProps = BoundProperties;
+				StateManager.StartProperty();
+				var result = Get == null ? default : Get.Invoke();
+				var props = StateManager.EndProperty();
+				CurrentValue = result;
+				BoundProperties = props;
+				if(BoundProperties.Except(oldProps).Any())
+					BindToProperty(View, PropertyName);
+			}
 			else
 			{
 				CurrentValue = Cast(value);
 			}
-			View?.ViewPropertyChanged(propertyName, value);
+			if(!(oldValue?.Equals(CurrentValue) ?? false))
+				View?.ViewPropertyChanged(propertyName, value);
 
 		}
 		T Cast(object value)

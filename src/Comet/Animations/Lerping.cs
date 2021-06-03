@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -80,12 +82,12 @@ namespace Comet
 					return start.Lerp(end, progress);
 				}
 			},
-			[typeof(RectangleF)] = new Lerp
+			[typeof(Rectangle)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
 
-					var start = (RectangleF)s;
-					var end = (RectangleF)e;
+					var start = (Rectangle)s;
+					var end = (Rectangle)e;
 					return start.Lerp(end, progress);
 				}
 			},
@@ -102,8 +104,8 @@ namespace Comet
 			{
 				Calculate = (s, e, progress) => {
 
-					var start = (Thickness)(s ?? Thickness.Empty);
-					var end = (Thickness)(e ?? Thickness.Empty);
+					var start = (Thickness)(s ?? Thickness.Zero);
+					var end = (Thickness)(e ?? Thickness.Zero);
 					return start.Lerp(end, progress);
 				}
 			},

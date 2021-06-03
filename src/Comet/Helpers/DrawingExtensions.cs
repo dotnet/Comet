@@ -1,6 +1,7 @@
 ﻿using System;
-using System.Drawing;
+
 using Comet.Graphics;
+using Microsoft.Maui.Graphics;
 
 // ReSharper disable once CheckNamespace
 namespace Comet
@@ -21,7 +22,7 @@ namespace Comet
 			{
 				var newX = x ?? shadow.Offset.Width;
 				var newY = y ?? shadow.Offset.Height;
-				shadow = shadow.WithOffset(new SizeF(newX, newY));
+				shadow = shadow.WithOffset(new Size(newX, newY));
 			}
 			if (type != null)
 				view.SetEnvironment(type, EnvironmentKeys.View.Shadow, shadow, true);
@@ -139,7 +140,7 @@ namespace Comet
 
 		public static T RoundedBorder<T>(this T view, float radius = 4, Color color = null, float strokeSize = 1, bool filled = false, Type type = null) where T : View
 		{
-			var finalColor = color ?? Color.Black;
+			var finalColor = color ?? Colors.Black;
 			view.Border(new RoundedRectangle(radius).Stroke(finalColor, strokeSize));
 			if (filled)
 				view.Background(color);
@@ -148,7 +149,7 @@ namespace Comet
 
 		public static T RoundedBorder<T>(this T view, float radius = 4, string color = null, float strokeSize = 1, bool filled = false, Type type = null) where T : View
 		{
-			var finalColor = color != null ? new Color(color) : Color.Black;
+			var finalColor = color != null ? Color.FromHex(color) : Colors.Black;
 			view.Border(new RoundedRectangle(radius).Stroke(finalColor, strokeSize));
 			if (filled)
 				view.Background(color);

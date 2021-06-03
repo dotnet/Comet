@@ -30,14 +30,12 @@ namespace Comet.Tests
 				return currentText;
 			};
 
-			var viewHandler = new GenericViewHandler();
-			view.ViewHandler = viewHandler;
 
+			var viewHandler = view.SetViewHandlerToGeneric();
 
 			text = currentText;
-			var textHandler = new GenericViewHandler();
-			text.ViewHandler = textHandler;
 
+			var textHandler = text.SetViewHandlerToGeneric();
 
 			Assert.Equal(1, buildCount);
 

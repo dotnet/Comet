@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.Maui.Graphics;
 
 namespace Comet.Samples
 {
@@ -11,7 +12,7 @@ namespace Comet.Samples
 					new VStack {
 						new Image("turtlerock.jpg").Frame(75, 75).Padding(4),
 						new Text("Title").FitHorizontal(),
-						new Text("Description").FitHorizontal().FontSize(12).Color(Color.Grey),
+						new Text("Description").FitHorizontal().FontSize(12).Color(Colors.Grey),
 					}.FillHorizontal()
 
 			};

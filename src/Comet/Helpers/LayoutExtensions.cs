@@ -1,5 +1,8 @@
 ﻿using Comet.Layout;
-using System.Drawing;
+
+using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.Primitives;
 
 // ReSharper disable once CheckNamespace
 namespace Comet
@@ -75,7 +78,7 @@ namespace Comet
 
 		public static void SetFrameFromNativeView(
 			this View view,
-			RectangleF frame)
+			Rectangle frame)
 		{
 			if (view == null)
 				return;
@@ -88,7 +91,7 @@ namespace Comet
 				frame.Height -= margin.VerticalThickness;
 			}
 
-			var sizeThatFits = view.Measure(frame.Size);
+			var sizeThatFits = view.Measure(frame.Size.Width,frame.Size.Height);
 			view.MeasuredSize = sizeThatFits;
 			view.MeasurementValid = true;
 
@@ -103,8 +106,8 @@ namespace Comet
 			}
 			else
 			{
-				var horizontalSizing = view.GetHorizontalSizing(view.Parent as ContainerView, Sizing.Fit);
-				if (horizontalSizing == Sizing.Fill)
+				var horizontalSizing = view.GetHorizontalLayoutAlignment(view.Parent as ContainerView, LayoutAlignment.Start);
+				if (horizontalSizing == LayoutAlignment.Fill)
 					width = frame.Width;
 			}
 
@@ -114,8 +117,8 @@ namespace Comet
 			}
 			else
 			{
-				var verticalSizing = view.GetVerticalSizing(view.Parent as ContainerView, Sizing.Fit);
-				if (verticalSizing == Sizing.Fill)
+				var verticalSizing = view.GetVerticalLayoutAlignment(view.Parent as ContainerView, LayoutAlignment.Start);
+				if (verticalSizing == LayoutAlignment.Fill)
 					height = frame.Height;
 			}
 
@@ -145,51 +148,52 @@ namespace Comet
 
 			var x = frame.X + ((frame.Width - width) * xFactor);
 			var y = frame.Y + ((frame.Height - height) * yFactor);
-			view.Frame = new RectangleF((float)x, (float)y, width, height);
-			view.RequestLayout();
+			view.Frame = new Rectangle((float)x, (float)y, width, height);
+			//TODO: Redo this!
+			//view.RequestLayout();
 		}
 
 		public static T FillHorizontal<T>(this T view, bool cascades = true) where T : View
 		{
-			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill, cascades);
+			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill, cascades);
 			return view;
 		}
 
 		public static T FillVertical<T>(this T view, bool cascades = true) where T : View
 		{
-			view.SetEnvironment(EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill, cascades);
+			view.SetEnvironment(EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill, cascades);
 			return view;
 		}
 
 		public static T FitHorizontal<T>(this T view, bool cascades = true) where T : View
 		{
-			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fit, cascades);
+			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Start, cascades);
 			return view;
 		}
 
 		public static T FitVertical<T>(this T view, bool cascades = true) where T : View
 		{
-			view.SetEnvironment(EnvironmentKeys.Layout.VerticalSizing, Sizing.Fit, cascades);
+			view.SetEnvironment(EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Start, cascades);
 			return view;
 		}
 
-		public static Sizing GetHorizontalSizing(this View view, ContainerView container, Sizing defaultSizing = Sizing.Fit)
+		public static LayoutAlignment GetHorizontalLayoutAlignment(this View view, ContainerView container, LayoutAlignment defaultSizing = LayoutAlignment.Start)
 		{
-			var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.HorizontalSizing);
-			if (sizing != null) return (Sizing)sizing;
+			var sizing = view.GetEnvironment<LayoutAlignment?>(view, EnvironmentKeys.Layout.HorizontalLayoutAlignment);
+			if (sizing != null) return (LayoutAlignment)sizing;
 
 			if (container != null)
-				sizing = view.GetEnvironment<Sizing?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.HorizontalSizing}");
+				sizing = view.GetEnvironment<LayoutAlignment?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.HorizontalLayoutAlignment}");
 			return sizing ?? defaultSizing;
 		}
 
-		public static Sizing GetVerticalSizing(this View view, ContainerView container, Sizing defaultSizing = Sizing.Fit)
+		public static LayoutAlignment GetVerticalLayoutAlignment(this View view, ContainerView container, LayoutAlignment defaultSizing = LayoutAlignment.Start)
 		{
-			var sizing = view.GetEnvironment<Sizing?>(view, EnvironmentKeys.Layout.VerticalSizing);
-			if (sizing != null) return (Sizing)sizing;
+			var sizing = view.GetEnvironment<LayoutAlignment?>(view, EnvironmentKeys.Layout.VerticalLayoutAlignment);
+			if (sizing != null) return (LayoutAlignment)sizing;
 
 			if (container != null)
-				sizing = view.GetEnvironment<Sizing?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.VerticalSizing}");
+				sizing = view.GetEnvironment<LayoutAlignment?>(view, $"{container.GetType().Name}.{EnvironmentKeys.Layout.VerticalLayoutAlignment}");
 			return sizing ?? defaultSizing;
 		}
 
@@ -213,7 +217,7 @@ namespace Comet
 		public static Thickness GetMargin(this View view, Thickness? defaultValue = null)
 		{
 			var margin = view.GetEnvironment<Thickness?>(view, EnvironmentKeys.Layout.Margin);
-			return margin ?? defaultValue ?? Thickness.Empty;
+			return margin ?? defaultValue ?? Thickness.Zero;
 		}
 
 		public static T Padding<T>(this T view, Thickness padding, bool cascades = false) where T : View
@@ -225,7 +229,7 @@ namespace Comet
 		public static Thickness GetPadding(this View view, Thickness? defaultValue = null)
 		{
 			var margin = view.GetEnvironment<Thickness?>(view, EnvironmentKeys.Layout.Padding);
-			return margin ?? defaultValue ?? Thickness.Empty;
+			return margin ?? defaultValue ?? Thickness.Zero;
 		}
 
 
@@ -241,7 +245,7 @@ namespace Comet
 			return constraints ?? defaultValue;
 		}
 
-		public static SizeF Measure(this View view, SizeF availableSize, bool includeMargin)
+		public static Size Measure(this View view, Size availableSize, bool includeMargin)
 		{
 			if (availableSize.Width <= 0 || availableSize.Height <= 0)
 				return availableSize;
@@ -252,13 +256,13 @@ namespace Comet
 				availableSize.Width -= margin.HorizontalThickness;
 				availableSize.Height -= margin.VerticalThickness;
 
-				var measuredSize = view.Measure(availableSize);
+				var measuredSize = view.Measure(availableSize.Width,availableSize.Height);
 				measuredSize.Width += margin.HorizontalThickness;
 				measuredSize.Height += margin.VerticalThickness;
 				return measuredSize;
 			}
 
-			return view.Measure(availableSize);
+			return view.Measure(availableSize.Width, availableSize.Height);
 		}
 
 		public static T IgnoreSafeArea<T>(this T view) where T : View

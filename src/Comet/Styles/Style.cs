@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.Maui;
+using Microsoft.Maui.Primitives;
 
 namespace Comet.Styles
 {
@@ -22,121 +24,73 @@ namespace Comet.Styles
 		public TextStyle H1 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H1),
-			Font = new FontAttributes
-			{
-				Size = 96,
-				Weight = Weight.Light,
-			},
+			Font = Font.SystemFontOfSize(96, FontWeight.Light)
 		};
 
 		public TextStyle H2 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H2),
-			Font = new FontAttributes
-			{
-				Size = 60,
-				Weight = Weight.Light,
-			},
+			Font = Font.SystemFontOfSize(60, FontWeight.Light)
 		};
 
 		public TextStyle H3 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H3),
-			Font = new FontAttributes
-			{
-				Size = 48,
-				Weight = Weight.Regular,
-			},
+			Font = Font.SystemFontOfSize(48, FontWeight.Regular)
 		};
 
 		public TextStyle H4 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H4),
-			Font = new FontAttributes
-			{
-				Size = 34,
-				Weight = Weight.Regular,
-			},
+			Font = Font.SystemFontOfSize(48, FontWeight.Light)
 		};
 
 		public TextStyle H5 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H5),
-			Font = new FontAttributes
-			{
-				Size = 24,
-				Weight = Weight.Regular,
-			},
+			Font = Font.SystemFontOfSize(24, FontWeight.Regular)
 		};
 
 		public TextStyle H6 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(H6),
-			Font = new FontAttributes
-			{
-				Size = 20,
-				Weight = Weight.Medium,
-			},
+			Font = Font.SystemFontOfSize(20, FontWeight.Medium)
 		};
 
 		public TextStyle Subtitle1 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Subtitle1),
-			Font = new FontAttributes
-			{
-				Size = 16,
-				Weight = Weight.Regular,
-			},
+			Font = Font.SystemFontOfSize(16, FontWeight.Regular)
 		};
 
 		public TextStyle Subtitle2 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Subtitle2),
-			Font = new FontAttributes
-			{
-				Size = 13,
-				Weight = Weight.Medium,
-			},
+			Font = Font.SystemFontOfSize(13, FontWeight.Medium)
 		};
 
 		public TextStyle Body1 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Body1),
-			Font = new FontAttributes
-			{
-				Size = 16,
-				Weight = Weight.Regular,
-			},
+			Font = Font.SystemFontOfSize(16, FontWeight.Regular)
 		};
 
 		public TextStyle Body2 { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Body2),
-			Font = new FontAttributes
-			{
-				Size = 14,
-				Weight = Weight.Medium,
-			},
+			Font = Font.SystemFontOfSize(14, FontWeight.Medium)
 		};
 
 		public TextStyle Caption { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Caption),
-			Font = new FontAttributes
-			{
-				Size = 12,
-				Weight = Weight.Regular,
-			},
+			Font = Font.SystemFontOfSize(12, FontWeight.Regular)
 		};
 
 		public TextStyle Overline { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Overline),
-			Font = new FontAttributes
-			{
-				Size = 10,
-				Weight = Weight.Regular,
-			},
+			Font = Font.SystemFontOfSize(10, FontWeight.Regular)
 		};
 
 		public virtual void Apply(ContextualObject view = null)
@@ -166,10 +120,10 @@ namespace Comet.Styles
 		protected virtual void ApplyTextStyle(ContextualObject view, TextStyle textStyle)
 		{
 			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Colors.Color, textStyle.Color);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font, (f) => (f as FontAttributes)?.Size);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Family, textStyle?.Font, (f) => (f as FontAttributes)?.Family);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Italic, textStyle?.Font, (f) => (f as FontAttributes)?.Italic);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Weight, textStyle?.Font, (f) => (f as FontAttributes)?.Weight);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font, (f) => (f is Font font) ? font.FontSize : null);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Family, textStyle?.Font, (f) => (f is Font font) ? font.FontFamily : null);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Weight, textStyle?.Font, (f) => (f is Font font) ? font.Weight : null);
+
 		}
 
 		protected virtual void ApplyButton(ContextualObject view)
@@ -178,7 +132,7 @@ namespace Comet.Styles
 			//Set the BorderStyle
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.ClipShape, Button?.Border);
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.Overlay, Button?.Border);
-			SetEnvironment(view, typeof(Button), EnvironmentKeys.Colors.BackgroundColor, Button?.BackgroundColor);
+			SetEnvironment(view, typeof(Button), EnvironmentKeys.Colors.Background, Button?.BackgroundColor);
 
 			SetEnvironment(view, typeof(Button), EnvironmentKeys.View.Shadow, Button?.Shadow);
 		}
@@ -213,7 +167,7 @@ namespace Comet.Styles
 			SetEnvironment(view, viewType, EnvironmentKeys.View.ClipShape, style?.ClipShape);
 			SetEnvironment(view, viewType, EnvironmentKeys.View.Overlay, style?.Overlay);
 			SetEnvironment(view, viewType, EnvironmentKeys.View.Border, style?.Border);
-			SetEnvironment(view, viewType, EnvironmentKeys.Colors.BackgroundColor, style?.BackgroundColor);
+			SetEnvironment(view, viewType, EnvironmentKeys.Colors.Background, style?.BackgroundColor);
 			SetEnvironment(view, viewType, EnvironmentKeys.View.Shadow, style?.Shadow);
 		}
 
@@ -279,28 +233,31 @@ namespace Comet.Styles
 
 		void SetDefaultControlSizingForLayouts()
 		{
-			void setSizing(Type control, Type container, string keyType, Sizing sizing)
+			void setSizing(Type control, Type container, string keyType, LayoutAlignment sizing)
 			{
 				var key = $"{container.Name}.{keyType}";
 				SetEnvironmentValue(null, control, key, sizing);
 			}
-			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(Slider), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
-			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.VerticalSizing, Sizing.Fill);
-			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.HorizontalSizing, Sizing.Fill);
+			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Start);
+			setSizing(typeof(Text), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Start);
+			setSizing(typeof(Text), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(Slider), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(ListView), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 		}
 	}
 }

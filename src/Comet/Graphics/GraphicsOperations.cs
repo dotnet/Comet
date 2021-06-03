@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Drawing;
+
 using System.Linq;
+using Microsoft.Maui.Graphics;
 
 namespace Comet.Graphics
 {
@@ -9,22 +10,22 @@ namespace Comet.Graphics
 	{
 		public static readonly float Epsilon = 0.0000000001f;
 
-		public static PointF RotatePoint(PointF point, float angleInDegrees)
+		public static Point RotatePoint(Point point, float angleInDegrees)
 		{
 			var radians = DegreesToRadians(angleInDegrees);
 
 			var x = (float)(Math.Cos(radians) * point.X - Math.Sin(radians) * point.Y);
 			var y = (float)(Math.Sin(radians) * point.X + Math.Cos(radians) * point.Y);
 
-			return new PointF(x, y);
+			return new Point(x, y);
 		}
 
-		public static PointF RotatePoint(PointF center, PointF point, float angleInDegrees)
+		public static Point RotatePoint(Point center, Point point, float angleInDegrees)
 		{
 			var radians = DegreesToRadians(angleInDegrees);
 			var x = center.X + (float)(Math.Cos(radians) * (point.X - center.X) - Math.Sin(radians) * (point.Y - center.Y));
 			var y = center.Y + (float)(Math.Sin(radians) * (point.X - center.X) + Math.Cos(radians) * (point.Y - center.Y));
-			return new PointF(x, y);
+			return new Point(x, y);
 		}
 
 		public static float DegreesToRadians(float angleInDegrees)
@@ -63,18 +64,18 @@ namespace Comet.Graphics
 			return angle2 - angle1;
 		}
 
-		public static RectangleF GetBoundsOfQuadraticCurve(
-			PointF startPoint,
-			PointF controlPoint,
-			PointF endPoint)
+		public static Rectangle GetBoundsOfQuadraticCurve(
+			Point startPoint,
+			Point controlPoint,
+			Point endPoint)
 		{
 			return GetBoundsOfQuadraticCurve(startPoint.X, startPoint.Y, controlPoint.X, controlPoint.Y, endPoint.X, endPoint.Y);
 		}
 
-		public static RectangleF GetBoundsOfQuadraticCurve(
-			float x0, float y0,
-			float x1, float y1,
-			float x2, float y2)
+		public static Rectangle GetBoundsOfQuadraticCurve(
+			double x0, double y0,
+			double x1, double y1,
+			double x2, double y2)
 		{
 			var cpx0 = x0 + 2.0f * (x1 - x0) / 3.0f;
 			var cpy0 = y0 + 2.0f * (y1 - y0) / 3.0f;
@@ -88,31 +89,32 @@ namespace Comet.Graphics
 				x2, y2);
 		}
 
-		public static RectangleF GetBoundsOfCubicCurve(
-			PointF startPoint,
-			PointF controlPoint1,
-			PointF controlPoint2,
-			PointF endPoint)
+		public static Rectangle GetBoundsOfCubicCurve(
+			Point startPoint,
+			Point controlPoint1,
+			Point controlPoint2,
+			Point endPoint)
 		{
 			return GetBoundsOfCubicCurve(startPoint.X, startPoint.Y, controlPoint1.X, controlPoint1.Y, controlPoint2.X, controlPoint2.Y, endPoint.X, endPoint.Y);
 		}
 
 
-		public static RectangleF GetBoundsOfCubicCurve(
-			float x0, float y0,
-			float x1, float y1,
-			float x2, float y2,
-			float x3, float y3)
-		{
-			var tValues = new List<float>();
 
-			float t;
+		public static Rectangle GetBoundsOfCubicCurve(
+			double x0, double y0,
+			double x1, double y1,
+			double x2, double y2,
+			double x3, double y3)
+		{
+			var tValues = new List<double>();
+
+			double t;
 
 			for (var i = 0; i < 2; ++i)
 			{
-				float b;
-				float c;
-				float a;
+				double b;
+				double c;
+				double a;
 
 				if (i == 0)
 				{
@@ -144,7 +146,7 @@ namespace Comet.Graphics
 				}
 
 				var b2ac = b * b - 4 * c * a;
-				var sqrtb2ac = (float)Math.Sqrt(b2ac);
+				var sqrtb2ac = Math.Sqrt(b2ac);
 				if (b2ac < 0)
 				{
 					continue;
@@ -163,8 +165,8 @@ namespace Comet.Graphics
 				}
 			}
 
-			var xValues = new List<float>();
-			var yValues = new List<float>();
+			var xValues = new List<double>();
+			var yValues = new List<double>();
 
 			for (var j = tValues.Count - 1; j >= 0; j--)
 			{
@@ -187,22 +189,22 @@ namespace Comet.Graphics
 			var maxX = xValues.Max();
 			var maxY = yValues.Max();
 
-			return new RectangleF(minX, minY, maxX - minX, maxY - minY);
+			return new Rectangle(minX, minY, maxX - minX, maxY - minY);
 		}
 
-		public static PointF GetPointAtAngle(float x, float y, float distance, float radians)
+		public static Point GetPointAtAngle(double x, double y, double distance, double radians)
 		{
 			var x2 = x + (Math.Cos(radians) * distance);
 			var y2 = y + (Math.Sin(radians) * distance);
-			return new PointF((float)x2, (float)y2);
+			return new Point(x2, y2);
 		}
 
-		public static PointF GetPointOnOval(
-			float x,
-			float y,
-			float width,
-			float height,
-			float angle)
+		public static Point GetPointOnOval(
+			double x,
+			double y,
+			double width,
+			double height,
+			double angle)
 		{
 			var cx = x + (width / 2);
 			var cy = y + (height / 2);
@@ -217,7 +219,7 @@ namespace Comet.Graphics
 
 			angle *= -1;
 
-			var radians = (float)DegreesToRadians(angle);
+			var radians = DegreesToRadians(angle);
 			var point = GetPointAtAngle(0, 0, d2, radians);
 			point.X = cx + (point.X * fx);
 			point.Y = cy + (point.Y * fy);
@@ -225,7 +227,7 @@ namespace Comet.Graphics
 			return point;
 		}
 
-		public static float GetAngleAsDegrees(PointF point1, PointF point2)
+		public static float GetAngleAsDegrees(Point point1, Point point2)
 		{
 			var dx = point1.X - point2.X;
 			var dy = point1.Y - point2.Y;
@@ -236,13 +238,13 @@ namespace Comet.Graphics
 			return 180 - degrees;
 		}
 
-		public static RectangleF GetBoundsOfArc(
-			float x,
-			float y,
-			float width,
-			float height,
-			float angle1,
-			float angle2,
+		public static Rectangle GetBoundsOfArc(
+			double x,
+			double y,
+			double width,
+			double height,
+			double angle1,
+			double angle2,
 			bool clockwise)
 		{
 			var x1 = x;
@@ -252,7 +254,7 @@ namespace Comet.Graphics
 
 			var point1 = GetPointOnOval(x, y, width, height, angle1);
 			var point2 = GetPointOnOval(x, y, width, height, angle2);
-			var center = new PointF(x + width / 2, y + height / 2);
+			var center = new Point(x + width / 2, y + height / 2);
 
 			var startAngle = GetAngleAsDegrees(center, point1);
 			var endAngle = GetAngleAsDegrees(center, point2);
@@ -443,7 +445,7 @@ namespace Comet.Graphics
 				}
 			}
 
-			return new RectangleF(x1, y1, x2 - x1, y2 - y1);
+			return new Rectangle(x1, y1, x2 - x1, y2 - y1);
 		}
 
 		public static byte GetQuadrant(double radians)
@@ -460,28 +462,28 @@ namespace Comet.Graphics
 			return 0;
 		}
 
-		public static PointF GetOppositePoint(PointF pivot, PointF oppositePoint)
+		public static Point GetOppositePoint(Point pivot, Point oppositePoint)
 		{
 			var dx = oppositePoint.X - pivot.X;
 			var dy = oppositePoint.Y - pivot.Y;
-			return new PointF(pivot.X - dx, pivot.Y - dy);
+			return new Point(pivot.X - dx, pivot.Y - dy);
 		}
 
-		public static PointF PolarToPoint(float aAngleInRadians, float fx, float fy)
+		public static Point PolarToPoint(float aAngleInRadians, float fx, float fy)
 		{
 			var sin = (float)Math.Sin(aAngleInRadians);
 			var cos = (float)Math.Cos(aAngleInRadians);
-			return new PointF(fx * cos, fy * sin);
+			return new Point(fx * cos, fy * sin);
 		}
 
-		public static PointF OvalAngleToPoint(float x, float y, float width, float height, float aAngleInDegrees)
+		public static Point OvalAngleToPoint(float x, float y, float width, float height, float aAngleInDegrees)
 		{
 			float vAngle = DegreesToRadians(aAngleInDegrees);
 
 			float cx = x + width / 2;
 			float cy = y + height / 2;
 
-			PointF vPoint = PolarToPoint(vAngle, width / 2, height / 2);
+			Point vPoint = PolarToPoint(vAngle, width / 2, height / 2);
 
 			vPoint.X += cx;
 			vPoint.Y += cy;

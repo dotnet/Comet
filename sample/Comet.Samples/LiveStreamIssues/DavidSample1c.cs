@@ -1,3 +1,7 @@
+﻿
+
+using Microsoft.Maui.Graphics;
+
 namespace Comet.Samples.LiveStreamIssues
 {
 	public class DavidSample1c : View
@@ -8,7 +12,7 @@ namespace Comet.Samples.LiveStreamIssues
 			{
 				new HStack
 				{
-					new ShapeView(new Circle().Stroke(Color.Black, 2f))
+					new ShapeView(new Circle().Stroke(Colors.Black, 2f))
 						.Frame(44,44)
 				}
 			};

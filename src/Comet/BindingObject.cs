@@ -91,7 +91,7 @@ namespace Comet
 		Dictionary<string, object> changeDictionary = new Dictionary<string, object>();
 
 		public HashSet<(INotifyPropertyRead BindingObject, string PropertyName)> GlobalProperties { get; set; } = new HashSet<(INotifyPropertyRead BindingObject, string PropertyName)>();
-		public Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), List<(string PropertyName, Binding Binding)>> ViewUpdateProperties = new Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), List<(string PropertyName, Binding Binding)>>();
+		public Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), HashSet<(string PropertyName, Binding Binding)>> ViewUpdateProperties = new Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), HashSet<(string PropertyName, Binding Binding)>>();
 		public void AddGlobalProperty((INotifyPropertyRead BindingObject, string PropertyName) property)
 		{
 			if (GlobalProperties.Add(property))
@@ -106,7 +106,7 @@ namespace Comet
 		public void AddViewProperty((INotifyPropertyRead BindingObject, string PropertyName) property, string propertyName, Binding binding)
 		{
 			if (!ViewUpdateProperties.TryGetValue(property, out var actions))
-				ViewUpdateProperties[property] = actions = new List<(string PropertyName, Binding Binding)>();
+				ViewUpdateProperties[property] = actions = new HashSet<(string PropertyName, Binding Binding)>();
 			actions.Add((propertyName, binding));
 		}
 
@@ -126,23 +126,7 @@ namespace Comet
 			}
 			ViewUpdateProperties.Clear();
 		}
-		/// <summary>
-		/// This returns true, if it updated the UI based on the changes
-		/// False, if it couldnt update, or the value was global so the whole UI needs refreshed
-		/// </summary>
-		/// <param name="updates"></param>
-		/// <returns></returns>
-		//public bool UpdateValues(IEnumerable<((INotifyPropertyRead BindingObject, string PropertyName) property, object value)> updates)
-		//{
-		//    bool didUpdate = true;
-		//    foreach (var update in updates)
-		//    {
 
-		//        UpdateValue(update.property,update.value);
-
-		//    }
-		//    return didUpdate;
-		//}
 		protected void UpdatePropertyChangeProperty(View view, string fullProperty, object value)
 		{
 			if (view.Parent != null)
@@ -158,7 +142,7 @@ namespace Comet
 				return false;
 			if (ViewUpdateProperties.TryGetValue((property.BindingObject, property.PropertyName), out var bindings))
 			{
-				foreach (var binding in bindings)
+				foreach (var binding in bindings.ToList())
 				{
 					binding.Binding.BindingValueChanged(property.BindingObject, binding.PropertyName, value);
 				}

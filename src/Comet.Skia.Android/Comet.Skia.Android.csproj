@@ -85,10 +85,6 @@
       <Project>{1817646E-E71E-48CF-80A4-3030EF870D61}</Project>
       <Name>Comet</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Comet.Android\Comet.Android.csproj">
-      <Project>{1E8FBBC2-9E06-4960-A116-65CDEFEFE11D}</Project>
-      <Name>Comet.Android</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Comet.Skia\Comet.Skia.csproj">
       <Project>{BF15264B-D7C7-4F09-B13B-487D60D649BD}</Project>
       <Name>Comet.Skia</Name>

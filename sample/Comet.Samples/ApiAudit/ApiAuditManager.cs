@@ -4,6 +4,7 @@ using Comet.Reflection;
 using Comet.Internal;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Maui;
 
 namespace Comet.Samples
 {
@@ -23,7 +24,6 @@ namespace Comet.Samples
 		static string[] FontProperties =
 		{
 			EnvironmentKeys.Fonts.Family,
-			EnvironmentKeys.Fonts.Italic,
 			EnvironmentKeys.Fonts.Size,
 			EnvironmentKeys.Fonts.Weight,
 			EnvironmentKeys.Colors.Color,
@@ -31,7 +31,7 @@ namespace Comet.Samples
 
 		static string[] ViewProperties =
 		{
-			EnvironmentKeys.Colors.BackgroundColor,
+			EnvironmentKeys.Colors.Background,
 			EnvironmentKeys.View.ClipShape,
 			EnvironmentKeys.View.Overlay,
 			EnvironmentKeys.View.Shadow,
@@ -68,11 +68,11 @@ namespace Comet.Samples
 		public static List<AuditReport> GenerateReport()
 		{
 			var reports = new List<AuditReport>();
-			var pairs = Registrar.Handlers.GetAllRenderers();
-			foreach (var pair in pairs)
-			{
-				reports.Add(GenerateReport(pair.Key, pair.Value));
-			}
+			//var pairs = Microsoft.Maui.Registrar.Handlers.GetAllRenderers();
+			//foreach (var pair in pairs)
+			//{
+			//	reports.Add(GenerateReport(pair.Key, pair.Value));
+			//}
 			return reports.OrderByDescending(x => x.UnHandledProperties.Count).ToList();
 		}
 
@@ -86,21 +86,21 @@ namespace Comet.Samples
 
 			if (viewType.BaseType != null)
 			{
-				var baseHandler = Registrar.Handlers.GetRendererType(viewType);
-				if (baseHandler != null)
-				{
-					var baseReport = GenerateReport(viewType.BaseType, baseHandler);
-					foreach (var p in baseReport.HandledProperties)
-					{
-						if (!report.HandledProperties.Contains(p))
-							report.HandledProperties.Add(p);
-					}
-					foreach (var p in baseReport.UnHandledProperties)
-					{
-						if (!report.UnHandledProperties.Contains(p))
-							report.UnHandledProperties.Add(p);
-					}
-				}
+				//var baseHandler = Registrar.Handlers.GetRendererType(viewType);
+				//if (baseHandler != null)
+				//{
+				//	var baseReport = GenerateReport(viewType.BaseType, baseHandler);
+				//	foreach (var p in baseReport.HandledProperties)
+				//	{
+				//		if (!report.HandledProperties.Contains(p))
+				//			report.HandledProperties.Add(p);
+				//	}
+				//	foreach (var p in baseReport.UnHandledProperties)
+				//	{
+				//		if (!report.UnHandledProperties.Contains(p))
+				//			report.UnHandledProperties.Add(p);
+				//	}
+				//}
 			}
 
 
