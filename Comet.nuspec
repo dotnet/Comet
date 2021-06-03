@@ -10,8 +10,8 @@
     <description>Comet MVU .net framework</description>
     <summary>Comet is an MVU UI Framework. It lets you build UI quickly and efficiently from C#. It also has HotReload.</summary>
     <copyright>James Clancey</copyright>
-    <projectUrl>https://github.com/clancey/Comet</projectUrl>
-    <repository type="git" url="https://github.com/clancey/Comet"/>
+    <projectUrl>https://github.com/dotnet/Comet</projectUrl>
+    <repository type="git" url="https://github.com/dotnet/Comet"/>
     <license type="expression">MIT</license>
     <language>C#</language>
     <dependencies>
