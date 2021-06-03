@@ -54,7 +54,7 @@ jobs:
           MINOR_VERSION=$(( $BASE + $GITHUB_RUN_NUMBER ))
           VERSION=0.3.$MINOR_VERSION-beta
           echo "PACKAGE VERSION: $VERSION"
-          nuget pack Comet.nuspec -version $VERSION
+          nuget pack Comet.nuspec -version $VERSION -Symbols -SymbolPackageFormat snupkg
         
       - uses: actions/upload-artifact@v2
         name: Upload Nuget Artifact
@@ -63,7 +63,7 @@ jobs:
           path: |
             **\*.nupkg
             **\*.snupkg
-            **/*.symbols.nupkg
+            **\*.symbols.nupkg
   
   test:
       name: Run Tests
