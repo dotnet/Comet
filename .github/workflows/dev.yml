@@ -4,7 +4,9 @@ name: dev-build
 
 on:
   push:
-    branches: [ dev,sweek/ci-fix]
+    branches: [ dev]
+  pull_request:
+    branches: [ dev, main ]
 
   workflow_dispatch:
 
@@ -101,23 +103,6 @@ jobs:
           
         - name: Run Tests Project
           run: dotnet test tests/Comet.Tests/Comet.Tests.csproj
-            
-  publish:
-      name: Publish
-      needs:
-        - test
-      runs-on: windows-latest
-      steps:
-        - name: Download Artifacts
-          uses: actions/download-artifact@v1
-          with:
-            name: nuget-artifact
-        
-        - name: Push nuget-alpha to GitHub Packages
-          run: |
-            nuget sources add -Name "GHNuget" -Source "https://nuget.pkg.github.com/dotnet/index.json"  -UserName Clancey -Password ${{ secrets.REPO_NUGET_PAT }}
-            nuget setapikey ${{ secrets.REPO_NUGET_PAT }} -Source "https://nuget.pkg.github.com/dotnet/index.json"
-            nuget push nuget-artifact\*.nupkg  -Source "GHNuget" -SkipDuplicate
         
       
 
