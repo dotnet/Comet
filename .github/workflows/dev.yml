@@ -117,7 +117,7 @@ jobs:
         
         - name: Push nuget-alpha to GitHub Packages
           run: |
-            nuget sources add -Name "GHNuget" -Source "https://nuget.pkg.github.com/Clancey/index.json" -UserName Clancey -Password ${{ secrets.GITHUB_TOKEN }}
+            nuget sources add -Name "GHNuget" -Source "https://nuget.pkg.github.com/Clancey/index.json" -UserName Clancey -Password ${{ secrets.REPO_NUGET_PAT }}
             nuget push nuget-dev-artifact\*.nupkg -Source "GHNuget" -SkipDuplicate
         
       
