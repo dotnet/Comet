@@ -60,13 +60,13 @@
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-android30.0">
-        <dependency id="Microsoft.Maui" Version="6.0.100-preview.4.631" />
+        <dependency id="Microsoft.Maui" version="6.0.100-preview.4.631" />
       </group>
       <group targetFramework="net6.0-ios13.6">
-        <dependency id="Microsoft.Maui" Version="6.0.100-preview.4.631" />
+        <dependency id="Microsoft.Maui" version="6.0.100-preview.4.631" />
       </group>
       <group targetFramework="net6.0-maccatalyst13.5">
-        <dependency id="Microsoft.Maui" Version="6.0.100-preview.4.631" />
+        <dependency id="Microsoft.Maui" version="6.0.100-preview.4.631" />
       </group>
     </dependencies>
   </metadata>
