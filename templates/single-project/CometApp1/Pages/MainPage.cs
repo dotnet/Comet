@@ -4,18 +4,15 @@ using System.Collections.Generic;
 using System.Text;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
+using Comet;
 
 namespace CometApp1.Pages
 {
 	public class MainPage : View
 	{
-		public RideSample()
-		{
-			comet = new Comet();
-		}
 
 		[State]
-		readonly Comet comet;
+		readonly CometRide comet = new();
 
 		[Body]
 		View body()
@@ -35,7 +32,7 @@ namespace CometApp1.Pages
 				.Shadow(Colors.Grey,4,2,2),
 			};
 
-		public class Comet : BindingObject
+		public class CometRide : BindingObject
 		{
 			public int Rides
 			{

@@ -1,5 +1,7 @@
 ﻿using Foundation;
-using Comet.Samples;
+using Comet;
+using Microsoft.Maui;
+
 
 namespace CometApp1
 {

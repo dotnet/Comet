@@ -4,6 +4,7 @@ using Comet.Graphics;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Hosting;
+using Comet;
 
 namespace CometApp1
 {
