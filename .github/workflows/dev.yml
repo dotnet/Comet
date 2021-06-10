@@ -59,6 +59,14 @@ jobs:
           VERSION=0.3.$MINOR_VERSION-alpha
           echo "PACKAGE VERSION: $VERSION"
           nuget pack Comet.nuspec -version $VERSION -Symbols -SymbolPackageFormat snupkg
+        
+      - name: Nuget Pack Template step
+        shell: bash
+        run: |
+          MINOR_VERSION=$(( $BASE + $GITHUB_RUN_NUMBER ))
+          VERSION=0.3.$MINOR_VERSION-alpha
+          echo "PACKAGE VERSION: $VERSION"
+          nuget pack templates\comet-templates.nuspec -version $VERSION
           
       - uses: actions/upload-artifact@v2
         name: Upload Nuget Artifact
