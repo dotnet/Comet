@@ -141,5 +141,7 @@
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.pdb" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.Essentials.dll" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.Essentials.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.Essentials.pdb" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.Essentials.pdb"/>
+    <file src="external/Maui/.nuspec/Microsoft.Maui.Core.targets" target="build/Microsoft.Maui.Core.targets" />
+    <file src="external/Maui/.nuspec/Microsoft.Maui.Core.props" target="build/Microsoft.Maui.Core.props" />
   </files>
 </package>
