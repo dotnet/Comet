@@ -74,6 +74,7 @@
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0-preview.4.21253.7" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Essentials" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Resizetizer" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Controls.Build.Tasks" version="6.0.100-preview.4.634" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-ios13.6">
@@ -84,6 +85,7 @@
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0-preview.4.21253.7" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Essentials" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Resizetizer" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Controls.Build.Tasks" version="6.0.100-preview.4.634" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-maccatalyst13.5">
@@ -94,6 +96,7 @@
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0-preview.4.21253.7" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Essentials" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Resizetizer" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Controls.Build.Tasks" version="6.0.100-preview.4.634" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
     </dependencies>

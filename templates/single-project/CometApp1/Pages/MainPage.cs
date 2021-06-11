@@ -6,7 +6,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 using Comet;
 
-namespace CometApp1.Pages
+namespace CometApp1
 {
 	public class MainPage : View
 	{
