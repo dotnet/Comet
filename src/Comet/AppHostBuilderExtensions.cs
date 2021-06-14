@@ -32,7 +32,7 @@ namespace Comet
 				{typeof(NavigationView), typeof (NavigationViewHandler)},
 				//{ typeof(Picker), typeof(PickerHandler) },
 				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
-				//{ typeof(SearchBar), typeof(SearchBarHandler) },
+				{ typeof(SearchBar), typeof(SearchBarHandler) },
 				{typeof(ScrollView), typeof(ScrollViewHandler) },
 				{typeof(ShapeView), typeof(Comet.Handlers.ShapeViewHandler)},
 				{ typeof(SecureField), typeof(EntryHandler) },

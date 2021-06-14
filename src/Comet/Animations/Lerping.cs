@@ -109,6 +109,14 @@ namespace Comet
 					return start.Lerp(end, progress);
 				}
 			},
+			[typeof(SolidPaint)] = new Lerp
+			{
+				Calculate = (s,e, progress) => {
+					var start = (SolidPaint)s;
+					var end = (SolidPaint)e;
+					return start.Lerp(end, progress);
+				}
+			}
 		};
 
 		public static Lerp GetLerp(Type type)

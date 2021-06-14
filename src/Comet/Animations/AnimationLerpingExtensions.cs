@@ -60,5 +60,30 @@ namespace Comet
 				start.Right.Lerp(end.Right, progress),
 				start.Bottom.Lerp(end.Bottom, progress)
 				);
+
+		public static SolidPaint Lerp(this SolidPaint paint, SolidPaint endPaint, double progress)
+		{
+			var color = paint?.Color ?? Colors.Black;
+			var endColor = endPaint?.Color ?? Colors.Black;
+			return new SolidPaint(color.Lerp(endColor, progress));
+		}
+		//public static GradientPaint Lerp(this GradientPaint paint, GradientPaint endPaint, double progress)
+		//{
+		//	var stops = paint.GetSortedStops();
+			
+		//	var endStops = endPaint.GetSortedStops();
+		//	var gradient = paint.
+		//	if(stops.Length == endStops.Length && stops.Length > 0)
+		//	{
+		//		//Lets make a new one!
+		//		for(var i = 0; i < stops.Length; i++)
+		//		{
+		//			var s = stops[i];
+		//			var e = endStops[i];
+					
+		//		}
+		//	}
+		//	return GenericLerp(paint, endPaint, progress);
+		//}
 	}
 }
