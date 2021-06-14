@@ -58,7 +58,7 @@ namespace Comet
 			public const string Border = "Border";
 			public const string StyleId = "StyleId";
 			public const string AutomationId = nameof(AutomationId);
-			public const string Opacity = nameof(Opacity);
+			public const string Opacity = nameof(Microsoft.Maui.IFrameworkElement.Opacity);
 		}
 
 		public static class Shape

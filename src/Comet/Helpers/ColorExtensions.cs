@@ -200,7 +200,7 @@ namespace Comet
 			return color ?? defaultColor;
 		}
 
-		public static T Opacity<T>(this T view, double opacity, bool cascades = false) where T : ProgressBar
+		public static T Opacity<T>(this T view, double opacity, bool cascades = false) where T : View
 		{
 			view.SetEnvironment(EnvironmentKeys.View.Opacity, opacity, cascades);
 			return view;
