@@ -34,7 +34,7 @@ namespace Comet
 				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
 				//{ typeof(SearchBar), typeof(SearchBarHandler) },
 				{typeof(ScrollView), typeof(ScrollViewHandler) },
-				{typeof(ShapeView), typeof(ShapeViewHandler)},
+				{typeof(ShapeView), typeof(Comet.Handlers.ShapeViewHandler)},
 				{ typeof(SecureField), typeof(EntryHandler) },
 				{ typeof(Slider), typeof(SliderHandler) },
 				{ typeof(Stepper), typeof(StepperHandler) },

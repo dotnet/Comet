@@ -5,7 +5,7 @@ using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
-	public abstract class Shape : ContextualObject//, IShape
+	public abstract class Shape : ContextualObject, IShape
 	{
 		protected Shape()
 		{

@@ -84,6 +84,16 @@ namespace Comet
 
 		Keyboard ITextInput.Keyboard => this.GetEnvironment<Keyboard>(nameof(ITextInput.Keyboard));
 
+		int IEntry.CursorPosition
+		{
+			get => this.GetProperty<int>(cascades: false);
+			set => this.SetProperty(value, cascades: false);
+		}
+		int IEntry.SelectionLength
+		{
+			get => this.GetProperty<int>(cascades: false);
+			set => this.SetProperty(value, cascades: false);
+		}
 
 		public void ValueChanged(string value)
 			=> OnEditingChanged?.Invoke(value);

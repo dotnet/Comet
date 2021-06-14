@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
 using System.Threading;
 using Microsoft.Maui.Essentials;
 
@@ -242,6 +243,7 @@ namespace Comet
 			return contextualObject;
 		}
 
+		public static void SetProperty(this View view, object value, [CallerMemberName] string key = "", bool cascades = true) => view.SetEnvironment(key,value, cascades);
 		//public static T SetEnvironment<T>(this T contextualObject, IDictionary<string, object> data, bool cascades = true) where T : ContextualObject
 		//{
 		//    foreach (var pair in data)
@@ -262,6 +264,8 @@ namespace Comet
 		}
 		public static T GetEnvironment<T>(this View view, string key, bool cascades = true)
 			=> view.GetEnvironment<T>(view, view.GetType(), key, cascades);
+
+		public static T GetProperty<T>(this View view, [CallerMemberName] string key = "", bool cascades = true) => view.GetEnvironment<T>(key, cascades);
 
 		public static T GetEnvironment<T>(this View view, Type type, string key, ControlState state, bool cascades = true)
 		{
