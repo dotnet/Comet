@@ -39,7 +39,7 @@
         "type": "parameter",
         "dataType": "string",
         "replaces": "COMET_VERSION",
-        "defaultValue": "0.3.43-beta"
+        "defaultValue": "0.3.45-beta"
       }
     },
     "defaultName": "CometApp1"
