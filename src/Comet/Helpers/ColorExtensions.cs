@@ -1,4 +1,5 @@
 ﻿using System;
+using Comet.Graphics;
 using Microsoft.Maui.Graphics;
 
 
@@ -18,12 +19,12 @@ namespace Comet
 		/// <param name="color"></param>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public static T Color<T>(this T view, Color color) where T : View
+		public static T Color<T>(this T view, Binding<Color> color) where T : View
 		{
 			view.SetEnvironment(EnvironmentKeys.Colors.Color, color, false);
 			return view;
 		}
-		public static T Color<T>(this T view, Type type, Color color) where T : View
+		public static T Color<T>(this T view, Type type, Binding<Color> color) where T : View
 		{
 			view.SetEnvironment(type, EnvironmentKeys.Colors.Color, color, true);
 			return view;
@@ -60,9 +61,9 @@ namespace Comet
 		/// <param name="color"></param>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public static T Background<T>(this T view, Color color, bool cascades = false) where T : View
+		public static T Background<T>(this T view, Binding<Color> color, bool cascades = false) where T : View
 		{
-			view.SetEnvironment(EnvironmentKeys.Colors.Background, new SolidPaint { Color = color, BackgroundColor = color }, cascades);
+			view.SetEnvironment(EnvironmentKeys.Colors.Background, color, cascades);
 			return view;
 		}
 
@@ -73,10 +74,9 @@ namespace Comet
 		/// <param name="colorHex"></param>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public static T Background<T>(this T view, string colorHex, bool cascades = false) where T : View
+		public static T Background<T>(this T view, Binding<string> colorHex, bool cascades = false) where T : View
 		{
-			var c = Microsoft.Maui.Graphics.Color.FromHex(colorHex);
-			view.SetEnvironment(EnvironmentKeys.Colors.Background, new SolidPaint { Color = c, BackgroundColor =  c}, cascades);
+			view.SetEnvironment(EnvironmentKeys.Colors.Background, colorHex, cascades);
 			return view;
 		}
 
@@ -87,12 +87,12 @@ namespace Comet
 		/// <param name="color"></param>
 		/// <typeparam name="T"></typeparam>
 		/// <returns></returns>
-		public static T Background<T>(this T view, Type type, Color color) where T : View
+		public static T Background<T>(this T view, Type type, Binding<Color> color) where T : View
 		{
-			view.SetEnvironment(type, EnvironmentKeys.Colors.Background, new SolidPaint { Color = color, BackgroundColor = color }, true);
+			view.SetEnvironment(type, EnvironmentKeys.Colors.Background, color, true);
 			return view;
 		}
-		public static T Background<T>(this T view, Type type, Paint paint) where T : View
+		public static T Background<T>(this T view, Type type, Binding<Paint> paint) where T : View
 		{
 			view.SetEnvironment(type, EnvironmentKeys.Colors.Background, paint, true);
 			return view;
@@ -100,15 +100,16 @@ namespace Comet
 
 		public static Paint GetBackground(this View view, Type type, Paint defaultColor = null, ControlState state = ControlState.Default)
 		{
-			var color = view?.GetEnvironment<Paint>(type, EnvironmentKeys.Colors.Background, state);
-			return color ?? defaultColor;
+			var color = view?.GetEnvironment<object>(type, EnvironmentKeys.Colors.Background, state);
+			return color.ConvertToPaint() ?? defaultColor;
 		}
 
 		public static Paint GetBackground(this View view, Paint defaultColor = null, ControlState state = ControlState.Default)
 		{
-			var color = view?.GetEnvironment<Paint>(EnvironmentKeys.Colors.Background,state);
-			return color ?? defaultColor;
+			var color = view?.GetEnvironment<object>(EnvironmentKeys.Colors.Background,state);
+			return color.ConvertToPaint() ?? defaultColor;
 		}
+		
 
 		public static Color GetNavigationBackgroundColor(this View view, Color defaultColor = null)
 		{
@@ -121,7 +122,7 @@ namespace Comet
 			return color ?? defaultColor;
 		}
 
-		public static T TrackColor<T>(this T view, Color color, ControlState state = ControlState.Default) where T : Slider
+		public static T TrackColor<T>(this T view, Binding<Color> color, ControlState state = ControlState.Default) where T : Slider
 		{
 			view.SetEnvironment(EnvironmentKeys.Slider.TrackColor, color, cascades:false, state);
 			return view;
@@ -135,7 +136,7 @@ namespace Comet
 			return color ?? defaultColor;
 		}
 
-		public static T ProgressColor<T>(this T view, Color color, ControlState state = ControlState.Default) where T : Slider
+		public static T ProgressColor<T>(this T view, Binding<Color> color, ControlState state = ControlState.Default) where T : Slider
 		{
 			view.SetEnvironment(EnvironmentKeys.Slider.ProgressColor, color, cascades:false, state);
 			return view;
@@ -149,7 +150,7 @@ namespace Comet
 			return color ?? defaultColor;
 		}
 
-		public static T ThumbColor<T>(this T view, Color color, ControlState state = ControlState.Default) where T : View, IThumbView
+		public static T ThumbColor<T>(this T view, Binding<Color> color, ControlState state = ControlState.Default) where T : View, IThumbView
 		{
 			view.SetEnvironment(EnvironmentKeys.Slider.ThumbColor, color, cascades: false, state);
 			return view;
@@ -171,7 +172,7 @@ namespace Comet
 			return color ?? defaultColor;
 		}
 
-		public static T TrackColor<T>(this T view, Color color, ControlState state = ControlState.Default, bool cascades = false)
+		public static T TrackColor<T>(this T view, Binding<Color> color, ControlState state = ControlState.Default, bool cascades = false)
 			where T : ProgressBar
 		{
 			view.SetEnvironment(EnvironmentKeys.ProgressBar.TrackColor, color, cascades, state);
@@ -186,7 +187,7 @@ namespace Comet
 			return color ?? defaultColor;
 		}
 
-		public static T ProgressColor<T>(this T view, Color color, bool cascades = false) where T : ProgressBar
+		public static T ProgressColor<T>(this T view, Binding<Color> color, bool cascades = false) where T : ProgressBar
 		{
 			view.SetEnvironment(EnvironmentKeys.ProgressBar.ProgressColor, color, cascades);
 			return view;
@@ -200,7 +201,7 @@ namespace Comet
 			return color ?? defaultColor;
 		}
 
-		public static T Opacity<T>(this T view, double opacity, bool cascades = false) where T : View
+		public static T Opacity<T>(this T view, Binding<Color> opacity, bool cascades = false) where T : View
 		{
 			view.SetEnvironment(EnvironmentKeys.View.Opacity, opacity, cascades);
 			return view;

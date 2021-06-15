@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
 using Microsoft.Maui.Essentials;
+using Comet.Internal;
 
 namespace Comet
 {
@@ -128,7 +129,7 @@ namespace Comet
 			try
 			{
 				var value = GetValue(key, current, view, styledKey, typedKey, cascades);
-				return (T)value;
+				return value.GetValueOfType<T>() ?? default;
 			}
 			catch
 			{
@@ -230,7 +231,33 @@ namespace Comet
 			});
 			return contextualObject;
 		}
-		
+
+		public static T SetEnvironment<T,TValue>(this T view, Type type, string key, Binding<TValue> binding, bool cascades = true, ControlState state = ControlState.Default)
+			where T : View
+		{
+			binding.BindToProperty(view, key);
+			key = ContextualObject.GetControlStateKey(state, key);
+			var typedKey = ContextualObject.GetTypedKey(type, key);
+			view.SetValue(typedKey, binding, cascades);
+			//TODO: Verify this is needed 
+			ThreadHelper.RunOnMainThread(() => {
+				view.ContextPropertyChanged(typedKey, binding, cascades);
+			});
+			return view;
+		}
+
+		public static T SetEnvironment<T, TValue>(this T view, string key, Binding<TValue> binding, bool cascades = true, ControlState state = ControlState.Default)
+			where T : View
+		{
+			binding.BindToProperty(view, key);
+			key = ContextualObject.GetControlStateKey(state, key);
+			if (!view.SetValue(key, binding, cascades))
+				return view;
+			ThreadHelper.RunOnMainThread(() => {
+				view.ContextPropertyChanged(key, binding, cascades);
+			});
+			return view;
+		}
 		public static T SetEnvironment<T>(this T contextualObject, string key, object value, bool cascades = true, ControlState state = ControlState.Default)
 			where T : ContextualObject
 		{
