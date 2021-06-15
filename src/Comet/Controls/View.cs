@@ -381,7 +381,7 @@ namespace Comet
 					if (mauiContext != null)
 					{
 						var type = this.GetType();
-						var prop = type.GetDeepField(key);
+						var prop = type.GetDeepField(item.Field);
 						var service = mauiContext.Services.GetService(prop.FieldType);
 						if (service != null)
 							value = service;
