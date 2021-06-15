@@ -25,6 +25,8 @@
         <dependency id="Xamarin.AndroidX.Navigation.UI" version="2.3.5-net6preview03.4680155" exclude="Build,Analyzers" />
         <dependency id="Xamarin.AndroidX.RecyclerView" version="1.2.0-net6preview03.4680155" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Google.Android.Material" version="1.3.0.1-net6preview03.4680155" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.Android.Glide" version="4.12.0" />
+        <dependency id="Xamarin.AndroidX.Browser" version="1.3.0.5" />
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
@@ -68,12 +70,15 @@
         <dependency id="Xamarin.AndroidX.Navigation.Runtime" version="2.3.5-net6preview03.4680155" exclude="Build,Analyzers" />
         <dependency id="Xamarin.AndroidX.Navigation.UI" version="2.3.5-net6preview03.4680155" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Google.Android.Material" version="1.3.0.1-net6preview03.4680155" exclude="Build,Analyzers" />
+        <dependency id="Xamarin.Android.Glide" version="4.12.0" />
+        <dependency id="Xamarin.AndroidX.Browser" version="1.3.0.5" />
         <dependency id="Microsoft.Extensions.Configuration" version="6.0.0-preview.4.21253.7" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.DependencyInjection" version="6.0.0-preview.4.21253.7" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="6.0.0-preview.4.21253.7" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0-preview.4.21253.7" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Essentials" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Resizetizer" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Controls.Build.Tasks" version="6.0.100-preview.4.634" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-ios13.6">
@@ -84,6 +89,7 @@
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0-preview.4.21253.7" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Essentials" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Resizetizer" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Controls.Build.Tasks" version="6.0.100-preview.4.634" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-maccatalyst13.5">
@@ -94,6 +100,7 @@
         <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0-preview.4.21253.7" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Essentials" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Maui.Resizetizer" version="6.0.100-preview.4.631" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Maui.Controls.Build.Tasks" version="6.0.100-preview.4.634" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
     </dependencies>
@@ -127,19 +134,15 @@
     <file src="src/Comet/bin/Debug/net6.0-ios/Comet.pdb" target="lib/net6.0-ios13.6/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.dll" target="lib/net6.0-ios13.6/Microsoft.Maui.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.pdb" target="lib/net6.0-ios13.6/Microsoft.Maui.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.Essentials.dll" target="lib/net6.0-ios13.6/Microsoft.Maui.Essentials.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-ios/Microsoft.Maui.Essentials.pdb" target="lib/net6.0-ios13.6/Microsoft.Maui.Essentials.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-android/Comet.dll" target="lib/net6.0-android30.0/Comet.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-android/Comet.pdb" target="lib/net6.0-android30.0/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.dll" target="lib/net6.0-android30.0/Microsoft.Maui.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.pdb" target="lib/net6.0-android30.0/Microsoft.Maui.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.Essentials.dll" target="lib/net6.0-android30.0/Microsoft.Maui.Essentials.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-android/Microsoft.Maui.Essentials.pdb" target="lib/net6.0-android30.0/Microsoft.Maui.Essentials.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.dll" target="lib/net6.0-maccatalyst13.5/Comet.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.pdb" target="lib/net6.0-maccatalyst13.5/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.dll" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.pdb" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.Essentials.dll" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.Essentials.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Microsoft.Maui.Essentials.pdb" target="lib/net6.0-maccatalyst13.5/Microsoft.Maui.Essentials.pdb"/>
+    <file src="external/Maui/.nuspec/Microsoft.Maui.Core.targets" target="build/Microsoft.Maui.Core.targets" />
+    <file src="external/Maui/.nuspec/Microsoft.Maui.Core.props" target="build/Microsoft.Maui.Core.props" />
   </files>
 </package>
