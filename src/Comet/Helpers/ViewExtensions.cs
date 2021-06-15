@@ -54,8 +54,10 @@ namespace Comet
 			return fields;
 		}
 
-		public static T Title<T>(this T view, string title, bool cascades = true) where T : View =>
+		public static T Title<T>(this T view, Binding<string> title, bool cascades = true) where T : View =>
 			view.SetEnvironment(EnvironmentKeys.View.Title, title, cascades, ControlState.Default);
+		public static T Title<T>(this T view, Func<string> title, bool cascades = true) where T : View =>
+			view.Title((Binding<string>)title, cascades);
 
 		public static string GetTitle(this View view)
 		{

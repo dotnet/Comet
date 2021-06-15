@@ -6,11 +6,10 @@ namespace Comet
 {
 	public static class TextExtensions
 	{
-		public static T TextAlignment<T>(this T view, TextAlignment? alignment, bool cascades = true) where T : View
-		{
+		public static T TextAlignment<T>(this T view, Binding<TextAlignment?> alignment, bool cascades = true) where T : View =>
 			view.SetEnvironment(EnvironmentKeys.Text.Alignment, alignment, cascades);
-			return view;
-		}
+		public static T TextAlignment<T>(this T view, Func<TextAlignment?> alignment, bool cascades = true) where T : View =>
+			view.TextAlignment((Binding<TextAlignment?>)alignment, cascades);
 
 		public static TextAlignment? GetTextAlignment(this View view, TextAlignment? defaultValue = null)
 		{
