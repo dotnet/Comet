@@ -372,6 +372,21 @@ namespace Comet
 			{
 				var key = item.Key;
 				var value = this.GetEnvironment(key);
+				if(value == null)
+				{
+					//Get the current MauiContext
+					//I might be able to do something better, like searching up though the parent
+					//Maybe I can do something where I get the current Context whenever I build
+					var mauiContext = this.ViewHandler?.MauiContext ?? CometApp.CurrentWindow?.MauiContext;
+					if (mauiContext != null)
+					{
+						var type = this.GetType();
+						var prop = type.GetDeepField(key);
+						var service = mauiContext.Services.GetService(prop.FieldType);
+						if (service != null)
+							value = service;
+					}
+				}
 				if (value == null)
 				{
 					//Check the replaced view
