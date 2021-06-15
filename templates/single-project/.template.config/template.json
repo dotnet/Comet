@@ -1,0 +1,46 @@
+{
+    "$schema": "http://json.schemastore.org/template",
+    "author": "Microsoft",
+    "classifications": [ "Comet", "MAUI", "Android", "iOS", "macOS", "Mac Catalyst", "WinUI" ],
+    "identity": "Microsoft.Maui.CometApp",
+    "groupIdentity": "Microsoft.Maui.Comet",
+    "name": ".NET MAUI Comet App",
+    "description": "A project for creating a .NET MAUI Comet application for iOS, Android, Mac Catalyst, and WinUI",
+    "shortName": "comet",
+    "tags": {
+      "language": "C#",
+      "type": "solution"
+    },
+    "sourceName": "CometApp1",
+    "preferNameDirectory": true,
+    "guids": [
+      "07CD65EF-6238-4365-AF5D-F6D433967F48"
+    ],
+    "symbols": {
+      "applicationId": {
+        "type": "parameter",
+        "description": "Overrides the $(ApplicationId) in the project",
+        "datatype": "string",
+        "replaces": "com.companyname.CometApp1"
+      },
+      "microsoftExtensionsVersion": {
+        "type": "parameter",
+        "dataType": "string",
+        "replaces": "MICROSOFT_EXTENSIONS_VERSION",
+        "defaultValue": "6.0.0-preview.4.*"
+      },
+      "mauiVersion": {
+        "type": "parameter",
+        "dataType": "string",
+        "replaces": "MAUI_VERSION",
+        "defaultValue": "6.0.100-preview.4.*"
+      },
+      "cometVersion": {
+        "type": "parameter",
+        "dataType": "string",
+        "replaces": "COMET_VERSION",
+        "defaultValue": "0.3.43-beta"
+      }
+    },
+    "defaultName": "CometApp1"
+  }

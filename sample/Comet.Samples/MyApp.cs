@@ -52,8 +52,6 @@ namespace Comet.Samples
 		public override void Configure(IAppHostBuilder appBuilder)
 		{
 			base.Configure(appBuilder);
-
-			appBuilder.UseMauiApp<MyApp>();
 #if DEBUG
 			appBuilder.EnableHotReload();
 #endif

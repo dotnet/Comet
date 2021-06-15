@@ -1,8 +1,35 @@
 ﻿using System;
 using System.Collections.Generic;
 using Comet.Graphics;
+using Comet.Internal;
 using Microsoft.Maui.Graphics;
 
+namespace Comet.Graphics
+{
+	public static class GraphicsExtensions
+	{
+		public static Paint ConvertToPaint(this Object obj)
+		{
+			if (obj == null)
+				return null;
+			var p = obj?.GetValueOfType<Paint>();
+			if (p != null)
+				return p;
+			var c = obj?.GetValueOfType<Color>();
+			if (c != null)
+				return new SolidPaint { Color = c };
+			var s = obj?.GetValueOfType<string>();
+			if (!string.IsNullOrWhiteSpace(s))
+			{
+				return new SolidPaint
+				{
+					Color = Color.FromArgb(s),
+				};
+			}
+			return null;
+		}
+	}
+}
 namespace Comet
 {
 	public static class GraphicsExtensions

@@ -9,6 +9,17 @@ namespace Comet.Internal
 {
 	public static class Extensions
 	{
+		public static T GetValueOfType<T>(this object obj)
+		{
+			if (obj is T t)
+				return t;
+			if (obj is Binding<T> bt)
+				return bt.CurrentValue;
+			if (obj is Binding b && b.Value is T bv)
+				return bv;
+			return default(T);
+		}
+
 		public static View FindViewById(this View view, string id)
 		{
 			if(view == null)
@@ -19,8 +30,6 @@ namespace Comet.Internal
 				return ic.GetChildren().Select(x => x.FindViewById(id)).FirstOrDefault();
 			return null;
 		}
-
-	
 
 		public static Func<View> GetBody(this View view)
 		{

@@ -75,6 +75,8 @@ namespace Comet
 			set => ValueChanged(value);
 		}
 
+		IImageSource ISlider.ThumbImageSource => this.GetEnvironment<IImageSource>(nameof(ISlider.ThumbImageSource));
+
 		public void ValueChanged(double value)
 			=> OnEditingChanged.Invoke(value);
 
