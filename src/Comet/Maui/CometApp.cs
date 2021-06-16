@@ -8,7 +8,7 @@ using Microsoft.Maui.Hosting;
 namespace Comet
 {
 
-	public class CometApp : View, IApplication, IStartup, IPage
+	public class CometApp : View, IApplication, IStartup, IPage, IMauiContextHolder
 	{
 		public CometApp()
 		{
@@ -16,7 +16,7 @@ namespace Comet
 		}
 		public static CometApp CurrentApp { get; protected set; }
 		public static CometWindow CurrentWindow { get; protected set; }
-		public static IMauiContext MauiContext => CurrentWindow?.MauiContext;
+		public static IMauiContext MauiContext => StateManager.CurrentContext ?? CurrentWindow?.MauiContext;
 
 		public static float DisplayScale => CurrentWindow?.DisplayScale ?? 1;
 		List<IWindow> windows = new List<IWindow>();
@@ -40,6 +40,7 @@ namespace Comet
 
 		IWindow IApplication.CreateWindow(IActivationState activationState)
 		{
+			((IMauiContextHolder)this).MauiContext = activationState.Context;
 			windows.Add(CurrentWindow = new CometWindow
 			{
 				MauiContext = activationState.Context,
@@ -47,7 +48,7 @@ namespace Comet
 			}) ;
 			return CurrentWindow;
 		}
-
+		IMauiContext IMauiContextHolder.MauiContext { get; set; }
 
 	}
 }

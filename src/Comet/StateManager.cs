@@ -7,6 +7,7 @@ using System.Reflection;
 using Comet.Helpers;
 using Comet.Internal;
 using Comet.Reflection;
+using Microsoft.Maui;
 using Microsoft.Maui.Essentials;
 
 namespace Comet
@@ -19,7 +20,7 @@ namespace Comet
 		static Dictionary<string, List<INotifyPropertyRead>> ViewObjectMappings = new Dictionary<string, List<INotifyPropertyRead>>();
 		static Dictionary<INotifyPropertyRead, HashSet<View>> NotifyToViewMappings = new Dictionary<INotifyPropertyRead, HashSet<View>>();
 		static Dictionary<INotifyPropertyChanged, Dictionary<string, string>> ChildPropertyNamesMapping = new Dictionary<INotifyPropertyChanged, Dictionary<string, string>>();
-
+		public static IMauiContext CurrentContext { get; private set; }
 
 		static List<INotifyPropertyRead> MonitoredObjects = new List<INotifyPropertyRead>();
 
@@ -68,6 +69,11 @@ namespace Comet
 
 		public static void StartBuilding(View view)
 		{
+			if (view.ViewHandler?.MauiContext != null)
+				CurrentContext = view.ViewHandler?.MauiContext;
+			else if (view is IMauiContextHolder imvc && CurrentContext != imvc.MauiContext)
+				CurrentContext = imvc.MauiContext;
+			
 			//TODO: Grab objects and add them to previous views globals
 			currentBuildingView.Push(view);
 			isBuilding = true;
