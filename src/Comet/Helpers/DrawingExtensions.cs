@@ -149,7 +149,7 @@ namespace Comet
 
 		public static T RoundedBorder<T>(this T view, float radius = 4, string color = null, float strokeSize = 1, bool filled = false, Type type = null) where T : View
 		{
-			var finalColor = color != null ? Color.FromHex(color) : Colors.Black;
+			var finalColor = color != null ? Color.FromArgb(color) : Colors.Black;
 			view.Border(new RoundedRectangle(radius).Stroke(finalColor, strokeSize));
 			if (filled)
 				view.Background(color);
