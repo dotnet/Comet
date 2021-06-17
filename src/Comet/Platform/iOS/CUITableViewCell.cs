@@ -17,6 +17,12 @@ namespace Comet.iOS
 			BackgroundColor = UIColor.Clear;
 		}
 
+		public CUITableViewCell(NSString resuseIdentifier) : base(UITableViewCellStyle.Default,resuseIdentifier)
+		{
+			ContentView.Tag = _instanceCount++;
+			BackgroundColor = UIColor.Clear;
+		}
+
 		public void SetFromContext(IMauiContext context)
 		{
 			if (cometView != null)
@@ -38,15 +44,8 @@ namespace Comet.iOS
 		public void SetView(View view)
 		{
 			var previousView = cometView.CurrentView;
-			var isFromThisCell = previousView == view;
-
-			//Apple bug, somehow the view be a weird recycle... So only re-use if the view still matches
-			//if (isFromThisCell && previousView != null && !previousView.IsDisposed)
-			//	view = view.Diff(previousView, false);
-
 			cometView.CurrentView = view;
-
-			//previousView?.ViewDidDisappear();
+			(previousView as View)?.ViewDidDisappear();
 			view?.ViewDidAppear();
 		}
 	}

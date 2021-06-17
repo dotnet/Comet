@@ -19,8 +19,8 @@ using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage, ISafeAreaView//, IClipShapeView
-	{		
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage, ISafeAreaView, IContentTypeHash//, IClipShapeView
+	{
 		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
@@ -730,5 +730,7 @@ namespace Comet
 			}
 		}
 		void IHotReloadableView.Reload() => ThreadHelper.RunOnMainThread(() => Reload(true));
+		protected int? TypeHashCode;
+		public virtual int GetContentTypeHashCode() => this.replacedView?.GetContentTypeHashCode() ?? (TypeHashCode ??= this.GetType().GetHashCode());
 	}
 }

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.1;netstandard2.0;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
     
     <RootNamespace>Comet</RootNamespace>
     <AssemblyName>Comet</AssemblyName>
@@ -24,7 +24,7 @@
    </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.39" />
+    <PackageReference Include="Microsoft.Maui.Graphics" Version="$(_MicrosoftMauiGraphics)" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
@@ -43,8 +43,8 @@
     <Folder Include="Platform\Standard\" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid10.0'">
-    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0.8-net6preview01" />
-    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.0-$(_AndroidXVersion)" />
+    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.0$(_AndroidXVersion)" />
+    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.0$(_AndroidXVersion)" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Platform\iOS\CUITableViewCell.cs" />
