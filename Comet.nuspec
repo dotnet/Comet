@@ -43,15 +43,6 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
-      <group targetFramework=".NETStandard2.0">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
-        <dependency id="Reloadify3000" version="1.0.6" />
-      </group>
       <group targetFramework=".NETStandard2.1">
         <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
