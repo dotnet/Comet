@@ -97,12 +97,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Comet.dll" target="lib/netstandard2.0/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Comet.pdb" target="lib/netstandard2.0/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.dll" target="lib/netstandard2.0/Microsoft.Maui.dll"/>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.pdb" target="lib/netstandard2.0/Microsoft.Maui.pdb"/>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.Essentials.dll" target="lib/netstandard2.0/Microsoft.Maui.Essentials.dll"/>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.Essentials.pdb" target="lib/netstandard2.0/Microsoft.Maui.Essentials.pdb"/>
     <file src="src/Comet/bin/Debug/netstandard2.1/Comet.dll" target="lib/netstandard2.1/Comet.dll"/>
     <file src="src/Comet/bin/Debug/netstandard2.1/Comet.pdb" target="lib/netstandard2.1/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/netstandard2.1/Microsoft.Maui.dll" target="lib/netstandard2.1/Microsoft.Maui.dll"/>
