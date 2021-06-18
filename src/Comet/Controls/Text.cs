@@ -46,7 +46,7 @@ namespace Comet
 
 		TextAlignment ITextAlignment.HorizontalTextAlignment => this.GetTextAlignment() ?? TextAlignment.Start;
 
-		//TextAlignment ITextAlignment.VerticalTextAlignment => this.GetVerticalTextAlignment() ?? TextAlignment.Start;
+		TextAlignment ITextAlignment.VerticalTextAlignment => this.GetVerticalTextAlignment() ?? TextAlignment.Start;
 
 		Microsoft.Maui.LineBreakMode ILabel.LineBreakMode => this.GetLineBreakMode(LineBreakMode.NoWrap);
 
