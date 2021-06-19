@@ -125,7 +125,11 @@ namespace Comet
 			{
 				var progress = Easing.Ease(percent);
 				CurrentValue = Lerp.Calculate(StartValue, EndValue, progress);
-				ContextualObject?.SetEnvironment(PropertyName, CurrentValue, PropertyCascades);
+				var oldV = ContextualObject?.GetEnvironment(Parent.GetValueOfType<View>(), PropertyName, PropertyCascades);
+				if (oldV is Binding b)
+					b.BindingValueChanged(null, PropertyName, CurrentValue);
+				else
+					ContextualObject?.SetEnvironment(PropertyName, CurrentValue, PropertyCascades);
 				HasFinished = percent == 1;
 			}
 			catch (Exception ex)

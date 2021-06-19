@@ -42,7 +42,13 @@ namespace Comet
 			foreach (var change in changedProperties)
 			{
 				var prop = change.Key;
+
 				var values = change.Value;
+				//Handle the bingings!
+				if (values.newValue is Binding nb)
+					values.newValue = nb.Value;
+				if (values.oldValue is Binding ob)
+					values.oldValue = ob.Value;
 				if (values.newValue == values.oldValue)
 					continue;
 				var animation = new Animation

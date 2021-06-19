@@ -47,8 +47,8 @@ namespace Comet
 			[typeof(double)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
-					var start = (double)s;
-					var end = (double)e;
+					var start = (double)(s ?? 0);
+					var end = (double)(e ?? 0);
 					return ((end - start) * progress) + start;
 				}
 			},
@@ -116,7 +116,7 @@ namespace Comet
 					var end = (SolidPaint)e;
 					return start.Lerp(end, progress);
 				}
-			}
+			},
 		};
 
 		public static Lerp GetLerp(Type type)
