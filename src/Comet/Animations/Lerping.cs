@@ -15,24 +15,24 @@ namespace Comet
 			[typeof(int)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
-					var start = (int)s;
-					var end = (int)e;
+					var start = Convert.ToInt32(s);
+					var end = Convert.ToInt32(e);
 					return (int)((end - start) * progress) + start;
 				}
 			},
 			[typeof(short)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
-					var start = (short)s;
-					var end = (short)e;
+					var start = Convert.ToInt16(s);
+					var end = Convert.ToInt16(e);
 					return (short)((end - start) * progress) + start;
 				}
 			},
 			[typeof(byte)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
-					var start = (byte)s;
-					var end = (byte)e;
+					var start = Convert.ToByte(s);
+					var end = Convert.ToByte(e);
 					return (byte)((end - start) * progress) + start;
 				}
 			},
@@ -47,16 +47,16 @@ namespace Comet
 			[typeof(double)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
-					var start = (double)(s ?? 0);
-					var end = (double)(e ?? 0);
+					var start = Convert.ToDouble(s);
+					var end = Convert.ToDouble(e);
 					return ((end - start) * progress) + start;
 				}
 			},
 			[typeof(long)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
-					var start = (int)s;
-					var end = (int)e;
+					var start = Convert.ToInt64(s);
+					var end = Convert.ToInt64(e);
 					return (long)((end - start) * progress) + start;
 				}
 			},
@@ -68,8 +68,8 @@ namespace Comet
 			[typeof(uint)] = new Lerp
 			{
 				Calculate = (s, e, progress) => {
-					var start = (uint)s;
-					var end = (uint)e;
+					var start = Convert.ToUInt32(s);
+					var end = Convert.ToUInt32(e);
 					return (uint)((end - start) * progress) + start;
 				}
 			},
