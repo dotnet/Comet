@@ -1,12 +1,13 @@
 ﻿using System;
 using CoreAnimation;
 using Foundation;
+using Microsoft.Maui;
 
 namespace Comet.Services
 {
 	public class NativeTicker : Ticker
 	{
-		public NativeTicker()
+		public NativeTicker(IMauiContext mauiContext)
 		{
 		}
 		CADisplayLink link;

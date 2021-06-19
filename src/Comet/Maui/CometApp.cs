@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Comet.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
@@ -41,6 +42,10 @@ namespace Comet
 		IWindow IApplication.CreateWindow(IActivationState activationState)
 		{
 			((IMauiContextHolder)this).MauiContext = activationState.Context;
+
+#if __IOS__ || MONOANDROID
+			AnimationManger.SetTicker(new NativeTicker(activationState.Context));
+#endif
 			windows.Add(CurrentWindow = new CometWindow
 			{
 				MauiContext = activationState.Context,

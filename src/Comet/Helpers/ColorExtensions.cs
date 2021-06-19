@@ -216,7 +216,7 @@ namespace Comet
 		public static T Opacity<T>(this T view, Binding<double> opacity, bool cascades = false) where T : View 
 			=> view.SetEnvironment(EnvironmentKeys.View.Opacity, opacity, cascades);
 		public static T Opacity<T>(this T view, Func<double> opacity, bool cascades = false) where T : View 
-			=> view.Opacity((Binding<doubl>)opacity,cascades);
+			=> view.Opacity((Binding<double>)opacity,cascades);
 		
 		public static double GetOpacity(this View view, ControlState state = ControlState.Default)
 		{

@@ -9,11 +9,12 @@ namespace Comet.Services
 {
 	public class NativeTicker : Ticker
 	{
-		public IMauiContext MauiContext { get; set; }
+		readonly IMauiContext MauiContext;
 		ValueAnimator _val;
 		bool _systemEnabled;
-		public NativeTicker()
+		public NativeTicker(IMauiContext mauiContext)
 		{
+			MauiContext = mauiContext;
 			_val = new ValueAnimator();
 			_val.SetIntValues(0, 100); // avoid crash
 			_val.RepeatCount = ValueAnimator.Infinite;
@@ -45,10 +46,7 @@ namespace Comet.Services
 
 		public override bool IsRunning => _val.IsStarted;
 		public override bool SystemEnabled { get => _systemEnabled; }
-		public override void Start() => _val.Start();
-		public override void Stop()
-		{
-			ThreadHelper.RunOnMainThread(() => _val?.Cancel());
-		}
+		public override void Start() => ThreadHelper.RunOnMainThread(() => _val.Start());
+		public override void Stop() => ThreadHelper.RunOnMainThread(() => _val?.Cancel());
 	}
 }
