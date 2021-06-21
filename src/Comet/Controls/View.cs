@@ -306,7 +306,7 @@ namespace Comet
 				Debug.WriteLine(ex);
 			}
 			ViewHandler?.UpdateValue(GetHandlerPropertyName(property));
-			replacedView?.ViewPropertyChanged(property, value);
+			builtView?.ViewPropertyChanged(property, value);
 		}
 
 		protected virtual string GetHandlerPropertyName(string property) =>
