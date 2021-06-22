@@ -267,7 +267,7 @@ namespace Comet
 
 		internal static IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> EndProperty()
 		{
-			var changed = currentReadProperies.Distinct().ToList();
+			var changed = currentReadProperies.ToList().Distinct().ToList();
 			currentReadProperies.Clear();
 			return changed;
 
