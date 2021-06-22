@@ -26,6 +26,8 @@ namespace Comet
 		public string File { get; set; }
 
 		public override bool IsEmpty => string.IsNullOrWhiteSpace(File);
+		public override bool Equals(object obj) => obj is FileImageSource fis && fis.File == File;
+		public override int GetHashCode() => File?.GetHashCode() ?? base.GetHashCode();
 
 	}
 
@@ -43,6 +45,8 @@ namespace Comet
 		public bool CachingEnabled { get; set; } = true;
 
 		Task<Stream> IStreamImageSource.GetStreamAsync(CancellationToken cancellationToken) => client.GetStreamAsync(Uri);
+		public override bool Equals(object obj) => obj is UriImageSource uis && uis.Uri == Uri;
+		public override int GetHashCode() => Uri?.GetHashCode() ?? base.GetHashCode();
 	}
 
 	public class FontImageSource : ImageSource, IFontImageSource
