@@ -242,8 +242,8 @@ namespace Comet
 						{
 							State.AddGlobalProperties(props);
 						}
-						UpdateBuiltViewContext(view);
 						builtView = view.GetRenderView();
+						UpdateBuiltViewContext(builtView);
 					}
 					catch(Exception ex)
 					{
@@ -315,6 +315,7 @@ namespace Comet
 
 		internal override void ContextPropertyChanged(string property, object value, bool cascades)
 		{
+			builtView?.ContextPropertyChanged(property, value, cascades);
 			ViewPropertyChanged(property, value);
 		}
 
