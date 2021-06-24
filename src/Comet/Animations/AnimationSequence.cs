@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Maui;
+using Microsoft.Maui.Animations;
 
 namespace Comet
 {
-	public class AnimationSequence<T> : Animation where T : View
+	public class AnimationSequence<T> : ContextualAnimation where T : View
 	{
 		//TODO: Do something for key frames
 		public AnimationSequence()

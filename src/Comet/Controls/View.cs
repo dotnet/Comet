@@ -9,6 +9,7 @@ using Comet.Internal;
 //using System.Reflection;
 using Comet.Reflection;
 using Microsoft.Maui;
+using Microsoft.Maui.Animations;
 using Microsoft.Maui.Essentials;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.HotReload;
@@ -19,7 +20,7 @@ using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage, ISafeAreaView, IContentTypeHash//, IClipShapeView
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage, ISafeAreaView, IContentTypeHash, IAnimator//, IClipShapeView
 	{
 		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
@@ -27,6 +28,10 @@ namespace Comet
 		protected static Dictionary<string, string> HandlerPropertyMapper = new()
 		{
 			[nameof(MeasuredSize)] = nameof(IFrameworkElement.DesiredSize),
+			[EnvironmentKeys.Fonts.Size] = nameof(IText.Font),
+			[EnvironmentKeys.Fonts.Slant] = nameof(IText.Font),
+			[EnvironmentKeys.Fonts.Family] = nameof(IText.Font),
+			[EnvironmentKeys.Fonts.Weight] = nameof(IText.Font),
 		};
 
 		IReloadHandler reloadHandler;
@@ -121,6 +126,7 @@ namespace Comet
 				viewHandler?.SetVirtualView(this);
 			if (replacedView != null)
 				replacedView.ViewHandler = handler;
+			AddAllAnimationsToManager();
 			return true;
 
 		}
@@ -605,21 +611,38 @@ namespace Comet
 
 		public void AddAnimation(Animation animation)
 		{
-			animation.Parent = new WeakReference<View>(this);
+			animation.Parent = new WeakReference<IAnimator>(this);
 			GetAnimations(true).Add(animation);
-			AnimationManger.Add(animation);
+			AddAnimationsToManager(animation);
 		}
 		public void RemoveAnimation(Animation animation)
 		{
 			animation.Parent = null;
 			GetAnimations(false)?.Remove(animation);
-			AnimationManger.Remove(animation);
 		}
 
 		public void RemoveAnimations() => GetAnimations(false)?.ToList().ForEach(animation => {
 			animations.Remove(animation);
-			AnimationManger.Remove(animation);
+			RemoveAnimationsFromManager(animation);
 		});
+		void AddAnimationsToManager(Animation animation)
+		{
+			if (ViewHandler?.MauiContext?.AnimationManager == null)
+				return;
+			ViewHandler.MauiContext.AnimationManager.Add(animation);
+		}
+		void AddAllAnimationsToManager()
+		{
+			if (ViewHandler?.MauiContext?.AnimationManager == null)
+				return;
+			GetAnimations(false)?.ToList().ForEach(ViewHandler.MauiContext.AnimationManager.Add);
+		}
+		void RemoveAnimationsFromManager(Animation animation)
+		{
+			if (ViewHandler?.MauiContext?.AnimationManager == null)
+				return;
+			ViewHandler.MauiContext.AnimationManager.Remove(animation);
+		}
 
 		public virtual void PauseAnimations()
 		{

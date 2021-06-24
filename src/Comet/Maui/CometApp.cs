@@ -43,9 +43,6 @@ namespace Comet
 		{
 			((IMauiContextHolder)this).MauiContext = activationState.Context;
 
-#if __IOS__ || MONOANDROID
-			AnimationManger.SetTicker(new NativeTicker(activationState.Context));
-#endif
 			windows.Add(CurrentWindow = new CometWindow
 			{
 				MauiContext = activationState.Context,

@@ -25,6 +25,6 @@ namespace Comet.Handlers
 			nativeView?.ReloadData();
 		}
 
-		protected override CUITableView CreateNativeView() => NativeView as CUITableView ?? new CUITableView(MauiContext);
+		protected override CUITableView CreateNativeView() =>  new CUITableView(MauiContext);
 	}
 }

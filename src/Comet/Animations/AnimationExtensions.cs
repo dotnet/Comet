@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.Maui;
+using Microsoft.Maui.Animations;
 
 namespace Comet
 {
@@ -51,7 +53,7 @@ namespace Comet
 					values.oldValue = ob.Value;
 				if (values.newValue == values.oldValue)
 					continue;
-				var animation = new Animation
+				Animation animation = new ContextualAnimation
 				{
 					Duration = duration,
 					Easing = easing,
@@ -72,7 +74,7 @@ namespace Comet
 				animations.Add(animation);
 			}
 
-			return new Animation(animations)
+			return new ContextualAnimation(animations)
 			{
 				Id = id,
 				Duration = duration,

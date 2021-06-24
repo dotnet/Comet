@@ -37,7 +37,7 @@ namespace Comet.Samples
 					//	ScaleTo = new PointF(2f, 2f),
 					//}
 					),
-				new Text("Regular Text Above...")
+				new Text("Regular Text Above...").Background(Colors.White)
 				.BeginAnimationSequence(repeats:true)
 					.Animate(duration:1,action:(text)=>{
 						text.Background(Colors.Fuchsia);
@@ -64,7 +64,7 @@ namespace Comet.Samples
 						this.ResumeAnimations();
 					else
 						this.PauseAnimations();
-				}))
+				}).Background(Colors.Transparent))
 			};
 	}
 }
