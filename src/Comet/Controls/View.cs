@@ -627,21 +627,26 @@ namespace Comet
 		});
 		void AddAnimationsToManager(Animation animation)
 		{
-			if (ViewHandler?.MauiContext?.AnimationManager == null)
+			var context = GetMauiContext();
+			if (context?.AnimationManager == null)
 				return;
-			ViewHandler.MauiContext.AnimationManager.Add(animation);
+			context.AnimationManager.Add(animation);
 		}
+
+		protected virtual IMauiContext GetMauiContext() => ViewHandler?.MauiContext ?? BuiltView?.GetMauiContext();
 		void AddAllAnimationsToManager()
 		{
-			if (ViewHandler?.MauiContext?.AnimationManager == null)
+			var context = GetMauiContext();
+			if (context?.AnimationManager == null)
 				return;
-			GetAnimations(false)?.ToList().ForEach(ViewHandler.MauiContext.AnimationManager.Add);
+			GetAnimations(false)?.ToList().ForEach(context.AnimationManager.Add);
 		}
 		void RemoveAnimationsFromManager(Animation animation)
 		{
-			if (ViewHandler?.MauiContext?.AnimationManager == null)
+			var context = GetMauiContext();
+			if (context?.AnimationManager == null)
 				return;
-			ViewHandler.MauiContext.AnimationManager.Remove(animation);
+			context.AnimationManager.Remove(animation);
 		}
 
 		public virtual void PauseAnimations()
