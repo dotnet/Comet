@@ -630,7 +630,7 @@ namespace Comet
 			var context = GetMauiContext();
 			if (context?.AnimationManager == null)
 				return;
-			context.AnimationManager.Add(animation);
+			ThreadHelper.RunOnMainThread(()=>context.AnimationManager.Add(animation));
 		}
 
 		protected virtual IMauiContext GetMauiContext() => ViewHandler?.MauiContext ?? BuiltView?.GetMauiContext();
@@ -639,7 +639,7 @@ namespace Comet
 			var context = GetMauiContext();
 			if (context?.AnimationManager == null)
 				return;
-			GetAnimations(false)?.ToList().ForEach(context.AnimationManager.Add);
+			ThreadHelper.RunOnMainThread(()=>GetAnimations(false)?.ToList().ForEach(context.AnimationManager.Add));
 		}
 		void RemoveAnimationsFromManager(Animation animation)
 		{
