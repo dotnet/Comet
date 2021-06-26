@@ -8,6 +8,7 @@ using Comet.Helpers;
 using Comet.Internal;
 //using System.Reflection;
 using Comet.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
 using Microsoft.Maui.Animations;
 using Microsoft.Maui.Essentials;
@@ -627,26 +628,28 @@ namespace Comet
 		});
 		void AddAnimationsToManager(Animation animation)
 		{
-			var context = GetMauiContext();
-			if (context?.AnimationManager == null)
+			var animationManager = GetAnimationManager();
+			if (animationManager == null)
 				return;
-			ThreadHelper.RunOnMainThread(()=>context.AnimationManager.Add(animation));
+			ThreadHelper.RunOnMainThread(()=> animationManager.Add(animation));
 		}
 
 		protected virtual IMauiContext GetMauiContext() => ViewHandler?.MauiContext ?? BuiltView?.GetMauiContext();
+		IAnimationManager GetAnimationManager() => GetMauiContext()?.Services.GetRequiredService<IAnimationManager>();
+
 		void AddAllAnimationsToManager()
 		{
-			var context = GetMauiContext();
-			if (context?.AnimationManager == null)
+			var animationManager = GetAnimationManager();
+			if (animationManager == null)
 				return;
-			ThreadHelper.RunOnMainThread(()=>GetAnimations(false)?.ToList().ForEach(context.AnimationManager.Add));
+			ThreadHelper.RunOnMainThread(()=>GetAnimations(false)?.ToList().ForEach(animationManager.Add));
 		}
 		void RemoveAnimationsFromManager(Animation animation)
 		{
-			var context = GetMauiContext();
-			if (context?.AnimationManager == null)
+			var animationManager = GetAnimationManager();
+			if (animationManager == null)
 				return;
-			context.AnimationManager.Remove(animation);
+			animationManager.Remove(animation);
 		}
 
 		public virtual void PauseAnimations()
