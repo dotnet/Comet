@@ -688,7 +688,7 @@ namespace Comet
 
 		public bool RequiresContainer => HasContent;
 
-		public IShape ClipShape => this.GetClipShape();
+		IShape IFrameworkElement.Clip => this.GetClipShape();
 
 		IView IReplaceableView.ReplacedView => this.ReplacedView;
 
