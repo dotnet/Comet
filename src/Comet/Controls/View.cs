@@ -20,7 +20,7 @@ using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage, ISafeAreaView, IContentTypeHash, IAnimator//, IClipShapeView
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage, ISafeAreaView, IContentTypeHash, IAnimator
 	{
 		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
@@ -688,7 +688,7 @@ namespace Comet
 
 		public bool RequiresContainer => HasContent;
 
-		//public IShape ClipShape => this.GetClipShape();
+		public IShape ClipShape => this.GetClipShape();
 
 		IView IReplaceableView.ReplacedView => this.ReplacedView;
 
