@@ -50,7 +50,7 @@ namespace Comet
 
 		Microsoft.Maui.LineBreakMode ILabel.LineBreakMode => this.GetLineBreakMode(LineBreakMode.NoWrap);
 
-		int ILabel.MaxLines => this.GetEnvironment<int>(nameof(ILabel.MaxLines));
+		int ILabel.MaxLines => this.GetMaxLines(-1);
 
 		TextDecorations ILabel.TextDecorations => this.GetEnvironment<TextDecorations>(nameof(ILabel.TextDecorations));
 

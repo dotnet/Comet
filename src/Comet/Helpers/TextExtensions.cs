@@ -21,5 +21,13 @@ namespace Comet
 			var value = view.GetEnvironment<TextAlignment?>(view, EnvironmentKeys.Text.VerticalAlignment);
 			return value ?? defaultValue;
 		}
+
+		public static T MaxLines<T>(this T view, Binding<int> alignment, bool cascades = true) where T : View =>
+			view.SetEnvironment(nameof(ILabel.MaxLines), alignment, cascades);
+		public static T MaxLines<T>(this T view, Func<int> alignment, bool cascades = true) where T : View =>
+			view.MaxLines((Binding<int>)alignment, cascades);
+
+		public static int GetMaxLines(this View view, int defaultValue = null) =>
+			view.GetEnvironment<int?>(view, nameof(ILabel.MaxLines)) ?? defaultValue;
 	}
 }
