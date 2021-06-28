@@ -101,6 +101,17 @@ namespace Comet.Android
 				inLayout = false;
 			}
 		}
+		protected override void OnSizeChanged(int w, int h, int oldw, int oldh)
+		{
+			base.OnSizeChanged(w, h, oldw, oldh);
+			if (w > 0 && h > 0)
+			{
+				inLayout = true;
+				var rect = new Rectangle(0, 0, w, h);
+				CurrentView.Arrange(rect);
+				inLayout = false;
+			}
+		}
 
 		protected override void Dispose(bool disposing)
 		{
