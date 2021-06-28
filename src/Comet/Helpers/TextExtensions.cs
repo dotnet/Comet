@@ -27,7 +27,7 @@ namespace Comet
 		public static T MaxLines<T>(this T view, Func<int> alignment, bool cascades = true) where T : View =>
 			view.MaxLines((Binding<int>)alignment, cascades);
 
-		public static int GetMaxLines(this View view, int defaultValue = null) =>
+		public static int GetMaxLines(this View view, int defaultValue = -1) =>
 			view.GetEnvironment<int?>(view, nameof(ILabel.MaxLines)) ?? defaultValue;
 	}
 }
