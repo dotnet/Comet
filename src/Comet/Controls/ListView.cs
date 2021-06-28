@@ -27,14 +27,24 @@ namespace Comet
 		//TODO Evaluate if 30 is a good number
 		protected IDictionary<object, View> CurrentViews { get; }
 
-		readonly Binding<IReadOnlyList<T>> itemsBinding;
-		IReadOnlyList<T> items;
+		Binding<IReadOnlyList<T>> _items;
+		Binding<IReadOnlyList<T>> Items
+		{
+			get => _items;
+			set => this.SetBindingValue(ref _items, value);
+		}
 
-		public ListView(Binding<IReadOnlyList<T>> items) : this()
+
+		IReadOnlyList<T> currentItems;
+
+		public ListView(Func<IReadOnlyList<T>> items) : this((Binding<IReadOnlyList<T>>)items)
 		{
 
-			this.itemsBinding = items;
-			this.items = items?.CurrentValue;
+		}
+		public ListView(Binding<IReadOnlyList<T>> items) : this()
+		{
+			Items = items;
+			this.currentItems = items?.CurrentValue;
 			SetupObservable();
 		}
 
@@ -62,15 +72,19 @@ namespace Comet
 		public override void ViewPropertyChanged(string property, object value)
 		{
 			//Update this when things change!
-			DisposeObservable();
-			items = itemsBinding?.CurrentValue;
-			SetupObservable();
+			if (property == nameof(Items))
+			{
+				DisposeObservable();
+				currentItems = Items?.CurrentValue;
+				SetupObservable();
+				ReloadData();
+			}
 			base.ViewPropertyChanged(property, value);
 		}
 
 		void SetupObservable()
 		{
-			if (!(items is ObservableCollection<T> observable))
+			if (!(currentItems is ObservableCollection<T> observable))
 				return;
 			observable.CollectionChanged += Observable_CollectionChanged;
 		}
@@ -82,7 +96,7 @@ namespace Comet
 
 		void DisposeObservable()
 		{
-			if (!(items is ObservableCollection<T> observable))
+			if (!(currentItems is ObservableCollection<T> observable))
 				return;
 
 			observable.CollectionChanged -= Observable_CollectionChanged;
@@ -95,9 +109,9 @@ namespace Comet
 
 		public Func<int> Count { get; set; }
 
-		protected override int GetCount(int section) => items?.Count() ?? Count?.Invoke() ?? 0;
+		protected override int GetCount(int section) => currentItems?.Count() ?? Count?.Invoke() ?? 0;
 
-		protected override object GetItemAt(int section, int index) => items.SafeGetAtIndex(index, ItemFor);
+		protected override object GetItemAt(int section, int index) => currentItems.SafeGetAtIndex(index, ItemFor);
 
 		protected override View GetViewFor(int section, int index)
 		{
