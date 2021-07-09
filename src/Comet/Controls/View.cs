@@ -665,7 +665,11 @@ namespace Comet
 
 		bool IFrameworkElement.IsEnabled => this.GetEnvironment<bool?>(nameof(IFrameworkElement.IsEnabled)) ?? true;
 
-		Rectangle IFrameworkElement.Frame => Frame;
+		Rectangle IFrameworkElement.Frame
+		{
+			get => Frame;
+			set => Frame = value;
+		}
 
 		IViewHandler IFrameworkElement.Handler
 		{
@@ -673,7 +677,14 @@ namespace Comet
 			set => SetViewHandler(value);
 		}
 
+		IElementHandler IElement.Handler
+		{
+			get => this.ViewHandler;
+			set => SetViewHandler((IViewHandler)value);
+		}
+
 		IFrameworkElement IFrameworkElement.Parent => this.Parent;
+		IElement IElement.Parent => this.Parent;
 
 		Size IFrameworkElement.DesiredSize => MeasuredSize;
 

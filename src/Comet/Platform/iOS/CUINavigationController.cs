@@ -25,8 +25,8 @@ namespace Comet.iOS
 		public override UIViewController PopViewController(bool animated)
 		{
 			var vc = base.PopViewController(animated);
-			var cometVC = vc as ContainerViewController;
-			//cometVC?.WasPopped();
+			var cometVC = vc as CometViewController;
+			cometVC?.WasPopped();
 
 			return vc;
 		}

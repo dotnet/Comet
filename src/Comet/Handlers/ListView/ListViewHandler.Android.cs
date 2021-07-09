@@ -24,13 +24,13 @@ namespace Comet.Handlers
 		//	return Comet.View.UseAvailableWidthAndHeight;
 		//}
 
-		public static void MapListViewProperty(IViewHandler viewHandler, IListView virtualView)
+		public static void MapListViewProperty(IElementHandler viewHandler, IListView virtualView)
 		{
 			var nativeView = (CometRecyclerView)viewHandler.NativeView;
 			nativeView.ListView = virtualView;
 		}
 
-		public static void MapReloadData(IViewHandler viewHandler, IListView virtualView)
+		public static void MapReloadData(IElementHandler viewHandler, IListView virtualView)
 		{
 			var nativeView = (CometRecyclerView)viewHandler.NativeView;
 			nativeView?.ReloadData();

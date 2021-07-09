@@ -20,10 +20,12 @@ namespace Comet
 #endif
 			}
 		}
-		IView IWindow.View
+		IView IWindow.Content
 		{
 			get => this.Content;
-			set => Content = (View)value;
 		}
+
+
+		public string Title => this.Content.GetTitle();
 	}
 }
