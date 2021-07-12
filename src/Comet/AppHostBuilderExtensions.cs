@@ -26,6 +26,7 @@ namespace Comet
 				{ typeof(ActivityIndicator), typeof(ActivityIndicatorHandler) },
 				{ typeof(Button), typeof(ButtonHandler) },
 				{ typeof(CheckBox), typeof(CheckBoxHandler) },
+				{ typeof(CometWindow), typeof(WindowHandler) },
 				{ typeof(DatePicker), typeof(DatePickerHandler) },
 				{ typeof(Image) , typeof(ImageHandler) },
 				//{ typeof(Picker), typeof(PickerHandler) },
