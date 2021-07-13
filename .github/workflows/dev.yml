@@ -26,7 +26,14 @@ jobs:
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
 
-      
+      - name:  install .NET 6.0.100-preview.6.21355.2
+        shell: pwsh
+        run: |
+          $ProgressPreference = 'SilentlyContinue'
+          Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
+          & .\dotnet-install.ps1 -Version 6.0.100-preview.6.21355.2 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+          & dotnet --list-sdks
+          
       - name: Install and Run maui-check Tool
         shell: pwsh
         run: |
