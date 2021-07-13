@@ -1,7 +1,8 @@
 <Project>
   <Import Project="External\Maui\eng\Versions.props" />
   <PropertyGroup>
-    <BuildForWinUI Condition="'$(SolutionFileName)' == 'Comet.WinUI.sln'">true</BuildForWinUI>
+    <IsWindows Condition="'$(OS)' == 'Windows_NT'">true</IsWindows>
+    <BuildForWinUI Condition="'$(IsWindows)' == 'true'">true</BuildForWinUI>
     <BuildForNet6 Condition="'$(SolutionFileName)' == 'Comet-net6.sln' or '$(BuildForWinUI)' == 'true'">true</BuildForNet6>
     <MauiPlatforms>net6.0-ios;net6.0-maccatalyst;net6.0-android</MauiPlatforms>
     <WindowsTargetFramework Condition="'$(WindowsTargetFramework)' == ''">net6.0-windows10.0.18362</WindowsTargetFramework>
