@@ -18,15 +18,14 @@ jobs:
         with:
           submodules: true
 
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
-
-
       - name: Install and Run maui-check Tool
         shell: pwsh
         run: |
           & dotnet tool update --global redth.net.maui.check --add-source https://api.nuget.org/v3/index.json
           & maui-check --preview --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
+
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.0.2
 
       - name: Restore Comet-Nuget.sln
         run: nuget restore build/Comet-Nuget.sln
