@@ -38,7 +38,7 @@ jobs:
         shell: pwsh
         run: |
           & dotnet tool update --global redth.net.maui.check
-          & maui-check --preview --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac 
+          & maui-check --main --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
 
       - name: Restore Comet-Nuget.sln
         run: nuget restore build/Comet-Nuget.sln
@@ -102,7 +102,7 @@ jobs:
           shell: pwsh
           run: |
             & dotnet tool update --global redth.net.maui.check --version 0.4.1 --add-source https://api.nuget.org/v3/index.json
-            & maui-check --preview --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac
+            & maui-check --main --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
 
         - name: Restore Comet-Tests.sln
           run: nuget restore build/Comet-Tests.sln
