@@ -25,6 +25,12 @@ jobs:
       
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.0.2
+        
+          
+      - name: Install Visual Studio Preview
+        shell: pwsh
+        run: |
+          & build/install-vs.ps1
 
       - name:  install .NET 6.0.100-preview.6.21355.2
         shell: pwsh
