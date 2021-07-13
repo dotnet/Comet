@@ -24,14 +24,13 @@ jobs:
           submodules: true
                 
       - name: Install Visual Studio Preview
-        - run: dotnet tool update -g dotnet-vs
-        - run: echo "::set-env name=MSB::$(vs where preview --prop=InstallationPath)"
-        - run: vs install preview --quiet +Microsoft.VisualStudio.Component.ManagedDesktop.Core +Microsoft.NetCore.Component.DevelopmentTools
+        shell: pwsh
+        run: dotnet tool update -g dotnet-vs
+        run: echo "::set-env name=MSB::$(vs where preview --prop=InstallationPath)"
+        run: vs install preview --quiet +Microsoft.VisualStudio.Component.ManagedDesktop.Core +Microsoft.NetCore.Component.DevelopmentTools
           if: env.MSB == ''
-        - run: echo "::add-path::$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin"
-        - run: msbuild -r
-        - run: msbuild -t:test
-        
+        run: echo "::add-path::$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin"
+
       - name:  install .NET 6.0.100-preview.6.21355.2
         shell: pwsh
         run: |
