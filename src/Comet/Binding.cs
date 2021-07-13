@@ -234,7 +234,8 @@ namespace Comet
 				View?.ViewPropertyChanged(propertyName, CurrentValue);
 
 		}
-		T Cast(object value)
+
+		static T Cast(object value)
 		{
 			if (value is T v)
 				return v;
