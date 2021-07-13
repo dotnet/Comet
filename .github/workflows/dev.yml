@@ -24,14 +24,14 @@ jobs:
           submodules: true
                 
       - name: Install Visual Studio Preview
-        shell: pwsh
-        run: powershell .\build\install-vs.ps1
-      
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
-        with:
-          vs-version: '[16.11,16.12)'
-
+        - run: dotnet tool update -g dotnet-vs
+        - run: echo "::set-env name=MSB::$(vs where preview --prop=InstallationPath)"
+        - run: vs install preview --quiet +Microsoft.VisualStudio.Component.ManagedDesktop.Core +Microsoft.NetCore.Component.DevelopmentTools
+          if: env.MSB == ''
+        - run: echo "::add-path::$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin"
+        - run: msbuild -r
+        - run: msbuild -t:test
+        
       - name:  install .NET 6.0.100-preview.6.21355.2
         shell: pwsh
         run: |
