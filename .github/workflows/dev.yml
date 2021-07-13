@@ -94,7 +94,7 @@ jobs:
           shell: pwsh
           run: |
             & dotnet tool update --global redth.net.maui.check --version 0.4.1 --add-source https://api.nuget.org/v3/index.json
-            & maui-check --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --manifest https://raw.githubusercontent.com/Redth/dotnet-maui-check/main/manifests/maui-dev.manifest.json
+            & maui-check --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac
 
         - name: Restore Comet-Tests.sln
           run: nuget restore build/Comet-Tests.sln
