@@ -55,7 +55,8 @@ jobs:
  
       - name: Build Comet-net6-Nuget.sln
         shell: pwsh
-        run: "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Current\Bin\MSBuild.exe" build/Comet-net6-Nuget.sln
+        run: |
+          "C:\Program Files (x86)\Microsoft Visual Studio\2019\Preview\MSBuild\Current\Bin\MSBuild.exe" build/Comet-net6-Nuget.sln
         
       - name: Nuget Pack step
         shell: bash
