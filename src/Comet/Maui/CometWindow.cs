@@ -27,32 +27,5 @@ namespace Comet
 
 
 		public string Title => this.Content.GetTitle();
-
-		IWindowHandler windowHandler;
-
-		bool SetViewHandler(IWindowHandler handler)
-		{
-			if (windowHandler == handler)
-				return false;
-			InvalidateMeasurement();
-			var oldViewHandler = windowHandler;
-			//viewHandler?.Remove(this);
-			windowHandler = handler;
-			if (windowHandler?.VirtualView != this)
-				windowHandler?.SetVirtualView(this);
-			if (ReplacedView != null)
-				((IElement)ReplacedView).Handler = handler;
-			//AddAllAnimationsToManager();
-			return true;
-
-		}
-
-
-
-		IElementHandler IElement.Handler
-		{
-			get => this.ViewHandler;
-			set => SetViewHandler((IWindowHandler)value);
-		}
 	}
 }
