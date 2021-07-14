@@ -16,22 +16,24 @@
 		<!-- Versions -->
 		<ApplicationVersion>1.0</ApplicationVersion>
 		<AndroidVersionCode>1</AndroidVersionCode>
-
+    <UseMauiAssets>true</UseMauiAssets>
+    <UseMaui>true</UseMaui>
+    <UseMauiEssentials>true</UseMauiEssentials>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
-  <!-- <ItemGroup>
-      <MauiImage
-        Include="Resources\appicon.svg"
-        ForegroundFile="Resources\appiconfg.svg"
-        IsAppIcon="true" />
+  <ItemGroup>
+    <MauiImage
+      Include="Resources\appicon.svg"
+      ForegroundFile="Resources\appiconfg.svg"
+      IsAppIcon="true" />
 
-      <MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />
+    <MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />
 
-      <MauiImage Include="Resources\Images\*" />
+    <MauiImage Include="Resources\Images\*" />
 
-      <MauiFont Include="Resources\Fonts\*" />
-    </ItemGroup> -->
+    <MauiFont Include="Resources\Fonts\*" />
+  </ItemGroup> 
 
   <ItemGroup>
     <PackageReference Include="Clancey.Comet" Version="COMET_VERSION" />
