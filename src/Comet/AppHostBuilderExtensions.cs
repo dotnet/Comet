@@ -26,15 +26,12 @@ namespace Comet
 				{ typeof(ActivityIndicator), typeof(ActivityIndicatorHandler) },
 				{ typeof(Button), typeof(ButtonHandler) },
 				{ typeof(CheckBox), typeof(CheckBoxHandler) },
+				{ typeof(CometWindow), typeof(WindowHandler) },
 				{ typeof(DatePicker), typeof(DatePickerHandler) },
 				{ typeof(Image) , typeof(ImageHandler) },
-				{ typeof(ListView),typeof(ListViewHandler) },
-				{typeof(NavigationView), typeof (NavigationViewHandler)},
 				//{ typeof(Picker), typeof(PickerHandler) },
 				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
 				{ typeof(SearchBar), typeof(SearchBarHandler) },
-				{typeof(ScrollView), typeof(ScrollViewHandler) },
-				{typeof(ShapeView), typeof(Comet.Handlers.ShapeViewHandler)},
 				{ typeof(SecureField), typeof(EntryHandler) },
 				{ typeof(Slider), typeof(SliderHandler) },
 				{ typeof(Stepper), typeof(StepperHandler) },
@@ -45,6 +42,15 @@ namespace Comet
 				{ typeof(Text), typeof(LabelHandler) },
 				{ typeof(TimePicker), typeof(TimePickerHandler) },
 				{ typeof(Toggle), typeof(SwitchHandler) },
+#if __MOBILE__
+				{ typeof(ListView),typeof(ListViewHandler) },
+				{typeof(NavigationView), typeof (NavigationViewHandler)},
+				{typeof(ScrollView), typeof(ScrollViewHandler) },
+				{typeof(ShapeView), typeof(Comet.Handlers.ShapeViewHandler)},
+
+#endif
+
+
 #if __IOS__
 				{typeof(View), typeof(CometViewHandler)},
 #endif
