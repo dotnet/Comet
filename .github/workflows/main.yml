@@ -51,6 +51,9 @@ jobs:
 
       - name: Restore Comet-net6-Nuget.sln
         run: dotnet restore build/Comet-net6-Nuget.sln
+
+      - name: Build Comet-net6-Nuget.sln
+        run: msbuild build/Comet-net6-Nuget.sln
         
       - name: Nuget Pack step
         shell: bash
