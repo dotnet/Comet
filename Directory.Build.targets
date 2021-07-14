@@ -1,4 +1,0 @@
-<Project>
-  <Import Project="External\Maui\eng\AndroidX.targets" />
-  <Import Project="External\Maui\eng\Microsoft.Extensions.targets" />
-</Project>
