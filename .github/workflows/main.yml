@@ -84,7 +84,7 @@ jobs:
   publish:
       name: Publish
       needs:
-        - test
+        - build
       runs-on: windows-latest
       steps:
         - name: Download Artifacts
