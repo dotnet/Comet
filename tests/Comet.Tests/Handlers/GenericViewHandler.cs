@@ -34,6 +34,7 @@ namespace Comet.Tests.Handlers
 			set => ChangedProperties[nameof(Frame)] = value;
 		}
 
+		IElement IElementHandler.VirtualView => CurrentView;
 		IView IViewHandler.VirtualView => CurrentView;
 
 		public object ContainerView => throw new NotImplementedException();
@@ -61,8 +62,10 @@ namespace Comet.Tests.Handlers
 			ChangedProperties.Clear();
 			CurrentView = view;
 		}
+
+		void IElementHandler.SetVirtualView(IElement view) => SetVirtualView((IView)view);
 		public void DisconnectHandler() => CurrentView = null;
-		void IViewHandler.SetMauiContext(IMauiContext mauiContext) => MauiContext = mauiContext;
+		void IElementHandler.SetMauiContext(IMauiContext mauiContext) => MauiContext = mauiContext;
 		Size IViewHandler.GetDesiredSize(double widthConstraint, double heightConstraint) => GetIntrinsicSize(widthConstraint, heightConstraint);
 		void IViewHandler.NativeArrange(Rectangle frame) => Frame = frame;
 	}
