@@ -105,8 +105,8 @@ namespace Comet
 			set => __viewThatWasReplaced = new WeakReference(value);
 		}
 		public string AccessibilityId { get; set; }
-		IViewHandler viewHandler;
-		public IViewHandler ViewHandler
+		IElementHandler viewHandler;
+		public IElementHandler ViewHandler
 		{
 			get => viewHandler;
 			set
@@ -115,7 +115,7 @@ namespace Comet
 			}
 		}
 
-		bool SetViewHandler(IViewHandler handler)
+		bool SetViewHandler(IElementHandler handler)
 		{
 			if (viewHandler == handler)
 				return false;
@@ -479,7 +479,7 @@ namespace Comet
 				if (f == value)
 					return;
 				this.SetEnvironment(nameof(Frame), value, false);
-				ViewHandler?.NativeArrange(value);
+				(ViewHandler as IViewHandler)?.NativeArrange(value);
 			}
 		}
 
@@ -673,14 +673,14 @@ namespace Comet
 
 		IViewHandler IFrameworkElement.Handler
 		{
-			get => this.ViewHandler;
+			get => (ViewHandler as IViewHandler);
 			set => SetViewHandler(value);
 		}
 
 		IElementHandler IElement.Handler
 		{
 			get => this.ViewHandler;
-			set => SetViewHandler((IViewHandler)value);
+			set => SetViewHandler(value);
 		}
 
 		IFrameworkElement IFrameworkElement.Parent => this.Parent;
