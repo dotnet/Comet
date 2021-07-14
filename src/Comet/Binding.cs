@@ -231,16 +231,27 @@ namespace Comet
 				CurrentValue = Cast(value);
 			}
 			if(!(oldValue?.Equals(CurrentValue) ?? false))
-				View?.ViewPropertyChanged(propertyName, value);
+				View?.ViewPropertyChanged(propertyName, CurrentValue);
 
 		}
-		T Cast(object value)
+
+		static T Cast(object value)
 		{
 			if (value is T v)
 				return v;
 			if (typeof(T) == typeof(string))
 				return (T)(object)value?.ToString();
-			throw new InvalidCastException();
+			var error = new InvalidCastException()
+			{
+				Data =
+				{
+					["Value"] = value,
+					["T Type"] = typeof(T),
+					["Value Type"] = value?.GetType(),
+				}
+			};
+			Logger.Error(error, typeof(T), value);
+			throw error;
 		}
 	}
 

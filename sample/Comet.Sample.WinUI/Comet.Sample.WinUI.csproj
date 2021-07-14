@@ -1,23 +1,48 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.19041.0</TargetFramework>
-    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
-    <RootNamespace>Maui.Controls.Sample.WinUI3</RootNamespace>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-    <Platforms>x86;x64;arm64</Platforms>
-    <RuntimeIdentifiers>win10-x86;win10-x64;win10-arm64</RuntimeIdentifiers>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.ProjectReunion" />
-    <PackageReference Include="Microsoft.ProjectReunion.Foundation" />
-    <PackageReference Include="Microsoft.ProjectReunion.WinUI" />
-    <Manifest Include="$(ApplicationManifest)" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\external\Maui\src\Core\src\Core-net6.csproj" />
-    <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials-net6.csproj" />
-    <ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />
-    <ProjectReference Include="..\Comet.Samples\Comet.Samples-net6.csproj" />
-  </ItemGroup>
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0-windows10.0.19041</TargetFrameworks>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<OutputType>WinExe</OutputType>
+		<TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+		<RootNamespace>CometSample</RootNamespace>
+
+		<!-- Required - Enable Single Project for WinUI -->
+		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+		<WindowsPackageType>MSIX</WindowsPackageType>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiImage Include="..\Comet.SingleProject.Sample\Resources\appicon.svg" Link="Resources\appicon.svg" ForegroundFile="..\Comet.SingleProject.Sample\Resources\appiconfg.svg" IsAppIcon="true" Color="#512BD4" />
+
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="..\Comet.SingleProject.Sample\Resources\appiconfg.svg" Link="Resources\appiconfg.svg" Color="#512BD4" />
+
+		<!-- Images -->
+		<MauiImage Include="..\Comet.SingleProject.Sample\Resources\Images\*" Link="Resources\Images\%(Filename)%(Extension)" />
+
+		<!-- Custom Fonts -->
+		<MauiFont Include="..\Comet.SingleProject.Sample\Resources\Fonts\*" Link="Resources\Fonts\%(Filename)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Include="..\Comet.SingleProject.Sample\**\*.cs" Exclude="..\Comet.SingleProject.Sample\bin\**;..\Comet.SingleProject.Sample\obj\**;..\Comet.SingleProject.Sample\Platforms\**" Link="%(RecursiveDir)%(Filename)%(Extension)" />
+		<MauiXaml Include="..\Comet.SingleProject.Sample\**\*.xaml" Exclude="..\Comet.SingleProject.Sample\bin\**;..\Comet.SingleProject.Sample\obj\**" Link="%(RecursiveDir)%(FileName)%(Extension)" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Microsoft.ProjectReunion" Version="0.8.0" />
+		<PackageReference Include="Microsoft.ProjectReunion.Foundation" Version="0.8.0" />
+		<PackageReference Include="Microsoft.ProjectReunion.WinUI" Version="0.8.0" />
+		<PackageReference Include="Microsoft.ProjectReunion.InteractiveExperiences" Version="0.8.0" NoWarn="NU1701" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />
+	  <ProjectReference Include="..\Comet.Samples\Comet.Samples-net6.csproj" />
+	</ItemGroup>
+
 </Project>

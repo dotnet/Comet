@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Comet.Graphics;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
@@ -7,6 +8,10 @@ namespace Comet
 {
 	public class Image : View, Microsoft.Maui.IImage
 	{
+		protected static Dictionary<string, string> ImageHandlerPropertyMapper = new(HandlerPropertyMapper)
+		{
+			[nameof(ImageSource)] = nameof(IImageSourcePart.Source),
+		};
 		public Image(Binding<IImageSource> imageSource = null)
 		{
 			ImageSource = imageSource;
@@ -14,7 +19,7 @@ namespace Comet
 
 		public Image(Binding<string> source)
 		{
-			Source = source;
+			StringSource = source;
 		}
 
 		public Image(Func<IImageSource> bitmap) : this((Binding<IImageSource>)bitmap) { }
@@ -29,7 +34,7 @@ namespace Comet
 		}
 
 		private Binding<string> _source;
-		public Binding<string> Source
+		public Binding<string> StringSource
 		{
 			get => _source;
 			protected set
@@ -42,8 +47,9 @@ namespace Comet
 		public override void ViewPropertyChanged(string property, object value)
 		{
 			base.ViewPropertyChanged(property, value);
-			if (property == nameof(Source))
+			if (property == nameof(StringSource))
 			{
+				this.InvalidateMeasurement();
 				CreateImageSource((string)value);
 			}
 		}
@@ -52,12 +58,9 @@ namespace Comet
 		{
 			try
 			{
-				if (string.IsNullOrWhiteSpace(source))
-				{
-					ImageSource = null;
-					return;
-				}
-				ImageSource = (ImageSource)source;
+				_imageSource ??= new Binding<IImageSource>();
+				_imageSource.Value = (ImageSource)source;
+				ViewHandler?.UpdateValue(nameof(IImageSourcePart.Source));
 			}
 			catch (Exception exc)
 			{
@@ -77,5 +80,9 @@ namespace Comet
 		IImageSource IImageSourcePart.Source => ImageSource?.CurrentValue;
 
 		bool IImageSourcePart.IsAnimationPlaying => this.GetEnvironment<bool>(nameof(Microsoft.Maui.IImage.IsAnimationPlaying));
+
+
+		protected override string GetHandlerPropertyName(string property)
+			=> ImageHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}
 }

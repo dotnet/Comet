@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Comet.Tests.Handlers;
 using Microsoft.Maui;
 using Xunit;
@@ -304,6 +305,107 @@ namespace Comet.Tests
 
 			model.CurrentDataModel.Value.Count = 2;
 			Assert.Equal("2", text.Value);
+
+		}
+
+
+		[Fact]
+		public async Task DatabindingWorksAcrossThreads()
+		{
+
+			bool hasFirstViewStarted = false;
+			bool hasFirstViewEnded = false;
+
+			StatePage firstView = null;
+			Text firstText = null;
+
+			int firstViewBuildCount = 0;
+			int firstTextBuildCount = 0;
+
+
+			bool hasSecondViewStarted = false;
+			bool hasSecondViewEnded = false;
+
+			StatePage secondView = null;
+			Text secondText = null;
+
+			int secondViewBuildCount = 0;
+			int secondTextBuildCount = 0;
+
+
+			var firstViewTask = Task.Run(() => {
+				firstView = new StatePage();
+				firstView.text.Value = "Hello";
+				firstView.Body = () => {
+					hasFirstViewStarted = true;
+					while (!hasSecondViewStarted)
+						Task.Delay(10).Wait();
+					firstViewBuildCount++;
+					firstText = new Text(() => {
+						firstTextBuildCount++;
+						return firstView.text.Value;
+					});
+
+					hasFirstViewEnded = true;
+					while (!hasSecondViewEnded)
+						Task.Delay(10).Wait();
+					return firstText;
+				};
+
+				var viewHandler = firstView.SetViewHandlerToGeneric();
+
+				var textHandler = firstView.SetViewHandlerToGeneric();
+
+			});
+
+
+			var secondViewTask = Task.Run(() => {
+				secondView = new StatePage();
+				secondView.text.Value = "Hello";
+				secondView.Body = () => {
+					hasSecondViewStarted = true;
+					while (!hasFirstViewStarted)
+						Task.Delay(10).Wait();
+					secondViewBuildCount++;
+					secondText = new Text(() => {
+						secondTextBuildCount++;
+						return secondView.text.Value;
+					});
+
+					hasSecondViewEnded = true;
+					while (!hasFirstViewEnded)
+						Task.Delay(10).Wait();
+					return secondText;
+				};
+
+				var viewHandler = secondView.SetViewHandlerToGeneric();
+
+				var textHandler = secondText.SetViewHandlerToGeneric();
+
+			});
+
+
+			await Task.WhenAll(firstViewTask, secondViewTask);	
+
+
+			Assert.Equal(1, firstViewBuildCount);
+			Assert.Equal(1, firstTextBuildCount);
+			Assert.Equal(1, secondViewBuildCount);
+			Assert.Equal(1, secondTextBuildCount);
+
+			firstView.text.Value = "Goodbye";
+
+			Assert.Equal(1, firstViewBuildCount);
+			Assert.Equal(2, firstTextBuildCount);
+			Assert.Equal(1, secondViewBuildCount);
+			Assert.Equal(1, secondTextBuildCount);
+
+			secondView.text.Value = "Goodbye";
+
+			Assert.Equal(1, firstViewBuildCount);
+			Assert.Equal(2, firstTextBuildCount);
+			Assert.Equal(1, secondViewBuildCount);
+			Assert.Equal(2, secondTextBuildCount);
 
 		}
 

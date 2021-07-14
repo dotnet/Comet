@@ -8,7 +8,9 @@ using Comet.Helpers;
 using Comet.Internal;
 //using System.Reflection;
 using Comet.Reflection;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
+using Microsoft.Maui.Animations;
 using Microsoft.Maui.Essentials;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.HotReload;
@@ -19,14 +21,18 @@ using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage, ISafeAreaView//, IClipShapeView
-	{		
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, IPage, ISafeAreaView, IContentTypeHash, IAnimator
+	{
 		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
 		protected static Dictionary<string, string> HandlerPropertyMapper = new()
 		{
 			[nameof(MeasuredSize)] = nameof(IFrameworkElement.DesiredSize),
+			[EnvironmentKeys.Fonts.Size] = nameof(IText.Font),
+			[EnvironmentKeys.Fonts.Slant] = nameof(IText.Font),
+			[EnvironmentKeys.Fonts.Family] = nameof(IText.Font),
+			[EnvironmentKeys.Fonts.Weight] = nameof(IText.Font),
 		};
 
 		IReloadHandler reloadHandler;
@@ -99,8 +105,8 @@ namespace Comet
 			set => __viewThatWasReplaced = new WeakReference(value);
 		}
 		public string AccessibilityId { get; set; }
-		IViewHandler viewHandler;
-		public IViewHandler ViewHandler
+		IElementHandler viewHandler;
+		public IElementHandler ViewHandler
 		{
 			get => viewHandler;
 			set
@@ -109,7 +115,7 @@ namespace Comet
 			}
 		}
 
-		bool SetViewHandler(IViewHandler handler)
+		bool SetViewHandler(IElementHandler handler)
 		{
 			if (viewHandler == handler)
 				return false;
@@ -121,6 +127,7 @@ namespace Comet
 				viewHandler?.SetVirtualView(this);
 			if (replacedView != null)
 				replacedView.ViewHandler = handler;
+			AddAllAnimationsToManager();
 			return true;
 
 		}
@@ -242,8 +249,8 @@ namespace Comet
 						{
 							State.AddGlobalProperties(props);
 						}
-						UpdateBuiltViewContext(view);
 						builtView = view.GetRenderView();
+						UpdateBuiltViewContext(builtView);
 					}
 					catch(Exception ex)
 					{
@@ -306,7 +313,7 @@ namespace Comet
 				Debug.WriteLine(ex);
 			}
 			ViewHandler?.UpdateValue(GetHandlerPropertyName(property));
-			replacedView?.ViewPropertyChanged(property, value);
+			builtView?.ViewPropertyChanged(property, value);
 		}
 
 		protected virtual string GetHandlerPropertyName(string property) =>
@@ -315,6 +322,7 @@ namespace Comet
 
 		internal override void ContextPropertyChanged(string property, object value, bool cascades)
 		{
+			builtView?.ContextPropertyChanged(property, value, cascades);
 			ViewPropertyChanged(property, value);
 		}
 
@@ -372,6 +380,21 @@ namespace Comet
 			{
 				var key = item.Key;
 				var value = this.GetEnvironment(key);
+				if(value == null)
+				{
+					//Get the current MauiContext
+					//I might be able to do something better, like searching up though the parent
+					//Maybe I can do something where I get the current Context whenever I build
+					var mauiContext = this.ViewHandler?.MauiContext ?? CometApp.CurrentWindow?.MauiContext;
+					if (mauiContext != null)
+					{
+						var type = this.GetType();
+						var prop = type.GetDeepField(item.Field);
+						var service = mauiContext.Services.GetService(prop.FieldType);
+						if (service != null)
+							value = service;
+					}
+				}
 				if (value == null)
 				{
 					//Check the replaced view
@@ -456,7 +479,7 @@ namespace Comet
 				if (f == value)
 					return;
 				this.SetEnvironment(nameof(Frame), value, false);
-				ViewHandler?.NativeArrange(value);
+				(ViewHandler as IViewHandler)?.NativeArrange(value);
 			}
 		}
 
@@ -589,21 +612,45 @@ namespace Comet
 
 		public void AddAnimation(Animation animation)
 		{
-			animation.Parent = new WeakReference<View>(this);
+			animation.Parent = new WeakReference<IAnimator>(this);
 			GetAnimations(true).Add(animation);
-			AnimationManger.Add(animation);
+			AddAnimationsToManager(animation);
 		}
 		public void RemoveAnimation(Animation animation)
 		{
 			animation.Parent = null;
 			GetAnimations(false)?.Remove(animation);
-			AnimationManger.Remove(animation);
 		}
 
 		public void RemoveAnimations() => GetAnimations(false)?.ToList().ForEach(animation => {
 			animations.Remove(animation);
-			AnimationManger.Remove(animation);
+			RemoveAnimationsFromManager(animation);
 		});
+		void AddAnimationsToManager(Animation animation)
+		{
+			var animationManager = GetAnimationManager();
+			if (animationManager == null)
+				return;
+			ThreadHelper.RunOnMainThread(()=> animationManager.Add(animation));
+		}
+
+		protected virtual IMauiContext GetMauiContext() => ViewHandler?.MauiContext ?? BuiltView?.GetMauiContext();
+		IAnimationManager GetAnimationManager() => GetMauiContext()?.Services.GetRequiredService<IAnimationManager>();
+
+		void AddAllAnimationsToManager()
+		{
+			var animationManager = GetAnimationManager();
+			if (animationManager == null)
+				return;
+			ThreadHelper.RunOnMainThread(()=>GetAnimations(false)?.ToList().ForEach(animationManager.Add));
+		}
+		void RemoveAnimationsFromManager(Animation animation)
+		{
+			var animationManager = GetAnimationManager();
+			if (animationManager == null)
+				return;
+			animationManager.Remove(animation);
+		}
 
 		public virtual void PauseAnimations()
 		{
@@ -618,15 +665,26 @@ namespace Comet
 
 		bool IFrameworkElement.IsEnabled => this.GetEnvironment<bool?>(nameof(IFrameworkElement.IsEnabled)) ?? true;
 
-		Rectangle IFrameworkElement.Frame => Frame;
+		Rectangle IFrameworkElement.Frame
+		{
+			get => Frame;
+			set => Frame = value;
+		}
 
 		IViewHandler IFrameworkElement.Handler
+		{
+			get => (ViewHandler as IViewHandler);
+			set => SetViewHandler(value);
+		}
+
+		IElementHandler IElement.Handler
 		{
 			get => this.ViewHandler;
 			set => SetViewHandler(value);
 		}
 
 		IFrameworkElement IFrameworkElement.Parent => this.Parent;
+		IElement IElement.Parent => this.Parent;
 
 		Size IFrameworkElement.DesiredSize => MeasuredSize;
 
@@ -644,7 +702,7 @@ namespace Comet
 
 		public bool RequiresContainer => HasContent;
 
-		//public IShape ClipShape => this.GetClipShape();
+		IShape IFrameworkElement.Clip => this.GetClipShape();
 
 		IView IReplaceableView.ReplacedView => this.ReplacedView;
 
@@ -715,5 +773,7 @@ namespace Comet
 			}
 		}
 		void IHotReloadableView.Reload() => ThreadHelper.RunOnMainThread(() => Reload(true));
+		protected int? TypeHashCode;
+		public virtual int GetContentTypeHashCode() => this.replacedView?.GetContentTypeHashCode() ?? (TypeHashCode ??= this.GetType().GetHashCode());
 	}
 }

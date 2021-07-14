@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Maui;
 
 namespace Comet
@@ -25,12 +26,14 @@ namespace Comet
 			view.Navigation = Parent as NavigationView ?? Parent?.Navigation;
 			Views.Add(view);
 			OnAdded(view);
+			TypeHashCode = null;
 		}
 
 		protected virtual void OnAdded(View view) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
 
 		public void Clear()
 		{
+			TypeHashCode = null;
 			var count = Views.Count;
 			if (count > 0)
 			{
@@ -72,6 +75,7 @@ namespace Comet
 				Views.Remove(item);
 
 				OnRemoved(item);
+				TypeHashCode = null;
 				//ChildrenRemoved?.Invoke(this, new LayoutEventArgs(index, 1, removed));
 				return true;
 			}
@@ -105,6 +109,7 @@ namespace Comet
 
 			item.Parent = this;
 			item.Navigation = Parent as NavigationView ?? Parent?.Navigation;
+			TypeHashCode = null;
 		}
 
 		protected virtual void OnInsert(int index, View item) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
@@ -120,6 +125,7 @@ namespace Comet
 				var removed = new List<View> { item };
 				Views.RemoveAt(index);
 				OnRemoved(item);
+				TypeHashCode = null;
 			}
 		}
 
@@ -199,5 +205,14 @@ namespace Comet
 			base.ResumeAnimations();
 		}
 
+		public override int GetContentTypeHashCode() => TypeHashCode ??= GetChidrensTypeHasCode();
+
+		int GetChidrensTypeHasCode()
+		{
+			int hashCode = base.GetContentTypeHashCode();
+			foreach (var v in Views)
+				hashCode = HashCode.Combine(hashCode, v.GetType().GetHashCode());
+			return hashCode;
+		}
 	}
 }

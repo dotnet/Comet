@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Comet.Internal;
+using Microsoft.Maui;
 
 namespace Comet
 {
@@ -54,8 +55,10 @@ namespace Comet
 			return fields;
 		}
 
-		public static T Title<T>(this T view, string title, bool cascades = true) where T : View =>
+		public static T Title<T>(this T view, Binding<string> title, bool cascades = true) where T : View =>
 			view.SetEnvironment(EnvironmentKeys.View.Title, title, cascades, ControlState.Default);
+		public static T Title<T>(this T view, Func<string> title, bool cascades = true) where T : View =>
+			view.Title((Binding<string>)title, cascades);
 
 		public static string GetTitle(this View view)
 		{
@@ -119,5 +122,20 @@ namespace Comet
 			=> view.GetEnvironment<string>(view, EnvironmentKeys.View.AutomationId,cascades:false);
 		public static void SetAutomationId(this View view, string automationId)
 			=> view.SetEnvironment(EnvironmentKeys.View.AutomationId, automationId, cascades: false);
+
+		/// <summary>
+		/// Hunts through the parents to find the current Context.
+		/// </summary>
+		/// <param name="view"></param>
+		/// <returns></returns>
+		public static IMauiContext GetMauiContext(this View view)
+		{
+			//IF there is only one app, with one window, then there is only one context.
+			//Don't go hunting!
+			if (CometApp.CurrentApp.Windows.Count == 1)
+				return CometApp.MauiContext;
+			return view.FindParentOfType<IMauiContextHolder>()?.MauiContext ?? CometApp.MauiContext;
+		}
+
 	}
 }

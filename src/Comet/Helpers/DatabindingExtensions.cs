@@ -240,7 +240,7 @@ namespace Comet
 				return viewView?.GetType() == compareViewView?.GetType();
 			}
 			var areSame = AreSameType(view, compareView);
-			if (areSame && checkRenderers && compareView.ViewHandler != null)
+			if (areSame && checkRenderers && compareView?.ViewHandler != null)
 			{
 				var renderType = CometApp.MauiContext.Handlers.GetHandlerType(view.GetType());
 				areSame = renderType == compareView.ViewHandler.GetType();

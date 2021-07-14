@@ -12,7 +12,6 @@ namespace Comet.iOS
 		{
 			Context = context;
 		}
-		private static readonly string CellType = "CUIViewCell";
 		public IMauiContext Context { get; protected set; }
 		private IListView _listView;
 		private bool _unevenRows;
@@ -62,10 +61,10 @@ namespace Comet.iOS
 
 		public override UITableViewCell GetCell(UITableView tableView, NSIndexPath indexPath)
 		{
-			var cellIdentifier = CellType;
-			var cell = tableView.DequeueReusableCell(cellIdentifier, indexPath) as CUITableViewCell;
-			cell.SetFromContext(Context);
 			var v = _listView?.ViewFor(indexPath.Section, indexPath.Row);
+			var cellIdentifier = new NSString($"{v.GetContentTypeHashCode()}");
+			var cell = tableView.DequeueReusableCell(cellIdentifier) as CUITableViewCell ?? new CUITableViewCell(cellIdentifier);
+			cell.SetFromContext(Context);
 			cell.SetView(v);
 			return cell;
 		}

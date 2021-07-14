@@ -29,12 +29,18 @@ namespace Comet.iOS
 		{
 			if (view == _view && !forceRefresh)
 				return;
-			//If the views are the same type- reuse the handlers!
-			if(view is View v && _view is View pv && v.AreSameType(pv,true) && currentHandler != null)
+			//reuse the handlers!
+			if(view is View v && _view is View pv &&
+				v.GetContentTypeHashCode() == pv.GetContentTypeHashCode()
+				&& currentHandler != null)
 			{
 				_view = view;
 				v.ViewHandler = currentHandler;
-				currentHandler.SetVirtualView(view);
+				if (_view is IHotReloadableView ihr1)
+				{
+					ihr1.ReloadHandler = this;
+					MauiHotReloadHelper.AddActiveView(ihr1);
+				}
 				return;
 			}
 
@@ -60,6 +66,7 @@ namespace Comet.iOS
 			base.LayoutSubviews();
 			if (currentNativeView == null)
 				return;
+			_view?.Measure(Bounds.Width, Bounds.Height);// .LayoutSubviews(this.Bounds.ToRectangle());
 			currentNativeView.Frame = Bounds;
 		}
 

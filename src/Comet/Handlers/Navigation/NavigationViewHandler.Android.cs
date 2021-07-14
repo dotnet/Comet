@@ -12,8 +12,6 @@ namespace Comet.Handlers
 			=> new CometNavigationView(MauiContext);
 		public override void SetVirtualView(IView view)
 		{
-			if (view == VirtualView)
-				return;
 			base.SetVirtualView(view);
 			if (VirtualView != null)
 			{

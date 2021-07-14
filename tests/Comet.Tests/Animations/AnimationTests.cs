@@ -1,5 +1,7 @@
 ﻿using System;
 using Xunit;
+using Microsoft.Maui.Animations;
+using Microsoft.Maui;
 
 namespace Comet.Tests
 {
@@ -8,7 +10,7 @@ namespace Comet.Tests
         [Fact]
 		public void DoubleAnimatesOverTime()
         {
-            var animation = new Animation
+            var animation = new LerpingAnimation
             {
                 StartValue = 0.0,
                 EndValue = 1.0,

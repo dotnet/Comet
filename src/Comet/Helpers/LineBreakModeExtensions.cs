@@ -11,10 +11,9 @@ namespace Comet
 			return mode ?? defaultMode;
 		}
 
-		public static T LineBreakMode<T>(this T view, LineBreakMode mode) where T : View
-		{
+		public static T LineBreakMode<T>(this T view, Binding<LineBreakMode> mode) where T : View =>
 			view.SetEnvironment(EnvironmentKeys.LineBreakMode.Mode, mode);
-			return view;
-		}
+		public static T LineBreakMode<T>(this T view, Func<LineBreakMode> mode) where T : View =>
+			view.LineBreakMode((Binding<LineBreakMode>)mode);
 	}
 }

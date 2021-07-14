@@ -12,19 +12,19 @@ namespace Comet.Handlers
 	{
 		
 
-		public static void MapListViewProperty(IViewHandler viewHandler, IListView virtualView)
+		public static void MapListViewProperty(IElementHandler viewHandler, IListView virtualView)
 		{
 			var nativeView = (CUITableView)viewHandler.NativeView;
 			nativeView.ListView = virtualView;
 			nativeView.SizeToFit();
 		}
 
-		public static void MapReloadData(IViewHandler viewHandler, IListView virtualView)
+		public static void MapReloadData(IElementHandler viewHandler, IListView virtualView)
 		{
 			var nativeView = (CUITableView)viewHandler.NativeView;
 			nativeView?.ReloadData();
 		}
 
-		protected override CUITableView CreateNativeView() => NativeView as CUITableView ?? new CUITableView(MauiContext);
+		protected override CUITableView CreateNativeView() =>  new CUITableView(MauiContext);
 	}
 }

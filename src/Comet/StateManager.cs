@@ -4,26 +4,36 @@ using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Comet.Helpers;
 using Comet.Internal;
 using Comet.Reflection;
+using Microsoft.Maui;
 using Microsoft.Maui.Essentials;
 
 namespace Comet
 {
 	public static class StateManager
 	{
-		static WeakStack<View> currentBuildingView = new WeakStack<View>();
-		public static View CurrentView => currentBuildingView.Peek() ?? LastView?.Target as View;
+		static readonly Dictionary<Thread, WeakStack<View>> ViewsByThread = new Dictionary<Thread, WeakStack<View>>();
+		static readonly Dictionary<Thread, List<(INotifyPropertyRead bindingObject, string property)>> CurrentReadProperiesByThread = new Dictionary<Thread, List<(INotifyPropertyRead bindingObject, string property)>>();
+		public static View CurrentView => ViewsByThread.GetCurrent().Peek() ?? LastView?.Target as View;
+
 		static WeakReference LastView;
 		static Dictionary<string, List<INotifyPropertyRead>> ViewObjectMappings = new Dictionary<string, List<INotifyPropertyRead>>();
 		static Dictionary<INotifyPropertyRead, HashSet<View>> NotifyToViewMappings = new Dictionary<INotifyPropertyRead, HashSet<View>>();
 		static Dictionary<INotifyPropertyChanged, Dictionary<string, string>> ChildPropertyNamesMapping = new Dictionary<INotifyPropertyChanged, Dictionary<string, string>>();
-
+		public static IMauiContext CurrentContext { get; private set; }
 
 		static List<INotifyPropertyRead> MonitoredObjects = new List<INotifyPropertyRead>();
 
-		public static List<(INotifyPropertyRead bindingObject, string property)> currentReadProperies = new List<(INotifyPropertyRead bindingObject, string property)>();
+		static T GetCurrent<T>(this Dictionary<Thread,T> dictionary) where T : new ()
+		{
+			var thread = Thread.CurrentThread;
+			if (dictionary.TryGetValue(thread, out var item))
+				return item;
+			return dictionary[thread] = new T();
+		}
 
 		public static bool IsBuilding => isBuilding;
 		static bool isBuilding = false;
@@ -41,6 +51,7 @@ namespace Comet
 					NotifyToViewMappings.GetOrCreateForKey(obj).Add(view);
 				}
 			}
+			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
 			if (currentReadProperies.Any())
 			{
 				//TODO: Change this to object and property!!!
@@ -68,23 +79,35 @@ namespace Comet
 
 		public static void StartBuilding(View view)
 		{
+			if (view.ViewHandler?.MauiContext != null)
+				CurrentContext = view.ViewHandler?.MauiContext;
+			else if (view is IMauiContextHolder imvc && CurrentContext != imvc.MauiContext)
+				CurrentContext = imvc.MauiContext;
+
 			//TODO: Grab objects and add them to previous views globals
+			var currentBuildingView = ViewsByThread.GetCurrent();
 			currentBuildingView.Push(view);
 			isBuilding = true;
+			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
 			if (currentReadProperies.Any())
 			{
 				//TODO: Change this to object and property!!!
 				CurrentView.GetState().AddGlobalProperties(currentReadProperies);
 			}
 			currentReadProperies.Clear();
-
 		}
 		public static void EndBuilding(View view)
 		{
-			//TODO: Remove from the stack
+			var currentBuildingView = ViewsByThread.GetCurrent();
 			var v = currentBuildingView.Pop();
 			Debug.Assert(v == view);
 			isBuilding = currentBuildingView.Count != 0;
+			if (!isBuilding)
+			{
+				var thread = Thread.CurrentThread;
+				ViewsByThread.Remove(thread);
+				CurrentReadProperiesByThread.Remove(thread);
+			}
 		}
 
 
@@ -181,6 +204,7 @@ namespace Comet
 		{
 			if (!isBuilding)
 				return;
+			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
 			currentReadProperies.Add((sender as INotifyPropertyRead, propertyName));
 		}
 		static internal void OnPropertyChanged(object sender, string propertyName, object value)
@@ -261,7 +285,9 @@ namespace Comet
 
 		internal static IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> EndProperty()
 		{
-			var changed = currentReadProperies.Distinct().ToList();
+
+			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
+			var changed = currentReadProperies.ToList().Distinct().ToList();
 			currentReadProperies.Clear();
 			return changed;
 
@@ -271,6 +297,7 @@ namespace Comet
 		internal static void StartProperty()
 		{
 			isBuilding = true;
+			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
 			if (currentReadProperies.Any())
 			{
 				//TODO: Change this to object and property!!!

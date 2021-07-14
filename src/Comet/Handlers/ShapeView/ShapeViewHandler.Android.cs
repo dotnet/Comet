@@ -10,7 +10,7 @@ namespace Comet.Handlers
 		protected override NativeGraphicsView CreateNativeView() => new NativeGraphicsView(MauiContext.Context);
 
 
-		public static void MapShapeProperty(IViewHandler viewHandler, ShapeView virtualView)
+		public static void MapShapeProperty(IElementHandler viewHandler, ShapeView virtualView)
 		{
 			var nativeView = (NativeGraphicsView)viewHandler.NativeView;
 			nativeView.Drawable = virtualView;

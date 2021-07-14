@@ -126,7 +126,7 @@ namespace Comet.Layout
 					view.MeasuredSize = new Size(w, h);
 					view.MeasurementValid = true;
 				}
-
+				view.Measure(w, h);
 				view.Frame = new Rectangle(x, y, w, h);
 			}
 

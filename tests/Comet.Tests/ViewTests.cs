@@ -52,5 +52,65 @@ namespace Comet.Tests
 			//Make sure the new view has the old handler
 			Assert.Equal(textHandler, currentText?.ViewHandler);
 		}
+		[Fact]
+		public void ViewsHaveMatchingTypeHashCodes()
+		{
+			var text = new Text("Foo").GetContentTypeHashCode();
+			var text2 = new Text("Bar").GetContentTypeHashCode();
+			Assert.Equal(text, text2);
+
+			text = new HStack()
+			{
+				new Text("Foo"),
+			}.GetContentTypeHashCode();
+
+			text2 = new HStack()
+			{
+				new Text("Bar"),
+			}.GetContentTypeHashCode();
+
+			Assert.Equal(text, text2);
+
+
+			text = new HStack()
+			{
+				new Text("Foo"),
+				new Button("Foo"),
+			}.GetContentTypeHashCode();
+
+			text2 = new HStack()
+			{
+				new Text("Bar"),
+				new Button("Bar"),
+			}.GetContentTypeHashCode();
+
+			Assert.Equal(text, text2);
+
+			//Not Equal Section
+
+			text = new HStack()
+			{
+				new Text("Foo"),
+			}.GetContentTypeHashCode();
+
+			text2 = new HStack()
+			{
+				new Button("Bar"),
+			}.GetContentTypeHashCode();
+
+			Assert.NotEqual(text, text2);
+
+			text = new HStack()
+			{
+				new Text("Foo"),
+			}.GetContentTypeHashCode();
+
+			text2 = new VStack()
+			{
+				new Button("Foo"),
+			}.GetContentTypeHashCode();
+
+			Assert.NotEqual(text, text2);
+		}
 	}
 }

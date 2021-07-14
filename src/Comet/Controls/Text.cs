@@ -46,11 +46,11 @@ namespace Comet
 
 		TextAlignment ITextAlignment.HorizontalTextAlignment => this.GetTextAlignment() ?? TextAlignment.Start;
 
-		//TextAlignment ITextAlignment.VerticalTextAlignment => this.GetVerticalTextAlignment() ?? TextAlignment.Start;
+		TextAlignment ITextAlignment.VerticalTextAlignment => this.GetVerticalTextAlignment() ?? TextAlignment.Start;
 
 		Microsoft.Maui.LineBreakMode ILabel.LineBreakMode => this.GetLineBreakMode(LineBreakMode.NoWrap);
 
-		int ILabel.MaxLines => this.GetEnvironment<int>(nameof(ILabel.MaxLines));
+		int ILabel.MaxLines => this.GetMaxLines(-1);
 
 		TextDecorations ILabel.TextDecorations => this.GetEnvironment<TextDecorations>(nameof(ILabel.TextDecorations));
 

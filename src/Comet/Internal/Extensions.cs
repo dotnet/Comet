@@ -54,17 +54,17 @@ namespace Comet.Internal
 			return view;
 		}
 
-		public static T FindParentOfType<T>(this View view) where T : View
+		public static T FindParentOfType<T>(this View view)
 		{
 			if (view == null)
-				return null;
+				return default;
 			if (view.BuiltView is T bt)
 			{
 				return bt;
 			}
 			if (view is T t)
 				return t;
-			return view.Parent?.FindParentOfType<T>();
+			return view.Parent.FindParentOfType<T>() ?? default;
 		}
 	}
 }

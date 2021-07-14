@@ -43,15 +43,6 @@
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
-      <group targetFramework=".NETStandard2.0">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
-        <dependency id="Reloadify3000" version="1.0.6" />
-      </group>
       <group targetFramework=".NETStandard2.1">
         <dependency id="Microsoft.Maui.Graphics" version="6.0.100-preview.4.134" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
@@ -62,23 +53,16 @@
         <dependency id="Reloadify3000" version="1.0.6" />
       </group>
       <group targetFramework="net6.0-android30.0">
-        <dependency id="Microsoft.Maui" version="6.0.100-preview.5.794" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="net6.0-ios13.6">
-        <dependency id="Microsoft.Maui" version="6.0.100-preview.5.794" exclude="Build,Analyzers" />
       </group>
       <group targetFramework="net6.0-maccatalyst13.5">
-        <dependency id="Microsoft.Maui" version="6.0.100-preview.5.794" exclude="Build,Analyzers" />
+      </group>      
+      <group targetFramework="net6.0-windows10.0.18362">
       </group>
     </dependencies>
   </metadata>
   <files>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Comet.dll" target="lib/netstandard2.0/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Comet.pdb" target="lib/netstandard2.0/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.dll" target="lib/netstandard2.0/Microsoft.Maui.dll"/>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.pdb" target="lib/netstandard2.0/Microsoft.Maui.pdb"/>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.Essentials.dll" target="lib/netstandard2.0/Microsoft.Maui.Essentials.dll"/>
-    <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.Essentials.pdb" target="lib/netstandard2.0/Microsoft.Maui.Essentials.pdb"/>
     <file src="src/Comet/bin/Debug/netstandard2.1/Comet.dll" target="lib/netstandard2.1/Comet.dll"/>
     <file src="src/Comet/bin/Debug/netstandard2.1/Comet.pdb" target="lib/netstandard2.1/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/netstandard2.1/Microsoft.Maui.dll" target="lib/netstandard2.1/Microsoft.Maui.dll"/>
@@ -103,5 +87,9 @@
     <file src="src/Comet/bin/Debug/net6.0-android/Comet.pdb" target="lib/net6.0-android30.0/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.dll" target="lib/net6.0-maccatalyst13.5/Comet.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.pdb" target="lib/net6.0-maccatalyst13.5/Comet.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0-windows10.0.18362/Comet.dll" target="lib/net6.0-windows10.0.18362/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-windows10.0.18362/Comet.pdb" target="lib/net6.0-windows10.0.18362/Comet.pdb"/>
+    <file src="external/Maui/.nuspec/Microsoft.Maui.Core.targets" target="build/Microsoft.Maui.Core.targets" />
+    <file src="external/Maui/.nuspec/Microsoft.Maui.Core.props" target="build/Microsoft.Maui.Core.props" />
   </files>
 </package>

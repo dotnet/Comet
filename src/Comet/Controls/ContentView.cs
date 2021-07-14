@@ -16,6 +16,7 @@ namespace Comet
 			view.Parent = this;
 			view.Navigation = Parent?.Navigation;
 			Content = view;
+			TypeHashCode = view.GetContentTypeHashCode();
 		}
 		protected override void OnParentChange(View parent)
 		{

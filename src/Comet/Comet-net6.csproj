@@ -3,6 +3,10 @@
     <TargetFrameworks>$(MauiPlatforms)</TargetFrameworks>
     <RootNamespace>Comet</RootNamespace>
     <AssemblyName>Comet</AssemblyName>
+    <IsPackable>false</IsPackable>
+    <UseMauiAssets>true</UseMauiAssets>
+    <UseMauiCore>true</UseMauiCore>
+    <UseMauiEssentials>true</UseMauiEssentials>
   </PropertyGroup>
   <PropertyGroup>
     <PackageId>Clancey.Comet</PackageId>
@@ -10,7 +14,11 @@
   <Import Project="..\..\external\Maui\.nuspec\Microsoft.Maui.Controls.MultiTargeting.targets" />
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-    <PackageReference Include="Microsoft.Maui" Version="6.0.100-preview.5.794" />
+  </ItemGroup>
+ <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
+    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0.8-net6preview02.4535000" />
+  </ItemGroup>
+ <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
   </ItemGroup>
 </Project>
 

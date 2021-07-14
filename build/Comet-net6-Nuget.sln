@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.29016.16
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31513.29
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet-net6", "..\src\Comet\Comet-net6.csproj", "{D374ACC2-73FF-45E6-B434-29C492EFF384}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet-net6", "..\src\Comet\Comet-net6.csproj", "{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,26 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D374ACC2-73FF-45E6-B434-29C492EFF384}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D374ACC2-73FF-45E6-B434-29C492EFF384}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D374ACC2-73FF-45E6-B434-29C492EFF384}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D374ACC2-73FF-45E6-B434-29C492EFF384}.Release|Any CPU.Build.0 = Release|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Debug|ARM.Build.0 = Debug|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Debug|x64.Build.0 = Debug|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Debug|x86.Build.0 = Debug|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Release|Any CPU.Build.0 = Release|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Release|ARM.ActiveCfg = Release|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Release|ARM.Build.0 = Release|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Release|ARM64.Build.0 = Release|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Release|x64.ActiveCfg = Release|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Release|x64.Build.0 = Release|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Release|x86.ActiveCfg = Release|Any CPU
+		{557EDEC5-504C-4FA1-97DB-F7B1E80EE447}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
