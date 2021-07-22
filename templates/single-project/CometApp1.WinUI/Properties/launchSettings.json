@@ -1,0 +1,7 @@
+{
+  "profiles": {
+    "CometApp1.WinUI": {
+      "commandName": "MsixPackage"
+    }
+  }
+}
