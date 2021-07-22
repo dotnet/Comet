@@ -52,7 +52,7 @@ namespace Comet.iOS
 				MauiHotReloadHelper.AddActiveView(ihr);
 			}
 			var newNativeView = _view?.ToNative(MauiContext);
-			currentHandler = _view.Handler;
+			currentHandler = _view?.Handler;
 			if (currentNativeView == newNativeView)
 				return;
 			currentNativeView?.RemoveFromSuperview();
