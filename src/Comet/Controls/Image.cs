@@ -59,7 +59,7 @@ namespace Comet
 			try
 			{
 				_imageSource ??= new Binding<IImageSource>();
-				_imageSource.Value = (ImageSource)source;
+				_imageSource.Set((ImageSource)source);
 				ViewHandler?.UpdateValue(nameof(IImageSourcePart.Source));
 			}
 			catch (Exception exc)

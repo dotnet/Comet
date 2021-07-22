@@ -9,7 +9,7 @@ namespace Comet
 {
 	public class Binding
 	{
-		public object Value { get; set; }
+		public object Value { get; protected set; }
 
 		public bool IsValue { get; internal set; }
 		public bool IsFunc { get; internal set; }
