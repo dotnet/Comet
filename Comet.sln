@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
-VisualStudioVersion = 16.0.29020.237
+VisualStudioVersion = 16.0.31507.150
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet", "src\Comet\Comet.csproj", "{1817646E-E71E-48CF-80A4-3030EF870D61}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet", "src\Comet\Comet.csproj", "{1817646E-E71E-48CF-80A4-3030EF870D61}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sample", "Sample", "{C3FDCDB7-0C29-472D-A406-E2F21A4B0EAE}"
 EndProject
@@ -16,15 +16,17 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Samples", "sample\Comet.Samples\Comet.Samples.csproj", "{1057EEAD-899D-4BC2-BA73-6BC526AD3F19}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet.Samples", "sample\Comet.Samples\Comet.Samples.csproj", "{1057EEAD-899D-4BC2-BA73-6BC526AD3F19}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "external\Maui\src\Core\src\Core.csproj", "{8A53D192-072F-4EF2-8547-932D7538FFB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "external\Maui\src\Core\src\Core.csproj", "{8A53D192-072F-4EF2-8547-932D7538FFB9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Tests", "tests\Comet.Tests\Comet.Tests.csproj", "{A94A318E-1F79-4AE9-9620-58D941382410}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet.Tests", "tests\Comet.Tests\Comet.Tests.csproj", "{A94A318E-1F79-4AE9-9620-58D941382410}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Essentials", "external\Maui\src\Essentials\src\Essentials.csproj", "{E2F234D6-3B2C-4F5E-B815-6D61B8AA5DC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Essentials", "external\Maui\src\Essentials\src\Essentials.csproj", "{E2F234D6-3B2C-4F5E-B815-6D61B8AA5DC6}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Android.Sample", "sample\Comet.Android.Sample\Comet.Android.Sample.csproj", "{1B3F8AD2-4252-44CA-8DD6-A7702C46A25D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet.SourceGenerator", "..\Comet.SourceGenerator\Comet.SourceGenerator\Comet.SourceGenerator.csproj", "{9DB7B29F-0347-4A06-9953-E35F5783C0DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -231,6 +233,34 @@ Global
 		{1B3F8AD2-4252-44CA-8DD6-A7702C46A25D}.Release|x64.Build.0 = Release|Any CPU
 		{1B3F8AD2-4252-44CA-8DD6-A7702C46A25D}.Release|x86.ActiveCfg = Release|Any CPU
 		{1B3F8AD2-4252-44CA-8DD6-A7702C46A25D}.Release|x86.Build.0 = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|ARM.Build.0 = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|x64.Build.0 = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Debug|x86.Build.0 = Debug|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|ARM.ActiveCfg = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|ARM.Build.0 = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|ARM64.Build.0 = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|iPhone.Build.0 = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|x64.ActiveCfg = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|x64.Build.0 = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|x86.ActiveCfg = Release|Any CPU
+		{9DB7B29F-0347-4A06-9953-E35F5783C0DC}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

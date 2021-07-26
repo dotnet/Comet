@@ -4,10 +4,10 @@ using Microsoft.Maui;
 // ReSharper disable once CheckNamespace
 namespace Comet
 {
-	public static class TextExtensions
+	public static partial class TextExtensions
 	{
 		public static T TextAlignment<T>(this T view, Binding<TextAlignment?> alignment, bool cascades = true) where T : View =>
-			view.SetEnvironment(EnvironmentKeys.Text.Alignment, alignment, cascades);
+		view.SetEnvironment(EnvironmentKeys.Text.Alignment, alignment, cascades);
 		public static T TextAlignment<T>(this T view, Func<TextAlignment?> alignment, bool cascades = true) where T : View =>
 			view.TextAlignment((Binding<TextAlignment?>)alignment, cascades);
 
@@ -22,12 +22,5 @@ namespace Comet
 			return value ?? defaultValue;
 		}
 
-		public static T MaxLines<T>(this T view, Binding<int> alignment, bool cascades = true) where T : View =>
-			view.SetEnvironment(nameof(ILabel.MaxLines), alignment, cascades);
-		public static T MaxLines<T>(this T view, Func<int> alignment, bool cascades = true) where T : View =>
-			view.MaxLines((Binding<int>)alignment, cascades);
-
-		public static int GetMaxLines(this View view, int defaultValue = -1) =>
-			view.GetEnvironment<int?>(view, nameof(ILabel.MaxLines)) ?? defaultValue;
 	}
 }
