@@ -211,7 +211,7 @@ namespace Comet
 		{
 			int hashCode = base.GetContentTypeHashCode();
 			foreach (var v in Views)
-				hashCode = HashCode.Combine(hashCode, v.GetType().GetHashCode());
+				hashCode = (hashCode, v.GetType().GetHashCode()).GetHashCode();
 			return hashCode;
 		}
 	}
