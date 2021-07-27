@@ -31,6 +31,7 @@ namespace Comet.SourceGenerator
 		public string Namespace { get; set; }
 		public System.Type BaseClass { get; set; }
 		public string[] DefaultValues { get; set; }
+		public string[] Skip { get; set; }
 	}
 ";
 
@@ -64,7 +65,7 @@ namespace {{NameSpace}} {
 		public Binding<{{Type}}> {{Name}}
 		{
 			get => {{LowercaseName}};
-			private set => this.SetBindingValue(ref  {{LowercaseName}}, value);
+			private set => this.SetBindingValue(ref  this.{{LowercaseName}}, value);
 		}
 		{{/Parameters}}
 		
@@ -76,7 +77,17 @@ namespace {{NameSpace}} {
 
 }
 ";
-
+		const string extensionProperty = @"
+		public static T {{Name}}<T>(this T view, Binding<{{Type}}> {{LowercaseName}}, bool cascades = true) where T : View =>
+			view.SetEnvironment(nameof({{FullName}}),{{LowercaseName}},cascades);
+		
+		public static T {{Name}}<T>(this T view, Func<{{Type}}> {{LowercaseName}}, bool cascades = true) where T : View =>
+			view.SetEnvironment(nameof({{FullName}}),(Binding<{{Type}}>){{LowercaseName}},cascades);
+";
+		const string extensionActionProperty = @"
+		public static T {{Name}}<T>(this T view, {{Type}} {{LowercaseName}}, bool cascades = true) where T : View =>
+			view.SetEnvironment(nameof({{FullName}}),{{LowercaseName}},cascades);
+";
 		const string extensionMustacheTemplate = @"
 using Comet;
 using Microsoft.Maui;
@@ -86,11 +97,7 @@ namespace {{NameSpace}} {
 	{		
 		{{#Properties}}
 		{{#ExtensionPropertiesFunc}}
-		public static T {{Name}}<T>(this T view, Binding<{{Type}}> {{LowercaseName}}, bool cascades = true) where T : View =>
-			view.SetEnvironment(nameof({{FullName}}),{{LowercaseName}},cascades) ?? {{DefaultValue}};
-		
-		public static T {{Name}}<T>(this T view, Func<{{Type}}> {{LowercaseName}}, bool cascades = true) where T : View =>
-			view.SetEnvironment(nameof({{FullName}}),(Binding<{{Type}}>){{LowercaseName}},cascades) ?? {{DefaultValue}};
+
 
 		{{/ExtensionPropertiesFunc}}
 		{{/Properties}}
@@ -99,13 +106,18 @@ namespace {{NameSpace}} {
 }
 ";
 
-		static Dictionary<(bool HasSet, bool IsMethod), (string FromEnvironment, string FromProperty)> interfacePropertyDictionary;
+		static Dictionary<(bool HasGet, bool HasSet), (string FromEnvironment, string FromProperty)> interfacePropertyDictionary;
 
 		static CometViewSourceGenerator()
 		{
 			var interfacePropertyEnvironmentMustache = @"
                 {{Type}} {{FullName}} {
                         get => this.GetEnvironment<{{CleanType}}>(nameof({{FullName}})) ?? {{DefaultValue}};
+                        set => this.SetEnvironment(nameof({{FullName}}), value);
+                }
+";
+			var interfacePropertySetOnlyEnvironmentMustache = @"
+                {{Type}} {{FullName}} {
                         set => this.SetEnvironment(nameof({{FullName}}), value);
                 }
 ";
@@ -116,28 +128,36 @@ namespace {{NameSpace}} {
 
 			var interfacePropertyMustache = @"
                 {{Type}} {{FullName}} {
-                        get => {{Name}} ?? {{DefaultValue}};
+                        get => {{Name}}?.CurrentValue ?? {{DefaultValue}};
                         set => {{Name}}.Set(value);
                 }
 ";
 
 			var interfacePropertyGetOnlyMustache = @"
-                {{Type}} {{FullName}} => {{Name}} ?? {{DefaultValue}};
+                {{Type}} {{FullName}} => {{Name}}?.CurrentValue ?? {{DefaultValue}};
 ";
 
+
+			var interfacePropertySetOnlyMustache = @"
+				{{Type}} {{FullName}} {
+                        set => {{Name}}.Set(value);
+                }
+";
 			var interfacePropertyMethodEnvironmentMustache = @"
-                void {{FullName}} () => this.GetEnvironment<{{CleanType}}>(nameof({{FullName}}))?.Invoke();
+
+				void {{FullName}} () => this.GetEnvironment<{{CleanType}}>(nameof({{FullName}}))?.Invoke();
 ";
 
 			var interfacePropertyMethodMustache = @"
                 void {{FullName}} () => {{Name}}.CurrentValue?.Invoke();
 ";
 
-			interfacePropertyDictionary = new Dictionary<(bool HasSet, bool IsMethod), (string FromEnvironment, string FromProperty)>
+			interfacePropertyDictionary = new Dictionary<(bool HasGet,bool HasSet), (string FromEnvironment, string FromProperty)>
 			{
-				[(true, false)] = (interfacePropertyEnvironmentMustache, interfacePropertyMustache),
-				[(false, false)] = (interfacePropertyGetOnlyEnvironmentMustache, interfacePropertyGetOnlyMustache),
-				[(false, true)] = (interfacePropertyMethodEnvironmentMustache, interfacePropertyMethodMustache),
+				[(true, true)] = (interfacePropertyEnvironmentMustache, interfacePropertyMustache),
+				[(true, false)] = (interfacePropertyGetOnlyEnvironmentMustache, interfacePropertyGetOnlyMustache),
+				[(false, true)] = (interfacePropertySetOnlyEnvironmentMustache, interfacePropertySetOnlyMustache),
+				[(false, false)] = (interfacePropertyMethodEnvironmentMustache, interfacePropertyMethodMustache),
 			};
 		}
 
@@ -149,7 +169,7 @@ namespace {{NameSpace}} {
 			
 			foreach (var item in rx.TemplateInfo)
 			{
-				var input = GetModelData(item.name, item.interfaceType, item.keyProperties, item.nameSpace, item.baseClass, item.propertyNameTransforms, item.propertyDefaultValues);
+				var input = GetModelData(item.name, item.interfaceType, item.keyProperties, item.nameSpace, item.baseClass, item.propertyNameTransforms, item.propertyDefaultValues, item.skippedProperties);
 				var classSource = stubble.Render(classMustacheTemplate, input);
 				
 				context.AddSource($"{item.name}.g.cs", classSource);
@@ -176,35 +196,42 @@ namespace {{NameSpace}} {
 			return $"{first}.{second}";
 		}
 
-		dynamic GetModelData(string name, INamedTypeSymbol interfaceType, List<string> keyProperties, string nameSpace, INamedTypeSymbol baseClass, Dictionary<string, string> propertyNameTransforms, Dictionary<string, string> propertyDefaultValues)
+		dynamic GetModelData(string name, INamedTypeSymbol interfaceType, List<string> keyProperties, string nameSpace, INamedTypeSymbol baseClass, Dictionary<string, string> propertyNameTransforms, Dictionary<string, string> propertyDefaultValues, List<string> skippedProperties)
 		{
 			var interfaces = interfaceType.AllInterfaces.ToList();
 			interfaces.Insert(0, interfaceType);
 			var alreadyImplemented = baseClass.AllInterfaces;
 			interfaces.RemoveAll(x => alreadyImplemented.Contains(x));
-			List<(string Type, string CleanType, string Name, string FullName, bool IsMethod, bool ShouldBeExtension)> properties = new();
+			List<(string Type, string CleanType, string Name, string FullName, bool ShouldBeExtension, bool Skip)> properties = new();
 			Dictionary<string, string> constructorTypes = new Dictionary<string, string>();
 			List<string> propertiesWithSetters = new();
+			List<string> propertiesWithGetters = new();
 			Dictionary<string, bool> quoteDefaultData = new();
+			Dictionary<string, bool> processedProperty = new();
 			foreach(var i in interfaces)
 			{
 				var members = i.GetMembers();
 				foreach(var m in members)
 				{
+					var fullName = $"{GetFullName(i)}.{m.Name}";
 					if (m.Name.StartsWith("get_"))
-						continue;
-					if (m.Name.StartsWith("set_"))
-						propertiesWithSetters.Add(m.Name.Replace("set_", ""));
-
-					string type = "";
-					bool canBeNull = true;
-					bool isMethod = false;
-					if (m is IMethodSymbol mi)
 					{
-						type = typeof(Action).FullName;
-						isMethod = true;
+						fullName = fullName.Replace("get_", "");
+						propertiesWithGetters.Add(fullName);
+						continue;
 					}
-					else if(m is IPropertySymbol pi)
+					else if (m.Name.StartsWith("set_"))
+					{
+						fullName = fullName.Replace("set_", "");
+						propertiesWithSetters.Add(fullName);
+						continue;
+					}
+
+
+					string type = null;
+					bool canBeNull = true;
+					
+					if(m is IPropertySymbol pi)
 					{
 						//cleanType = GetFullName(pi.Type.WithNullableAnnotation(pi.Type.NullableAnnotation));
 						canBeNull = !pi.Type.IsValueType;
@@ -218,11 +245,15 @@ namespace {{NameSpace}} {
 					if (keyProperties.Contains(m.Name))
 					{
 						constructorTypes[m.Name] = cleanType;
-						properties.Add((type, cleanType, m.Name, $"{GetFullName(i)}.{m.Name}", isMethod, false));
+						var t = (type, cleanType, m.Name, $"{fullName}", false, skippedProperties.Contains(m.Name));
+						if(!properties.Contains(t))
+							properties.Add(t);
 					}
 					else
 					{
-						properties.Add((type, cleanType, m.Name, $"{GetFullName(i)}.{m.Name}", isMethod, true));
+						var t = (type, cleanType, m.Name, $"{fullName}", true, skippedProperties.Contains(m.Name));
+						if (!properties.Contains(t))
+							properties.Add(t);
 
 					}
 				}
@@ -242,7 +273,7 @@ namespace {{NameSpace}} {
 			{
 				if (!propertyDefaultValues.TryGetValue(key, out var defaultValue))
 					return "default";
-				var value = quoteDefaultData.TryGetValue(key, out var shouldQuote) && shouldQuote ? $"\"{defaultValue}\"" : defaultValue;
+				var value = quoteDefaultData.TryGetValue(key, out var shouldQuote) && shouldQuote && defaultValue != "null" ? $"\"{defaultValue}\"" : defaultValue;
 				return $"{defaultValue}";
 			};
 			string getNewName(string key)
@@ -259,24 +290,25 @@ namespace {{NameSpace}} {
 				NameSpace = nameSpace,
 				Parameters = constructorParameters.Select(x => new
 				{
-					x.Type,
+					Type = x.Type ?? typeof(Action).FullName,
 					Name = getNewName(x.Name),
 					LowercaseName = getNewName(x.Name).LowercaseFirst(),
 					DefaultValueString = x.defaultValueString
 				}).ToList(),
-				HasParameters = constructorParameters.Any(),
+				HasParameters = constructorParameters.Where(x=> x.Type != "System.Action").Any(),
 				Properties = properties.Select(x=> new
 				{
-					x.Type,
-					x.CleanType,
+					Type = string.IsNullOrWhiteSpace(x.Type) ? typeof(Action).FullName : x.Type,
+					CleanType = string.IsNullOrWhiteSpace(x.Type) ? typeof(Action).FullName : x.CleanType,
 					Name = getNewName(x.Name),
 					x.FullName,
-					x.IsMethod,
-					HasSet = propertiesWithSetters.Contains(x.Name),
+					HasSet = propertiesWithSetters.Contains(x.FullName),
+					HasGet = propertiesWithGetters.Contains(x.FullName),
 					x.ShouldBeExtension,
 					ClassName = name,
 					DefaultValue = getPropertyDefaultValue(x.Name),
 					LowercaseName = x.Name.LowercaseFirst(),
+					x.Skip
 				}).ToList(),
 				ParametersFunction = new Func<dynamic, string, object>((dyn, str) => string.Join(",", ((IEnumerable<dynamic>)dyn.Parameters).Select(x => stubble.Render(str, new
 				{
@@ -284,14 +316,17 @@ namespace {{NameSpace}} {
 					x.Name,
 					x.LowercaseName,
 					x.DefaultValueString
-				})))),
-				FuncConstructorFunction = new Func<dynamic, string, object>((dyn, str) => dyn.HasParameters ? stubble.Render(str, dyn) : ""),
+				}).Replace("Binding<System.Action>", "System.Action")))),
+
+				FuncConstructorFunction = new Func<dynamic, string, object>((dyn, str) =>
+						//Feeling lazy, didnt want another template. May change this later
+						dyn.HasParameters ? stubble.Render(str, dyn).Replace("(Binding<System.Action>)", "").Replace("Func<System.Action>", "System.Action") : ""),
 				PropertiesFunc = new Func<dynamic, string, object>((dyn, str) => {
-					var templateGroup = interfacePropertyDictionary[(dyn.HasSet, dyn.IsMethod)];
+					var templateGroup = interfacePropertyDictionary[(dyn.HasGet, dyn.HasSet)];
 					var template = dyn.ShouldBeExtension ? templateGroup.FromEnvironment : templateGroup.FromProperty;
 					return stubble.Render(template, dyn);
 				}),
-				ExtensionPropertiesFunc = new Func<dynamic, string, object>((dyn, str) => dyn.ShouldBeExtension ? stubble.Render(str, dyn) : ""),
+				ExtensionPropertiesFunc = new Func<dynamic, string, object>((dyn, str) => dyn.ShouldBeExtension && !dyn.Skip ? stubble.Render(dyn.Type == "System.Action" ? extensionActionProperty : extensionProperty, dyn) : ""),
 
 
 			};
@@ -300,10 +335,10 @@ namespace {{NameSpace}} {
 
 		public void Initialize(GeneratorInitializationContext context)
 		{
-  //if (!Debugger.IsAttached)
-  //{
-  //  Debugger.Launch();
-  //}
+			//if (!Debugger.IsAttached)
+			//{
+			//	Debugger.Launch();
+			//}
 
 			context.RegisterForPostInitialization((pi) => pi.AddSource("CometGenerationAttribute__", attributeSource));
 			context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
@@ -311,7 +346,7 @@ namespace {{NameSpace}} {
 
 		class SyntaxReceiver : ISyntaxContextReceiver
 		{
-			public List<(string name, INamedTypeSymbol interfaceType, List<string> keyProperties, string nameSpace, INamedTypeSymbol baseClass, Dictionary<string,string> propertyNameTransforms, Dictionary<string, string> propertyDefaultValues)> TemplateInfo = new ();
+			public List<(string name, INamedTypeSymbol interfaceType, List<string> keyProperties, string nameSpace, INamedTypeSymbol baseClass, Dictionary<string,string> propertyNameTransforms, Dictionary<string, string> propertyDefaultValues, List<string> skippedProperties)> TemplateInfo = new ();
 
 			public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
 			{
@@ -332,6 +367,7 @@ namespace {{NameSpace}} {
 							string nameSpace = null;
 							INamedTypeSymbol baseClass = cometView;
 							List<string> defaultValues = new();
+							List<string> skippedProperties = new();
 
 							foreach (var arg in attrib.ArgumentList.Arguments.Skip(1))
 							{
@@ -356,6 +392,15 @@ namespace {{NameSpace}} {
 									{
 										var fif = context.SemanticModel.GetConstantValue(i);
 										defaultValues.Add(fif.ToString());
+									}
+								}
+								if (argName == "Skip")
+								{
+									var iac = (arg.Expression as ImplicitArrayCreationExpressionSyntax).Initializer.Expressions;
+									foreach (var i in iac)
+									{
+										var fif = context.SemanticModel.GetConstantValue(i);
+										skippedProperties.Add(fif.ToString());
 									}
 								}
 								//Strings which can only be key properties
@@ -418,13 +463,23 @@ namespace {{NameSpace}} {
 							{
 								(bool hasParts, string key) = getParts(oldKey);
 							}
+							foreach (var oldKey in skippedProperties.ToList())
+							{
+								(bool hasParts, string key) = getParts(oldKey);
+								if (!hasParts)
+								{
+									continue;
+								}
+								skippedProperties.Remove(oldKey);
+								skippedProperties.Add(key);
+							}
 
 
 							//string name = context.SemanticModel.GetTypeInfo(attrib.ArgumentList.Arguments[0].Expression).ToString();
 							//string template = context.SemanticModel.GetConstantValue(attrib.ArgumentList.Arguments[1].Expression).ToString();
 							//string hash = context.SemanticModel.GetConstantValue(attrib.ArgumentList.Arguments[2].Expression).ToString();
 
-							TemplateInfo.Add((name,realClass,keyProperties,nameSpace,baseClass, propertyTransform, propertyDefaultValues));
+							TemplateInfo.Add((name,realClass,keyProperties,nameSpace,baseClass, propertyTransform, propertyDefaultValues, skippedProperties));
 						}
 					}
 				}

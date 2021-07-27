@@ -26,7 +26,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Essentials", "external\Maui
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Comet.Android.Sample", "sample\Comet.Android.Sample\Comet.Android.Sample.csproj", "{1B3F8AD2-4252-44CA-8DD6-A7702C46A25D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet.SourceGenerator", "..\Comet.SourceGenerator\Comet.SourceGenerator\Comet.SourceGenerator.csproj", "{9DB7B29F-0347-4A06-9953-E35F5783C0DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet.SourceGenerator", "src\Comet.SourceGenerator\Comet.SourceGenerator.csproj", "{9DB7B29F-0347-4A06-9953-E35F5783C0DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

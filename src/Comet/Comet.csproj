@@ -27,7 +27,7 @@
     <PackageReference Include="Microsoft.Maui.Graphics" Version="$(_MicrosoftMauiGraphics)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\Comet.SourceGenerator\Comet.SourceGenerator\Comet.SourceGenerator.csproj" 
+    <ProjectReference Include="..\Comet.SourceGenerator\Comet.SourceGenerator.csproj" 
                       OutputItemType="Analyzer"
                       ReferenceOutputAssembly="false"/>
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
