@@ -163,7 +163,7 @@ namespace {{NameSpace}} {
                 void {{FullName}} () => {{Name}}.CurrentValue?.Invoke();
 ";
 
-			interfacePropertyDictionary = new Dictionary<(bool HasGet,bool HasSet), (string FromEnvironment, string FromProperty)>
+			interfacePropertyDictionary = new Dictionary<(bool HasGet, bool HasSet), (string FromEnvironment, string FromProperty)>
 			{
 				[(true, true)] = (interfacePropertyEnvironmentMustache, interfacePropertyMustache),
 				[(true, false)] = (interfacePropertyGetOnlyEnvironmentMustache, interfacePropertyGetOnlyMustache),
@@ -175,14 +175,14 @@ namespace {{NameSpace}} {
 		Stubble.Core.StubbleVisitorRenderer stubble = new StubbleBuilder().Build();
 		public void Execute(GeneratorExecutionContext context)
 		{
-			
-			SyntaxReceiver rx = (SyntaxReceiver)context.SyntaxContextReceiver!;
-			
+
+			var rx = (SyntaxReceiver)context.SyntaxContextReceiver!;
+
 			foreach (var item in rx.TemplateInfo)
 			{
 				var input = GetModelData(item.name, item.interfaceType, item.keyProperties, item.nameSpace, item.baseClass, item.propertyNameTransforms, item.propertyDefaultValues, item.skippedProperties);
 				var classSource = stubble.Render(classMustacheTemplate, input);
-				
+
 				context.AddSource($"{item.name}.g.cs", classSource);
 
 				var extensionSource = stubble.Render(extensionMustacheTemplate, input);
@@ -214,15 +214,15 @@ namespace {{NameSpace}} {
 			var alreadyImplemented = baseClass.AllInterfaces;
 			interfaces.RemoveAll(x => alreadyImplemented.Contains(x));
 			List<(string Type, string CleanType, string Name, string FullName, bool ShouldBeExtension, bool Skip)> properties = new();
-			Dictionary<string, string> constructorTypes = new Dictionary<string, string>();
+			Dictionary<string, string> constructorTypes = new ();
 			List<string> propertiesWithSetters = new();
 			List<string> propertiesWithGetters = new();
 			Dictionary<string, bool> quoteDefaultData = new();
 			Dictionary<string, bool> processedProperty = new();
-			foreach(var i in interfaces)
+			foreach (var i in interfaces)
 			{
 				var members = i.GetMembers();
-				foreach(var m in members)
+				foreach (var m in members)
 				{
 					var fullName = $"{GetFullName(i)}.{m.Name}";
 					if (m.Name.StartsWith("get_"))
@@ -241,13 +241,13 @@ namespace {{NameSpace}} {
 
 					string type = null;
 					bool canBeNull = true;
-					
-					if(m is IPropertySymbol pi)
+
+					if (m is IPropertySymbol pi)
 					{
 						//cleanType = GetFullName(pi.Type.WithNullableAnnotation(pi.Type.NullableAnnotation));
 						canBeNull = !pi.Type.IsValueType;
 						type = GetFullName(pi.Type);
-						if (pi.Type.Name  == "String")
+						if (pi.Type.Name == "String")
 							quoteDefaultData[m.Name] = true;
 					}
 
@@ -257,7 +257,7 @@ namespace {{NameSpace}} {
 					{
 						constructorTypes[m.Name] = cleanType;
 						var t = (type, cleanType, m.Name, $"{fullName}", false, skippedProperties.Contains(m.Name));
-						if(!properties.Contains(t))
+						if (!properties.Contains(t))
 							properties.Add(t);
 					}
 					else
@@ -272,7 +272,7 @@ namespace {{NameSpace}} {
 
 			}
 			List<(string Type, string Name, string defaultValueString)> constructorParameters = new();
-			for(var i = 0; i < keyProperties.Count; i++)
+			for (var i = 0; i < keyProperties.Count; i++)
 			{
 				var keyName = keyProperties[i];
 				var value = constructorTypes[keyName];
@@ -280,7 +280,7 @@ namespace {{NameSpace}} {
 				constructorParameters.Add((value, keyName, defaultValue));
 			}
 
-			string getPropertyDefaultValue(string key) 
+			string getPropertyDefaultValue(string key)
 			{
 				if (!propertyDefaultValues.TryGetValue(key, out var defaultValue))
 					return "default";
@@ -294,21 +294,18 @@ namespace {{NameSpace}} {
 				return key;
 			};
 
-			var input = new
-			{
+			var input = new {
 				ClassName = name,
 				BaseClassName = $"{baseClass} , {string.Join(",", interfaces.Select(x => GetFullName(x)))}",
 				NameSpace = nameSpace,
-				Parameters = constructorParameters.Select(x => new
-				{
+				Parameters = constructorParameters.Select(x => new {
 					Type = x.Type ?? typeof(Action).FullName,
 					Name = getNewName(x.Name),
 					LowercaseName = getNewName(x.Name).LowercaseFirst(),
 					DefaultValueString = x.defaultValueString
 				}).ToList(),
-				HasParameters = constructorParameters.Where(x=> x.Type != "System.Action").Any(),
-				Properties = properties.Select(x=> new
-				{
+				HasParameters = constructorParameters.Where(x => x.Type != "System.Action").Any(),
+				Properties = properties.Select(x => new {
 					Type = string.IsNullOrWhiteSpace(x.Type) ? typeof(Action).FullName : x.Type,
 					CleanType = string.IsNullOrWhiteSpace(x.Type) ? typeof(Action).FullName : x.CleanType,
 					Name = getNewName(x.Name),
@@ -321,8 +318,7 @@ namespace {{NameSpace}} {
 					LowercaseName = x.Name.LowercaseFirst(),
 					x.Skip
 				}).ToList(),
-				ParametersFunction = new Func<dynamic, string, object>((dyn, str) => string.Join(",", ((IEnumerable<dynamic>)dyn.Parameters).Select(x => stubble.Render(str, new
-				{
+				ParametersFunction = new Func<dynamic, string, object>((dyn, str) => string.Join(",", ((IEnumerable<dynamic>)dyn.Parameters).Select(x => stubble.Render(str, new {
 					x.Type,
 					x.Name,
 					x.LowercaseName,
@@ -362,7 +358,7 @@ namespace {{NameSpace}} {
 
 		class SyntaxReceiver : ISyntaxContextReceiver
 		{
-			public List<(string name, INamedTypeSymbol interfaceType, List<string> keyProperties, string nameSpace, INamedTypeSymbol baseClass, Dictionary<string,string> propertyNameTransforms, Dictionary<string, string> propertyDefaultValues, List<string> skippedProperties)> TemplateInfo = new ();
+			public List<(string name, INamedTypeSymbol interfaceType, List<string> keyProperties, string nameSpace, INamedTypeSymbol baseClass, Dictionary<string, string> propertyNameTransforms, Dictionary<string, string> propertyDefaultValues, List<string> skippedProperties)> TemplateInfo = new();
 
 			public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
 			{
@@ -390,21 +386,21 @@ namespace {{NameSpace}} {
 								var constVal = context.SemanticModel.GetConstantValue(arg.Expression);
 								var symbol = context.SemanticModel.GetSymbolInfo(arg.Expression);
 								var argName = arg.NameEquals?.Name.Identifier.ValueText;
-								if(argName == "ClassName")
+								if (argName == "ClassName")
 								{
 									name = constVal.ToString();
 									continue;
 								}
 
-								if(argName == "Namespace")
+								if (argName == "Namespace")
 								{
 									nameSpace = constVal.ToString();
 									continue;
 								}
-								if(argName == "DefaultValues")
+								if (argName == "DefaultValues")
 								{
 									var iac = (arg.Expression as ImplicitArrayCreationExpressionSyntax).Initializer.Expressions;
-									foreach(var i in iac)
+									foreach (var i in iac)
 									{
 										var fif = context.SemanticModel.GetConstantValue(i);
 										defaultValues.Add(fif.ToString());
@@ -425,7 +421,7 @@ namespace {{NameSpace}} {
 									keyProperties.Add(constVal.ToString());
 									continue;
 								}
-								
+
 
 								if (arg.Expression is TypeOfExpressionSyntax toe)
 								{
@@ -441,7 +437,8 @@ namespace {{NameSpace}} {
 
 							Dictionary<string, string> propertyTransform = new();
 							Dictionary<string, string> propertyDefaultValues = new();
-							(bool hasParts,string key) getParts(string oldKey) {
+							(bool hasParts, string key) getParts(string oldKey)
+							{
 								var hasName = oldKey.Contains(':');
 								var hasValue = oldKey.Contains('=');
 
@@ -462,10 +459,10 @@ namespace {{NameSpace}} {
 									propertyDefaultValues[key] = defaultValue;
 								return (true, key);
 							}
-							foreach(var oldKey in keyProperties.ToList())
+							foreach (var oldKey in keyProperties.ToList())
 							{
 								(bool hasParts, string key) = getParts(oldKey);
-								if(!hasParts)
+								if (!hasParts)
 								{
 									continue;
 								}
@@ -495,7 +492,7 @@ namespace {{NameSpace}} {
 							//string template = context.SemanticModel.GetConstantValue(attrib.ArgumentList.Arguments[1].Expression).ToString();
 							//string hash = context.SemanticModel.GetConstantValue(attrib.ArgumentList.Arguments[2].Expression).ToString();
 
-							TemplateInfo.Add((name,realClass,keyProperties,nameSpace,baseClass, propertyTransform, propertyDefaultValues, skippedProperties));
+							TemplateInfo.Add((name, realClass, keyProperties, nameSpace, baseClass, propertyTransform, propertyDefaultValues, skippedProperties));
 						}
 					}
 				}
