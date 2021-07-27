@@ -40,6 +40,7 @@ namespace Comet.SourceGenerator
 using System;
 using Comet;
 using Microsoft.Maui;
+using System.Collections.Generic;
 namespace {{NameSpace}} {
 	public partial class {{ClassName}} : {{BaseClassName}} 
 	{
@@ -73,8 +74,18 @@ namespace {{NameSpace}} {
 		{{#PropertiesFunc}}
 		{{/PropertiesFunc}}
 		{{/Properties}}
-	}
+		{{#HasRenamedProperties}}
+		protected static Dictionary<string, string> {{ClassName}}HandlerPropertyMapper = new(HandlerPropertyMapper)
+		{
 
+			{{#RenamedProperties}}
+			[""{{NewName}}""] = ""{{OldName}}"",
+			{{/RenamedProperties}}
+		};
+		protected override string GetHandlerPropertyName(string property)
+			=> {{ClassName}}HandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
+		{{/HasRenamedProperties}}
+	}
 }
 ";
 		const string extensionProperty = @"
@@ -327,6 +338,11 @@ namespace {{NameSpace}} {
 					return stubble.Render(template, dyn);
 				}),
 				ExtensionPropertiesFunc = new Func<dynamic, string, object>((dyn, str) => dyn.ShouldBeExtension && !dyn.Skip ? stubble.Render(dyn.Type == "System.Action" ? extensionActionProperty : extensionProperty, dyn) : ""),
+				HasRenamedProperties = propertyNameTransforms.Any(),
+				RenamedProperties = propertyNameTransforms.Select(x => new {
+					OldName = x.Key,
+					NewName = x.Value
+				}).ToList(),
 
 
 			};
