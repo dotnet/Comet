@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Essentials", "..\external\M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core", "..\external\Maui\src\Core\src\Core.csproj", "{630C6621-00AB-4947-B7A6-6181FEF06351}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Comet.SourceGenerator", "..\src\Comet.SourceGenerator\Comet.SourceGenerator.csproj", "{46504548-9A4D-47FE-8575-DFF451D497C0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -83,6 +85,26 @@ Global
 		{630C6621-00AB-4947-B7A6-6181FEF06351}.Release|x64.Build.0 = Release|Any CPU
 		{630C6621-00AB-4947-B7A6-6181FEF06351}.Release|x86.ActiveCfg = Release|Any CPU
 		{630C6621-00AB-4947-B7A6-6181FEF06351}.Release|x86.Build.0 = Release|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Debug|ARM.ActiveCfg = Debug|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Debug|ARM.Build.0 = Debug|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Debug|x64.Build.0 = Debug|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Debug|x86.Build.0 = Debug|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Release|ARM.ActiveCfg = Release|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Release|ARM.Build.0 = Release|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Release|ARM64.Build.0 = Release|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Release|x64.ActiveCfg = Release|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Release|x64.Build.0 = Release|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Release|x86.ActiveCfg = Release|Any CPU
+		{46504548-9A4D-47FE-8575-DFF451D497C0}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
