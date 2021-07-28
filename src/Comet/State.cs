@@ -23,7 +23,11 @@ namespace Comet
 		public T Value
 		{
 			get => GetProperty<T>();
-			set => SetProperty(value);
+			set
+			{
+				if (SetProperty(value))
+					ValueChanged(value);
+			}
 		}
 
 		public static implicit operator T(State<T> state) => state.Value;
@@ -31,6 +35,8 @@ namespace Comet
 		public static implicit operator State<T>(T value) => new State<T>(value);
 
 		public override string ToString() => Value?.ToString();
+
+		public Action<T> ValueChanged { get; set; }
 
 	}
 

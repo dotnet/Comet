@@ -89,14 +89,14 @@ namespace {{NameSpace}} {
 }
 ";
 		const string extensionProperty = @"
-		public static T {{Name}}<T>(this T view, Binding<{{Type}}> {{LowercaseName}}, bool cascades = true) where T : View =>
+		public static T {{Name}}<T>(this T view, Binding<{{Type}}> {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
 			view.SetEnvironment(nameof({{FullName}}),{{LowercaseName}},cascades);
 		
-		public static T {{Name}}<T>(this T view, Func<{{Type}}> {{LowercaseName}}, bool cascades = true) where T : View =>
+		public static T {{Name}}<T>(this T view, Func<{{Type}}> {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
 			view.SetEnvironment(nameof({{FullName}}),(Binding<{{Type}}>){{LowercaseName}},cascades);
 ";
 		const string extensionActionProperty = @"
-		public static T {{Name}}<T>(this T view, {{Type}} {{LowercaseName}}, bool cascades = true) where T : View =>
+		public static T {{Name}}<T>(this T view, {{Type}} {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
 			view.SetEnvironment(nameof({{FullName}}),{{LowercaseName}},cascades);
 ";
 		const string extensionMustacheTemplate = @"
@@ -255,7 +255,7 @@ namespace {{NameSpace}} {
 
 					if (keyProperties.Contains(m.Name))
 					{
-						constructorTypes[m.Name] = cleanType;
+						constructorTypes[m.Name] = type;
 						var t = (type, cleanType, m.Name, $"{fullName}", false, skippedProperties.Contains(m.Name));
 						if (!properties.Contains(t))
 							properties.Add(t);
@@ -416,7 +416,7 @@ namespace {{NameSpace}} {
 									}
 								}
 								//Strings which can only be key properties
-								if (arg.Expression is LiteralExpressionSyntax || (arg.Expression is InvocationExpressionSyntax && constVal.HasValue))
+								if (arg.Expression is LiteralExpressionSyntax || (arg.Expression is InvocationExpressionSyntax && constVal.HasValue) || arg.Expression is InterpolatedStringExpressionSyntax)
 								{
 									keyProperties.Add(constVal.ToString());
 									continue;
