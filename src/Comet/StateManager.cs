@@ -300,8 +300,7 @@ namespace Comet
 			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
 			if (currentReadProperies.Any())
 			{
-				//TODO: Change this to object and property!!!
-				CurrentView.GetState().AddGlobalProperties(currentReadProperies);
+				CurrentView.GetState()?.AddGlobalProperties(currentReadProperies);
 			}
 			currentReadProperies.Clear();
 		}
