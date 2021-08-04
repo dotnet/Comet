@@ -22,18 +22,7 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
-              
-      - name: Install Visual Studio Preview
-        shell: pwsh
-        run: powershell .\build\install-vs.ps1
-      
-      
-      - name: Add MSBuild to Path
-        shell: pwsh
-        run: |
-          dotnet tool update -g dotnet-vs
-          & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
+        
       - name:  install .NET 6.0.100-preview.7.21379.14
         shell: pwsh
         run: |
@@ -46,7 +35,18 @@ jobs:
         shell: pwsh
         run: |
           & dotnet tool update --global redth.net.maui.check
-          & maui-check --preview --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2 —-verbose
+          & maui-check --preview --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2 —verbose
+              
+      - name: Install Visual Studio Preview
+        shell: pwsh
+        run: powershell .\build\install-vs.ps1
+      
+      
+      - name: Add MSBuild to Path
+        shell: pwsh
+        run: |
+          dotnet tool update -g dotnet-vs
+          & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
 
       - name: Restore Comet-Nuget.sln
         run: nuget restore build/Comet-Nuget.sln
