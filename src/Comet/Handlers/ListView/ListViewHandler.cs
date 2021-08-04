@@ -12,7 +12,7 @@ namespace Comet.Handlers
 			["ListView"] = MapListViewProperty,
 
 		};
-		public static readonly CommandMapper<IListView> ActionMapper = new CommandMapper<IListView>
+		public static readonly CommandMapper<IListView, ListViewHandler> ActionMapper = new CommandMapper<IListView, ListViewHandler>
 		{
 			[nameof(ListView.ReloadData)] = MapReloadData,
 		};

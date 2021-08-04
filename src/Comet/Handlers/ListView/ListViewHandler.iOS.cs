@@ -19,7 +19,7 @@ namespace Comet.Handlers
 			nativeView.SizeToFit();
 		}
 
-		public static void MapReloadData(IElementHandler viewHandler, IListView virtualView, object? value)
+		public static void MapReloadData(ListViewHandler viewHandler, IListView virtualView, object? value)
 		{
 			var nativeView = (CUITableView)viewHandler.NativeView;
 			nativeView?.ReloadData();

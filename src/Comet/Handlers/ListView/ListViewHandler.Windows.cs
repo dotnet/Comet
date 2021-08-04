@@ -14,7 +14,7 @@ namespace Comet.Handlers
 			setupView(viewHandler, virtualView);
 		}
 
-		static void setupView(IElementHandler viewHandler, IListView virtualView)
+		static void setupView(ListViewHandler viewHandler, IListView virtualView)
 		{
 			//var nativeView = (UWPListView)viewHandler.NativeView;
 			//var sections = virtualView?.Sections() ?? 0;

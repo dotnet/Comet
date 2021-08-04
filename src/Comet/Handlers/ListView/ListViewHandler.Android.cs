@@ -30,7 +30,7 @@ namespace Comet.Handlers
 			nativeView.ListView = virtualView;
 		}
 
-		public static void MapReloadData(IElementHandler viewHandler, IListView virtualView, object? value)
+		public static void MapReloadData(ListViewHandler viewHandler, IListView virtualView, object? value)
 		{
 			var nativeView = (CometRecyclerView)viewHandler.NativeView;
 			nativeView?.ReloadData();
