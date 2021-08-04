@@ -28,20 +28,12 @@ jobs:
         run: |
           dotnet tool update -g dotnet-vs
           & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
-      - name:  install .NET 6.0.100-preview.7.21377.35
-        shell: pwsh
-        run: |
-          $ProgressPreference = 'SilentlyContinue'
-          Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
-          & .\dotnet-install.ps1 -Version 6.0.100-preview.7.21377.35 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
-          & dotnet --list-sdks
           
       - name: Install and Run maui-check Tool
         shell: pwsh
         run: |
           & dotnet tool update --global redth.net.maui.check
-          & maui-check --preview --ci --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
+          & maui-check --preview --verbose --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
 
       - name: Restore Comet-Nuget.sln
         run: nuget restore build/Comet-Nuget.sln
