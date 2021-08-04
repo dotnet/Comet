@@ -13,7 +13,7 @@ namespace Comet.iOS
 		{
 			Add(tabViewController.View);
 		}
-		public void Setup(List<View> views)
+		public void Setup(IList<View> views)
 		{
 			if (views == null)
 			{

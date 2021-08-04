@@ -14,7 +14,7 @@ namespace Comet.Layout
 
 		public Size Measure(double widthConstraint, double heightConstraint) {
 			Size measuredSize = new ();
-			foreach(var c in layout.Children)
+			foreach(var c in layout)
 			{
 				var s = c.Measure(widthConstraint, heightConstraint);
 				measuredSize.Height = Math.Max(measuredSize.Height, s.Height);
@@ -23,12 +23,15 @@ namespace Comet.Layout
 			return measuredSize;
 		}
 
-		public void ArrangeChildren(Rectangle bounds)
+		public virtual Size ArrangeChildren(Rectangle bounds)
 		{
-			foreach (var v in layout.Children)
+			foreach (var v in layout)
 			{
 				v.Arrange(bounds);
 			}
+			return bounds.Size;
 		}
+
+
 	}
 }

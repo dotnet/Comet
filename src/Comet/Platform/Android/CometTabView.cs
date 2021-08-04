@@ -36,7 +36,7 @@ namespace Comet.Android.Controls
 			AddView(_bottomNavigationView);
 		}
 
-		public void CreateTabs(List<View> views)
+		public void CreateTabs(IList<View> views)
 		{
 			_fragments = views.Select(v => new CometFragment(v,MauiContext )).ToList();
 			_bottomNavigationView.Menu.Clear();

@@ -133,7 +133,7 @@ namespace Comet.Layout
 			return new Size(_width, _height);
 		}
 
-		public void ArrangeChildren(Rectangle rect)
+		public Size ArrangeChildren(Rectangle rect)
 		{
 			var layout = grid;
 			var measured = rect.Size;
@@ -203,9 +203,9 @@ namespace Comet.Layout
 					w -= margin.HorizontalThickness;
 					h -= margin.VerticalThickness;
 				}
-
 				view.Frame = new Rectangle(x, y, w, h);
 			}
+			return measured;
 		}
 
 		public int AddRow(object row)

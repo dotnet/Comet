@@ -12,6 +12,12 @@ namespace Comet.Handlers
 		protected override CUITabView CreateNativeView() => NativeView ?? new CUITabView { Context = MauiContext };
 
 
-		public static void MapChildren(TabViewHandler handler, TabView tabView) => handler?.NativeView?.Setup(tabView?.ToList());
+		public override void SetVirtualView(IView view)
+		{
+			base.SetVirtualView(view);
+
+			NativeView?.Setup(this.VirtualView);
+		}
+
 	}
 }

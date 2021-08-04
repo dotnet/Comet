@@ -36,7 +36,7 @@ namespace Comet.Handlers
 			//}
 		}
 
-		public static void MapReloadData(IElementHandler viewHandler, IListView virtualView)
+		public static void MapReloadData(IElementHandler viewHandler, IListView virtualView, object? value)
 		{
 			var nativeView = (UWPListView)viewHandler.NativeView;
 			nativeView.Items.Clear();

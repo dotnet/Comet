@@ -14,7 +14,7 @@ namespace Comet
 
 		public Orientation Orientation { get; }
 
-		int IStackLayout.Spacing => 6;
+		double IStackLayout.Spacing => 6;
 
 		protected override ILayoutManager CreateLayoutManager() => Orientation == Orientation.Vertical
 				? new VerticalStackLayoutManager(this) : new HorizontalStackLayoutManager(this);

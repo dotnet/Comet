@@ -29,7 +29,10 @@ namespace Comet
 			TypeHashCode = null;
 		}
 
-		protected virtual void OnAdded(View view) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
+		protected virtual void OnAdded(View view)
+		{
+			//ViewHandler?.UpdateValue(nameof(IContainer.Children));
+		}
 
 		public void Clear()
 		{
@@ -43,7 +46,10 @@ namespace Comet
 			}
 		}
 
-		protected virtual void OnClear(List<View> views) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
+		protected virtual void OnClear(List<View> views)
+		{
+			//ViewHandler?.UpdateValue(nameof(IContainer.Children));
+		}
 
 		public bool Contains(View item) => Views.Contains(item);
 
@@ -83,19 +89,20 @@ namespace Comet
 			return false;
 		}
 
-		protected virtual void OnRemoved(View view) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
+		protected virtual void OnRemoved(View view)
+		{
+			//ViewHandler?.UpdateValue(nameof(IContainer.Children));
+		}
 
 		public int Count => Views.Count;
 
 		public bool IsReadOnly => false;
 
-		IReadOnlyList<IView> IContainer.Children => GetChildren();
+		IView IList<IView>.this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
 		public IEnumerator<View> GetEnumerator() => Views.GetEnumerator();
 
 		IEnumerator IEnumerable.GetEnumerator() => Views.GetEnumerator();
-
-		public IReadOnlyList<View> GetChildren() => Views;
 
 		public int IndexOf(View item) => Views.IndexOf(item);
 
@@ -112,7 +119,10 @@ namespace Comet
 			TypeHashCode = null;
 		}
 
-		protected virtual void OnInsert(int index, View item) => ViewHandler?.UpdateValue(nameof(IContainer.Children));
+		protected virtual void OnInsert(int index, View item)
+		{
+			//ViewHandler?.UpdateValue(nameof(IContainer.Children));
+		}
 
 		public void RemoveAt(int index)
 		{
@@ -214,5 +224,12 @@ namespace Comet
 				hashCode = (hashCode, v.GetType().GetHashCode()).GetHashCode();
 			return hashCode;
 		}
+
+		int IList<IView>.IndexOf(IView item) => Views.IndexOf(item);
+		void IList<IView>.Insert(int index, IView item) => this.Insert(index, (View)item);
+		bool ICollection<IView>.Contains(IView item) => Views.Contains(item);
+		void ICollection<IView>.CopyTo(IView[] array, int arrayIndex) => Views.OfType<IView>().ToArray().CopyTo(array, arrayIndex);
+		IEnumerator<IView> IEnumerable<IView>.GetEnumerator() => Views.OfType<IView>().GetEnumerator();
+		IReadOnlyList<View> IContainerView.GetChildren() => this.Views;
 	}
 }
