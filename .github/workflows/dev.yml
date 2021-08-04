@@ -23,18 +23,18 @@ jobs:
         with:
           submodules: true
           
-      # - name: Install Visual Studio Preview
-      #   shell: pwsh
-      #   run: powershell .\build\install-vs.ps1
+      - name: Install Visual Studio Preview
+        shell: pwsh
+        run: powershell .\build\install-vs.ps1
       
-      - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
+      # - name: Add msbuild to PATH
+      #   uses: microsoft/setup-msbuild@v1.0.2
         
-      # - name: Add MSBuild to Path
-      #   shell: pwsh
-      #   run: |
-      #     dotnet tool update -g dotnet-vs
-      #     & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
+      - name: Add MSBuild to Path
+        shell: pwsh
+        run: |
+          dotnet tool update -g dotnet-vs
+          & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       
       - name: Install and Run maui-check Tool
         shell: pwsh
