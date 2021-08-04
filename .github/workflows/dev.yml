@@ -23,13 +23,7 @@ jobs:
         with:
           submodules: true
           
-      - name: Install and Run maui-check Tool
-        shell: pwsh
-        run: |
-          & dotnet tool update --global redth.net.maui.check
-          & maui-check --preview --verbose --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
-              
-      - name: Install Visual Studio Preview
+       - name: Install Visual Studio Preview
         shell: pwsh
         run: powershell .\build\install-vs.ps1
       
@@ -39,7 +33,13 @@ jobs:
         run: |
           dotnet tool update -g dotnet-vs
           & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-
+      
+      - name: Install and Run maui-check Tool
+        shell: pwsh
+        run: |
+          & dotnet tool update --global redth.net.maui.check
+          & maui-check --preview --verbose --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
+     
       - name: Restore Comet-Nuget.sln
         run: nuget restore build/Comet-Nuget.sln
 
