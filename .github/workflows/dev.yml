@@ -23,9 +23,9 @@ jobs:
         with:
           submodules: true
           
-      - name: Install Visual Studio Preview
-        shell: pwsh
-        run: powershell .\build\install-vs.ps1
+      # - name: Install Visual Studio Preview
+      #   shell: pwsh
+      #   run: powershell .\build\install-vs.ps1
       
       
       - name: Add MSBuild to Path
