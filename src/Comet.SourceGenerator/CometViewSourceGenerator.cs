@@ -44,6 +44,9 @@ using System.Collections.Generic;
 namespace {{NameSpace}} {
 	public partial class {{ClassName}} : {{BaseClassName}} 
 	{
+		{{#HasParameters}}
+		public {{ClassName}}() {}
+		{{/HasParameters}}
 
 		public {{ClassName}} ({{#ParametersFunction}} Binding<{{Type}}> {{LowercaseName}}{{DefaultValueString}}{{/ParametersFunction}})
 		{

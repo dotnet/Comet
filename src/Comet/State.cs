@@ -26,7 +26,7 @@ namespace Comet
 			set
 			{
 				if (SetProperty(value))
-					ValueChanged(value);
+					ValueChanged?.Invoke(value);
 			}
 		}
 

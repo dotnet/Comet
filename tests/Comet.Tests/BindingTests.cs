@@ -54,7 +54,7 @@ namespace Comet.Tests
 			};
 			view.SetViewHandlerToGeneric();
 
-			textField.OnEditingChanged("Test");
+			(textField as ITextInput).Text = "Test";
 			Assert.Equal("Test", textField.Text);
 			Assert.Equal("Test", text.Value);
 
