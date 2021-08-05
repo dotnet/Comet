@@ -14,7 +14,11 @@
   <PropertyGroup>
    <LangVersion>preview</LangVersion>
   </PropertyGroup>
-  <Import Project="..\..\external\Maui\.nuspec\Microsoft.Maui.Controls.MultiTargeting.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\Comet.SourceGenerator\Comet.SourceGenerator.csproj" 
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false"/>
+  </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
   </ItemGroup>
@@ -23,5 +27,6 @@
   </ItemGroup>
  <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
   </ItemGroup>
+    <Import Project="..\..\external\Maui\.nuspec\Microsoft.Maui.Controls.MultiTargeting.targets" />
 </Project>
 

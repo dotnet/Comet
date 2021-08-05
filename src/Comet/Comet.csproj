@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
   <PropertyGroup>
-    <TargetFrameworks>netstandard2.0;netstandard2.1;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
+    <TargetFrameworks>netstandard2.1;Xamarin.iOS10;MonoAndroid10.0</TargetFrameworks>
     
     <RootNamespace>Comet</RootNamespace>
     <AssemblyName>Comet</AssemblyName>
@@ -16,17 +16,17 @@
     <PackageId>Clancey.Comet</PackageId>
     <Product>Comet</Product>
   </PropertyGroup>
-   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-     <LangVersion>latestmajor</LangVersion>
-   </PropertyGroup>
-   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-     <LangVersion>latestmajor</LangVersion>
+   <PropertyGroup >
+     <LangVersion>preview</LangVersion>
    </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
     <PackageReference Include="Microsoft.Maui.Graphics" Version="$(_MicrosoftMauiGraphics)" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Comet.SourceGenerator\Comet.SourceGenerator.csproj" 
+                      OutputItemType="Analyzer"
+                      ReferenceOutputAssembly="false"/>
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
     <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj" />
   </ItemGroup>

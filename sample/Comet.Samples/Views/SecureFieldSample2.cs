@@ -24,7 +24,7 @@ namespace Comet.Samples
 		[Body]
 		View body() => new VStack()
 		{
-			new SecureField(null, "Enter a password", value => password.Value = value),
+			new SecureField(password, "Enter a password"),
 			new Text(password.Value)
 		}.FillHorizontal();
 	}
