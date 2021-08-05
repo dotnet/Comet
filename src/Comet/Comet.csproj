@@ -16,11 +16,8 @@
     <PackageId>Clancey.Comet</PackageId>
     <Product>Comet</Product>
   </PropertyGroup>
-   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-     <LangVersion>latestmajor</LangVersion>
-   </PropertyGroup>
-   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-     <LangVersion>latestmajor</LangVersion>
+   <PropertyGroup >
+     <LangVersion>preview</LangVersion>
    </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
