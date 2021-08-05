@@ -48,10 +48,13 @@ namespace Comet
 			return CurrentWindow;
 		}
 
-		void IApplication.ThemeChanged() => throw new NotImplementedException();
+		void IApplication.ThemeChanged()
+		{
+			//TODO: apply new theme
+		}
 
 		IMauiContext IMauiContextHolder.MauiContext { get; set; }
 
-		IReadOnlyList<IWindow> IApplication.Windows => throw new NotImplementedException();
+		IReadOnlyList<IWindow> IApplication.Windows => windows;
 	}
 }

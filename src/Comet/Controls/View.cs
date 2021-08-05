@@ -21,7 +21,7 @@ using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IHotReloadableView,ISafeAreaView, IContentTypeHash, IAnimator
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView,ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement
 	{
 		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
@@ -746,6 +746,8 @@ namespace Comet
 		double ITransform.AnchorX => this.GetEnvironment<double?>(nameof(ITransform.AnchorX)) ?? .5;
 
 		double ITransform.AnchorY => this.GetEnvironment<double?>(nameof(ITransform.AnchorY)) ?? .5;
+
+		public string Title => this.GetTitle();
 
 		Size IView.Arrange(Rectangle bounds)
 		{

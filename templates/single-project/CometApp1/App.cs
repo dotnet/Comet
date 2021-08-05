@@ -18,9 +18,11 @@ namespace CometApp1
 		public override void Configure(IAppHostBuilder appBuilder)
 		{
 			base.Configure(appBuilder);			
+//-:cnd
 #if DEBUG
 			appBuilder.EnableHotReload();
 #endif
+//+:cnd
 		}
 	}
 }
