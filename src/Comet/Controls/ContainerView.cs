@@ -98,7 +98,7 @@ namespace Comet
 
 		public bool IsReadOnly => false;
 
-		IView IList<IView>.this[int index] { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		IView IList<IView>.this[int index] { get => Views[index]; set => Views[index] = value as View; }
 
 		public IEnumerator<View> GetEnumerator() => Views.GetEnumerator();
 
