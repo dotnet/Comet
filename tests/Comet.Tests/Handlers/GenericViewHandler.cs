@@ -40,6 +40,7 @@ namespace Comet.Tests.Handlers
 		public object ContainerView => throw new NotImplementedException();
 
 		public readonly Dictionary<string, object> ChangedProperties = new Dictionary<string, object>();
+		public readonly Dictionary<string, object> InvokedCommands = new Dictionary<string, object>();
 
 
 		public void UpdateValue(string property)
@@ -68,5 +69,6 @@ namespace Comet.Tests.Handlers
 		void IElementHandler.SetMauiContext(IMauiContext mauiContext) => MauiContext = mauiContext;
 		Size IViewHandler.GetDesiredSize(double widthConstraint, double heightConstraint) => GetIntrinsicSize(widthConstraint, heightConstraint);
 		void IViewHandler.NativeArrange(Rectangle frame) => Frame = frame;
+		public void Invoke(string command, object args = null) => InvokedCommands.Add(command, args);
 	}
 }

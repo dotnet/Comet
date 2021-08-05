@@ -27,5 +27,30 @@ namespace Comet
 
 
 		public string Title => this.Content.GetTitle();
+
+
+		void IWindow.Created()
+		{
+
+		}
+		void IWindow.Resumed()
+		{
+		}
+		void IWindow.Activated()
+		{
+
+		}
+		void IWindow.Deactivated()
+		{
+
+		}
+		void IWindow.Stopped()
+		{
+
+		}
+		void IWindow.Destroying()
+		{
+
+		}
 	}
 }

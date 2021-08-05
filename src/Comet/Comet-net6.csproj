@@ -11,6 +11,9 @@
   <PropertyGroup>
     <PackageId>Clancey.Comet</PackageId>
   </PropertyGroup>
+  <PropertyGroup>
+   <LangVersion>preview</LangVersion>
+  </PropertyGroup>
   <Import Project="..\..\external\Maui\.nuspec\Microsoft.Maui.Controls.MultiTargeting.targets" />
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
