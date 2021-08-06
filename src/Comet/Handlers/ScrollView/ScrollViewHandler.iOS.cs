@@ -33,8 +33,6 @@ namespace Comet.Handlers
 
 		public override void SetVirtualView(IView view)
 		{
-			if (view == VirtualView)
-				return;
 			base.SetVirtualView(view);
 
 
