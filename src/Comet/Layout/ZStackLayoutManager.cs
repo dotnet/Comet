@@ -23,13 +23,14 @@ namespace Comet.Layout
 			return measuredSize;
 		}
 
-		public virtual Size ArrangeChildren(Rectangle bounds)
+		public Size ArrangeChildren(Size inSize)
 		{
+			var bounds = new Rectangle(Point.Zero, inSize);
 			foreach (var v in layout)
 			{
 				v.Arrange(bounds);
 			}
-			return bounds.Size;
+			return inSize;
 		}
 
 
