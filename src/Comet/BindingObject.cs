@@ -10,13 +10,16 @@ using Comet.Reflection;
 
 namespace Comet
 {
+	public interface IAutoImplemented
+	{
 
+	}
 
 	public interface INotifyPropertyRead : INotifyPropertyChanged
 	{
 		event PropertyChangedEventHandler PropertyRead;
 	}
-	public class BindingObject : INotifyPropertyRead
+	public class BindingObject : INotifyPropertyRead, IAutoImplemented
 	{
 
 		public event PropertyChangedEventHandler PropertyRead;
