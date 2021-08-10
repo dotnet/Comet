@@ -49,7 +49,7 @@ namespace Comet
 			base.ViewPropertyChanged(property, value);
 			if (property == nameof(StringSource))
 			{
-				this.InvalidateMeasurement();
+				InvalidateMeasurement();
 				CreateImageSource((string)value);
 			}
 		}

@@ -33,12 +33,12 @@ namespace Comet.Handlers
 
 		public override void SetVirtualView(IView view)
 		{
-			if (view == VirtualView)
-				return;
 			base.SetVirtualView(view);
 
-
+			var oldContent = _content;
 			_content = VirtualView?.Content?.ToNative(MauiContext);
+			if(oldContent != _content)
+				oldContent.RemoveFromSuperview();
 			if (_content != null)
 			{
 				//_content.SizeToFit();

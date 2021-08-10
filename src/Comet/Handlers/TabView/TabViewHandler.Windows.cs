@@ -10,13 +10,14 @@ namespace Comet.Handlers
 {
 	public partial class TabViewHandler : ViewHandler<TabView, Panel>
 	{
-		//public override bool IgnoreSafeArea => VirtualView?.GetIgnoreSafeArea(true) ?? true;
 		protected override Panel CreateNativeView() => NativeView ?? new LayoutPanel { };
 
 
-		public static void MapChildren(TabViewHandler handler, TabView tabView)
-		{
-			//handler?.NativeView?.Setup(tabView?.ToList());
-		}
+		//public override void SetVirtualView(IView view)
+		//{
+		//	base.SetVirtualView(view);
+
+		//	NativeView?.Setup(this.VirtualView);
+		//}
 	}
 }

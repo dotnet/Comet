@@ -11,7 +11,7 @@ namespace Comet.Handlers
 	{
 		public static PropertyMapper<View, CometViewHandler> CometViewMapper = new ()
 		{
-			[nameof(IPage.Title)] = MapTitle,
+			//[nameof(IPage.Title)] = MapTitle,
 			[nameof(IView.Background)] = MapBackgroundColor,
 		};
 

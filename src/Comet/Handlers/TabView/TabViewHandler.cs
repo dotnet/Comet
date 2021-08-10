@@ -7,13 +7,8 @@ namespace Comet.Handlers
 {
 	public partial class TabViewHandler
 	{
-		public static readonly PropertyMapper<TabView, TabViewHandler> Mapper = new PropertyMapper<TabView, TabViewHandler>(ViewHandler.ViewMapper)
-		{
-			[nameof(IContainer.Children)] = MapChildren
 
-		};
-
-		public TabViewHandler() : base(Mapper)
+		public TabViewHandler() : base(ViewHandler.ViewMapper)
 		{
 
 		}

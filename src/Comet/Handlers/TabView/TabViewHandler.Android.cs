@@ -7,6 +7,7 @@ using Android.Content;
 using Android.Util;
 using System.Linq;
 using Microsoft.Maui.Handlers;
+using Microsoft.Maui;
 
 namespace Comet.Handlers
 {
@@ -15,6 +16,15 @@ namespace Comet.Handlers
 		//private AView _view;
 		protected override CometTabView CreateNativeView() => new CometTabView(MauiContext);
 
-		public static void MapChildren(TabViewHandler handler, TabView tabView) => handler?.NativeView?.CreateTabs(tabView?.ToList());
+
+		protected override void ConnectHandler(CometTabView nativeView)
+		{
+			base.ConnectHandler(nativeView);
+		}
+		public override void SetVirtualView(IView view) {
+			base.SetVirtualView(view);
+
+			NativeView?.CreateTabs(this.VirtualView);
+		}
 	}
 }

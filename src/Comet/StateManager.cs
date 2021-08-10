@@ -167,7 +167,7 @@ namespace Comet
 			CheckForStateAttributes(obj, null).ToList();
 
 			//if it is a binding object we auto monitor!!!!
-			if (!(obj is BindingObject))
+			if (!(obj is IAutoImplemented))
 			{
 				obj.PropertyChanged += Obj_PropertyChanged;
 				obj.PropertyRead += Obj_PropertyRead;
@@ -178,7 +178,7 @@ namespace Comet
 			if (!MonitoredObjects.Contains(obj))
 				return;
 			MonitoredObjects.Remove(obj);
-			if (!(obj is BindingObject b))
+			if (!(obj is IAutoImplemented))
 			{
 				obj.PropertyChanged -= Obj_PropertyRead;
 				obj.PropertyRead -= Obj_PropertyRead;

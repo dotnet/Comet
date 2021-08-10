@@ -120,8 +120,8 @@ namespace Comet.Styles
 		protected virtual void ApplyTextStyle(ContextualObject view, TextStyle textStyle)
 		{
 			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Colors.Color, textStyle.Color);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font, (f) => (f is Font font) ? font.FontSize : null);
-			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Family, textStyle?.Font, (f) => (f is Font font) ? font.FontFamily : null);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Size, textStyle?.Font, (f) => (f is Font font) ? font.Size : null);
+			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Family, textStyle?.Font, (f) => (f is Font font) ? font.Family : null);
 			SetEnvironment(view, textStyle.StyleId, EnvironmentKeys.Fonts.Weight, textStyle?.Font, (f) => (f is Font font) ? font.Weight : null);
 
 		}

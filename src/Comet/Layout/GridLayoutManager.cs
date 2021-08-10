@@ -133,11 +133,11 @@ namespace Comet.Layout
 			return new Size(_width, _height);
 		}
 
-		public void ArrangeChildren(Rectangle rect)
+		public Size ArrangeChildren(Rectangle bounds)
 		{
 			var layout = grid;
-			var measured = rect.Size;
-			var size = rect.Size;
+			var measured = bounds.Size;
+			var size = bounds.Size;
 			if (_gridX == null || !_lastSize.Equals(size))
 			{
 				ComputeGrid(size.Width, size.Height);
@@ -203,9 +203,9 @@ namespace Comet.Layout
 					w -= margin.HorizontalThickness;
 					h -= margin.VerticalThickness;
 				}
-
 				view.Frame = new Rectangle(x, y, w, h);
 			}
+			return measured;
 		}
 
 		public int AddRow(object row)
