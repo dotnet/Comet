@@ -48,7 +48,7 @@ namespace {{NameSpace}} {
 		public {{ClassName}}() {}
 		{{/HasParameters}}
 
-		public {{ClassName}} ({{#ParametersFunction}} Binding<{{Type}}> {{LowercaseName}}{{DefaultValueString}}{{/ParametersFunction}})
+		public {{ClassName}} ({{#ParametersFunction}} Binding<{{{Type}}}> {{LowercaseName}}{{DefaultValueString}}{{/ParametersFunction}})
 		{
 			{{#Parameters}}
 			{{Name}} = {{LowercaseName}};
@@ -56,7 +56,7 @@ namespace {{NameSpace}} {
 		}
 
 		{{#FuncConstructorFunction}}		
-		public {{ClassName}} ({{#ParametersFunction}} Func<{{Type}}> {{LowercaseName}}{{DefaultValueString}}{{/ParametersFunction}})
+		public {{ClassName}} ({{#ParametersFunction}} Func<{{{Type}}}> {{LowercaseName}}{{DefaultValueString}}{{/ParametersFunction}})
 		{
 			{{#Parameters}}
 			{{Name}} = {{LowercaseName}};
@@ -65,8 +65,8 @@ namespace {{NameSpace}} {
 		{{/FuncConstructorFunction}}
 
 		{{#Parameters}}
-		Binding<{{Type}}> {{LowercaseName}};
-		public Binding<{{Type}}> {{Name}}
+		Binding<{{{Type}}}> {{LowercaseName}};
+		public Binding<{{{Type}}}> {{Name}}
 		{
 			get => {{LowercaseName}};
 			private set => this.SetBindingValue(ref  this.{{LowercaseName}}, value);
@@ -92,14 +92,14 @@ namespace {{NameSpace}} {
 }
 ";
 		const string extensionProperty = @"
-		public static T {{Name}}<T>(this T view, Binding<{{Type}}> {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
+		public static T {{Name}}<T>(this T view, Binding<{{{Type}}}> {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
 			view.SetEnvironment(nameof({{FullName}}),{{LowercaseName}},cascades);
 		
-		public static T {{Name}}<T>(this T view, Func<{{Type}}> {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
-			view.SetEnvironment(nameof({{FullName}}),(Binding<{{Type}}>){{LowercaseName}},cascades);
+		public static T {{Name}}<T>(this T view, Func<{{{Type}}}> {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
+			view.SetEnvironment(nameof({{FullName}}),(Binding<{{{Type}}}>){{LowercaseName}},cascades);
 ";
 		const string extensionActionProperty = @"
-		public static T {{Name}}<T>(this T view, {{Type}} {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
+		public static T {{Name}}<T>(this T view, {{{Type}}} {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
 			view.SetEnvironment(nameof({{FullName}}),{{LowercaseName}},cascades);
 ";
 		const string extensionMustacheTemplate = @"
@@ -125,45 +125,45 @@ namespace {{NameSpace}} {
 		static CometViewSourceGenerator()
 		{
 			var interfacePropertyEnvironmentMustache = @"
-                {{Type}} {{FullName}} {
-                        get => this.GetEnvironment<{{CleanType}}>(nameof({{FullName}})) ?? {{DefaultValue}};
+                {{{Type}}} {{FullName}} {
+                        get => this.GetEnvironment<{{{CleanType}}}>(nameof({{FullName}})) ?? {{DefaultValue}};
                         set => this.SetEnvironment(nameof({{FullName}}), value);
                 }
 ";
 			var interfacePropertySetOnlyEnvironmentMustache = @"
-                {{Type}} {{FullName}} {
+                {{{Type}}} {{FullName}} {
                         set => this.SetEnvironment(nameof({{FullName}}), value);
                 }
 ";
 
 			var interfacePropertyGetOnlyEnvironmentMustache = @"
-                {{Type}} {{FullName}} => this.GetEnvironment<{{CleanType}}>(nameof({{FullName}})) ?? {{DefaultValue}};
+                {{{Type}}} {{FullName}} => this.GetEnvironment<{{{CleanType}}}>(nameof({{FullName}})) ?? {{DefaultValue}};
 ";
 
 			var interfacePropertyMustache = @"
-                {{Type}} {{FullName}} {
+                {{{Type}}} {{FullName}} {
                         get => {{Name}}?.CurrentValue ?? {{DefaultValue}};
                         set => {{Name}}.Set(value);
                 }
 ";
 
 			var interfacePropertyGetOnlyMustache = @"
-                {{Type}} {{FullName}} => {{Name}}?.CurrentValue ?? {{DefaultValue}};
+                {{{Type}}} {{FullName}} => {{Name}}?.CurrentValue ?? {{DefaultValue}};
 ";
 
 
 			var interfacePropertySetOnlyMustache = @"
-				{{Type}} {{FullName}} {
+				{{{Type}}} {{FullName}} {
                         set => {{Name}}.Set(value);
                 }
 ";
 			var interfacePropertyMethodEnvironmentMustache = @"
 
-				void {{FullName}} () => this.GetEnvironment<{{CleanType}}>(nameof({{FullName}}))?.Invoke();
+				void {{FullName}} ({{{ActionsParameters}}}) => this.GetEnvironment<{{{CleanType}}}>(nameof({{FullName}}))?.Invoke({{{ActionsInvokeParameters}}});
 ";
 
 			var interfacePropertyMethodMustache = @"
-                void {{FullName}} () => {{Name}}.CurrentValue?.Invoke();
+                void {{FullName}} ({{{ActionsParameters}}}) => {{Name}}.CurrentValue?.Invoke({{{ActionsInvokeParameters}}});
 ";
 
 			interfacePropertyDictionary = new Dictionary<(bool HasGet, bool HasSet), (string FromEnvironment, string FromProperty)>
@@ -216,7 +216,7 @@ namespace {{NameSpace}} {
 			interfaces.Insert(0, interfaceType);
 			var alreadyImplemented = baseClass.AllInterfaces;
 			interfaces.RemoveAll(x => alreadyImplemented.Contains(x));
-			List<(string Type, string CleanType, string Name, string FullName, bool ShouldBeExtension, bool Skip)> properties = new();
+			List<(string Type, string CleanType, string Name, string FullName, bool ShouldBeExtension, bool Skip, List<(string Type, string Name)> Parameters)> properties = new();
 			Dictionary<string, string> constructorTypes = new ();
 			List<string> propertiesWithSetters = new();
 			List<string> propertiesWithGetters = new();
@@ -224,6 +224,10 @@ namespace {{NameSpace}} {
 			Dictionary<string, bool> processedProperty = new();
 			foreach (var i in interfaces)
 			{
+				if(i.Name == "IScrollView")
+				{
+					Console.WriteLine("");
+				}
 				var members = i.GetMembers();
 				foreach (var m in members)
 				{
@@ -244,7 +248,7 @@ namespace {{NameSpace}} {
 
 					string type = null;
 					bool canBeNull = true;
-
+					List<(string Type, string Name)> parameters = new List<(string Type, string Name)>();
 					if (m is IPropertySymbol pi)
 					{
 						//cleanType = GetFullName(pi.Type.WithNullableAnnotation(pi.Type.NullableAnnotation));
@@ -252,6 +256,30 @@ namespace {{NameSpace}} {
 						type = GetFullName(pi.Type);
 						if (pi.Type.Name == "String")
 							quoteDefaultData[m.Name] = true;
+					} else if(m is IMethodSymbol mi)
+					{
+						parameters = mi.Parameters.Select(x => (GetFullName(x.Type), x.Name)).ToList();
+						var parameterTypeString = string.Join(", ", parameters.Select(x => $"{x.Type} {x.Name}"));
+					
+						if (mi.ReturnsVoid)
+						{
+							if (mi.Parameters.Any())
+							{
+								type = $"System.Action<({parameterTypeString})>";
+							}
+						}
+						else
+						{
+							if (mi.Parameters.Any()) {
+								type = $"System.Func<({parameterTypeString}),{GetFullName(mi.ReturnType)}>";
+							}
+							else
+							{
+								type = $"System.Func<{GetFullName(mi.ReturnType)}>";
+							}
+
+						}
+
 					}
 
 					var cleanType = canBeNull ? type : $"{type}?";
@@ -259,13 +287,13 @@ namespace {{NameSpace}} {
 					if (keyProperties.Contains(m.Name))
 					{
 						constructorTypes[m.Name] = type;
-						var t = (type, cleanType, m.Name, $"{fullName}", false, skippedProperties.Contains(m.Name));
+						var t = (type, cleanType, m.Name, $"{fullName}", false, skippedProperties.Contains(m.Name), parameters);
 						if (!properties.Contains(t))
 							properties.Add(t);
 					}
 					else
 					{
-						var t = (type, cleanType, m.Name, $"{fullName}", true, skippedProperties.Contains(m.Name));
+						var t = (type, cleanType, m.Name, $"{fullName}", true, skippedProperties.Contains(m.Name), parameters);
 						if (!properties.Contains(t))
 							properties.Add(t);
 
@@ -319,6 +347,9 @@ namespace {{NameSpace}} {
 					ClassName = name,
 					DefaultValue = getPropertyDefaultValue(x.Name),
 					LowercaseName = x.Name.LowercaseFirst(),
+					Parameter = x.Parameters,					
+					ActionsParameters = string.Join(", ", ((List<(string Type, string Name)>)x.Parameters).Select(x => $"{x.Type} {x.Name}")),
+					ActionsInvokeParameters = x.Parameters.Any() ? "(" + string.Join(", ", ((List<(string Type, string Name)>)x.Parameters).Select(x => x.Name)) + ")" : "",
 					x.Skip
 				}).ToList(),
 				ParametersFunction = new Func<dynamic, string, object>((dyn, str) => string.Join(",", ((IEnumerable<dynamic>)dyn.Parameters).Select(x => stubble.Render(str, new {
@@ -336,6 +367,7 @@ namespace {{NameSpace}} {
 					var template = dyn.ShouldBeExtension ? templateGroup.FromEnvironment : templateGroup.FromProperty;
 					return stubble.Render(template, dyn);
 				}),
+
 				ExtensionPropertiesFunc = new Func<dynamic, string, object>((dyn, str) => dyn.ShouldBeExtension && !dyn.Skip ? stubble.Render(dyn.Type == "System.Action" ? extensionActionProperty : extensionProperty, dyn) : ""),
 				HasRenamedProperties = propertyNameTransforms.Any(),
 				RenamedProperties = propertyNameTransforms.Select(x => new {
