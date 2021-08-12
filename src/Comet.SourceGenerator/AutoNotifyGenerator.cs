@@ -51,7 +51,7 @@ namespace Comet
 			Compilation compilation = context.Compilation.AddSyntaxTrees(CSharpSyntaxTree.ParseText(SourceText.From(attributeText, Encoding.UTF8), options));
 
 			// get the newly bound attribute, and INotifyPropertyChanged
-			INamedTypeSymbol attributeSymbol = compilation.GetTypeByMetadataName("AutoNotify.AutoNotifyAttribute");
+			INamedTypeSymbol attributeSymbol = compilation.GetTypeByMetadataName("Comet.AutoNotifyAttribute");
 			INamedTypeSymbol notifySymbol = compilation.GetTypeByMetadataName("System.ComponentModel.INotifyPropertyChanged");
 			var notifyReadSymbol = compilation.GetTypeByMetadataName("Comet.INotifyPropertyRead");
 			var autoImplementedSymbol = compilation.GetTypeByMetadataName("Comet.IAutoImplemented");
