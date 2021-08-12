@@ -73,7 +73,7 @@ jobs:
       - uses: actions/upload-artifact@v2
         name: Upload Nuget Artifact
         with:
-          name: nuget-artifact
+          name: nuget-artifact.$GITHUB_RUN_NUMBER
           path: |
             **\*.nupkg
             **\*.snupkg
