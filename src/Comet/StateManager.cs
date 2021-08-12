@@ -230,7 +230,7 @@ namespace Comet
 
 			ChildPropertyNamesMapping.TryGetValue(notify, out var mappings);
 			List<View> disposedViews = new List<View>();
-			views.ForEach((view) => {
+			views.ToList().ForEach((view) => {
 				if (view == null || view.IsDisposed)
 				{
 					disposedViews.Add(view);
