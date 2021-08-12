@@ -95,8 +95,7 @@
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.pdb" target="lib/net6.0-maccatalyst13.5/Comet.pdb"/>
     <!-- <file src="src/Comet/bin/Debug/net6.0-windows10.0.18362/Comet.dll" target="lib/net6.0-windows10.0.18362/Comet.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-windows10.0.18362/Comet.pdb" target="lib/net6.0-windows10.0.18362/Comet.pdb"/> -->
-    <file src="external/Maui/.nuspec/Microsoft.Maui.Core.targets" target="build/Microsoft.Maui.Core.targets" />
-    <file src="external/Maui/.nuspec/Microsoft.Maui.Core.props" target="build/Microsoft.Maui.Core.props" />
+    <file src="external/Maui/.nuspec/Microsoft.Maui.Controls.MultiTargeting.targets" target="build/Microsoft.Maui.Controls.MultiTargeting.targets" />
     <file src="src/Comet.SourceGenerator/bin/Debug/netstandard2.0/Comet.SourceGenerator.dll" target="analyzers/cs/Comet.SourceGenerator.dll"/>
     <file src="src/Comet.SourceGenerator/bin/Debug/netstandard2.0/Stubble.Core.dll" target="analyzers/cs/Stubble.Core.dll"/>
   </files>

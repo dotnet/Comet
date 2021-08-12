@@ -200,14 +200,14 @@ namespace Comet
 			var value = sender.GetPropertyValue(e.PropertyName);
 			OnPropertyChanged(sender, e.PropertyName, value);
 		}
-		static internal void OnPropertyRead(object sender, string propertyName)
+		public static void OnPropertyRead(object sender, string propertyName)
 		{
 			if (!isBuilding)
 				return;
 			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
 			currentReadProperies.Add((sender as INotifyPropertyRead, propertyName));
 		}
-		static internal void OnPropertyChanged(object sender, string propertyName, object value)
+		public static  void OnPropertyChanged(object sender, string propertyName, object value)
 		{
 			if (value?.GetType() == typeof(View))
 				return;
