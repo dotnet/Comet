@@ -20,7 +20,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="Clancey.Comet" Version="0.3.59-beta" />
+		<PackageReference Include="Clancey.Comet" Version="0.3.64-beta" />
 		<PackageReference Include="Reloadify3000" Version="1.0.6" />
 	</ItemGroup>
 	
