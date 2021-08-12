@@ -16,7 +16,7 @@ namespace Comet.SourceGenerator
 	{
 		private const string attributeText = @"
 using System;
-namespace AutoNotify
+namespace Comet
 {
     [AttributeUsage(AttributeTargets.Field, Inherited = false, AllowMultiple = false)]
     sealed class AutoNotifyAttribute : Attribute
