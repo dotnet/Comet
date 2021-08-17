@@ -178,10 +178,6 @@ namespace Comet
 			}
 		}
 
-		protected void OnFrameSet()
-		{
-
-		}
 		protected override void Dispose(bool disposing)
 		{
 			foreach (var view in Views)

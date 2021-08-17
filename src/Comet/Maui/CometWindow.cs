@@ -26,7 +26,7 @@ namespace Comet
 		}
 
 
-		public string Title => this.Content.GetTitle();
+		public new string Title => this.Content.GetTitle();
 
 
 		void IWindow.Created()

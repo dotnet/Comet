@@ -109,7 +109,7 @@ namespace Comet
 
 		public Func<int> Count { get; set; }
 
-		protected override int GetCount(int section) => currentItems?.Count() ?? Count?.Invoke() ?? 0;
+		protected override int GetCount(int section) => currentItems?.Count ?? Count?.Invoke() ?? 0;
 
 		protected override object GetItemAt(int section, int index) => currentItems.SafeGetAtIndex(index, ItemFor);
 
@@ -184,7 +184,7 @@ namespace Comet
 
 		public virtual void ReloadData()
 		{
-			ViewHandler?.UpdateValue(nameof(ReloadData));
+			ViewHandler?.Invoke(nameof(ReloadData));
 		}
 
 		protected virtual void OnSelected(int section, int index)
@@ -233,6 +233,16 @@ namespace Comet
 		View IListView.FooterFor(int section) => GetFooterFor(section);
 
 		void IListView.OnSelected(int section, int index) => OnSelected(section, index);
+
+		protected override string GetHandlerPropertyName(string property) => base.GetHandlerPropertyName(property);
+
+		public override void ViewPropertyChanged(string property, object value)
+		{
+			if (property == "Items")
+				ViewHandler?.Invoke(nameof(ListView.ReloadData));
+			else
+				base.ViewPropertyChanged(property, value);
+		}
 	}
 
 
@@ -341,7 +351,7 @@ namespace Comet
 		public Func<int> SectionCount { get; set; }
 
 
-		protected override int GetSections() => sections?.Count() ?? SectionCount?.Invoke() ?? 0;
+		protected override int GetSections() => sections?.Count ?? SectionCount?.Invoke() ?? 0;
 		protected override View GetHeaderFor(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.Header?.SetParent(this);
 		protected override View GetFooterFor(int section) => sections.SafeGetAtIndex(section, GetCachedSection)?.Footer?.SetParent(this);
 		protected override object GetItemAt(int section, int index) => sections.SafeGetAtIndex(section, GetCachedSection)?.GetItemAt(index);
@@ -426,7 +436,7 @@ namespace Comet
 		}
 		protected override int GetSections()
 		{
-			var s = sections?.Count() ?? 0;
+			var s = sections?.Count ?? 0;
 			return s;
 		}
 		protected override View GetHeaderFor(int section) => sections?[section]?.Header?.SetParent(this);
