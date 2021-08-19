@@ -197,10 +197,10 @@ namespace {{NameSpace}} {
 
 		public void Initialize(GeneratorInitializationContext context)
 		{
-			if (!Debugger.IsAttached)
-			{
-				Debugger.Launch();
-			}
+			// if (!Debugger.IsAttached)
+			// {
+			// 	Debugger.Launch();
+			// }
 
 			context.RegisterForPostInitialization((pi) => pi.AddSource("GenerateStateClassAttribute__", attributeSource));
 			context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
