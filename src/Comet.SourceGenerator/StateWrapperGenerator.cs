@@ -71,7 +71,7 @@ namespace {{NameSpace}} {
 		static StateWrapperGenerator()
 		{
 			var interfacePropertyMustache = @"
-        {{{Type}}} {{Name}} {
+        public {{{Type}}} {{Name}} {
 			get {
 				NotifyPropertyRead();
 				return OriginalModel.{{Name}};
@@ -83,7 +83,7 @@ namespace {{NameSpace}} {
         }
 ";
 			var interfacePropertySetOnlyMustache = @"
-        {{{Type}}} {{Name}} {
+        public {{{Type}}} {{Name}} {
 			set {
 				OriginalModel.{{Name}} = value;
 				NotifyPropertychanged(value);
@@ -92,7 +92,7 @@ namespace {{NameSpace}} {
 ";
 
 			var interfacePropertyGetOnlyMustache = @"
-        {{{Type}}} {{Name}} {
+        public {{{Type}}} {{Name}} {
 			get {
 				NotifyPropertyRead();
 				return OriginalModel.{{Name}};
