@@ -33,8 +33,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 namespace {{NameSpace}} {
-	public partial class {{ClassName}} : IAutoImplemented 
+	public partial class {{ClassName}} :INotifyPropertyRead, IAutoImplemented 
 	{
+		public event PropertyChangedEventHandler PropertyRead;
+		public event PropertyChangedEventHandler PropertyChanged;
 
 		public readonly {{ClassType}} OriginalModel;
 		public {{ClassName}} ({{ClassType}} model)
@@ -50,15 +52,20 @@ namespace {{NameSpace}} {
 		bool shouldNotifyChanged = true;
 		private void Inp_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
-			StateManager.OnPropertyChanged(sender,e.PropertyName,null);
+			StateManager.OnPropertyChanged(this,e.PropertyName,null);
+			PropertyChanged?.Invoke(this, e);
 		}
-		void NotifyPropertychanged(object value, [CallerMemberName] string memberName = null)
-		{
-			if (shouldNotifyChanged)
+		
+		void NotifyPropertyChanged(object value, [CallerMemberName] string memberName = null){
+			if (shouldNotifyChanged) {
 				StateManager.OnPropertyChanged(this, memberName, value);
+				PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(memberName));
+			}
+		} 
+		void NotifyPropertyRead([CallerMemberName] string memberName = null){ 
+			StateManager.OnPropertyRead(this, memberName);
+			PropertyRead?.Invoke(this, new PropertyChangedEventArgs(memberName));
 		}
-
-		void NotifyPropertyRead([CallerMemberName] string memberName = null) => StateManager.OnPropertyRead(this, memberName);
 
 		{{#Properties}}
 		{{#PropertiesFunc}}
@@ -78,7 +85,7 @@ namespace {{NameSpace}} {
 			}
             set {
 				OriginalModel.{{Name}} = value;
-				NotifyPropertychanged(value);
+				NotifyPropertyChanged(value);
 			}
         }
 ";
@@ -86,7 +93,7 @@ namespace {{NameSpace}} {
         public {{{Type}}} {{Name}} {
 			set {
 				OriginalModel.{{Name}} = value;
-				NotifyPropertychanged(value);
+				NotifyPropertyChanged(value);
 			}
         }
 ";
