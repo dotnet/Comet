@@ -16,16 +16,16 @@ jobs:
     env:
         NUPKG_MAJOR: 0.2
         BASE: 334
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps: 
       - uses: actions/checkout@v2
         with:
           submodules: true
           
-      - name: Install Visual Studio Preview
-        shell: pwsh
-        run: powershell .\build\install-vs.ps1
+      # - name: Install Visual Studio Preview
+      #   shell: pwsh
+      #   run: powershell .\build\install-vs.ps1
       
       # - name: Add msbuild to PATH
       #   uses: microsoft/setup-msbuild@v1.0.2
