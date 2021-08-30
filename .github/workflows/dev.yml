@@ -44,10 +44,10 @@ jobs:
           & .\dotnet-install.ps1 -Version 6.0.100-rc.2.21423.2 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
           & dotnet --list-sdks    
       
-      - name: delete junk
-        shell: pwsh
-        run: |
-          Remove-Item –path 'C:\Program Files\dotnet\metadata\workloads\6.0.100\installertype\msi'
+      # - name: delete junk
+      #   shell: pwsh
+      #   run: |
+      #     Remove-Item –path 'C:\Program Files\dotnet\metadata\workloads\6.0.100\installertype\msi'
 
       - name: Install and Run maui-check Tool
         shell: pwsh
