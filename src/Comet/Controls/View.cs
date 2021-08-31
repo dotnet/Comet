@@ -697,6 +697,11 @@ namespace Comet
 		double IView.Width => this.GetFrameConstraints()?.Width ?? -1;
 		double IView.Height => this.GetFrameConstraints()?.Height ?? -1;
 
+		double IView.MinimumHeight => this.GetEnvironment<double?>(nameof(IView.MinimumHeight)) ?? Dimension.Unset;
+		double IView.MaximumWidth => this.GetEnvironment<double?>(nameof(IView.MaximumWidth)) ?? Dimension.Maximum;
+		double IView.MinimumWidth => this.GetEnvironment<double?>(nameof(IView.MinimumWidth)) ?? Dimension.Unset;
+		double IView.MaximumHeight => this.GetEnvironment<double?>(nameof(IView.MaximumHeight)) ?? Dimension.Maximum;
+
 		public IView ReplacedView => this.GetView();// HasContent ? this : BuiltView ?? this;
 
 
@@ -746,6 +751,7 @@ namespace Comet
 		double ITransform.AnchorX => this.GetEnvironment<double?>(nameof(ITransform.AnchorX)) ?? .5;
 
 		double ITransform.AnchorY => this.GetEnvironment<double?>(nameof(ITransform.AnchorY)) ?? .5;
+
 
 		public string Title => this.GetTitle();
 

@@ -10,9 +10,9 @@ using Microsoft.Maui.HotReload;
 namespace Comet.iOS.Sample
 {
 	[Register("AppDelegate")]
-	public class AppDelegate : MauiUIApplicationDelegate<MyApp>
+	public class AppDelegate : MauiUIApplicationDelegate
 	{
-
+		protected override MauiApp CreateMauiApp() => MyApp.CreatMauiApp();
 	}
 }
 

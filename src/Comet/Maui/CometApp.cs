@@ -9,7 +9,7 @@ using Microsoft.Maui.Hosting;
 namespace Comet
 {
 
-	public class CometApp : View, IApplication, IStartup, IMauiContextHolder
+	public class CometApp : View, IApplication, IMauiContextHolder
 	{
 		public CometApp()
 		{
@@ -22,18 +22,6 @@ namespace Comet
 		public static float DisplayScale => CurrentWindow?.DisplayScale ?? 1;
 		List<IWindow> windows = new List<IWindow>();
 		public IReadOnlyList<IWindow> Windows => windows;
-
-
-		public virtual void Configure(IAppHostBuilder appBuilder)
-		{
-			appBuilder.ConfigureServices((context, collection) => {
-				collection.AddSingleton<IApplication, CometApp>((s) => {
-					return CurrentApp;
-				});
-
-			});
-			appBuilder.UseCometHandlers();
-		}
 
 
 		IWindow IApplication.CreateWindow(IActivationState activationState)

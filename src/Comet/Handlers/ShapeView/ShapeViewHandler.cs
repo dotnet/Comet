@@ -6,7 +6,7 @@ namespace Comet.Handlers
 {
 	public partial class ShapeViewHandler
 	{
-		public static readonly PropertyMapper<ShapeView> Mapper = new PropertyMapper<ShapeView>(ViewHandler.ViewMapper)
+		public static readonly PropertyMapper<ShapeView, ShapeViewHandler> Mapper = new PropertyMapper<ShapeView, ShapeViewHandler>(ViewHandler.ViewMapper)
 		{
 			 [nameof(ShapeView.Shape)] = MapShapeProperty
 		};

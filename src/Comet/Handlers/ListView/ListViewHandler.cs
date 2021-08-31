@@ -7,7 +7,7 @@ namespace Comet.Handlers
 {
 	public partial class ListViewHandler 
 	{
-		public static readonly PropertyMapper<IListView> Mapper = new PropertyMapper<IListView>(ViewHandler.ViewMapper)
+		public static readonly PropertyMapper<IListView, ListViewHandler> Mapper = new PropertyMapper<IListView, ListViewHandler>(ViewHandler.ViewMapper)
 		{
 			["ListView"] = MapListViewProperty,
 
