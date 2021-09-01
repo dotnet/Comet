@@ -23,7 +23,6 @@ namespace Comet
 
 	public class View : ContextualObject, IDisposable, IView, IHotReloadableView,ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement
 	{
-		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
 		protected static Dictionary<string, string> HandlerPropertyMapper = new()
@@ -521,9 +520,9 @@ namespace Comet
 			{
 				var fe = (IView)this;
 				var ms = this.ComputeDesiredSize(availableSize.Width, availableSize.Height);
-				if(fe.Width != -1)
+				if(fe.Width > 0)
 					ms.Width = fe.Width;
-				if (fe.Height != -1)
+				if (fe.Height > 0)
 					ms.Height = fe.Height;
 				//TODO: Remove this when we get some LayoutOptions...
 				//This check ignores MArgin which is bad
@@ -694,8 +693,8 @@ namespace Comet
 		protected bool IsArrangeValid;
 		//bool IView.IsArrangeValid => IsArrangeValid;
 
-		double IView.Width => this.GetFrameConstraints()?.Width ?? -1;
-		double IView.Height => this.GetFrameConstraints()?.Height ?? -1;
+		double IView.Width => this.GetFrameConstraints()?.Width ?? Dimension.Unset;
+		double IView.Height => this.GetFrameConstraints()?.Height ?? Dimension.Unset;
 
 		double IView.MinimumHeight => this.GetEnvironment<double?>(nameof(IView.MinimumHeight)) ?? Dimension.Unset;
 		double IView.MaximumWidth => this.GetEnvironment<double?>(nameof(IView.MaximumWidth)) ?? Dimension.Maximum;

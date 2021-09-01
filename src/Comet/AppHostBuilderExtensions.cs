@@ -51,9 +51,9 @@ namespace Comet
 				{ typeof(Toggle), typeof(SwitchHandler) },
 #if __MOBILE__
 				{ typeof(ListView),typeof(ListViewHandler) },
-				{typeof(NavigationView), typeof (NavigationViewHandler)},
+				{typeof(NavigationView), typeof (Handlers.NavigationViewHandler)},
 				{typeof(ScrollView), typeof(Handlers.ScrollViewHandler) },
-				{typeof(ShapeView), typeof(Comet.Handlers.ShapeViewHandler)},
+				{typeof(ShapeView), typeof(Handlers.ShapeViewHandler)},
 
 #endif
 
