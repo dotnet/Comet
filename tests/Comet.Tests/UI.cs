@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using Comet.Tests.Handlers;
 using Microsoft.Extensions.DependencyInjection;
@@ -7,6 +8,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using Microsoft.Maui.Hosting.Internal;
 using Microsoft.Maui.HotReload;
+using static Microsoft.Maui.HandlerMauiAppBuilderExtensions;
 
 namespace Comet.Tests
 {
@@ -37,12 +39,9 @@ namespace Comet.Tests
 					{ typeof(VStack), typeof(GenericViewHandler)},
 					{ typeof(ZStack), typeof(GenericViewHandler)},
 				};
-			var handlerCollection = new MauiHandlersCollection();
-			foreach (var handler in handlers)
-			{
-				handlerCollection.AddTransient(handler.Key, handler.Value);
-			}
-			Handlers = new MauiHandlersServiceProvider(handlerCollection);
+			
+
+			Handlers = new MauiHandlersServiceProvider(handlers.Select(x=> new HandlerRegistration((a)=> a.AddHandler(x.Key,x.Value))));
 
 			MauiHotReloadHelper.IsEnabled = true;
 
