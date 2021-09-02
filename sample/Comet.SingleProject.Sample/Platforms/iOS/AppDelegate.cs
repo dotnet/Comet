@@ -7,6 +7,6 @@ namespace Maui.Controls.Sample.SingleProject
 	[Register("AppDelegate")]
 	public class AppDelegate : MauiUIApplicationDelegate
 	{
-		protected override MauiApp CreateMauiApp() => MyApp.CreatMauiApp();
+		protected override MauiApp CreateMauiApp() => MyApp.CreateMauiApp();
 	}
 }
