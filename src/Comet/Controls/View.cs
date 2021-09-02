@@ -126,9 +126,13 @@ namespace Comet
 				viewHandler?.SetVirtualView(this);
 			if (replacedView != null)
 				replacedView.ViewHandler = handler;
-			AddAllAnimationsToManager();
+			OnHandlerSet();
 			return true;
+		}
 
+		protected virtual void OnHandlerSet()
+		{
+			AddAllAnimationsToManager();
 		}
 
 		internal void UpdateFromOldView(View view)

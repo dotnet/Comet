@@ -49,9 +49,15 @@ namespace Comet
 				{ typeof(Text), typeof(LabelHandler) },
 				{ typeof(TimePicker), typeof(TimePickerHandler) },
 				{ typeof(Toggle), typeof(SwitchHandler) },
+#if __ANDROID__
+				
+				{typeof(NavigationView), typeof (Microsoft.Maui.Handlers.NavigationViewHandler)},
+#elif __MOBILE__
+				{typeof(NavigationView), typeof (Handlers.NavigationViewHandler)},
+#endif
+
 #if __MOBILE__
 				{ typeof(ListView),typeof(ListViewHandler) },
-				{typeof(NavigationView), typeof (Handlers.NavigationViewHandler)},
 				{typeof(ScrollView), typeof(Handlers.ScrollViewHandler) },
 				{typeof(ShapeView), typeof(Handlers.ShapeViewHandler)},
 

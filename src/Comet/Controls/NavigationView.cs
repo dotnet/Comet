@@ -1,16 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
+using Microsoft.Maui;
+
 namespace Comet
 {
-	public class NavigationView : ContentView
+	public class NavigationView : ContentView, INavigationView
 	{
-		public void Navigate(View view)
+		List<IView> stack = new List<IView>();
+		public IReadOnlyList<IView> Stack => stack;
+		public void Navigate(View view, bool animated = true)
 		{
 			view.Navigation = this;
 			view.UpdateNavigation();
-			if (PerformNavigate == null && Navigation != null)
-				Navigation.Navigate(view);
-			else
-				PerformNavigate(view);
+			stack.Add(view);
+			this.ViewHandler?.Invoke(nameof(INavigationView.RequestNavigation), new NavigationRequest(Stack, animated));
 		}
 
 		public void SetPerformPop(Action action) => PerformPop = action;
@@ -26,12 +29,11 @@ namespace Comet
 		protected Action<View> PerformNavigate { get; set; }
 
 
-		public void Pop()
+		public void Pop(bool animated = true)
 		{
-			if (PerformPop == null && Navigation != null)
-				Navigation.Pop();
-			else
-				PerformPop();
+			stack.RemoveAt(stack.Count - 1);
+
+			this.ViewHandler?.Invoke(nameof(INavigationView.RequestNavigation), new NavigationRequest(Stack, animated));
 		}
 
 		public override void Add(View view)
@@ -42,6 +44,7 @@ namespace Comet
 				view.Navigation = this;
 				view.Parent = this;
 			}
+			stack.Add(view);
 		}
 
 		public static void Navigate(View fromView, View view)
@@ -73,16 +76,6 @@ namespace Comet
 			}
 		}
 
-		//public static void PopToRoot(View view)
-		//{
-
-		//}
-
-		//public static void PopToView(View fromView, View toView)
-		//{
-
-		//}
-
 		static View FindParentNavigationView(View view)
 		{
 			if (view == null)
@@ -94,6 +87,21 @@ namespace Comet
 			}
 
 			return FindParentNavigationView(view?.Parent) ?? view.Navigation;
+		}
+
+		protected override void OnHandlerSet()
+		{
+			base.OnHandlerSet();
+			this.ViewHandler.Invoke(nameof(INavigationView.RequestNavigation), new NavigationRequest(Stack,false));
+		}
+
+		void INavigationView.RequestNavigation(NavigationRequest eventArgs) 
+		{
+
+		}
+		void INavigationView.NavigationFinished(IReadOnlyList<IView> newStack) {
+			stack.Clear();
+			stack.AddRange(newStack);
 		}
 	}
 }
