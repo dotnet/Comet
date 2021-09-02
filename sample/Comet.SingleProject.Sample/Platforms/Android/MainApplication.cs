@@ -13,6 +13,6 @@ namespace Maui.Controls.Sample.SingleProject
 		{
 		}
 
-		protected override MauiApp CreateMauiApp() => MyApp.CreatMauiApp();
+		protected override MauiApp CreateMauiApp() => MyApp.CreateMauiApp();
 	}
 }

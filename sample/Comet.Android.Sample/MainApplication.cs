@@ -13,6 +13,6 @@ namespace Comet.Android.Sample
 		{
 		}
 
-		protected override MauiApp CreateMauiApp() => MyApp.CreatMauiApp();
+		protected override MauiApp CreateMauiApp() => MyApp.CreateMauiApp();
 	}
 }

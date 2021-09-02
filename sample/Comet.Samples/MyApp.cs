@@ -14,7 +14,7 @@ namespace Comet.Samples
 		View view() => new MainPage();
 	
 
-		public static MauiApp CreatMauiApp()
+		public static MauiApp CreateMauiApp()
 		{
 			var builder = MauiApp.CreateBuilder();
 			builder.UseCometApp<MyApp>()
