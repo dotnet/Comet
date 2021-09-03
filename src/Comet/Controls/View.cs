@@ -14,6 +14,7 @@ using Microsoft.Maui.Animations;
 using Microsoft.Maui.Essentials;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.HotReload;
+using Microsoft.Maui.Internal;
 using Microsoft.Maui.Layouts;
 using Microsoft.Maui.Primitives;
 using Rectangle = Microsoft.Maui.Graphics.Rectangle;
@@ -24,6 +25,7 @@ namespace Comet
 	public class View : ContextualObject, IDisposable, IView, IHotReloadableView,ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement
 	{
 
+		static internal readonly WeakList<IView> ActiveViews = new WeakList<IView>();
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
 		protected static Dictionary<string, string> HandlerPropertyMapper = new()
 		{
@@ -87,8 +89,8 @@ namespace Comet
 
 		public View()
 		{
-			//HotReloadHelper.ActiveViews.Add(this);
-			//Debug.WriteLine($"Active View Count: {HotReloadHelper.ActiveViews.Count}");
+			ActiveViews.Add(this);
+			Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
 			//HotReloadHelper.Register(this);
 			//TODO: Should this need its view?
 			State = new BindingState();
@@ -311,7 +313,8 @@ namespace Comet
 				Debug.WriteLine($"Error setting property:{property} : {value} on :{this}");
 				Debug.WriteLine(ex);
 			}
-			ViewHandler?.UpdateValue(GetHandlerPropertyName(property));
+			var newPropName = GetHandlerPropertyName(property);
+			ViewHandler?.UpdateValue(newPropName);
 			builtView?.ViewPropertyChanged(property, value);
 		}
 
@@ -329,7 +332,7 @@ namespace Comet
 		{
 			Environment.SetValue(key, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(key, value));
+				ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(key, value));
 			});
 
 		}
@@ -339,7 +342,7 @@ namespace Comet
 			var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
 			Environment.SetValue(typedKey, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
+				ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
 
@@ -348,7 +351,7 @@ namespace Comet
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			Environment.SetValue(typedKey, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
+				ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
 
@@ -435,9 +438,9 @@ namespace Comet
 			if (!disposing)
 				return;
 
-			//MauiHotReloadHelper.ActiveViews.Remove(this);
+			ActiveViews.Remove(this);
 
-			//Debug.WriteLine($"Active View Count: {HotReloadHelper.ActiveViews.Count}");
+			Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
 
 			MauiHotReloadHelper.UnRegister(this);
 			var vh = ViewHandler;

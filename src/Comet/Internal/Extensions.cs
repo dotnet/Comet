@@ -11,13 +11,23 @@ namespace Comet.Internal
 	{
 		public static T GetValueOfType<T>(this object obj)
 		{
+			if (obj == null)
+				return default;
+
 			if (obj is T t)
 				return t;
 			if (obj is Binding<T> bt)
 				return bt.CurrentValue;
 			if (obj is Binding b && b.Value is T bv)
 				return bv;
-			return default(T);
+			try
+			{
+				return (T)Convert.ChangeType(obj, typeof(T));
+			}
+			catch
+			{
+				return default;
+			}
 		}
 
 		public static View FindViewById(this View view, string id)
