@@ -77,8 +77,8 @@ namespace Comet
 
 		public static class Text
 		{
-			public const string Alignment = "Text.Alignment";
-			public const string VerticalAlignment = "Text.VerticalAlignment";
+			public const string HorizontalAlignment = nameof(Microsoft.Maui.ITextAlignment.HorizontalTextAlignment);
+			public const string VerticalAlignment = nameof(Microsoft.Maui.ITextAlignment.VerticalTextAlignment);;
 			public static class Style
 			{
 				public const string H1 = nameof(H1);
