@@ -159,6 +159,7 @@ namespace {{NameSpace}} {
 			var interfacePropertyGetOnlyMustache = interfacePropSupportMustache +
 @"		public {{{Type}}} {{Name}} {
 			get {
+				NotifyPropertyRead();
 				return OriginalModel.{{Name}};
 			}
 		}
@@ -180,39 +181,45 @@ namespace {{NameSpace}} {
 			if (!(context.SyntaxContextReceiver is SyntaxReceiver rx) || !rx.TemplateInfo.Any())
 				return;
 
+			var st = context.Compilation.SyntaxTrees;
+
 			void addChildStateClasses(IEnumerable<INamedTypeSymbol> match)
 			{
-				var st = context.Compilation.SyntaxTrees;
-				var parentStateClassesProps =
+				var matchWith = match.ToList();
+				matchWith.AddRange(match.SelectMany(m => GetAllBaseTypes(m)));
+				//var parentStateClassesProps =
+
 				//select all the class SyntaxNodes for match classes
-				st.SelectMany(st => st.GetRoot().DescendantNodes()).Where(
+				var classes = st.SelectMany(st => st.GetRoot().DescendantNodes()).Where(
 					sn => {
 						var select = false;
 						if (sn is ClassDeclarationSyntax cds)
 						{
 							var sm = context.Compilation.GetSemanticModel(cds.SyntaxTree);
 							var ts = sm.GetDeclaredSymbol(cds).OriginalDefinition as INamedTypeSymbol;
-							select = match.Contains(ts);
+							select = matchWith.Any(c => c == ts || c.OriginalDefinition == ts);
 						}
 						return select;
-					})
-					//select all property SyntaxNodes for matched state classes that return a user class to be wrapped
-					.SelectMany(c => c.ChildNodes().Where(cn => {
-						var select = false;
-						if (cn is PropertyDeclarationSyntax pds)
-						{
-							var sm = context.Compilation.GetSemanticModel(pds.SyntaxTree);
-							var realClass = StateWrapperGenerator.GetType(sm, pds.Type);
-							select = IsUserClass(realClass);
-						}
-						return select;
-					}))
-					.Select(pds => {
-						var p = (PropertyDeclarationSyntax)pds;
-						var sm = context.Compilation.GetSemanticModel(p.SyntaxTree);
-						var realClass = StateWrapperGenerator.GetType(sm, p.Type);
-						return realClass;
-					}).ToList();
+					});
+
+				//select all property SyntaxNodes for matched state classes that return a user class to be wrapped
+				var props = classes.SelectMany(c => c.ChildNodes().Where(cn => {
+					var select = false;
+					if (cn is PropertyDeclarationSyntax pds)
+					{
+						var sm = context.Compilation.GetSemanticModel(pds.SyntaxTree);
+						var realClass = StateWrapperGenerator.GetType(sm, pds.Type);
+						select = !(pds.Type is NullableTypeSyntax) && IsUserClass(realClass);
+					}
+					return select;
+				}));
+
+				var parentStateClassesProps = props.Select(pds => {
+					var p = (PropertyDeclarationSyntax)pds;
+					var sm = context.Compilation.GetSemanticModel(p.SyntaxTree);
+					var realClass = StateWrapperGenerator.GetType(sm, p.Type);
+					return realClass;
+				}).ToList();
 
 				parentStateClassesProps.ForEach(itns => rx.AddTemplate(itns));
 
@@ -224,16 +231,16 @@ namespace {{NameSpace}} {
 
 			var match = rx.TemplateInfo.Select(x => x.classType);
 			addChildStateClasses(match);
-
-			foreach (var item in rx.TemplateInfo)
+			var templates = rx.TemplateInfo.ToList();
+			foreach (var item in templates)
 			{
-				var input = GetModelData(item.name, item.classType, item.nameSpace);
+				var input = GetModelData(item.name, item.classType, item.nameSpace, rx);
 				var classSource = stubble.Render(classMustacheTemplate, input);
 				context.AddSource($"{item.name}.g.cs", classSource);
 			}
 		}
 
-		bool IsUserClass(ITypeSymbol realClass) => realClass?.TypeKind == TypeKind.Class && realClass.SpecialType == SpecialType.None;
+		bool IsUserClass(ITypeSymbol realClass) => realClass?.TypeKind == TypeKind.Class && realClass.SpecialType == SpecialType.None && !realClass.ToString().StartsWith("System"); //&& realClass.isnu;
 
 		IEnumerable<INamedTypeSymbol> GetAllBaseTypes(INamedTypeSymbol classType)
 		{
@@ -245,7 +252,7 @@ namespace {{NameSpace}} {
 			}
 		}
 
-		dynamic GetModelData(string className, INamedTypeSymbol classType, string nameSpace)
+		dynamic GetModelData(string className, INamedTypeSymbol classType, string nameSpace, SyntaxReceiver sr)
 		{
 			var baseClasses = GetAllBaseTypes(classType).ToList();
 			List<(string Type, string Name)> properties = new();
@@ -260,38 +267,40 @@ namespace {{NameSpace}} {
 				var members = i.GetMembers();
 				foreach (var m in members)
 				{
-					var name = m.Name;
-					if (m.Name.StartsWith("get_"))
+					if (m is IPropertySymbol pi && pi.DeclaredAccessibility == Accessibility.Public)
 					{
-						name = name.Replace("get_", "");
-						propertiesWithGetters.Add(name);
-						continue;
-					}
-					else if (m.Name.StartsWith("set_"))
-					{
-						name = name.Replace("set_", "");
-						propertiesWithSetters.Add(name);
-						continue;
-					}
+						string type = null;
+						string name = pi.Name;
+						bool isUserClass = IsUserClass(pi.Type);
 
-					if (m is IPropertySymbol pi)
-					{
-						//List<(string Type, string Name)> parameters = new List<(string Type, string Name)>();
-						string type = CometViewSourceGenerator.GetFullName(pi.Type);
-						if (IsUserClass(pi.Type))
+						bool isPublicSet = pi.OriginalDefinition.SetMethod?.DeclaredAccessibility == Accessibility.Public;
+						bool isAccessibleSet = isPublicSet && (!pi.IsReadOnly && !pi.OriginalDefinition.SetMethod.IsReadOnly && !pi.OriginalDefinition.SetMethod.IsInitOnly);
+
+						propertiesWithGetters.Add(name);
+						if (isAccessibleSet)
+							propertiesWithSetters.Add(name);
+
+						if (isUserClass)
 						{
-							propertiesWithState.Add(name);
-							type += "State";
-							if (!propertiesWithSetters.Contains(name))
+							var theType = CometViewSourceGenerator.GetFullName(pi.Type);
+							theType += "State";
+							var exists = sr.TemplateInfo.Any(i => $"{i.nameSpace}.{i.name}" == theType);
+							if (exists)
 							{
-								propertiesWithSetters.Add(name);
+								propertiesWithState.Add(name);
+								type = theType;
 							}
-						};
+						}
+
+
+						type ??= pi.Type.ToString();
+
 						var t = (type, name);
 						if (!properties.Contains(t))
 							properties.Add(t);
 					}
 				}
+
 
 			}
 
@@ -342,9 +351,9 @@ namespace {{NameSpace}} {
 					HasSet = propertiesWithSetters.Contains(x.Name),
 					HasGet = propertiesWithGetters.Contains(x.Name),
 					HasState = propertiesWithState.Contains(x.Name)
-				}).ToList(),
+				}).Where(p => !p.Name.StartsWith("this")).ToList(),
 				PropertiesFunc = new Func<dynamic, string, object>((dyn, str) => {
-					var template = interfacePropertyDictionary[(dyn.HasGet, dyn.HasSet)];
+					var template = (dyn.HasGet || dyn.HasSet || dyn.HasState) ? interfacePropertyDictionary[(dyn.HasGet, (dyn.HasSet || dyn.HasState))] : "";
 					return stubble.Render(template, dyn);
 				}),
 				PropertiesUpdateFunc = new Func<dynamic, string, object>((dyn, str) => {
