@@ -66,5 +66,10 @@ namespace Comet
 			//LayoutManager?.Invalidate();
 		}
 
+		public virtual Size CrossPlatformMeasure(double widthConstraint, double heightConstraint) => GetDesiredSize(new Size(widthConstraint,heightConstraint));
+		public virtual Size CrossPlatformArrange(Rectangle bounds) {
+			this.LayoutSubviews(bounds);
+			return this.MeasuredSize;
+		}
 	}
 }
