@@ -48,7 +48,7 @@ namespace Comet
 				padding.Right,
 				frame.Width - padding.HorizontalThickness,
 				frame.Height - padding.VerticalThickness);
-			LayoutManager?.ArrangeChildren(bounds);
+			CrossPlatformArrange(bounds);
 		}
 
 		public override Size GetDesiredSize(Size availableSize)
@@ -68,7 +68,7 @@ namespace Comet
 
 		public virtual Size CrossPlatformMeasure(double widthConstraint, double heightConstraint) => GetDesiredSize(new Size(widthConstraint,heightConstraint));
 		public virtual Size CrossPlatformArrange(Rectangle bounds) {
-			this.LayoutSubviews(bounds);
+			LayoutManager?.ArrangeChildren(bounds);
 			return this.MeasuredSize;
 		}
 	}
