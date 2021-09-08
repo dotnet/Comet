@@ -1,14 +1,22 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
-	public class ContentView : View, IEnumerable, IContainerView
+	public class ContentView : View, IEnumerable, IContainerView, IContentView
 	{
 		IEnumerator IEnumerable.GetEnumerator() => new[] { Content }.GetEnumerator();
 		public View Content { get; set; }
+
+		object IContentView.Content => Content;
+
+		IView IContentView.PresentedContent => Content;
+
+		Thickness IContentView.Padding => this.GetPadding();
+
 		public virtual void Add(View view)
 		{
 			if (view == null)
@@ -98,5 +106,14 @@ namespace Comet
 		}
 
 		public IReadOnlyList<View> GetChildren() => new []{ Content };
+
+
+
+		Size IContentView.CrossPlatformArrange(Rectangle bounds)
+		{
+			this.LayoutSubviews(bounds);
+			return MeasuredSize;
+		}
+		Size IContentView.CrossPlatformMeasure(double widthConstraint, double heightConstraint) => GetDesiredSize(new Size(widthConstraint, heightConstraint));
 	}
 }

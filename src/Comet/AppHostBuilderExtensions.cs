@@ -49,10 +49,10 @@ namespace Comet
 				{ typeof(Text), typeof(LabelHandler) },
 				{ typeof(TimePicker), typeof(TimePickerHandler) },
 				{ typeof(Toggle), typeof(SwitchHandler) },
+				{typeof(ScrollView), typeof(Microsoft.Maui.Handlers.ScrollViewHandler) },
 #if __MOBILE__
 				{ typeof(ListView),typeof(ListViewHandler) },
 				{typeof(NavigationView), typeof (Handlers.NavigationViewHandler)},
-				{typeof(ScrollView), typeof(Handlers.ScrollViewHandler) },
 				{typeof(ShapeView), typeof(Handlers.ShapeViewHandler)},
 
 #endif

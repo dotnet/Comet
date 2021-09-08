@@ -6,23 +6,34 @@ using Microsoft.Maui;
 
 namespace Comet
 {
-	public class ScrollView : ContentView, IEnumerable
+	public class ScrollView : ContentView, IEnumerable, IScrollView
 	{
-		public ScrollView(Orientation orientation = Orientation.Vertical)
+		public ScrollView(ScrollOrientation orientation = ScrollOrientation.Vertical)
 		{
 			Orientation = orientation;
 		}
 
-		public Orientation Orientation { get; }
-		
+		public ScrollOrientation Orientation { get; }
+
+		ScrollBarVisibility IScrollView.HorizontalScrollBarVisibility => ScrollBarVisibility.Default;
+
+		ScrollBarVisibility IScrollView.VerticalScrollBarVisibility => ScrollBarVisibility.Default;
+
+		ScrollOrientation IScrollView.Orientation => Orientation;
+
+		Size IScrollView.ContentSize => Content.MeasuredSize;
+
+		double IScrollView.HorizontalOffset { get; set; }
+		double IScrollView.VerticalOffset { get; set; }
+
 		public override Size GetDesiredSize(Size availableSize)
 		{
 			var contentMeasureSize = availableSize;
-			if (Orientation == Orientation.Vertical)
+			if (Orientation == ScrollOrientation.Vertical)
 				contentMeasureSize.Height = double.PositiveInfinity;
 			else
 				contentMeasureSize.Width = double.PositiveInfinity;
-			
+
 			if (Content != null)
 			{
 				var contentSize = Content.MeasuredSize;
@@ -36,7 +47,7 @@ namespace Comet
 				return MeasuredSize = new Size(
 					Math.Min(availableSize.Width, contentSize.Width),
 					Math.Min(availableSize.Height, contentSize.Height));
-				
+
 			}
 			return MeasuredSize = availableSize;
 		}
@@ -61,6 +72,13 @@ namespace Comet
 			if (disposing)
 				Content?.Dispose();
 			base.Dispose(disposing);
+		}
+
+		void IScrollView.RequestScrollTo(double horizontalOffset, double verticalOffset, bool instant) {
+
+		}
+		void IScrollView.ScrollFinished() {
+
 		}
 	}
 }

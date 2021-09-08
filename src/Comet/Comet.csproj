@@ -16,7 +16,7 @@
     <PackageId>Clancey.Comet</PackageId>
     <Product>Comet</Product>
   </PropertyGroup>
-   <PropertyGroup >
+   <PropertyGroup>
      <LangVersion>preview</LangVersion>
    </PropertyGroup>
   <ItemGroup>
@@ -24,9 +24,7 @@
     <PackageReference Include="Microsoft.Maui.Graphics" Version="$(_MicrosoftMauiGraphics)" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Comet.SourceGenerator\Comet.SourceGenerator.csproj" 
-                      OutputItemType="Analyzer"
-                      ReferenceOutputAssembly="false"/>
+    <ProjectReference Include="..\Comet.SourceGenerator\Comet.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
     <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj" />
   </ItemGroup>
@@ -43,8 +41,8 @@
     <Folder Include="Platform\Standard\" />
   </ItemGroup>
   <ItemGroup Condition="'$(TargetFramework)' == 'MonoAndroid10.0'">
-    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.0$(_AndroidXVersion)" />
-    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.0$(_AndroidXVersion)" />
+    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.1.1" />
+    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.1.1" />
   </ItemGroup>
   <ItemGroup>
     <None Remove="Platform\iOS\CUITableViewCell.cs" />
