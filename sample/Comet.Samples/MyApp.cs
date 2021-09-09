@@ -12,7 +12,6 @@ namespace Comet.Samples
 	{
 		[Body]
 		View view() => new MainPage();
-	
 
 		public static MauiApp CreateMauiApp()
 		{
