@@ -14,6 +14,16 @@ namespace Comet
 			[nameof(ImageSource)] = nameof(IImageSourcePart.Source),
 		};
 
+		public Image(Binding<IImageSource> imageSource)
+		{
+			ImageSource = imageSource;
+		}
+		public Image(Binding<string> source)
+		{
+
+			StringSource = source;
+		}
+
 		public Image(Expression<Func<IImageSource>> imageSource)
 		{
 			ImageSource = imageSource;

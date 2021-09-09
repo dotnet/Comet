@@ -367,7 +367,7 @@ namespace {{NameSpace}} {
 
 				FuncConstructorFunction = new Func<dynamic, string, object>((dyn, str) =>
 						//Feeling lazy, didnt want another template. May change this later
-						dyn.HasParameters ? stubble.Render(str, dyn).Replace("(Binding<System.Action>)", "").Replace("Func<System.Action>", "System.Action") : ""),
+						dyn.HasParameters ? stubble.Render(str, dyn).Replace("(Binding<System.Action>)", "").Replace("Expression<Func<System.Action>>", "System.Action") : ""),
 				PropertiesFunc = new Func<dynamic, string, object>((dyn, str) => {
 					var templateGroup = interfacePropertyDictionary[(dyn.HasGet, dyn.HasSet)];
 					var template = dyn.ShouldBeExtension ? templateGroup.FromEnvironment : templateGroup.FromProperty;
