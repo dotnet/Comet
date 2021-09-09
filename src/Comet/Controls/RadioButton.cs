@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 
 namespace Comet
 {
@@ -15,8 +16,8 @@ namespace Comet
 		}
 
 		public RadioButton(
-			Func<string> label,
-			Func<bool> selected = null,
+			Expression<Func<string>> label,
+			Expression<Func<bool>> selected = null,
 			Action onClick = null)
 			: this(
 				  (Binding<string>)label,

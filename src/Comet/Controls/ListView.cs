@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using Comet.Internal;
 using Microsoft.Maui;
+using System.Linq.Expressions;
 
 namespace Comet
 {
@@ -37,7 +38,7 @@ namespace Comet
 
 		IReadOnlyList<T> currentItems;
 
-		public ListView(Func<IReadOnlyList<T>> items) : this((Binding<IReadOnlyList<T>>)items)
+		public ListView(Expression<Func<IReadOnlyList<T>>> items) : this((Binding<IReadOnlyList<T>>)items)
 		{
 
 		}

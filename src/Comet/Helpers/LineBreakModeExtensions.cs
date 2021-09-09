@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using Microsoft.Maui;
 
 namespace Comet
@@ -13,7 +14,7 @@ namespace Comet
 
 		public static T LineBreakMode<T>(this T view, Binding<LineBreakMode> mode) where T : View =>
 			view.SetEnvironment(EnvironmentKeys.LineBreakMode.Mode, mode);
-		public static T LineBreakMode<T>(this T view, Func<LineBreakMode> mode) where T : View =>
+		public static T LineBreakMode<T>(this T view, Expression<Func<LineBreakMode>> mode) where T : View =>
 			view.LineBreakMode((Binding<LineBreakMode>)mode);
 	}
 }

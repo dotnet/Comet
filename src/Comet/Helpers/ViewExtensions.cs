@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Comet.Internal;
 using Microsoft.Maui;
+using System.Linq.Expressions;
 
 namespace Comet
 {
@@ -57,7 +58,7 @@ namespace Comet
 
 		public static T Title<T>(this T view, Binding<string> title, bool cascades = true) where T : View =>
 			view.SetEnvironment(EnvironmentKeys.View.Title, title, cascades, ControlState.Default);
-		public static T Title<T>(this T view, Func<string> title, bool cascades = true) where T : View =>
+		public static T Title<T>(this T view, Expression<Func<string>> title, bool cascades = true) where T : View =>
 			view.Title((Binding<string>)title, cascades);
 
 		public static string GetTitle(this View view)

@@ -143,7 +143,7 @@ namespace Comet
 			var finalColor = color ?? Colors.Black;
 			view.Border(new RoundedRectangle(radius).Stroke(finalColor, strokeSize));
 			if (filled)
-				view.Background(color);
+				view.Background(()=>color);
 			return view;
 		}
 
@@ -152,7 +152,7 @@ namespace Comet
 			var finalColor = color != null ? Color.FromArgb(color) : Colors.Black;
 			view.Border(new RoundedRectangle(radius).Stroke(finalColor, strokeSize));
 			if (filled)
-				view.Background(color);
+				view.Background(()=>color);
 			return view;
 		}
 

@@ -41,23 +41,23 @@ namespace Comet.Samples
 				new VStack
 				{
 					(state.CanEdit
-						? (View) new TextField(state.Text)
+						? (View) new TextField(()=>state.Text)
 						: new Text(() => $"{state.Text}: multiText")), // Formatted Text will warn you. This should be done by TextBinding
-					new Text(state.Text),
+					new Text(()=>state.Text),
 					new HStack
 					{
-						new Button("Toggle Entry/Label",
+						new Button(()=> "Toggle Entry/Label",
 							() => state.CanEdit = !state.CanEdit),
-						new Button("Update Text",
+						new Button(()=> "Update Text",
 							() => state.Text = $"Click Count: {clickCount.Value++}"),
-						new Button("Update FontSize",
+						new Button(()=> "Update FontSize",
 							() => {
 								var font = View.GetGlobalEnvironment<float?>(EnvironmentKeys.Fonts.Size) ?? 14;
 								var size = font + 5;
 								View.SetGlobalEnvironment (EnvironmentKeys.Fonts.Size, size);
 							}),
 					},
-					new Toggle(state.CanEdit)
+					new Toggle(()=> state.CanEdit)
 				}
 			}
 		};

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using Comet.Graphics;
 using Microsoft.Maui.Graphics;
 
@@ -13,7 +14,7 @@ namespace Comet
 		{
 			Shape = value;
 		}
-		public ShapeView(Func<Shape> value)
+		public ShapeView(Expression<Func<Shape>> value)
 		{
 			Shape = value;
 		}

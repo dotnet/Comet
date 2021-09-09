@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using Comet.Graphics;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
@@ -12,19 +13,16 @@ namespace Comet
 		{
 			[nameof(ImageSource)] = nameof(IImageSourcePart.Source),
 		};
-		public Image(Binding<IImageSource> imageSource = null)
+
+		public Image(Expression<Func<IImageSource>> imageSource)
 		{
 			ImageSource = imageSource;
 		}
 
-		public Image(Binding<string> source)
-		{
+		public Image(Expression<Func<string>> source) {
+
 			StringSource = source;
 		}
-
-		public Image(Func<IImageSource> bitmap) : this((Binding<IImageSource>)bitmap) { }
-
-		public Image(Func<string> source) : this((Binding<string>)source) { }
 
 		private Binding<IImageSource> _imageSource;
 		public Binding<IImageSource> ImageSource

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using Comet.Graphics;
 using Microsoft.Maui.Graphics;
 
@@ -24,14 +25,14 @@ namespace Comet
 			view.SetEnvironment(EnvironmentKeys.Colors.Color, color, false);
 			return view;
 		}
-		public static T Color<T>(this T view, Func<Color> color) where T : View => view.Color((Binding<Color>)color);
+		public static T Color<T>(this T view, Expression<Func<Color>> color) where T : View => view.Color((Binding<Color>)color);
 
 		public static T Color<T>(this T view, Type type, Binding<Color> color) where T : View
 		{
 			view.SetEnvironment(type, EnvironmentKeys.Colors.Color, color, true);
 			return view;
 		}
-		public static T Color<T>(this T view, Type type, Func<Color> color) where T : View => view.Color(type: type, (Binding<Color>)color);
+		public static T Color<T>(this T view, Type type, Expression<Func<Color>> color) where T : View => view.Color(type: type, (Binding<Color>)color);
 
 		public static Color GetColor<T>(this T view, Color defaultColor = null, ControlState state = ControlState.Default) where T : View
 		{
@@ -69,7 +70,7 @@ namespace Comet
 			view.SetEnvironment(EnvironmentKeys.Colors.Background, color, cascades);
 			return view;
 		}
-		public static T Background<T>(this T view, Func<Color> color, bool cascades = false) where T : View => view.Background((Binding<Color>)color, cascades);
+		public static T Background<T>(this T view, Expression<Func<Color>> color, bool cascades = false) where T : View => view.Background((Binding<Color>)color, cascades);
 
 		/// <summary>
 		/// Set the background color by hex value
@@ -83,7 +84,7 @@ namespace Comet
 			view.SetEnvironment(EnvironmentKeys.Colors.Background, colorHex, cascades);
 			return view;
 		}
-		public static T Background<T>(this T view, Func<string> colorHex, bool cascades = false) where T : View => view.Background((Binding<string>)colorHex, cascades);
+		public static T Background<T>(this T view, Expression<Func<string>> colorHex, bool cascades = false) where T : View => view.Background((Binding<string>)colorHex, cascades);
 
 		/// <summary>
 		/// Set the background color
@@ -97,13 +98,13 @@ namespace Comet
 			view.SetEnvironment(type, EnvironmentKeys.Colors.Background, color, true);
 			return view;
 		}
-		public static T Background<T>(this T view, Type type, Func<Color> color) where T : View => view.Background(type, (Binding<Color>)color);
+		public static T Background<T>(this T view, Type type, Expression<Func<Color>> color) where T : View => view.Background(type, (Binding<Color>)color);
 		public static T Background<T>(this T view, Type type, Binding<Paint> paint) where T : View
 		{
 			view.SetEnvironment(type, EnvironmentKeys.Colors.Background, paint, true);
 			return view;
 		}
-		public static T Background<T>(this T view, Type type, Func<Paint> paint) where T : View => view.Background(type, (Binding<Paint>)paint);
+		public static T Background<T>(this T view, Type type, Expression<Func<Paint>> paint) where T : View => view.Background(type, (Binding<Paint>)paint);
 
 		public static Paint GetBackground(this View view, Type type, Paint defaultColor = null, ControlState state = ControlState.Default)
 		{
@@ -132,7 +133,7 @@ namespace Comet
 
 		public static T Opacity<T>(this T view, Binding<double> opacity, bool cascades = false) where T : View 
 			=> view.SetEnvironment(EnvironmentKeys.View.Opacity, opacity, cascades);
-		public static T Opacity<T>(this T view, Func<double> opacity, bool cascades = false) where T : View 
+		public static T Opacity<T>(this T view, Expression<Func<double>> opacity, bool cascades = false) where T : View 
 			=> view.Opacity((Binding<double>)opacity,cascades);
 		
 		public static double GetOpacity(this View view, ControlState state = ControlState.Default)

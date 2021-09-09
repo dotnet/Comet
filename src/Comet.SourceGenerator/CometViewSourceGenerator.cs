@@ -41,6 +41,7 @@ using System;
 using Comet;
 using Microsoft.Maui;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 namespace {{NameSpace}} {
 	public partial class {{ClassName}} : {{BaseClassName}} 
 	{
@@ -56,7 +57,7 @@ namespace {{NameSpace}} {
 		}
 
 		{{#FuncConstructorFunction}}		
-		public {{ClassName}} ({{#ParametersFunction}} Func<{{{Type}}}> {{LowercaseName}}{{DefaultValueString}}{{/ParametersFunction}})
+		public {{ClassName}} ({{#ParametersFunction}} Expression<Func<{{{Type}}}>> {{LowercaseName}}{{DefaultValueString}}{{/ParametersFunction}})
 		{
 			{{#Parameters}}
 			{{Name}} = {{LowercaseName}};
@@ -95,7 +96,7 @@ namespace {{NameSpace}} {
 		public static T {{Name}}<T>(this T view, Binding<{{{Type}}}> {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
 			view.SetEnvironment(nameof({{FullName}}),{{LowercaseName}},cascades);
 		
-		public static T {{Name}}<T>(this T view, Func<{{{Type}}}> {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
+		public static T {{Name}}<T>(this T view, Expression<Func<{{{Type}}}>> {{LowercaseName}}, bool cascades = true) where T : {{ClassName}} =>
 			view.SetEnvironment(nameof({{FullName}}),(Binding<{{{Type}}}>){{LowercaseName}},cascades);
 ";
 		const string extensionActionProperty = @"
@@ -106,6 +107,7 @@ namespace {{NameSpace}} {
 using Comet;
 using Microsoft.Maui;
 using System;
+using System.Linq.Expressions;
 namespace {{NameSpace}} {
 	public static partial class {{ClassName}}Extensions
 	{		

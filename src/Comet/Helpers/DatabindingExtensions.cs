@@ -20,64 +20,6 @@ namespace Comet
 			newValue?.BindToProperty(view, propertyName);
 		}
 
-		//public static void SetValue<T>(this State state, ref T currentValue, T newValue, View view, [CallerMemberName] string propertyName = "")
-		//{
-		//    if (state?.IsBuilding ?? false)
-		//    {
-		//        var props = state.EndProperty();
-		//        var propCount = props.Length;
-		//        //This is databound!
-		//        if (propCount > 0)
-		//        {
-		//            bool isGlobal = propCount > 1;
-		//            if (propCount == 1)
-		//            {
-		//                var prop = props[0];
-
-		//                var stateValue = state.GetValue(prop).Cast<T>();
-		//                var old = state.EndProperty();
-		//                //1 to 1 binding!
-		//                if (EqualityComparer<T>.Default.Equals(stateValue, newValue))
-		//                {
-		//                    state.BindingState.AddViewProperty(prop, propertyName, view);
-		//                    Debug.WriteLine($"Databinding: {propertyName} to {prop}");
-		//                }
-		//                else
-		//                {
-		//                    var errorMessage = $"Warning: {propertyName} is using formated Text. For performance reasons, please switch to a Lambda. i.e new Text(()=> \"Hello\")";
-		//                    if (Debugger.IsAttached)
-		//                    {
-		//                        throw new Exception(errorMessage);
-		//                    }
-
-		//                    Debug.WriteLine(errorMessage);
-		//                    isGlobal = true;
-		//                }
-		//            }
-		//            else
-		//            {
-		//                var errorMessage = $"Warning: {propertyName} is using Multiple state Variables. For performance reasons, please switch to a Lambda.";
-		//                if (Debugger.IsAttached)
-		//                {
-		//                    throw new Exception(errorMessage);
-		//                }
-
-		//                Debug.WriteLine(errorMessage);
-		//            }
-
-		//            if (isGlobal)
-		//            {
-		//                state.BindingState.AddGlobalProperties(props);
-		//            }
-		//        }
-		//    }
-
-		//    if (EqualityComparer<T>.Default.Equals(currentValue, newValue))
-		//        return;
-		//    currentValue = newValue;
-
-		//    view.BindingPropertyChanged(propertyName, newValue);
-		//}
 
 		public static T Cast<T>(this object val)
 		{
@@ -105,30 +47,11 @@ namespace Comet
 		}
 
 
-		//public static void SetValue<T>(this View view, State state, ref T currentValue, T newValue, [CallerMemberName] string propertyName = "")
-		//{
-		//    if (view.IsDisposed)
-		//        return;
-		//    state.SetValue<T>(ref currentValue, newValue, view, propertyName);
-		//}
-
 		public static View Diff(this View newView, View oldView, bool checkRenderers)
 		{
 			if (oldView == null)
 				return newView;
 			var v = newView.DiffUpdate(oldView,checkRenderers);
-			//void callUpdateOnView(View view)
-			//{
-			//    if (view is IContainerView container)
-			//    {
-			//        foreach (var child in container.GetChildren())
-			//        {
-			//            callUpdateOnView(child);
-			//        }
-			//    }
-			//    view.FinalizeUpdateFromOldView();
-			//};
-			//callUpdateOnView(v);
 			return v;
 		}
 
