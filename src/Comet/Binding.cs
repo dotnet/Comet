@@ -11,6 +11,8 @@ namespace Comet
 	public class Binding
 	{
 		public object Value { get; protected set; }
+		public bool IsValue { get; internal set; }
+		public bool IsFunc { get; internal set; }
 
 		WeakReference _view;
 		internal View View
@@ -49,6 +51,7 @@ namespace Comet
 			var bindings = visitor.GetBoundProperties();
 			var result = func.Invoke();
 			CurrentValue = result;
+			IsFunc = true;
 			Get = func;
 			Set = setValue;
 		}
@@ -57,17 +60,45 @@ namespace Comet
 		Action<T> _set;
 		public Action<T> Set
 		{
-			get => _set ?? (_set = (v)=>CurrentValue = v);
+			get => _set ?? (_set = (v) => CurrentValue = v);
 			internal set => _set = value;
 		}
 
-		public T CurrentValue { get => Value == null ? default :  (T)Value; private set => Value = value; }
+		public T CurrentValue { get => Value == null ? default : (T)Value; private set => Value = value; }
+
+		public static implicit operator Binding<T>(T value)
+		{
+			return new Binding<T>()
+			{
+				IsValue = true,
+				CurrentValue = value,
+				BoundFromView = StateManager.CurrentView
+			};
+		}
 
 
-		public static implicit operator Binding<T>(Expression<Func<T>> value) => 
+		public static implicit operator Binding<T>(Expression<Func<T>> value) =>
 			new Binding<T>(
 				getValue: value,
 				setValue: null);
+
+		public static implicit operator Binding<T>(State<T> state)
+		{
+			var result = state.Value;
+
+
+			var binding = new Binding<T>(
+				getValue: () => state.Value,
+				setValue: (v) => {
+					state.Value = v;
+				})
+			{
+				CurrentValue = result,
+				IsFunc = true,
+			};
+			return binding;
+		}
+
 
 		public static implicit operator T(Binding<T> value)
 			=> value == null
@@ -88,7 +119,7 @@ namespace Comet
 			var oldValue = CurrentValue;
 			var result = Get == null ? default : Get.Invoke();
 			CurrentValue = result;
-			
+
 
 		}
 

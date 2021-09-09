@@ -16,16 +16,16 @@ namespace Comet
 	public static class StateManager
 	{
 		static readonly Dictionary<Thread, WeakStack<View>> ViewsByThread = new Dictionary<Thread, WeakStack<View>>();
-		static readonly Dictionary<Thread, List<(INotifyPropertyRead bindingObject, string property)>> CurrentReadProperiesByThread = new Dictionary<Thread, List<(INotifyPropertyRead bindingObject, string property)>>();
+		static readonly Dictionary<Thread, List<(INotifyPropertyChanged bindingObject, string property)>> CurrentReadProperiesByThread = new Dictionary<Thread, List<(INotifyPropertyChanged bindingObject, string property)>>();
 		public static View CurrentView => ViewsByThread.GetCurrent().Peek() ?? LastView?.Target as View;
 
 		static WeakReference LastView;
-		static Dictionary<string, List<INotifyPropertyRead>> ViewObjectMappings = new Dictionary<string, List<INotifyPropertyRead>>();
-		static Dictionary<INotifyPropertyRead, HashSet<View>> NotifyToViewMappings = new Dictionary<INotifyPropertyRead, HashSet<View>>();
+		static Dictionary<string, List<INotifyPropertyChanged>> ViewObjectMappings = new Dictionary<string, List<INotifyPropertyChanged>>();
+		static Dictionary<INotifyPropertyChanged, HashSet<View>> NotifyToViewMappings = new Dictionary<INotifyPropertyChanged, HashSet<View>>();
 		static Dictionary<INotifyPropertyChanged, Dictionary<string, string>> ChildPropertyNamesMapping = new Dictionary<INotifyPropertyChanged, Dictionary<string, string>>();
 		public static IMauiContext CurrentContext { get; private set; }
 
-		static List<INotifyPropertyRead> MonitoredObjects = new List<INotifyPropertyRead>();
+		static List<INotifyPropertyChanged> MonitoredObjects = new List<INotifyPropertyChanged>();
 
 		static T GetCurrent<T>(this Dictionary<Thread,T> dictionary) where T : new ()
 		{
@@ -37,31 +37,9 @@ namespace Comet
 
 		public static bool IsBuilding => isBuilding;
 		static bool isBuilding = false;
-		public static void ConstructingView(View view)
-		{
-			LastView = new WeakReference(view);
-			// currentBuildingView.Push(view);
+		
 
-			var mappings = CheckForStateAttributes(view, view).ToList();
-			if (mappings.Any())
-			{
-				ViewObjectMappings[view.Id] = mappings;
-				foreach (var obj in mappings)
-				{
-					NotifyToViewMappings.GetOrCreateForKey(obj).Add(view);
-				}
-			}
-			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
-			if (currentReadProperies.Any())
-			{
-				//TODO: Change this to object and property!!!
-				CurrentView.GetState().AddGlobalProperties(currentReadProperies);
-			}
-			currentReadProperies.Clear();
-
-		}
-
-		public static void MonitorListViewObject(View view, INotifyPropertyRead obj)
+		public static void MonitorListViewObject(View view, INotifyPropertyChanged obj)
 		{
 			ViewObjectMappings.GetOrCreateForKey(view.Id).Add(obj);
 			NotifyToViewMappings.GetOrCreateForKey(obj).Add(view);
@@ -77,38 +55,6 @@ namespace Comet
 
 		}
 
-		public static void StartBuilding(View view)
-		{
-			if (view.ViewHandler?.MauiContext != null)
-				CurrentContext = view.ViewHandler?.MauiContext;
-			else if (view is IMauiContextHolder imvc && CurrentContext != imvc.MauiContext)
-				CurrentContext = imvc.MauiContext;
-
-			//TODO: Grab objects and add them to previous views globals
-			var currentBuildingView = ViewsByThread.GetCurrent();
-			currentBuildingView.Push(view);
-			isBuilding = true;
-			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
-			if (currentReadProperies.Any())
-			{
-				//TODO: Change this to object and property!!!
-				CurrentView.GetState().AddGlobalProperties(currentReadProperies);
-			}
-			currentReadProperies.Clear();
-		}
-		public static void EndBuilding(View view)
-		{
-			var currentBuildingView = ViewsByThread.GetCurrent();
-			var v = currentBuildingView.Pop();
-			Debug.Assert(v == view);
-			isBuilding = currentBuildingView.Count != 0;
-			if (!isBuilding)
-			{
-				var thread = Thread.CurrentThread;
-				ViewsByThread.Remove(thread);
-				CurrentReadProperiesByThread.Remove(thread);
-			}
-		}
 
 
 		static Assembly CometAssembly = typeof(BindingObject).Assembly;
@@ -117,7 +63,7 @@ namespace Comet
 			CheckForStateAttributes(view, view).ToList();
 		}
 
-		static IEnumerable<INotifyPropertyRead> CheckForStateAttributes(object obj, View view)
+		static IEnumerable<INotifyPropertyChanged> CheckForStateAttributes(object obj, View view)
 		{
 			//if (hasChecked && obj == this)
 			//    return;
@@ -137,7 +83,7 @@ namespace Comet
 						throw new ReadonlyRequiresException(field.DeclaringType?.FullName, field.Name);
 					}
 					var fieldValue = field.GetValue(obj);
-					var child = fieldValue as INotifyPropertyRead;
+					var child = fieldValue as INotifyPropertyChanged;
 					if (child != null)
 					{
 						//If the view is null, this is a child propety for a binding object.
@@ -149,7 +95,7 @@ namespace Comet
 			}
 		}
 
-		public static void RegisterChild(View view, INotifyPropertyRead value, string fieldName)
+		public static void RegisterChild(View view, INotifyPropertyChanged value, string fieldName)
 		{
 			ChildPropertyNamesMapping.GetOrCreateForKey(value)[view?.Id ?? ""] = fieldName;
 			if (!MonitoredObjects.Contains(value))
@@ -158,7 +104,7 @@ namespace Comet
 			}
 		}
 
-		static public void StartMonitoring(INotifyPropertyRead obj)
+		static public void StartMonitoring(INotifyPropertyChanged obj)
 		{
 			if (MonitoredObjects.Contains(obj))
 				return;
@@ -170,24 +116,20 @@ namespace Comet
 			if (!(obj is IAutoImplemented))
 			{
 				obj.PropertyChanged += Obj_PropertyChanged;
-				obj.PropertyRead += Obj_PropertyRead;
 			}
 		}
-		public static void StopMonitoring(INotifyPropertyRead obj)
+		public static void StopMonitoring(INotifyPropertyChanged obj)
 		{
 			if (!MonitoredObjects.Contains(obj))
 				return;
 			MonitoredObjects.Remove(obj);
 			if (!(obj is IAutoImplemented))
 			{
-				obj.PropertyChanged -= Obj_PropertyRead;
-				obj.PropertyRead -= Obj_PropertyRead;
+				obj.PropertyChanged -= Obj_PropertyChanged;
 			}
 			//TODO remove it from all the mappings
 
 		}
-
-		static void Obj_PropertyRead(object sender, PropertyChangedEventArgs e) => OnPropertyRead(sender, e.PropertyName);
 
 		static void Obj_PropertyChanged(object sender, PropertyChangedEventArgs e)
 		{
@@ -200,20 +142,14 @@ namespace Comet
 			var value = sender.GetPropertyValue(e.PropertyName);
 			OnPropertyChanged(sender, e.PropertyName, value);
 		}
-		public static void OnPropertyRead(object sender, string propertyName)
-		{
-			if (!isBuilding)
-				return;
-			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
-			currentReadProperies.Add((sender as INotifyPropertyRead, propertyName));
-		}
+	
 		public static  void OnPropertyChanged(object sender, string propertyName, object value)
 		{
 			if (value?.GetType() == typeof(View))
 				return;
-			if (value is INotifyPropertyRead iNotify)
+			if (value is INotifyPropertyChanged iNotify)
 				StartMonitoring(iNotify);
-			var notify = sender as INotifyPropertyRead;
+			var notify = sender as INotifyPropertyChanged;
 			if (notify == null)
 				throw new Exception("Error, this is null!!!");
 			if (!NotifyToViewMappings.TryGetValue(notify, out var views))
@@ -283,7 +219,7 @@ namespace Comet
 
 
 
-		internal static IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> EndProperty()
+		internal static IReadOnlyList<(INotifyPropertyChanged BindingObject, string PropertyName)> EndProperty()
 		{
 
 			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();

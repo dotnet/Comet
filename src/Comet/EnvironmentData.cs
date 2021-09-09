@@ -190,20 +190,6 @@ namespace Comet
 				return null;
 			}
 		}
-		protected override void CallPropertyRead(string propertyName)
-		{
-			if (View != null)
-				StateManager.OnPropertyRead(View.Environment, propertyName);
-			else if (isStatic)
-			{
-
-				StateManager.OnPropertyRead(View.Environment, propertyName);
-				//TODO: Verify this is right. We may need a way to tell allthe views a property changed
-				// View.ActiveViews.ForEach(x => x.GetState()?.OnPropertyRead(this, propertyName));
-			}
-			base.CallPropertyRead(propertyName);
-		}
-
 		public bool SetValue(string key, object value, bool cascades)
 		{
 			//if Nothing changed, don't send on notifications

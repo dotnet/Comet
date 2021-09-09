@@ -40,24 +40,6 @@ namespace Comet
 
 	}
 
-	public class StateBuilder : IDisposable
-	{
-		public StateBuilder(View view)
-		{
-			View = view;
-			StateManager.StartBuilding(view);
-		}
-
-		public View View { get; private set; }
-
-		public void Dispose()
-		{
-			StateManager.EndBuilding(View);
-			View = null;
-		}
-	}
-
-
 	//[Serializable]
 	//public class State : BindingObjectManager {
 	//	public State()

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Diagnostics;
 
 using System.Linq;
@@ -94,7 +95,6 @@ namespace Comet
 			//HotReloadHelper.Register(this);
 			//TODO: Should this need its view?
 			State = new BindingState();
-			StateManager.ConstructingView(this);
 			SetEnvironmentFields();
 
 		}
@@ -236,31 +236,28 @@ namespace Comet
 			if (BuiltView == null)
 			{
 				Debug.WriteLine($"Building View: {this.GetType().Name}");
-				using (new StateBuilder(this))
+				try
 				{
-					try
+					var view = Body.Invoke();
+					view.Parent = this;
+					if (view is NavigationView navigationView)
+						Navigation = navigationView;
+					var props = StateManager.EndProperty();
+					var propCount = props.Count;
+					if (propCount > 0)
 					{
-						var view = Body.Invoke();
-						view.Parent = this;
-						if (view is NavigationView navigationView)
-							Navigation = navigationView;
-						var props = StateManager.EndProperty();
-						var propCount = props.Count;
-						if (propCount > 0)
-						{
-							State.AddGlobalProperties(props);
-						}
-						builtView = view.GetRenderView();
-						UpdateBuiltViewContext(builtView);
+						State.AddGlobalProperties(props);
 					}
-					catch(Exception ex)
+					builtView = view.GetRenderView();
+					UpdateBuiltViewContext(builtView);
+				}
+				catch(Exception ex)
+				{
+					if (Debugger.IsAttached)
 					{
-						if (Debugger.IsAttached)
-						{
-							builtView = new VStack {new Text(()=> ex.Message.ToString()).LineBreakMode(()=>LineBreakMode.WordWrap) };
-						}
-						else throw ex;
+						builtView = new VStack {new Text(()=> ex.Message.ToString()).LineBreakMode(()=>LineBreakMode.WordWrap) };
 					}
+					else throw ex;
 				}
 			}
 
@@ -287,7 +284,7 @@ namespace Comet
 				Body = bodyMethod;
 		}
 
-		internal void BindingPropertyChanged(INotifyPropertyRead bindingObject, string property, string fullProperty, object value)
+		internal void BindingPropertyChanged(INotifyPropertyChanged bindingObject, string property, string fullProperty, object value)
 		{
 			var prop = property.Split('.').Last();
 			if (!State.UpdateValue(this, (bindingObject, property), fullProperty, value))
@@ -425,7 +422,7 @@ namespace Comet
 				{
 					StateManager.ListenToEnvironment(this);
 					State.AddGlobalProperty((View.Environment, key));
-					if (value is INotifyPropertyRead notify)
+					if (value is INotifyPropertyChanged notify)
 						StateManager.RegisterChild(this, notify, key);
 					this.SetDeepPropertyValue(item.Field, value);
 				}

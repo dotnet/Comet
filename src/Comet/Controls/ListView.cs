@@ -121,12 +121,7 @@ namespace Comet
 				return null;
 			if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
 			{
-				using (new StateBuilder(this))
-				{
-					view = ViewFor?.Invoke(item);
-					if (item is INotifyPropertyRead read && view != null)
-						StateManager.MonitorListViewObject(view, read);
-				}
+				view = ViewFor?.Invoke(item);
 				if (view == null)
 					return null;
 				CurrentViews[item] = view;
@@ -312,14 +307,9 @@ namespace Comet
 		public override View GetViewFor(int index)
 		{
 			var item = (T)GetItemAt(index);
-			using (new StateBuilder(this))
-			{
-				var view = ViewFor?.Invoke(item);
-				//TODO: Make sure we clean this up. This is a memory leak!!!!
-				if (item is INotifyPropertyRead read && view != null)
-					StateManager.MonitorListViewObject(view, read);
-				return view;
-			}
+		
+			var view = ViewFor?.Invoke(item);
+			return view;
 		}
 		public override int GetCount() => items?.Count ?? Count?.Invoke() ?? 0;
 

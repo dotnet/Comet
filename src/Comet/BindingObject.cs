@@ -15,22 +15,15 @@ namespace Comet
 
 	}
 
-	public interface INotifyPropertyRead : INotifyPropertyChanged
-	{
-		event PropertyChangedEventHandler PropertyRead;
-	}
-	public class BindingObject : INotifyPropertyRead, IAutoImplemented
+	public class BindingObject : INotifyPropertyChanged, IAutoImplemented
 	{
 
-		public event PropertyChangedEventHandler PropertyRead;
 		public event PropertyChangedEventHandler PropertyChanged;
 
 		internal protected Dictionary<string, object> dictionary = new Dictionary<string, object>();
 
 		protected T GetProperty<T>(T defaultValue = default, [CallerMemberName] string propertyName = "")
 		{
-			CallPropertyRead(propertyName);
-
 			if (dictionary.TryGetValue(propertyName, out var val))
 				return (T)val;
 			return defaultValue;
@@ -71,11 +64,6 @@ namespace Comet
 			PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
 		}
 
-		protected virtual void CallPropertyRead(string propertyName)
-		{
-			StateManager.OnPropertyRead(this, propertyName);
-			PropertyRead?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-		}
 
 		internal bool SetPropertyInternal(object value, [CallerMemberName] string propertyName = "")
 		{
@@ -93,27 +81,27 @@ namespace Comet
 		public IEnumerable<KeyValuePair<string, object>> ChangedProperties => changeDictionary;
 		Dictionary<string, object> changeDictionary = new Dictionary<string, object>();
 
-		public HashSet<(INotifyPropertyRead BindingObject, string PropertyName)> GlobalProperties { get; set; } = new HashSet<(INotifyPropertyRead BindingObject, string PropertyName)>();
-		public Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), HashSet<(string PropertyName, Binding Binding)>> ViewUpdateProperties = new Dictionary<(INotifyPropertyRead BindingObject, string PropertyName), HashSet<(string PropertyName, Binding Binding)>>();
-		public void AddGlobalProperty((INotifyPropertyRead BindingObject, string PropertyName) property)
+		public HashSet<(INotifyPropertyChanged BindingObject, string PropertyName)> GlobalProperties { get; set; } = new HashSet<(INotifyPropertyChanged BindingObject, string PropertyName)>();
+		public Dictionary<(INotifyPropertyChanged BindingObject, string PropertyName), HashSet<(string PropertyName, Binding Binding)>> ViewUpdateProperties = new Dictionary<(INotifyPropertyChanged BindingObject, string PropertyName), HashSet<(string PropertyName, Binding Binding)>>();
+		public void AddGlobalProperty((INotifyPropertyChanged BindingObject, string PropertyName) property)
 		{
 			if (GlobalProperties.Add(property))
 				Debug.WriteLine($"Adding Global Property: {property}");
 		}
-		public void AddGlobalProperties(IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> properties)
+		public void AddGlobalProperties(IReadOnlyList<(INotifyPropertyChanged BindingObject, string PropertyName)> properties)
 		{
 			var props = properties.ToList();
 			foreach (var prop in props)
 				AddGlobalProperty(prop);
 		}
-		public void AddViewProperty((INotifyPropertyRead BindingObject, string PropertyName) property, string propertyName, Binding binding)
+		public void AddViewProperty((INotifyPropertyChanged BindingObject, string PropertyName) property, string propertyName, Binding binding)
 		{
 			if (!ViewUpdateProperties.TryGetValue(property, out var actions))
 				ViewUpdateProperties[property] = actions = new HashSet<(string PropertyName, Binding Binding)>();
 			actions.Add((propertyName, binding));
 		}
 
-		public void AddViewProperty(IReadOnlyList<(INotifyPropertyRead BindingObject, string PropertyName)> properties, Binding binding, string propertyName)
+		public void AddViewProperty(IReadOnlyList<(INotifyPropertyChanged BindingObject, string PropertyName)> properties, Binding binding, string propertyName)
 		{
 			foreach (var p in properties)
 			{
@@ -137,7 +125,7 @@ namespace Comet
 			else
 				view.GetState().changeDictionary[fullProperty] = value;
 		}
-		public bool UpdateValue(View view,(INotifyPropertyRead BindingObject, string PropertyName) property, string fullProperty, object value)
+		public bool UpdateValue(View view,(INotifyPropertyChanged BindingObject, string PropertyName) property, string fullProperty, object value)
 		{
 			changeDictionary[fullProperty] = value;
 			UpdatePropertyChangeProperty(view, fullProperty, value);
