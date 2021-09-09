@@ -430,8 +430,8 @@ namespace {{NameSpace}} {
 
 		static INamedTypeSymbol GetType(SemanticModel sm, TypeSyntax type)
 		{
-			var interfaceType = sm.GetSymbolInfo(type);
-			var s = CometViewSourceGenerator.GetFullName(interfaceType.Symbol);
+			SymbolInfo? interfaceType = sm.GetSymbolInfo(type);
+			var s = CometViewSourceGenerator.GetFullName(interfaceType?.Symbol);
 			return sm.Compilation.GetTypeByMetadataName(s);
 		}
 
