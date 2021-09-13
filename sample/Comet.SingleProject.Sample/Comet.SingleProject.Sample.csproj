@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net6.0-ios;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
 		<OutputType>Exe</OutputType>
@@ -50,6 +50,8 @@
 	</PropertyGroup>
 	
 	<PropertyGroup>
+
+    <RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>
 		<!-- Required - WinUI can't deploy in a multi-targeting environment -->
 		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-windows'))">win-x64</RuntimeIdentifier>
 	</PropertyGroup>

@@ -48,7 +48,7 @@ namespace Comet
 			Func<T> func = getValue.Compile();
 			var visitor = new PropertyExpressionVisitor(false);
 			visitor.Visit(getValue);
-			var bindings = visitor.GetBoundProperties();
+			BoundProperties = visitor.GetBoundProperties();
 			var result = func.Invoke();
 			CurrentValue = result;
 			IsFunc = true;
@@ -109,9 +109,11 @@ namespace Comet
 		{
 			PropertyName = property;
 			View = view;
+
 			if (BoundProperties?.Count > 0)
 			{
 				StateManager.UpdateBinding(this, view);
+				view.GetState().AddViewProperty(BoundProperties, this, property);
 			}
 		}
 		public override void BindingValueChanged(INotifyPropertyChanged bindingObject, string propertyName, object value)
@@ -119,7 +121,7 @@ namespace Comet
 			var oldValue = CurrentValue;
 			var result = Get == null ? default : Get.Invoke();
 			CurrentValue = result;
-
+			View.ViewPropertyChanged(PropertyName, CurrentValue);
 
 		}
 

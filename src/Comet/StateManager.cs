@@ -58,7 +58,7 @@ namespace Comet
 
 
 		static Assembly CometAssembly = typeof(BindingObject).Assembly;
-		public static void CheckBody(View view)
+		public static void CheckForStateT(View view)
 		{
 			CheckForStateAttributes(view, view).ToList();
 		}
@@ -218,28 +218,6 @@ namespace Comet
 
 
 
-
-		internal static IReadOnlyList<(INotifyPropertyChanged BindingObject, string PropertyName)> EndProperty()
-		{
-
-			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
-			var changed = currentReadProperies.ToList().Distinct().ToList();
-			currentReadProperies.Clear();
-			return changed;
-
-		}
-
-
-		internal static void StartProperty()
-		{
-			isBuilding = true;
-			var currentReadProperies = CurrentReadProperiesByThread.GetCurrent();
-			if (currentReadProperies.Any())
-			{
-				CurrentView.GetState()?.AddGlobalProperties(currentReadProperies);
-			}
-			currentReadProperies.Clear();
-		}
 
 
 		internal static void UpdateBinding(Binding binding, View view)

@@ -8,9 +8,10 @@ namespace Comet
 	{
 		private readonly float? spacing;
 
-		public VStack(
-			HorizontalAlignment alignment = HorizontalAlignment.Center,
-			float? spacing = null) 
+		public VStack() : this (null)
+		{
+		}
+		public VStack(float? spacing) 
 		{
 			this.spacing = spacing;
 		}

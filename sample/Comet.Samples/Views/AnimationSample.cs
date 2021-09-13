@@ -8,12 +8,7 @@ namespace Comet.Samples
 	{
 		public AnimationSample()
 		{
-			Body = Build;
-		}
-		readonly State<bool> shouldAnimate = true;
-		Text animatedText;
-		Button button;
-		View Build() =>
+			Body = () =>
 			new VStack
 			{
 				new Text("Regular Text Behind..."),
@@ -65,6 +60,10 @@ namespace Comet.Samples
 					else
 						this.PauseAnimations();
 				}).Background(Colors.Transparent))
-			};
+			}; ;
+		}
+		readonly State<bool> shouldAnimate = true;
+		Text animatedText;
+		Button button;
 	}
 }

@@ -21,7 +21,17 @@ namespace Comet
 
 		public T View { get; set; }
 		List<AnimationStep<T>> steps = new List<AnimationStep<T>>();
-		public AnimationSequence<T> Animate(Easing easing, Action<T> action, Action completed = null, double duration = .2, double delay = 0,string id = null, Lerp lerp = null)
+
+		public AnimationSequence<T> Animate(Action<T> action) => Animate(Easing.Default, action, null, .2, 0, null, null);
+		public AnimationSequence<T> Animate(Action<T> action, Action completed) => Animate(Easing.Default, action, completed, .2, 0, null, null);
+		public AnimationSequence<T> Animate(Action<T> action, Action completed, double duration) => Animate(Easing.Default, action, completed, duration, 0, null, null);
+		public AnimationSequence<T> Animate(Action<T> action, Action completed, double duration, double delay) => Animate(Easing.Default, action, completed, duration, delay, null, null);
+		public AnimationSequence<T> Animate(Easing easing, Action<T> action) => Animate(easing, action, null, .2, 0, null, null);
+		public AnimationSequence<T> Animate(Easing easing, Action<T> action, Action completed) => Animate(easing, action, completed, .2, 0, null, null);
+		public AnimationSequence<T> Animate(Easing easing, Action<T> action, Action completed, double duration) => Animate(easing, action, completed, duration, 0, null, null);
+		public AnimationSequence<T> Animate(Easing easing, Action<T> action, Action completed, double duration, double delay) => Animate(easing, action, completed, duration, delay, null, null);
+		public AnimationSequence<T> Animate(Easing easing, Action<T> action, Action completed, double duration, double delay, string id) => Animate(easing, action, completed, duration, delay, id, null);
+		public AnimationSequence<T> Animate(Easing easing, Action<T> action, Action completed , double duration, double delay,string id, Lerp lerp)
 		{
 			steps.Add(new AnimationStep<T>
 			{
@@ -35,8 +45,6 @@ namespace Comet
 			});
 			return this;
 		}
-		public AnimationSequence<T> Animate(Action<T> action, Action completed = null, double duration = .2, double delay = 0)
-			=> Animate(Easing.Default, action, completed, duration, delay);
 
 
 		public T EndAnimationSequence()

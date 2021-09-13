@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Diagnostics;
 
 using System.Linq;
+using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
 using Comet.Helpers;
 using Comet.Internal;
@@ -191,8 +192,8 @@ namespace Comet
 			}
 		}
 
-		Func<View> body;
-		public Func<View> Body
+		Expression<Func<View>> body;
+		public Expression<Func<View>> Body
 		{
 			get => body;
 			set
@@ -201,7 +202,6 @@ namespace Comet
 				body = value;
 				if (wasSet)
 					ResetView();
-				//   this.SetBindingValue(State, ref body, value, ResetPropertyString);
 			}
 		}
 
@@ -228,7 +228,7 @@ namespace Comet
 				replacedView = replaced;
 				return builtView = replacedView.GetRenderView();
 			}
-			CheckForBody();
+			CheckForStateT();
 			if (Body == null)
 				return this;
 
@@ -236,29 +236,32 @@ namespace Comet
 			if (BuiltView == null)
 			{
 				Debug.WriteLine($"Building View: {this.GetType().Name}");
-				try
-				{
-					var view = Body.Invoke();
+				//try
+				//{
+				//TODO: Use  new Exprsision
+					var visitor = new PropertyExpressionVisitor(true);
+					visitor.Visit(body);
+					var globalProperties = visitor.GetBoundProperties();
+					var view = Body.Compile().Invoke();
 					view.Parent = this;
 					if (view is NavigationView navigationView)
 						Navigation = navigationView;
-					var props = StateManager.EndProperty();
-					var propCount = props.Count;
-					if (propCount > 0)
+					//var props = StateManager.EndProperty();
+					if (globalProperties.Count > 0)
 					{
-						State.AddGlobalProperties(props);
+						State.AddGlobalProperties(globalProperties);
 					}
 					builtView = view.GetRenderView();
-					UpdateBuiltViewContext(builtView);
-				}
-				catch(Exception ex)
-				{
-					if (Debugger.IsAttached)
-					{
-						builtView = new VStack {new Text(()=> ex.Message.ToString()).LineBreakMode(()=>LineBreakMode.WordWrap) };
-					}
-					else throw ex;
-				}
+						UpdateBuiltViewContext(builtView);
+				//}
+				//catch(Exception ex)
+				//{
+				//	if (Debugger.IsAttached)
+				//	{
+				//		builtView = new VStack {new Text(()=> ex.Message.ToString()).LineBreakMode(()=>LineBreakMode.WordWrap) };
+				//	}
+				//	else throw ex;
+				//}
 			}
 
 			// We need to make this check if there are global views. If so, return itself so it can be in a container view
@@ -268,20 +271,15 @@ namespace Comet
 			return BuiltView;
 		}
 
-		bool didCheckForBody;
-		void CheckForBody()
+		bool didCheckForStateT;
+		void CheckForStateT()
 		{
-			if (didCheckForBody)
+			if (didCheckForStateT)
 				return;
 			if (usedEnvironmentData.Any())
 				PopulateFromEnvironment();
-			StateManager.CheckBody(this);
-			didCheckForBody = true;
-			if (Body != null)
-				return;
-			var bodyMethod = this.GetBody();
-			if (bodyMethod != null)
-				Body = bodyMethod;
+			StateManager.CheckForStateT(this);
+			didCheckForStateT = true;
 		}
 
 		internal void BindingPropertyChanged(INotifyPropertyChanged bindingObject, string property, string fullProperty, object value)
