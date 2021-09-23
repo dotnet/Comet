@@ -120,7 +120,7 @@ dotnet_style_qualification_for_property = false:suggestion
 resharper_csharp_insert_final_newline=true
 resharper_csharp_wrap_lines=false
 
-[{*.md,*.sln,*.sln.DotSettings}]
+[{*.sln,*.sln.DotSettings}]
 #use tabs for indentation
 indent_style = tab
 indent_size = 4
