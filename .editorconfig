@@ -5,8 +5,9 @@
 
 #Core editorconfig formatting - indentation
 
-#use soft tabs (spaces) for indentation
+#use tabs for indentation
 indent_style = tab
+indent_size = 4
 
 #Formatting - indentation options
 
@@ -118,3 +119,8 @@ dotnet_style_qualification_for_property = false:suggestion
 # ReSharper properties
 resharper_csharp_insert_final_newline=true
 resharper_csharp_wrap_lines=false
+
+[{*.md,*.sln,*.sln.DotSettings}]
+#use tabs for indentation
+indent_style = tab
+indent_size = 4
