@@ -10,6 +10,7 @@ using Comet.Helpers;
 using Comet.Internal;
 //using System.Reflection;
 using Comet.Reflection;
+using FastExpressionCompiler;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
 using Microsoft.Maui.Animations;
@@ -213,36 +214,41 @@ namespace Comet
 		View replacedView;
 		protected virtual View GetRenderView()
 		{
-			if (replacedView != null)
-				return replacedView.GetRenderView();
-			var replaced = MauiHotReloadHelper.GetReplacedView(this) as View;
-			if (replaced != this)
+		
+			var start = DateTime.Now;
+			try
 			{
-				replaced.viewThatWasReplaced = this;
-				replaced.ViewHandler = ViewHandler;
-				replaced.Navigation = this.Navigation;
-				replaced.Parent = this;
-				replaced.ReloadHandler = this.ReloadHandler;
-				replaced.PopulateFromEnvironment();
 
-				replacedView = replaced;
-				return builtView = replacedView.GetRenderView();
-			}
-			CheckForStateT();
-			if (Body == null)
-				return this;
+				if (replacedView != null)
+					return replacedView.GetRenderView();
+				var replaced = MauiHotReloadHelper.GetReplacedView(this) as View;
+				if (replaced != this)
+				{
+					replaced.viewThatWasReplaced = this;
+					replaced.ViewHandler = ViewHandler;
+					replaced.Navigation = this.Navigation;
+					replaced.Parent = this;
+					replaced.ReloadHandler = this.ReloadHandler;
+					replaced.PopulateFromEnvironment();
+
+					replacedView = replaced;
+					return builtView = replacedView.GetRenderView();
+				}
+				CheckForStateT();
+				if (Body == null)
+					return this;
 
 
-			if (BuiltView == null)
-			{
-				Debug.WriteLine($"Building View: {this.GetType().Name}");
-				//try
-				//{
-				//TODO: Use  new Exprsision
+				if (BuiltView == null)
+				{
+					Debug.WriteLine($"Building View: {this.GetType().Name}");
+					//try
+					//{
+					//TODO: Use  new Exprsision
 					var visitor = new PropertyExpressionVisitor(true);
 					visitor.Visit(body);
 					var globalProperties = visitor.GetBoundProperties();
-					var view = Body.Compile().Invoke();
+					var view = Body.CompileFast().Invoke();
 					view.Parent = this;
 					if (view is NavigationView navigationView)
 						Navigation = navigationView;
@@ -252,16 +258,23 @@ namespace Comet
 						State.AddGlobalProperties(globalProperties);
 					}
 					builtView = view.GetRenderView();
-						UpdateBuiltViewContext(builtView);
-				//}
-				//catch(Exception ex)
-				//{
-				//	if (Debugger.IsAttached)
-				//	{
-				//		builtView = new VStack {new Text(()=> ex.Message.ToString()).LineBreakMode(()=>LineBreakMode.WordWrap) };
-				//	}
-				//	else throw ex;
-				//}
+					UpdateBuiltViewContext(builtView);
+					//}
+					//catch(Exception ex)
+					//{
+					//	if (Debugger.IsAttached)
+					//	{
+					//		builtView = new VStack {new Text(()=> ex.Message.ToString()).LineBreakMode(()=>LineBreakMode.WordWrap) };
+					//	}
+					//	else throw ex;
+					//}
+				}
+			}
+			finally
+			{
+				var end = DateTime.Now - start;
+				var output = $"{this} Took: {end.TotalMilliseconds}";
+				Console.WriteLine(output);
 			}
 
 			// We need to make this check if there are global views. If so, return itself so it can be in a container view
@@ -751,6 +764,8 @@ namespace Comet
 
 
 		public string Title => this.GetTitle();
+
+		//IShadow IView.Shadow => this.GetEnvironment<IShadow>(nameof(IView.Shadow));
 
 		Size IView.Arrange(Rectangle bounds)
 		{

@@ -10,8 +10,11 @@ namespace Comet.Samples
 {
 	public class MyApp : CometApp
 	{
-		[Body]
-		View view() => new MainPage();
+		public MyApp()
+		{
+			Body = () => new InsaneDiffPage();
+		}
+	
 
 		public static MauiApp CreateMauiApp()
 		{

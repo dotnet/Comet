@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using Comet.Reflection;
+using FastExpressionCompiler;
 
 namespace Comet
 {
@@ -45,7 +46,7 @@ namespace Comet
 		}
 		public Binding(Expression<Func<T>> getValue, Action<T> setValue)
 		{
-			Func<T> func = getValue.Compile();
+			Func<T> func = getValue.CompileFast();
 			var visitor = new PropertyExpressionVisitor(false);
 			visitor.Visit(getValue);
 			BoundProperties = visitor.GetBoundProperties();

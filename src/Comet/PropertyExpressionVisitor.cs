@@ -5,6 +5,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using FastExpressionCompiler;
 
 namespace Comet
 {
@@ -72,7 +73,7 @@ namespace Comet
 
 			var getterLambda = Expression.Lambda<Func<object>>(objectMember);
 
-			var getter = getterLambda.Compile();
+			var getter = getterLambda.CompileFast();
 
 			return getter();
 		}
