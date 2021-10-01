@@ -224,9 +224,13 @@ namespace {{NameSpace}} {
 			Dictionary<string, bool> processedProperty = new();
 			foreach (var i in interfaces)
 			{
-				if(i.Name == "IScrollView")
+				if(i.Name == "ITextStyle")
 				{
-					Console.WriteLine("");
+					//If its an ITextStyle, we need to convert it into a Font OBject
+					propertyDefaultValues ??= new ();
+					skippedProperties ??= new ();
+					propertyDefaultValues["Font"] = "this.GetFont(null)";
+					skippedProperties.Add("Font");
 				}
 				var members = i.GetMembers();
 				foreach (var m in members)

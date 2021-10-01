@@ -19,7 +19,7 @@ namespace Comet.Tests.Handlers
 
 		public bool HasContainer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
-		public SizeF GetIntrinsicSize(double widthConstraint, double heightConstraint) => OnGetIntrinsicSize?.Invoke(widthConstraint,heightConstraint) ?? View.UseAvailableWidthAndHeight;
+		public SizeF GetIntrinsicSize(double widthConstraint, double heightConstraint) => OnGetIntrinsicSize?.Invoke(widthConstraint,heightConstraint) ?? new Size(-1,-1);
 
 		public void SetFrame(RectangleF frame)
 		{

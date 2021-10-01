@@ -14,9 +14,9 @@ namespace Comet.Samples
 					.Frame(75, 75)
 					.Padding(4),
 				new Text("Title")
-					.TextAlignment(TextAlignment.Center),
+					.HorizontalTextAlignment(TextAlignment.Center),
 				new Text("Description")
-					.TextAlignment(TextAlignment.Center)
+					.HorizontalTextAlignment(TextAlignment.Center)
 					.FontSize(12)
 					.Color(Colors.Grey),
 			}.FillHorizontal();

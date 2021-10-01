@@ -7,10 +7,12 @@ using Comet.Samples;
 namespace Comet.Android.Sample
 {
 	[Application]
-	public class MainApplication : MauiApplication<MyApp>
+	public class MainApplication : MauiApplication
 	{
 		public MainApplication(IntPtr handle, JniHandleOwnership ownership) : base(handle, ownership)
 		{
 		}
+
+		protected override MauiApp CreateMauiApp() => MyApp.CreateMauiApp();
 	}
 }

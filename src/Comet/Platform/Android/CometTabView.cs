@@ -31,7 +31,7 @@ namespace Comet.Android.Controls
 			context.Context.Theme.ResolveAttribute(global::Android.Resource.Attribute.ColorBackground, val, true);
 			_bottomNavigationView.SetBackgroundColor(new global::Android.Graphics.Color(val.Data));
 
-			_bottomNavigationView.NavigationItemSelected += HandleNavigationItemSelected;
+			_bottomNavigationView.ItemSelected += HandleNavigationItemSelected;
 
 			AddView(_bottomNavigationView);
 		}
@@ -65,7 +65,7 @@ namespace Comet.Android.Controls
 				.Commit();
 		}
 
-		private void HandleNavigationItemSelected(object sender, BottomNavigationView.NavigationItemSelectedEventArgs e)
+		private void HandleNavigationItemSelected(object sender, Google.Android.Material.Navigation.NavigationBarView.ItemSelectedEventArgs e)
 		{
 			var index = e.Item.ItemId;
 			var manager = (MauiContext.Context as MauiAppCompatActivity).SupportFragmentManager;

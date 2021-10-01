@@ -9,15 +9,14 @@ namespace Comet
 		public static Font GetFont(this View view, Font? defaultFont)
 		{
 			Font font = Font.Default;
-			var  size = view.GetEnvironment<double?>(EnvironmentKeys.Fonts.Size) ?? defaultFont?.Size ?? font.Size;
+			var size = view.GetEnvironment<double?>(EnvironmentKeys.Fonts.Size) ?? defaultFont?.Size ?? font.Size;
 			var name = view.GetEnvironment<string>(EnvironmentKeys.Fonts.Family) ?? defaultFont?.Family ?? font.Family;
 			var weight = view.GetEnvironment<FontWeight?>(EnvironmentKeys.Fonts.Weight) ?? defaultFont?.Weight ?? Microsoft.Maui.FontWeight.Regular;
 			var slant = view.GetEnvironment<FontSlant?>(EnvironmentKeys.Fonts.Slant) ?? Microsoft.Maui.FontSlant.Default;
 			if (!string.IsNullOrWhiteSpace(name))
 				return Font.OfSize(name, size, weight, slant);
-			//else if (size > 0)
-				return Font.SystemFontOfSize(size, weight, slant);
-			//return font;
+			return Font.SystemFontOfSize(size, weight, slant);
+
 		}
 
 		public static T FontSize<T>(this T view, Binding<double> value) where T : View

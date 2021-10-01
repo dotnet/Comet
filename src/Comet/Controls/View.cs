@@ -14,6 +14,7 @@ using Microsoft.Maui.Animations;
 using Microsoft.Maui.Essentials;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.HotReload;
+using Microsoft.Maui.Internal;
 using Microsoft.Maui.Layouts;
 using Microsoft.Maui.Primitives;
 using Rectangle = Microsoft.Maui.Graphics.Rectangle;
@@ -23,8 +24,8 @@ namespace Comet
 
 	public class View : ContextualObject, IDisposable, IView, IHotReloadableView,ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement
 	{
-		public static readonly Size UseAvailableWidthAndHeight = new Size(-1, -1);
 
+		static internal readonly WeakList<IView> ActiveViews = new WeakList<IView>();
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
 		protected static Dictionary<string, string> HandlerPropertyMapper = new()
 		{
@@ -88,8 +89,8 @@ namespace Comet
 
 		public View()
 		{
-			//HotReloadHelper.ActiveViews.Add(this);
-			//Debug.WriteLine($"Active View Count: {HotReloadHelper.ActiveViews.Count}");
+			ActiveViews.Add(this);
+			Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
 			//HotReloadHelper.Register(this);
 			//TODO: Should this need its view?
 			State = new BindingState();
@@ -312,7 +313,8 @@ namespace Comet
 				Debug.WriteLine($"Error setting property:{property} : {value} on :{this}");
 				Debug.WriteLine(ex);
 			}
-			ViewHandler?.UpdateValue(GetHandlerPropertyName(property));
+			var newPropName = GetHandlerPropertyName(property);
+			ViewHandler?.UpdateValue(newPropName);
 			builtView?.ViewPropertyChanged(property, value);
 		}
 
@@ -330,7 +332,7 @@ namespace Comet
 		{
 			Environment.SetValue(key, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(key, value));
+				ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(key, value));
 			});
 
 		}
@@ -340,7 +342,7 @@ namespace Comet
 			var typedKey = string.IsNullOrWhiteSpace(styleId) ? key : $"{styleId}.{key}";
 			Environment.SetValue(typedKey, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
+				ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
 
@@ -349,7 +351,7 @@ namespace Comet
 			var typedKey = ContextualObject.GetTypedKey(type, key);
 			Environment.SetValue(typedKey, value, true);
 			ThreadHelper.RunOnMainThread(() => {
-				MauiHotReloadHelper.ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
+				ActiveViews.OfType<View>().ForEach(x => x.ViewPropertyChanged(typedKey, value));
 			});
 		}
 
@@ -436,9 +438,9 @@ namespace Comet
 			if (!disposing)
 				return;
 
-			//MauiHotReloadHelper.ActiveViews.Remove(this);
+			ActiveViews.Remove(this);
 
-			//Debug.WriteLine($"Active View Count: {HotReloadHelper.ActiveViews.Count}");
+			Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
 
 			MauiHotReloadHelper.UnRegister(this);
 			var vh = ViewHandler;
@@ -521,9 +523,9 @@ namespace Comet
 			{
 				var fe = (IView)this;
 				var ms = this.ComputeDesiredSize(availableSize.Width, availableSize.Height);
-				if(fe.Width != -1)
+				if(fe.Width > 0)
 					ms.Width = fe.Width;
-				if (fe.Height != -1)
+				if (fe.Height > 0)
 					ms.Height = fe.Height;
 				//TODO: Remove this when we get some LayoutOptions...
 				//This check ignores MArgin which is bad
@@ -694,8 +696,13 @@ namespace Comet
 		protected bool IsArrangeValid;
 		//bool IView.IsArrangeValid => IsArrangeValid;
 
-		double IView.Width => this.GetFrameConstraints()?.Width ?? -1;
-		double IView.Height => this.GetFrameConstraints()?.Height ?? -1;
+		double IView.Width => this.GetFrameConstraints()?.Width ?? Dimension.Unset;
+		double IView.Height => this.GetFrameConstraints()?.Height ?? Dimension.Unset;
+
+		double IView.MinimumHeight => this.GetEnvironment<double?>(nameof(IView.MinimumHeight)) ?? Dimension.Unset;
+		double IView.MaximumWidth => this.GetEnvironment<double?>(nameof(IView.MaximumWidth)) ?? Dimension.Maximum;
+		double IView.MinimumWidth => this.GetEnvironment<double?>(nameof(IView.MinimumWidth)) ?? Dimension.Unset;
+		double IView.MaximumHeight => this.GetEnvironment<double?>(nameof(IView.MaximumHeight)) ?? Dimension.Maximum;
 
 		public IView ReplacedView => this.GetView();// HasContent ? this : BuiltView ?? this;
 
@@ -746,6 +753,7 @@ namespace Comet
 		double ITransform.AnchorX => this.GetEnvironment<double?>(nameof(ITransform.AnchorX)) ?? .5;
 
 		double ITransform.AnchorY => this.GetEnvironment<double?>(nameof(ITransform.AnchorY)) ?? .5;
+
 
 		public string Title => this.GetTitle();
 

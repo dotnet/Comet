@@ -1,7 +1,0 @@
-{
-  "profiles": {
-    "MauiSample.WinUI": {
-      "commandName": "AppContainer"
-    }
-  }
-}

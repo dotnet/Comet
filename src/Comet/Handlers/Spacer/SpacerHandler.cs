@@ -19,7 +19,7 @@ namespace Comet.Handlers
 {
 	public partial class SpacerHandler : ViewHandler<Spacer, NativeView>
 	{
-		public static readonly PropertyMapper<Spacer> Mapper = new PropertyMapper<Spacer>(ViewHandler.ViewMapper);
+		public static readonly PropertyMapper<Spacer, SpacerHandler> Mapper = new PropertyMapper<Spacer, SpacerHandler>(ViewHandler.ViewMapper);
 		public SpacerHandler() : base(Mapper)
 		{
 

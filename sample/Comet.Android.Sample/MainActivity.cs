@@ -3,7 +3,7 @@ using Microsoft.Maui;
 
 namespace Comet.Android.Sample
 {
-	[Activity(Label = "@string/app_name", Theme = "@style/AppTheme.NoActionBar", MainLauncher = true)]
+	[Activity(Label = "@string/app_name", Theme = "@style/Maui.SplashTheme", MainLauncher = true)]
 	[IntentFilter(
 		new[] { Microsoft.Maui.Essentials.Platform.Intent.ActionAppAction },
 		Categories = new[] { global::Android.Content.Intent.CategoryDefault })]

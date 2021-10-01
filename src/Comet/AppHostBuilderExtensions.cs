@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using Comet.Handlers;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Maui;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
 
@@ -9,7 +11,14 @@ namespace Comet
 {
 	public static class AppHostBuilderExtensions
 	{
-		public static IAppHostBuilder UseCometHandlers(this IAppHostBuilder builder)
+		public static MauiAppBuilder UseCometApp<TApp>(this MauiAppBuilder builder)
+			where TApp : class, IApplication
+		{
+			builder.Services.TryAddSingleton<IApplication, TApp>();
+			builder.UseCometHandlers();
+			return builder;
+		}
+		public static MauiAppBuilder UseCometHandlers(this MauiAppBuilder builder)
 		{
 
 			//AnimationManger.SetTicker(new iOSTicker());
@@ -18,9 +27,7 @@ namespace Comet
 			var style = new Styles.Style();
 			style.Apply();
 
-			
-
-			builder.ConfigureMauiHandlers((_, handlersCollection) => handlersCollection.AddHandlers(new Dictionary<Type, Type>
+			builder.ConfigureMauiHandlers((handlersCollection) => handlersCollection.AddHandlers(new Dictionary<Type, Type>
 			{
 				{ typeof(AbstractLayout), typeof(LayoutHandler) },
 				{ typeof(ActivityIndicator), typeof(ActivityIndicatorHandler) },
@@ -44,9 +51,9 @@ namespace Comet
 				{ typeof(Toggle), typeof(SwitchHandler) },
 #if __MOBILE__
 				{ typeof(ListView),typeof(ListViewHandler) },
-				{typeof(NavigationView), typeof (NavigationViewHandler)},
+				{typeof(NavigationView), typeof (Handlers.NavigationViewHandler)},
 				{typeof(ScrollView), typeof(Handlers.ScrollViewHandler) },
-				{typeof(ShapeView), typeof(Comet.Handlers.ShapeViewHandler)},
+				{typeof(ShapeView), typeof(Handlers.ShapeViewHandler)},
 
 #endif
 

@@ -15,9 +15,7 @@
    <LangVersion>preview</LangVersion>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Comet.SourceGenerator\Comet.SourceGenerator.csproj" 
-                      OutputItemType="Analyzer"
-                      ReferenceOutputAssembly="false"/>
+    <ProjectReference Include="..\Comet.SourceGenerator\Comet.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
@@ -25,8 +23,10 @@
  <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
     <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0.8-net6preview02.4535000" />
   </ItemGroup>
- <ItemGroup Condition="$(TargetFramework.Contains('-windows'))">
-  </ItemGroup>
+  <PropertyGroup>
+   <RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>
+ </PropertyGroup>
     <Import Project="..\..\external\Maui\.nuspec\Microsoft.Maui.Controls.MultiTargeting.targets" />
+
 </Project>
 
