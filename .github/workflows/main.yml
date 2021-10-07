@@ -17,6 +17,14 @@ jobs:
       - uses: actions/checkout@v2
         with:
           submodules: true
+          
+      - name:  install .NET 
+        shell: pwsh
+        run: |
+          $ProgressPreference = 'SilentlyContinue'
+          Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
+          & .\dotnet-install.ps1 -Version 6.0.100-rc.2.21478.37 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+          & dotnet --list-sdks   
 
       - name: Install Visual Studio Preview
         shell: pwsh
@@ -34,7 +42,7 @@ jobs:
         run: |
           & dotnet tool update --global redth.net.maui.check
           & maui-check --skip dotnet --verbose --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
-          
+
       - name: Install Maui Workload
         shell: pwsh
         run: |
