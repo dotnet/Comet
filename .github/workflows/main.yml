@@ -50,7 +50,7 @@ jobs:
           & dotnet workload install maui --skip-manifest-update --source https://aka.ms/dotnet6/nuget/index.json
 
       - name: Restore Comet-Nuget.sln
-        run: nuget restore build/Comet-Nuget.sln
+        run: dotnet restore build/Comet-Nuget.sln
 
       - name: Build Comet-Nuget.sln
         run: msbuild build/Comet-Nuget.sln
