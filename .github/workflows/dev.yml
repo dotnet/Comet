@@ -55,8 +55,13 @@ jobs:
         run: |
           & dotnet tool update --global redth.net.maui.check
           & maui-check --skip dotnet --verbose --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
+          
+      - name: Install Maui Workload
+        shell: pwsh
+        run: |
           & dotnet workload update --from-rollback-file https://aka.ms/dotnet/maui/main.json  --source https://aka.ms/dotnet6/nuget/index.json
           & dotnet workload install maui --skip-manifest-update --source https://aka.ms/dotnet6/nuget/index.json
+
      
       - name: Restore Comet-Nuget.sln
         run: nuget restore build/Comet-Nuget.sln
