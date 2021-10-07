@@ -3,6 +3,7 @@ using Android.App;
 using Android.Runtime;
 using Microsoft.Maui;
 using Comet.Samples;
+using Microsoft.Maui.Hosting;
 
 namespace Comet.Android.Sample
 {
