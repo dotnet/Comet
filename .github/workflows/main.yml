@@ -55,11 +55,11 @@ jobs:
       - name: Build Comet-Nuget.sln
         run: msbuild build/Comet-Nuget.sln
 
-      - name: Restore Comet-Tests.sln
-        run: dotnet restore build/Comet-Tests.sln
+      # - name: Restore Comet-Tests.sln
+      #   run: dotnet restore build/Comet-Tests.sln
 
-      - name: Build Tests Project
-        run: msbuild tests/Comet.Tests/Comet.Tests.csproj /p:Configuration=Release
+      # - name: Build Tests Project
+      #   run: msbuild tests/Comet.Tests/Comet.Tests.csproj /p:Configuration=Release
         
       # - name: Run Tests Project
       #   run: dotnet test tests/Comet.Tests/Comet.Tests.csproj
