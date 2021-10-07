@@ -685,7 +685,6 @@ namespace Comet
 			set => SetViewHandler(value);
 		}
 
-		IView IView.Parent => this.Parent;
 		IElement IElement.Parent => this.Parent;
 
 		Size IView.DesiredSize => MeasuredSize;

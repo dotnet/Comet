@@ -1,22 +1,29 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 	<PropertyGroup>
 		<TargetFrameworks>net6.0-ios;net6.0-android;net6.0-maccatalyst</TargetFrameworks>
 		<OutputType>Exe</OutputType>
-		<SingleProject>true</SingleProject>
-		<ApplicationTitle>Single Project</ApplicationTitle>
-		<ApplicationId>com.microsoft.maui.singleproject</ApplicationId>
-		<ApplicationVersion>1.0</ApplicationVersion>
-		<AndroidVersionCode>1</AndroidVersionCode>
-		
+		<RootNamespace>CometSample</RootNamespace>
 		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
 
+		<!-- Display name -->
+		<ApplicationTitle>CometSample</ApplicationTitle>
+
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.CometSample</ApplicationId>
+
+		<!-- Versions -->
+		<ApplicationVersion>1</ApplicationVersion>
+
 		<!-- Required for C# Hot Reload -->
 		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
-	</PropertyGroup>
 
-  
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.18362.0</SupportedOSPlatformVersion>
+	</PropertyGroup>
 
 	<ItemGroup>
 		<!-- App Icon -->
@@ -44,14 +51,10 @@
 		<PackageReference Include="Microsoft.WindowsAppSDK.InteractiveExperiences" Version="WINDOWSAPPSDK_VERSION" NoWarn="NU1701" />
 	</ItemGroup>
 
+
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-	</PropertyGroup>
-	
-	<PropertyGroup>
-		<!-- Required - WinUI can't deploy in a multi-targeting environment -->
-		<RuntimeIdentifier Condition="$(TargetFramework.Contains('-windows'))">win-x64</RuntimeIdentifier>
 	</PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />

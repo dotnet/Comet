@@ -1,6 +1,7 @@
 ﻿using Foundation;
 using Microsoft.Maui;
 using Comet.Samples;
+using Microsoft.Maui.Hosting;
 
 namespace Maui.Controls.Sample.SingleProject
 {

@@ -20,9 +20,9 @@ namespace Comet.Samples
 				.ConfigureFonts(fonts => {
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				});
-#if DEBUG
-			builder.EnableHotReload();
-#endif
+//#if DEBUG
+//			builder.EnableHotReload();
+//#endif
 
 			return builder.Build();
 		}
