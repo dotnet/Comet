@@ -41,6 +41,15 @@ jobs:
       - name: Build Comet-Nuget.sln
         run: msbuild build/Comet-Nuget.sln
 
+      - name: Restore Comet-Tests.sln
+        run: nuget restore build/Comet-Tests.sln
+
+      - name: Build Tests Project
+        run: msbuild tests/Comet.Tests/Comet.Tests.csproj /p:Configuration=Release
+        
+      - name: Run Tests Project
+        run: dotnet test tests/Comet.Tests/Comet.Tests.csproj
+
       - name: Restore Comet-net6-Nuget.sln
         run: dotnet restore build/Comet-net6-Nuget.sln
 
@@ -71,15 +80,6 @@ jobs:
             **\*.nupkg
             **\*.snupkg
             **\*.symbols.nupkg
-      
-      - name: Restore Comet-Tests.sln
-        run: nuget restore build/Comet-Tests.sln
-
-      - name: Build Tests Project
-        run: msbuild tests/Comet.Tests/Comet.Tests.csproj /p:Configuration=Release
-        
-      - name: Run Tests Project
-        run: dotnet test tests/Comet.Tests/Comet.Tests.csproj
   
   publish:
       name: Publish
