@@ -10,19 +10,20 @@ using System.IO;
 
 namespace CometApp1
 {
-	public class App : CometApp
-	{
-		[Body]
-		View view() => new MainPage();
+    public class App : CometApp
+    {
+        [Body]
+        View view() => new MainPage();
 
-		public override void Configure(IAppHostBuilder appBuilder)
-		{
-			base.Configure(appBuilder);			
-//-:cnd
-#if DEBUG
-			appBuilder.EnableHotReload();
-#endif
-//+:cnd
-		}
-	}
+        public static MauiApp CreateMauiApp()
+        {
+            var builder = MauiApp.CreateBuilder();
+            builder.UseCometApp<App>()
+                .ConfigureFonts(fonts =>
+                {
+                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+                });
+            return builder.Build();
+        }
+    }
 }
