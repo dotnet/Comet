@@ -14,7 +14,7 @@ namespace Comet
 		public ILayoutManager LayoutManager => layout ??= CreateLayoutManager();
 		public ILayoutHandler LayoutHandler => ViewHandler as ILayoutHandler;
 
-		Thickness ILayout.Padding => this.GetPadding();
+		Thickness IPadding.Padding => this.GetPadding();
 
 		protected override void OnAdded(View view)
 		{

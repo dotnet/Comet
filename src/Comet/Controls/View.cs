@@ -757,6 +757,8 @@ namespace Comet
 
 		public string Title => this.GetTitle();
 
+		IShadow IView.Shadow => this.GetEnvironment<IShadow>(nameof(IView.Shadow));
+
 		Size IView.Arrange(Rectangle bounds)
 		{
 			LayoutSubviews(bounds);

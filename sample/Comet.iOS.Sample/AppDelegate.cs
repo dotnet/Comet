@@ -6,6 +6,7 @@ using MapKit;
 using UIKit;
 using Microsoft.Maui;
 using Microsoft.Maui.HotReload;
+using Microsoft.Maui.Hosting;
 
 namespace Comet.iOS.Sample
 {
