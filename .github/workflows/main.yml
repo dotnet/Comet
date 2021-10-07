@@ -34,6 +34,7 @@ jobs:
         run: |
           & dotnet tool update --global redth.net.maui.check
           & maui-check --skip dotnet --verbose --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
+          
       - name: Install Maui Workload
         shell: pwsh
         run: |
