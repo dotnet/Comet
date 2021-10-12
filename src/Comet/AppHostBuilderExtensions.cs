@@ -49,6 +49,7 @@ namespace Comet
 				{ typeof(Text), typeof(LabelHandler) },
 				{ typeof(TimePicker), typeof(TimePickerHandler) },
 				{ typeof(Toggle), typeof(SwitchHandler) },
+				{ typeof(CometApp), typeof(ApplicationHandler) },
 #if __MOBILE__
 				{ typeof(ListView),typeof(ListViewHandler) },
 				{typeof(NavigationView), typeof (Handlers.NavigationViewHandler)},
