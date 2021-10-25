@@ -53,6 +53,6 @@ namespace Comet
 
 		}
 
-		bool IWindow.BackButtonPressed() => true;
+		bool IWindow.BackButtonClicked() => true;
 	}
 }
