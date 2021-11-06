@@ -1,32 +1,28 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>$(MauiPlatforms)</TargetFrameworks>
-    <RootNamespace>Comet</RootNamespace>
-    <AssemblyName>Comet</AssemblyName>
-    <IsPackable>false</IsPackable>
-    <UseMauiAssets>true</UseMauiAssets>
-    <UseMauiCore>true</UseMauiCore>
-    <UseMauiEssentials>true</UseMauiEssentials>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PackageId>Clancey.Comet</PackageId>
-  </PropertyGroup>
-  <PropertyGroup>
-   <LangVersion>preview</LangVersion>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Comet.SourceGenerator\Comet.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
-  </ItemGroup>
- <ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
-    <PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0.8-net6preview02.4535000" />
-  </ItemGroup>
-  <PropertyGroup>
-   <RuntimeIdentifier Condition="$(TargetFramework.Contains('-ios'))">iossimulator-x64</RuntimeIdentifier>
- </PropertyGroup>
-    <Import Project="..\..\external\Maui\.nuspec\Microsoft.Maui.Controls.MultiTargeting.targets" />
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
+		<RootNamespace>Comet</RootNamespace>
+		<AssemblyName>Comet</AssemblyName>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\Comet.SourceGenerator\Comet.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0" />
+	</ItemGroup>
+	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
+		<PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.1.0.8-net6preview02.4535000" />
+	</ItemGroup>
 
 </Project>
-

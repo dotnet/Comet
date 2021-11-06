@@ -1,9 +1,9 @@
 ﻿using Foundation;
 using Microsoft.Maui;
-using Comet.Samples;
 using Microsoft.Maui.Hosting;
+using Comet.Samples;
 
-namespace Maui.Controls.Sample.SingleProject
+namespace CometSample
 {
 	[Register("AppDelegate")]
 	public class AppDelegate : MauiUIApplicationDelegate

@@ -1,18 +1,23 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFrameworks>$(MauiPlatforms)</TargetFrameworks>
-    <RootNamespace>Comet.Samples</RootNamespace>
-    <AssemblyName>Comet.Samples</AssemblyName>
-    <UseMauiAssets>true</UseMauiAssets>
-    <UseMauiCore>true</UseMauiCore>
-    <UseMauiEssentials>true</UseMauiEssentials>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <NoWarn>1701;1702;0649;</NoWarn>
-  </PropertyGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />
-  </ItemGroup>
-  <Import Project="..\..\external\Maui\.nuspec\Microsoft.Maui.Controls.MultiTargeting.targets" />
-</Project>
 
+	<PropertyGroup>
+		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
+
+		<RootNamespace>Comet.Samples</RootNamespace>
+		<AssemblyName>Comet.Samples</AssemblyName>
+		<UseMaui>true</UseMaui>
+		<SingleProject>true</SingleProject>
+
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-maccatalyst'">14.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />
+	</ItemGroup>
+
+</Project>

@@ -5,13 +5,13 @@ using UWPListView = Microsoft.UI.Xaml.Controls.ListView;
 
 namespace Comet.Handlers
 {
-	public partial class ListViewHandler : ViewHandler<IListView, UWPListView>
+	public partial class ListViewHandler : ViewHandler<IListView, UWPListView>, IElementHandler
 	{
 
 
 		public static void MapListViewProperty(IElementHandler viewHandler, IListView virtualView)
 		{
-			setupView(viewHandler, virtualView);
+			//setupView(viewHandler, virtualView);
 		}
 
 		static void setupView(ListViewHandler viewHandler, IListView virtualView)
@@ -40,7 +40,7 @@ namespace Comet.Handlers
 		{
 			var nativeView = (UWPListView)viewHandler.NativeView;
 			nativeView.Items.Clear();
-			setupView(viewHandler, virtualView);
+			//setupView(viewHandler, virtualView);
 		}
 
 		protected override UWPListView CreateNativeView()

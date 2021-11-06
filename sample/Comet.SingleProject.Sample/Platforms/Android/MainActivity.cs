@@ -1,12 +1,10 @@
 ﻿using Android.App;
+using Android.Content.PM;
 using Microsoft.Maui;
 
-namespace Maui.Controls.Sample.SingleProject
+namespace CometSample
 {
-	[Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true)]
-	[IntentFilter(
-		new[] { Microsoft.Maui.Essentials.Platform.Intent.ActionAppAction },
-		Categories = new[] { global::Android.Content.Intent.CategoryDefault })]
+	[Activity(Theme = "@style/Maui.SplashTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation | ConfigChanges.UiMode | ConfigChanges.ScreenLayout | ConfigChanges.SmallestScreenSize)]
 	public class MainActivity : MauiAppCompatActivity
 	{
 	}

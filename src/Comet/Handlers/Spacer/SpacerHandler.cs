@@ -5,7 +5,7 @@ using Microsoft.Maui.Handlers;
 #if __IOS__
 
 using NativeView = UIKit.UIView;
-#elif MONOANDROID
+#elif ANDROID
 using NativeView = Android.Views.View;
 #elif WINDOWS
 using NativeView = Microsoft.UI.Xaml.Controls.Panel;
@@ -26,7 +26,7 @@ namespace Comet.Handlers
 		}
 
 		protected override NativeView CreateNativeView() =>
-#if MONOANDROID
+#if ANDROID
 			new NativeView(Context.ApplicationContext);
 #elif WINDOWS
 			new LayoutPanel();
