@@ -238,6 +238,7 @@ namespace Comet.Styles
 				var key = $"{container.Name}.{keyType}";
 				SetEnvironmentValue(null, control, key, sizing);
 			}
+			SetEnvironmentValue(null, typeof(HStack), nameof(IView.FlowDirection), FlowDirection.LeftToRight);
 			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Start);
 			setSizing(typeof(Text), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Start);
