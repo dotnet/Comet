@@ -16,6 +16,8 @@ namespace Comet.Styles
 
 		public ProgressBarStyle ProgressBar { get; set; } = new ProgressBarStyle();
 
+		public FlowDirection FlowDirection { get; set; } = System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
+
 		public TextStyle Label { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Label)
@@ -97,6 +99,10 @@ namespace Comet.Styles
 		{
 			if (view == null)
 				SetDefaultControlSizingForLayouts();
+			if (view == null)
+				View.SetGlobalEnvironment(nameof(IView.FlowDirection), FlowDirection);
+			else
+				view.SetEnvironment(nameof(IView.FlowDirection), FlowDirection);
 			ApplyButton(view);
 			ApplyNavbarStyles(view);
 			ApplyTextStyle(view, Label);
@@ -238,7 +244,6 @@ namespace Comet.Styles
 				var key = $"{container.Name}.{keyType}";
 				SetEnvironmentValue(null, control, key, sizing);
 			}
-			SetEnvironmentValue(null, typeof(HStack), nameof(IView.FlowDirection), FlowDirection.LeftToRight);
 			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Start);
 			setSizing(typeof(Text), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Start);
