@@ -16,7 +16,12 @@ namespace Comet.Android.Controls
 
 		public void SetRoot(View view)
 		{
-			(MauiContext.Context).GetFragmentManager()
+			if (!isAttached)
+			{
+				contentView = view;
+			}
+			else
+				(MauiContext.Context).GetFragmentManager()
 				.BeginTransaction()
 				.Replace(Id, new CometFragment(view, MauiContext))
 				.CommitAllowingStateLoss();
@@ -30,6 +35,16 @@ namespace Comet.Android.Controls
 				.AddToBackStack(view.Id)
 				.Replace(Id, new CometFragment(view, MauiContext))
 				.CommitAllowingStateLoss();
+		}
+		bool isAttached = false;
+		View contentView;
+		protected override void OnAttachedToWindow()
+		{
+			base.OnAttachedToWindow();
+			isAttached = true;
+			if(contentView != null)
+				SetRoot(contentView);
+			contentView = null;
 		}
 
 		public void Pop() =>
