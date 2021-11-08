@@ -18,6 +18,8 @@ namespace Comet.Styles
 
 		public FlowDirection FlowDirection { get; set; } = System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
 
+		public HorizontalAlignment HorizontalAlignment { get; set; } = System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? HorizontalAlignment.Trailing : HorizontalAlignment.Leading;
+
 		public TextStyle Label { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Label)
@@ -103,6 +105,13 @@ namespace Comet.Styles
 				View.SetGlobalEnvironment(nameof(IView.FlowDirection), FlowDirection);
 			else
 				view.SetEnvironment(nameof(IView.FlowDirection), FlowDirection);
+
+
+			if (view == null)
+				View.SetGlobalEnvironment(nameof(ITextAlignment.HorizontalTextAlignment), HorizontalAlignment);
+			else
+				view.SetEnvironment(nameof(ITextAlignment.HorizontalTextAlignment), HorizontalAlignment);
+
 			ApplyButton(view);
 			ApplyNavbarStyles(view);
 			ApplyTextStyle(view, Label);
