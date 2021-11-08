@@ -54,5 +54,9 @@ namespace Comet
 		}
 
 		bool IWindow.BackButtonClicked() => true;
+		void IWindow.Backgrounding(IPersistedState state)
+		{
+
+		}
 	}
 }

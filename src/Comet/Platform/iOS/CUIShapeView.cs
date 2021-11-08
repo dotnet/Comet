@@ -5,6 +5,7 @@ using UIKit;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics.Native;
+using ObjCRuntime;
 
 namespace Comet.iOS
 {

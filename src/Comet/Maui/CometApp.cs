@@ -4,6 +4,7 @@ using System.Linq;
 using Comet.Services;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
+using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
 
 namespace Comet
@@ -11,6 +12,7 @@ namespace Comet
 
 	public class CometApp : View, IApplication, IMauiContextHolder
 	{
+		const string MauiWindowIdKey = "__MAUI_WINDOW_ID__";
 		public CometApp()
 		{
 			CurrentApp = this;
@@ -44,5 +46,22 @@ namespace Comet
 		IMauiContext IMauiContextHolder.MauiContext { get; set; }
 
 		IReadOnlyList<IWindow> IApplication.Windows => windows;
+		void IApplication.OpenWindow(IWindow window)
+		{
+			if (window is CometWindow cwindow)
+				OpenWindow(cwindow);
+		}
+
+		public virtual void OpenWindow(CometWindow window)
+		{
+
+
+			var state = new PersistedState
+			{
+				[MauiWindowIdKey] = window.Id
+			};
+
+			ViewHandler?.Invoke(nameof(IApplication.OpenWindow), new OpenWindowRequest(State: state));
+		}
 	}
 }
