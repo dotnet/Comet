@@ -93,8 +93,8 @@
     <file src="src/Comet/bin/Debug/net6.0-android/Comet.pdb" target="lib/net6.0-android30.0/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.dll" target="lib/net6.0-maccatalyst13.5/Comet.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.pdb" target="lib/net6.0-maccatalyst13.5/Comet.pdb"/>
-    <!-- <file src="src/Comet/bin/Debug/net6.0-windows10.0.18362/Comet.dll" target="lib/net6.0-windows10.0.18362/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-windows10.0.18362/Comet.pdb" target="lib/net6.0-windows10.0.18362/Comet.pdb"/> -->
+    <file src="src/Comet/bin/Debug/net6.0-windows10.0.19041/Comet.dll" target="lib/net6.0-windows10.0.19041/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0-windows10.0.19041/Comet.pdb" target="lib/net6.0-windows10.0.19041/Comet.pdb"/>
     <file src="external/Maui/.nuspec/Microsoft.Maui.Controls.MultiTargeting.targets" target="build/Microsoft.Maui.Controls.MultiTargeting.targets" />
     <file src="src/Comet.SourceGenerator/bin/Debug/netstandard2.0/Comet.SourceGenerator.dll" target="analyzers/cs/Comet.SourceGenerator.dll"/>
     <file src="src/Comet.SourceGenerator/bin/Debug/netstandard2.0/Stubble.Core.dll" target="analyzers/cs/Stubble.Core.dll"/>
