@@ -16,7 +16,7 @@ jobs:
     env:
         NUPKG_MAJOR: 0.2
         BASE: 334
-    runs-on: windows-latest
+    runs-on: windows-2022
 
     steps: 
       - uses: actions/checkout@v2
