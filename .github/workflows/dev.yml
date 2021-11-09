@@ -41,7 +41,9 @@ jobs:
       #   run: powershell .\build\install-vs.ps1
       
       - name: Add msbuild to PATH
-        uses: microsoft/setup-msbuild@v1.0.2
+        uses: microsoft/setup-msbuild@v1.1.1
+        with:
+          vs-prerelease: true
         
       # - name: Add MSBuild to Path
       #   shell: pwsh
