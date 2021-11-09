@@ -17,6 +17,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<ProjectReference Include="..\..\src\Comet.Reload\Comet.Reload.csproj" />
 		<ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />
 	</ItemGroup>
 
