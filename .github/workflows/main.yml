@@ -11,64 +11,75 @@ on:
 jobs:
   build:
     name: Build Comet-Nuget
-    runs-on: windows-latest
+    env:
+        NUPKG_MAJOR: 0.2
+        BASE: 334
+    runs-on: windows-2022
 
-    steps:
+    steps: 
       - uses: actions/checkout@v2
         with:
           submodules: true
           
+      - uses: actions/setup-java@v2
+        with:
+          distribution: 'zulu' # See 'Supported distributions' for available options
+          java-version: '11'
+
       - name:  install .NET 
         shell: pwsh
         run: |
           $ProgressPreference = 'SilentlyContinue'
           Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
-          & .\dotnet-install.ps1 -Version 6.0.100-rc.2.21478.37 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
-          & dotnet --list-sdks   
-
-      - name: Install Visual Studio Preview
-        shell: pwsh
-        run: powershell .\build\install-vs.ps1
+          & .\dotnet-install.ps1 -Version 6.0.100 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+          & dotnet --list-sdks    
+              
+      # - name: Install Visual Studio Preview
+      #   shell: pwsh
+      #   run: powershell .\build\install-vs.ps1
       
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.1
+        with:
+          vs-prerelease: true
+        
+      # - name: Add MSBuild to Path
+      #   shell: pwsh
+      #   run: |
+      #     dotnet tool update -g dotnet-vs
+      #     & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       
-      - name: Add MSBuild to Path
-        shell: pwsh
-        run: |
-          dotnet tool update -g dotnet-vs
-          & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-          
+    
       - name: Install and Run maui-check Tool
         shell: pwsh
         run: |
           & dotnet tool update --global redth.net.maui.check
           & maui-check --skip dotnet --verbose --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
-
+          
       - name: Install Maui Workload
         shell: pwsh
         run: |
-          & dotnet workload update --from-rollback-file https://aka.ms/dotnet/maui/preview.9.json  --source https://aka.ms/dotnet6/nuget/index.json
-          & dotnet workload install maui --skip-manifest-update --source https://aka.ms/dotnet6/nuget/index.json
+          & dotnet workload install maui `
+            --from-rollback-file https://aka.ms/dotnet/maui/preview.10.json `
+            --source https://aka.ms/dotnet6/nuget/index.json `
+            --source https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-runtime-6f411658/nuget/v3/index.json `
+            --source https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-emsdk-1ec2e17f/nuget/v3/index.json `
+            --source https://api.nuget.org/v3/index.json
 
+
+
+     
       - name: Restore Comet-Nuget.sln
         run: dotnet restore build/Comet-Nuget.sln
 
       - name: Build Comet-Nuget.sln
         run: msbuild build/Comet-Nuget.sln
 
-      # - name: Restore Comet-Tests.sln
-      #   run: dotnet restore build/Comet-Tests.sln
-
-      # - name: Build Tests Project
-      #   run: msbuild tests/Comet.Tests/Comet.Tests.csproj /p:Configuration=Release
-        
-      # - name: Run Tests Project
-      #   run: dotnet test tests/Comet.Tests/Comet.Tests.csproj
-
       - name: Restore Comet-net6-Nuget.sln
-        run: dotnet restore build/Comet-net6-Nuget.sln
-
+        run: msbuild /r build/Comet-net6-Nuget.sln
+ 
       - name: Build Comet-net6-Nuget.sln
-        run: msbuild build/Comet-net6-Nuget.sln
+        run: MSBuild build/Comet-net6-Nuget.sln
         
       - name: Nuget Pack step
         shell: bash
