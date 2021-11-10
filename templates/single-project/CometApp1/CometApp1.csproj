@@ -53,7 +53,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <PackageReference Include="Clancey.Comet" Version="0.3.80-beta" />
+	  <PackageReference Include="Clancey.Comet" Version="0.3.415-beta" />
 	</ItemGroup>
 
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
