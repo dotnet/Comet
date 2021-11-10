@@ -18,8 +18,10 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<ProjectReference Include="..\..\src\Comet.Reload\Comet.Reload.csproj" />
 		<ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Clancey.Comet.Reload" Version="0.0.19" />
 	</ItemGroup>
 
 </Project>

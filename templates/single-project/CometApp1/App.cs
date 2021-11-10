@@ -23,6 +23,11 @@ namespace CometApp1
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                 });
+//-:cnd
+#if DEBUG
+			builder.EnableHotReload();
+#endif
+//+:cnd
             return builder.Build();
         }
     }

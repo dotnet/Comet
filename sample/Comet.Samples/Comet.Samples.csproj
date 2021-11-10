@@ -23,4 +23,10 @@
     <Folder Include="Views\" />
     <Folder Include="Graphics\" />
   </ItemGroup> 
+  <ItemGroup>
+    <None Remove="Clancey.Comet.Reload" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Clancey.Comet.Reload" Version="0.0.19" />
+  </ItemGroup>
 </Project>
