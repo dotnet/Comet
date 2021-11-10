@@ -27,30 +27,27 @@
         <dependency id="Xamarin.Google.Android.Material" version="1.3.0.1-net6preview03.4680155" exclude="Build,Analyzers" />
         <dependency id="Xamarin.Android.Glide" version="4.12.0" />
         <dependency id="Xamarin.AndroidX.Browser" version="1.3.0.5" />
-        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
-        <dependency id="Reloadify3000" version="1.0.6" />
+        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
       </group>
       <group targetFramework="Xamarin.iOS1.0">
         <dependency id="Microsoft.Maui.Graphics" version="6.0.100-rc.2.470" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
-        <dependency id="Reloadify3000" version="1.0.6" />
+        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
       </group>
       <group targetFramework=".NETStandard2.1">
         <dependency id="Microsoft.Maui.Graphics" version="6.0.100-rc.2.470" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="5.0.0" />
-        <dependency id="Microsoft.Extensions.Configuration" version="5.0.0" />
-        <dependency id="Reloadify3000" version="1.0.6" />
+        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.DependencyInjection" version="6.0.0" />
+        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
       </group>
       <group targetFramework="net6.0-android30.0">
       </group>
