@@ -7,7 +7,7 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using Microsoft.Maui.HotReload;
 
-namespace Comet
+namespace Comet.Reload
 {
 	public static partial class AppHostBuilderExtensions
 	{
