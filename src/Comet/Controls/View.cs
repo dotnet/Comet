@@ -176,7 +176,7 @@ namespace Comet
 				if (view != oldParentView)
 					oldParentView?.Dispose();
 				animations?.ForEach(x => x.Dispose());
-				ViewHandler?.SetVirtualView(view);
+				ViewHandler?.SetVirtualView(this);
 				ReloadHandler?.Reload();
 			}
 			finally
