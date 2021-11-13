@@ -5,6 +5,10 @@ using Microsoft.Maui;
 using Comet;
 //Property:NewPropertyName=DefaultValue
 [assembly: CometGenerate(typeof(ITextButton), nameof(ITextButton.Text), nameof(IButton.Clicked), ClassName = "Button", Namespace = "Comet")]
+//[assembly: CometGenerate(typeof(IImageButton), nameof(IImageButton.Source), nameof(IButton.Clicked), ClassName = "ImageButton", Namespace = "Comet")]
+//[assembly: CometGenerate(typeof(IBorder), BaseClass = "ContentView", Namespace = "Comet")]
+[assembly: CometGenerate(typeof(IIndicatorView),nameof(IIndicatorView.Count), ClassName = "IndicatorView", Namespace = "Comet")]
+[assembly: CometGenerate(typeof(IRefreshView), nameof(IRefreshView.IsRefreshing), ClassName = "RefreshView", Namespace = "Comet")]
 [assembly: CometGenerate(typeof(ILabel), $"{nameof(ILabel.Text)}:Value", Namespace = "Comet", ClassName = "Text", DefaultValues = new[] { "MaxLines = 1" }, Skip = new[] { $"{nameof(ITextAlignment.HorizontalTextAlignment)}", $"{nameof(ITextAlignment.VerticalTextAlignment)}" })]
 
 [assembly: CometGenerate(typeof(IEntry), nameof(IEntry.Text), nameof(IEntry.Placeholder), nameof(IEntry.Completed), ClassName = "SecureField", Namespace = "Comet", Skip = new[] { $"{nameof(IEntry.IsPassword)}= true" })]
