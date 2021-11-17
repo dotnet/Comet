@@ -64,9 +64,6 @@ namespace Comet
 			ViewHandler?.Invoke(nameof(IApplication.OpenWindow), new OpenWindowRequest(State: state));
 		}
 
-		void IApplication.CloseWindow(IWindow window)
-		{
-
-		}
-}
+		void IApplication.CloseWindow(IWindow window) => ViewHandler?.Invoke(nameof(IApplication.CloseWindow), window);
+	}
 }
