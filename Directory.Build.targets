@@ -1,6 +1,6 @@
 <Project>
   <PropertyGroup>
-	  <MauiVersion>6.0.101-preview.11.2117</MauiVersion>
+	  <CometMauiVersion>6.0.101-preview.11.2180</CometMauiVersion>
   </PropertyGroup>
   <Import Project="External\Maui\eng\AndroidX.targets" />
   <Import Project="External\Maui\eng\Microsoft.Extensions.targets" />

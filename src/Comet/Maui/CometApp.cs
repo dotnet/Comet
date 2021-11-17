@@ -34,7 +34,7 @@ namespace Comet
 			{
 				MauiContext = activationState.Context,
 				Content = this,
-			}) ;
+			});
 			return CurrentWindow;
 		}
 
@@ -63,5 +63,10 @@ namespace Comet
 
 			ViewHandler?.Invoke(nameof(IApplication.OpenWindow), new OpenWindowRequest(State: state));
 		}
-	}
+
+		void IApplication.CloseWindow(IWindow window)
+		{
+
+		}
+}
 }
