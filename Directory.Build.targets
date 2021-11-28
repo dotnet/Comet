@@ -1,9 +1,9 @@
 <Project>
   <PropertyGroup>
-	  <CometMauiVersion>6.0.101-preview.11.694</CometMauiVersion>
+	  <CometMauiVersion>6.0.101-preview.11.8896</CometMauiVersion>
   </PropertyGroup>
   <Import Project="External\Maui\eng\AndroidX.targets" />
-  <Import Project="External\Maui\eng\Microsoft.Extensions.targets" />
+  <Import Project="External\Maui\eng\Versions.props" />
   <!-- Fancy file adding/removing based on .platform -->
   <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net6.0-ios')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true ">
     <Compile Remove="**\**\*.iOS.cs" />
