@@ -21,7 +21,7 @@ namespace Comet.Samples
 					fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
 				});
 #if DEBUG
-			builder.EnableHotReload();
+			//builder.EnableHotReload();
 #endif
 
 			return builder.Build();
