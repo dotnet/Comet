@@ -1,14 +1,14 @@
 <img src="https://repobeats.axiom.co/api/embed/f917a77cbbdeee19b87fa1f2f932895d1df18b56.svg" />
 
-# Comet ☄️ 
+# Comet ☄️
 
 [![dev-build](https://github.com/dotnet/Comet/actions/workflows/dev.yml/badge.svg)](https://github.com/dotnet/Comet/actions/workflows/dev.yml)  [![Clancey.Comet on fuget.org](https://www.fuget.org/packages/Clancey.Comet/badge.svg)](https://www.fuget.org/packages/Clancey.Comet)
 [Chat on Discord](https://discord.gg/7Ms7ptM)
 
 
-What is Comet? Comet is a prototype for a new UI Framework/Pattern to write app UI.  It follows the Model View Update (MVU) pattern. It magically databinds for you!  
+What is Comet? Comet is a modern way of writing cross-platform UIs. Based on [.Net MAUI](https://docs.microsoft.com/en-us/dotnet/maui/what-is-maui), it follows the Model View Update (MVU) pattern and magically databinds for you!
 
-Video Preview:
+Watch this video to get a preview of the developer experience:
 
 [![Video Demo](http://img.youtube.com/vi/-Ieg9UadN8s/0.jpg)](http://www.youtube.com/watch?v=-Ieg9UadN8s)
 
@@ -18,11 +18,11 @@ When you're ready to take a ride on the comet, head over to the wiki and follow 
 
 ## Key Concepts
 
-Comet is an MVU style pattern:
+Comet is based on the MVU architecture:
 
 ![MVU pattern](art/mvu-pattern.png)
 
-`View` is a screen. Views have a `Body` method that you can assign either by an attribute `[Body]`:
+`View` is a screen. Views have a `Body` method that you can assign either by using an attribute `[Body]`:
 
 ``` cs
 public class MyPage : View {
@@ -31,7 +31,7 @@ public class MyPage : View {
 }
 ```
 
-or:
+Or manually from your constructor:
 
 ``` cs
 public class MyPage : View {
@@ -44,11 +44,12 @@ public class MyPage : View {
 
 ## Hot Reload
 
-Hot Reload is included by default! The setup is very easy: a Visual Studio extension and a NuGet. Download both from [Releases](https://github.com/Clancey/Comet/releases) here on GitHub.
+Using Hot Reload is the fastest way to develop your user interface.
 
-Download and install the VS extension from the [Releases](https://github.com/Clancey/Comet/releases/)
-
-Then add to your `AppDelegate.cs` and/or `MainActivity.cs`, or similar. See the sample projects here for examples.
+The setup is simple and only requires a few steps:
+1. Install the Visual Studio extension `Comet.Reload` from [Releases](https://github.com/dotnet/Comet/releases) (or [Comet for .Net Mobile](https://marketplace.visualstudio.com/items?itemName=Clancey.comet-debug) if you use Visual Studio Code)
+2. Install the [Comet project template](https://www.nuget.org/packages/Clancey.Comet.Templates.Multiplatform) available on Nuget.
+3. Add this short snippet to your `AppDelegate.cs` and/or `MainActivity.cs`, or equivalent.
 
 ``` cs
 #if DEBUG
@@ -56,6 +57,7 @@ Comet.Reload.Init();
 #endif
 ```
 
+ See the sample projects [here](https://github.com/dotnet/Comet/tree/dev/sample) for examples.
 
 ## State
 
@@ -75,7 +77,7 @@ class MyPage : View {
 
 ### 2. Do you want to use more complex data types?
 
-You can either implement [INotifyPropertyRead](https://github.com/Clancey/Comet/blob/master/src/Comet/BindingObject.cs#L13) or you can use [BindingObject](https://github.com/Clancey/Comet/blob/master/src/Comet/BindingObject.cs) to make it even simpler.
+You can either implement [INotifyPropertyRead](https://github.com/Clancey/Comet/blob/master/src/Comet/BindingObject.cs#L13) or you can use [BindingObject](https://github.com/Clancey/Comet/blob/master/src/Comet/BindingObject.cs) to make it even simpler.
 
 Add it as a Field/Property, and add the `[State]` attribute!
 
@@ -103,7 +105,7 @@ public class MainPage : View {
 
 ### How do I use the State?
 
-Simply update the stateful value and the framework handles the rest. 
+Simply update the stateful value and the framework handles the rest.
 
 ``` cs
 public class MyPage : View {
@@ -113,7 +115,7 @@ public class MyPage : View {
 
     public MyPage() {
         Body = () => new VStack {
-            new Text (text),			
+            new Text (text),
             new Button("Update Text", () => state.Text = $"Click Count: {clickCount.Value++}")
         };
 
@@ -121,7 +123,7 @@ public class MyPage : View {
 }
 ```
 
-That is all!, now when the Text Changes everything updates. 
+That is all!, now when the Text Changes everything updates.
 
 ### What if I want to format my value without an extra state property?
 
@@ -147,15 +149,17 @@ public class MyPage : View {
 ```
 
 
-## What platforms are being targeted?
+## What platforms are supported?
 
-* iOS
+Comet is developped on top of .Net MAUI handlers, providing its own implementation for interfaces such as `Microsoft.Maui.IButton` and other controls. Any platform supported by .Net MAUI can be targeted:
+
+* Windows
 * Android
-* UWP
-* WPF
-* Mac OS
-* Xamarin.Forms - all Forms targets: Linux, macOS, Tizen, WPF, and of course Android, iOS, UWP.
+* iOS
+* macOS
 * Blazor
+
+Non-MAUI application models, such as UWP or WPF, aren't supported.
 
 # Disclaimer
 
