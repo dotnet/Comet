@@ -121,7 +121,7 @@
       <Version>1.4.0.4</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.AndroidX.Legacy.Support.V4">
-      <Version>1.0.0.7</Version>
+      <Version>1.0.0.10</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.34" />
     <PackageReference Include="Xamarin.FFImageLoading" Version="2.4.11.982" />
