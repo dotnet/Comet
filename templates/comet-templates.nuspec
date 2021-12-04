@@ -5,7 +5,7 @@
         <title>Comet Template Pack</title>
         <version>0.3.415-beta</version>
         <authors>James Clancey</authors>
-        <description>Templates for building iOS apps with Comet.</description>
+        <description>Templates for building Android, iOS, and macOS application with Comet.</description>
         <projectUrl>https://github.com/Clancey/Comet</projectUrl>
         <licenseUrl>https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm</licenseUrl>
         <iconUrl>https://xamarin.com/content/images/nuget/xamarin.png</iconUrl>
