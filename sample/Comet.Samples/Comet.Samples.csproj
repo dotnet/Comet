@@ -14,6 +14,9 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
+    <PackageReference Include="Reloadify3000">
+      <Version>1.0.8</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Models\" />
@@ -23,10 +26,4 @@
     <Folder Include="Views\" />
     <Folder Include="Graphics\" />
   </ItemGroup> 
-  <ItemGroup>
-    <None Remove="Clancey.Comet.Reload" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Clancey.Comet.Reload" Version="0.0.19" />
-  </ItemGroup>
 </Project>

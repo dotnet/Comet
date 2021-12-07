@@ -76,7 +76,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Reloadify3000">
-      <Version>1.0.4</Version>
+      <Version>1.0.8</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.Maui.Graphics" Version="6.0.100-preview.3.34" />
     <PackageReference Include="Microsoft.Maui.Graphics" Version="$(MicrosoftMauiGraphicsVersion)" />

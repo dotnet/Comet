@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<MauiVersion>$(CometMauiVersion)</MauiVersion>
+		<MauiVersion>6.0.101-preview.12.2336</MauiVersion>
 		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
 
@@ -21,7 +21,6 @@
 		<ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-		<PackageReference Include="Clancey.Comet.Reload" Version="0.0.19" />
+		<PackageReference Include="Reloadify3000" Version="1.0.8" />
 	</ItemGroup>
-
 </Project>

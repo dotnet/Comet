@@ -62,7 +62,7 @@
 	</PropertyGroup>
 	
 	<ItemGroup>
-		<PackageReference Include="Clancey.Comet.Reload" Version="0.0.19" />
+		<PackageReference Include="Reloadify3000" Version="1.0.8" />
 	</ItemGroup>
 	
 </Project>
