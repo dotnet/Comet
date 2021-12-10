@@ -6,7 +6,7 @@
 [Chat on Discord](https://discord.gg/7Ms7ptM)
 
 
-What is Comet? Comet is a modern way of writing cross-platform UIs. Based on [.Net MAUI](https://docs.microsoft.com/en-us/dotnet/maui/what-is-maui), it follows the Model View Update (MVU) pattern and magically databinds for you!
+What is Comet? Comet is a modern way of writing cross-platform UIs. Based on [.NET MAUI](https://docs.microsoft.com/en-us/dotnet/maui/what-is-maui), it follows the Model View Update (MVU) pattern and magically databinds for you!
 
 Watch this video to get a preview of the developer experience:
 
@@ -14,7 +14,7 @@ Watch this video to get a preview of the developer experience:
 
 ## Getting Started
 
-When you're ready to take a ride on the comet, head over to the wiki and follow the [Getting Started](https://github.com/Clancey/Comet/wiki/Getting-Started) guide.
+When you're ready to take a ride on the Comet, head over to the wiki and follow the [Getting Started](https://github.com/Clancey/Comet/wiki/Getting-Started) guide.
 
 ## Key Concepts
 
@@ -47,8 +47,8 @@ public class MyPage : View {
 Using Hot Reload is the fastest way to develop your user interface.
 
 The setup is simple and only requires a few steps:
-1. Install the Visual Studio extension `Comet.Reload` from [Releases](https://github.com/dotnet/Comet/releases) (or [Comet for .Net Mobile](https://marketplace.visualstudio.com/items?itemName=Clancey.comet-debug) if you use Visual Studio Code)
-2. Install the [Comet project template](https://www.nuget.org/packages/Clancey.Comet.Templates.Multiplatform) available on Nuget.
+1. Install the Visual Studio extension `Comet.Reload` from [Releases](https://github.com/dotnet/Comet/releases) (or [Comet for .NET Mobile](https://marketplace.visualstudio.com/items?itemName=Clancey.comet-debug) if you use Visual Studio Code)
+2. Install the [Comet project template](https://www.nuget.org/packages/Clancey.Comet.Templates.Multiplatform) available on NuGet.
 3. Add this short snippet to your `AppDelegate.cs` and/or `MainActivity.cs`, or equivalent.
 
 ``` cs
@@ -101,7 +101,7 @@ public class MainPage : View {
 
 ```
 
-`INotifyPropertyRead` is just like `INotifyPropertyChanged`. Just call `PropertyRead` whenever a property Getter is called. And `PropertyChanged` whenever a property Value changes.
+`INotifyPropertyRead` is just like `INotifyPropertyChanged`. Just call `PropertyRead` whenever a property getter is called. And `PropertyChanged` whenever a property value changes.
 
 ### How do I use the State?
 
@@ -123,7 +123,7 @@ public class MyPage : View {
 }
 ```
 
-That is all!, now when the Text Changes everything updates.
+That is all!, now when the text changes everything updates.
 
 ### What if I want to format my value without an extra state property?
 
@@ -151,7 +151,7 @@ public class MyPage : View {
 
 ## What platforms are supported?
 
-Comet is developped on top of .Net MAUI handlers, providing its own implementation for interfaces such as `Microsoft.Maui.IButton` and other controls. Any platform supported by .Net MAUI can be targeted:
+Comet is developed on top of .NET MAUI handlers, providing its own implementation for interfaces such as `Microsoft.Maui.IButton` and other controls. Any platform supported by .NET MAUI can be targeted:
 
 * Windows
 * Android
@@ -159,8 +159,8 @@ Comet is developped on top of .Net MAUI handlers, providing its own implementati
 * macOS
 * Blazor
 
-Non-MAUI application models, such as UWP or WPF, aren't supported.
+Non-MAUI application models, such as UWP or WPF, are not supported.
 
 # Disclaimer
 
-Comet is a **proof of concept**. There is **no** official support. Use at your own Risk.
+Comet is a **proof of concept**. There is **no** official support. Use at your own risk.
