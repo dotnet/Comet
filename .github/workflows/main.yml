@@ -60,7 +60,7 @@ jobs:
         shell: pwsh
         run: |
           & dotnet workload install android ios maccatalyst tvos macos maui wasm-tools `
-            --from-rollback-file https://aka.ms/dotnet/maui/main.json `
+            --from-rollback-file https://aka.ms/dotnet/maui/preview.11.json  `
             --source https://aka.ms/dotnet6/nuget/index.json `
             --source https://api.nuget.org/v3/index.json
 
