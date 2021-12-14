@@ -758,7 +758,7 @@ namespace Comet
 
 		IShadow IView.Shadow => this.GetEnvironment<IShadow>(nameof(IView.Shadow));
 
-		int IView.ZIndex => this.GetEnvironment<int?>(nameof(IView.ZIndex)) ?? 0;
+		//int IView.ZIndex => this.GetEnvironment<int?>(nameof(IView.ZIndex)) ?? 0;
 
 		Size IView.Arrange(Rectangle bounds)
 		{
