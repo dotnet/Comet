@@ -40,6 +40,11 @@
 		<ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />
 		<ProjectReference Include="..\Comet.Samples\Comet.Samples-net6.csproj" />
 	</ItemGroup>
+	<ItemGroup>
+	  <None Update="Resources\Images\turtlerock.jpg">
+	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  </None>
+	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>

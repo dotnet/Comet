@@ -137,5 +137,8 @@ namespace Comet
 			return view.FindParentOfType<IMauiContextHolder>()?.MauiContext ?? CometApp.MauiContext;
 		}
 
+		public static T Aspect<T>(this T image, Aspect aspect) where T : Image =>
+			image.SetEnvironment(nameof(Aspect), aspect);
+
 	}
 }
