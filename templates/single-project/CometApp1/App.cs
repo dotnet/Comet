@@ -1,34 +1,23 @@
-using System;
-using System.Linq;
-using Comet.Graphics;
-using Microsoft.Maui;
-using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Hosting;
-using System.Collections.Generic;
-using Comet;
-using System.IO;
 
-namespace CometApp1
+namespace CometApp1;
+public class App : CometApp
 {
-    public class App : CometApp
-    {
-        [Body]
-        View view() => new MainPage();
+	[Body]
+	View view() => new MainPage();
 
-        public static MauiApp CreateMauiApp()
-        {
-            var builder = MauiApp.CreateBuilder();
-            builder.UseCometApp<App>()
-                .ConfigureFonts(fonts =>
-                {
-                    fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
-                });
-//-:cnd
+	public static MauiApp CreateMauiApp()
+	{
+		var builder = MauiApp.CreateBuilder();
+		builder.UseCometApp<App>()
+			.ConfigureFonts(fonts => {
+				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+			});
+		//-:cnd
 #if DEBUG
 			builder.EnableHotReload();
 #endif
-//+:cnd
-            return builder.Build();
-        }
-    }
+		//+:cnd
+		return builder.Build();
+	}
 }

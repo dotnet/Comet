@@ -15,15 +15,6 @@ using Microsoft.Maui;
 [assembly: AssemblyMetadata("IsTrimmable", "True")]
 namespace Comet
 {
-	//public static class Reload
-	//{
-	//    public static Task<bool> Init(string ideIP = null, int idePort = Constants.DEFAULT_PORT)
-	//    {
-	//        Reloadify.Reload.Instance.ReplaceType = (d) => MauiHotReloadHelper.RegisterReplacedView(d.ClassName, d.Type);
-	//        Reloadify.Reload.Instance.FinishedReload = () => MauiHotReloadHelper.TriggerReload();
-	//        return Reloadify.Reload.Init(ideIP, idePort);
-	//    }
-	//}
 	public static partial class Reload
 	{
 		public static MauiAppBuilder EnableHotReload(this MauiAppBuilder builder, string? ideIp = null, int idePort = Constants.DEFAULT_PORT)

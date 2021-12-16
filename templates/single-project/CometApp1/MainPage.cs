@@ -1,23 +1,14 @@
-using System;
-using System.Collections.Generic;
-
-using System.Text;
-using Microsoft.Maui;
-using Microsoft.Maui.Graphics;
-using Comet;
-
-namespace CometApp1
+namespace CometApp1;
+public class MainPage : View
 {
-	public class MainPage : View
-	{
 
-		[State]
-		readonly CometRide comet = new();
+	[State]
+	readonly CometRide comet = new();
 
-		[Body]
-		View body()
-			=> new VStack {
-				new Text(()=> $"({comet.Rides}) rides taken:{comet.CometTrain}")   
+	[Body]
+	View body()
+		=> new VStack {
+				new Text(()=> $"({comet.Rides}) rides taken:{comet.CometTrain}")
 					.Frame(width:300)
 					.LineBreakMode(LineBreakMode.CharacterWrap),
 
@@ -30,24 +21,24 @@ namespace CometApp1
 					.Background(Colors.Green)
 				.RoundedBorder(color:Colors.Blue)
 				.Shadow(Colors.Grey,4,2,2),
-			};
+		};
 
-		public class CometRide : BindingObject
+	public class CometRide : BindingObject
+	{
+		public int Rides
 		{
-			public int Rides
-			{
-				get => GetProperty<int>();
-				set => SetProperty(value);
-			}
+			get => GetProperty<int>();
+			set => SetProperty(value);
+		}
 
-			public string CometTrain
+		public string CometTrain
+		{
+			get
 			{
-				get
-				{
-					return "☄️".Repeat(Rides);
-				}
+				return "☄️".Repeat(Rides);
 			}
 		}
 	}
 }
+
 
