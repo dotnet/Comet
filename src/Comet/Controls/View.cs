@@ -149,6 +149,10 @@ namespace Comet
 		}
 		View builtView;
 		public View BuiltView => builtView?.BuiltView ?? builtView;
+		/// <summary>
+		/// This will reload the view, forcing a build/diff.
+		/// Bindings are more efficient. But this works with any data models.
+		/// </summary>
 		public void Reload() => Reload(false);
 		internal virtual void Reload(bool isHotReload) => ResetView(isHotReload);
 		void ResetView(bool isHotReload = false)
