@@ -3,7 +3,7 @@
     <metadata>
         <id>Clancey.Comet.Templates.Multiplatform</id>
         <title>Comet Template Pack</title>
-        <version>0.3.417-beta</version>
+        <version>0.3.418-beta</version>
         <authors>James Clancey</authors>
         <description>Templates for building Android, iOS, and macOS application with Comet.</description>
         <projectUrl>https://github.com/Clancey/Comet</projectUrl>
