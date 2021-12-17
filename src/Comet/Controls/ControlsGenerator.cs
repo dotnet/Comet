@@ -11,7 +11,7 @@ using Comet;
 [assembly: CometGenerate(typeof(IRefreshView), nameof(IRefreshView.IsRefreshing), ClassName = "RefreshView", Namespace = "Comet")]
 [assembly: CometGenerate(typeof(ILabel), $"{nameof(ILabel.Text)}:Value", Namespace = "Comet", ClassName = "Text", DefaultValues = new[] { "MaxLines = 1" }, Skip = new[] { $"{nameof(ILabel.TextColor)}:{EnvironmentKeys.Colors.Color}", $"{nameof(ITextAlignment.HorizontalTextAlignment)}", $"{nameof(ITextAlignment.VerticalTextAlignment)}" })]
 
-[assembly: CometGenerate(typeof(IEntry), nameof(IEntry.Text), nameof(IEntry.Placeholder), nameof(IEntry.Completed), ClassName = "SecureField", Skip = new[] { $"{nameof(ITextStyle.TextColor)}:{EnvironmentKeys.Colors.Color}" }, DefaultValues =new[] {$"{nameof(ITextInput.MaxLength)}=-1"}, Namespace = "Comet", Skip = new[] { $"{nameof(IEntry.IsPassword)}= true" })]
+[assembly: CometGenerate(typeof(IEntry), nameof(IEntry.Text), nameof(IEntry.Placeholder), nameof(IEntry.Completed), ClassName = "SecureField", Skip = new[] { $"{nameof(ITextStyle.TextColor)}:{EnvironmentKeys.Colors.Color}" , $"{nameof(IEntry.IsPassword)}= true"}, DefaultValues =new[] {$"{nameof(ITextInput.MaxLength)}=-1"}, Namespace = "Comet")]
 [assembly: CometGenerate(typeof(IActivityIndicator), Namespace ="Comet", Skip = new[] { $"{nameof(IActivityIndicator.IsRunning)}=true" })]
 [assembly: CometGenerate(typeof(ICheckBox),  nameof(ICheckBox.IsChecked), Namespace = "Comet")]
 [assembly: CometGenerate(typeof(IDatePicker), nameof(IDatePicker.Date), nameof(IDatePicker.MinimumDate), nameof(IDatePicker.MaximumDate), Namespace = "Comet")]
