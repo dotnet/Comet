@@ -65,7 +65,7 @@ namespace Comet.Samples
 							.Color(Colors.Black)
 					}.Margin(left:30, bottom:30).Frame(height: 20),
 
-				}.RoundedBorder(radius: 8, color: "#3177CB", filled: true).Margin(30)
+				}.RoundedBorder(radius: 8, color: Color.FromHex("#3177CB"), filled: true).Margin(30)
 			}.Background("#f6f6f6"),
 
 			new BorderedEntry(Card.Number,"Enter CC Number", "\uf09d")
