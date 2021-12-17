@@ -17,7 +17,7 @@ using Comet;
 [assembly: CometGenerate(typeof(IDatePicker), nameof(IDatePicker.Date), nameof(IDatePicker.MinimumDate), nameof(IDatePicker.MaximumDate), Namespace = "Comet")]
 [assembly: CometGenerate(typeof(IProgress), $"{nameof(IProgress.Progress)}:Value", ClassName = "ProgressBar", Namespace = "Comet")]
 //[assembly: CometGenerate(typeof(IRadioButton), nameof(IRadioButton.IsChecked), Namespace = "Comet")]
-[assembly: CometGenerate(typeof(ISearchBar), nameof(ISearchBar.Text),$"{nameof(ISearchBar.SearchButtonPressed)}:Search", Namespace = "Comet")]
+[assembly: CometGenerate(typeof(ISearchBar), nameof(ISearchBar.Text),$"{nameof(ISearchBar.SearchButtonPressed)}:Search", Skip = new[] { $"{nameof(ITextStyle.TextColor)}:{EnvironmentKeys.Colors.Color}" }, DefaultValues = new[] { $"{nameof(ITextInput.MaxLength)}=-1" }, Namespace = "Comet")]
 [assembly: CometGenerate(typeof(IEditor), nameof(IEditor.Text), Skip = new[] { $"{nameof(ITextStyle.TextColor)}:{EnvironmentKeys.Colors.Color}" }, DefaultValues = new[] { $"{nameof(ITextInput.MaxLength)}=-1" }, ClassName="TextEditor", Namespace = "Comet")]
 [assembly: CometGenerate(typeof(IEntry), nameof(IEntry.Text), nameof(IEntry.Placeholder), nameof(IEntry.Completed), Skip = new[] { $"{nameof(ITextStyle.TextColor)}:{EnvironmentKeys.Colors.Color}" }, DefaultValues = new[] { $"{nameof(ITextInput.MaxLength)}=-1" }, ClassName="TextField", Namespace = "Comet")]
 [assembly: CometGenerate(typeof(ISlider), nameof(ISlider.Value),$"{nameof(ISlider.Minimum)}=0", $"{nameof(ISlider.Maximum)}=1", Namespace = "Comet")]
