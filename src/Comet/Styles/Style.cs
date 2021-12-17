@@ -256,8 +256,12 @@ namespace Comet.Styles
 			//Make everything editable by default
 			View.SetGlobalEnvironment(nameof(ITextInput.MaxLength), -1);
 
+			//HStack and VStack fill by default
 			SetEnvironmentValue(null, typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			SetEnvironmentValue(null, typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
+			//Unless they are in anothe stack. Then it should default to start
+			setSizing(typeof(HStack), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Start);
+			setSizing(typeof(VStack), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Start);
 
 			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Start);
