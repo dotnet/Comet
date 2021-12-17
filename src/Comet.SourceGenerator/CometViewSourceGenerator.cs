@@ -126,18 +126,18 @@ namespace {{NameSpace}} {
 		{
 			var interfacePropertyEnvironmentMustache = @"
                 {{{Type}}} {{FullName}} {
-                        get => this.GetEnvironment<{{{CleanType}}}>(nameof({{FullName}})) ?? {{DefaultValue}};
-                        set => this.SetEnvironment(nameof({{FullName}}), value);
+                        get => this.GetEnvironment<{{{CleanType}}}>(""{{Name}}"") ?? {{DefaultValue}};
+                        set => this.SetEnvironment(""{{Name}}"", value);
                 }
 ";
 			var interfacePropertySetOnlyEnvironmentMustache = @"
                 {{{Type}}} {{FullName}} {
-                        set => this.SetEnvironment(nameof({{FullName}}), value);
+                        set => this.SetEnvironment(""{{Name}}"", value);
                 }
 ";
 
 			var interfacePropertyGetOnlyEnvironmentMustache = @"
-                {{{Type}}} {{FullName}} => this.GetEnvironment<{{{CleanType}}}>(nameof({{FullName}})) ?? {{DefaultValue}};
+                {{{Type}}} {{FullName}} => this.GetEnvironment<{{{CleanType}}}>(""{{Name}}"") ?? {{DefaultValue}};
 ";
 
 			var interfacePropertyMustache = @"
@@ -159,7 +159,7 @@ namespace {{NameSpace}} {
 ";
 			var interfacePropertyMethodEnvironmentMustache = @"
 
-				void {{FullName}} ({{{ActionsParameters}}}) => this.GetEnvironment<{{{CleanType}}}>(nameof({{FullName}}))?.Invoke({{{ActionsInvokeParameters}}});
+				void {{FullName}} ({{{ActionsParameters}}}) => this.GetEnvironment<{{{CleanType}}}>(""{{Name}}"")?.Invoke({{{ActionsInvokeParameters}}});
 ";
 
 			var interfacePropertyMethodMustache = @"
@@ -287,7 +287,6 @@ namespace {{NameSpace}} {
 					}
 
 					var cleanType = canBeNull ? type : $"{type}?";
-
 					if (keyProperties.Contains(m.Name))
 					{
 						constructorTypes[m.Name] = type;
