@@ -253,11 +253,14 @@ namespace Comet.Styles
 				var key = $"{container.Name}.{keyType}";
 				SetEnvironmentValue(null, control, key, sizing);
 			}
+			//Make everything editable by default
+			View.SetGlobalEnvironment(nameof(ITextInput.MaxLength), -1);
 			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(Text), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Start);
 			setSizing(typeof(Text), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Start);
 			setSizing(typeof(Text), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(TextField), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
+			setSizing(typeof(TextEditor), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(Slider), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
