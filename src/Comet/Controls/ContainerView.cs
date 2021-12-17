@@ -10,7 +10,16 @@ namespace Comet
 	{
 		readonly protected List<View> Views = new List<View>();
 
-
+		public void Add(IEnumerable<View> views)
+		{
+			foreach (var v in views)
+				Add(v);
+		}
+		public void Add(IEnumerable<IView> views)
+		{
+			foreach (var v in views)
+				Add(v);
+		}
 		public void Add(IView iView)
 		{
 			//TODO: Add wrapper
