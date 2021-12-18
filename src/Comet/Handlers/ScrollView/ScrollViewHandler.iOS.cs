@@ -22,7 +22,7 @@ namespace Comet.Handlers
 
 		void Arange(Rectangle rect)
 		{
-			var measuredSize = VirtualView.Content.Measure(float.PositiveInfinity, float.PositiveInfinity);
+			var measuredSize = VirtualView?.Content?.Measure(float.PositiveInfinity, float.PositiveInfinity) ?? Size.Zero;
 			//Make sure we at least fit the scroll view
 			measuredSize.Width = Math.Max(measuredSize.Width, rect.Width);
 			measuredSize.Height = Math.Max(measuredSize.Height, rect.Height);
