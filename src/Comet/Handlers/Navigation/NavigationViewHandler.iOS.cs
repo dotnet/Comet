@@ -28,7 +28,7 @@ namespace Comet.Handlers
 				}
 
 				toView.Navigation = nav;
-				var newVc = toView.ToUIViewController(MauiContext);
+				var newVc = new Comet.iOS.CometViewController { MauiContext = MauiContext, CurrentView = toView };
 				navigationController.PushViewController(newVc, true);
 			});
 			nav.SetPerformPop(() => navigationController.PopViewController(true));
