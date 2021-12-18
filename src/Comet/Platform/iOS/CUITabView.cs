@@ -21,7 +21,7 @@ namespace Comet.iOS
 				return;
 			}
 			var controllers = views.Select(x
-				=> new Tuple<View, UIViewController>(x, new CometViewController { MauiContext = Context, CurrentView = x }).ToList();
+				=> new Tuple<View, UIViewController>(x, new CometViewController { MauiContext = Context, CurrentView = x })).ToList();
 			foreach (var pair in controllers)
 			{
 				var title = pair.Item1.GetEnvironment<string>(EnvironmentKeys.TabView.Title);
