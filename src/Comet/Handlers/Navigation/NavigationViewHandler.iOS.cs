@@ -11,7 +11,7 @@ namespace Comet.Handlers
 		UIViewController INativeViewHandler.ViewController => viewController;
 		protected override UIView CreateNativeView()
 		{
-			var vc = VirtualView.Content.ToUIViewController(MauiContext);
+			var vc = new Comet.iOS.CometViewController { MauiContext = MauiContext, CurrentView = VirtualView.Content };
 			var nav = VirtualView;
 			if (nav.Navigation != null)
 			{
