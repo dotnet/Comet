@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Comet.Internal;
 using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
@@ -139,6 +140,39 @@ namespace Comet
 
 		public static T Aspect<T>(this T image, Aspect aspect) where T : Image =>
 			image.SetEnvironment(nameof(Aspect), aspect);
+
+		public static T Opacity<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.Opacity), value);
+
+		public static T Background<T>(this T view, Paint value) where T : View =>
+			view.SetEnvironment(nameof(IView.Background), value,false);
+
+		public static T TranslationX<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.TranslationX), value,false);
+
+		public static T TranslationY<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.TranslationY), value, false);
+
+		public static T Scale<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.Scale), value, false);
+		public static T ScaleX<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.ScaleX), value, false);
+		public static T ScaleY<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.ScaleY), value, false);
+
+
+		public static T Rotation<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.Rotation), value, false);
+		public static T RotationX<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.RotationX), value, false);
+		public static T RotationY<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.RotationY), value, false);
+
+
+		public static T AnchorX<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.AnchorX), value, false);
+		public static T AnchorY<T>(this T view, double value) where T : View =>
+			view.SetEnvironment(nameof(IView.AnchorY), value, false);
 
 	}
 }
