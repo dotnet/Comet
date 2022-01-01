@@ -197,6 +197,13 @@ namespace Comet
 			return sizing ?? defaultSizing;
 		}
 
+		public static T VerticalLayoutAlignment<T>(this T view, LayoutAlignment alignment, bool cascades = false) where T : View
+			=> view.SetEnvironment(EnvironmentKeys.Layout.VerticalLayoutAlignment, alignment,cascades);
+
+		public static T HorizontalLayoutAlignment<T>(this T view, LayoutAlignment alignment, bool cascades = false) where T : View
+			=> view.SetEnvironment(EnvironmentKeys.Layout.HorizontalLayoutAlignment, alignment, cascades);
+
+
 		public static T FrameConstraints<T>(this T view, FrameConstraints constraints, bool cascades = false) where T : View
 		{
 			view.SetEnvironment(EnvironmentKeys.Layout.FrameConstraints, constraints, cascades);
