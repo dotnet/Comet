@@ -49,5 +49,7 @@
 	<array>
 		<string>com.microsoft.maui.sample.default</string>
 	</array>
+	<key>LSMinimumSystemVersion</key>
+	<string>13.0</string>
 </dict>
 </plist>

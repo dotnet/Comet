@@ -3,19 +3,18 @@
       <TargetFrameworks>netstandard2.1</TargetFrameworks>
   </PropertyGroup> 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <NoWarn>1701;1702;0649;</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <LangVersion>9.0</LangVersion>
+    <LangVersion>10.0</LangVersion>
     <DebugType></DebugType>
     <NoWarn>1701;1702;0649;</NoWarn>
   </PropertyGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
     <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
-    <PackageReference Include="Reloadify3000">
-      <Version>1.0.8</Version>
+    <PackageReference Include="Reloadify3000" Version="1.0.8">
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
