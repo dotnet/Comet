@@ -40,9 +40,6 @@ public class VGrid : AbstractLayout, IAutoGrid
 		if (constraint.Column > 0)
 			currentColumn = constraint.Column;
 
-		if (constraint.Row > 0)
-			currentRow = constraint.Row;
-		if (constraint.Column > 0)
 		if (view.GetIsNextRow())
 		{
 			currentRow++;
