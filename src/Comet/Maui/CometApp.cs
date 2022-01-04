@@ -15,6 +15,14 @@ namespace Comet
 		public CometApp()
 		{
 			CurrentApp = this;
+#if __IOS__
+			ModalView.PerformPresent = (o) => ThreadHelper.RunOnMainThread(()=> PresentingViewController.PresentViewController(new Comet.iOS.CometViewController{MauiContext = o.GetMauiContext(),CurrentView = o}, true, null));
+			ModalView.PerformDismiss = () => ThreadHelper.RunOnMainThread( ()=> PresentingViewController.DismissModalViewController(true));
+#elif ANDROID
+
+			ModalView.PerformPresent = Comet.Android.Controls.ModalManager.ShowModal;
+			ModalView.PerformDismiss = Comet.Android.Controls.ModalManager.DismisModal;
+#endif
 		}
 		public static CometApp CurrentApp { get; protected set; }
 		public static CometWindow CurrentWindow { get; protected set; }
@@ -64,5 +72,20 @@ namespace Comet
 		}
 
 		void IApplication.CloseWindow(IWindow window) => ViewHandler?.Invoke(nameof(IApplication.CloseWindow), window);
+
+
+#if __IOS__
+		internal static UIKit.UIViewController PresentingViewController
+		{
+			get
+			{
+				var window = UIKit.UIApplication.SharedApplication.KeyWindow;
+				var vc = window.RootViewController;
+				while (vc.PresentedViewController != null)
+					vc = vc.PresentedViewController;
+				return vc;
+			}
+		}
+#endif
 	}
 }
