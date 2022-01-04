@@ -34,6 +34,15 @@ public class VGrid : AbstractLayout, IAutoGrid
 
 	public void SetupConstraints(View view, ref int currentColumn, ref int currentRow, ref GridConstraints constraint)
 	{
+
+		if (constraint.Row > 0)
+			currentRow = constraint.Row;
+		if (constraint.Column > 0)
+			currentColumn = constraint.Column;
+
+		if (constraint.Row > 0)
+			currentRow = constraint.Row;
+		if (constraint.Column > 0)
 		if (view.GetIsNextRow())
 		{
 			currentRow++;

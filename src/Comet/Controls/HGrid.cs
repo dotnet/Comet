@@ -33,6 +33,12 @@ public class HGrid : AbstractLayout, IAutoGrid
 
 	public void SetupConstraints(View view, ref int currentColumn, ref int currentRow, ref GridConstraints constraint)
 	{
+		//Use values specified
+		if (constraint.Row > 0)
+			currentRow = constraint.Row;
+		if (constraint.Column > 0)
+			currentColumn = constraint.Column;
+
 		if (view.GetIsNextColumn())
 		{
 			currentColumn++;
