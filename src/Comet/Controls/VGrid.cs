@@ -59,6 +59,11 @@ public class VGrid : AbstractLayout, IAutoGrid
 		constraint.Column = currentColumn;
 		constraint.Row = currentRow;
 		currentColumn += constraint.ColumnSpan;
+		if (currentColumn >= columnCount)
+		{
+			currentRow++;
+			currentColumn = 0;
+		}
 	}
 	protected override ILayoutManager CreateLayoutManager() => new Comet.Layout.GridLayoutManager(this, Spacing);
 }

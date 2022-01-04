@@ -58,6 +58,12 @@ public class HGrid : AbstractLayout, IAutoGrid
 		constraint.Column = currentColumn;
 		constraint.Row = currentRow;
 		currentRow += constraint.RowSpan;
+
+		if (currentRow >= rowCount)
+		{
+			currentColumn++;
+			currentRow = 0;
+		}
 	}
 	protected override ILayoutManager CreateLayoutManager() => new Comet.Layout.GridLayoutManager(this, Spacing);
 }
