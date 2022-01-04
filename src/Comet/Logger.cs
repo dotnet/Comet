@@ -1,6 +1,4 @@
 using System;
-using Comet.Services;
-
 namespace Comet
 {
 	public static class Logger
@@ -17,7 +15,7 @@ namespace Comet
 					if (_registeredService == null)
 					{
 						_registeredService = new ConsoleLoggingService();
-						_registeredService.Log(LogType.Warning, "No logging service was registered.  Falling back to console logging.");
+						_registeredService.Log(LogType.WARNING, "No logging service was registered.  Falling back to console logging.");
 					}
 				}
 
@@ -33,27 +31,27 @@ namespace Comet
 
 		public static void Debug(params object[] parameters)
 		{
-			Log(LogType.Debug, parameters);
+			Log(LogType.DEBUG, parameters);
 		}
 
 		public static void Warn(params object[] parameters)
 		{
-			Log(LogType.Warning, parameters);
+			Log(LogType.WARNING, parameters);
 		}
 
 		public static void Error(params object[] parameters)
 		{
-			Log(LogType.Error, parameters);
+			Log(LogType.ERROR, parameters);
 		}
 
 		public static void Fatal(params object[] parameters)
 		{
-			Log(LogType.Fatal, parameters);
+			Log(LogType.FATAL, parameters);
 		}
 
 		public static void Info(params object[] parameters)
 		{
-			Log(LogType.Info, parameters);
+			Log(LogType.INFO, parameters);
 		}
 
 		public static void Log(LogType logType, params object[] parameters)
@@ -89,7 +87,7 @@ namespace Comet
 			}
 			catch (Exception exc)
 			{
-				RegisteredService.Log(LogType.Info, $"An error occured formatting the logging message: [{format}]", exc);
+				RegisteredService.Log(LogType.INFO, $"An error occured formatting the logging message: [{format}]", exc);
 			}
 
 			if (parameters[parameters.Length - 1] is Exception ex)

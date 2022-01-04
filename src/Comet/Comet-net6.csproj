@@ -28,4 +28,10 @@
 		<PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.1.3" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Services\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Services\" />
+	</ItemGroup>
 </Project>
