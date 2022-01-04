@@ -64,7 +64,7 @@ namespace Comet
 		public static T Enabled<T>(this T view, Binding<bool> enabled, bool cascades = true) where T : View =>
 			view.SetEnvironment(nameof(IView.IsEnabled), enabled, cascades, ControlState.Default);
 		public static T Enabled<T>(this T view, Func<bool> enabled, bool cascades = true) where T : View =>
-			view.Title((Binding<bool>)enabled, cascades);
+			view.Enabled((Binding<bool>)enabled, cascades);
 
 		public static string GetTitle(this View view)
 		{
