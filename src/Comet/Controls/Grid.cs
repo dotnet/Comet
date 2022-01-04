@@ -14,6 +14,7 @@ namespace Comet
 			object defaultRowHeight = null,
 			object defaultColumnWidth = null)
 		{
+			Spacing = spacing;
 			var layout = (Layout.GridLayoutManager)LayoutManager;
 
 			layout.DefaultRowHeight = defaultRowHeight ?? "*";
@@ -24,7 +25,6 @@ namespace Comet
 
 			if (rows != null)
 				layout.AddRows(rows);
-			Spacing = spacing;
 		}
 
 		public float? Spacing { get; }

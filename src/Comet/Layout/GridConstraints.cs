@@ -2,7 +2,7 @@ namespace Comet.Layout
 {
 	public class GridConstraints
 	{
-		public static readonly GridConstraints Default = new GridConstraints();
+		public static GridConstraints Default => new GridConstraints();
 
 		public GridConstraints(
 			int row = 0,
@@ -24,8 +24,8 @@ namespace Comet.Layout
 			PositionY = positionY;
 		}
 
-		public int Row { get; }
-		public int Column { get; }
+		public int Row { get; internal set; }
+		public int Column { get; internal set; }
 		public int RowSpan { get; }
 		public int ColumnSpan { get; }
 		public float WeightX { get; }

@@ -76,6 +76,22 @@ namespace Comet
 			return view;
 		}
 
+		public static T NextRow<T>(this T view) where T : View
+		{
+			view.SetEnvironment(nameof(NextRow), true, false);
+			return view;
+		}
+		public static T NextColumn<T>(this T view) where T : View
+		{
+			view.SetEnvironment(nameof(NextColumn), true, false);
+			return view;
+		}
+		public static bool GetIsNextColumn(this View view)
+			=>view.GetEnvironment<bool>(nameof(NextColumn), false);
+
+		public static bool GetIsNextRow(this View view)
+			=> view.GetEnvironment<bool>(nameof(NextRow), false);
+
 		public static void SetFrameFromNativeView(
 			this View view,
 			Rectangle frame)
