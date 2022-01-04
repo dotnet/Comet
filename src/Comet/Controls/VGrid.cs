@@ -40,16 +40,19 @@ public class VGrid : AbstractLayout, IAutoGrid
 			currentRow = constraint.Row;
 		if (constraint.Column > 0)
 			currentColumn = constraint.Column;
-
-		if (view.GetIsNextRow())
+		//currentRowSpan = 1, so we will use that value.
+		var rowSkip = view.GetIsNextRow() -1;
+		if (rowSkip >= 0)
 		{
-			currentRow += currentRowSpan;
+			currentRow += currentRowSpan + rowSkip;
 			currentRowSpan = 1;
 			currentColumn = 0;
 		}
-		else if (view.GetIsNextColumn())
+
+		var columnSkip = view.GetIsNextColumn();
+		if (columnSkip > 0)
 		{
-			currentColumn++;
+			currentColumn += columnSkip;
 		}
 
 		var columnsNeeded = constraint.ColumnSpan + currentColumn;

@@ -39,15 +39,20 @@ public class HGrid : AbstractLayout, IAutoGrid
 		if (constraint.Column > 0)
 			currentColumn = constraint.Column;
 
-		if (view.GetIsNextColumn())
+
+
+		var columnSkip = view.GetIsNextColumn() - 1;
+		if (columnSkip >= 0)
 		{
-			currentColumn += currentColumnSpan;
+			currentColumn += currentColumnSpan + columnSkip;
 			currentColumnSpan = 1;
 			currentRow = 0;
 		}
-		else if (view.GetIsNextRow())
+
+		var rowSkip = view.GetIsNextRow();
+		if (rowSkip > 0)
 		{
-			currentRow++;
+			currentRow += rowSkip;
 		}
 
 		var rowsNeeded = constraint.RowSpan + currentRow;
