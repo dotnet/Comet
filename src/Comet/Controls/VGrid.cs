@@ -43,7 +43,8 @@ public class VGrid : AbstractLayout, IAutoGrid
 
 		if (view.GetIsNextRow())
 		{
-			currentRow++;
+			currentRow += currentRowSpan;
+			currentRowSpan = 1;
 			currentColumn = 0;
 		}
 		else if (view.GetIsNextColumn())
@@ -54,7 +55,8 @@ public class VGrid : AbstractLayout, IAutoGrid
 		var columnsNeeded = constraint.ColumnSpan + currentColumn;
 		if (columnsNeeded > columnCount)
 		{
-			currentRow++;
+			currentRow += currentRowSpan;
+			currentRowSpan = 1;
 			currentColumn = 0;
 		}
 
