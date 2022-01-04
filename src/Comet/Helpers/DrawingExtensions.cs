@@ -8,21 +8,23 @@ namespace Comet
 {
 	public static class DrawingExtensions
 	{
-		public static T Shadow<T>(this T view, Color color = null, float? radius = null, float? x = null, float? y = null, Type type = null) where T : View
+		public static T Shadow<T>(this T view, Color color, float? radius = null, float? x = null, float? y = null, Type type = null) where T : View
+			=> view.Shadow(new SolidPaint(color), radius, x, y, type);
+		public static T Shadow<T>(this T view, Paint paint = null, float? radius = null, float? x = null, float? y = null, Type type = null) where T : View
 		{
 			var shadow = view.GetShadow() ?? new Shadow();
 
-			if (color != null)
-				shadow = shadow.WithColor(color);
+			if (paint != null)
+				shadow = shadow.WithPaint(paint);
 
 			if (radius != null)
 				shadow = shadow.WithRadius((float)radius);
 
 			if (x != null || y != null)
 			{
-				var newX = x ?? shadow.Offset.Width;
-				var newY = y ?? shadow.Offset.Height;
-				shadow = shadow.WithOffset(new Size(newX, newY));
+				var newX = x ?? shadow.Offset.X;
+				var newY = y ?? shadow.Offset.Y;
+				shadow = shadow.WithOffset(new Point(newX, newY));
 			}
 			if (type != null)
 				view.SetEnvironment(type, EnvironmentKeys.View.Shadow, shadow, true);

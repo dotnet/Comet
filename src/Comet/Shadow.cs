@@ -4,12 +4,20 @@ using Microsoft.Maui.Graphics;
 
 namespace Comet.Graphics
 {
-	public class Shadow
+	public class Shadow : IShadow
 	{
-		public Color Color { get; private set; } = Colors.Black;
+		public Paint Paint { get; private set; } = new SolidPaint(Colors.Black);
 		public float Opacity { get; private set; } = .5f;
 		public float Radius { get; private set; } = 10;
-		public Size Offset { get; private set; } = Size.Zero;
+		public Point Offset { get; private set; } = Point.Zero;
+
+		float IShadow.Radius => Radius;
+
+		float IShadow.Opacity => Opacity;
+
+		Paint IShadow.Paint => Paint;
+
+		Point IShadow.Offset => Offset;
 
 		public Shadow()
 		{
@@ -18,7 +26,7 @@ namespace Comet.Graphics
 
 		protected Shadow(Shadow prototype)
 		{
-			Color = prototype.Color;
+			Paint = prototype.Paint;
 			Opacity = prototype.Opacity;
 			Radius = prototype.Radius;
 			Offset = prototype.Offset;
@@ -27,7 +35,13 @@ namespace Comet.Graphics
 		public Shadow WithColor(Color color)
 		{
 			var shadow = new Shadow(this);
-			shadow.Color = color;
+			shadow.Paint = new SolidPaint (color);
+			return shadow;
+		}
+		public Shadow WithPaint(Paint paint)
+		{
+			var shadow = new Shadow(this);
+			shadow.Paint = paint;
 			return shadow;
 		}
 
@@ -45,7 +59,7 @@ namespace Comet.Graphics
 			return shadow;
 		}
 
-		public Shadow WithOffset(Size offset)
+		public Shadow WithOffset(Point offset)
 		{
 			var shadow = new Shadow(this);
 			shadow.Offset = offset;
