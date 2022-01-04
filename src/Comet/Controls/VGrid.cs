@@ -31,6 +31,7 @@ public class VGrid : AbstractLayout, IAutoGrid
 	}
 	public float? Spacing { get; }
 	readonly int columnCount;
+	int currentRowSpan = 1;
 
 	public void SetupConstraints(View view, ref int currentColumn, ref int currentRow, ref GridConstraints constraint)
 	{
@@ -56,6 +57,8 @@ public class VGrid : AbstractLayout, IAutoGrid
 			currentRow++;
 			currentColumn = 0;
 		}
+
+		currentRowSpan = Math.Max(currentRowSpan, constraint.RowSpan);
 		constraint.Column = currentColumn;
 		constraint.Row = currentRow;
 		currentColumn += constraint.ColumnSpan;

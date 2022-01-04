@@ -30,7 +30,7 @@ public class HGrid : AbstractLayout, IAutoGrid
 	}
 	public float? Spacing { get; }
 	readonly int rowCount;
-
+	int currentColumnSpan = 1;
 	public void SetupConstraints(View view, ref int currentColumn, ref int currentRow, ref GridConstraints constraint)
 	{
 		//Use values specified
@@ -41,7 +41,8 @@ public class HGrid : AbstractLayout, IAutoGrid
 
 		if (view.GetIsNextColumn())
 		{
-			currentColumn++;
+			currentColumn += currentColumnSpan;
+			currentColumnSpan = 1;
 			currentRow = 0;
 		}
 		else if (view.GetIsNextRow())
@@ -52,9 +53,12 @@ public class HGrid : AbstractLayout, IAutoGrid
 		var rowsNeeded = constraint.RowSpan + currentRow;
 		if (rowsNeeded > rowCount)
 		{
-			currentColumn++;
+			currentColumn += currentColumnSpan;
+			currentColumnSpan = 1;
 			currentRow = 0;
 		}
+
+		currentColumnSpan = Math.Max(currentColumnSpan, constraint.ColumnSpan);
 		constraint.Column = currentColumn;
 		constraint.Row = currentRow;
 		currentRow += constraint.RowSpan;
