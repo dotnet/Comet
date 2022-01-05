@@ -53,7 +53,6 @@ namespace Comet
 		{
 			public const string ClipShape = "ClipShape";
 			public const string Shadow = "Shadow";
-			public const string Overlay = "Overlay";
 			public const string Title = "Title";
 			public const string Border = "Border";
 			public const string StyleId = "StyleId";

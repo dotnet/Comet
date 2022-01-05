@@ -13,7 +13,7 @@ namespace Comet.Samples
 				new Image("turtlerock.jpg")
 				.Aspect(Aspect.AspectFill)
 					.ClipShape(new Circle())
-					.Overlay(new Circle().Stroke(Colors.White, lineWidth: 4))
+					.Border(new Circle().Stroke(Colors.White, lineWidth: 4))
 					.Shadow(radius: 10)
 			};
 

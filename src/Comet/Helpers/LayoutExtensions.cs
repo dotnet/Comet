@@ -38,23 +38,6 @@ namespace Comet
 			return view;
 		}
 
-		public static T Overlay<T>(this T view, View overlayView) where T : View
-		{
-			view.SetEnvironment(EnvironmentKeys.View.Overlay, overlayView);
-			return view;
-		}
-
-		public static T Overlay<T>(this T view, Shape shape) where T : View
-		{
-			view.SetEnvironment(EnvironmentKeys.View.Overlay, shape);
-			return view;
-		}
-
-		public static Shape GetOverlay(this View view)
-		{
-			return view.GetEnvironment<Shape>(EnvironmentKeys.View.Overlay);
-		}
-
 		public static T Frame<T>(this T view, float? width = null, float? height = null, Alignment alignment = null) where T : View
 		{
 			view.FrameConstraints(new FrameConstraints(width, height, alignment));

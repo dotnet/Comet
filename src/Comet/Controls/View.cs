@@ -22,7 +22,7 @@ using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IHotReloadableView,ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement, IBorder
 	{
 
 		static internal readonly WeakList<IView> ActiveViews = new WeakList<IView>();
@@ -124,7 +124,7 @@ namespace Comet
 			var oldViewHandler = viewHandler;
 			//viewHandler?.Remove(this);
 			viewHandler = handler;
-			if(viewHandler?.VirtualView != this)
+			if (viewHandler?.VirtualView != this)
 				viewHandler?.SetVirtualView(this);
 			if (replacedView != null)
 				replacedView.ViewHandler = handler;
@@ -258,11 +258,11 @@ namespace Comet
 						builtView = view.GetRenderView();
 						UpdateBuiltViewContext(builtView);
 					}
-					catch(Exception ex)
+					catch (Exception ex)
 					{
 						if (Debugger.IsAttached)
 						{
-							builtView = new VStack {new Text(ex.Message.ToString()).LineBreakMode(LineBreakMode.WordWrap) };
+							builtView = new VStack { new Text(ex.Message.ToString()).LineBreakMode(LineBreakMode.WordWrap) };
 						}
 						else throw ex;
 					}
@@ -325,7 +325,7 @@ namespace Comet
 
 		protected virtual string GetHandlerPropertyName(string property) =>
 			HandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
-		
+
 
 		internal override void ContextPropertyChanged(string property, object value, bool cascades)
 		{
@@ -387,7 +387,7 @@ namespace Comet
 			{
 				var key = item.Key;
 				var value = this.GetEnvironment(key);
-				if(value == null)
+				if (value == null)
 				{
 					//Get the current MauiContext
 					//I might be able to do something better, like searching up though the parent
@@ -528,7 +528,7 @@ namespace Comet
 			{
 				var fe = (IView)this;
 				var ms = this.ComputeDesiredSize(availableSize.Width, availableSize.Height);
-				if(fe.Width > 0)
+				if (fe.Width > 0)
 					ms.Width = fe.Width;
 				if (fe.Height > 0)
 					ms.Height = fe.Height;
@@ -574,12 +574,12 @@ namespace Comet
 				// _don't_ include the margins are actually bugs.
 
 				var frameworkElement = this as IView;
-				
+
 				var size = GetDesiredSize(new Size(widthConstraint, heightConstraint));
 				widthConstraint = LayoutManager.ResolveConstraints(widthConstraint, frameworkElement.Width, size.Width);
 				heightConstraint = LayoutManager.ResolveConstraints(heightConstraint, frameworkElement.Height, size.Height);
 
-				MeasuredSize = new Size(widthConstraint,heightConstraint);
+				MeasuredSize = new Size(widthConstraint, heightConstraint);
 				if (MeasuredSize.Width <= 0 || MeasuredSize.Height <= 0)
 				{
 					Console.WriteLine($"Why :( - {this}");
@@ -638,7 +638,7 @@ namespace Comet
 			var animationManager = GetAnimationManager();
 			if (animationManager == null)
 				return;
-			ThreadHelper.RunOnMainThread(()=> animationManager.Add(animation));
+			ThreadHelper.RunOnMainThread(() => animationManager.Add(animation));
 		}
 
 		protected virtual IMauiContext GetMauiContext() => ViewHandler?.MauiContext ?? BuiltView?.GetMauiContext();
@@ -649,7 +649,7 @@ namespace Comet
 			var animationManager = GetAnimationManager();
 			if (animationManager == null)
 				return;
-			ThreadHelper.RunOnMainThread(()=>GetAnimations(false)?.ToList().ForEach(animationManager.Add));
+			ThreadHelper.RunOnMainThread(() => GetAnimations(false)?.ToList().ForEach(animationManager.Add));
 		}
 		void RemoveAnimationsFromManager(Animation animation)
 		{
@@ -776,7 +776,7 @@ namespace Comet
 			Measure(widthConstraint, heightConstraint);
 		void IView.InvalidateMeasure() => InvalidateMeasurement();
 		void IView.InvalidateArrange() => IsArrangeValid = false;
-		void IHotReloadableView. TransferState(IView newView) {
+		void IHotReloadableView.TransferState(IView newView) {
 			var oldState = this.GetState();
 			if (oldState == null)
 				return;
@@ -789,5 +789,16 @@ namespace Comet
 		void IHotReloadableView.Reload() => ThreadHelper.RunOnMainThread(() => Reload(true));
 		protected int? TypeHashCode;
 		public virtual int GetContentTypeHashCode() => this.replacedView?.GetContentTypeHashCode() ?? (TypeHashCode ??= this.GetType().GetHashCode());
+
+		IBorderStroke IBorder.Border
+		{
+			get
+			{
+				var border = this.GetBorder();
+				if (border != null)
+					border.view = this;
+				return border;
+			}
+		}
 	}
 }

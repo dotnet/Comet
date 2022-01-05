@@ -14,7 +14,5 @@ namespace Comet.Styles
 		public StyleAwareValue<ControlState, Shadow> Shadow { get; set; }
 
 		public StyleAwareValue<ControlState, Shape> ClipShape { get; set; }
-
-		public StyleAwareValue<ControlState, Shape> Overlay { get; set; }
 	}
 }
