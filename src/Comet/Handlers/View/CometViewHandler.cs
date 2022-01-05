@@ -23,7 +23,7 @@ namespace Comet.Handlers
 			if (!(gestures?.Any() ?? false))
 				return;
 			foreach (var g in gestures)
-				viewHandler.AddGesture(g);
+				HandlerExtensions.AddGesture(viewHandler,g);
 		}
 	}
 }
