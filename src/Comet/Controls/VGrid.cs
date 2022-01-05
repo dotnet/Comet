@@ -7,26 +7,26 @@ public class VGrid : AbstractLayout, IAutoGrid
 {
 	public VGrid(int columns,
 		float? spacing = null,
-		object defaultColumnWidth = null,
-		object defaultRowHeight = null)
+		object columnWidth = null,
+		object rowHeight = null)
 	{
 		columnCount = columns;
 		Spacing = spacing;
 		var layout = (Layout.GridLayoutManager)LayoutManager;
-		layout.DefaultRowHeight = defaultRowHeight ?? "*";
-		layout.DefaultColumnWidth = defaultColumnWidth ?? "*";
+		layout.DefaultRowHeight = rowHeight ?? "*";
+		layout.DefaultColumnWidth = columnWidth ?? "*";
 		//layout.AddColumns(Enumerable.Range(0,columns));
 	}
 	public VGrid(object[] columns,
 		float? spacing = null,
-		object defaultColumnWidth = null,
-		object defaultRowHeight = null)
+		object columnWidth = null,
+		object rowHeight = null)
 	{
 		columnCount = columns.Length;
 		Spacing = spacing;
 		var layout = (Layout.GridLayoutManager)LayoutManager;
-		layout.DefaultRowHeight = defaultRowHeight ?? "*";
-		layout.DefaultColumnWidth = defaultColumnWidth ?? "*";
+		layout.DefaultRowHeight = rowHeight ?? "*";
+		layout.DefaultColumnWidth = columnWidth ?? "*";
 		layout.AddColumns(columns);
 	}
 	public float? Spacing { get; }

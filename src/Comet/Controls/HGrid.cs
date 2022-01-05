@@ -7,24 +7,24 @@ public class HGrid : AbstractLayout, IAutoGrid
 {
 	public HGrid(int rows,
 		float? spacing = null,
-		object defaultRowHeight = null,
-		object defaultColumnWidth = null)
+		object rowHeight = null,
+		object columnWidth = null)
 	{
 		rowCount = rows;
 		Spacing = spacing;
 		var layout = (Layout.GridLayoutManager)LayoutManager;
-		layout.DefaultRowHeight = defaultRowHeight ?? "*";
-		layout.DefaultColumnWidth = defaultColumnWidth ?? "*";
+		layout.DefaultRowHeight = rowHeight ?? "*";
+		layout.DefaultColumnWidth = columnWidth ?? "*";
 	}
 	public HGrid(object[] rows,
 		float? spacing = null,
-		object defaultRowHeight = null,
-		object defaultColumnWidth = null)
+		object rowHeight = null,
+		object columnWidth = null)
 	{
 		Spacing = spacing;
 		var layout = (Layout.GridLayoutManager)LayoutManager;
-		layout.DefaultRowHeight = defaultRowHeight ?? "*";
-		layout.DefaultColumnWidth = defaultColumnWidth ?? "*";
+		layout.DefaultRowHeight = rowHeight ?? "*";
+		layout.DefaultColumnWidth = columnWidth ?? "*";
 		layout.AddRow(rows);
 		rowCount = rows.Length;
 	}
