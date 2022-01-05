@@ -7,7 +7,7 @@ namespace Comet.Handlers
 		{
 			if (arg is not Gesture g)
 				return;
-			HandlerExtensions.AddGesture(viewHandler,g);
+			viewHandler.AddGesture(g);
 		}
 		public static void RemoveGesture(IViewHandler viewHandler, IView view, object arg)
 		{
@@ -23,7 +23,7 @@ namespace Comet.Handlers
 			if (!(gestures?.Any() ?? false))
 				return;
 			foreach (var g in gestures)
-				HandlerExtensions.AddGesture(viewHandler,g);
+				viewHandler.AddGesture(g);
 		}
 	}
 }
