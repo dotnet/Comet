@@ -60,12 +60,28 @@ namespace Comet
 			if (type != null)
 			{
 				shape.SetEnvironment(type, EnvironmentKeys.Shape.LineWidth, lineWidth, true);
-				shape.SetEnvironment(type, EnvironmentKeys.Shape.StrokeColor, color, true);
+				shape.SetEnvironment(type, EnvironmentKeys.Shape.StrokeColor, new SolidPaint(color), true);
 			}
 			else
 			{
 				shape.SetEnvironment(EnvironmentKeys.Shape.LineWidth, lineWidth, cascades);
-				shape.SetEnvironment(EnvironmentKeys.Shape.StrokeColor, color, cascades);
+				shape.SetEnvironment(EnvironmentKeys.Shape.StrokeColor, new SolidPaint(color), cascades);
+			}
+			return shape;
+		}
+		public static T Stroke<T>(this T shape, Paint paint, float lineWidth, bool cascades = true, Type type = null) where T : Shape
+		{
+			if (type != null && !cascades)
+				Logger.Fatal($"Setting a type, and cascades = false does nothing!");
+			if (type != null)
+			{
+				shape.SetEnvironment(type, EnvironmentKeys.Shape.LineWidth, lineWidth, true);
+				shape.SetEnvironment(type, EnvironmentKeys.Shape.StrokeColor, paint, true);
+			}
+			else
+			{
+				shape.SetEnvironment(EnvironmentKeys.Shape.LineWidth, lineWidth, cascades);
+				shape.SetEnvironment(EnvironmentKeys.Shape.StrokeColor, paint, cascades);
 			}
 			return shape;
 		}
