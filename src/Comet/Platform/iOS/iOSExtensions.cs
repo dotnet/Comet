@@ -12,5 +12,14 @@ namespace Comet.iOS
 				return uIView.GetViewController();
 			return null;
 		}
+
+		public static UIGestureRecognizer ToGestureRecognizer(this Gesture gesture)
+		{
+			if (gesture is TapGesture tapGesture)
+			{
+				return new CUITapGesture(tapGesture);
+			}
+			throw new NotImplementedException();
+		}
 	}
 }

@@ -27,6 +27,9 @@ namespace Comet
 			var style = new Styles.Style();
 			style.Apply();
 
+			ViewHandler.ViewMapper.AppendToMapping(nameof(IGestureView.Gestures), CometViewHandler.AddGestures);
+			ViewHandler.ViewCommandMapper.AppendToMapping(Gesture.AddGestureProperty, CometViewHandler.AddGesture);
+			ViewHandler.ViewCommandMapper.AppendToMapping(Gesture.AddGestureProperty, CometViewHandler.RemoveGesture);
 			builder.ConfigureMauiHandlers((handlersCollection) => handlersCollection.AddHandlers(new Dictionary<Type, Type>
 			{
 				{ typeof(AbstractLayout), typeof(LayoutHandler) },

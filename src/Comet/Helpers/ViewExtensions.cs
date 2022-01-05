@@ -73,26 +73,26 @@ namespace Comet
 			return title;
 		}
 
-		//public static T AddGesture<T>(this T view, Gesture gesture) where T : View
-		//{
-		//	var gestures = (List<Gesture>)(view.Gestures ?? (view.Gestures = new List<Gesture>()));
-		//	gestures.Add(gesture);
-		//	view?.ViewHandler?.UpdateValue(Comet.Gesture.AddGestureProperty);
-		//	return view;
-		//}
-		//public static T RemoveGesture<T>(this T view, Gesture gesture) where T : View
-		//{
-		//	var gestures = (List<Gesture>)view.Gestures;
-		//	gestures.Remove(gesture);
-		//	view?.ViewHandler?.UpdateValue(Comet.Gesture.RemoveGestureProperty);
-		//	return view;
-		//}
+		public static T AddGesture<T>(this T view, Gesture gesture) where T : View
+		{
+			var gestures = (List<Gesture>)(view.Gestures ?? (view.Gestures = new List<Gesture>()));
+			gestures.Add(gesture);
+			view?.ViewHandler?.UpdateValue(Comet.Gesture.AddGestureProperty);
+			return view;
+		}
+		public static T RemoveGesture<T>(this T view, Gesture gesture) where T : View
+		{
+			var gestures = (List<Gesture>)view.Gestures;
+			gestures.Remove(gesture);
+			view?.ViewHandler?.UpdateValue(Comet.Gesture.RemoveGestureProperty);
+			return view;
+		}
 
-		//public static T OnTap<T>(this T view, Action<T> action) where T : View
-		//	=> view.AddGesture(new TapGesture((g) => action?.Invoke(view)));
+		public static T OnTap<T>(this T view, Action<T> action) where T : View
+			=> view.AddGesture(new TapGesture((g) => action?.Invoke(view)));
 
-		//public static T OnTapNavigate<T>(this T view, Func<View> destination) where T : View
-		//	=> view.OnTap((v) => NavigationView.Navigate(view, destination.Invoke()));
+		public static T OnTapNavigate<T>(this T view, Func<View> destination) where T : View
+			=> view.OnTap((v) => NavigationView.Navigate(view, destination.Invoke()));
 
 		public static void Navigate(this View view, View destination) => NavigationView.Navigate(view, destination);
 

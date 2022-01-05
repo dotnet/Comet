@@ -42,7 +42,7 @@ namespace Comet.Samples
 							new Text ($"Handled Properties: {report.HandledProperties.Count}").Color(report.HandledProperties.Count == 0 ? Colors.Red : Colors.Green),
 							new Text ($"Missing Count: {report.UnHandledProperties.Count}").Color(report.UnHandledProperties.Count == 0 ? Colors.Green : Colors.Red),
 						}.Margin().FontSize(10)
-						//.OnTapNavigate(()=>new AuditReportPageDetails().SetEnvironment("report", report))
+						.OnTapNavigate(()=>new AuditReportPageDetails().SetEnvironment("report", report))
 				 },
 			};
 			//.OnSelectedNavigate((report) => new AuditReportPageDetails().SetEnvironment("report", report)); ;

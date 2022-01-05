@@ -22,7 +22,7 @@ using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IHotReloadableView,ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView,ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement, IGestureView
 	{
 
 		static internal readonly WeakList<IView> ActiveViews = new WeakList<IView>();
@@ -52,6 +52,12 @@ namespace Comet
 		public string Tag
 		{
 			get => GetPropertyFromContext<string>();
+			internal set => SetPropertyInContext(value);
+		}
+
+		public IReadOnlyList<Gesture> Gestures
+		{
+			get => GetPropertyFromContext<List<Gesture>>();
 			internal set => SetPropertyInContext(value);
 		}
 
@@ -143,6 +149,7 @@ namespace Comet
 			}
 			var oldView = view.ViewHandler;
 			this.ReloadHandler = view.ReloadHandler;
+			this.Gestures = view.Gestures;
 			view.ViewHandler = null;
 			view.replacedView?.Dispose();
 			this.ViewHandler = oldView;
@@ -444,6 +451,13 @@ namespace Comet
 				return;
 
 			ActiveViews.Remove(this);
+
+			var gestures = Gestures;
+			if (gestures?.Any() ?? false)
+			{
+				foreach (var g in gestures)
+					ViewHandler?.Invoke(Gesture.RemoveGestureProperty, g);
+			}
 
 			Debug.WriteLine($"Active View Count: {ActiveViews.Count}");
 
