@@ -8,6 +8,13 @@ public static partial class HandlerExtensions
 	{
 
 	}
+
+	public static void RemoveGesture(this IViewHandler handler, Gesture gesture)
+	{
+		//var nativeView = (UIView)handler.NativeView;
+		//if (gesture.NativeGesture is UIGestureRecognizer g)
+		//	nativeView.RemoveGestureRecognizer(g);
+	}
 }
 
 

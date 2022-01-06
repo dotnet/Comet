@@ -11,9 +11,9 @@ namespace Comet.Handlers
 		}
 		public static void RemoveGesture(IViewHandler viewHandler, IView view, object arg)
 		{
-			//if (arg is not Gesture g)
-			//	return;
-			//viewHandler.AddGesture(g);
+			if (arg is not Gesture g)
+				return;
+			viewHandler.RemoveGesture(g);
 		}
 		public static void AddGestures(IViewHandler viewHandler, IView view)
 		{

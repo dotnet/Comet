@@ -8,6 +8,12 @@ public static partial class HandlerExtensions
 	{
 
 	}
+
+	public static void RemoveGesture(this IViewHandler handler, Gesture gesture)
+	{
+
+	}
+
 }
 
 

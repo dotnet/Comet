@@ -12,6 +12,13 @@ public static partial class HandlerExtensions
 		nativeView.UserInteractionEnabled = true;
 		nativeView.AddGestureRecognizer(gesture.ToGestureRecognizer());
 	}
+
+	public static void RemoveGesture(this IViewHandler handler, Gesture gesture)
+	{
+		var nativeView = (UIView)handler.NativeView;
+		if(gesture.NativeGesture is UIGestureRecognizer g)
+			nativeView.RemoveGestureRecognizer(g);
+	}
 }
 
 
