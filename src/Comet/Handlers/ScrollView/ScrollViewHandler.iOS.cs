@@ -22,8 +22,13 @@ namespace Comet.Handlers
 
 		void Arange(Rectangle rect)
 		{
-			var measuredSize = VirtualView?.Content?.Measure(float.PositiveInfinity, float.PositiveInfinity) ?? Size.Zero;
+			var sizeAllowed = this.VirtualView.Orientation == Orientation.Vertical ? new Size(rect.Width, double.MaxValue) : new Size(double.MaxValue, rect.Height);
+			var measuredSize = VirtualView?.Content?.Measure(sizeAllowed.Width, sizeAllowed.Height) ?? Size.Zero;
 			//Make sure we at least fit the scroll view
+			if (double.IsInfinity(measuredSize.Width))
+				measuredSize.Width = rect.Width;
+			if (double.IsInfinity(measuredSize.Height))
+				measuredSize.Height = rect.Height;
 			measuredSize.Width = Math.Max(measuredSize.Width, rect.Width);
 			measuredSize.Height = Math.Max(measuredSize.Height, rect.Height);
 
