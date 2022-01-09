@@ -301,11 +301,19 @@ namespace Comet
 
 		internal void BindingPropertyChanged(INotifyPropertyRead bindingObject, string property, string fullProperty, object value)
 		{
-			var prop = property.Split('.').Last();
-			if (!State.UpdateValue(this, (bindingObject, property), fullProperty, value))
+			try
+			{
+				var prop = property.Split('.').Last();
+				if (!State.UpdateValue(this, (bindingObject, property), fullProperty, value))
+					Reload(false);
+				else
+					ViewPropertyChanged(prop, value);
+			}
+			catch(Exception ex)
+			{
+				Logger.Error(ex);
 				Reload(false);
-			else
-				ViewPropertyChanged(prop, value);
+			}
 		}
 		protected const string ResetPropertyString = "ResetPropertyString";
 		public virtual void ViewPropertyChanged(string property, object value)
