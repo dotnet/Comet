@@ -17,6 +17,7 @@ namespace Comet.Samples
 			new MenuItem("Text Weight",()=> new TextWeightSample()),
 			new MenuItem("VGrid Sample", ()=> new VGridSample()),
 			new MenuItem("VGrid Number Pad", ()=> new VGridNumberPad()),
+			new MenuItem("Shape View Sample", ()=> new ShapeViewSample()),
 			//new MenuItem("Skia Controls Sample",()=> new SkiaControlsSample()),
 			new MenuItem("Material Design",()=> new MaterialStylePicker()),
 			new MenuItem("AuditReportPage",()=> new AuditReportPage()),

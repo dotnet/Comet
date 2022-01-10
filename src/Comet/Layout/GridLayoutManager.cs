@@ -134,7 +134,7 @@ namespace Comet.Layout
 					view.MeasurementValid = true;
 				}
 				view.Measure(w, h);
-				view.Frame = new Rectangle(x, y, w, h);
+				view.SetFrameFromNativeView(new Rectangle(x, y, w, h));
 			}
 
 			return new Size(_width, _height);
@@ -201,16 +201,7 @@ namespace Comet.Layout
 						y += (double)Math.Round(availHeight * position.PositionY);
 					}
 				}
-
-				var margin = view.GetMargin();
-				if (!margin.IsEmpty)
-				{
-					x += margin.Left;
-					y += margin.Top;
-					w -= margin.HorizontalThickness;
-					h -= margin.VerticalThickness;
-				}
-				view.Frame = new Rectangle(x, y, w, h);
+				view.SetFrameFromNativeView(new Rectangle(x, y, w, h));
 			}
 			return measured;
 		}

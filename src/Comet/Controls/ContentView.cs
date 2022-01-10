@@ -43,16 +43,7 @@ namespace Comet
 		public override void LayoutSubviews(Rectangle frame)
 		{
 			this.Frame = frame;
-			if (Content != null)
-			{
-				var margin = Content.GetMargin();
-				var bounds = new Rectangle(
-					frame.Left + margin.Left,
-					frame.Top + margin.Top,
-					frame.Width - margin.HorizontalThickness,
-					frame.Height - margin.VerticalThickness);
-				Content.Frame = bounds;
-			}
+			Content?.LayoutSubviews(frame);
 		}
 		public override Size GetDesiredSize(Size availableSize)
 		{

@@ -312,7 +312,6 @@ namespace Comet
 			catch(Exception ex)
 			{
 				Logger.Error(ex);
-				Reload(false);
 			}
 		}
 		protected const string ResetPropertyString = "ResetPropertyString";
@@ -616,7 +615,7 @@ namespace Comet
 
 		public virtual void LayoutSubviews(Rectangle frame)
 		{
-			Frame = frame;
+			this.SetFrameFromNativeView(frame);
 			if (BuiltView != null)
 				BuiltView.LayoutSubviews(frame);
 		}
