@@ -1,13 +1,11 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
 	<PropertyGroup>
-		<MauiVersion>6.0.101-preview.12.2336</MauiVersion>
 		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
 
 		<RootNamespace>Comet.Samples</RootNamespace>
 		<AssemblyName>Comet.Samples</AssemblyName>
-		<UseMaui>true</UseMaui>
 		<SingleProject>true</SingleProject>
 
 		<SupportedOSPlatformVersion Condition="'$(TargetFramework)' == 'net6.0-ios'">14.2</SupportedOSPlatformVersion>
@@ -16,11 +14,11 @@
 		<SupportedOSPlatformVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$(TargetFramework.Contains('-windows'))">10.0.17763.0</TargetPlatformMinVersion>
 	</PropertyGroup>
-
-	<ItemGroup>
-		<ProjectReference Include="..\..\src\Comet\Comet-net6.csproj" />
-	</ItemGroup>
 	<ItemGroup>
 		<PackageReference Include="Reloadify3000" Version="1.0.8" />
+	</ItemGroup>
+	<ItemGroup>
+	  <ProjectReference Include="..\..\External\Maui\src\Core\src\Core-net6.csproj" />
+	  <ProjectReference Include="..\..\src\Comet\Comet-net6.debug.csproj" />
 	</ItemGroup>
 </Project>

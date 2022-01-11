@@ -1,0 +1,12 @@
+<Project>
+  <PropertyGroup>
+    <SampleProject>true</SampleProject>
+    <UseMaui Condition=" '$(UseWorkload)' == 'true' ">true</UseMaui>
+  </PropertyGroup>
+  <Import Project="../../External/Maui/Directory.Build.props" />
+  
+  <Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Core.props"/>
+  <Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Controls.DefaultItems.props"/>
+  <Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Controls.props"/>
+
+</Project>

@@ -17,6 +17,8 @@
     <None Include="**\*.Mac.cs" />
     <Compile Remove="**\Mac\**\*.cs" />
     <None Include="**\Mac\**\*.cs" />
+    <Compile Remove="**\MacCatalyst\**\*.cs" />
+    <None Include="**\MacCatalyst\**\*.cs" />
   </ItemGroup>
   <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true AND $(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net6.0-ios')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true">
     <Compile Remove="**\*.MaciOS.cs" />
