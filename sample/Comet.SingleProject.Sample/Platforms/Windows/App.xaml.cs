@@ -25,11 +25,5 @@ namespace CometSample.WinUI
 
         protected override MauiApp CreateMauiApp() => MyApp.CreateMauiApp();
 
-        protected override void OnLaunched(LaunchActivatedEventArgs args)
-        {
-            base.OnLaunched(args);
-
-            Microsoft.Maui.Essentials.Platform.OnLaunched(args);
-        }
     }
 }

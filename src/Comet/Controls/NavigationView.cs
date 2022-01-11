@@ -1,7 +1,8 @@
 ﻿using System;
+
 namespace Comet
 {
-	public class NavigationView : ContentView
+	public class NavigationView : ContentView, INavigationView
 	{
 		public void Navigate(View view)
 		{
@@ -94,6 +95,13 @@ namespace Comet
 			}
 
 			return FindParentNavigationView(view?.Parent) ?? view.Navigation;
+		}
+
+		void INavigationView.RequestNavigation(NavigationRequest eventArgs) =>
+			ViewHandler?.Invoke(nameof(INavigationView.RequestNavigation), eventArgs);
+		void INavigationView.NavigationFinished(IReadOnlyList<IView> newStack)
+		{
+					
 		}
 	}
 }
