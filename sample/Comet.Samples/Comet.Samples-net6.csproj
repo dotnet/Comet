@@ -3,7 +3,8 @@
 	<PropertyGroup>
 		<TargetFrameworks>net6.0;net6.0-android;net6.0-ios;net6.0-maccatalyst</TargetFrameworks>
 		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net6.0-windows10.0.19041</TargetFrameworks>
-
+		
+		<OutputType>Library</OutputType>
 		<RootNamespace>Comet.Samples</RootNamespace>
 		<AssemblyName>Comet.Samples</AssemblyName>
 		<SingleProject>true</SingleProject>
