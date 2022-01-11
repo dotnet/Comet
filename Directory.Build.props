@@ -1,3 +1,5 @@
 <Project>
-		<MauiVersion>6.0.101-preview.11.2349</MauiVersion>
+	<PropertyGroup>
+		<MauiVersion  Condition=" '$(MauiVersion)' == '' ">6.0.101-preview.11.2349</MauiVersion>
+	<PropertyGroup>
 </Project>
