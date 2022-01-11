@@ -1,28 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <Project>
-   <PropertyGroup>
-    <!-- Required - Enable Launch Profiles for .NET 6 iOS/Android -->
-    <_KeepLaunchProfiles>true</_KeepLaunchProfiles>
-  </PropertyGroup>
-  <ItemGroup>
-    <!-- Required - Setup Single Project features -->
-    <ProjectCapability Include="MauiSingleProject" />
-
-    <!-- Optional - Enables a list of TFM's and device categories in the debug menu -->
-    <!-- This allows easily toggling of debug target TFM by selecting the platform -->
-    <!-- If removed, Top level debug targets show as a list of devices for the selected TFM -->
-    <ProjectCapability Include="XamarinStaticLaunchProfiles" />
-    
-  </ItemGroup>
-
-  <!-- Required - Overwrite tasks that are not needed when multitargeting -->
-  <Target Name="ValidateWinUIPlatform" />
-  <Target Name="BinPlaceBootstrapDll" />
-  
 	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Resizetizer.targets" />
-  <Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Controls.DefaultItems.targets" />
-  <Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Controls.targets" />
-	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Core.targets"  />
+	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Controls.DefaultItems.targets" />
+	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Controls.targets" />
+	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Core.targets" />
 	<Import Project="../../External/Maui/Directory.Build.targets" />
-	<Import Project="../../Directory.Build.targets" />
-
 </Project>

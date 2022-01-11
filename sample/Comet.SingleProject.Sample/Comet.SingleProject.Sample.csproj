@@ -5,7 +5,7 @@
 		<OutputType>Exe</OutputType>
 		<RootNamespace>CometSample</RootNamespace>
 		<SingleProject>true</SingleProject>
-   		<IsPackable>false</IsPackable>
+		<IsPackable>false</IsPackable>
 		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
 		<!-- Display name -->
 		<ApplicationTitle>CometSample</ApplicationTitle>
@@ -16,6 +16,7 @@
 		<!-- Required for C# Hot Reload -->
 		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
 		<_FastDeploymentDiagnosticLogging>True</_FastDeploymentDiagnosticLogging>
+		<WarningsNotAsErrors>CA1416</WarningsNotAsErrors>
 	</PropertyGroup>
 	<ItemGroup Condition=" $(TargetFramework.Contains('-windows')) ">
 		<PackageReference Include="Microsoft.WindowsAppSDK" />
@@ -36,9 +37,9 @@
 		<ProjectReference Include="..\Comet.Samples\Comet.Samples-net6.csproj" />
 	</ItemGroup>
 	<ItemGroup>
-	  <None Update="Resources\Images\turtlerock.jpg">
-	    <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-	  </None>
+		<None Update="Resources\Images\turtlerock.jpg">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</None>
 	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>
