@@ -17,5 +17,12 @@
   <!-- Required - Overwrite tasks that are not needed when multitargeting -->
   <Target Name="ValidateWinUIPlatform" />
   <Target Name="BinPlaceBootstrapDll" />
+  
+	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Resizetizer.targets" />
+  <Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Controls.DefaultItems.targets" />
+  <Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Controls.targets" />
+	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Core.targets"  />
+	<Import Project="../../External/Maui/Directory.Build.targets" />
+	<Import Project="../../Directory.Build.targets" />
 
 </Project>
