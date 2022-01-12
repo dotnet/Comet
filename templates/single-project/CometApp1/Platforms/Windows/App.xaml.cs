@@ -19,13 +19,7 @@ public partial class App : MauiWinUIApplication
         this.InitializeComponent();
     }
 
-        protected override MauiApp CreateMauiApp() => App.CreateMauiApp();
-
-    protected override void OnLaunched(LaunchActivatedEventArgs args)
-    {
-        base.OnLaunched(args);
-
-        Platform.OnLaunched(args);
-    }
+    protected override MauiApp CreateMauiApp() => CometApp1.App.CreateMauiApp();
+    
 }
 
