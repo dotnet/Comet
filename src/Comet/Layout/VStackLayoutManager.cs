@@ -198,7 +198,7 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 
 				var constraints = view.GetFrameConstraints();
 				var sizing = view.GetHorizontalLayoutAlignment(layout);
-				if (sizing == LayoutAlignment.Fill && constraints?.Width == null)
+				if (sizing == LayoutAlignment.Fill && constraints?.Width == null && !double.IsInfinity(widthConstraint))
 					width = widthConstraint;
 
 				width = Math.Max(finalWidth, width);
@@ -217,10 +217,10 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 
 		var layoutMargin = layout.GetMargin();
 
-		if (layoutHorizontalSizing == LayoutAlignment.Fill)
+		if (layoutHorizontalSizing == LayoutAlignment.Fill && !double.IsInfinity(widthConstraint))
 			width = widthConstraint;
 
-		if (layoutVerticalSizing == LayoutAlignment.Fill)
+		if (layoutVerticalSizing == LayoutAlignment.Fill && !double.IsInfinity(heightConstraint))
 			height = heightConstraint - layoutMargin.VerticalThickness;
 
 		width += padding.VerticalThickness;

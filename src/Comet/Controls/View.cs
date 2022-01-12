@@ -548,6 +548,11 @@ namespace Comet
 			if (!IsMeasureValid)
 			{
 				var fe = (IView)this;
+
+				var frameConstraints = this.GetFrameConstraints();
+
+				if (frameConstraints?.Height > 0 && frameConstraints?.Width > 0)
+					return new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
 				var ms = this.ComputeDesiredSize(availableSize.Width, availableSize.Height);
 				if(fe.Width > 0)
 					ms.Width = fe.Width;

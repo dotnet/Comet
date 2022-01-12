@@ -22,9 +22,6 @@ namespace Comet.Layout
 			var layoutVerticalSizing = layout.VerticalLayoutAlignment;
 			var layoutHorizontalSizing = layout.HorizontalLayoutAlignment;
 
-			if (layoutHorizontalSizing == LayoutAlignment.Fill && layoutVerticalSizing == LayoutAlignment.Fill)
-				return new Size(wConstraint, hConstraint);
-
 			double widthConstraint = frameConstraints?.Width > 0 ? frameConstraints.Width.Value : wConstraint;
 			double heightConstraint = frameConstraints?.Height > 0 ? frameConstraints.Height.Value : hConstraint;
 
@@ -42,13 +39,14 @@ namespace Comet.Layout
 			measuredSize.Height += padding.VerticalThickness;
 			measuredSize.Width += padding.HorizontalThickness;
 
-			if (layoutVerticalSizing == LayoutAlignment.Fill)
+			if (layoutVerticalSizing == LayoutAlignment.Fill && !double.IsInfinity(hConstraint))
 				measuredSize.Height = hConstraint;
-			if (layoutHorizontalSizing == LayoutAlignment.Fill)
+			if (layoutHorizontalSizing == LayoutAlignment.Fill && !double.IsInfinity(wConstraint))
 				measuredSize.Width = wConstraint;
 
 			if (frameConstraints?.Height > 0 && frameConstraints?.Width > 0)
 				return new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
+
 			return measuredSize;
 		}
 

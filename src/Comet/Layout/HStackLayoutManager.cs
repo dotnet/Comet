@@ -211,7 +211,7 @@ namespace Comet.Layout
 
 					var constraints = view.GetFrameConstraints();
 					var verticalSizing = view.GetVerticalLayoutAlignment(layout);
-					if (verticalSizing == LayoutAlignment.Fill && constraints?.Height == null)
+					if (verticalSizing == LayoutAlignment.Fill && constraints?.Height == null && !double.IsInfinity(heightConstraint))
 						height = heightConstraint;
 
 					height = Math.Max(finalHeight, height);
@@ -228,10 +228,9 @@ namespace Comet.Layout
 			if (spacerCount > 0)
 				width = widthConstraint;
 
-			if (layoutVerticalSizing == LayoutAlignment.Fill)
+			if (layoutVerticalSizing == LayoutAlignment.Fill && !double.IsInfinity(heightConstraint))
 				height = heightConstraint;
-
-			if (layoutHorizontalSizing == LayoutAlignment.Fill)
+			if (layoutHorizontalSizing == LayoutAlignment.Fill && !double.IsInfinity(widthConstraint))
 				width = widthConstraint;
 
 			width += padding.VerticalThickness;
