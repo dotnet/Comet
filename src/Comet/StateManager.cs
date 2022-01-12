@@ -240,7 +240,7 @@ namespace Comet
 				string parentproperty = null;
 				if (!mappings?.TryGetValue(view.Id, out parentproperty) ?? false && (mappings?.Count ?? 0) > 0)
 				{
-					parentproperty ??= mappings?.First().Key;
+					parentproperty ??= mappings?.First().Value;
 				}
 				var prop = string.IsNullOrWhiteSpace(parentproperty) ? propertyName : $"{parentproperty}.{propertyName}";
 				//TODO: Change this to use notify and property name
