@@ -135,7 +135,13 @@ namespace Comet
 			if (replacedView != null)
 				replacedView.ViewHandler = handler;
 			AddAllAnimationsToManager();
+			OnHandlerChange();
 			return true;
+
+		}
+
+		protected virtual void OnHandlerChange()
+		{
 
 		}
 

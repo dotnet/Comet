@@ -26,6 +26,10 @@ namespace Comet
 
 		protected Action<View> PerformNavigate { get; set; }
 
+		protected override void OnHandlerChange()
+		{
+			((INavigationView)this).RequestNavigation(new NavigationRequest(new List<IView> { Content }, false));
+		}
 
 		public void Pop()
 		{
