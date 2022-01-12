@@ -20,7 +20,13 @@ namespace Comet.Layout
 		ContainerView layout;
 		public Size ArrangeChildren(Rectangle rect)
 		{
+
+			var padding = layout.GetPadding();
+
 			var measured = rect.Size;
+			measured.Width -= padding.Right;
+			measured.Height -= padding.Bottom;
+
 			double height = 0;
 
 			var index = 0;
@@ -83,8 +89,8 @@ namespace Comet.Layout
 				spacerWidth = availableWidth / spacerCount;
 			}
 
-			var x = rect.X;
-			var y = rect.Y;
+			var x = rect.X + padding.Left;
+			var y = rect.Y + padding.Top;
 			index = 0;
 			foreach (var view in layout)
 			{
@@ -110,13 +116,13 @@ namespace Comet.Layout
 				switch (alignment)
 				{
 					case VerticalAlignment.Center:
-						alignedY += (measured.Height - size.Height - margin.Bottom + margin.Top) / 2;
+						alignedY += ((measured.Height - size.Height - margin.Bottom + margin.Top) / 2) + padding.Top;
 						break;
 					case VerticalAlignment.Bottom:
-						alignedY += measured.Height - size.Height - margin.Bottom;
+						alignedY += measured.Height - size.Height - (margin.Bottom + padding.Bottom);
 						break;
 					case VerticalAlignment.Top:
-						alignedY = margin.Top;
+						alignedY = margin.Top + padding.Top;
 						break;
 					case VerticalAlignment.FirstTextBaseline:
 						throw new NotSupportedException(VerticalAlignment.FirstTextBaseline.ToString());
@@ -134,8 +140,8 @@ namespace Comet.Layout
 				var sizing = view.GetVerticalLayoutAlignment(layout);
 				if (sizing == LayoutAlignment.Fill && constraints?.Height == null)
 				{
-					alignedY = margin.Top;
-					size.Height = measured.Height - margin.VerticalThickness;
+					alignedY = margin.Top + padding.Top;
+					size.Height = measured.Height - margin.VerticalThickness - padding.VerticalThickness;
 				}
 
 				view.Frame = new Rectangle(x, alignedY, size.Width, size.Height);
@@ -148,8 +154,23 @@ namespace Comet.Layout
 			}
 			return new Size(x, height);
 		}
-		public Size Measure(double widthConstraint, double heightConstraint)
+		public Size Measure(double wConstraint, double hConstraint)
 		{
+			//Lets adjust for Frame settings
+			var frameConstraints = layout.GetFrameConstraints();
+
+			var layoutVerticalSizing = ((IView)layout).VerticalLayoutAlignment;
+			var layoutHorizontalSizing = ((IView)layout).HorizontalLayoutAlignment;
+
+
+			double widthConstraint = frameConstraints?.Width > 0 ? frameConstraints.Width.Value : wConstraint;
+			double heightConstraint = frameConstraints?.Height > 0 ? frameConstraints.Height.Value : hConstraint;
+
+			//Lets adjust for padding
+			var padding = layout.GetPadding();
+			widthConstraint -= padding.HorizontalThickness;
+			heightConstraint -= padding.VerticalThickness;
+
 			var index = 0;
 			double width = 0;
 			double height = 0;
@@ -207,13 +228,17 @@ namespace Comet.Layout
 			if (spacerCount > 0)
 				width = widthConstraint;
 
-			var layoutVerticalSizing = layout.GetVerticalLayoutAlignment(layout);
 			if (layoutVerticalSizing == LayoutAlignment.Fill)
 				height = heightConstraint;
 
-			var layoutHorizontalSizing = layout.GetHorizontalLayoutAlignment(layout);
 			if (layoutHorizontalSizing == LayoutAlignment.Fill)
 				width = widthConstraint;
+
+			width += padding.VerticalThickness;
+			height += padding.HorizontalThickness;
+
+			if (frameConstraints?.Height > 0 && frameConstraints?.Width > 0)
+				return new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
 
 			return new Size(width, height);
 		}
