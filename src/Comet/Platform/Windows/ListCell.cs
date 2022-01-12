@@ -1,96 +1,86 @@
-﻿//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-//using System.Threading.Tasks;
-//using Microsoft.Maui;
-//using Microsoft.UI.Xaml;
-//using Microsoft.UI.Xaml.Controls;
-//using WGrid = Microsoft.UI.Xaml.Controls.Grid;
-//using UwpSize = Windows.Foundation.Size;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Microsoft.Maui;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using WGrid = Microsoft.UI.Xaml.Controls.Grid;
+using UwpSize = Windows.Foundation.Size;
 
-//namespace Comet.Platform.Windows
-//{
-//	class ListCell : WGrid
-//	{
-//		private View _view;
-//		private UIElement _nativeView;
-//		private IViewHandler _handler;
+namespace Comet.Platform.Windows
+{
+	class ListCell : WGrid
+	{
+		private View _view;
+		private UIElement _nativeView;
+		private IElementHandler _handler;
 
-//		public ListCell(View view = null)
-//		{
-//			View = view;
-//		}
+		public ListCell(View view , IMauiContext context)
+		{
+			Context = context;
+			View = view;
+		}
 
-//		public View View
-//		{
-//			get => _view;
-//			set
-//			{
-//				if (value == _view)
-//					return;
+		public View View
+		{
+			get => _view;
+			set
+			{
+				if (value == _view)
+					return;
 
-//				if (_handler is ViewHandler oldViewHandler)
-//					oldViewHandler.NativeViewChanged -= HandleNativeViewChanged;
+				_view = value;
+				_handler = _view?.ViewHandler;
+				UpdateView();
+			}
+		}
 
-//				if (_view != null)
-//					_view.NeedsLayout -= LayoutChanged;
+		public IMauiContext Context { get; }
 
-//				_view = value;
-//				_handler = _view?.ViewHandler;
+		private void LayoutChanged(object sender, EventArgs e)
+		{
+			InvalidateMeasure();
+			InvalidateArrange();
+		}
 
-//				if (_view != null)
-//					_view.NeedsLayout += LayoutChanged;
+		private void UpdateView()
+		{
+			if (_nativeView != null)
+			{
+				Children.Remove(_nativeView);
+				_nativeView = null;
+			}
 
-//				if (_handler is ViewHandler newViewHandler)
-//					newViewHandler.NativeViewChanged += HandleNativeViewChanged;
+			_nativeView = _view?.ToNative(Context);
 
-//				HandleNativeViewChanged(this, null);
-//			}
-//		}
+			if (_nativeView != null)
+			{
+				if (_nativeView is FrameworkElement frameworkElement)
+				{
+					WGrid.SetRow(frameworkElement, 0);
+					WGrid.SetColumn(frameworkElement, 0);
+					WGrid.SetColumnSpan(frameworkElement, 1);
+					WGrid.SetRowSpan(frameworkElement, 1);
+				}
 
-//		private void LayoutChanged(object sender, EventArgs e)
-//		{
-//			InvalidateMeasure();
-//			InvalidateArrange();
-//		}
+				Children.Add(_nativeView);
+			}
+		}
 
-//		private void HandleNativeViewChanged(object sender, ViewChangedEventArgs e)
-//		{
-//			if (_nativeView != null)
-//			{
-//				Children.Remove(_nativeView);
-//				_nativeView = null;
-//			}
+		protected override UwpSize MeasureOverride(UwpSize availableSize)
+		{
+			var measuredSize = _view?.Measure(availableSize.Width, availableSize.Height).ToNative();
+			return measuredSize ?? availableSize;
+		}
 
-//			_nativeView = _view?.ToView();
+		protected override UwpSize ArrangeOverride(UwpSize finalSize)
+		{
+			if (finalSize.Width > 0 && finalSize.Height > 0 && _view != null)
+				_view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
 
-//			if (_nativeView != null)
-//			{
-//				if (_nativeView is FrameworkElement frameworkElement)
-//				{
-//					WGrid.SetRow(frameworkElement, 0);
-//					WGrid.SetColumn(frameworkElement, 0);
-//					WGrid.SetColumnSpan(frameworkElement, 1);
-//					WGrid.SetRowSpan(frameworkElement, 1);
-//				}
-
-//				Children.Add(_nativeView);
-//			}
-//		}
-
-//		protected override UwpSize MeasureOverride(UwpSize availableSize)
-//		{
-//			var measuredSize = _view?.Measure(availableSize.ToSizeF()).ToWSize();
-//			return measuredSize ?? availableSize;
-//		}
-
-//		protected override UwpSize ArrangeOverride(UwpSize finalSize)
-//		{
-//			if (finalSize.Width > 0 && finalSize.Height > 0 && _view != null)
-//				_view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
-
-//			return finalSize;
-//		}
-//	}
-//}
+			return finalSize;
+		}
+	}
+}

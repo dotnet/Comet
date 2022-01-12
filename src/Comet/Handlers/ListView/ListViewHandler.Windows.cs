@@ -2,6 +2,8 @@
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui;
 using UWPListView = Microsoft.UI.Xaml.Controls.ListView;
+using Microsoft.UI.Xaml.Controls;
+using Comet.Platform.Windows;
 
 namespace Comet.Handlers
 {
@@ -11,29 +13,29 @@ namespace Comet.Handlers
 
 		public static void MapListViewProperty(IElementHandler viewHandler, IListView virtualView)
 		{
-			//setupView(viewHandler, virtualView);
+			setupView(viewHandler as ListViewHandler, virtualView);
 		}
 
 		static void setupView(ListViewHandler viewHandler, IListView virtualView)
 		{
-			//var nativeView = (UWPListView)viewHandler.NativeView;
-			//var sections = virtualView?.Sections() ?? 0;
-			//for (var s = 0; s < sections; s++)
-			//{
-			//	var section = virtualView?.HeaderFor(s);
-			//	if (section != null)
-			//		nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler)viewHandler, section));
+			var nativeView = (UWPListView)viewHandler.NativeView;
+			var sections = virtualView?.Sections() ?? 0;
+			for (var s = 0; s < sections; s++)
+			{
+				var section = virtualView?.HeaderFor(s);
+				if (section != null)
+					nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler)viewHandler, section));
 
-			//	var rows = virtualView.Rows(s);
-			//	for (var r = 0; r < rows; r++)
-			//	{
-			//		var v = virtualView.ViewFor(s, r);
-			//		nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler)viewHandler, v));
-			//	}
-			//	var footer = virtualView?.FooterFor(s);
-			//	if (footer != null)
-			//		nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler)viewHandler, footer));
-			//}
+				var rows = virtualView.Rows(s);
+				for (var r = 0; r < rows; r++)
+				{
+					var v = virtualView.ViewFor(s, r);
+					nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler)viewHandler, v));
+				}
+				var footer = virtualView?.FooterFor(s);
+				if (footer != null)
+					nativeView.Items?.Add(new ListViewHandlerItem((ListViewHandler)viewHandler, footer));
+			}
 		}
 
 		public static void MapReloadData(IElementHandler viewHandler, IListView virtualView, object? value)
@@ -55,22 +57,22 @@ namespace Comet.Handlers
 
 			VirtualView?.OnSelected(0, NativeView.SelectedIndex);
 		}
-		//public class ListViewHandlerItem : ListViewItem
-		//{
-		//	public ListViewHandlerItem(ListViewHandler handler, View view)
-		//	{
-		//		RemoveViewHandlers(view);
-		//		var nativeView = new IListCell(view);
-		//		Content = nativeView;
-		//	}
+		public class ListViewHandlerItem : ListViewItem
+		{
+			public ListViewHandlerItem(ListViewHandler handler, View view)
+			{
+				RemoveViewHandlers(view);
+				var nativeView = new ListCell(view, handler.MauiContext);
+				Content = nativeView;
+			}
 
-		//	private void RemoveViewHandlers(View view)
-		//	{
-		//		view.ViewHandler = null;
-		//		if (view is AbstractLayout layout)
-		//			foreach (var subview in layout)
-		//				RemoveViewHandlers(subview);
-		//	}
-		//}
+			private void RemoveViewHandlers(View view)
+			{
+				view.ViewHandler = null;
+				if (view is AbstractLayout layout)
+					foreach (var subview in layout)
+						RemoveViewHandlers(subview);
+			}
+		}
 	}
 }
