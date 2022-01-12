@@ -169,25 +169,25 @@ namespace Comet
 			//view.RequestLayout();
 		}
 
-		public static T FillHorizontal<T>(this T view, bool cascades = true) where T : View
+		public static T FillHorizontal<T>(this T view, bool cascades = false) where T : View
 		{
 			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill, cascades);
 			return view;
 		}
 
-		public static T FillVertical<T>(this T view, bool cascades = true) where T : View
+		public static T FillVertical<T>(this T view, bool cascades = false) where T : View
 		{
 			view.SetEnvironment(EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill, cascades);
 			return view;
 		}
 
-		public static T FitHorizontal<T>(this T view, bool cascades = true) where T : View
+		public static T FitHorizontal<T>(this T view, bool cascades = false) where T : View
 		{
 			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Start, cascades);
 			return view;
 		}
 
-		public static T FitVertical<T>(this T view, bool cascades = true) where T : View
+		public static T FitVertical<T>(this T view, bool cascades = false) where T : View
 		{
 			view.SetEnvironment(EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Start, cascades);
 			return view;
