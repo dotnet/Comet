@@ -12,7 +12,7 @@ on:
 
 jobs:
   build:
-    name: Build Comet-Nuget
+    name: Build Template
     env:
         NUPKG_MAJOR: 0.2
         BASE: 334
