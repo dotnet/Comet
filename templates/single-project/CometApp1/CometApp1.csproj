@@ -43,7 +43,7 @@
 		<RuntimeIdentifier>win10-x64</RuntimeIdentifier>
 	</PropertyGroup>
 	<ItemGroup>
-		<PackageReference Include="Clancey.Comet" Version="0.3.424-beta" />
+		<PackageReference Include="Clancey.Comet" Version="0.3.438-beta" />
 		<PackageReference Include="Reloadify3000" Version="1.0.8" />
 	</ItemGroup>
 </Project>

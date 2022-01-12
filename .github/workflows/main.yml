@@ -5,6 +5,8 @@ name: main-build
 on:
   push:
     branches: [ main]
+    paths-ignore:
+      - 'templates/**'
 
   workflow_dispatch:
 
