@@ -48,18 +48,7 @@ namespace Comet.Handlers
 		public override void SetVirtualView(IView view)
 		{
 			base.SetVirtualView(view);
-
-			var newContent = VirtualView.Content?.ToNative(MauiContext);
-			if (_content == null || newContent != _content)
-			{
-				if (_content != null)
-					NativeView.RemoveView(_content);
-
-				_content = newContent;
-
-				if (_content != null)
-					NativeView.AddView(_content);
-			}
+			NativeView.SetVirtualView(VirtualView, MauiContext);
 		}
 	}
 }
