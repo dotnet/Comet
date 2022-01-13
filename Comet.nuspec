@@ -67,7 +67,7 @@
   </metadata>
   <files>
     <file src="Directory.Build.targets" target="build/CometTargets.targets"/>
-    <file src="Directory.Build.props" target="build/CometTargets.Build.props"/>
+    <file src="Directory.Build.props" target="content/CometTargets.Build.props"/>
     <file src="src/Comet/bin/Debug/netstandard2.1/Comet.dll" target="lib/netstandard2.1/Comet.dll"/>
     <file src="src/Comet/bin/Debug/netstandard2.1/Comet.pdb" target="lib/netstandard2.1/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/netstandard2.1/Microsoft.Maui.dll" target="lib/netstandard2.1/Microsoft.Maui.dll"/>
