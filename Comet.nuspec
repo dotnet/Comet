@@ -64,6 +64,9 @@
       <group targetFramework="net6.0-windows10.0.18362">
       </group>
     </dependencies>
+    <contentFiles>
+      <files include="**/CometTargets.Build.props" flatten="true" />
+    </contentFiles
   </metadata>
   <files>
     <file src="Directory.Build.targets" target="build/CometTargets.targets"/>
