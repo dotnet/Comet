@@ -20,127 +20,28 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 	{
 
 		var padding = layout.GetPadding();
-
-		var measured = rect.Size;
-		measured.Width -= padding.HorizontalThickness;
-		measured.Height -= padding.VerticalThickness;
-
-		double width = 0;
-
-		var index = 0;
-		double nonSpacerHeight = 0;
-		var spacerCount = 0;
-		var sizes = new List<Size>();
-		var lastWasSpacer = false;
-
-		foreach (var v in layout)
+		var layoutRect = rect.ApplyPadding(padding);
+		double spacerHeight = (layoutRect.Height - childrenHeight) / spacerCount;
+		foreach (var view in layout)
 		{
-			var isSpacer = false;
-
-			if (v is Spacer)
+			if (view is Spacer)
 			{
-				spacerCount++;
-				isSpacer = true;
-				sizes.Add(new Size());
-			}
-			else if(v is View view)
-			{
-				var size = view.MeasuredSize;
-				var constraints = view.GetFrameConstraints();
-				var margin = view.GetMargin();
-				var sizing = view.GetHorizontalLayoutAlignment(layout);
-
-				if (constraints?.Width != null)
-					size.Width = Math.Min((float)constraints.Width, measured.Width);
-
-				if (constraints?.Height != null)
-					size.Height = Math.Min((float)constraints.Height, measured.Height);
-
-				if (sizing == Microsoft.Maui.Primitives.LayoutAlignment.Fill && constraints?.Width == null)
-					size.Width = measured.Width - margin.HorizontalThickness;
-
-				sizes.Add(size);
-				width = Math.Max(size.Width, width);
-				nonSpacerHeight += size.Height + margin.VerticalThickness;
+				layoutRect.Y += spacerHeight;
+				continue;
 			}
 
-			if (index > 0 && !lastWasSpacer && !isSpacer)
-				nonSpacerHeight += _spacing;
 
-			lastWasSpacer = isSpacer;
-			index++;
+			var size = view.MeasuredSize;
+			layoutRect.Height = size.Height;
+			view.SetFrameFromNativeView(layoutRect);
+			layoutRect.Y = view.Frame.Bottom + _spacing;
+
 		}
-
-		nonSpacerHeight = Math.Min(nonSpacerHeight, measured.Height);
-
-		double spacerHeight = 0;
-		if (spacerCount > 0)
-		{
-			var availableHeight = measured.Height - nonSpacerHeight;
-			spacerHeight = availableHeight / spacerCount;
-		}
-
-		var x = rect.X + padding.Left;
-		var y = rect.Y + padding.Top;
-		index = 0;
-		foreach (var v in layout)
-		{
-			var isSpacer = false;
-			var view = (View)v;
-			Size size;
-			if (v is Spacer)
-			{
-				isSpacer = true;
-				size = new Size(width, spacerHeight);
-			}
-			else
-			{
-				size = sizes[index];
-			}
-
-			var constraints = view.GetFrameConstraints();
-			var alignment = constraints?.Alignment?.Horizontal ?? _defaultAlignment;
-			var alignedX = x;
-
-			var margin = view.GetMargin();
-
-			switch (alignment)
-			{
-				case HorizontalAlignment.Center:
-					alignedX += ((measured.Width - size.Width - margin.HorizontalThickness) / 2) + padding.Left;
-					break;
-				case HorizontalAlignment.Trailing:
-					alignedX = layout.Frame.Width - size.Width - (margin.Right + padding.Right);
-					break;
-				case HorizontalAlignment.Leading:
-					alignedX = margin.Left + padding.Left;
-					break;
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
-
-			if (index > 0 && !lastWasSpacer && !isSpacer)
-				y += _spacing;
-
-			y += margin.Top;
-
-			var sizing = view.GetHorizontalLayoutAlignment(layout);
-			if (sizing == LayoutAlignment.Fill && constraints?.Width == null)
-			{
-				alignedX = margin.Left + padding.Left;
-				size.Width = measured.Width - margin.HorizontalThickness - padding.HorizontalThickness;
-			}
-
-			view.Frame = new Rectangle(alignedX, y, size.Width, size.Height);
-
-			y += size.Height;
-			y += margin.Bottom;
-
-			lastWasSpacer = isSpacer;
-			index++;
-		}
-		return new Size(width, y);
+		return new Size(layoutRect.Left,layoutRect.Bottom);
 	}
+
+	int spacerCount;
+	double childrenHeight;
 	public Size Measure(double wConstraint, double hConstraint)
 	{
 		//Lets adjust for Frame settings
@@ -161,8 +62,8 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 		var index = 0;
 		double width = 0;
 		double height = 0;
-		var spacerCount = 0;
 		var lastWasSpacer = false;
+		spacerCount = 0;
 
 
 		foreach (var view in layout)
@@ -211,7 +112,8 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 			lastWasSpacer = isSpacer;
 			index++;
 		}
-
+		if(spacerCount > 0)
+			childrenHeight = height;
 		if (spacerCount > 0)
 			height = heightConstraint;
 
@@ -225,9 +127,10 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 
 		width += padding.VerticalThickness;
 		height += padding.HorizontalThickness;
-
 		if (frameConstraints?.Height > 0 && frameConstraints?.Width > 0)
+		{
 			return new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
+		}
 
 		return new Size(width, height);
 	}
