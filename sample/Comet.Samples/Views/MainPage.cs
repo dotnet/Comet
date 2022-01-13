@@ -14,6 +14,7 @@ namespace Comet.Samples
 		{
 			new MenuItem("Ride the Comet",()=> new RideSample()),
 			new MenuItem("Text Styles",()=> new TextStylesSample()),
+			new MenuItem("LayoutTest",()=> new ViewLayoutTestCase()),
 			new MenuItem("Text Weight",()=> new TextWeightSample()),
 			new MenuItem("VGrid Sample", ()=> new VGridSample()),
 			new MenuItem("VGrid Number Pad", ()=> new VGridNumberPad()),

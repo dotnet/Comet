@@ -52,9 +52,14 @@ namespace Comet.Layout
 
 		public Size ArrangeChildren(Rectangle bounds)
 		{
+			var padding = layout.Padding;
+			var b = bounds.ApplyPadding(padding);
 			foreach (var v in layout)
 			{
-				v.Arrange(bounds);
+				if (v is View cv)
+					cv.SetFrameFromNativeView(b);
+				else
+					v.Arrange(b);
 			}
 			return bounds.Size;
 		}

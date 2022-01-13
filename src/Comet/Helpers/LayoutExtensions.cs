@@ -165,8 +165,6 @@ namespace Comet
 			var x = frame.X + ((frame.Width - width) * xFactor);
 			var y = frame.Y + ((frame.Height - height) * yFactor);
 			view.Frame = new Rectangle((float)x, (float)y, width, height);
-			//TODO: Redo this!
-			//view.RequestLayout();
 		}
 
 		public static T FillHorizontal<T>(this T view, bool cascades = false) where T : View
