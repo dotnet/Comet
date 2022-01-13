@@ -18,7 +18,6 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 	ContainerView layout;
 	public Size ArrangeChildren(Rectangle rect)
 	{
-
 		var padding = layout.GetPadding();
 		var layoutRect = rect.ApplyPadding(padding);
 		double spacerHeight = (layoutRect.Height - childrenHeight) / spacerCount;
@@ -62,24 +61,21 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 		var index = 0;
 		double width = 0;
 		double height = 0;
-		var lastWasSpacer = false;
 		spacerCount = 0;
 
 
 		foreach (var view in layout)
 		{
-			var isSpacer = false;
-
 			if (view is Spacer)
 			{
 				spacerCount++;
-				isSpacer = true;
 
 				if (!view.MeasurementValid)
 				{
 					view.MeasuredSize = new Size(-1, -1);
 					view.MeasurementValid = true;
 				}
+				continue;
 			}
 			else
 			{
@@ -106,10 +102,8 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 				height += finalHeight;
 			}
 
-			if (index > 0 && !lastWasSpacer && !isSpacer)
+			if (index > 0)
 				height += _spacing;
-
-			lastWasSpacer = isSpacer;
 			index++;
 		}
 		if(spacerCount > 0)

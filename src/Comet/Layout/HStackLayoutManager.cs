@@ -20,140 +20,28 @@ namespace Comet.Layout
 		ContainerView layout;
 		public Size ArrangeChildren(Rectangle rect)
 		{
-
 			var padding = layout.GetPadding();
-
-			var measured = rect.Size;
-			measured.Width -= padding.Right;
-			measured.Height -= padding.Bottom;
-
-			double height = 0;
-
-			var index = 0;
-			double nonSpacerWidth = 0;
-			var spacerCount = 0;
-			var sizes = new List<Size>();
-			var lastWasSpacer = false;
+			var layoutRect = rect.ApplyPadding(padding);
+			double spacerWidth = (layoutRect.Width - childrenWidth) / spacerCount;
 
 			foreach (var view in layout)
 			{
-				var isSpacer = false;
-
 				if (view is Spacer)
 				{
-					spacerCount++;
-					isSpacer = true;
-					sizes.Add(new Size());
-				}
-				else
-				{
-					var size = view.MeasuredSize;
-					var constraints = view.GetFrameConstraints();
-					var margin = view.GetMargin();
-					var sizing = view.GetVerticalLayoutAlignment(layout);
-
-					// todo: this should never be needed.  Need to investigate this.
-					if (!view.MeasurementValid)
-					{
-						view.MeasuredSize = size = view.Measure(measured.Width,measured.Height);
-						view.MeasurementValid = true;
-					}
-
-					if (constraints?.Width != null)
-						size.Width = Math.Min((float)constraints.Width, measured.Width);
-
-					if (constraints?.Height != null)
-						size.Height = Math.Min((float)constraints.Height, measured.Height);
-
-					if (sizing == LayoutAlignment.Fill && constraints?.Height == null)
-						size.Height = measured.Height - margin.VerticalThickness;
-
-					sizes.Add(size);
-					height = Math.Max(size.Height, height);
-					nonSpacerWidth += size.Width + margin.HorizontalThickness;
+					layoutRect.X += spacerWidth;
+					continue;
 				}
 
-				if (index > 0 && !lastWasSpacer && !isSpacer)
-					nonSpacerWidth += _spacing;
-
-				lastWasSpacer = isSpacer;
-				index++;
+				var size = view.MeasuredSize;
+				layoutRect.Width = size.Width;
+				view.SetFrameFromNativeView(layoutRect);
+				layoutRect.X = view.Frame.Right + _spacing;
 			}
-
-			nonSpacerWidth = Math.Min(nonSpacerWidth, measured.Width);
-
-			double spacerWidth = 0;
-			if (spacerCount > 0)
-			{
-				var availableWidth = measured.Width - nonSpacerWidth;
-				spacerWidth = availableWidth / spacerCount;
-			}
-
-			var x = rect.X + padding.Left;
-			var y = rect.Y + padding.Top;
-			index = 0;
-			foreach (var view in layout)
-			{
-				var isSpacer = false;
-
-				Size size;
-				if (view is Spacer)
-				{
-					isSpacer = true;
-					size = new Size(spacerWidth, height);
-				}
-				else
-				{
-					size = sizes[index];
-				}
-
-				var constraints = view.GetFrameConstraints();
-				var alignment = constraints?.Alignment?.Vertical ?? _defaultAlignment;
-				var alignedY = y;
-
-				var margin = view.GetMargin();
-
-				switch (alignment)
-				{
-					case VerticalAlignment.Center:
-						alignedY += ((measured.Height - size.Height - margin.Bottom + margin.Top) / 2) + padding.Top;
-						break;
-					case VerticalAlignment.Bottom:
-						alignedY += measured.Height - size.Height - (margin.Bottom + padding.Bottom);
-						break;
-					case VerticalAlignment.Top:
-						alignedY = margin.Top + padding.Top;
-						break;
-					case VerticalAlignment.FirstTextBaseline:
-						throw new NotSupportedException(VerticalAlignment.FirstTextBaseline.ToString());
-					case VerticalAlignment.LastTextBaseline:
-						throw new NotSupportedException(VerticalAlignment.LastTextBaseline.ToString());
-					default:
-						throw new ArgumentOutOfRangeException();
-				}
-
-				if (index > 0 && !lastWasSpacer && !isSpacer)
-					x += _spacing;
-
-				x += margin.Left;
-
-				var sizing = view.GetVerticalLayoutAlignment(layout);
-				if (sizing == LayoutAlignment.Fill && constraints?.Height == null)
-				{
-					alignedY = margin.Top + padding.Top;
-					size.Height = measured.Height - margin.VerticalThickness - padding.VerticalThickness;
-				}
-
-				view.Frame = new Rectangle(x, alignedY, size.Width, size.Height);
-
-				x += size.Width;
-				x += margin.Right;
-
-				lastWasSpacer = isSpacer;
-				index++;
-			}
-			return new Size(x, height);
+			return new Size(layoutRect.Left, layoutRect.Bottom);
 		}
+
+		int spacerCount;
+		double childrenWidth;
 		public Size Measure(double wConstraint, double hConstraint)
 		{
 			//Lets adjust for Frame settings
@@ -174,24 +62,19 @@ namespace Comet.Layout
 			var index = 0;
 			double width = 0;
 			double height = 0;
-			var spacerCount = 0;
-			var lastWasSpacer = false;
 
 
 			foreach (var view in layout)
 			{
-				var isSpacer = false;
-
 				if (view is Spacer)
 				{
 					spacerCount++;
-					isSpacer = true;
-
 					if (!view.MeasurementValid)
 					{
 						view.MeasuredSize = new Size(-1, -1);
 						view.MeasurementValid = true;
 					}
+					continue;
 				}
 				else
 				{
@@ -218,13 +101,11 @@ namespace Comet.Layout
 					width += finalWidth;
 				}
 
-				if (index > 0 && !lastWasSpacer && !isSpacer)
+				if (index > 0)
 					width += _spacing;
-
-				lastWasSpacer = isSpacer;
 				index++;
 			}
-
+			childrenWidth = width;
 			if (spacerCount > 0)
 				width = widthConstraint;
 
