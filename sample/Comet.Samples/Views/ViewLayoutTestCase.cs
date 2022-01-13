@@ -44,7 +44,7 @@ namespace Comet.Samples
 
 				}.Frame(400,400).Background(Colors.White).Padding(12),
 
-				new Text("Layout Without Spacers"),
+				new Text("VStack Without Spacers"),
 				new VStack
 				{
 					new Text("L").Background(Colors.Blue),
@@ -53,8 +53,27 @@ namespace Comet.Samples
 
 				}.Background(Colors.White).Padding(12),
 
-				new Text("Layout With Spacers"),
+				new Text("VStack With Spacers"),
 				new VStack
+				{
+					new Text("L").Background(Colors.Blue),
+					new Spacer(),
+					new Text("C").Background(Colors.Blue),
+					new Text("R").Background(Colors.Blue),
+
+				}.Frame(200,200).Background(Colors.White).Padding(12),
+
+				new Text("HStack Without Spacers"),
+				new HStack
+				{
+					new Text("L").Background(Colors.Blue),
+					new Text("C").Background(Colors.Blue),
+					new Text("R").Background(Colors.Blue),
+
+				}.Background(Colors.White).Padding(12),
+
+				new Text("HStack With Spacers"),
+				new HStack
 				{
 					new Text("L").Background(Colors.Blue),
 					new Spacer(),
