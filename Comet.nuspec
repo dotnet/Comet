@@ -66,7 +66,7 @@
     </dependencies>
     <contentFiles>
       <files include="**/CometTargets.Build.props" flatten="true" />
-    </contentFiles
+    </contentFiles>
   </metadata>
   <files>
     <file src="Directory.Build.targets" target="build/CometTargets.targets"/>
