@@ -15,7 +15,7 @@ namespace Comet
 		public ILayoutManager LayoutManager => layout ??= CreateLayoutManager();
 		public ILayoutHandler LayoutHandler => ViewHandler as ILayoutHandler;
 
-		Thickness IPadding.Padding => this.GetPadding();
+		Thickness IPadding.Padding => GetDefaultPadding();
 
 		protected override void OnAdded(View view)
 		{
@@ -40,6 +40,7 @@ namespace Comet
 			InvalidateMeasurement();
 		}
 
+		protected virtual Thickness GetDefaultPadding() => this.GetEnvironment<Thickness>(nameof(Styles.Style.LayoutPadding));
 
 		public override Size GetDesiredSize(Size availableSize)
 		{
@@ -56,8 +57,8 @@ namespace Comet
 			double heightConstraint = frameConstraints?.Height > 0 ? frameConstraints.Height.Value : availableSize.Height;
 
 			//Lets adjust for padding
-			var padding = this.GetPadding();
 
+			var padding =  this.GetPadding(GetDefaultPadding());
 			if(!double.IsInfinity(widthConstraint))
 				widthConstraint -= padding.HorizontalThickness;
 			if (!double.IsInfinity(heightConstraint))
