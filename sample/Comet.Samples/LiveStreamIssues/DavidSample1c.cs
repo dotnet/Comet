@@ -8,7 +8,7 @@ namespace Comet.Samples.LiveStreamIssues
 	{
 		[Body]
 		View body() =>
-			new VStack(HorizontalAlignment.Center)
+			new VStack(LayoutAlignment.Center)
 			{
 				new HStack
 				{

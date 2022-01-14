@@ -6,11 +6,11 @@ namespace Comet
 {
 	public class VStack : AbstractLayout, IStackLayout
 	{
-		private readonly HorizontalAlignment alignment;
+		private readonly LayoutAlignment alignment;
 		private readonly float? spacing;
 
 		public VStack(
-			HorizontalAlignment alignment = HorizontalAlignment.Center,
+			LayoutAlignment alignment = LayoutAlignment.Center,
 			float? spacing = null) 
 		{
 			this.alignment = alignment;

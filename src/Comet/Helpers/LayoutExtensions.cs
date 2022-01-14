@@ -94,7 +94,7 @@ namespace Comet
 
 		public static void SetFrameFromNativeView(
 			this View view,
-			Rectangle frame)
+			Rectangle frame, LayoutAlignment defaultHorizontalAlignment = LayoutAlignment.Center, LayoutAlignment defaultVerticalAlignment = LayoutAlignment.Center)
 		{
 			if (view == null)
 				return;
@@ -119,13 +119,17 @@ namespace Comet
 
 			var frameConstraints = view.GetFrameConstraints();
 
+			
+			var horizontalSizing = frameConstraints?.Alignment?.Horizontal ?? view.GetHorizontalLayoutAlignment(view.Parent as ContainerView,  defaultHorizontalAlignment);
+			var verticalSizing = frameConstraints?.Alignment?.Vertical ?? view.GetVerticalLayoutAlignment(view.Parent as ContainerView, defaultVerticalAlignment);
+
+
 			if (frameConstraints?.Width != null)
 			{
 				width = (float)frameConstraints.Width;
 			}
 			else
 			{
-				var horizontalSizing = view.GetHorizontalLayoutAlignment(view.Parent as ContainerView, LayoutAlignment.Start);
 				if (horizontalSizing == LayoutAlignment.Fill)
 					width = frame.Width;
 			}
@@ -136,7 +140,6 @@ namespace Comet
 			}
 			else
 			{
-				var verticalSizing = view.GetVerticalLayoutAlignment(view.Parent as ContainerView, LayoutAlignment.Start);
 				if (verticalSizing == LayoutAlignment.Fill)
 					height = frame.Height;
 			}
@@ -144,23 +147,23 @@ namespace Comet
 			var alignment = frameConstraints?.Alignment ?? Alignment.Center;
 
 			var xFactor = .5f;
-			switch (alignment.Horizontal)
+			switch (horizontalSizing)
 			{
-				case HorizontalAlignment.Leading:
+				case LayoutAlignment.Start:
 					xFactor = 0;
 					break;
-				case HorizontalAlignment.Trailing:
+				case LayoutAlignment.End:
 					xFactor = 1;
 					break;
 			}
 
 			var yFactor = .5f;
-			switch (alignment.Vertical)
+			switch (verticalSizing)
 			{
-				case VerticalAlignment.Bottom:
+				case LayoutAlignment.End:
 					yFactor = 1;
 					break;
-				case VerticalAlignment.Top:
+				case LayoutAlignment.Start:
 					yFactor = 0;
 					break;
 			}
@@ -223,6 +226,9 @@ namespace Comet
 
 		public static T FrameConstraints<T>(this T view, FrameConstraints constraints, bool cascades = false) where T : View
 		{
+
+			view.SetEnvironment(EnvironmentKeys.Layout.VerticalLayoutAlignment, constraints?.Alignment?.Vertical, cascades);
+			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalLayoutAlignment, constraints?.Alignment?.Horizontal, cascades);
 			view.SetEnvironment(EnvironmentKeys.Layout.FrameConstraints, constraints, cascades);
 			return view;
 		}

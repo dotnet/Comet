@@ -18,7 +18,7 @@ namespace Comet.Styles
 
 		public FlowDirection FlowDirection { get; set; } = System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? FlowDirection.RightToLeft : FlowDirection.LeftToRight;
 
-		public HorizontalAlignment HorizontalAlignment { get; set; } = System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? HorizontalAlignment.Trailing : HorizontalAlignment.Leading;
+		public LayoutAlignment HorizontalAlignment { get; set; } = System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? LayoutAlignment.End : LayoutAlignment.Start;
 
 		public TextStyle Label { get; set; } = new TextStyle
 		{

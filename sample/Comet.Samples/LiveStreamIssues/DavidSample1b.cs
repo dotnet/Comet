@@ -8,7 +8,7 @@ namespace Comet.Samples.LiveStreamIssues
 	{
 		[Body]
 		View body() =>
-			new HStack(VerticalAlignment.Center)
+			new HStack(LayoutAlignment.Center)
 			{
 				new Spacer(),
 				new ShapeView(new Circle().Stroke(Colors.Black, 2f)).Frame(44,44),

@@ -30,7 +30,7 @@ namespace Comet.Samples
 			ViewFor = (song) => new HStack
 			{
 				new Image (song.ArtworkUrl).Frame(52, 52).Margin(4),
-				new VStack(HorizontalAlignment.Leading, spacing:2)
+				new VStack(LayoutAlignment.Start, spacing:2)
 				{
 					new Text (song.Title).FontSize(17),
 					new Text (song.Artist).Color(Colors.Grey),

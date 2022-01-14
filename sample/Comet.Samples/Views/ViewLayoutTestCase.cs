@@ -29,7 +29,7 @@ namespace Comet.Samples
 							new Image()
 								.Background(Colors.SkyBlue).FillHorizontal().FillVertical()
 								.ClipShape(new RoundedRectangle(36)),
-							new VStack(Comet.HorizontalAlignment.Leading) {
+							new VStack(LayoutAlignment.Start) {
 								new VStack
 								{
 									new Text(() => "$100")

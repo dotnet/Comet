@@ -4,10 +4,10 @@ namespace Comet.Layout;
 
 public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 {
-	private readonly HorizontalAlignment _defaultAlignment;
+	private readonly LayoutAlignment _defaultAlignment;
 	private readonly double _spacing;
 
-	public VStackLayoutManager(ContainerView layout, HorizontalAlignment alignment = HorizontalAlignment.Center,
+	public VStackLayoutManager(ContainerView layout, LayoutAlignment alignment = LayoutAlignment.Center,
 		double? spacing = null)
 	{
 		_defaultAlignment = alignment;
@@ -31,7 +31,7 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 
 			var size = view.MeasuredSize;
 			layoutRect.Height = size.Height;
-			view.LayoutSubviews(layoutRect);
+			view.SetFrameFromNativeView(layoutRect,_defaultAlignment, LayoutAlignment.Start);
 			layoutRect.Y = view.Frame.Bottom + _spacing;
 
 		}

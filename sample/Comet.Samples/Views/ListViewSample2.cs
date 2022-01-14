@@ -36,7 +36,7 @@ namespace Comet.Samples
 						.Frame(44,44, Alignment.Center)
 						.Margin(left:10f)
 						.ClipShape(new Circle()),
-					new VStack(HorizontalAlignment.Leading)
+					new VStack(LayoutAlignment.Start)
 					{
 						new Text(song.Title),
 						new Text(song.Artist),

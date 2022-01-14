@@ -1,25 +1,27 @@
+using Microsoft.Maui.Primitives;
+
 namespace Comet
 {
 	public class Alignment
 	{
-		public static readonly Alignment Bottom = new Alignment(HorizontalAlignment.Center, VerticalAlignment.Bottom);
-		public static readonly Alignment BottomLeading = new Alignment(HorizontalAlignment.Leading, VerticalAlignment.Bottom);
-		public static readonly Alignment BottomTrailing = new Alignment(HorizontalAlignment.Trailing, VerticalAlignment.Bottom);
-		public static readonly Alignment Center = new Alignment(HorizontalAlignment.Center, VerticalAlignment.Center);
-		public static readonly Alignment Leading = new Alignment(HorizontalAlignment.Leading, VerticalAlignment.Center);
-		public static readonly Alignment Trailing = new Alignment(HorizontalAlignment.Trailing, VerticalAlignment.Center);
-		public static readonly Alignment Top = new Alignment(HorizontalAlignment.Center, VerticalAlignment.Top);
-		public static readonly Alignment TopLeading = new Alignment(HorizontalAlignment.Leading, VerticalAlignment.Top);
-		public static readonly Alignment TopTrailing = new Alignment(HorizontalAlignment.Trailing, VerticalAlignment.Top);
+		public static readonly Alignment Bottom = new Alignment(LayoutAlignment.Center, LayoutAlignment.End);
+		public static readonly Alignment BottomLeading = new Alignment(LayoutAlignment.Start, LayoutAlignment.End);
+		public static readonly Alignment BottomTrailing = new Alignment(LayoutAlignment.End, LayoutAlignment.End);
+		public static readonly Alignment Center = new Alignment(LayoutAlignment.Center, LayoutAlignment.Center);
+		public static readonly Alignment Leading = new Alignment(LayoutAlignment.Start, LayoutAlignment.Center);
+		public static readonly Alignment Trailing = new Alignment(LayoutAlignment.End, LayoutAlignment.Center);
+		public static readonly Alignment Top = new Alignment(LayoutAlignment.Center, LayoutAlignment.Start);
+		public static readonly Alignment TopLeading = new Alignment(LayoutAlignment.Start, LayoutAlignment.Start);
+		public static readonly Alignment TopTrailing = new Alignment(LayoutAlignment.End, LayoutAlignment.Start);
 
-		public Alignment(HorizontalAlignment horizontal, VerticalAlignment vertical)
+		public Alignment(LayoutAlignment horizontal, LayoutAlignment vertical)
 		{
 			Horizontal = horizontal;
 			Vertical = vertical;
 		}
 
-		public HorizontalAlignment Horizontal { get; }
-		public VerticalAlignment Vertical { get; }
+		public LayoutAlignment Horizontal { get; }
+		public LayoutAlignment Vertical { get; }
 
 		protected bool Equals(Alignment other) => Horizontal == other.Horizontal && Vertical == other.Vertical;
 

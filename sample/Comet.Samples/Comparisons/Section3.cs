@@ -34,7 +34,7 @@ namespace Comet.Samples.Comparisons
 	{
 		[Body]
 		View body() =>
-				 new VStack(alignment: HorizontalAlignment.Leading){
+				 new VStack(alignment: LayoutAlignment.Start){
 					new Text("Turtle Rock"),
 					new HStack {
 						new Text("Joshua Tree National Park")

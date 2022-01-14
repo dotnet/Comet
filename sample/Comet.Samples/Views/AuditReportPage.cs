@@ -34,7 +34,7 @@ namespace Comet.Samples
 			{
 				ViewFor = (report) => new HStack()
 					{
-						new VStack(HorizontalAlignment.Leading)
+						new VStack(LayoutAlignment.Start)
 						{
 							new Text (report.View).FontSize(20),
 							new Text ($"Handler: {report.Handler}"),

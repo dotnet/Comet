@@ -40,13 +40,6 @@ namespace Comet
 			InvalidateMeasurement();
 		}
 
-		public override void LayoutSubviews(Rectangle frame)
-		{
-			base.LayoutSubviews(frame);
-			var padding = this.GetPadding();
-			var bounds = new Rectangle(Point.Zero, Frame.Size);//.ApplyPadding(padding);
-			CrossPlatformArrange(bounds);
-		}
 
 		public override Size GetDesiredSize(Size availableSize)
 		{
