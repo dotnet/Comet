@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Layouts;
+using Microsoft.Maui.Primitives;
 
 namespace Comet
 {
@@ -43,11 +44,7 @@ namespace Comet
 		{
 			base.LayoutSubviews(frame);
 			var padding = this.GetPadding();
-			var bounds = new Rectangle(
-				padding.Left,
-				padding.Right,
-				frame.Width - padding.HorizontalThickness,
-				frame.Height - padding.VerticalThickness);
+			var bounds = new Rectangle(Point.Zero, Frame.Size);//.ApplyPadding(padding);
 			CrossPlatformArrange(bounds);
 		}
 
@@ -55,9 +52,51 @@ namespace Comet
 		{
 			if (IsMeasureValid)
 				return MeasuredSize;
-			MeasuredSize = LayoutManager.Measure(availableSize.Width, availableSize.Height);
+
+			var frameConstraints = this.GetFrameConstraints();
+
+			var layoutVerticalSizing = ((IView)this).VerticalLayoutAlignment;
+			var layoutHorizontalSizing = ((IView)this).HorizontalLayoutAlignment;
+
+
+			double widthConstraint = frameConstraints?.Width > 0 ? frameConstraints.Width.Value : availableSize.Width;
+			double heightConstraint = frameConstraints?.Height > 0 ? frameConstraints.Height.Value : availableSize.Height;
+
+			//Lets adjust for padding
+			var padding = this.GetPadding();
+			if(!double.IsInfinity(widthConstraint))
+				widthConstraint -= padding.HorizontalThickness;
+			if (!double.IsInfinity(heightConstraint))
+				heightConstraint -= padding.VerticalThickness;
+
+
+			var measured = LayoutManager.Measure(widthConstraint, heightConstraint);
+
+
+			if (frameConstraints?.Height > 0 && frameConstraints?.Width > 0)
+			{
+				measured = new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
+			}
+			else
+			{
+				if (layoutVerticalSizing == LayoutAlignment.Fill && !double.IsInfinity(heightConstraint))
+					measured.Height = heightConstraint;
+				if (layoutHorizontalSizing == LayoutAlignment.Fill && !double.IsInfinity(widthConstraint))
+					measured.Width = widthConstraint;
+
+				if (!double.IsInfinity(measured.Width))
+					measured.Width += padding.HorizontalThickness;
+				if (!double.IsInfinity(measured.Height))
+					measured.Height += padding.VerticalThickness;
+			}
+
+			var margin = this.GetMargin();
+			if(!double.IsInfinity(measured.Width))
+				measured.Width += margin.HorizontalThickness;
+			if (!double.IsInfinity(measured.Height))
+				measured.Height += margin.VerticalThickness;
 			IsMeasureValid = true;
-			return MeasuredSize;
+			return MeasuredSize = measured;
 		}
 
 		protected override void Dispose(bool disposing)
@@ -68,7 +107,9 @@ namespace Comet
 
 		public virtual Size CrossPlatformMeasure(double widthConstraint, double heightConstraint) => GetDesiredSize(new Size(widthConstraint,heightConstraint));
 		public virtual Size CrossPlatformArrange(Rectangle bounds) {
-			LayoutManager?.ArrangeChildren(bounds);
+			var padding = this.GetPadding();
+			var b = bounds.ApplyPadding(padding);
+			LayoutManager?.ArrangeChildren(b);
 			return this.MeasuredSize;
 		}
 	}

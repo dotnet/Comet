@@ -20,8 +20,7 @@ namespace Comet.Layout
 		ContainerView layout;
 		public Size ArrangeChildren(Rectangle rect)
 		{
-			var padding = layout.GetPadding();
-			var layoutRect = rect.ApplyPadding(padding);
+			var layoutRect = rect;
 			double spacerWidth = (layoutRect.Width - childrenWidth) / spacerCount;
 
 			foreach (var view in layout)
@@ -34,7 +33,7 @@ namespace Comet.Layout
 
 				var size = view.MeasuredSize;
 				layoutRect.Width = size.Width;
-				view.SetFrameFromNativeView(layoutRect);
+				view.LayoutSubviews(layoutRect);
 				layoutRect.X = view.Frame.Right + _spacing;
 			}
 			return new Size(layoutRect.Left, layoutRect.Bottom);
@@ -42,23 +41,9 @@ namespace Comet.Layout
 
 		int spacerCount;
 		double childrenWidth;
-		public Size Measure(double wConstraint, double hConstraint)
+		public Size Measure(double widthConstraint, double heightConstraint)
 		{
 			//Lets adjust for Frame settings
-			var frameConstraints = layout.GetFrameConstraints();
-
-			var layoutVerticalSizing = ((IView)layout).VerticalLayoutAlignment;
-			var layoutHorizontalSizing = ((IView)layout).HorizontalLayoutAlignment;
-
-
-			double widthConstraint = frameConstraints?.Width > 0 ? frameConstraints.Width.Value : wConstraint;
-			double heightConstraint = frameConstraints?.Height > 0 ? frameConstraints.Height.Value : hConstraint;
-
-			//Lets adjust for padding
-			var padding = layout.GetPadding();
-			widthConstraint -= padding.HorizontalThickness;
-			heightConstraint -= padding.VerticalThickness;
-
 			var index = 0;
 			double width = 0;
 			double height = 0;
@@ -109,16 +94,6 @@ namespace Comet.Layout
 			if (spacerCount > 0)
 				width = widthConstraint;
 
-			if (layoutVerticalSizing == LayoutAlignment.Fill && !double.IsInfinity(heightConstraint))
-				height = heightConstraint;
-			if (layoutHorizontalSizing == LayoutAlignment.Fill && !double.IsInfinity(widthConstraint))
-				width = widthConstraint;
-
-			width += padding.VerticalThickness;
-			height += padding.HorizontalThickness;
-
-			if (frameConstraints?.Height > 0 && frameConstraints?.Width > 0)
-				return new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
 
 			return new Size(width, height);
 		}

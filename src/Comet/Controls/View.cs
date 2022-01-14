@@ -556,6 +556,7 @@ namespace Comet
 				var fe = (IView)this;
 
 				var frameConstraints = this.GetFrameConstraints();
+				var margins = fe.Margin;
 
 				if (frameConstraints?.Height > 0 && frameConstraints?.Width > 0)
 					return new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
@@ -564,8 +565,9 @@ namespace Comet
 					ms.Width = fe.Width;
 				if (fe.Height > 0)
 					ms.Height = fe.Height;
-				//TODO: Remove this when we get some LayoutOptions...
-				//This check ignores MArgin which is bad
+
+				ms.Width += margins.HorizontalThickness;
+				ms.Height += margins.HorizontalThickness;
 				var hSizing = this.GetHorizontalLayoutAlignment(this.Parent as ContainerView);
 				var vSizing = this.GetVerticalLayoutAlignment(this.Parent as ContainerView);
 				if (hSizing == LayoutAlignment.Fill && !double.IsInfinity(availableSize.Width))

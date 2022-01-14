@@ -106,13 +106,16 @@ namespace Comet
 				frame.Width -= margin.HorizontalThickness;
 				frame.Height -= margin.VerticalThickness;
 			}
+			if (!view.MeasurementValid)
+			{
+				var sizeThatFits = view.Measure(frame.Size.Width, frame.Size.Height);
+				view.MeasuredSize = sizeThatFits;
+				view.MeasurementValid = true;
+			}
 
-			var sizeThatFits = view.Measure(frame.Size.Width,frame.Size.Height);
-			view.MeasuredSize = sizeThatFits;
-			view.MeasurementValid = true;
 
-			var width = sizeThatFits.Width;
-			var height = sizeThatFits.Height;
+			var width = view.MeasuredSize.Width - margin.HorizontalThickness;
+			var height = view.MeasuredSize.Height - margin.VerticalThickness;
 
 			var frameConstraints = view.GetFrameConstraints();
 
@@ -164,7 +167,7 @@ namespace Comet
 
 			var x = frame.X + ((frame.Width - width) * xFactor);
 			var y = frame.Y + ((frame.Height - height) * yFactor);
-			view.Frame = new Rectangle((float)x, (float)y, width, height);
+			view.Frame = new Rectangle(x, y, width, height);
 		}
 
 		public static T FillHorizontal<T>(this T view, bool cascades = false) where T : View

@@ -46,4 +46,5 @@
 		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
 		<WindowsPackageType>MSIX</WindowsPackageType>
 	</PropertyGroup>
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionCometSingleProjectSampleHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 </Project>

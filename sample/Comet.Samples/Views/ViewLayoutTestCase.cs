@@ -9,9 +9,61 @@ namespace Comet.Samples
 	public  class ViewLayoutTestCase : View
 	{
 		[Body]
-		View view() => new ScrollView
-					   {
+		View view() =>  new ScrollView {
 			new VStack(){
+
+				new VStack
+				{
+					new Text(()=> "Recommended")
+						.Color(Colors.Black)
+						.FontFamily("Rockolf Bold")
+						.FontSize(20)
+						.FontWeight(FontWeight.Bold)
+						.Margin(new Thickness(0, 6)),
+					new ScrollView(Orientation.Horizontal) {
+						new HStack
+						{
+							Enumerable.Range(0,10).Select(destination => new ZStack
+						{
+							// Destination Background Image
+							new Image()
+								.Background(Colors.SkyBlue).FillHorizontal().FillVertical()
+								.ClipShape(new RoundedRectangle(36)),
+							new VStack(Comet.HorizontalAlignment.Leading) {
+								new VStack
+								{
+									new Text(() => "$100")
+										.Color(Colors.White)
+										.FitHorizontal()
+										.FontSize(14)
+										.FontFamily("Rockolf Bold")
+										.FontSize(14)
+										.FontWeight(FontWeight.Bold),
+								}.FitHorizontal().Frame(alignment: Alignment.Trailing)
+									.Background(Color.FromArgb("#67AEE9"))
+									.ClipShape(new RoundedRectangle(12))
+									.Padding(6)
+									.Margin(12),
+
+								new Spacer(),
+								new Text("Japan Street")
+									.Color(Colors.White)
+									.FontFamily("Rockolf Bold")
+									.FontSize(18)
+									.FontWeight(FontWeight.Bold)
+									.Shadow(radius: 6),
+								new Text("Awesome Sauce")
+									.Color(Colors.White)
+									.FontFamily("Rockolf")
+									.FontSize(14),
+							}
+							.Padding(new Thickness(16, 0, 0, 16))
+						}.Frame(height: 250, width: 200))
+						}
+					}
+				},
+
+
 				new Text("ZSTack Alignment"),
 				new ZStack
 				{

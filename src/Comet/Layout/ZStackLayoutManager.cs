@@ -13,21 +13,7 @@ namespace Comet.Layout
 
 		ILayout layout;
 
-		public Size Measure(double wConstraint, double hConstraint) {
-
-			var v = layout as View;
-			var frameConstraints = v?.GetFrameConstraints();
-
-
-			var layoutVerticalSizing = layout.VerticalLayoutAlignment;
-			var layoutHorizontalSizing = layout.HorizontalLayoutAlignment;
-
-			double widthConstraint = frameConstraints?.Width > 0 ? frameConstraints.Width.Value : wConstraint;
-			double heightConstraint = frameConstraints?.Height > 0 ? frameConstraints.Height.Value : hConstraint;
-
-			var padding = layout.Padding;
-			widthConstraint -= padding.HorizontalThickness;
-			heightConstraint -= padding.VerticalThickness;
+		public Size Measure(double widthConstraint, double heightConstraint) {
 
 			Size measuredSize = new ();
 			foreach(var c in layout)
@@ -36,28 +22,17 @@ namespace Comet.Layout
 				measuredSize.Height = Math.Max(measuredSize.Height, s.Height);
 				measuredSize.Width = Math.Max(measuredSize.Width, s.Width);
 			};
-			measuredSize.Height += padding.VerticalThickness;
-			measuredSize.Width += padding.HorizontalThickness;
-
-			if (layoutVerticalSizing == LayoutAlignment.Fill && !double.IsInfinity(hConstraint))
-				measuredSize.Height = hConstraint;
-			if (layoutHorizontalSizing == LayoutAlignment.Fill && !double.IsInfinity(wConstraint))
-				measuredSize.Width = wConstraint;
-
-			if (frameConstraints?.Height > 0 && frameConstraints?.Width > 0)
-				return new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
 
 			return measuredSize;
 		}
 
 		public Size ArrangeChildren(Rectangle bounds)
 		{
-			var padding = layout.Padding;
-			var b = bounds.ApplyPadding(padding);
+			var b = bounds;
 			foreach (var v in layout)
 			{
 				if (v is View cv)
-					cv.SetFrameFromNativeView(b);
+					cv.LayoutSubviews(b);
 				else
 					v.Arrange(b);
 			}
