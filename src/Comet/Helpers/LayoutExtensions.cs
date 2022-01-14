@@ -259,7 +259,10 @@ namespace Comet
 		public static Thickness GetPadding(this View view, Thickness? defaultValue = null)
 		{
 			var margin = view.GetEnvironment<Thickness?>(view, EnvironmentKeys.Layout.Padding);
-			return margin ?? defaultValue ?? Thickness.Zero;
+			margin ??= defaultValue;
+			if (margin == null && view is ILayout)
+				margin = view.GetEnvironment<Thickness>(nameof(Styles.Style.LayoutPadding));
+			return margin ?? Thickness.Zero;
 		}
 
 

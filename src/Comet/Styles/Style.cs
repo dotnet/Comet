@@ -20,6 +20,8 @@ namespace Comet.Styles
 
 		public LayoutAlignment HorizontalAlignment { get; set; } = System.Globalization.CultureInfo.CurrentCulture.TextInfo.IsRightToLeft ? LayoutAlignment.End : LayoutAlignment.Start;
 
+		public Thickness LayoutPadding { get; set; } = new Thickness(6);
+
 		public TextStyle Label { get; set; } = new TextStyle
 		{
 			StyleId = nameof(Label)
@@ -111,6 +113,8 @@ namespace Comet.Styles
 				View.SetGlobalEnvironment(nameof(ITextAlignment.HorizontalTextAlignment), HorizontalAlignment);
 			else
 				view.SetEnvironment(nameof(ITextAlignment.HorizontalTextAlignment), HorizontalAlignment);
+
+			SetEnvironmentValue(view, "", nameof(LayoutPadding), LayoutPadding);
 
 			ApplyButton(view);
 			ApplyNavbarStyles(view);
