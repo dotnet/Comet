@@ -57,6 +57,7 @@ namespace Comet
 
 			//Lets adjust for padding
 			var padding = this.GetPadding();
+
 			if(!double.IsInfinity(widthConstraint))
 				widthConstraint -= padding.HorizontalThickness;
 			if (!double.IsInfinity(heightConstraint))
