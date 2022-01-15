@@ -36,7 +36,7 @@ namespace Comet.Samples
 					new Text (song.Artist).Color(Colors.Grey),
 					new Text (song.Album).Color(Colors.Grey),
 				}.FontSize(12)
-			}.Frame(height: 60, alignment: Alignment.Leading),
+			}.Frame(height: 60).Alignment(Alignment.Leading),
 		}.OnSelectedNavigate((song) => new ListViewDetails().SetEnvironment("song",song));
 	}
 }

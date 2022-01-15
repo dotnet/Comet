@@ -33,7 +33,7 @@ namespace Comet.Samples
 				ViewFor = song => new HStack
 				{
 					new Image(song.ArtworkUrl)
-						.Frame(44,44, Alignment.Center)
+						.Frame(44,44).Alignment(Alignment.Center)
 						.Margin(left:10f)
 						.ClipShape(new Circle()),
 					new VStack(LayoutAlignment.Start)
@@ -42,7 +42,7 @@ namespace Comet.Samples
 						new Text(song.Artist),
 						new Text(song.Album),
 					},
-				}.Frame(alignment: Alignment.Leading),
+				}.Alignment(Alignment.Leading),
 				Header = new VStack
 				{
 					new Text("Songs")

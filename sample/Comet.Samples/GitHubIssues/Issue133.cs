@@ -37,7 +37,7 @@ namespace Comet.Samples
 			},
 
 
-		}.FillHorizontal().Frame(alignment: Alignment.Top);
+		}.FillHorizontal().Alignment(Alignment.Top);
 
 		public class BorderedEntry : HStack
 		{

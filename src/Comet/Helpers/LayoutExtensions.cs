@@ -55,9 +55,15 @@ namespace Comet
 			return view.GetEnvironment<Shape>(EnvironmentKeys.View.Overlay);
 		}
 
-		public static T Frame<T>(this T view, float? width = null, float? height = null, Alignment alignment = null) where T : View
+		public static T Frame<T>(this T view, float? width = null, float? height = null) where T : View
 		{
-			view.FrameConstraints(new FrameConstraints(width, height, alignment));
+			view.FrameConstraints(new FrameConstraints(width, height));
+			return view;
+		}
+		public static T Alignment<T>(this T view, Alignment alignment ) where T : View
+		{
+			view.SetEnvironment(EnvironmentKeys.Layout.VerticalLayoutAlignment, alignment?.Vertical, false);
+			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalLayoutAlignment, alignment?.Horizontal, false);
 			return view;
 		}
 
@@ -120,8 +126,8 @@ namespace Comet
 			var frameConstraints = view.GetFrameConstraints();
 
 			
-			var horizontalSizing = frameConstraints?.Alignment?.Horizontal ?? view.GetHorizontalLayoutAlignment(view.Parent as ContainerView,  defaultHorizontalAlignment);
-			var verticalSizing = frameConstraints?.Alignment?.Vertical ?? view.GetVerticalLayoutAlignment(view.Parent as ContainerView, defaultVerticalAlignment);
+			var horizontalSizing = view.GetHorizontalLayoutAlignment(view.Parent as ContainerView,  defaultHorizontalAlignment);
+			var verticalSizing = view.GetVerticalLayoutAlignment(view.Parent as ContainerView, defaultVerticalAlignment);
 
 
 			if (frameConstraints?.Width != null)
@@ -144,12 +150,11 @@ namespace Comet
 					height = frame.Height;
 			}
 
-			var alignment = frameConstraints?.Alignment ?? Alignment.Center;
-
 			var xFactor = .5f;
 			switch (horizontalSizing)
 			{
 				case LayoutAlignment.Start:
+				case LayoutAlignment.Fill:
 					xFactor = 0;
 					break;
 				case LayoutAlignment.End:
@@ -164,6 +169,7 @@ namespace Comet
 					yFactor = 1;
 					break;
 				case LayoutAlignment.Start:
+				case LayoutAlignment.Fill:
 					yFactor = 0;
 					break;
 			}
@@ -226,9 +232,6 @@ namespace Comet
 
 		public static T FrameConstraints<T>(this T view, FrameConstraints constraints) where T : View
 		{
-
-			view.SetEnvironment(EnvironmentKeys.Layout.VerticalLayoutAlignment, constraints?.Alignment?.Vertical, false);
-			view.SetEnvironment(EnvironmentKeys.Layout.HorizontalLayoutAlignment, constraints?.Alignment?.Horizontal, false);
 			view.SetEnvironment(EnvironmentKeys.Layout.FrameConstraints, constraints, false);
 			return view;
 		}

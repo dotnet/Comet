@@ -54,7 +54,10 @@ namespace Comet
 		public override void LayoutSubviews(Rectangle frame)
 		{
 			this.Frame = frame;
-			Content?.LayoutSubviews(frame);
+
+			Content.SetFrameFromNativeView(frame,LayoutAlignment.Start,	LayoutAlignment.Start);
+			if (Content?.BuiltView != null)
+				Content.BuiltView.LayoutSubviews(frame);
 		}
 
 		protected override void Dispose(bool disposing)
