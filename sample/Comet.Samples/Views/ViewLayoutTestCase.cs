@@ -102,7 +102,7 @@ namespace Comet.Samples
 					new Text("C").Background(Colors.Blue),
 					new Text("R").Background(Colors.Blue),
 
-				}.Background(Colors.White).Padding(12),
+				}.Frame(400,400).Background(Colors.White).Padding(12),
 
 				new Text("VStack With Spacers"),
 				new VStack
