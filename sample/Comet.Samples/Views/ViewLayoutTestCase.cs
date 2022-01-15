@@ -57,7 +57,7 @@ namespace Comet.Samples
 									.FontSize(14),
 							}
 							.Padding(new Thickness(16, 0, 0, 16))
-						}.ClipShape(new Squircle(5)).Frame(height: 250, width: 200))
+						}.ClipShape(new RoundedRectangle(36)).Frame(height: 250, width: 200))
 						}
 					}
 				},
