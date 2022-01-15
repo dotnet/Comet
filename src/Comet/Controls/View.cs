@@ -823,5 +823,7 @@ namespace Comet
 		void IHotReloadableView.Reload() => ThreadHelper.RunOnMainThread(() => Reload(true));
 		protected int? TypeHashCode;
 		public virtual int GetContentTypeHashCode() => this.replacedView?.GetContentTypeHashCode() ?? (TypeHashCode ??= this.GetType().GetHashCode());
+
+		protected T GetPropertyValue<T>(bool cascades = true, [CallerMemberName] string key = "") => this.GetEnvironment<T>(key, cascades);
 	}
 }

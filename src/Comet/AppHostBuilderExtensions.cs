@@ -65,6 +65,7 @@ namespace Comet
 #else
 				
 				{typeof(NavigationView), typeof (Microsoft.Maui.Handlers.NavigationViewHandler)},
+				{typeof(ScrollView), typeof(Microsoft.Maui.Handlers.ScrollViewHandler) },
 #endif
 
 

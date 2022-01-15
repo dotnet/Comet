@@ -5,10 +5,17 @@ using Microsoft.Maui.Graphics;
 
 namespace Comet
 {
-	public class ContentView : View, IEnumerable, IContainerView
+	public class ContentView : View, IEnumerable, IContainerView, IContentView
 	{
 		IEnumerator IEnumerable.GetEnumerator() => new[] { Content }.GetEnumerator();
 		public View Content { get; set; }
+
+		object IContentView.Content => Content;
+
+		IView IContentView.PresentedContent => Content;
+
+		Thickness IPadding.Padding => this.GetPadding();
+
 		public virtual void Add(View view)
 		{
 			if (view == null)
@@ -89,5 +96,13 @@ namespace Comet
 		}
 
 		public IReadOnlyList<View> GetChildren() => new []{ Content };
+		Size IContentView.CrossPlatformMeasure(double widthConstraint, double heightConstraint) => this.Measure(widthConstraint, heightConstraint);
+		Size IContentView.CrossPlatformArrange(Rectangle bounds)
+		{
+			if(!this.MeasurementValid)
+				Measure(bounds.Width,bounds.Height);
+			this.LayoutSubviews(bounds);
+			return this.MeasuredSize;
+		}
 	}
 }
