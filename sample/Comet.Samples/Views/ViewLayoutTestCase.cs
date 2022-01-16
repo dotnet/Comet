@@ -81,7 +81,7 @@ namespace Comet.Samples
 				new HStack
 				{
 					new Text("T").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Top),
-					new Text("Center").Background(Colors.Blue).Frame(75,75),
+					new Text("Center").Background(Colors.Blue).Frame(75,75).Alignment(Alignment.Center),
 					new Text("B").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Bottom),
 
 				}.Frame(400,400).Background(Colors.White).Padding(12),

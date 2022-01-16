@@ -136,7 +136,7 @@ namespace Comet
 			}
 			else
 			{
-				if (horizontalSizing == LayoutAlignment.Fill)
+				if (horizontalSizing == LayoutAlignment.Fill && !double.IsInfinity(frame.Width))
 					width = frame.Width;
 			}
 
@@ -146,7 +146,7 @@ namespace Comet
 			}
 			else
 			{
-				if (verticalSizing == LayoutAlignment.Fill)
+				if (verticalSizing == LayoutAlignment.Fill && !double.IsInfinity(frame.Height))
 					height = frame.Height;
 			}
 
