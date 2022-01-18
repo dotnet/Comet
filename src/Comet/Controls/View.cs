@@ -552,19 +552,17 @@ namespace Comet
 			if (BuiltView != null)
 				return BuiltView.GetDesiredSize(availableSize);
 			if (!IsMeasureValid || lastAvailableSize != availableSize)
-			{
-				var fe = (IView)this;
-
+			{ 
 				var frameConstraints = this.GetFrameConstraints();
-				var margins = fe.Margin;
+				var margins = this.GetMargin();
 
 				if (frameConstraints?.Height > 0 && frameConstraints?.Width > 0)
 					return new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
 				var ms = this.ComputeDesiredSize(availableSize.Width, availableSize.Height);
-				if(fe.Width > 0)
-					ms.Width = fe.Width;
-				if (fe.Height > 0)
-					ms.Height = fe.Height;
+				if(frameConstraints.Width > 0)
+					ms.Width = frameConstraints.Width.Value;
+				if (frameConstraints.Height > 0)
+					ms.Height = frameConstraints.Height.Value;
 
 				ms.Width += margins.HorizontalThickness;
 				ms.Height += margins.HorizontalThickness;
@@ -598,13 +596,7 @@ namespace Comet
 			var availableSize = new Size(widthConstraint, heightConstraint);
 			if (!IsMeasureValid || availableSize != lastAvailableSize)
 			{
-				var frameworkElement = this as IView;
-				
-				var size = GetDesiredSize(new Size(widthConstraint, heightConstraint));
-				widthConstraint = LayoutManager.ResolveConstraints(widthConstraint, frameworkElement.Width, size.Width);
-				heightConstraint = LayoutManager.ResolveConstraints(heightConstraint, frameworkElement.Height, size.Height);
-
-				MeasuredSize = new Size(widthConstraint,heightConstraint);
+				MeasuredSize = GetDesiredSize(new Size(widthConstraint, heightConstraint));
 				if (ViewHandler != null)
 					lastAvailableSize = availableSize;
 				if (MeasuredSize.Width <= 0 || MeasuredSize.Height <= 0)
