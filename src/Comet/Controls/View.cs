@@ -559,9 +559,9 @@ namespace Comet
 				if (frameConstraints?.Height > 0 && frameConstraints?.Width > 0)
 					return new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
 				var ms = this.ComputeDesiredSize(availableSize.Width, availableSize.Height);
-				if(frameConstraints.Width > 0)
+				if(frameConstraints?.Width > 0)
 					ms.Width = frameConstraints.Width.Value;
-				if (frameConstraints.Height > 0)
+				if (frameConstraints?.Height > 0)
 					ms.Height = frameConstraints.Height.Value;
 
 				ms.Width += margins.HorizontalThickness;
