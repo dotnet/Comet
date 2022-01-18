@@ -60,7 +60,6 @@ namespace Comet
 				availableSize.Width -= margin.HorizontalThickness;
 				availableSize.Height -= margin.VerticalThickness;
 				MeasuredSize = Content.Measure(availableSize, true);
-				MeasurementValid = true;
 				return MeasuredSize;
 			}
 

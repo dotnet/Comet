@@ -44,9 +44,6 @@ namespace Comet
 
 		public override Size GetDesiredSize(Size availableSize)
 		{
-			if (IsMeasureValid)
-				return MeasuredSize;
-
 			var frameConstraints = this.GetFrameConstraints();
 
 			var layoutVerticalSizing = ((IView)this).VerticalLayoutAlignment;
@@ -90,7 +87,6 @@ namespace Comet
 				measured.Width += margin.HorizontalThickness;
 			if (!double.IsInfinity(measured.Height))
 				measured.Height += margin.VerticalThickness;
-			IsMeasureValid = true;
 			return MeasuredSize = measured;
 		}
 
@@ -100,8 +96,14 @@ namespace Comet
 			//LayoutManager?.Invalidate();
 		}
 
+		Rectangle lastRect;
 		public virtual Size CrossPlatformMeasure(double widthConstraint, double heightConstraint) => GetDesiredSize(new Size(widthConstraint,heightConstraint));
 		public virtual Size CrossPlatformArrange(Rectangle bounds) {
+			if(bounds != lastRect)
+			{
+				Measure(bounds.Width,bounds.Height);
+			}
+			lastRect = bounds;
 			var padding = this.GetPadding();
 			var b = bounds.ApplyPadding(padding);
 			LayoutManager?.ArrangeChildren(b);

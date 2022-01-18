@@ -551,7 +551,7 @@ namespace Comet
 		{
 			if (BuiltView != null)
 				return BuiltView.GetDesiredSize(availableSize);
-			if (!IsMeasureValid)
+			if (!IsMeasureValid || lastAvailableSize != availableSize)
 			{
 				var fe = (IView)this;
 
@@ -583,30 +583,21 @@ namespace Comet
 				ms.Height = Math.Min(ms.Height, availableSize.Height);
 				MeasuredSize = ms;
 			}
-			IsMeasureValid = true;
+			IsMeasureValid = this.ViewHandler != null;
 			return MeasuredSize;
 		}
 
 
+		Size lastAvailableSize;
 		public Size Measure(double widthConstraint, double heightConstraint)
 		{
 
 			if (BuiltView != null)
 				return MeasuredSize = BuiltView.Measure(widthConstraint, heightConstraint);
-
-			if (!IsMeasureValid)
+			
+			var availableSize = new Size(widthConstraint, heightConstraint);
+			if (!IsMeasureValid || availableSize != lastAvailableSize)
 			{
-				// TODO ezhart Adjust constraints to account for margins
-
-				// TODO ezhart If we can find reason to, we may need to add a MeasureFlags parameter to IView.Measure
-				// Forms has and (very occasionally) uses one. I'd rather not muddle this up with it, but if it's necessary
-				// we can add it. The default is MeasureFlags.None, but nearly every use of it is MeasureFlags.IncludeMargins,
-				// so it's an awkward default. 
-
-				// I'd much rather just get rid of all the uses of it which don't include the margins, and have "with margins"
-				// be the default. It's more intuitive and less code to write. Also, I sort of suspect that the uses which
-				// _don't_ include the margins are actually bugs.
-
 				var frameworkElement = this as IView;
 				
 				var size = GetDesiredSize(new Size(widthConstraint, heightConstraint));
@@ -614,13 +605,15 @@ namespace Comet
 				heightConstraint = LayoutManager.ResolveConstraints(heightConstraint, frameworkElement.Height, size.Height);
 
 				MeasuredSize = new Size(widthConstraint,heightConstraint);
+				if (ViewHandler != null)
+					lastAvailableSize = availableSize;
 				if (MeasuredSize.Width <= 0 || MeasuredSize.Height <= 0)
 				{
 					Console.WriteLine($"Why :( - {this}");
 				}
 			}
 
-			IsMeasureValid = true;
+			IsMeasureValid = ViewHandler != null;
 			return MeasuredSize;
 		}
 

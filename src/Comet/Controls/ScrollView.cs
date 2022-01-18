@@ -50,7 +50,6 @@ namespace Comet
 				{
 					contentSize = Content.Measure(contentMeasureSize.Width, contentMeasureSize.Height);
 					Content.MeasuredSize = contentSize;
-					Content.MeasurementValid = true;
 				}
 				MeasurementValid = true;
 				return MeasuredSize = new Size(

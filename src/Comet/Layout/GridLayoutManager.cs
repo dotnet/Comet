@@ -100,10 +100,7 @@ namespace Comet.Layout
 
 				if (position.WeightX < 1 || position.WeightY < 1)
 				{
-					var viewSize = view.MeasuredSize;
-
-					if (!view.MeasurementValid)
-						viewSize = view.Measure(widthConstraint, heightConstraint);
+					var viewSize = view.Measure(widthConstraint, heightConstraint);
 
 					var cellWidth = w;
 					var cellHeight = h;
@@ -134,7 +131,7 @@ namespace Comet.Layout
 					view.MeasurementValid = true;
 				}
 				view.Measure(w, h);
-				view.SetFrameFromNativeView(new Rectangle(x, y, w, h));
+				//view.SetFrameFromNativeView(new Rectangle(x, y, w, h));
 			}
 
 			return new Size(_width, _height);
@@ -156,12 +153,7 @@ namespace Comet.Layout
 				var position = _constraints[index];
 				var view = layout[index];
 
-				var viewSize = view.MeasuredSize;
-				if (!view.MeasurementValid)
-				{
-					view.MeasuredSize = viewSize = view.Measure(measured.Width, measured.Height);
-					view.MeasurementValid = true;
-				}
+				var viewSize =  view.Measure(measured.Width, measured.Height);
 
 				var x = _gridX[position.Column];
 				var y = _gridY[position.Row];

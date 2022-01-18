@@ -63,12 +63,7 @@ namespace Comet.Layout
 				}
 				else
 				{
-					var size = view.MeasuredSize;
-					if (!view.MeasurementValid)
-					{
-						view.MeasuredSize = size = view.Measure(widthConstraint,heightConstraint);
-						view.MeasurementValid = true;
-					}
+					var size = view.Measure(widthConstraint, heightConstraint);
 
 					var finalHeight = size.Height;
 					var finalWidth = size.Width;
