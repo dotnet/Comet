@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.Maui;
+using Microsoft.Maui.Platform;
 
 namespace Comet
 {
@@ -59,7 +60,17 @@ namespace Comet
 
 		}
 
-		bool IWindow.BackButtonClicked() => true;
+		bool IWindow.BackButtonClicked()
+		{
+#if ANDROID
+			var fragmentManager = this.GetMauiContext().Context.GetFragmentManager();
+			if (fragmentManager.BackStackEntryCount > 0)
+			{
+				fragmentManager.PopBackStack();
+			}
+#endif
+			return true;
+		}
 		void IWindow.Backgrounding(IPersistedState state)
 		{
 
