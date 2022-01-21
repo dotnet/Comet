@@ -17,6 +17,8 @@ namespace Comet
 
 		Thickness IPadding.Padding => GetDefaultPadding();
 
+		bool ILayout.ClipsToBounds { get; }
+
 		protected override void OnAdded(View view)
 		{
 			LayoutHandler?.Add(view);
