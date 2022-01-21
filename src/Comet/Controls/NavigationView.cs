@@ -34,6 +34,8 @@ namespace Comet
 
 		protected Action<View> PerformNavigate { get; set; }
 
+		IToolbar INavigationView.Toolbar => null;
+
 		protected override void OnHandlerChange()
 		{
 			if (_views.Count == 0 && Content != null)
