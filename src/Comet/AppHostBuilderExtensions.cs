@@ -15,6 +15,7 @@ namespace Comet
 {
 	public static class AppHostBuilderExtensions
 	{
+		static void AddHandlers(this IMauiHandlersCollection collection, Dictionary<Type, Type> handlers) => handlers.ForEach(x => collection.AddHandler(x.Key, x.Value));
 		public static MauiAppBuilder UseCometApp<TApp>(this MauiAppBuilder builder)
 			where TApp : class, IApplication
 		{
