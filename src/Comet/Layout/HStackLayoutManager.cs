@@ -86,8 +86,6 @@ namespace Comet.Layout
 				index++;
 			}
 			childrenWidth = width;
-			if (spacerCount > 0)
-				width = widthConstraint;
 
 
 			
