@@ -1,18 +1,18 @@
 ﻿using System;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui;
-using Microsoft.Maui.Graphics.Native;
+using Microsoft.Maui.Graphics.Platform;
 
 namespace Comet.Handlers
 {
-	public partial class ShapeViewHandler : ViewHandler<ShapeView, NativeGraphicsView>
+	public partial class ShapeViewHandler : ViewHandler<ShapeView, PlatformGraphicsView>
 	{
-		protected override NativeGraphicsView CreateNativeView() => new NativeGraphicsView(MauiContext.Context);
+		protected override PlatformGraphicsView CreateNativeView() => new PlatformGraphicsView(MauiContext.Context);
 
 
 		public static void MapShapeProperty(IElementHandler viewHandler, ShapeView virtualView)
 		{
-			var nativeView = (NativeGraphicsView)viewHandler.NativeView;
+			var nativeView = (PlatformGraphicsView)viewHandler.NativeView;
 			nativeView.Drawable = virtualView;
 		}
 	}
