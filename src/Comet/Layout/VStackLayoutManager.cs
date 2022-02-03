@@ -88,8 +88,6 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 		}
 		if(spacerCount > 0)
 			childrenHeight = height;
-		if (spacerCount > 0)
-			height = heightConstraint;
 
 		return new Size(width, height);
 	}
