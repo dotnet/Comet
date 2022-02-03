@@ -18,7 +18,7 @@ namespace Comet.Android.Controls
 		{
 			//TODO: Account for Section
 			var view = ListView?.ViewFor(0, position);
-			var cell = view?.ToNative(MauiContext);
+			var cell = view?.ToPlatform(MauiContext);
 
 			if (holder is CometRecyclerViewHolder rvh && cell != null)
 			{

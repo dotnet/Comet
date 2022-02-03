@@ -49,7 +49,7 @@ namespace Comet.Android
 				ihr.ReloadHandler = this;
 				MauiHotReloadHelper.AddActiveView(ihr);
 			}
-			var newNativeView = _view?.ToNative(MauiContext);
+			var newNativeView = _view?.ToPlatform(MauiContext);
 
 			if (view is IReplaceableView ir)
 				currentHandler = ir.ReplacedView.Handler;
