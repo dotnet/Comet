@@ -44,8 +44,12 @@ namespace Comet
 
 		protected virtual Thickness GetDefaultPadding() => this.GetEnvironment<Thickness>(nameof(Styles.Style.LayoutPadding));
 
+		Size lastMeasureSize;
 		public override Size GetDesiredSize(Size availableSize)
 		{
+			if (this.IsMeasureValid && availableSize == lastMeasureSize)
+				return MeasuredSize;
+			lastMeasureSize = availableSize;
 			var frameConstraints = this.GetFrameConstraints();
 
 			var layoutVerticalSizing = ((IView)this).VerticalLayoutAlignment;
@@ -57,8 +61,8 @@ namespace Comet
 
 			//Lets adjust for padding
 
-			var padding =  this.GetPadding(GetDefaultPadding());
-			if(!double.IsInfinity(widthConstraint))
+			var padding = this.GetPadding(GetDefaultPadding());
+			if (!double.IsInfinity(widthConstraint))
 				widthConstraint -= padding.HorizontalThickness;
 			if (!double.IsInfinity(heightConstraint))
 				heightConstraint -= padding.VerticalThickness;
@@ -85,7 +89,7 @@ namespace Comet
 			}
 
 			var margin = this.GetMargin();
-			if(!double.IsInfinity(measured.Width))
+			if (!double.IsInfinity(measured.Width))
 				measured.Width += margin.HorizontalThickness;
 			if (!double.IsInfinity(measured.Height))
 				measured.Height += margin.VerticalThickness;
