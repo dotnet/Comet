@@ -106,7 +106,7 @@ namespace Comet
 				Measure(bounds.Width,bounds.Height);
 			}
 			lastRect = bounds;
-			var padding = this.GetPadding();
+			var padding = this.GetPadding(GetDefaultPadding()); ;
 			var b = bounds.ApplyPadding(padding);
 			LayoutManager?.ArrangeChildren(b);
 			return this.MeasuredSize;
