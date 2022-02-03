@@ -11,7 +11,7 @@ namespace Comet.Reflection
 		{
 			var type = obj.GetType();
 			var info = type.GetProperty(name, BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Instance);
-			if (info != null)
+			if (info != null && info.CanWrite)
 			{
 				if (info.PropertyType.IsDeepSubclass(typeof(Binding)))
 				{
@@ -47,6 +47,10 @@ namespace Comet.Reflection
 			if (type.IsAssignableFrom(newType))
 				return obj;
 			if (obj?.GetType().Name == "State`1" && type.Name != "State`1")
+			{
+				return obj.GetPropValue<object>("Value");
+			}
+			else if(obj?.GetType().Name == "Binding`1" && type.Name != "Binding`1")
 			{
 				return obj.GetPropValue<object>("Value");
 			}
