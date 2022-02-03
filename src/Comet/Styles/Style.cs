@@ -278,10 +278,8 @@ namespace Comet.Styles
 			setSizing(typeof(SecureField), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(ProgressBar), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(Slider), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
-			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(ScrollView), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
-			setSizing(typeof(ScrollView), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.HorizontalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(WebView), typeof(HStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
 			setSizing(typeof(WebView), typeof(VStack), EnvironmentKeys.Layout.VerticalLayoutAlignment, LayoutAlignment.Fill);
