@@ -53,6 +53,7 @@ namespace Comet.Layout
 			double height = 0;
 			spacerCount = 0;
 			childrenWidth = 0;
+			bool hasExpandingChildren = false;
 
 			foreach (var view in layout)
 			{
@@ -86,7 +87,10 @@ namespace Comet.Layout
 
 					var horizontalSizing = view.GetHorizontalLayoutAlignment(layout);
 					if (horizontalSizing == LayoutAlignment.Fill)
+					{
 						spacerCount++;
+						hasExpandingChildren = true;
+					}
 					else
 						childrenWidth += finalWidth;
 				}
@@ -95,6 +99,8 @@ namespace Comet.Layout
 					width += _spacing;
 				index++;
 			}
+			if (hasExpandingChildren)
+				width = widthConstraint;
 
 			return new Size(width, height);
 		}
