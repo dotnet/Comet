@@ -48,6 +48,7 @@ namespace Comet.Layout
 			double width = 0;
 			double height = 0;
 
+			spacerCount = 0;
 
 			foreach (var view in layout)
 			{
@@ -85,8 +86,6 @@ namespace Comet.Layout
 					width += _spacing;
 				index++;
 			}
-			childrenWidth = width;
-
 
 			
 			return new Size(width, height);
