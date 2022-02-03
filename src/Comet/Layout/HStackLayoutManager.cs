@@ -27,11 +27,15 @@ namespace Comet.Layout
 			{
 				if (view is Spacer)
 				{
-					layoutRect.X += spacerWidth;
+					layoutRect.X += spacerWidth + _spacing;
 					continue;
 				}
 
 				var size = view.MeasuredSize;
+				var horizontalSizing = view.GetHorizontalLayoutAlignment(layout);
+				if (horizontalSizing == LayoutAlignment.Fill)
+					size.Width = spacerWidth;
+
 				layoutRect.Width = size.Width;
 				view.SetFrameFromNativeView(layoutRect,LayoutAlignment.Start, _defaultAlignment);
 				layoutRect.X = view.Frame.Right + _spacing;
@@ -47,8 +51,8 @@ namespace Comet.Layout
 			var index = 0;
 			double width = 0;
 			double height = 0;
-
 			spacerCount = 0;
+			childrenWidth = 0;
 
 			foreach (var view in layout)
 			{
@@ -77,9 +81,14 @@ namespace Comet.Layout
 					var verticalSizing = view.GetVerticalLayoutAlignment(layout);
 					if (verticalSizing == LayoutAlignment.Fill && constraints?.Height == null && !double.IsInfinity(heightConstraint))
 						height = heightConstraint;
-
 					height = Math.Max(finalHeight, height);
 					width += finalWidth;
+
+					var horizontalSizing = view.GetHorizontalLayoutAlignment(layout);
+					if (horizontalSizing == LayoutAlignment.Fill)
+						spacerCount++;
+					else
+						childrenWidth += finalWidth;
 				}
 
 				if (index > 0)
@@ -87,7 +96,6 @@ namespace Comet.Layout
 				index++;
 			}
 
-			
 			return new Size(width, height);
 		}
 	}
