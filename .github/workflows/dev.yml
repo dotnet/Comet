@@ -33,7 +33,7 @@ jobs:
         run: |
           $ProgressPreference = 'SilentlyContinue'
           Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
-          & .\dotnet-install.ps1 -Quality daily -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+          & .\dotnet-install.ps1 -Quality daily -Channel 6.0.2xx -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
           & dotnet --list-sdks    
               
       # - name: Install Visual Studio Preview
