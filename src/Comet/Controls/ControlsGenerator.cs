@@ -24,3 +24,4 @@ using Comet;
 [assembly: CometGenerate(typeof(ISwitch), $"{nameof(ISwitch.IsOn)}:Value", ClassName="Toggle", Namespace = "Comet")]
 [assembly: CometGenerate(typeof(ITimePicker), nameof(ITimePicker.Time), Namespace = "Comet")]
 [assembly: CometGenerate(typeof(IStepper), nameof(IStepper.Value),nameof(IStepper.Minimum),nameof(IStepper.Maximum),nameof(IStepper.Interval), Namespace = "Comet")]
+[assembly: CometGenerate(typeof(IToolbar), nameof(IToolbar.BackButtonVisible), nameof(IToolbar.IsVisible), Namespace = "Comet")]

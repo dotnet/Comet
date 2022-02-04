@@ -2,7 +2,7 @@
 
 namespace Comet
 {
-	public class NavigationView : ContentView, INavigationView
+	public class NavigationView : ContentView, INavigationView, IToolbarElement
 	{
 		List<IView> _views = new List<IView>();
 		public void Navigate(View view)
@@ -34,7 +34,8 @@ namespace Comet
 
 		protected Action<View> PerformNavigate { get; set; }
 
-		IToolbar INavigationView.Toolbar => null;
+		IToolbar INavigationView.Toolbar => CometWindow.Toolbar;
+		IToolbar IToolbarElement.Toolbar => CometWindow.Toolbar;
 
 		protected override void OnHandlerChange()
 		{

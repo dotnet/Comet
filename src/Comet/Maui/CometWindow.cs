@@ -5,7 +5,7 @@ using Microsoft.Maui.Platform;
 
 namespace Comet
 {
-	public class CometWindow : ContentView, IWindow
+	public class CometWindow : ContentView, IWindow, IToolbarElement
 	{
 		public float DisplayScale { get; private set; } = 1;
 		private IMauiContext mauiContext;
@@ -63,11 +63,12 @@ namespace Comet
 		bool IWindow.BackButtonClicked()
 		{
 #if ANDROID
-			var fragmentManager = this.GetMauiContext().Context.GetFragmentManager();
-			if (fragmentManager.BackStackEntryCount > 0)
-			{
-				fragmentManager.PopBackStack();
-			}
+			//var fragmentManager = this.GetMauiContext().Context.GetFragmentManager();
+			//if (fragmentManager.BackStackEntryCount > 0)
+			//{
+			//	fragmentManager.PopBackStack();
+			//}
+			//return true;
 #endif
 			return true;
 		}
@@ -105,5 +106,9 @@ namespace Comet
 			return result;
 
 		}
+
+
+		public static IToolbar Toolbar = new Toolbar(true, true);
+		IToolbar IToolbarElement.Toolbar => this.GetProperty<IToolbar>(nameof(IToolbarElement.Toolbar), false) ?? Toolbar;
 	}
 }

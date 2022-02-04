@@ -57,21 +57,24 @@ namespace Comet
 				{ typeof(Text), typeof(LabelHandler) },
 				{ typeof(TimePicker), typeof(TimePickerHandler) },
 				{ typeof(Toggle), typeof(SwitchHandler) },
+				{ typeof(Toolbar), typeof(ToolbarHandler) },
 				{ typeof(CometApp), typeof(ApplicationHandler) },
 				{ typeof(ListView),typeof(ListViewHandler) },
 #if __MOBILE__
-				{typeof(NavigationView), typeof (Handlers.NavigationViewHandler)},
 				{typeof(ScrollView), typeof(Handlers.ScrollViewHandler) },
 				{typeof(ShapeView), typeof(Handlers.ShapeViewHandler)},
 #else
 				
-				{typeof(NavigationView), typeof (Microsoft.Maui.Handlers.NavigationViewHandler)},
 				{typeof(ScrollView), typeof(Microsoft.Maui.Handlers.ScrollViewHandler) },
 #endif
 
 
 #if __IOS__
+				{typeof(NavigationView), typeof (Handlers.NavigationViewHandler)},
 				{typeof(View), typeof(CometViewHandler)},
+#else
+				
+				{typeof(NavigationView), typeof (Microsoft.Maui.Handlers.NavigationViewHandler)},
 #endif
 			}));
 
