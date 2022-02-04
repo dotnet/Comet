@@ -33,7 +33,6 @@ namespace Comet.Samples
 		{
 			EnvironmentKeys.Colors.Background,
 			EnvironmentKeys.View.ClipShape,
-			EnvironmentKeys.View.Overlay,
 			EnvironmentKeys.View.Shadow,
 		};
 
