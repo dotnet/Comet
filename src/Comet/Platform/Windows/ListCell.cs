@@ -71,7 +71,7 @@ namespace Comet.Platform.Windows
 
 		protected override UwpSize MeasureOverride(UwpSize availableSize)
 		{
-			var measuredSize = _view?.Measure(availableSize.Width, availableSize.Height).ToPlatform();
+			var measuredSize = _view?.Measure(availableSize.Width, availableSize.Height).ToNative();
 			return measuredSize ?? availableSize;
 		}
 
