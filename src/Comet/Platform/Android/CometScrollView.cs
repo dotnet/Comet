@@ -18,7 +18,7 @@ namespace Comet.Android.Controls
 		Orientation currentOrientation;
 		public void SetVirtualView(ScrollView view, IMauiContext context)
 		{
-			var newContent = view.Content?.ToNative(context);
+			var newContent = view.Content?.ToPlatform(context);
 			if(scrollView == null || currentOrientation != view.Orientation)
 			{
 				if (currentView != null)
