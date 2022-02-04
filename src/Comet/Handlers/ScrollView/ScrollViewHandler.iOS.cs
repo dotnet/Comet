@@ -41,7 +41,7 @@ namespace Comet.Handlers
 			base.SetVirtualView(view);
 
 			var oldContent = _content;
-			_content = VirtualView?.Content?.ToPlatform(MauiContext);
+			_content = VirtualView?.Content?.ToNative(MauiContext);
 			if(oldContent != _content)
 				oldContent?.RemoveFromSuperview();
 			if (_content != null)

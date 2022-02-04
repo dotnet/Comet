@@ -47,7 +47,7 @@ namespace Comet.iOS
 			}
 			return base.RespondsToSelector(sel);
 		}
-		public override UIView GetViewForHeader(UITableView tableView, nint section) => _listView?.HeaderFor((int)section).ToPlatform(Context);
+		public override UIView GetViewForHeader(UITableView tableView, nint section) => _listView?.HeaderFor((int)section).ToNative(Context);
 
 		public override nint NumberOfSections(UITableView tableView) => _listView?.Sections() ?? 0;
 
@@ -95,7 +95,7 @@ namespace Comet.iOS
 					return (float)constraints?.Height;
 
 				// todo: this is really inefficient.
-				if (view.ToPlatform(Context) != null)
+				if (view.ToNative(Context) != null)
 				{
 					var size = tableView.Bounds.Size;
 					var measure = view.Measure(size.Width,size.Height);
