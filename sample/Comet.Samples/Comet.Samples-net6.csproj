@@ -19,7 +19,8 @@
 		<PackageReference Include="Reloadify3000" Version="1.0.8" />
 	</ItemGroup>
 	<ItemGroup>
-	  <ProjectReference Include="..\..\External\Maui\src\Core\src\Core-net6.csproj" />
+	  <ProjectReference Include="..\..\External\Maui\src\Core\src\Core.csproj" />
+	  <ProjectReference Include="..\..\External\Maui\src\Essentials\src\Essentials.csproj" />
 	  <ProjectReference Include="..\..\src\Comet\Comet-net6.debug.csproj" />
 	</ItemGroup>
 </Project>
