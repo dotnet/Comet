@@ -29,7 +29,7 @@ namespace Comet.Samples.Comparisons
 		View body() =>
 			new Image("turtlerock.jpg")
 				.ClipShape(new Circle())
-				.Overlay(new Circle().Stroke(Colors.White, lineWidth: 4))
+				.Border(new Circle().Stroke(Colors.White, lineWidth: 4))
 				.Shadow(radius: 10).Background(Colors.Green);
 	}
 
