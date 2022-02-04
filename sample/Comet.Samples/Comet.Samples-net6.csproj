@@ -21,7 +21,5 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\External\Maui\src\Core\src\Core-net6.csproj" />
 	  <ProjectReference Include="..\..\src\Comet\Comet-net6.debug.csproj" />
-	  <ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
-	  <ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj" />
 	</ItemGroup>
 </Project>
