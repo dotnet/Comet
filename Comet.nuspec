@@ -15,36 +15,6 @@
     <license type="expression">MIT</license>
     <language>C#</language>
     <dependencies>
-      <group targetFramework="MonoAndroid10.0">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-rc.2.470" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.AndroidX.Legacy.Support.V4" version="1.0.0.7-net6preview03.4680155" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.AndroidX.Lifecycle.LiveData" version="2.3.1-net6preview03.4680155" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.AndroidX.Navigation.Common" version="2.3.5-net6preview03.4680155" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.AndroidX.Navigation.Fragment" version="2.3.5-net6preview03.4680155" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.AndroidX.Navigation.Runtime" version="2.3.5-net6preview03.4680155" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.AndroidX.Navigation.UI" version="2.3.5-net6preview03.4680155" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.AndroidX.RecyclerView" version="1.2.0-net6preview03.4680155" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.Google.Android.Material" version="1.3.0.1-net6preview03.4680155" exclude="Build,Analyzers" />
-        <dependency id="Xamarin.Android.Glide" version="4.12.0" />
-        <dependency id="Xamarin.AndroidX.Browser" version="1.3.0.5" />
-        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Logging" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
-      </group>
-      <group targetFramework="Xamarin.iOS1.0">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-rc.2.470" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Logging" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
-      </group>
       <group targetFramework=".NETStandard2.1">
         <dependency id="Microsoft.Maui.Graphics" version="6.0.100-rc.2.470" exclude="Build,Analyzers" />
         <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
@@ -61,7 +31,7 @@
       </group>
       <group targetFramework="net6.0-maccatalyst13.5">
       </group>      
-      <group targetFramework="net6.0-windows10.0.18362">
+      <group targetFramework="net6.0-windows10.0.19041">
       </group>
     </dependencies>
   </metadata>
@@ -80,18 +50,6 @@
     <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.pdb" target="lib/netstandard2.0/Microsoft.Maui.pdb"/>
     <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.Essentials.dll" target="lib/netstandard2.0/Microsoft.Maui.Essentials.dll"/>
     <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.Essentials.pdb" target="lib/netstandard2.0/Microsoft.Maui.Essentials.pdb"/> -->
-    <file src="src/Comet/bin/Debug/xamarin.ios10/Comet.dll" target="lib/xamarinios10/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/xamarin.ios10/Comet.pdb" target="lib/xamarinios10/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/xamarin.ios10/Microsoft.Maui.dll" target="lib/xamarinios10/Microsoft.Maui.dll"/>
-    <file src="src/Comet/bin/Debug/xamarin.ios10/Microsoft.Maui.pdb" target="lib/xamarinios10/Microsoft.Maui.pdb"/>
-    <file src="src/Comet/bin/Debug/xamarin.ios10/Microsoft.Maui.Essentials.dll" target="lib/xamarinios10/Microsoft.Maui.Essentials.dll"/>
-    <file src="src/Comet/bin/Debug/xamarin.ios10/Microsoft.Maui.Essentials.pdb" target="lib/xamarinios10/Microsoft.Maui.Essentials.pdb"/>
-    <file src="src/Comet/bin/Debug/monoandroid10.0/Comet.dll" target="lib/monoandroid10/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/monoandroid10.0/Comet.pdb" target="lib/monoandroid10/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/monoandroid10.0/Microsoft.Maui.dll" target="lib/monoandroid10/Microsoft.Maui.dll"/>
-    <file src="src/Comet/bin/Debug/monoandroid10.0/Microsoft.Maui.pdb" target="lib/monoandroid10/Microsoft.Maui.pdb"/>
-    <file src="src/Comet/bin/Debug/monoandroid10.0/Microsoft.Maui.Essentials.dll" target="lib/monoandroid10/Microsoft.Maui.Essentials.dll"/>
-    <file src="src/Comet/bin/Debug/monoandroid10.0/Microsoft.Maui.Essentials.pdb" target="lib/monoandroid10/Microsoft.Maui.Essentials.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-ios/Comet.dll" target="lib/net6.0-ios13.6/Comet.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-ios/Comet.pdb" target="lib/net6.0-ios13.6/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-android/Comet.dll" target="lib/net6.0-android30.0/Comet.dll"/>
