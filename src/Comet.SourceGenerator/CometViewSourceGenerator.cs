@@ -395,7 +395,7 @@ namespace {{NameSpace}} {
 			context.RegisterForPostInitialization((pi) => pi.AddSource("CometGenerationAttribute__", attributeSource));
 			context.RegisterForSyntaxNotifications(() => new SyntaxReceiver());
 		}
-
+		static INamedTypeSymbol cometViewSymbol;
 		class SyntaxReceiver : ISyntaxContextReceiver
 		{
 			public List<(string name, INamedTypeSymbol interfaceType, List<string> keyProperties, string nameSpace, INamedTypeSymbol baseClass, Dictionary<string, string> propertyNameTransforms, Dictionary<string, string> propertyDefaultValues, List<string> skippedProperties)> TemplateInfo = new();
@@ -403,6 +403,7 @@ namespace {{NameSpace}} {
 			public void OnVisitSyntaxNode(GeneratorSyntaxContext context)
 			{
 				var cometView = context.SemanticModel.Compilation.GetTypeByMetadataName("Comet.View");
+				cometViewSymbol ??= cometView;
 				var attrib = context.Node as AttributeSyntax;
 				if (attrib != null)
 				{
@@ -541,8 +542,22 @@ namespace {{NameSpace}} {
 			static INamedTypeSymbol GetType(GeneratorSyntaxContext context, TypeOfExpressionSyntax expression)
 			{
 				var interfaceType = context.SemanticModel.GetSymbolInfo(expression.Type);
-				var s = GetFullName(interfaceType.Symbol);
+				var symbol = interfaceType.Symbol;
+				if (symbol == null && interfaceType.CandidateSymbols.Length > 1)
+				{
+					symbol = interfaceType.CandidateSymbols.OfType<INamedTypeSymbol>().Where(x=> IsSublcassOfCometView(x)).FirstOrDefault();
+				}
+				var s = GetFullName(symbol);
 				return context.SemanticModel.Compilation.GetTypeByMetadataName(s);
+			}
+			static bool IsSublcassOfCometView(INamedTypeSymbol symbol)
+			{
+				if (symbol.BaseType == null)
+					return false;
+				if (symbol.BaseType == cometViewSymbol)
+					return true;
+
+				return IsSublcassOfCometView(symbol.BaseType);
 			}
 
 		}
