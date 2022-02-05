@@ -43,6 +43,7 @@ namespace Comet
 				{ typeof(CheckBox), typeof(CheckBoxHandler) },
 				{ typeof(CometWindow), typeof(WindowHandler) },
 				{ typeof(DatePicker), typeof(DatePickerHandler) },
+				{ typeof(FlyoutView), typeof(FlyoutViewHandler) },
 				{ typeof(Image) , typeof(ImageHandler) },
 				//{ typeof(Picker), typeof(PickerHandler) },
 				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
