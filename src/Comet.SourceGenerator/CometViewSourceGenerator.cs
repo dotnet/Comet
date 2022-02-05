@@ -488,9 +488,9 @@ namespace {{NameSpace}} {
 									return (false, null);
 								}
 								var parts = oldKey.Split(':', '=');
-								var key = parts[0];
-								var newName = hasName ? parts[1] : null;
-								var defaultValue = hasValue ? parts.Last() : null;
+								var key = parts[0].Trim();
+								var newName = hasName ? parts[1].Trim() : null;
+								var defaultValue = hasValue ? parts.Last().Trim() : null;
 
 
 								if (newName != null)
