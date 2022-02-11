@@ -10,8 +10,7 @@ namespace Comet.iOS
 		public override void LayoutSubviews()
 		{
 			base.LayoutSubviews();
-
-			var bounds = Frame.ToRectangle();
+			var bounds = Bounds.ToRectangle();
 			CrossPlatformArrange?.Invoke(bounds);
 		}
 	}
