@@ -8,14 +8,10 @@ namespace Comet.iOS
 	public class CUIScrollView : UIScrollView
 	{
 		internal Action<Rectangle> CrossPlatformArrange { get; set; }
-		CGRect rect;
 		public override void LayoutSubviews()
 		{
 			base.LayoutSubviews();
-			if (rect == Frame)
-				return;
-			rect = Frame;
-			var bounds = Frame.ToRectangle();
+			var bounds = Bounds.ToRectangle();
 			CrossPlatformArrange?.Invoke(bounds);
 		}
 	}
