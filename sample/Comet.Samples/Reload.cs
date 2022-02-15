@@ -4,7 +4,6 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Maui.HotReload;
 using Esp.Resources;
 using System.Reflection;

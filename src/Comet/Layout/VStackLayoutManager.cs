@@ -30,6 +30,10 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 
 
 			var size = view.MeasuredSize;
+			var verticalSizing = view.GetVerticalLayoutAlignment(layout);
+			if (verticalSizing == LayoutAlignment.Fill)
+				size.Height = spacerHeight;
+
 			layoutRect.Height = size.Height;
 			view.SetFrameFromNativeView(layoutRect,_defaultAlignment, LayoutAlignment.Start);
 			layoutRect.Y = view.Frame.Bottom + _spacing;
@@ -47,7 +51,8 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 		double width = 0;
 		double height = 0;
 		spacerCount = 0;
-
+		childrenHeight = 0;
+		bool hasExpandingChildren = false;
 
 		foreach (var view in layout)
 		{
@@ -64,12 +69,7 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 			}
 			else
 			{
-				var size = view.MeasuredSize;
-				if (!view.MeasurementValid)
-				{
-					view.MeasuredSize = size = view.Measure(widthConstraint,heightConstraint);
-					view.MeasurementValid = true;
-				}
+				var size = view.Measure(widthConstraint, heightConstraint);
 
 				var finalHeight = size.Height;
 				var finalWidth = size.Width;
@@ -85,15 +85,23 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 
 				width = Math.Max(finalWidth, width);
 				height += finalHeight;
+
+				var verticalSizing = view.GetVerticalLayoutAlignment(layout);
+				if (verticalSizing == LayoutAlignment.Fill)
+				{
+					spacerCount++;
+					hasExpandingChildren = true;
+				}
+				else
+					childrenHeight += finalHeight;
 			}
 
 			if (index > 0)
 				height += _spacing;
 			index++;
 		}
-		if(spacerCount > 0)
-			childrenHeight = height;
-		if (spacerCount > 0)
+
+		if (hasExpandingChildren)
 			height = heightConstraint;
 
 		return new Size(width, height);

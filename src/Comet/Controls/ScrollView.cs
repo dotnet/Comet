@@ -6,7 +6,7 @@ using Microsoft.Maui;
 
 namespace Comet
 {
-	public class ScrollView : ContentView, IEnumerable
+	public class ScrollView : ContentView, IEnumerable, IScrollView
 	{
 		public ScrollView(Orientation orientation = Orientation.Vertical)
 		{
@@ -14,7 +14,18 @@ namespace Comet
 		}
 
 		public Orientation Orientation { get; }
-		
+
+		ScrollBarVisibility IScrollView.HorizontalScrollBarVisibility => this.GetPropertyValue<ScrollBarVisibility?>() ?? ScrollBarVisibility.Default;
+
+		ScrollBarVisibility IScrollView.VerticalScrollBarVisibility => this.GetPropertyValue<ScrollBarVisibility?>() ?? ScrollBarVisibility.Default;
+
+		ScrollOrientation IScrollView.Orientation => Orientation == Orientation.Horizontal ? ScrollOrientation.Horizontal : ScrollOrientation.Vertical;
+
+		Size IScrollView.ContentSize => Content?.MeasuredSize ?? Size.Zero;
+
+		double IScrollView.HorizontalOffset { get; set; }
+		double IScrollView.VerticalOffset { get; set; }
+
 		public override Size GetDesiredSize(Size availableSize)
 		{
 
@@ -39,7 +50,6 @@ namespace Comet
 				{
 					contentSize = Content.Measure(contentMeasureSize.Width, contentMeasureSize.Height);
 					Content.MeasuredSize = contentSize;
-					Content.MeasurementValid = true;
 				}
 				MeasurementValid = true;
 				return MeasuredSize = new Size(
@@ -54,7 +64,10 @@ namespace Comet
 		public override void LayoutSubviews(Rectangle frame)
 		{
 			this.Frame = frame;
-			Content?.LayoutSubviews(frame);
+
+			Content.SetFrameFromNativeView(frame,LayoutAlignment.Start,	LayoutAlignment.Start);
+			if (Content?.BuiltView != null)
+				Content.BuiltView.LayoutSubviews(frame);
 		}
 
 		protected override void Dispose(bool disposing)
@@ -63,5 +76,8 @@ namespace Comet
 				Content?.Dispose();
 			base.Dispose(disposing);
 		}
+
+		void IScrollView.RequestScrollTo(double horizontalOffset, double verticalOffset, bool instant) { }
+		void IScrollView.ScrollFinished() { }
 	}
 }

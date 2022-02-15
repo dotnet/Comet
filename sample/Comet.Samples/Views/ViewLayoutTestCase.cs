@@ -27,8 +27,7 @@ namespace Comet.Samples
 						{
 							// Destination Background Image
 							new Image()
-								.Background(Colors.SkyBlue).FillHorizontal().FillVertical()
-								.ClipShape(new RoundedRectangle(36)),
+								.Background(Colors.SkyBlue).FillHorizontal().FillVertical(),
 							new VStack(LayoutAlignment.Start) {
 								new VStack
 								{
@@ -39,7 +38,7 @@ namespace Comet.Samples
 										.FontFamily("Rockolf Bold")
 										.FontSize(14)
 										.FontWeight(FontWeight.Bold),
-								}.FitHorizontal().Frame(alignment: Alignment.Trailing)
+								}.FitHorizontal().Alignment( Alignment.Trailing)
 									.Background(Color.FromArgb("#67AEE9"))
 									.ClipShape(new RoundedRectangle(12))
 									.Padding(6)
@@ -58,7 +57,7 @@ namespace Comet.Samples
 									.FontSize(14),
 							}
 							.Padding(new Thickness(16, 0, 0, 16))
-						}.Frame(height: 250, width: 200))
+						}.ClipShape(new RoundedRectangle(36)).Frame(height: 250, width: 200))
 						}
 					}
 				},
@@ -67,32 +66,32 @@ namespace Comet.Samples
 				new Text("ZSTack Alignment"),
 				new ZStack
 				{
-					new Text("TL").Background(Colors.Blue).Frame(75,75, Alignment.TopLeading),
-					new Text("T").Background(Colors.Blue).Frame(75,75, Alignment.Top),
-					new Text("TR").Background(Colors.Blue).Frame(75,75, Alignment.TopTrailing),
-					new Text("R").Background(Colors.Blue).Frame(75,75, Alignment.Trailing),
-					new Text("L").Background(Colors.Blue).Frame(75,75, Alignment.Leading),
-					new Text("BL").Background(Colors.Blue).Frame(75,75, Alignment.BottomLeading),
-					new Text("BR").Background(Colors.Blue).Frame(75,75, Alignment.BottomTrailing),
-					new Text("B").Background(Colors.Blue).Frame(75,75, Alignment.Bottom),
+					new Text("TL").Background(Colors.Blue).Frame(75,75).Alignment(Alignment.TopLeading),
+					new Text("T").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Top),
+					new Text("TR").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.TopTrailing),
+					new Text("R").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Trailing),
+					new Text("L").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Leading),
+					new Text("BL").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.BottomLeading),
+					new Text("BR").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.BottomTrailing),
+					new Text("B").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Bottom),
 				}.Frame(400,400).Padding(12)
 				.Background(Colors.White),
 
 				new Text("HStack, Only uses Vertial Alignment"),
 				new HStack
 				{
-					new Text("T").Background(Colors.Blue).Frame(75,75, Alignment.Top),
-					new Text("Center").Background(Colors.Blue).Frame(75,75),
-					new Text("B").Background(Colors.Blue).Frame(75,75, Alignment.Bottom),
+					new Text("T").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Top),
+					new Text("Center").Background(Colors.Blue).Frame(75,75).Alignment(Alignment.Center),
+					new Text("B").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Bottom),
 
 				}.Frame(400,400).Background(Colors.White).Padding(12),
 
 				new Text("VStack, Only uses Horizontal Alignment"),
 				new VStack
 				{
-					new Text("L").Background(Colors.Blue).Frame(75,75, Alignment.Leading),
-					new Text("C").Background(Colors.Blue).Frame(75,75, Alignment.Top),
-					new Text("R").Background(Colors.Blue).Frame(75,75, Alignment.Trailing),
+					new Text("L").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Leading),
+					new Text("C").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Top),
+					new Text("R").Background(Colors.Blue).Frame(75,75).Alignment( Alignment.Trailing),
 
 				}.Frame(400,400).Background(Colors.White).Padding(12),
 
@@ -103,7 +102,7 @@ namespace Comet.Samples
 					new Text("C").Background(Colors.Blue),
 					new Text("R").Background(Colors.Blue),
 
-				}.Background(Colors.White).Padding(12),
+				}.Frame(400,400).Background(Colors.White).Padding(12),
 
 				new Text("VStack With Spacers"),
 				new VStack

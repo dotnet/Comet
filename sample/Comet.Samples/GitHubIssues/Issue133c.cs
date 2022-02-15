@@ -21,7 +21,7 @@ namespace Comet.Samples
 			new BorderedEntry(_card.Number,"Enter CC Number", "\uf09d")
 				.Margin(left:20, right: 20),
 
-		}.FillHorizontal().Frame(alignment: Alignment.Top);
+		}.FillHorizontal().Alignment(Alignment.Top);
 
 		private class BorderedEntry : View
 		{

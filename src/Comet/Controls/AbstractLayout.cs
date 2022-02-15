@@ -17,6 +17,8 @@ namespace Comet
 
 		Thickness IPadding.Padding => GetDefaultPadding();
 
+		bool ILayout.ClipsToBounds { get; }
+
 		protected override void OnAdded(View view)
 		{
 			LayoutHandler?.Add(view);
@@ -42,11 +44,12 @@ namespace Comet
 
 		protected virtual Thickness GetDefaultPadding() => this.GetEnvironment<Thickness>(nameof(Styles.Style.LayoutPadding));
 
+		Size lastMeasureSize;
 		public override Size GetDesiredSize(Size availableSize)
 		{
-			if (IsMeasureValid)
+			if (this.IsMeasureValid && availableSize == lastMeasureSize)
 				return MeasuredSize;
-
+			lastMeasureSize = availableSize;
 			var frameConstraints = this.GetFrameConstraints();
 
 			var layoutVerticalSizing = ((IView)this).VerticalLayoutAlignment;
@@ -58,8 +61,8 @@ namespace Comet
 
 			//Lets adjust for padding
 
-			var padding =  this.GetPadding(GetDefaultPadding());
-			if(!double.IsInfinity(widthConstraint))
+			var padding = this.GetPadding(GetDefaultPadding());
+			if (!double.IsInfinity(widthConstraint))
 				widthConstraint -= padding.HorizontalThickness;
 			if (!double.IsInfinity(heightConstraint))
 				heightConstraint -= padding.VerticalThickness;
@@ -86,11 +89,10 @@ namespace Comet
 			}
 
 			var margin = this.GetMargin();
-			if(!double.IsInfinity(measured.Width))
+			if (!double.IsInfinity(measured.Width))
 				measured.Width += margin.HorizontalThickness;
 			if (!double.IsInfinity(measured.Height))
 				measured.Height += margin.VerticalThickness;
-			IsMeasureValid = true;
 			return MeasuredSize = measured;
 		}
 
@@ -100,9 +102,15 @@ namespace Comet
 			//LayoutManager?.Invalidate();
 		}
 
+		Rectangle lastRect;
 		public virtual Size CrossPlatformMeasure(double widthConstraint, double heightConstraint) => GetDesiredSize(new Size(widthConstraint,heightConstraint));
 		public virtual Size CrossPlatformArrange(Rectangle bounds) {
-			var padding = this.GetPadding();
+			if(bounds != lastRect)
+			{
+				Measure(bounds.Width,bounds.Height);
+			}
+			lastRect = bounds;
+			var padding = this.GetPadding(GetDefaultPadding()); ;
 			var b = bounds.ApplyPadding(padding);
 			LayoutManager?.ArrangeChildren(b);
 			return this.MeasuredSize;

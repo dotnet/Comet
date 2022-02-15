@@ -1,21 +1,29 @@
 using System;
+using Microsoft.Extensions.Logging;
+
 namespace Comet
 {
+	class ConsoleLogger : ILogger
+	{
+		IDisposable ILogger.BeginScope<TState>(TState state) => null;
+		bool ILogger.IsEnabled(LogLevel logLevel) => true;
+		void ILogger.Log<TState>(LogLevel logLevel, EventId eventId, TState state, Exception exception, Func<TState, Exception, string> formatter) => Console.WriteLine(formatter(state,exception));
+	}
 	public static class Logger
 	{
-		private static ILoggingService _registeredService;
+		private static ILogger _registeredService;
 
-		public static ILoggingService RegisteredService
+		public static ILogger RegisteredService
 		{
 			get
 			{
 				if (_registeredService == null)
 				{
-					_registeredService = ServiceContainer.Resolve<ILoggingService>(true);
+					_registeredService = ServiceContainer.Resolve<ILogger>(true);
 					if (_registeredService == null)
 					{
-						_registeredService = new ConsoleLoggingService();
-						_registeredService.Log(LogType.WARNING, "No logging service was registered.  Falling back to console logging.");
+						_registeredService = new ConsoleLogger();
+						_registeredService.Log(LogLevel.Warning, "No logging service was registered.  Falling back to console logging.");
 					}
 				}
 
@@ -23,7 +31,7 @@ namespace Comet
 			}
 		}
 
-		public static void RegisterService(ILoggingService service)
+		public static void RegisterService(ILogger service)
 		{
 			ServiceContainer.Register(service);
 			_registeredService = service;
@@ -31,30 +39,30 @@ namespace Comet
 
 		public static void Debug(params object[] parameters)
 		{
-			Log(LogType.DEBUG, parameters);
+			Log(LogLevel.Debug, parameters);
 		}
 
 		public static void Warn(params object[] parameters)
 		{
-			Log(LogType.WARNING, parameters);
+			Log(LogLevel.Warning, parameters);
 		}
 
 		public static void Error(params object[] parameters)
 		{
-			Log(LogType.ERROR, parameters);
+			Log(LogLevel.Error, parameters);
 		}
 
 		public static void Fatal(params object[] parameters)
 		{
-			Log(LogType.FATAL, parameters);
+			Log(LogLevel.Critical, parameters);
 		}
 
 		public static void Info(params object[] parameters)
 		{
-			Log(LogType.INFO, parameters);
+			Log(LogLevel.Information, parameters);
 		}
 
-		public static void Log(LogType logType, params object[] parameters)
+		public static void Log(LogLevel LogLevel, params object[] parameters)
 		{
 			if (parameters == null || parameters.Length == 0)
 				return;
@@ -63,14 +71,14 @@ namespace Comet
 			{
 				if (parameters[0] is Exception exception)
 				{
-					RegisteredService.Log(logType, exception.Message, exception);
+					RegisteredService.Log(LogLevel, exception.Message, exception);
 					return;
 				}
 
 				var value = parameters[0];
 				if (value != null)
 				{
-					RegisteredService.Log(logType, value.ToString());
+					RegisteredService.Log(LogLevel, value.ToString());
 					return;
 				}
 			}
@@ -87,16 +95,16 @@ namespace Comet
 			}
 			catch (Exception exc)
 			{
-				RegisteredService.Log(LogType.INFO, $"An error occured formatting the logging message: [{format}]", exc);
+				RegisteredService.Log(LogLevel.Information, $"An error occured formatting the logging message: [{format}]", exc);
 			}
 
 			if (parameters[parameters.Length - 1] is Exception ex)
 			{
-				RegisteredService.Log(logType, message, ex);
+				RegisteredService.Log(LogLevel, message, ex);
 			}
 			else
 			{
-				RegisteredService.Log(logType, message);
+				RegisteredService.Log(LogLevel, message);
 			}
 		}
 	}

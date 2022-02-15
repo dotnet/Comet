@@ -14,6 +14,6 @@ namespace Comet.Samples.LiveStreamIssues
 				{
 					new ShapeView(new Circle().Stroke(Colors.Black, 2f)).Frame(44,44)
 				}
-			}.Frame(alignment: Alignment.BottomTrailing);
+			}.Alignment(Alignment.BottomTrailing);
 	}
 }

@@ -29,9 +29,9 @@ namespace Comet.Samples
 				ViewFor = (item)=>new ContentView{
 					new HStack
 					{
-						new Text(item.Name).Frame(alignment: Alignment.Leading),
+						new Text(item.Name).Alignment( Alignment.Leading),
 						new Spacer(),
-						new Toggle(item.Done).Frame(alignment:Alignment.Center)
+						new Toggle(item.Done).Alignment(Alignment.Center)
 					}.Margin(6)
 				}.FillHorizontal()
 			}.Title("Tasky"),

@@ -26,7 +26,7 @@ namespace Comet.Samples
 					new ShapeView(new RoundedRectangle(4.0f)
 						.Style(Graphics.DrawingStyle.Fill)
 						.Fill(Colors.Grey))
-						.Frame(40,30,alignment: Alignment.Trailing)
+						.Frame(40,30).Alignment( Alignment.Trailing)
 						.Margin(top: 30, right: 30)
 						.FitHorizontal(),
 
@@ -106,7 +106,7 @@ namespace Comet.Samples
 				.Margin(left:20, right:20),
 
 
-		}.FillHorizontal().Frame(alignment: Alignment.Top);
+		}.FillHorizontal().Alignment(Alignment.Top);
 
 		public class Separator : ShapeView
 		{
