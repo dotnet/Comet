@@ -31,15 +31,6 @@ namespace Comet.Android
 		{
 			if (view == _view && !forceRefresh)
 				return;
-			//If the views are the same type- reuse the handlers!
-			if (view is View v && _view is View pv && v.AreSameType(pv, true) && currentHandler != null)
-			{
-				_view = view;
-				var rView = v.ReplacedView;
-				rView.Handler = currentHandler;
-				currentHandler.SetVirtualView(rView);
-				return;
-			}
 
 			_view = view;
 
