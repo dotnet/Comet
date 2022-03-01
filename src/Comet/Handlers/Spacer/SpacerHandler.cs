@@ -4,20 +4,20 @@ using Microsoft.Maui.Graphics;
 using Microsoft.Maui.Handlers;
 #if __IOS__
 
-using NativeView = UIKit.UIView;
+using PlatformView = UIKit.UIView;
 #elif ANDROID
-using NativeView = Android.Views.View;
+using PlatformView = Android.Views.View;
 #elif WINDOWS
-using NativeView = Microsoft.UI.Xaml.Controls.Panel;
+using PlatformView = Microsoft.UI.Xaml.Controls.Panel;
 
 #else
-using NativeView = System.Object;
+using PlatformView = System.Object;
 #endif
 
 
 namespace Comet.Handlers
 {
-	public partial class SpacerHandler : ViewHandler<Spacer, NativeView>
+	public partial class SpacerHandler : ViewHandler<Spacer, PlatformView>
 	{
 		public static readonly PropertyMapper<Spacer, SpacerHandler> Mapper = new PropertyMapper<Spacer, SpacerHandler>(ViewHandler.ViewMapper);
 		public SpacerHandler() : base(Mapper)
@@ -25,13 +25,13 @@ namespace Comet.Handlers
 
 		}
 
-		protected override NativeView CreateNativeView() =>
+		protected override PlatformView CreatePlatformView() =>
 #if ANDROID
-			new NativeView(Context.ApplicationContext);
+			new PlatformView(Context.ApplicationContext);
 #elif WINDOWS
 			new LayoutPanel();
 #else
-			new NativeView();
+			new PlatformView();
 #endif
 
 	}

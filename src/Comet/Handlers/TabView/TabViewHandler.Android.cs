@@ -14,7 +14,7 @@ namespace Comet.Handlers
 	public partial class TabViewHandler : ViewHandler<TabView, CometTabView>
 	{
 		//private AView _view;
-		protected override CometTabView CreateNativeView() => new CometTabView(MauiContext);
+		protected override CometTabView CreatePlatformView() => new CometTabView(MauiContext);
 
 
 		protected override void ConnectHandler(CometTabView nativeView)
@@ -24,7 +24,7 @@ namespace Comet.Handlers
 		public override void SetVirtualView(IView view) {
 			base.SetVirtualView(view);
 
-			NativeView?.CreateTabs(this.VirtualView);
+			PlatformView?.CreateTabs(this.VirtualView);
 		}
 	}
 }

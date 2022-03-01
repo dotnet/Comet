@@ -24,7 +24,6 @@ namespace Comet
 
 	public class View : ContextualObject, IDisposable, IView, IHotReloadableView,ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement, IGestureView, IBorder
 	{
-
 		static internal readonly WeakList<IView> ActiveViews = new WeakList<IView>();
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
 		protected static Dictionary<string, string> HandlerPropertyMapper = new()
@@ -513,7 +512,7 @@ namespace Comet
 				if (f == value)
 					return;
 				this.SetEnvironment(nameof(Frame), value, false);
-				(ViewHandler as IViewHandler)?.NativeArrange(value);
+				(ViewHandler as IViewHandler)?.PlatformArrange(value);
 			}
 		}
 
@@ -600,7 +599,7 @@ namespace Comet
 
 		public virtual void LayoutSubviews(Rectangle frame)
 		{
-			this.SetFrameFromNativeView(frame);
+			this.SetFrameFromPlatformView(frame);
 			if (BuiltView != null)
 				BuiltView.LayoutSubviews(frame);
 		}
@@ -797,6 +796,9 @@ namespace Comet
 		public virtual int GetContentTypeHashCode() => this.replacedView?.GetContentTypeHashCode() ?? (TypeHashCode ??= this.GetType().GetHashCode());
 
 		protected T GetPropertyValue<T>(bool cascades = true, [CallerMemberName] string key = "") => this.GetEnvironment<T>(key, cascades);
+		public bool Focus() => throw new NotImplementedException();
+		public void Unfocus() => throw new NotImplementedException();
+
 		IBorderStroke IBorder.Border
 		{
 			get
@@ -807,5 +809,7 @@ namespace Comet
 				return border;
 			}
 		}
+
+		public bool IsFocused { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 	}
 }

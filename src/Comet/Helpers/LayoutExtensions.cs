@@ -81,7 +81,7 @@ namespace Comet
 		public static int GetIsNextRow(this View view)
 			=> view.GetEnvironment<int>(nameof(NextRow), false);
 
-		public static void SetFrameFromNativeView(
+		public static void SetFrameFromPlatformView(
 			this View view,
 			Rectangle frame, LayoutAlignment defaultHorizontalAlignment = LayoutAlignment.Center, LayoutAlignment defaultVerticalAlignment = LayoutAlignment.Center)
 		{

@@ -7,7 +7,7 @@ using UIKit;
 
 namespace Comet.Handlers
 {
-	public partial class CometViewHandler : ViewHandler<View, CometView>, INativeViewHandler
+	public partial class CometViewHandler : ViewHandler<View, CometView>, IPlatformViewHandler
 	{
 		public static PropertyMapper<View, CometViewHandler> CometViewMapper = new ()
 		{
@@ -21,12 +21,12 @@ namespace Comet.Handlers
 
 		}
 		CometViewController viewController;
-		UIViewController INativeViewHandler.ViewController => viewController ??= new CometViewController { ContainerView = this.NativeView, MauiContext = MauiContext };
-		protected override CometView CreateNativeView() => new CometView(MauiContext);
+		UIViewController IPlatformViewHandler.ViewController => viewController ??= new CometViewController { ContainerView = this.PlatformView, MauiContext = MauiContext };
+		protected override CometView CreatePlatformView() => new CometView(MauiContext);
 		public override void SetVirtualView(IView view)
 		{
 			base.SetVirtualView(view);
-			NativeView.CurrentView = view;
+			PlatformView.CurrentView = view;
 		}
 
 

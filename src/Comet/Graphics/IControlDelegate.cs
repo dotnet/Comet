@@ -10,7 +10,7 @@
 //		PropertyMapper<DrawableControl> Mapper { get; }
 //		RectangleF Bounds { get; }
 //		DrawableControl VirtualDrawableControl { get; set; }
-//		IDrawableControl NativeDrawableControl { get; set; }
+//		IDrawableControl PlatformDrawableControl { get; set; }
 //		void Invalidate();
 //		void Draw(ICanvas canvas, RectangleF dirtyRect);
 //		void StartHoverInteraction(PointF[] points);

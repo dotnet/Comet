@@ -53,7 +53,7 @@ namespace Comet.Platform.Windows
 				_nativeView = null;
 			}
 
-			_nativeView = _view?.ToNative(Context);
+			_nativeView = _view?.ToPlatform(Context);
 
 			if (_nativeView != null)
 			{
@@ -71,7 +71,7 @@ namespace Comet.Platform.Windows
 
 		protected override UwpSize MeasureOverride(UwpSize availableSize)
 		{
-			var measuredSize = _view?.Measure(availableSize.Width, availableSize.Height).ToNative();
+			var measuredSize = _view?.Measure(availableSize.Width, availableSize.Height).ToPlatform();
 			return measuredSize ?? availableSize;
 		}
 

@@ -18,7 +18,7 @@ namespace Comet.Handlers
 
 		static void setupView(ListViewHandler viewHandler, IListView virtualView)
 		{
-			var nativeView = (UWPListView)viewHandler.NativeView;
+			var nativeView = (UWPListView)viewHandler.PlatformView;
 			var sections = virtualView?.Sections() ?? 0;
 			for (var s = 0; s < sections; s++)
 			{
@@ -40,12 +40,12 @@ namespace Comet.Handlers
 
 		public static void MapReloadData(IElementHandler viewHandler, IListView virtualView, object? value)
 		{
-			var nativeView = (UWPListView)viewHandler.NativeView;
+			var nativeView = (UWPListView)viewHandler.PlatformView;
 			nativeView.Items.Clear();
 			//setupView(viewHandler, virtualView);
 		}
 
-		protected override UWPListView CreateNativeView()
+		protected override UWPListView CreatePlatformView()
 		{
 			var listView = new UWPListView();
 			listView.SelectionChanged += ListView_SelectionChanged;
@@ -55,7 +55,7 @@ namespace Comet.Handlers
 		private void ListView_SelectionChanged(object sender, Microsoft.UI.Xaml.Controls.SelectionChangedEventArgs e)
 		{
 
-			VirtualView?.OnSelected(0, NativeView.SelectedIndex);
+			VirtualView?.OnSelected(0, PlatformView.SelectedIndex);
 		}
 		public class ListViewHandlerItem : ListViewItem
 		{

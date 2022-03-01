@@ -12,7 +12,7 @@ namespace Comet.Handlers
 
 		private AView _content;
 
-		protected override AScrollView CreateNativeView() => new AScrollView(Context)
+		protected override AScrollView CreatePlatformView() => new AScrollView(Context)
 		{
 			CrossPlatformArrange = Arange,
 		};
@@ -41,14 +41,14 @@ namespace Comet.Handlers
 			measuredSize.Height = Math.Max(measuredSize.Height, rect.Height);
 			if (VirtualView?.Content != null)
 				VirtualView.Content.Frame = new Rectangle(Point.Zero, measuredSize);
-			//NativeView.v = measuredSize.ToCGSize();
+			//PlatformView.v = measuredSize.ToCGSize();
 			//_content.Frame = new CGRect(CGPoint.Empty, measuredSize);
 		}
 
 		public override void SetVirtualView(IView view)
 		{
 			base.SetVirtualView(view);
-			NativeView.SetVirtualView(VirtualView, MauiContext);
+			PlatformView.SetVirtualView(VirtualView, MauiContext);
 		}
 	}
 }

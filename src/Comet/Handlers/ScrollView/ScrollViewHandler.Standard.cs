@@ -5,7 +5,7 @@ namespace Comet.Handlers
 {
 	public partial class ScrollViewHandler: ViewHandler<ScrollView, object>
 	{
-		protected override object CreateNativeView() => throw new NotImplementedException();
+		protected override object CreatePlatformView() => throw new NotImplementedException();
 		
 	}
 }

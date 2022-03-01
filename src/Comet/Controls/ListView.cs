@@ -57,7 +57,7 @@ namespace Comet
 					OnDequeue = (pair) =>
 					{
 						var view = pair.Value;
-						if (view?.ViewHandler?.NativeView == null)
+						if (view?.ViewHandler ?.PlatformView == null)
 							view.Dispose();
 						else
 							CurrentViews[pair.Key] = view;
@@ -161,7 +161,7 @@ namespace Comet
 
 		public View Footer { get; set; }
 
-		public Action<object> ItemSelected { get; set; }
+		public Action<(object item,int section, int row)> ItemSelected { get; set; }
 
 		protected virtual int GetSections() => 1;
 
@@ -190,7 +190,7 @@ namespace Comet
 		protected virtual void OnSelected(int section, int index)
 		{
 			var item = GetItemAt(section, index);
-			ItemSelected?.Invoke(item);
+			ItemSelected?.Invoke((item,section,index));
 		}
 
 		protected override void Dispose(bool disposing)

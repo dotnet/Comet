@@ -16,7 +16,7 @@ namespace Comet
 		public const string AddGestureProperty = "AddGesture";
 		public const string RemoveGestureProperty = "RemoveGesture";
 
-		public object NativeGesture { get; set; }
+		public object PlatformGesture { get; set; }
 
 		public virtual void Invoke()
 		{

@@ -10,14 +10,14 @@ namespace Comet.Handlers
 {
 	public partial class TabViewHandler : ViewHandler<TabView, Panel>
 	{
-		protected override Panel CreateNativeView() => NativeView ?? new LayoutPanel { };
+		protected override Panel CreatePlatformView() => PlatformView ?? new LayoutPanel { };
 
 
 		//public override void SetVirtualView(IView view)
 		//{
 		//	base.SetVirtualView(view);
 
-		//	NativeView?.Setup(this.VirtualView);
+		//	PlatformView?.Setup(this.VirtualView);
 		//}
 	}
 }
