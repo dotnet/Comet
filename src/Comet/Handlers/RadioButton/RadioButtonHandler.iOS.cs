@@ -35,14 +35,14 @@
 
 //		public static void MapLabelProperty(IViewHandler viewHandler, RadioButton virtualRadioButton)
 //		{
-//			var nativeRadioButton = (CUIRadioButton)viewHandler.NativeView;
+//			var nativeRadioButton = (CUIRadioButton)viewHandler.PlatformView;
 //			nativeRadioButton.SetTitle(virtualRadioButton.Label?.CurrentValue, UIControlState.Normal);
 //			virtualRadioButton.InvalidateMeasurement();
 //		}
 
 //		public static void MapSelectedProperty(IViewHandler viewHandler, RadioButton virtualRadioButton)
 //		{
-//			var nativeRadioButton = (CUIRadioButton)viewHandler.NativeView;
+//			var nativeRadioButton = (CUIRadioButton)viewHandler.PlatformView;
 //			nativeRadioButton.IsChecked = virtualRadioButton.Selected;
 //		}
 //	}

@@ -2,7 +2,7 @@
 
 namespace Comet
 {
-	public class NavigationView : ContentView, INavigationView, IToolbarElement
+	public class NavigationView : ContentView, IStackNavigationView, IToolbarElement
 	{
 		List<IView> _views = new List<IView>();
 		public void Navigate(View view)
@@ -18,7 +18,7 @@ namespace Comet
 				if (PerformNavigate != null)
 					PerformNavigate(view);
 				else
-					((INavigationView)this).RequestNavigation(new NavigationRequest(_views, true));
+					((IStackNavigationView)this).RequestNavigation(new NavigationRequest(_views, true));
 			}
 		}
 
@@ -34,7 +34,6 @@ namespace Comet
 
 		protected Action<View> PerformNavigate { get; set; }
 
-		IToolbar INavigationView.Toolbar => CometWindow.Toolbar;
 		IToolbar IToolbarElement.Toolbar => CometWindow.Toolbar;
 
 		protected override void OnHandlerChange()
@@ -42,7 +41,7 @@ namespace Comet
 			if (_views.Count == 0 && Content != null)
 				_views.Add(Content);
 
-			((INavigationView)this).RequestNavigation(new NavigationRequest(_views, false));
+			((IStackNavigationView)this).RequestNavigation(new NavigationRequest(_views, false));
 		}
 
 		public void Pop()
@@ -115,8 +114,8 @@ namespace Comet
 			return FindParentNavigationView(view?.Parent) ?? view.Navigation;
 		}
 
-		void INavigationView.RequestNavigation(NavigationRequest eventArgs) =>
-			ViewHandler?.Invoke(nameof(INavigationView.RequestNavigation), eventArgs);
-		void INavigationView.NavigationFinished(IReadOnlyList<IView> newStack) => _views = newStack.ToList();
+		void IStackNavigation.RequestNavigation(NavigationRequest eventArgs) =>
+			ViewHandler?.Invoke(nameof(IStackNavigationView.RequestNavigation), eventArgs);
+		void IStackNavigation.NavigationFinished(IReadOnlyList<IView> newStack) => _views = newStack.ToList();
 	}
 }

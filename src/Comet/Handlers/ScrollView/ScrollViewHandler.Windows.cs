@@ -7,7 +7,7 @@ namespace Comet.Handlers
 {
 	public partial class ScrollViewHandler : ViewHandler<ScrollView, UWPScrollView>
 	{
-		protected override UWPScrollView CreateNativeView() =>  new UWPScrollView();
+		protected override UWPScrollView CreatePlatformView() =>  new UWPScrollView();
 
 	}
 }

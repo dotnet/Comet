@@ -14,7 +14,7 @@ namespace Comet.Handlers
 
 		private UIView _content;
 
-		protected override CUIScrollView CreateNativeView() =>
+		protected override CUIScrollView CreatePlatformView() =>
 			new CUIScrollView {
 				ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always,
 				CrossPlatformArrange = Arange,
@@ -32,7 +32,7 @@ namespace Comet.Handlers
 			measuredSize.Width = Math.Max(measuredSize.Width, rect.Width);
 			measuredSize.Height = Math.Max(measuredSize.Height, rect.Height);
 
-			NativeView.ContentSize = measuredSize.ToCGSize();
+			PlatformView.ContentSize = measuredSize.ToCGSize();
 			_content.Frame = new CGRect(CGPoint.Empty, measuredSize);
 		}
 
@@ -47,18 +47,18 @@ namespace Comet.Handlers
 			if (_content != null)
 			{
 				//_content.SizeToFit();
-				NativeView.Add(_content);
+				PlatformView.Add(_content);
 			}
 
 			if (VirtualView.Orientation == Orientation.Horizontal)
 			{
-				NativeView.ShowsVerticalScrollIndicator = false;
-				NativeView.ShowsHorizontalScrollIndicator = true;
+				PlatformView.ShowsVerticalScrollIndicator = false;
+				PlatformView.ShowsHorizontalScrollIndicator = true;
 			}
 			else
 			{
-				NativeView.ShowsVerticalScrollIndicator = true;
-				NativeView.ShowsHorizontalScrollIndicator = false;
+				PlatformView.ShowsVerticalScrollIndicator = true;
+				PlatformView.ShowsHorizontalScrollIndicator = false;
 			}
 		}
 		

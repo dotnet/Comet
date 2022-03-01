@@ -57,7 +57,7 @@ namespace Comet
 					OnDequeue = (pair) =>
 					{
 						var view = pair.Value;
-						if (view?.ViewHandler?.NativeView == null)
+						if (view?.ViewHandler ?.PlatformView == null)
 							view.Dispose();
 						else
 							CurrentViews[pair.Key] = view;

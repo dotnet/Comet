@@ -12,7 +12,7 @@ namespace Comet.Android
 	{
 		IView _view;
 		IViewHandler currentHandler;
-		AView currentNativeView;
+		AView currentPlatformView;
 		private bool inLayout;
 
 		IMauiContext MauiContext;
@@ -49,25 +49,25 @@ namespace Comet.Android
 				ihr.ReloadHandler = this;
 				MauiHotReloadHelper.AddActiveView(ihr);
 			}
-			var newNativeView = _view?.ToPlatform(MauiContext);
+			var newPlatformView = _view?.ToPlatform(MauiContext);
 
 			if (view is IReplaceableView ir)
 				currentHandler = ir.ReplacedView.Handler;
 			else
 				currentHandler = _view?.Handler;
-			if (currentNativeView == newNativeView)
+			if (currentPlatformView == newPlatformView)
 				return;
-			if (currentNativeView != null)
-				RemoveView(currentNativeView);
+			if (currentPlatformView != null)
+				RemoveView(currentPlatformView);
 			if (_view == null)
 				return;
 
-			currentNativeView = currentHandler.NativeView as AView ?? new AView(MauiContext.Context);
-			if (currentNativeView.Parent == this)
+			currentPlatformView = currentHandler.PlatformView as AView ?? new AView(MauiContext.Context);
+			if (currentPlatformView.Parent == this)
 				return;
-			if (currentNativeView.Parent != null)
-				(currentNativeView.Parent as AViewGroup).RemoveView(currentNativeView);
-			AddView(currentNativeView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
+			if (currentPlatformView.Parent != null)
+				(currentPlatformView.Parent as AViewGroup).RemoveView(currentPlatformView);
+			AddView(currentPlatformView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
 
 		}
 
@@ -88,7 +88,7 @@ namespace Comet.Android
 
 		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
 		{
-			if (currentNativeView == null || inLayout) return;
+			if (currentPlatformView == null || inLayout) return;
 
 			var displayScale = CometApp.CurrentWindow.DisplayScale;
 			var width = (right - left) / displayScale;

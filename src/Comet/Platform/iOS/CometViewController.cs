@@ -28,7 +28,7 @@ namespace Comet.iOS
 			}
 		}
 
-		public object NativeView => null;
+		public object PlatformView => null;
 
 		public bool HasContainer { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
@@ -76,14 +76,14 @@ namespace Comet.iOS
 
 		public void ApplyStyle()
 		{
-			var barColor = CurrentView?.GetNavigationBackgroundColor()?.ToNative() ?? CUINavigationController.DefaultBarTintColor;
+			var barColor = CurrentView?.GetNavigationBackgroundColor()?.ToPlatform() ?? CUINavigationController.DefaultBarTintColor;
 
 			if (NavigationController != null)
 			{
 				this.NavigationController.NavigationBar.BarTintColor = barColor;
 			}
 
-			var textColor = CurrentView?.GetNavigationTextColor()?.ToNative() ?? CUINavigationController.DefaultTintColor;
+			var textColor = CurrentView?.GetNavigationTextColor()?.ToPlatform() ?? CUINavigationController.DefaultTintColor;
 			if (NavigationController != null)
 			{
 				this.NavigationController.NavigationBar.TintColor = textColor;

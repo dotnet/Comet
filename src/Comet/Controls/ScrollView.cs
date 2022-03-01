@@ -65,7 +65,7 @@ namespace Comet
 		{
 			this.Frame = frame;
 
-			Content.SetFrameFromNativeView(frame,LayoutAlignment.Start,	LayoutAlignment.Start);
+			Content.SetFrameFromPlatformView(frame,LayoutAlignment.Start,	LayoutAlignment.Start);
 			if (Content?.BuiltView != null)
 				Content.BuiltView.LayoutSubviews(frame);
 		}

@@ -5,11 +5,11 @@ using UIKit;
 
 namespace Comet.Handlers
 {
-	public partial class NavigationViewHandler : ViewHandler<NavigationView, UIView>, INativeViewHandler
+	public partial class NavigationViewHandler : ViewHandler<NavigationView, UIView>, IPlatformViewHandler
 	{
 		UIViewController viewController;
-		UIViewController INativeViewHandler.ViewController => viewController;
-		protected override UIView CreateNativeView()
+		UIViewController IPlatformViewHandler.ViewController => viewController;
+		protected override UIView CreatePlatformView()
 		{
 			var vc = new Comet.iOS.CometViewController { MauiContext = MauiContext, CurrentView = VirtualView.Content };
 			var nav = VirtualView;

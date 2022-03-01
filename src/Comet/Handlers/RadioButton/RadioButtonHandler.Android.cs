@@ -34,13 +34,13 @@
 
 //		public static void MapLabelProperty(IViewHandler viewHandler, RadioButton virtualRadioButton)
 //		{
-//			var nativeRadioButton = (ARadioButton)viewHandler.NativeView;
+//			var nativeRadioButton = (ARadioButton)viewHandler.PlatformView;
 //			nativeRadioButton.Text = virtualRadioButton.Label?.CurrentValue;
 //		}
 
 //		public static void MapSelectedProperty(IViewHandler viewHandler, RadioButton virtualRadioButton)
 //		{
-//			var nativeRadioButton = (ARadioButton)viewHandler.NativeView;
+//			var nativeRadioButton = (ARadioButton)viewHandler.PlatformView;
 //			nativeRadioButton.Checked = virtualRadioButton.Selected;
 //		}
 //	}

@@ -21,7 +21,7 @@
 //		private RadioGroup _view;
 //		private bool _inLayout;
 
-//		public event EventHandler<ViewChangedEventArgs> NativeViewChanged;
+//		public event EventHandler<ViewChangedEventArgs> PlatformViewChanged;
 
 //		public RadioGroupHandler() : base(AndroidContext.CurrentContext)
 //		{
@@ -37,7 +37,7 @@
 
 //		public CometContainerView ContainerView => null;
 
-//		public object NativeView => this;
+//		public object PlatformView => this;
 
 //		public bool HasContainer
 //		{
@@ -59,7 +59,7 @@
 //				{
 //					subview.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
 //					if (subview.ViewHandler is AndroidViewHandler handler)
-//						handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+//						handler.PlatformViewChanged += HandleSubviewPlatformViewChanged;
 
 //					var nativeView = subview.ToView() ?? new AView(AndroidContext.CurrentContext);
 //					AddView(nativeView);
@@ -78,7 +78,7 @@
 //			{
 //				subview.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
 //				if (subview.ViewHandler is AndroidViewHandler handler)
-//					handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+//					handler.PlatformViewChanged -= HandleSubviewPlatformViewChanged;
 //			}
 
 //			_view.NeedsLayout -= HandleNeedsLayout;
@@ -93,19 +93,19 @@
 //		private void HandleSubviewViewHandlerChanged(object sender, ViewHandlerChangedEventArgs e)
 //		{
 //			if (e.OldViewHandler is AndroidViewHandler oldHandler)
-//				oldHandler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+//				oldHandler.PlatformViewChanged -= HandleSubviewPlatformViewChanged;
 //		}
 
-//		private void HandleSubviewNativeViewChanged(object sender, ViewChangedEventArgs args)
+//		private void HandleSubviewPlatformViewChanged(object sender, ViewChangedEventArgs args)
 //		{
-//			if (args.OldNativeView != null)
+//			if (args.OldPlatformView != null)
 //			{
-//				if (args.OldNativeView.Parent is AViewGroup parent)
-//					parent.RemoveView(args.OldNativeView);
+//				if (args.OldPlatformView.Parent is AViewGroup parent)
+//					parent.RemoveView(args.OldPlatformView);
 //			}
 
 //			var index = _view.IndexOf(args.VirtualView);
-//			var newView = args.NewNativeView ?? new AView(AndroidContext.CurrentContext);
+//			var newView = args.NewPlatformView ?? new AView(AndroidContext.CurrentContext);
 //			AddView(newView, index);
 //		}
 
@@ -130,7 +130,7 @@
 
 //				view.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
 //				if (view.ViewHandler is AndroidViewHandler handler)
-//					handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+//					handler.PlatformViewChanged += HandleSubviewPlatformViewChanged;
 
 //				var nativeView = view.ToView() ?? new AView(AndroidContext.CurrentContext);
 //				AddView(nativeView, index);
@@ -147,7 +147,7 @@
 //				{
 //					view.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
 //					if (view.ViewHandler is AndroidViewHandler handler)
-//						handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+//						handler.PlatformViewChanged -= HandleSubviewPlatformViewChanged;
 //				}
 //			}
 
@@ -168,7 +168,7 @@
 //				{
 //					view.ViewHandlerChanged -= HandleSubviewViewHandlerChanged;
 //					if (view.ViewHandler is AndroidViewHandler handler)
-//						handler.NativeViewChanged -= HandleSubviewNativeViewChanged;
+//						handler.PlatformViewChanged -= HandleSubviewPlatformViewChanged;
 //				}
 //			}
 
@@ -181,10 +181,10 @@
 
 //				view.ViewHandlerChanged += HandleSubviewViewHandlerChanged;
 //				if (view.ViewHandler is AndroidViewHandler handler)
-//					handler.NativeViewChanged += HandleSubviewNativeViewChanged;
+//					handler.PlatformViewChanged += HandleSubviewPlatformViewChanged;
 
-//				var newNativeView = view.ToView() ?? new AView(AndroidContext.CurrentContext);
-//				AddView(newNativeView, index);
+//				var newPlatformView = view.ToView() ?? new AView(AndroidContext.CurrentContext);
+//				AddView(newPlatformView, index);
 //			}
 
 //			Invalidate();

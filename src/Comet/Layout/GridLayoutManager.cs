@@ -131,7 +131,7 @@ namespace Comet.Layout
 					view.MeasurementValid = true;
 				}
 				view.Measure(w, h);
-				//view.SetFrameFromNativeView(new Rectangle(x, y, w, h));
+				//view.SetFrameFromPlatformView(new Rectangle(x, y, w, h));
 			}
 
 			return new Size(_width, _height);
@@ -193,7 +193,7 @@ namespace Comet.Layout
 						y += (double)Math.Round(availHeight * position.PositionY);
 					}
 				}
-				view.SetFrameFromNativeView(new Rectangle(x, y, w, h));
+				view.SetFrameFromPlatformView(new Rectangle(x, y, w, h));
 			}
 			return measured;
 		}

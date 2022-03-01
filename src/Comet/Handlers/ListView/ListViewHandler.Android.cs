@@ -14,7 +14,7 @@ namespace Comet.Handlers
 	public partial class ListViewHandler : ViewHandler<IListView, CometRecyclerView>
 	{
 		
-		protected override CometRecyclerView CreateNativeView() => new CometRecyclerView(MauiContext);
+		protected override CometRecyclerView CreatePlatformView() => new CometRecyclerView(MauiContext);
 
 
 		public override Microsoft.Maui.Graphics.Size GetDesiredSize(double widthConstraint, double heightConstraint) => new Microsoft.Maui.Graphics.Size(widthConstraint, heightConstraint);
@@ -26,13 +26,13 @@ namespace Comet.Handlers
 
 		public static void MapListViewProperty(IElementHandler viewHandler, IListView virtualView)
 		{
-			var nativeView = (CometRecyclerView)viewHandler.NativeView;
+			var nativeView = (CometRecyclerView)viewHandler.PlatformView;
 			nativeView.ListView = virtualView;
 		}
 
 		public static void MapReloadData(ListViewHandler viewHandler, IListView virtualView, object? value)
 		{
-			var nativeView = (CometRecyclerView)viewHandler.NativeView;
+			var nativeView = (CometRecyclerView)viewHandler.PlatformView;
 			nativeView?.ReloadData();
 		}
 	}
