@@ -67,7 +67,8 @@ jobs:
             --source https://pkgs.dev.azure.com/dnceng/public/_packaging/-shipping-2/nuget/v3/index.json `
             --source https://pkgs.dev.azure.com/xamarin/public/_packaging/maui-net6-shipping/nuget/v3/index.json `
             --source https://api.nuget.org/v3/index.json `
-            --source https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-runtime-3ba4b3f4/nuget/v3/index.json 
+            --source https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-runtime-6dd808ff-1/nuget/v3/index.json `
+            --source https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-emsdk-ee0a97a0/nuget/v3/index.json
 
       - name: Restore Comet-net6-Nuget.sln
         run: msbuild /r build/Comet-net6-Nuget.sln

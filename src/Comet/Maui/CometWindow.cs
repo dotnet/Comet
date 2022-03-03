@@ -110,5 +110,7 @@ namespace Comet
 
 		public static IToolbar Toolbar = new Toolbar(true, true);
 		IToolbar IToolbarElement.Toolbar => this.GetProperty<IToolbar>(nameof(IToolbarElement.Toolbar), false) ?? Toolbar;
+
+		FlowDirection IWindow.FlowDirection => this.GetEnvironment<FlowDirection>(nameof(IWindow.FlowDirection));
 	}
 }
