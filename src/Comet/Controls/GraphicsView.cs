@@ -5,8 +5,8 @@ namespace Comet
 {
 	public class GraphicsView : View, IDrawable
 	{
-		public Action<ICanvas,RectangleF> Draw { get; set; }
-		void IDrawable.Draw(ICanvas canvas, RectangleF dirtyRect) {
+		public Action<ICanvas, RectF> Draw { get; set; }
+		void IDrawable.Draw(ICanvas canvas, RectF dirtyRect) {
 			//TODO: Remove this later, it's a temp hack for Android
 			if (canvas.DisplayScale > 1)
 			{

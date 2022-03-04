@@ -18,7 +18,7 @@ namespace Comet.Layout
 		}
 
 		ContainerView layout;
-		public Size ArrangeChildren(Rectangle rect)
+		public Size ArrangeChildren(Rect rect)
 		{
 			var layoutRect = rect;
 			double spacerWidth = (layoutRect.Width - childrenWidth) / spacerCount;

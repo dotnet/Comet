@@ -64,7 +64,7 @@ namespace Comet.Graphics
 			return angle2 - angle1;
 		}
 
-		public static Rectangle GetBoundsOfQuadraticCurve(
+		public static Rect GetBoundsOfQuadraticCurve(
 			Point startPoint,
 			Point controlPoint,
 			Point endPoint)
@@ -72,7 +72,7 @@ namespace Comet.Graphics
 			return GetBoundsOfQuadraticCurve(startPoint.X, startPoint.Y, controlPoint.X, controlPoint.Y, endPoint.X, endPoint.Y);
 		}
 
-		public static Rectangle GetBoundsOfQuadraticCurve(
+		public static Rect GetBoundsOfQuadraticCurve(
 			double x0, double y0,
 			double x1, double y1,
 			double x2, double y2)
@@ -89,7 +89,7 @@ namespace Comet.Graphics
 				x2, y2);
 		}
 
-		public static Rectangle GetBoundsOfCubicCurve(
+		public static Rect GetBoundsOfCubicCurve(
 			Point startPoint,
 			Point controlPoint1,
 			Point controlPoint2,
@@ -100,7 +100,7 @@ namespace Comet.Graphics
 
 
 
-		public static Rectangle GetBoundsOfCubicCurve(
+		public static Rect GetBoundsOfCubicCurve(
 			double x0, double y0,
 			double x1, double y1,
 			double x2, double y2,
@@ -189,7 +189,7 @@ namespace Comet.Graphics
 			var maxX = xValues.Max();
 			var maxY = yValues.Max();
 
-			return new Rectangle(minX, minY, maxX - minX, maxY - minY);
+			return new Rect(minX, minY, maxX - minX, maxY - minY);
 		}
 
 		public static Point GetPointAtAngle(double x, double y, double distance, double radians)
@@ -238,7 +238,7 @@ namespace Comet.Graphics
 			return 180 - degrees;
 		}
 
-		public static Rectangle GetBoundsOfArc(
+		public static Rect GetBoundsOfArc(
 			double x,
 			double y,
 			double width,
@@ -445,7 +445,7 @@ namespace Comet.Graphics
 				}
 			}
 
-			return new Rectangle(x1, y1, x2 - x1, y2 - y1);
+			return new Rect(x1, y1, x2 - x1, y2 - y1);
 		}
 
 		public static byte GetQuadrant(double radians)

@@ -47,7 +47,7 @@ namespace Comet
 			base.Dispose(disposing);
 		}
 
-		public override void LayoutSubviews(Rectangle frame)
+		public override void LayoutSubviews(Rect frame)
 		{
 			this.Frame = frame;
 			Content?.LayoutSubviews(frame);
@@ -96,7 +96,7 @@ namespace Comet
 
 		public IReadOnlyList<View> GetChildren() => new []{ Content };
 		Size IContentView.CrossPlatformMeasure(double widthConstraint, double heightConstraint) => this.Measure(widthConstraint, heightConstraint);
-		Size IContentView.CrossPlatformArrange(Rectangle bounds)
+		Size IContentView.CrossPlatformArrange(Rect bounds)
 		{
 			if(!this.MeasurementValid)
 				Measure(bounds.Width,bounds.Height);

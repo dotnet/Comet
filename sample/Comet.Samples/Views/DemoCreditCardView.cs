@@ -127,7 +127,7 @@ namespace Comet.Samples
 		View HRule()
 		{
 			return new ShapeView(
-				new Shapes.Rectangle()
+				new Rectangle()
 					.Stroke(Colors.Grey, 2)
 				)
 				.Frame(100, 1);

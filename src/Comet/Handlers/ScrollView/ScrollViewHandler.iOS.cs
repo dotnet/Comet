@@ -20,7 +20,7 @@ namespace Comet.Handlers
 				CrossPlatformArrange = Arange,
 			};
 
-		void Arange(Rectangle rect)
+		void Arange(Rect rect)
 		{
 			var sizeAllowed = this.VirtualView.Orientation == Orientation.Vertical ? new Size(rect.Width, Double.PositiveInfinity) : new Size(Double.PositiveInfinity, rect.Height);
 			var measuredSize = VirtualView?.Content?.Measure(sizeAllowed.Width, sizeAllowed.Height) ?? Size.Zero;

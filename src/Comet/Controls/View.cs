@@ -17,7 +17,6 @@ using Microsoft.Maui.HotReload;
 using Microsoft.Maui.Internal;
 using Microsoft.Maui.Layouts;
 using Microsoft.Maui.Primitives;
-using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 
 namespace Comet
 {
@@ -503,9 +502,9 @@ namespace Comet
 			OnDispose(true);
 		}
 
-		public virtual Rectangle Frame
+		public virtual Rect Frame
 		{
-			get => this.GetEnvironment<Rectangle?>(nameof(Frame), false) ?? Rectangle.Zero;
+			get => this.GetEnvironment<Rect?>(nameof(Frame), false) ?? Rect.Zero;
 			set
 			{
 				var f = Frame;
@@ -597,7 +596,7 @@ namespace Comet
 
 
 
-		public virtual void LayoutSubviews(Rectangle frame)
+		public virtual void LayoutSubviews(Rect frame)
 		{
 			this.SetFrameFromPlatformView(frame);
 			if (BuiltView != null)
@@ -677,7 +676,7 @@ namespace Comet
 
 		bool IView.IsEnabled => this.GetEnvironment<bool?>(nameof(IView.IsEnabled)) ?? true;
 
-		Rectangle IView.Frame
+		Rect IView.Frame
 		{
 			get => Frame;
 			set => Frame = value;
@@ -770,7 +769,7 @@ namespace Comet
 
 		int IView.ZIndex => this.GetEnvironment<int?>(nameof(IView.ZIndex)) ?? 0;
 
-		Size IView.Arrange(Rectangle bounds)
+		Size IView.Arrange(Rect bounds)
 		{
 			LayoutSubviews(bounds);
 			return Frame.Size;
@@ -796,8 +795,8 @@ namespace Comet
 		public virtual int GetContentTypeHashCode() => this.replacedView?.GetContentTypeHashCode() ?? (TypeHashCode ??= this.GetType().GetHashCode());
 
 		protected T GetPropertyValue<T>(bool cascades = true, [CallerMemberName] string key = "") => this.GetEnvironment<T>(key, cascades);
-		public bool Focus() => throw new NotImplementedException();
-		public void Unfocus() => throw new NotImplementedException();
+		bool IView.Focus() => true;
+		void IView.Unfocus() { }
 
 		IBorderStroke IBorder.Border
 		{
@@ -810,6 +809,8 @@ namespace Comet
 			}
 		}
 
-		public bool IsFocused { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		bool IView.IsFocused { get; set; }
+
+		bool IView.InputTransparent => this.GetPropertyValue<bool?>() ?? false;
 	}
 }

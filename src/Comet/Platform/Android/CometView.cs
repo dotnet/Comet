@@ -87,7 +87,7 @@ namespace Comet.Android
 			if (width > 0 && height > 0)
 			{
 				inLayout = true;
-				var rect = new Rectangle(0, 0, width, height);
+				var rect = new Rect(0, 0, width, height);
 				CurrentView.Arrange(rect); 
 				inLayout = false;
 			}
@@ -98,7 +98,7 @@ namespace Comet.Android
 			if (w > 0 && h > 0)
 			{
 				inLayout = true;
-				var rect = new Rectangle(0, 0, w, h);
+				var rect = new Rect(0, 0, w, h);
 				CurrentView.Arrange(rect);
 				inLayout = false;
 			}

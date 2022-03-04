@@ -5,10 +5,10 @@ namespace Comet
 {
 	public class Ellipse : Shape
 	{
-		public override PathF PathForBounds(Rectangle rect)
+		public override PathF PathForBounds(Rect rect)
 		{
 			var path = new PathF();
-			path.AppendEllipse(new RectangleF((float)rect.X, (float)rect.Y, (float)rect.Width, (float)rect.Height));
+			path.AppendEllipse(new RectF((float)rect.X, (float)rect.Y, (float)rect.Width, (float)rect.Height));
 			return path;
 		}
 	}

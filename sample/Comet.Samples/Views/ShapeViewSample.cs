@@ -10,7 +10,7 @@ public class ShapeViewSample : View
 			)
 				.Frame(width:80,height:80),
 			new ShapeView(
-				new Comet.Shapes.Rectangle()
+				new Rectangle()
 					.Fill(Colors.Red)
 			).Frame(width:40,height:40)
 	};

@@ -14,7 +14,7 @@ namespace Comet
 
 		public float CornerRadius => _cornerRadius;
 
-		public override PathF PathForBounds(Rectangle rect)
+		public override PathF PathForBounds(Rect rect)
 		{
 			var path = new PathF();
 			path.AppendRoundedRectangle(rect, _cornerRadius);

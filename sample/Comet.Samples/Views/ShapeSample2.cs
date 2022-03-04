@@ -22,7 +22,7 @@ namespace Comet.Samples
 			new ShapeView(new Circle()
 				.Fill(LinearGradient)
 				.Style(DrawingStyle.Fill)).Frame(200,100),
-			new ShapeView(new Shapes.Rectangle()
+			new ShapeView(new Rectangle()
 				.Fill(LinearGradient)
 				.Style(DrawingStyle.Fill)).Frame(200,100),
 			new ShapeView(new RoundedRectangle(6)

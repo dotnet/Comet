@@ -26,7 +26,7 @@ namespace Comet.Layout
 			return measuredSize;
 		}
 
-		public Size ArrangeChildren(Rectangle bounds)
+		public Size ArrangeChildren(Rect bounds)
 		{
 			var b = bounds;
 			foreach (var v in layout)

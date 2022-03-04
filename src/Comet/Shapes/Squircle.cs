@@ -1,5 +1,4 @@
 ﻿using System;
-using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 
 namespace Comet;
 
@@ -15,7 +14,7 @@ public class Squircle : Shape
 	public float CornerRadius => cornerRadius;
 	const float SquircleFactor = 1.125f;
 	const float ControlPointFactor = 46f / 64f;
-	public override PathF PathForBounds(Microsoft.Maui.Graphics.Rectangle rect)
+	public override PathF PathForBounds(Microsoft.Maui.Graphics.Rect rect)
 	{
 		var x = (float)rect.X;
 		var y = (float)rect.Y;

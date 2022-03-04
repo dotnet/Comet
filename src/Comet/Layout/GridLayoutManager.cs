@@ -131,13 +131,13 @@ namespace Comet.Layout
 					view.MeasurementValid = true;
 				}
 				view.Measure(w, h);
-				//view.SetFrameFromPlatformView(new Rectangle(x, y, w, h));
+				//view.SetFrameFromPlatformView(new Rect(x, y, w, h));
 			}
 
 			return new Size(_width, _height);
 		}
 
-		public Size ArrangeChildren(Rectangle bounds)
+		public Size ArrangeChildren(Rect bounds)
 		{
 			var layout = grid;
 			var measured = bounds.Size;
@@ -193,7 +193,7 @@ namespace Comet.Layout
 						y += (double)Math.Round(availHeight * position.PositionY);
 					}
 				}
-				view.SetFrameFromPlatformView(new Rectangle(x, y, w, h));
+				view.SetFrameFromPlatformView(new Rect(x, y, w, h));
 			}
 			return measured;
 		}

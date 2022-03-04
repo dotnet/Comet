@@ -11,7 +11,7 @@ namespace Comet
 	/// </summary>
 	public class Capsule : Shape
 	{
-		public override PathF PathForBounds(Rectangle rect)
+		public override PathF PathForBounds(Rect rect)
 		{
 			var path = new PathF();
 			var cornerSize = (float) Math.Min(rect.Width, rect.Height) / 2;

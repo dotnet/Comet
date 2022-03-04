@@ -25,7 +25,7 @@ namespace Comet
 			private set => this.SetBindingValue(ref _shape, value);
 		}
 
-		void IDrawable.Draw(ICanvas canvas, RectangleF dirtyRect) {
+		void IDrawable.Draw(ICanvas canvas, RectF dirtyRect) {
 			var padding = this.GetPadding();
 			dirtyRect = dirtyRect.ApplyPadding(padding);
 

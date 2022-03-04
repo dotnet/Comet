@@ -28,7 +28,7 @@ namespace Comet.Handlers
 			base.DisconnectHandler(view);
 		}
 
-		void Arange(Rectangle rect)
+		void Arange(Rect rect)
 		{
 			var sizeAllowed = this.VirtualView.Orientation == Orientation.Vertical ? new Size(rect.Width, double.PositiveInfinity) : new Size(double.PositiveInfinity, rect.Height);
 			var measuredSize = VirtualView?.Content?.Measure(sizeAllowed.Width, sizeAllowed.Height) ?? Size.Zero;
@@ -40,7 +40,7 @@ namespace Comet.Handlers
 			measuredSize.Width = Math.Max(measuredSize.Width, rect.Width);
 			measuredSize.Height = Math.Max(measuredSize.Height, rect.Height);
 			if (VirtualView?.Content != null)
-				VirtualView.Content.Frame = new Rectangle(Point.Zero, measuredSize);
+				VirtualView.Content.Frame = new Rect(Point.Zero, measuredSize);
 			//PlatformView.v = measuredSize.ToCGSize();
 			//_content.Frame = new CGRect(CGPoint.Empty, measuredSize);
 		}

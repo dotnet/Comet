@@ -61,7 +61,7 @@ namespace Comet
 				return MeasuredSize = new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
 			return MeasuredSize = availableSize;
 		}
-		public override void LayoutSubviews(Rectangle frame)
+		public override void LayoutSubviews(Rect frame)
 		{
 			this.Frame = frame;
 

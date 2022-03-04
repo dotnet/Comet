@@ -1,6 +1,5 @@
 ﻿using Comet.Graphics;
 using Microsoft.Maui.Graphics;
-using Rectangle = Comet.Shapes.Rectangle;
 namespace Comet.Samples.Skia
 {
 	public class GraphicsSample6 : View
