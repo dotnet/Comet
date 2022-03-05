@@ -68,7 +68,7 @@ jobs:
         run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- https://aka.ms/dotnet/maui/main.json
 
       - name: Restore Comet-net6-Nuget.sln
-        run: dotnet restore build/Comet-net6-Nuget.sln
+        run: msbuild /r build/Comet-net6-Nuget.sln
  
       - name: Build Comet-net6-Nuget.sln
         run: MSBuild build/Comet-net6-Nuget.sln
