@@ -78,7 +78,7 @@ namespace Comet.Platform.Windows
 		protected override UwpSize ArrangeOverride(UwpSize finalSize)
 		{
 			if (finalSize.Width > 0 && finalSize.Height > 0 && _view != null)
-				_view.Frame = new RectangleF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
+				_view.Frame = new RectF(0, 0, (float)finalSize.Width, (float)finalSize.Height);
 
 			return finalSize;
 		}
