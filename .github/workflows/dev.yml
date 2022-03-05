@@ -64,7 +64,7 @@ jobs:
             --source https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-emsdk-ee0a97a0/nuget/v3/index.json
 
       - name: Restore Comet-net6-Nuget.sln
-        run: msbuild /r build/Comet-net6-Nuget.sln
+        run: dotnet restore build/Comet-net6-Nuget.sln
  
       - name: Build Comet-net6-Nuget.sln
         run: MSBuild build/Comet-net6-Nuget.sln
