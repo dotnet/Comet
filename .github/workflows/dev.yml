@@ -63,6 +63,10 @@ jobs:
             --source https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-runtime-6dd808ff-1/nuget/v3/index.json `
             --source https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-emsdk-ee0a97a0/nuget/v3/index.json
 
+
+      - name: Set Maui Version
+        run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- https://aka.ms/dotnet/maui/main.json
+
       - name: Restore Comet-net6-Nuget.sln
         run: dotnet restore build/Comet-net6-Nuget.sln
  
