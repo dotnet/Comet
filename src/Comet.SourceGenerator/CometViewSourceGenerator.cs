@@ -125,37 +125,37 @@ namespace {{NameSpace}} {
 		static CometViewSourceGenerator()
 		{
 			var interfacePropertyEnvironmentMustache = @"
-                {{{Type}}} {{FullName}} {
-                        get => this.GetEnvironment<{{{CleanType}}}>(""{{Name}}"") ?? {{DefaultValue}};
-                        set => this.SetEnvironment(""{{Name}}"", value);
-                }
+				{{{Type}}} {{FullName}} {
+					get => this.GetEnvironment<{{{CleanType}}}>(""{{Name}}"") ?? {{DefaultValue}};
+					set => this.SetEnvironment(""{{Name}}"", value);
+				}
 ";
 			var interfacePropertySetOnlyEnvironmentMustache = @"
-                {{{Type}}} {{FullName}} {
-                        set => this.SetEnvironment(""{{Name}}"", value);
-                }
+				{{{Type}}} {{FullName}} {
+					set => this.SetEnvironment(""{{Name}}"", value);
+				}
 ";
 
 			var interfacePropertyGetOnlyEnvironmentMustache = @"
-                {{{Type}}} {{FullName}} => this.GetEnvironment<{{{CleanType}}}>(""{{Name}}"") ?? {{DefaultValue}};
+				{{{Type}}} {{FullName}} => this.GetEnvironment<{{{CleanType}}}>(""{{Name}}"") ?? {{DefaultValue}};
 ";
 
 			var interfacePropertyMustache = @"
-                {{{Type}}} {{FullName}} {
-                        get => {{Name}}?.CurrentValue ?? {{DefaultValue}};
-                        set => {{Name}}.Set(value);
-                }
+				{{{Type}}} {{FullName}} {
+					get => {{Name}}?.CurrentValue ?? {{DefaultValue}};
+					set => {{Name}}?.Set(value);
+				}
 ";
 
 			var interfacePropertyGetOnlyMustache = @"
-                {{{Type}}} {{FullName}} => {{Name}}?.CurrentValue ?? {{DefaultValue}};
+				{{{Type}}} {{FullName}} => {{Name}}?.CurrentValue ?? {{DefaultValue}};
 ";
 
 
 			var interfacePropertySetOnlyMustache = @"
 				{{{Type}}} {{FullName}} {
-                        set => {{Name}}.Set(value);
-                }
+					set => {{Name}}?.Set(value);
+				}
 ";
 			var interfacePropertyMethodEnvironmentMustache = @"
 
@@ -163,7 +163,7 @@ namespace {{NameSpace}} {
 ";
 
 			var interfacePropertyMethodMustache = @"
-                void {{FullName}} ({{{ActionsParameters}}}) => {{Name}}.CurrentValue?.Invoke({{{ActionsInvokeParameters}}});
+				void {{FullName}} ({{{ActionsParameters}}}) => {{Name}}.CurrentValue?.Invoke({{{ActionsInvokeParameters}}});
 ";
 
 			interfacePropertyDictionary = new Dictionary<(bool HasGet, bool HasSet), (string FromEnvironment, string FromProperty)>
