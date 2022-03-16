@@ -46,6 +46,8 @@
     <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.Essentials.pdb" target="lib/netstandard2.0/Microsoft.Maui.Essentials.pdb"/> -->
     <file src="src/Comet/bin/Debug/net6.0-ios/Comet.dll" target="lib/net6.0-ios13.6/Comet.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-ios/Comet.pdb" target="lib/net6.0-ios13.6/Comet.pdb"/>
+    <file src="src/Comet/bin/Debug/net6.0/Comet.dll" target="lib/net6.0/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net6.0/Comet.pdb" target="lib/net6.0/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-android/Comet.dll" target="lib/net6.0-android30.0/Comet.dll"/>
     <file src="src/Comet/bin/Debug/net6.0-android/Comet.pdb" target="lib/net6.0-android30.0/Comet.pdb"/>
     <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.dll" target="lib/net6.0-maccatalyst13.5/Comet.dll"/>
