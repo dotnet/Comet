@@ -27,7 +27,7 @@
   </PropertyGroup>
 
   <Target Name="_ReadAllNuGetSources">
-    <XmlPeek XmlInputPath="../../NuGet.config" Query="configuration/packageSources/add/@value">
+    <XmlPeek XmlInputPath="NuGet.config" Query="configuration/packageSources/add/@value">
       <Output TaskParameter="Result" ItemName="_AllNuGetSources" />
     </XmlPeek>
   </Target>
@@ -39,8 +39,8 @@
     <!-- These files should invalidate ./bin/dotnet completely -->
     <_Inputs>
       $(MSBuildThisFile);
-      ../../eng/Versions.props;
-      ../../NuGet.config;
+      Dependencies/Versions.props;
+      NuGet.config;
     </_Inputs>
   </PropertyGroup>
 
