@@ -54,10 +54,7 @@ jobs:
       - name: Install Maui Workload
         shell: pwsh
         run: |
-          & dotnet workload install android ios maccatalyst tvos macos maui wasm-tools `
-            --from-rollback-file https://aka.ms/dotnet/maui/preview.14.json  `
-            --source https://aka.ms/dotnet6/nuget/index.json `
-            --source https://api.nuget.org/v3/index.json
+          & dotnet workload install maui-windows
 
 
       - name: Run Dotnet setup
