@@ -57,12 +57,7 @@ jobs:
         shell: pwsh
         run: |
           & dotnet build build/DotNet/DotNet.csproj -p:DotNetDirectory="$env:ProgramFiles\dotnet\" -p:InstallDotNet=false
-   
-      - name: Install Maui Workload
-        shell: pwsh
-        run: |
-          & iwr https://aka.ms/dotnet/maui/maui-install.ps1 -OutFile maui-install.ps1;
-          .\maui-install.ps1 -b 'release/6.0.2xx-preview14' -v '6.0.200-preview'
+
 
       - name: Set Maui Version
         run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- https://aka.ms/dotnet/maui/preview.14.json
