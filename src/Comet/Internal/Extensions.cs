@@ -76,5 +76,18 @@ namespace Comet.Internal
 				return t;
 			return view.Parent.FindParentOfType<T>() ?? default;
 		}
+		public static NavigationView FindNavigation (this View view)
+		{
+			if (view == null)
+				return default;
+			var v = view.GetView();
+			if(v.Navigation != null)
+				return v.Navigation;
+
+			if (v is ContentView cv)
+				return cv.Content?.FindNavigation();
+
+			return null;
+		}
 	}
 }

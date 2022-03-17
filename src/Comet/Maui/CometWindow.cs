@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Comet.Internal;
 using Microsoft.Maui;
 using Microsoft.Maui.Platform;
 
@@ -62,14 +63,8 @@ namespace Comet
 
 		bool IWindow.BackButtonClicked()
 		{
-#if ANDROID
-			//var fragmentManager = this.GetMauiContext().Context.GetFragmentManager();
-			//if (fragmentManager.BackStackEntryCount > 0)
-			//{
-			//	fragmentManager.PopBackStack();
-			//}
-			//return true;
-#endif
+			var nav = this.Content.FindNavigation();
+			nav.Pop();
 			return true;
 		}
 		void IWindow.Backgrounding(IPersistedState state)

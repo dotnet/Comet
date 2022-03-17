@@ -2,7 +2,7 @@
 
 namespace Comet
 {
-	public class NavigationView : ContentView, IStackNavigationView, IToolbarElement
+	public class NavigationView : ContentView, IStackNavigationView
 	{
 		List<IView> _views = new List<IView>();
 		public void Navigate(View view)
@@ -21,7 +21,6 @@ namespace Comet
 					((IStackNavigationView)this).RequestNavigation(new NavigationRequest(_views, true));
 			}
 		}
-
 		public void SetPerformPop(Action action) => PerformPop = action;
 		public void SetPerformPop(NavigationView navView)
 			=> PerformPop = navView.PerformPop;
@@ -34,7 +33,7 @@ namespace Comet
 
 		protected Action<View> PerformNavigate { get; set; }
 
-		IToolbar IToolbarElement.Toolbar => CometWindow.Toolbar;
+		//IToolbar IToolbarElement.Toolbar => CometWindow.Toolbar;
 
 		protected override void OnHandlerChange()
 		{
@@ -49,7 +48,18 @@ namespace Comet
 			if (PerformPop == null && Navigation != null)
 				Navigation.Pop();
 			else
-				PerformPop();
+			{
+				if (PerformPop != null)
+					PerformPop();
+				else
+				{
+					var lastIndex = _views.Count - 1;
+					if (lastIndex < 0)
+						return;
+					_views.RemoveAt(lastIndex);
+					((IStackNavigationView)this).RequestNavigation(new NavigationRequest(_views, true));
+				}
+			}
 		}
 
 		public override void Add(View view)
