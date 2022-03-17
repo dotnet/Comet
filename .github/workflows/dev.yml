@@ -50,7 +50,7 @@ jobs:
       #   run: |
       #     dotnet tool update -g dotnet-vs
       #     & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-      
+          
       - name: Install Maui Workload
         shell: pwsh
         run: |
@@ -58,6 +58,12 @@ jobs:
             --from-rollback-file https://aka.ms/dotnet/maui/preview.14.json  `
             --source https://aka.ms/dotnet6/nuget/index.json `
             --source https://api.nuget.org/v3/index.json
+
+
+      - name: Run Dotnet setup
+        shell: pwsh
+        run: |
+          & dotnet build build/DotNet/DotNet.csproj
 
       - name: Restore Comet-net6-Nuget.sln
         run: msbuild /r build/Comet-net6-Nuget.sln
