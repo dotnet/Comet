@@ -88,7 +88,7 @@
     <RemoveDir Directories="$(_WorkloadManifestDir);@(_PacksToRemove->'$(DotNetSdkManifestsDirectory)%(Identity)')" />
     <MakeDir Directories="$(_WorkloadManifestDir)" />
     <Exec
-        Command="&quot;$(DotNetToolPath)&quot; restore &quot;$(MSBuildThisFileDirectory)Dependencies/Workloads.csproj&quot; -bl:$(PackageOutputPath)/DotNetWorkloads.binlog"
+        Command=" dotnet restore &quot;$(MSBuildThisFileDirectory)Dependencies/Workloads.csproj&quot; -bl:$(PackageOutputPath)DotNetWorkloads.binlog"
         EnvironmentVariables="NUGET_PACKAGES=$(_WorkloadManifestDir);DOTNET_SKIP_FIRST_TIME_EXPERIENCE=1"
     />
     <!--
