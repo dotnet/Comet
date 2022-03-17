@@ -811,6 +811,6 @@ namespace Comet
 
 		bool IView.IsFocused { get; set; }
 
-		bool IView.InputTransparent => this.GetPropertyValue<bool?>() ?? false;
+		//bool IView.InputTransparent => this.GetPropertyValue<bool?>() ?? false;
 	}
 }
