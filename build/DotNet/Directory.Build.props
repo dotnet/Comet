@@ -1,5 +1,5 @@
 <Project>
-  <Import Project="eng\Versions.props" />
+  <Import Project="Dependencies\Versions.props" />
   <PropertyGroup>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <EmbedUntrackedSources>true</EmbedUntrackedSources>
