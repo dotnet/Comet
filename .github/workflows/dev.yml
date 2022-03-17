@@ -63,7 +63,7 @@ jobs:
       - name: Run Dotnet setup
         shell: pwsh
         run: |
-          & dotnet build build/DotNet/DotNet.csproj
+          & dotnet build build/DotNet/DotNet.csproj -p:DotNetDirectory="$env:DOTNET_ROOT" -p:InstallDotNet=false
 
       - name: Set Maui Version
         run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- https://aka.ms/dotnet/maui/preview.14.json
