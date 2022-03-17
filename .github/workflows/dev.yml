@@ -51,17 +51,18 @@ jobs:
       #     dotnet tool update -g dotnet-vs
       #     & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
           
+
+
+      - name: Run Dotnet setup
+        shell: pwsh
+        run: |
+          & dotnet build build/DotNet/DotNet.csproj -p:DotNetDirectory="$env:ProgramFiles\dotnet\" -p:InstallDotNet=false
+   
       - name: Install Maui Workload
         shell: pwsh
         run: |
           & iwr https://aka.ms/dotnet/maui/maui-install.ps1 -OutFile maui-install.ps1;
           .\maui-install.ps1 -b 'release/6.0.2xx-preview14' -v '6.0.200-preview'
-
-
-      # - name: Run Dotnet setup
-      #   shell: pwsh
-      #   run: |
-      #     & dotnet build build/DotNet/DotNet.csproj -p:DotNetDirectory="$env:ProgramFiles\dotnet\" -p:InstallDotNet=false
 
       - name: Set Maui Version
         run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- https://aka.ms/dotnet/maui/preview.14.json
