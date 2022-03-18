@@ -51,11 +51,26 @@ jobs:
       #     dotnet tool update -g dotnet-vs
       #     & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
       
-  
+    
+      - name: Install and Run maui-check Tool
+        shell: pwsh
+        run: |
+          & dotnet tool update --global redth.net.maui.check
+          & maui-check --skip dotnet --verbose --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
+          
+      # - name: Install Maui Workload
+      #   shell: pwsh
+      #   run: |
+      #     & dotnet workload install android ios maccatalyst tvos macos maui wasm-tools `
+      #       --from-rollback-file https://aka.ms/dotnet/maui/preview.14.json  `
+      #       --source https://aka.ms/dotnet6/nuget/index.json `
+      #       --source https://api.nuget.org/v3/index.json
+
+
       - name: Run Dotnet setup
         shell: pwsh
         run: |
-          & dotnet workload install maui
+          & dotnet build build/DotNet/DotNet.csproj
 
       - name: Set Maui Version
         run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- https://aka.ms/dotnet/maui/preview.14.json
