@@ -11,6 +11,7 @@
 		<ApplicationTitle>CometSample</ApplicationTitle>
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.CometSample</ApplicationId>
+		<ApplicationId Condition="$(TargetFramework.Contains('-windows'))">f6dfda62-c049-43db-a384-843c190fe298</ApplicationId>
 		<!-- Versions -->
 		<ApplicationVersion>1</ApplicationVersion>
 		<!-- Required for C# Hot Reload -->

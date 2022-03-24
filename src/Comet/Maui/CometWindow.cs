@@ -102,6 +102,8 @@ namespace Comet
 
 		}
 
+		void IWindow.DisplayDensityChanged(float displayDensity) => DisplayScale = displayDensity;
+		float IWindow.RequestDisplayDensity() => ViewHandler?.InvokeWithResult(nameof(IWindow.RequestDisplayDensity), new DisplayDensityRequest()) ?? DisplayScale;
 
 		public static IToolbar Toolbar = new Toolbar(true, true);
 		IToolbar IToolbarElement.Toolbar => this.GetProperty<IToolbar>(nameof(IToolbarElement.Toolbar), false) ?? Toolbar;

@@ -4,7 +4,6 @@ using Comet.Samples.Comparisons;
 using Comet.Samples.LiveStreamIssues;
 using Microsoft.Maui;
 using Microsoft.Maui.HotReload;
-//using Comet.Samples.Skia;
 
 namespace Comet.Samples
 {
@@ -19,7 +18,7 @@ namespace Comet.Samples
 			new MenuItem("VGrid Sample", ()=> new VGridSample()),
 			new MenuItem("VGrid Number Pad", ()=> new VGridNumberPad()),
 			new MenuItem("Shape View Sample", ()=> new ShapeViewSample()),
-			//new MenuItem("Skia Controls Sample",()=> new SkiaControlsSample()),
+			new MenuItem("Graphics Finger Paint Sample",()=> new SkiaSample1()),
 			new MenuItem("Material Design",()=> new MaterialStylePicker()),
 			new MenuItem("AuditReportPage",()=> new AuditReportPage()),
 			new MenuItem("VStackSample",()=> new VStackSample()),
