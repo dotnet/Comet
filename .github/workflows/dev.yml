@@ -49,8 +49,12 @@ jobs:
       - name: Run Dotnet setup
         shell: pwsh
         run: |
-          & iwr https://aka.ms/dotnet/maui/maui-install.ps1 -OutFile maui-install.ps1;
-          .\maui-install.ps1 -b 'main' -v '6.0.300-preview'
+          & dotnet workload install maui `
+            --from-rollback-file https://aka.ms/dotnet/maui/main.json `
+            --source https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-runtime-4050c126/nuget/v3/index.json `
+            --source https://pkgs.dev.azure.com/dnceng/public/_packaging/darc-pub-dotnet-emsdk-572aeedc/nuget/v3/index.json `
+            --source https://pkgs.dev.azure.com/dnceng/public/_packaging/dotnet6/nuget/v3/index.json" `
+            --source https://api.nuget.org/v3/index.json
 
       - name: Set Maui Version
         run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- https://aka.ms/dotnet/maui/main.json
