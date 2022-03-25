@@ -1,93 +1,62 @@
-﻿//using System.Collections.Generic;
-//
-//using Comet.Skia;
-//using SkiaSharp;
+﻿using System.Collections.Generic;
+namespace Comet.Samples
+{
+	public class BindableFingerPaint : SimpleFingerPaint, IDrawable, IGraphicsView
+	{
+		private Binding<double> _strokeWidth = 2;
+		private Binding<Color> _strokeColor = Colors.Black;
 
-//namespace Comet.Samples.Skia
-//{
-//	public class BindableFingerPaint : SimpleFingerPaint
-//	{
-//		private readonly List<List<PointF>> _pointsLists = new List<List<PointF>>();
-//		private Binding<float> _strokeWidth = 2f;
-//		private Binding<string> _strokeColor = "#00FF00";
+		public BindableFingerPaint(
+			Binding<double> strokeSize = null,
+			Binding<Color> strokeColor = null)
+		{
+			StrokeWidth = strokeSize;
+			StrokeColor = strokeColor;
+		}
 
-//		public BindableFingerPaint(
-//			Binding<float> strokeSize = null,
-//			Binding<string> strokeColor = null)
-//		{
-//			StrokeWidth = strokeSize;
-//			StrokeColor = strokeColor;
-//		}
+		public Binding<double> StrokeWidth
+		{
+			get => _strokeWidth;
+			private set => this.SetBindingValue(ref _strokeWidth, value);
+		}
 
-//		public Binding<float> StrokeWidth
-//		{
-//			get => _strokeWidth;
-//			private set => SetBindingValue(ref _strokeWidth, value);
-//		}
+		public Binding<Color> StrokeColor
+		{
+			get => _strokeColor;
+			private set => this.SetBindingValue(ref _strokeColor, value);
+		}
 
-//		public Binding<string> StrokeColor
-//		{
-//			get => _strokeColor;
-//			private set => SetBindingValue(ref _strokeColor, value);
-//		}
+		public override void ViewPropertyChanged(string property, object value)
+		{
+			base.ViewPropertyChanged(property, value);
+			Invalidate();
+		}			
 
-//		public override void Draw(SKCanvas canvas, RectangleF dirtyRect)
-//		{
-//			canvas.Clear(SKColors.White);
+		void IDrawable.Draw(ICanvas canvas, RectF dirtyRect)
+		{
+			//var paint = new SolidPaint(Colors.Blue);
+			canvas.StrokeColor = _strokeColor;
+			canvas.StrokeSize = (float)_strokeWidth.CurrentValue;
 
-//			var color = new Color(_strokeColor);
+			foreach (var pointsList in _pointsLists)
+			{
+				for (var i = 0; i < pointsList.Count; i++)
+				{
+					var point = pointsList[i];
+					if (i > 0)
+					{
+						var lastPoint = pointsList[i - 1];
+						canvas.DrawLine(lastPoint.X, lastPoint.Y, point.X, point.Y);
+					}
+				}
+			}
+		}
 
-//			var paint = new SKPaint()
-//			{
-//				Color = color.ToSKColor(),
-//				StrokeWidth = StrokeWidth,
-//				Style = SKPaintStyle.Stroke
-//			};
 
-//			foreach (var pointsList in _pointsLists)
-//			{
-//				var path = new SKPath();
-//				for (var i = 0; i < pointsList.Count; i++)
-//				{
-//					var point = pointsList[i];
-//					if (i == 0)
-//						path.MoveTo(point.X, point.Y);
-//					else
-//						path.LineTo(point.X, point.Y);
-//				}
-//				canvas.DrawPath(path, paint);
-//			}
-//		}
-
-//		public override bool StartInteraction(PointF[] points)
-//		{
-//			var pointsList = new List<PointF> { points[0] };
-//			_pointsLists.Add(pointsList);
-
-//			Invalidate();
-//			return true;
-//		}
-
-//		public override void DragInteraction(PointF[] points)
-//		{
-//			var pointsList = _pointsLists[_pointsLists.Count - 1];
-//			pointsList.Add(points[0]);
-
-//			Invalidate();
-//		}
-
-//		public override void EndInteraction(PointF[] points)
-//		{
-//			var pointsList = _pointsLists[_pointsLists.Count - 1];
-//			pointsList.Add(points[0]);
-
-//			Invalidate();
-//		}
-
-//		public void Reset()
-//		{
-//			_pointsLists.Clear();
-//			Invalidate();
-//		}
-//	}
-//}
+		public void Reset()
+		{
+			_pointsLists.Clear();
+			Invalidate();
+		}
+	}
+}

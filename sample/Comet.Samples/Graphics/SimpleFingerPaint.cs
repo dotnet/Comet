@@ -4,7 +4,7 @@ namespace Comet.Samples
 {
 	public class SimpleFingerPaint : GraphicsView, IDrawable, IGraphicsView
 	{
-		private readonly List<List<PointF>> _pointsLists = new List<List<PointF>>();
+		protected readonly List<List<PointF>> _pointsLists = new List<List<PointF>>();
 
 		void IDrawable.Draw(ICanvas canvas, RectF dirtyRect)
 		{

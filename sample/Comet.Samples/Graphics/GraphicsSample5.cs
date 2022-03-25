@@ -1,7 +1,7 @@
 ﻿using Comet.Graphics;
 using Microsoft.Maui.Graphics;
 
-namespace Comet.Samples.Skia
+namespace Comet.Samples
 {
 	public class GraphicsSample5 : View
 	{

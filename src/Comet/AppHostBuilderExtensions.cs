@@ -4,6 +4,7 @@ using Comet.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Maui;
+using Microsoft.Maui.Essentials;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
 
@@ -44,6 +45,7 @@ namespace Comet
 				{ typeof(CometWindow), typeof(WindowHandler) },
 				{ typeof(DatePicker), typeof(DatePickerHandler) },
 				{ typeof(FlyoutView), typeof(FlyoutViewHandler) },
+				{ typeof(GraphicsView), typeof(GraphicsViewHandler) },
 				{ typeof(Image) , typeof(ImageHandler) },
 				//{ typeof(Picker), typeof(PickerHandler) },
 				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
@@ -92,6 +94,7 @@ namespace Comet
 			}
 
 #endif
+			ThreadHelper.SetFireOnMainThread(MainThread.BeginInvokeOnMainThread);
 
 			return builder;
 		}
