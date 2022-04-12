@@ -99,13 +99,13 @@ namespace Comet
 				{
 					canvas.SaveState();
 
-					var colors = new GradientStop[gradient.Stops.Length];
+					var colors = new PaintGradientStop[gradient.Stops.Length];
 
 					var sortedStops = gradient.GetSortedStops();
 
 					for (var i = 0; i < sortedStops.Length; i++)
 					{
-						colors[i] = new GradientStop(sortedStops[i].Offset,sortedStops[i].Color);
+						colors[i] = new PaintGradientStop(sortedStops[i].Offset,sortedStops[i].Color);
 					}
 
 					if (gradient is LinearGradient linearGradient)
