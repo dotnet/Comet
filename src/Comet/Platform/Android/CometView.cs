@@ -12,7 +12,7 @@ namespace Comet.Android
 	{
 		IView _view;
 		IViewHandler currentHandler;
-		AView currentNativeView;
+		AView currentPlatformView;
 		private bool inLayout;
 
 		IMauiContext MauiContext;
@@ -31,15 +31,6 @@ namespace Comet.Android
 		{
 			if (view == _view && !forceRefresh)
 				return;
-			//If the views are the same type- reuse the handlers!
-			if (view is View v && _view is View pv && v.AreSameType(pv, true) && currentHandler != null)
-			{
-				_view = view;
-				var rView = v.ReplacedView;
-				rView.Handler = currentHandler;
-				currentHandler.SetVirtualView(rView);
-				return;
-			}
 
 			_view = view;
 
@@ -49,25 +40,25 @@ namespace Comet.Android
 				ihr.ReloadHandler = this;
 				MauiHotReloadHelper.AddActiveView(ihr);
 			}
-			var newNativeView = _view?.ToNative(MauiContext);
+			var newPlatformView = _view?.ToPlatform(MauiContext);
 
 			if (view is IReplaceableView ir)
 				currentHandler = ir.ReplacedView.Handler;
 			else
 				currentHandler = _view?.Handler;
-			if (currentNativeView == newNativeView)
+			if (currentPlatformView == newPlatformView)
 				return;
-			if (currentNativeView != null)
-				RemoveView(currentNativeView);
+			if (currentPlatformView != null)
+				RemoveView(currentPlatformView);
 			if (_view == null)
 				return;
 
-			currentNativeView = currentHandler.NativeView as AView ?? new AView(MauiContext.Context);
-			if (currentNativeView.Parent == this)
+			currentPlatformView = currentHandler.PlatformView as AView ?? new AView(MauiContext.Context);
+			if (currentPlatformView.Parent == this)
 				return;
-			if (currentNativeView.Parent != null)
-				(currentNativeView.Parent as AViewGroup).RemoveView(currentNativeView);
-			AddView(currentNativeView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
+			if (currentPlatformView.Parent != null)
+				(currentPlatformView.Parent as AViewGroup).RemoveView(currentPlatformView);
+			AddView(currentPlatformView, new LayoutParams(LayoutParams.MatchParent, LayoutParams.MatchParent));
 
 		}
 
@@ -88,7 +79,7 @@ namespace Comet.Android
 
 		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
 		{
-			if (currentNativeView == null || inLayout) return;
+			if (currentPlatformView == null || inLayout) return;
 
 			var displayScale = CometApp.CurrentWindow.DisplayScale;
 			var width = (right - left) / displayScale;
@@ -96,7 +87,7 @@ namespace Comet.Android
 			if (width > 0 && height > 0)
 			{
 				inLayout = true;
-				var rect = new Rectangle(0, 0, width, height);
+				var rect = new Rect(0, 0, width, height);
 				CurrentView.Arrange(rect); 
 				inLayout = false;
 			}
@@ -107,7 +98,7 @@ namespace Comet.Android
 			if (w > 0 && h > 0)
 			{
 				inLayout = true;
-				var rect = new Rectangle(0, 0, w, h);
+				var rect = new Rect(0, 0, w, h);
 				CurrentView.Arrange(rect);
 				inLayout = false;
 			}

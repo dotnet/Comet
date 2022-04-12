@@ -102,9 +102,9 @@ namespace Comet
 			//LayoutManager?.Invalidate();
 		}
 
-		Rectangle lastRect;
+		Rect lastRect;
 		public virtual Size CrossPlatformMeasure(double widthConstraint, double heightConstraint) => GetDesiredSize(new Size(widthConstraint,heightConstraint));
-		public virtual Size CrossPlatformArrange(Rectangle bounds) {
+		public virtual Size CrossPlatformArrange(Rect bounds) {
 			if(bounds != lastRect)
 			{
 				Measure(bounds.Width,bounds.Height);

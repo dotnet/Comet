@@ -110,7 +110,7 @@ namespace Comet.Samples
 
 		public class Separator : ShapeView
 		{
-			public Separator() : base(new Shapes.Rectangle().Stroke(Colors.Grey, 2))
+			public Separator() : base(new Rectangle().Stroke(Colors.Grey, 2))
 			{
 				this.Frame(height: 1);
 			}

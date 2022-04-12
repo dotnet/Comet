@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using System.Threading;
-using Microsoft.Maui.Essentials;
+using Microsoft.Maui.Devices;
 using Comet.Internal;
 
 namespace Comet

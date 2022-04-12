@@ -5,7 +5,7 @@ namespace Comet.Handlers
 {
 	public partial class ShapeViewHandler : ViewHandler<ShapeView, object>
 	{
-		protected override object CreateNativeView() => throw new NotImplementedException();
+		protected override object CreatePlatformView() => throw new NotImplementedException();
 
 		public static void MapShapeProperty(IElementHandler viewHandler, ShapeView virtualView) { }
 	}

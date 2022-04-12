@@ -4,6 +4,8 @@ using Comet.Handlers;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Maui;
+using Microsoft.Maui.ApplicationModel;
+using Microsoft.Maui.Devices;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
 
@@ -43,6 +45,8 @@ namespace Comet
 				{ typeof(CheckBox), typeof(CheckBoxHandler) },
 				{ typeof(CometWindow), typeof(WindowHandler) },
 				{ typeof(DatePicker), typeof(DatePickerHandler) },
+				{ typeof(FlyoutView), typeof(FlyoutViewHandler) },
+				{ typeof(GraphicsView), typeof(GraphicsViewHandler) },
 				{ typeof(Image) , typeof(ImageHandler) },
 				//{ typeof(Picker), typeof(PickerHandler) },
 				{ typeof(ProgressBar), typeof(ProgressBarHandler) },
@@ -57,21 +61,24 @@ namespace Comet
 				{ typeof(Text), typeof(LabelHandler) },
 				{ typeof(TimePicker), typeof(TimePickerHandler) },
 				{ typeof(Toggle), typeof(SwitchHandler) },
+				{ typeof(Toolbar), typeof(ToolbarHandler) },
 				{ typeof(CometApp), typeof(ApplicationHandler) },
 				{ typeof(ListView),typeof(ListViewHandler) },
 #if __MOBILE__
-				{typeof(NavigationView), typeof (Handlers.NavigationViewHandler)},
 				{typeof(ScrollView), typeof(Handlers.ScrollViewHandler) },
 				{typeof(ShapeView), typeof(Handlers.ShapeViewHandler)},
 #else
 				
-				{typeof(NavigationView), typeof (Microsoft.Maui.Handlers.NavigationViewHandler)},
 				{typeof(ScrollView), typeof(Microsoft.Maui.Handlers.ScrollViewHandler) },
 #endif
 
 
 #if __IOS__
+				{typeof(NavigationView), typeof (Handlers.NavigationViewHandler)},
 				{typeof(View), typeof(CometViewHandler)},
+#else
+				
+				{typeof(NavigationView), typeof (Microsoft.Maui.Handlers.NavigationViewHandler)},
 #endif
 			}));
 
@@ -88,6 +95,7 @@ namespace Comet
 			}
 
 #endif
+			ThreadHelper.SetFireOnMainThread(MainThread.BeginInvokeOnMainThread);
 
 			return builder;
 		}

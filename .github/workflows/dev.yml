@@ -4,7 +4,7 @@ name: dev-build
 
 on:
   push:
-    branches: [ dev,p13]
+    branches: [ dev]
   pull_request:
     branches: [ dev, main ]
 
@@ -28,44 +28,32 @@ jobs:
           distribution: 'zulu' # See 'Supported distributions' for available options
           java-version: '11'
 
-      - name:  install .NET 
-        shell: pwsh
-        run: |
-          $ProgressPreference = 'SilentlyContinue'
-          Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
-          & .\dotnet-install.ps1 -Quality daily -Channel 6.0.2xx -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
-          & dotnet --list-sdks    
-              
-      # - name: Install Visual Studio Preview
+      # - name:  install .NET 
       #   shell: pwsh
-      #   run: powershell .\build\install-vs.ps1
+      #   run: |
+      #     $ProgressPreference = 'SilentlyContinue'
+      #     Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
+      #     & .\dotnet-install.ps1 -Quality daily -Channel 6.0.3xx -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+      #     & dotnet --list-sdks    
+              
+      - name: Install Visual Studio Preview
+        shell: pwsh
+        run: powershell .\build\install-vs.ps1
       
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
         with:
           vs-prerelease: true
-        
-      # - name: Add MSBuild to Path
-      #   shell: pwsh
-      #   run: |
-      #     dotnet tool update -g dotnet-vs
-      #     & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-      
-    
-      - name: Install and Run maui-check Tool
-        shell: pwsh
-        run: |
-          & dotnet tool update --global redth.net.maui.check
-          & maui-check --skip dotnet --verbose --non-interactive --fix --skip androidsdk --skip xcode --skip vswin --skip vsmac --skip edgewebview2
-          
+
       - name: Install Maui Workload
         shell: pwsh
         run: |
-          & 
-          & dotnet workload install android ios maccatalyst tvos macos maui wasm-tools `
-            --from-rollback-file https://aka.ms/dotnet/maui/preview.14.json  `
-            --source https://aka.ms/dotnet6/nuget/index.json `
+          & dotnet workload install maui `
+            --from-rollback-file https://aka.ms/dotnet/maui/6.0.300/rc.1.json `
             --source https://api.nuget.org/v3/index.json
+
+      - name: Set Maui Version
+        run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- https://aka.ms/dotnet/maui/6.0.300/rc.1.json
 
       - name: Restore Comet-net6-Nuget.sln
         run: msbuild /r build/Comet-net6-Nuget.sln

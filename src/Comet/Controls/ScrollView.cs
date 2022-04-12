@@ -61,11 +61,11 @@ namespace Comet
 				return MeasuredSize = new Size(frameConstraints.Width.Value, frameConstraints.Height.Value);
 			return MeasuredSize = availableSize;
 		}
-		public override void LayoutSubviews(Rectangle frame)
+		public override void LayoutSubviews(Rect frame)
 		{
 			this.Frame = frame;
 
-			Content.SetFrameFromNativeView(frame,LayoutAlignment.Start,	LayoutAlignment.Start);
+			Content.SetFrameFromPlatformView(frame,LayoutAlignment.Start,	LayoutAlignment.Start);
 			if (Content?.BuiltView != null)
 				Content.BuiltView.LayoutSubviews(frame);
 		}

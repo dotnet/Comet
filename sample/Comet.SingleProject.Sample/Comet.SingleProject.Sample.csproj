@@ -11,6 +11,7 @@
 		<ApplicationTitle>CometSample</ApplicationTitle>
 		<!-- App Identifier -->
 		<ApplicationId>com.companyname.CometSample</ApplicationId>
+		<ApplicationId Condition="$(TargetFramework.Contains('-windows'))">f6dfda62-c049-43db-a384-843c190fe298</ApplicationId>
 		<!-- Versions -->
 		<ApplicationVersion>1</ApplicationVersion>
 		<!-- Required for C# Hot Reload -->
@@ -32,15 +33,10 @@
 		<MauiFont Include="Resources\Fonts\*" />
 	</ItemGroup>
 	<ItemGroup>
-		<ProjectReference Include="..\..\External\Maui\src\Core\src\Core.csproj" />
-		<ProjectReference Include="..\..\External\Maui\src\Essentials\src\Essentials.csproj" />
 		<ProjectReference Include="..\..\src\Comet\Comet-net6.debug.csproj" />
 		<ProjectReference Include="..\Comet.Samples\Comet.Samples-net6.csproj" />
-	</ItemGroup>
-	<ItemGroup>
-		<None Update="Resources\Images\turtlerock.jpg">
-			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-		</None>
+		<ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
+		<ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj" />
 	</ItemGroup>
 	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
 		<OutputType>WinExe</OutputType>

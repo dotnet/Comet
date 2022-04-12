@@ -11,20 +11,18 @@ using Comet.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
 using Microsoft.Maui.Animations;
-using Microsoft.Maui.Essentials;
+using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.HotReload;
 using Microsoft.Maui.Internal;
 using Microsoft.Maui.Layouts;
 using Microsoft.Maui.Primitives;
-using Rectangle = Microsoft.Maui.Graphics.Rectangle;
 
 namespace Comet
 {
 
 	public class View : ContextualObject, IDisposable, IView, IHotReloadableView,ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement, IGestureView, IBorder
 	{
-
 		static internal readonly WeakList<IView> ActiveViews = new WeakList<IView>();
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
 		protected static Dictionary<string, string> HandlerPropertyMapper = new()
@@ -504,16 +502,16 @@ namespace Comet
 			OnDispose(true);
 		}
 
-		public virtual Rectangle Frame
+		public virtual Rect Frame
 		{
-			get => this.GetEnvironment<Rectangle?>(nameof(Frame), false) ?? Rectangle.Zero;
+			get => this.GetEnvironment<Rect?>(nameof(Frame), false) ?? Rect.Zero;
 			set
 			{
 				var f = Frame;
 				if (f == value)
 					return;
 				this.SetEnvironment(nameof(Frame), value, false);
-				(ViewHandler as IViewHandler)?.NativeArrange(value);
+				(ViewHandler as IViewHandler)?.PlatformArrange(value);
 			}
 		}
 
@@ -598,9 +596,9 @@ namespace Comet
 
 
 
-		public virtual void LayoutSubviews(Rectangle frame)
+		public virtual void LayoutSubviews(Rect frame)
 		{
-			this.SetFrameFromNativeView(frame);
+			this.SetFrameFromPlatformView(frame);
 			if (BuiltView != null)
 				BuiltView.LayoutSubviews(frame);
 		}
@@ -678,7 +676,7 @@ namespace Comet
 
 		bool IView.IsEnabled => this.GetEnvironment<bool?>(nameof(IView.IsEnabled)) ?? true;
 
-		Rectangle IView.Frame
+		Rect IView.Frame
 		{
 			get => Frame;
 			set => Frame = value;
@@ -771,7 +769,7 @@ namespace Comet
 
 		int IView.ZIndex => this.GetEnvironment<int?>(nameof(IView.ZIndex)) ?? 0;
 
-		Size IView.Arrange(Rectangle bounds)
+		Size IView.Arrange(Rect bounds)
 		{
 			LayoutSubviews(bounds);
 			return Frame.Size;
@@ -797,6 +795,9 @@ namespace Comet
 		public virtual int GetContentTypeHashCode() => this.replacedView?.GetContentTypeHashCode() ?? (TypeHashCode ??= this.GetType().GetHashCode());
 
 		protected T GetPropertyValue<T>(bool cascades = true, [CallerMemberName] string key = "") => this.GetEnvironment<T>(key, cascades);
+		bool IView.Focus() => true;
+		void IView.Unfocus() { }
+
 		IBorderStroke IBorder.Border
 		{
 			get
@@ -807,5 +808,9 @@ namespace Comet
 				return border;
 			}
 		}
+
+		bool IView.IsFocused { get; set; }
+
+		bool IView.InputTransparent => this.GetPropertyValue<bool?>() ?? false;
 	}
 }

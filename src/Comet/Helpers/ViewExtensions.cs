@@ -44,7 +44,7 @@ namespace Comet
 		public static ListView<T> OnSelected<T>(this ListView<T> listview, Action<T> selected)
 		{
 			listview.ItemSelected = (o) => {
-				selected?.Invoke((T)o);
+				selected?.Invoke((T)o.item);
 			};
 			return listview;
 		}

@@ -6,18 +6,18 @@ using Microsoft.Maui.Handlers;
 //using Comet.iOS;
 namespace Comet.Handlers
 {
-	public partial class NavigationViewHandler : ViewHandler<NavigationView, CometNavigationView>, INativeViewHandler
+	public partial class NavigationViewHandler : ViewHandler<NavigationView, CometNavigationView>, IPlatformViewHandler
 	{
-		protected override CometNavigationView CreateNativeView()
+		protected override CometNavigationView CreatePlatformView()
 			=> new CometNavigationView(MauiContext);
 		public override void SetVirtualView(IView view)
 		{
 			base.SetVirtualView(view);
 			if (VirtualView != null)
 			{
-				NativeView.SetRoot(VirtualView.Content);
-				VirtualView?.SetPerformNavigate(NativeView.NavigateTo);
-				VirtualView?.SetPerformPop(NativeView.Pop);
+				PlatformView.SetRoot(VirtualView.Content);
+				VirtualView?.SetPerformNavigate(PlatformView.NavigateTo);
+				VirtualView?.SetPerformPop(PlatformView.Pop);
 			}
 		}
 		protected override void DisconnectHandler(CometNavigationView nativeView)

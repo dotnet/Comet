@@ -7,14 +7,14 @@ namespace Comet
 {
 	public static class RectangleExtensions
 	{
-		public static bool BoundsContains(this Rectangle rect, Point point) =>
+		public static bool BoundsContains(this Rect rect, Point point) =>
 			point.X >= 0 && point.X <= rect.Width &&
 			point.Y >= 0 && point.Y <= rect.Height;
 
-		public static bool Contains(this Rectangle rect, Point[] points)
+		public static bool Contains(this Rect rect, Point[] points)
 			=> points.Any(x => rect.Contains(x));
 
-		public static Rectangle ApplyPadding(this Rectangle rect, Thickness thickness)
+		public static Rect ApplyPadding(this Rect rect, Thickness thickness)
 		{
 			if (thickness == Thickness.Zero)
 				return rect;
@@ -25,7 +25,7 @@ namespace Comet
 
 			return rect;
 		}
-		public static RectangleF ApplyPadding(this RectangleF rect, Thickness thickness)
+		public static RectF ApplyPadding(this RectF rect, Thickness thickness)
 		{
 			if (thickness == Thickness.Zero)
 				return rect;

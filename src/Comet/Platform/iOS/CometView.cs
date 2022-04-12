@@ -23,7 +23,7 @@ namespace Comet.iOS
 		}
 		public IMauiContext MauiContext { get; internal set; }
 
-		UIView currentNativeView;
+		UIView currentPlatformView;
 		IViewHandler currentHandler;
 		void SetView(IView view, bool forceRefresh = false)
 		{
@@ -51,23 +51,23 @@ namespace Comet.iOS
 				ihr.ReloadHandler = this;
 				MauiHotReloadHelper.AddActiveView(ihr);
 			}
-			var newNativeView = _view?.ToNative(MauiContext);
+			var newPlatformView = _view?.ToPlatform(MauiContext);
 			currentHandler = _view?.Handler;
-			if (currentNativeView == newNativeView)
+			if (currentPlatformView == newPlatformView)
 				return;
-			currentNativeView?.RemoveFromSuperview();
-			if (newNativeView != this && newNativeView != null)
-				AddSubview(currentNativeView = newNativeView);
+			currentPlatformView?.RemoveFromSuperview();
+			if (newPlatformView != this && newPlatformView != null)
+				AddSubview(currentPlatformView = newPlatformView);
 		}
 
 
 		public override void LayoutSubviews()
 		{
 			base.LayoutSubviews();
-			if (currentNativeView == null)
+			if (currentPlatformView == null)
 				return;
 			_view?.Measure(Bounds.Width, Bounds.Height);// .LayoutSubviews(this.Bounds.ToRectangle());
-			currentNativeView.Frame = Bounds;
+			currentPlatformView.Frame = Bounds;
 		}
 
 

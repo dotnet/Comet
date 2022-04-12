@@ -4,7 +4,6 @@ using Comet.Samples.Comparisons;
 using Comet.Samples.LiveStreamIssues;
 using Microsoft.Maui;
 using Microsoft.Maui.HotReload;
-//using Comet.Samples.Skia;
 
 namespace Comet.Samples
 {
@@ -19,7 +18,7 @@ namespace Comet.Samples
 			new MenuItem("VGrid Sample", ()=> new VGridSample()),
 			new MenuItem("VGrid Number Pad", ()=> new VGridNumberPad()),
 			new MenuItem("Shape View Sample", ()=> new ShapeViewSample()),
-			//new MenuItem("Skia Controls Sample",()=> new SkiaControlsSample()),
+			new MenuItem("Graphics Finger Paint Sample",()=> new SkiaSample1()),
 			new MenuItem("Material Design",()=> new MaterialStylePicker()),
 			new MenuItem("AuditReportPage",()=> new AuditReportPage()),
 			new MenuItem("VStackSample",()=> new VStackSample()),
@@ -60,13 +59,13 @@ namespace Comet.Samples
 			new MenuItem("TextFieldSample3", ()=> new TextFieldSample3()),
 			new MenuItem("TextFieldSample4", ()=> new TextFieldSample4()),
 			new MenuItem("RadioButtonSample", ()=> new RadioButtonSample()),
-			//new MenuItem("SkiaSample1 (FingerPaint)", ()=> new SkiaSample1()),
-			//new MenuItem("SkiaSample2 (FingerPaint)", ()=> new SkiaSample2()),
-			//new MenuItem("SkiaSample3 (BindableFingerPaint)", ()=> new SkiaSample3()),
-			//new MenuItem("SkiaSample3WithScrollView (BindableFingerPaint)", ()=> new SkiaSample3WithScrollView()),
-			//new MenuItem("SkiaSample4 (BindableFingerPaint)", ()=> new SkiaSample4()),
-			//new MenuItem("SkiaSample5 (Shapes) ",() => new SkiaSample5()),
-			//new MenuItem("SkiaSample6 (Shapes w/ Gradient) ",() => new SkiaSample6()),
+			new MenuItem("Graphics Sample1 (FingerPaint)", ()=> new SkiaSample1()),
+			new MenuItem("Graphics Sample2 (FingerPaint)", ()=> new SkiaSample2()),
+			new MenuItem("Graphics Sample3 (BindableFingerPaint)", ()=> new SkiaSample3()),
+			new MenuItem("Graphics Sample3WithScrollView (BindableFingerPaint)", ()=> new SkiaSample3WithScrollView()),
+			new MenuItem("Graphics Sample4 (BindableFingerPaint)", ()=> new SkiaSample4()),
+			new MenuItem("Graphics Sample5 (Shapes) ",() => new GraphicsSample5()),
+			new MenuItem("Graphics Sample6 (Shapes w/ Gradient) ",() => new GraphicsSample5()),
 			new MenuItem("SwiftUI Tutorial Section 1", ()=> new Section1()),
 			new MenuItem("SwiftUI Tutorial Section 2", ()=> new Section2()),
 			new MenuItem("SwiftUI Tutorial Section 3", ()=> new Section3()),

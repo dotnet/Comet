@@ -18,7 +18,7 @@ namespace Comet.Android.Controls
 		Orientation currentOrientation;
 		public void SetVirtualView(ScrollView view, IMauiContext context)
 		{
-			var newContent = view.Content?.ToNative(context);
+			var newContent = view.Content?.ToPlatform(context);
 			if(scrollView == null || currentOrientation != view.Orientation)
 			{
 				if (currentView != null)
@@ -43,7 +43,7 @@ namespace Comet.Android.Controls
 		{
 		}
 
-		internal Action<Rectangle> CrossPlatformArrange { get; set; }
+		internal Action<Rect> CrossPlatformArrange { get; set; }
 
 		protected override void OnLayout(bool changed, int left, int top, int right, int bottom)
 		{
@@ -57,7 +57,7 @@ namespace Comet.Android.Controls
 			var deviceIndependentRight = Context.FromPixels(right);
 			var deviceIndependentBottom = Context.FromPixels(bottom);
 
-			var destination = Rectangle.FromLTRB(0, 0,
+			var destination = Rect.FromLTRB(0, 0,
 				deviceIndependentRight - deviceIndependentLeft, deviceIndependentBottom - deviceIndependentTop);
 
 			CrossPlatformArrange(destination);

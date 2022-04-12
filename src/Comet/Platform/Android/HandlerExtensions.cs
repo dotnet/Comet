@@ -25,7 +25,7 @@ public static partial class HandlerExtensions
 			return null;
 		var gl = v.GetEnvironment<ObjectWrapper<CometTouchGestureListener>>(nameof(CometTouchGestureListener), false)?.Object;
 		if (gl == null && createIfNull)
-			v.SetEnvironment(nameof(CometTouchGestureListener), new ObjectWrapper<CometTouchGestureListener> { Object = gl = new CometTouchGestureListener(handler.NativeView as AView, v) }, false);
+			v.SetEnvironment(nameof(CometTouchGestureListener), new ObjectWrapper<CometTouchGestureListener> { Object = gl = new CometTouchGestureListener(handler.PlatformView as AView, v) }, false);
 		return gl;
 	}
 	public static bool IsComplete(this MotionEvent e)

@@ -6,7 +6,7 @@ namespace Comet.iOS
 	{
 		public CUITapGesture(TapGesture gesture) : base(() => gesture.Invoke())
 		{
-			gesture.NativeGesture = this;
+			gesture.PlatformGesture = this;
 		}
 		//TODO SetGesture Tate
 		public override UIGestureRecognizerState State { get => base.State; set => base.State = value; }

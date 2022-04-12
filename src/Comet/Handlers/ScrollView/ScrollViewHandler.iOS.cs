@@ -14,13 +14,13 @@ namespace Comet.Handlers
 
 		private UIView _content;
 
-		protected override CUIScrollView CreateNativeView() =>
+		protected override CUIScrollView CreatePlatformView() =>
 			new CUIScrollView {
 				ContentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentBehavior.Always,
 				CrossPlatformArrange = Arange,
 			};
 
-		void Arange(Rectangle rect)
+		void Arange(Rect rect)
 		{
 			var sizeAllowed = this.VirtualView.Orientation == Orientation.Vertical ? new Size(rect.Width, Double.PositiveInfinity) : new Size(Double.PositiveInfinity, rect.Height);
 			var measuredSize = VirtualView?.Content?.Measure(sizeAllowed.Width, sizeAllowed.Height) ?? Size.Zero;
@@ -32,7 +32,7 @@ namespace Comet.Handlers
 			measuredSize.Width = Math.Max(measuredSize.Width, rect.Width);
 			measuredSize.Height = Math.Max(measuredSize.Height, rect.Height);
 
-			NativeView.ContentSize = measuredSize.ToCGSize();
+			PlatformView.ContentSize = measuredSize.ToCGSize();
 			_content.Frame = new CGRect(CGPoint.Empty, measuredSize);
 		}
 
@@ -41,24 +41,24 @@ namespace Comet.Handlers
 			base.SetVirtualView(view);
 
 			var oldContent = _content;
-			_content = VirtualView?.Content?.ToNative(MauiContext);
+			_content = VirtualView?.Content?.ToPlatform(MauiContext);
 			if(oldContent != _content)
 				oldContent?.RemoveFromSuperview();
 			if (_content != null)
 			{
 				//_content.SizeToFit();
-				NativeView.Add(_content);
+				PlatformView.Add(_content);
 			}
 
 			if (VirtualView.Orientation == Orientation.Horizontal)
 			{
-				NativeView.ShowsVerticalScrollIndicator = false;
-				NativeView.ShowsHorizontalScrollIndicator = true;
+				PlatformView.ShowsVerticalScrollIndicator = false;
+				PlatformView.ShowsHorizontalScrollIndicator = true;
 			}
 			else
 			{
-				NativeView.ShowsVerticalScrollIndicator = true;
-				NativeView.ShowsHorizontalScrollIndicator = false;
+				PlatformView.ShowsVerticalScrollIndicator = true;
+				PlatformView.ShowsHorizontalScrollIndicator = false;
 			}
 		}
 		

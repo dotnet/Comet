@@ -14,7 +14,7 @@ namespace Comet
 
 		public Orientation Orientation { get; }
 
-		public override PathF PathForBounds(Rectangle rect)
+		public override PathF PathForBounds(Rect rect)
 		{
 			var cornerRadius = (float)(Orientation == Orientation.Horizontal ? rect.Height : rect.Width) / 2f;
 			var path = new PathF();

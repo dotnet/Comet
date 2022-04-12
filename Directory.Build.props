@@ -1,5 +1,5 @@
 <Project>
 	<PropertyGroup>
-		<MauiVersion>6.0.200-preview.13.2865</MauiVersion>
+		<MauiVersion>6.0.300-rc.1.5355</MauiVersion>
 	</PropertyGroup>
 </Project>

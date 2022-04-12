@@ -483,7 +483,7 @@
 //			Close();
 //		}
 
-//		public object NativePath
+//		public object PlatformPath
 //		{
 //			get => _nativePath;
 //			set
@@ -498,15 +498,15 @@
 //		private void Invalidate()
 //		{
 //			_cachedBounds = null;
-//			ReleaseNative();
+//			ReleasePlatform();
 //		}
 
 //		public void Dispose()
 //		{
-//			ReleaseNative();
+//			ReleasePlatform();
 //		}
 
-//		private void ReleaseNative()
+//		private void ReleasePlatform()
 //		{
 //			if (_nativePath is IDisposable disposable)
 //				disposable.Dispose();

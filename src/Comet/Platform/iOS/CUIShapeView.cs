@@ -48,7 +48,7 @@ namespace Comet.iOS
 					fill = Shape.GetFill(View);
 				}
 
-				var shapeBounds = new RectangleF(
+				var shapeBounds = new RectF(
 					(float)rect.X + (lineWidth / 2),
 					(float)rect.Y + (lineWidth / 2),
 					(float)rect.Width - lineWidth,

@@ -34,14 +34,14 @@ namespace Comet
 {
 	public static class GraphicsExtensions
 	{
-		public static void AppendRectangle(this PathF path, Rectangle rect) => path.AppendRectangle((float)rect.X, (float)rect.Y, (float)rect.Width, (float)rect.Height);
-		public static void AppendRoundedRectangle(this PathF path, Rectangle rect, float radius) => path.AppendRoundedRectangle((float)rect.X, (float)rect.Y, (float)rect.Width, (float)rect.Height, radius);
+		public static void AppendRectangle(this PathF path, Rect rect) => path.AppendRectangle((float)rect.X, (float)rect.Y, (float)rect.Width, (float)rect.Height);
+		public static void AppendRoundedRectangle(this PathF path, Rect rect, float radius) => path.AppendRoundedRectangle((float)rect.X, (float)rect.Y, (float)rect.Width, (float)rect.Height, radius);
 
 
 		public static void DrawShape(
 			this ICanvas canvas,
 			Shape shape,
-			RectangleF rect,
+			RectF rect,
 			DrawingStyle drawingStyle = DrawingStyle.Fill,
 			float strokeWidth = 1,
 			Color strokeColor = null,
@@ -80,7 +80,7 @@ namespace Comet
 					break;
 			}
 
-			var shapeBounds = new RectangleF(
+			var shapeBounds = new RectF(
 				rect.X + (lineWidth / 2),
 				rect.Y + (lineWidth / 2),
 				rect.Width - lineWidth,
@@ -99,13 +99,13 @@ namespace Comet
 				{
 					canvas.SaveState();
 
-					var colors = new GradientStop[gradient.Stops.Length];
+					var colors = new PaintGradientStop[gradient.Stops.Length];
 
 					var sortedStops = gradient.GetSortedStops();
 
 					for (var i = 0; i < sortedStops.Length; i++)
 					{
-						colors[i] = new GradientStop(sortedStops[i].Offset,sortedStops[i].Color);
+						colors[i] = new PaintGradientStop(sortedStops[i].Offset,sortedStops[i].Color);
 					}
 
 					if (gradient is LinearGradient linearGradient)
@@ -119,7 +119,7 @@ namespace Comet
 						{
 							GradientStops = colors,
 						};
-						canvas.SetFillPaint(fillPaint,new RectangleF( x1, y1, x2, y2));
+						canvas.SetFillPaint(fillPaint,new RectF( x1, y1, x2, y2));
 						canvas.FillPath(path);
 					}
 					else if (gradient is RadialGradient radialGradient)
@@ -133,7 +133,7 @@ namespace Comet
 							GradientStops = colors,
 						};
 
-						canvas.SetFillPaint(fillPaint, new RectangleF(x1, y1, x2, y2));
+						canvas.SetFillPaint(fillPaint, new RectF(x1, y1, x2, y2));
 						canvas.FillPath(path);
 					}
 

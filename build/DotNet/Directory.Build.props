@@ -1,0 +1,71 @@
+<Project>
+  <Import Project="Dependencies\Versions.props" />
+  <PropertyGroup>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <IncludeSymbols>true</IncludeSymbols>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
+    <ProduceReferenceAssembly Condition="'$(UsingMicrosoftNETSdk)' == 'True' AND '$(Configuration)' == 'Debug'">True</ProduceReferenceAssembly>
+    <DisableImplicitNamespaceImports>true</DisableImplicitNamespaceImports>
+  </PropertyGroup>
+  <PropertyGroup>
+    <MauiRootDirectory>$(MSBuildThisFileDirectory)</MauiRootDirectory>
+    <DotNetOutputPath>$(MSBuildThisFileDirectory)bin/</DotNetOutputPath>
+    <DotNetTempDirectory>$(DotNetOutputPath)temp/</DotNetTempDirectory>
+    <DotNetDirectory Condition="'$(DotNetDirectory)' == ''">$(DotNetOutputPath)dotnet/</DotNetDirectory>
+    <DotNetDirectoryWithSlash>$([MSBuild]::EnsureTrailingSlash('$(DotNetDirectory)'))</DotNetDirectoryWithSlash>
+    <DotNetToolPath>$(DotNetDirectoryWithSlash)dotnet</DotNetToolPath>
+    <DotNetPacksDirectory>$(DotNetDirectoryWithSlash)packs/</DotNetPacksDirectory>
+    <DotNetLibraryPacksDirectory>$(DotNetDirectoryWithSlash)library-packs/</DotNetLibraryPacksDirectory>
+    <DotNetSdkManifestsDirectory>$(DotNetDirectoryWithSlash)sdk-manifests/$(DotNetVersionBand)/</DotNetSdkManifestsDirectory>
+    <DotNetTemplatePacksDirectory>$(DotNetDirectoryWithSlash)template-packs/</DotNetTemplatePacksDirectory>
+  </PropertyGroup>
+  <PropertyGroup>
+    <GitDefaultBranch>main</GitDefaultBranch>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Company>Microsoft</Company>
+    <Product>Microsoft MAUI Graphics</Product>
+    <Authors>Microsoft</Authors>
+    <Owners>microsoft</Owners>
+    <NeutralLanguage>en</NeutralLanguage>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/dotnet/Microsoft.Maui.Graphics.git</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/dotnet/Microsoft.Maui.Graphics</PackageProjectUrl>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <Copyright>© Microsoft Corporation. All rights reserved.</Copyright>
+    <PackageVersion>0.0.1-alpha1</PackageVersion>
+    <PackageOutputPath>$(MSBuildThisFileDirectory)artifacts</PackageOutputPath>
+  </PropertyGroup>
+
+  <!-- platform version number information -->
+  <PropertyGroup Condition="$(TargetFramework.Contains('-ios'))">
+    <SupportedOSPlatformVersion>10.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion>10.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework.Contains('-tvos'))">
+    <SupportedOSPlatformVersion>10.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion>10.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework.Contains('-maccatalyst'))">
+    <SupportedOSPlatformVersion>13.1</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion>13.1</TargetPlatformMinVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework.Contains('-macos'))">
+    <SupportedOSPlatformVersion>10.14</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion>10.14</TargetPlatformMinVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework.Contains('-android'))">
+    <SupportedOSPlatformVersion>21.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion>21.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="$(TargetFramework.Contains('-windows10'))">
+    <SupportedOSPlatformVersion>10.0.17763.0</SupportedOSPlatformVersion>
+    <TargetPlatformMinVersion>10.0.17763.0</TargetPlatformMinVersion>
+  </PropertyGroup>
+
+  <!-- This target is replaced by GitInfo when restored. Allows Version.targets to rely on it before restore. -->
+  <Target Name="GitVersion" />
+  <Target Name="GitInfo" />
+  <Import Condition="'$(EnvironmentBuildPropsImported)' != 'True'" Project="$(MSBuildThisFileDirectory)Dependencies\Environment.Build.props" />
+</Project>

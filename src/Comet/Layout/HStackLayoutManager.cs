@@ -18,7 +18,7 @@ namespace Comet.Layout
 		}
 
 		ContainerView layout;
-		public Size ArrangeChildren(Rectangle rect)
+		public Size ArrangeChildren(Rect rect)
 		{
 			var layoutRect = rect;
 			double spacerWidth = (layoutRect.Width - childrenWidth) / spacerCount;
@@ -37,7 +37,7 @@ namespace Comet.Layout
 					size.Width = spacerWidth;
 
 				layoutRect.Width = size.Width;
-				view.SetFrameFromNativeView(layoutRect,LayoutAlignment.Start, _defaultAlignment);
+				view.SetFrameFromPlatformView(layoutRect,LayoutAlignment.Start, _defaultAlignment);
 				layoutRect.X = view.Frame.Right + _spacing;
 			}
 			return new Size(layoutRect.Left, layoutRect.Bottom);

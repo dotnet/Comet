@@ -7,7 +7,7 @@ namespace Comet
 {
 	public class Circle : Shape
 	{
-		public override PathF PathForBounds(Rectangle rect)
+		public override PathF PathForBounds(Rect rect)
 		{
 			var size = Math.Min(rect.Width, rect.Height);
 			var x = rect.X + (rect.Width - size) / 2;

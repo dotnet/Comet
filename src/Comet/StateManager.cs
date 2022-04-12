@@ -9,7 +9,7 @@ using Comet.Helpers;
 using Comet.Internal;
 using Comet.Reflection;
 using Microsoft.Maui;
-using Microsoft.Maui.Essentials;
+using Microsoft.Maui.Devices;
 
 namespace Comet
 {

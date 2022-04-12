@@ -6,6 +6,6 @@ namespace Comet.Handlers
 {
 	public partial class TabViewHandler : ViewHandler<TabView, object>
 	{
-		protected override object CreateNativeView() => throw new NotImplementedException();
+		protected override object CreatePlatformView() => throw new NotImplementedException();
 	}
 }

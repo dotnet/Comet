@@ -16,7 +16,7 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 	}
 
 	ContainerView layout;
-	public Size ArrangeChildren(Rectangle rect)
+	public Size ArrangeChildren(Rect rect)
 	{
 		var layoutRect = rect;
 		double spacerHeight = (layoutRect.Height - childrenHeight) / spacerCount;
@@ -35,7 +35,7 @@ public class VStackLayoutManager : Microsoft.Maui.Layouts.ILayoutManager
 				size.Height = spacerHeight;
 
 			layoutRect.Height = size.Height;
-			view.SetFrameFromNativeView(layoutRect,_defaultAlignment, LayoutAlignment.Start);
+			view.SetFrameFromPlatformView(layoutRect,_defaultAlignment, LayoutAlignment.Start);
 			layoutRect.Y = view.Frame.Bottom + _spacing;
 
 		}

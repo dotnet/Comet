@@ -7,7 +7,7 @@ namespace Comet.Handlers
 {
 	public partial class NavigationViewHandler : ViewHandler<ScrollView, Panel>
 	{
-		protected override Panel CreateNativeView() => new LayoutPanel();
+		protected override Panel CreatePlatformView() => new LayoutPanel();
 
 	}
 }
