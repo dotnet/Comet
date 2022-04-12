@@ -28,13 +28,13 @@ jobs:
           distribution: 'zulu' # See 'Supported distributions' for available options
           java-version: '11'
 
-      - name:  install .NET 
-        shell: pwsh
-        run: |
-          $ProgressPreference = 'SilentlyContinue'
-          Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
-          & .\dotnet-install.ps1 -Quality daily -Channel 6.0.3xx -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
-          & dotnet --list-sdks    
+      # - name:  install .NET 
+      #   shell: pwsh
+      #   run: |
+      #     $ProgressPreference = 'SilentlyContinue'
+      #     Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
+      #     & .\dotnet-install.ps1 -Quality daily -Channel 6.0.3xx -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+      #     & dotnet --list-sdks    
               
       - name: Install Visual Studio Preview
         shell: pwsh
@@ -56,7 +56,7 @@ jobs:
             --source https://api.nuget.org/v3/index.json
 
       - name: Set Maui Version
-        run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- https://aka.ms/dotnet/maui/main.json
+        run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- https://aka.ms/dotnet/maui/6.0.300/rc.1.json
 
       - name: Restore Comet-net6-Nuget.sln
         run: msbuild /r build/Comet-net6-Nuget.sln
