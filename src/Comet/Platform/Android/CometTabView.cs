@@ -58,7 +58,7 @@ namespace Comet.Android.Controls
 			}
 
 			var index = 0;
-			(MauiContext.Context as MauiAppCompatActivity).SupportFragmentManager
+			MauiContext.GetFragmentManager()
 				.BeginTransaction()
 				.Add(Id, _fragments[index], index.ToString())
 				.Show(_fragments[index])
@@ -68,7 +68,7 @@ namespace Comet.Android.Controls
 		private void HandleNavigationItemSelected(object sender, Google.Android.Material.Navigation.NavigationBarView.ItemSelectedEventArgs e)
 		{
 			var index = e.Item.ItemId;
-			var manager = (MauiContext.Context as MauiAppCompatActivity).SupportFragmentManager;
+			var manager = MauiContext.GetFragmentManager();
 			var transaction = manager.BeginTransaction();
 
 			if (manager.FindFragmentByTag(index.ToString()) == null)
