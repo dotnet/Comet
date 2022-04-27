@@ -7,6 +7,7 @@ using Microsoft.Maui;
 namespace Comet
 {
 	public class ContainerView : View, IList<View>, IContainerView, IContainer
+
 	{
 		readonly protected List<View> Views = new List<View>();
 		public void Add(object obj)
@@ -39,7 +40,8 @@ namespace Comet
 			//TODO: Add wrapper
 			if (iView is View v)
 				Add(v);
-			throw new NotImplementedException();
+			else
+				Add(new IViewWrapperView(iView));
 		}
 		public void Add(View view)
 		{

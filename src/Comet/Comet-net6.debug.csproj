@@ -25,10 +25,6 @@
 			<PrivateAssets>all</PrivateAssets>
 		</PackageReference>
 	</ItemGroup>
-	<ItemGroup Condition="'$(TargetFramework)' == 'net6.0-android'">
-		<PackageReference Include="Xamarin.AndroidX.RecyclerView" Version="1.2.1.3" />
-	</ItemGroup>
 
-	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Core.targets" />
 	<Import Project="../../External/Maui/Directory.Build.targets" />
 </Project>
