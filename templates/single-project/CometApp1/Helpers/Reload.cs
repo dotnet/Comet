@@ -35,8 +35,6 @@ namespace Comet
 			{
 				var handlers = services.GetRequiredService<IMauiHandlersFactory>();
 
-				MauiHotReloadHelper.Init(handlers.GetCollection());
-
 				Reloadify.Reload.Instance.ReplaceType = (d) =>
 				{
 					MauiHotReloadHelper.RegisterReplacedView(d.ClassName, d.Type);
