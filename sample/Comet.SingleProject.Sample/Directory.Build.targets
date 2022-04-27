@@ -1,8 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
-	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Resizetizer.targets" />
-	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Controls.DefaultItems.targets" />
-	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Controls.targets" />
-	<Import Project="../../External/Maui/.nuspec/Microsoft.Maui.Core.targets" />
-	<Import Project="../../External/Maui/Directory.Build.targets" />
+  	<Import Project="../../External/Maui/src/Maui.InTree.targets"/>
 </Project>
