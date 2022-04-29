@@ -57,6 +57,11 @@ namespace Comet.Android.Controls
 				_bottomNavigationView.Menu.Add(0, i, i, title);
 			}
 
+			
+		}
+		protected override void OnAttachedToWindow()
+		{
+			base.OnAttachedToWindow();
 			var index = 0;
 			MauiContext.GetFragmentManager()
 				.BeginTransaction()
@@ -64,7 +69,6 @@ namespace Comet.Android.Controls
 				.Show(_fragments[index])
 				.Commit();
 		}
-
 		private void HandleNavigationItemSelected(object sender, Google.Android.Material.Navigation.NavigationBarView.ItemSelectedEventArgs e)
 		{
 			var index = e.Item.ItemId;
