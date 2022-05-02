@@ -7,7 +7,11 @@ namespace Comet
 {
 	public static class AnimationExtensions
 	{
-
+		public static FrameConstraints Lerp(this FrameConstraints start, FrameConstraints end, double progress)
+			=> new FrameConstraints(
+				start.Width.Lerp(end.Width, progress),
+				start.Height.Lerp(end.Height, progress)
+				);
 		public static T Animate<T>(this T view, Action<T> action, Action completed = null, double duration = .2, double delay = 0, bool repeats = false, bool autoReverses = false, string id = null, Lerp lerp = null)
 			where T : View => view.Animate(Easing.Default, action, completed, duration, delay, repeats, autoReverses, id, lerp);
 
