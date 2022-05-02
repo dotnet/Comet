@@ -34,6 +34,16 @@ namespace Comet
 			[EnvironmentKeys.Fonts.Weight] = nameof(IText.Font),
 		};
 
+		protected static HashSet<string> PropertiesThatTriggerLayout = new()
+		{
+			nameof(IText.Font),
+			nameof(IView.MinimumHeight),
+			nameof(IView.MaximumHeight),
+			nameof(IView.MinimumWidth),
+			nameof(IView.MaximumWidth),
+			nameof(IImageSourcePart.Source),
+		};
+
 		IReloadHandler reloadHandler;
 		public IReloadHandler ReloadHandler
 		{
@@ -339,10 +349,17 @@ namespace Comet
 			var newPropName = GetHandlerPropertyName(property);
 			ViewHandler?.UpdateValue(newPropName);
 			builtView?.ViewPropertyChanged(property, value);
+			if (measurementValid && PropertyChangeShouldTriggerLayout(newPropName))
+			{
+				this.InvalidateMeasurement();
+			}
 		}
 
 		protected virtual string GetHandlerPropertyName(string property) =>
 			HandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
+
+		protected virtual bool PropertyChangeShouldTriggerLayout(string property) =>
+			PropertiesThatTriggerLayout.Contains(property);
 
 
 		internal override void ContextPropertyChanged(string property, object value, bool cascades)
