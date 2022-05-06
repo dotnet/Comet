@@ -37,6 +37,7 @@ namespace Comet
 		protected static HashSet<string> PropertiesThatTriggerLayout = new()
 		{
 			nameof(IText.Font),
+			nameof(IText.Text),
 			nameof(IView.MinimumHeight),
 			nameof(IView.MaximumHeight),
 			nameof(IView.MinimumWidth),
