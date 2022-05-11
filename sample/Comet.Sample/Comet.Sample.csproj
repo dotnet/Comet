@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFrameworks>$(MauiPlatforms)</TargetFrameworks>
+		<OutputType>Exe</OutputType>
+		<RootNamespace>CometSample</RootNamespace>
+		<SingleProject>true</SingleProject>
+		<IsPackable>false</IsPackable>
+		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+		<!-- Display name -->
+		<ApplicationTitle>CometSample</ApplicationTitle>
+		<!-- App Identifier -->
+		<ApplicationId>com.companyname.CometSample</ApplicationId>
+		<ApplicationId Condition="$(TargetFramework.Contains('-windows'))">f6dfda62-c049-43db-a384-843c190fe298</ApplicationId>
+		<!-- Versions -->
+		<ApplicationVersion>1</ApplicationVersion>
+		<!-- Required for C# Hot Reload -->
+		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
+		<_FastDeploymentDiagnosticLogging>True</_FastDeploymentDiagnosticLogging>
+		<WarningsNotAsErrors>CA1416</WarningsNotAsErrors>
+		<NoWarn>1701;1702;0649;</NoWarn>
+	</PropertyGroup>
+	<ItemGroup Condition=" $(TargetFramework.Contains('-windows')) ">
+		<PackageReference Include="Microsoft.WindowsAppSDK" />
+	</ItemGroup>
+	<ItemGroup>
+		<!-- App Icon -->
+		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#512BD4" />
+		<!-- Splash Screen -->
+		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />
+		<!-- Images -->
+		<MauiImage Include="Resources\Images\*" />
+		<!-- Custom Fonts -->
+		<MauiFont Include="Resources\Fonts\*" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Reloadify3000" Version="1.0.8"/>
+		<ProjectReference Include="..\..\src\Comet\Comet.debug.csproj" />
+		<ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
+		<ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj" />
+	</ItemGroup>
+	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionCometSingleProjectSampleHideInfoBar="True" /></VisualStudio></ProjectExtensions>
+</Project>
