@@ -4,7 +4,5 @@
     <UseMaui Condition=" '$(UseWorkload)' == 'true' ">true</UseMaui>
   </PropertyGroup>
   <Import Project="../../External/Maui/Directory.Build.props" />
-  
-  <Import Project="../../External/Maui/src/Maui.InTree.props"/>
 
 </Project>

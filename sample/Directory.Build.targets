@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Project>
 	<Import Project="..\External\Maui\eng\AndroidX.targets" />
-	<Import Project="..\External\Maui\eng\Versions.props" />
 	<Import Project="..\External\Maui\eng\Microsoft.Extensions.targets" />
 	<Import Project="..\Directory.Build.targets" />
 </Project>
