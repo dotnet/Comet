@@ -45,7 +45,8 @@ jobs:
         with:
           vs-prerelease: true
 
-           - name: Install Maui Workload
+      
+      - name: Install Maui Workload
         shell: pwsh
         run: |
           & dotnet workload install maui `
