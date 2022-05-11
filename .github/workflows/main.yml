@@ -36,9 +36,9 @@ jobs:
           & .\dotnet-install.ps1 -Quality daily -Channel 6.0.3xx -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
           & dotnet --list-sdks    
               
-      - name: Install Visual Studio Preview
-        shell: pwsh
-        run: powershell .\build\install-vs.ps1
+      # - name: Install Visual Studio Preview
+      #   shell: pwsh
+      #   run: powershell .\build\install-vs.ps1
       
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
