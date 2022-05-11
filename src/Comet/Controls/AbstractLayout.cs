@@ -47,7 +47,7 @@ namespace Comet
 		Size lastMeasureSize;
 		public override Size GetDesiredSize(Size availableSize)
 		{
-			if (this.IsMeasureValid && availableSize == lastMeasureSize)
+			if (MeasurementValid && availableSize == lastMeasureSize)
 				return MeasuredSize;
 			lastMeasureSize = availableSize;
 			var frameConstraints = this.GetFrameConstraints();

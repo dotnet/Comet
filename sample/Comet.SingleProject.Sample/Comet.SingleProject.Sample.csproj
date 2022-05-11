@@ -38,10 +38,5 @@
 		<ProjectReference Include="..\..\external\Maui\src\Core\src\Core.csproj" />
 		<ProjectReference Include="..\..\external\Maui\src\Essentials\src\Essentials.csproj" />
 	</ItemGroup>
-	<PropertyGroup Condition="$(TargetFramework.Contains('-windows'))">
-		<OutputType>WinExe</OutputType>
-		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
-		<WindowsPackageType>MSIX</WindowsPackageType>
-	</PropertyGroup>
 	<ProjectExtensions><VisualStudio><UserProperties XamarinHotReloadDebuggerTimeoutExceptionCometSingleProjectSampleHideInfoBar="True" /></VisualStudio></ProjectExtensions>
 </Project>
