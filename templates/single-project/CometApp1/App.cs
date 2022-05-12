@@ -12,10 +12,11 @@ public class App : CometApp
 		builder.UseCometApp<App>()
 			.ConfigureFonts(fonts => {
 				fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
+				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 		//-:cnd
 #if DEBUG
-			builder.EnableHotReload();
+		builder.EnableHotReload();
 #endif
 		//+:cnd
 		return builder.Build();
