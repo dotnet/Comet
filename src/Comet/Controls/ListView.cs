@@ -25,7 +25,7 @@ namespace Comet
 	public class ListView<T> : ListView
 	{
 		//TODO Evaluate if 30 is a good number
-		protected IDictionary<object, View> CurrentViews { get; }
+		protected IDictionary<(int section, int row, object item), View> CurrentViews { get; }
 
 		Binding<IReadOnlyList<T>> _items;
 		Binding<IReadOnlyList<T>> Items
@@ -52,7 +52,7 @@ namespace Comet
 		{
 			if (HandlerSupportsVirtualization)
 			{
-				CurrentViews = new FixedSizeDictionary<object, View>(150)
+				CurrentViews = new FixedSizeDictionary<(int section, int row, object item), View>(150)
 				{
 					OnDequeue = (pair) =>
 					{
@@ -65,7 +65,7 @@ namespace Comet
 				};
 			}
 			else
-				CurrentViews = new Dictionary<object, View>();
+				CurrentViews = new Dictionary<(int section, int row, object item), View>();
 
 			ShouldDisposeViews = true;
 		}
@@ -118,7 +118,8 @@ namespace Comet
 			var item = (T)GetItemAt(section, index);
 			if (item == null)
 				return null;
-			if (!CurrentViews.TryGetValue(item, out var view) || (view?.IsDisposed ?? true))
+			var key = (section, index,item);
+			if (!CurrentViews.TryGetValue(key, out var view) || (view?.IsDisposed ?? true))
 			{
 				using (new StateBuilder(this))
 				{
@@ -128,7 +129,7 @@ namespace Comet
 				}
 				if (view == null)
 					return null;
-				CurrentViews[item] = view;
+				CurrentViews[key] = view;
 				view.Parent = this;
 			}
 			return view;
@@ -362,7 +363,7 @@ namespace Comet
 			var item = (T)GetItemAt(section, index);
 			if (item == null)
 				return null;
-			var key = (section, item);
+			var key = (section, index,item);
 			if (!CurrentViews.TryGetValue(key, out var view) || (view?.IsDisposed ?? true))
 			{
 				view = sections.SafeGetAtIndex(section, GetCachedSection)?.GetViewFor(index)?.SetParent(this);
