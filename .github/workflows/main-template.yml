@@ -7,6 +7,7 @@ on:
     branches: [ main] 
     paths:
       - 'templates/**'
+      - '.github/workflows/main-template.yml'
 
   workflow_dispatch:
 
