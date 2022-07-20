@@ -8,7 +8,7 @@ namespace Comet
 {
 	public partial class ImageButton : View, Microsoft.Maui.IImageButton
 	{
-		protected static Dictionary<string, string> ImageHandlerPropertyMapper = new(HandlerPropertyMapper)
+		protected static Dictionary<string, string> ImageButtonHandlerPropertyMapper = new(HandlerPropertyMapper)
 		{
 			[nameof(ImageSource)] = nameof(IImageSourcePart.Source),
 		};
@@ -57,6 +57,6 @@ namespace Comet
 		}
 
 		protected override string GetHandlerPropertyName(string property)
-			=> ImageHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
+			=> ImageButtonHandlerPropertyMapper.TryGetValue(property, out var value) ? value : property;
 	}
 }
