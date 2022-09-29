@@ -33,7 +33,7 @@ jobs:
         run: |
           $ProgressPreference = 'SilentlyContinue'
           Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
-          & .\dotnet-install.ps1 -Quality daily -Channel 6.0.3xx -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
+          & .\dotnet-install.ps1 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose
           & dotnet --list-sdks    
               
       # - name: Install Visual Studio Preview
@@ -50,13 +50,7 @@ jobs:
         shell: pwsh
         run: |
           & dotnet workload install maui `
-            --skip-sign-check `
-            --from-rollback-file http://aka.ms/dotnet/maui/6.0.300.json `
-            --source https://api.nuget.org/v3/index.json
-
-
-      - name: Set Maui Version
-        run: dotnet run --project build/MauiVersionUpdater/MauiVersionUpdater.csproj -- http://aka.ms/dotnet/maui/6.0.300.json
+            --skip-sign-check 
      
       - name: Restore Comet-Nuget.sln
         run: msbuild /r build/Comet-Nuget.sln
