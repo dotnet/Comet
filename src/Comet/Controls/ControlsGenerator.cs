@@ -5,7 +5,7 @@ using Microsoft.Maui;
 using Comet;
 //Property:NewPropertyName=DefaultValue
 [assembly: CometGenerate(typeof(ITextButton), nameof(ITextButton.Text), nameof(IButton.Clicked), ClassName = "Button", Skip = new[] { $"{nameof(ITextStyle.TextColor)}:{EnvironmentKeys.Colors.Color}" }, Namespace = "Comet")]
-//[assembly: CometGenerate(typeof(IImageButton), nameof(IImageButton.Source), nameof(IButton.Clicked), ClassName = "ImageButton", Namespace = "Comet")]
+[assembly: CometGenerate(typeof(IImageButton), nameof(IImageButton.Source), nameof(IButton.Clicked), ClassName = "ImageButton", Namespace = "Comet")]
 
 //[assembly: CometGenerate(typeof(IBorder), BaseClass = "ContentView", Namespace = "Comet")]
 [assembly: CometGenerate(typeof(IIndicatorView), nameof(IIndicatorView.Count), ClassName = "IndicatorView", Namespace = "Comet")]
