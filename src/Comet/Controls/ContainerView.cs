@@ -30,6 +30,12 @@ namespace Comet
 				foreach (var v in ieiv)
 					Add(v);
 			}
+			else if (obj is Func<View> func)
+			{
+				var view = func();
+				if (view != null)
+					Add(view);
+			}
 			else
 			{
 				throw new NotSupportedException("The object either needs to be a View, IView, or IEnumerable<IView>/IEnumerable<View>");

@@ -1,12 +1,12 @@
 <Project>
   <!-- Fancy file adding/removing based on .platform -->
-  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net6.0-ios')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true ">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.Contains('-ios')) != true AND $(TargetFramework.Contains('-maccatalyst')) != true ">
     <Compile Remove="**\**\*.iOS.cs" />
     <None Include="**\**\*.iOS.cs" />
     <Compile Remove="**\iOS\**\*.cs" />
     <None Include="**\iOS\**\*.cs" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true ">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true AND $(TargetFramework.Contains('-maccatalyst')) != true ">
     <Compile Remove="**\*.Mac.cs" />
     <None Include="**\*.Mac.cs" />
     <Compile Remove="**\Mac\**\*.cs" />
@@ -14,19 +14,19 @@
     <Compile Remove="**\MacCatalyst\**\*.cs" />
     <None Include="**\MacCatalyst\**\*.cs" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true AND $(TargetFramework.StartsWith('Xamarin.iOS')) != true AND $(TargetFramework.StartsWith('net6.0-ios')) != true AND $(TargetFramework.StartsWith('net6.0-maccatalyst')) != true">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('Xamarin.Mac')) != true AND $(TargetFramework.Contains('Xamarin.iOS')) != true AND $(TargetFramework.Contains('-ios')) != true AND $(TargetFramework.StartsWith('-maccatalyst')) != true">
     <Compile Remove="**\*.MaciOS.cs" />
     <None Include="**\*.MaciOS.cs" />
     <Compile Remove="**\MaciOS\**\*.cs" />
     <None Include="**\MaciOS\**\*.cs" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid')) != true AND $(TargetFramework.StartsWith('net6.0-android')) != true ">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('MonoAndroid')) != true AND $(TargetFramework.Contains('-android')) != true ">
     <Compile Remove="**\**\*.Android.cs" />
     <None Include="**\**\*.Android.cs" />
     <Compile Remove="**\Android\**\*.cs" />
     <None Include="**\Android\**\*.cs" />
   </ItemGroup>
-  <ItemGroup Condition="$(TargetFramework.StartsWith('netstandard')) != true AND '$(TargetFramework)' != 'net6.0'">
+  <ItemGroup Condition="$(TargetFramework.StartsWith('netstandard')) != true AND '$(TargetFramework)' != 'net6.0' AND '$(TargetFramework)' != 'net7.0'">
     <Compile Remove="**\*.Standard.cs" />
     <None Include="**\*.Standard.cs" />
     <Compile Remove="**\Standard\**\*.cs" />

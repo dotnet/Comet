@@ -73,6 +73,7 @@ namespace Comet.Samples
 			new MenuItem("SwiftUI Tutorial Section 4b", ()=> new Section4b()),
 			new MenuItem("SwiftUI Tutorial Section 4c", ()=> new Section4c()),
 			new MenuItem("SwiftUI Tutorial Section 4d", ()=> new Section4c()),
+			new MenuItem("Compare with Flutter",() => new Section5()),
 			new MenuItem("DavidSample1",()=> new DavidSample1()),
 			new MenuItem("DavidSample1a",()=> new DavidSample1a()),
 			new MenuItem("DavidSample1b",()=> new DavidSample1b()),

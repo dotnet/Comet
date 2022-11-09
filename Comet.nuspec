@@ -15,23 +15,13 @@
     <license type="expression">MIT</license>
     <language>C#</language>
     <dependencies>
-      <group targetFramework=".NETStandard2.1">
-        <dependency id="Microsoft.Maui.Graphics" version="6.0.100-rc.2.470" exclude="Build,Analyzers" />
-        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Hosting.Abstractions" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Logging" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.DependencyInjection" version="6.0.0" />
-        <dependency id="Microsoft.Extensions.Configuration" version="6.0.0" />
+      <group targetFramework="net7.0-android30.0">
       </group>
-      <group targetFramework="net6.0-android30.0">
+      <group targetFramework="net7.0-ios13.6">
       </group>
-      <group targetFramework="net6.0-ios13.6">
-      </group>
-      <group targetFramework="net6.0-maccatalyst13.5">
+      <group targetFramework="net7.0-maccatalyst13.5">
       </group>      
-      <group targetFramework="net6.0-windows10.0.19041">
+      <group targetFramework="net7.0-windows10.0.19041">
       </group>
     </dependencies>
   </metadata>
@@ -44,17 +34,17 @@
     <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.pdb" target="lib/netstandard2.0/Microsoft.Maui.pdb"/>
     <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.Essentials.dll" target="lib/netstandard2.0/Microsoft.Maui.Essentials.dll"/>
     <file src="src/Comet/bin/Debug/netstandard2.0/Microsoft.Maui.Essentials.pdb" target="lib/netstandard2.0/Microsoft.Maui.Essentials.pdb"/> -->
-    <file src="src/Comet/bin/Debug/net6.0-ios/Comet.dll" target="lib/net6.0-ios13.6/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-ios/Comet.pdb" target="lib/net6.0-ios13.6/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0/Comet.dll" target="lib/net6.0/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0/Comet.pdb" target="lib/net6.0/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-android/Comet.dll" target="lib/net6.0-android30.0/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-android/Comet.pdb" target="lib/net6.0-android30.0/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.dll" target="lib/net6.0-maccatalyst13.5/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-maccatalyst/Comet.pdb" target="lib/net6.0-maccatalyst13.5/Comet.pdb"/>
-    <file src="src/Comet/bin/Debug/net6.0-windows10.0.19041/Comet.dll" target="lib/net6.0-windows10.0.19041/Comet.dll"/>
-    <file src="src/Comet/bin/Debug/net6.0-windows10.0.19041/Comet.pdb" target="lib/net6.0-windows10.0.19041/Comet.pdb"/>
-    <file src="external/Maui/.nuspec/Microsoft.Maui.Controls.MultiTargeting.targets" target="build/Microsoft.Maui.Controls.MultiTargeting.targets" />
+    <file src="src/Comet/bin/Debug/net7.0-ios/Comet.dll" target="lib/net7.0-ios13.6/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net7.0-ios/Comet.pdb" target="lib/net7.0-ios13.6/Comet.pdb"/>
+    <file src="src/Comet/bin/Debug/net7.0/Comet.dll" target="lib/net7.0/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net7.0/Comet.pdb" target="lib/net7.0/Comet.pdb"/>
+    <file src="src/Comet/bin/Debug/net7.0-android/Comet.dll" target="lib/net7.0-android30.0/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net7.0-android/Comet.pdb" target="lib/net7.0-android30.0/Comet.pdb"/>
+    <file src="src/Comet/bin/Debug/net7.0-maccatalyst/Comet.dll" target="lib/net7.0-maccatalyst13.5/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net7.0-maccatalyst/Comet.pdb" target="lib/net7.0-maccatalyst13.5/Comet.pdb"/>
+    <file src="src/Comet/bin/Debug/net7.0-windows10.0.19041.0/Comet.dll" target="lib/net7.0-windows10.0.19041.0/Comet.dll"/>
+    <file src="src/Comet/bin/Debug/net7.0-windows10.0.19041.0/Comet.pdb" target="lib/net7.0-windows10.0.19041.0/Comet.pdb"/>
+    <!-- <file src="external/Maui/.nuspec/Microsoft.Maui.Controls.MultiTargeting.targets" target="build/Microsoft.Maui.Controls.MultiTargeting.targets" /> -->
     <file src="src/Comet.SourceGenerator/bin/Debug/netstandard2.0/Comet.SourceGenerator.dll" target="analyzers/cs/Comet.SourceGenerator.dll"/>
     <file src="src/Comet.SourceGenerator/bin/Debug/netstandard2.0/Stubble.Core.dll" target="analyzers/cs/Stubble.Core.dll"/>
   </files>
