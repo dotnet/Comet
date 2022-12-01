@@ -4,9 +4,9 @@ name: dev-build
 
 on:
   push:
-    branches: [ dev]
+    branches: [dev]
   pull_request:
-    branches: [ dev, main ]
+    branches: [dev, main]
 
   workflow_dispatch:
 
@@ -14,36 +14,34 @@ jobs:
   build:
     name: Build Comet-Nuget
     env:
-        NUPKG_MAJOR: 0.2
-        BASE: 334
+      NUPKG_MAJOR: 0.4
+      BASE: 334
     runs-on: windows-2022
 
-    steps: 
+    steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
-          
+
       - uses: actions/setup-java@v2
         with:
-          distribution: 'zulu' # See 'Supported distributions' for available options
-          java-version: '11'
+          distribution: "zulu" # See 'Supported distributions' for available options
+          java-version: "11"
 
-      - name:  install .NET 
+      - name: install .NET
         shell: pwsh
         run: |
           $ProgressPreference = 'SilentlyContinue'
           Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
           & .\dotnet-install.ps1 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose -Channel STS
-          & dotnet --list-sdks    
-              
+          & dotnet --list-sdks
+
       # - name: Install Visual Studio Preview
       #   shell: pwsh
       #   run: powershell .\build\install-vs.ps1
-      
+
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
-        with:
-          vs-prerelease: true
 
       - name: Install Maui Workload
         shell: pwsh
@@ -51,18 +49,17 @@ jobs:
           & dotnet workload install maui `
             --skip-sign-check `
 
-
       - name: Restore Comet-Nuget.sln
         run: msbuild /r build/Comet-Nuget.sln
- 
+
       - name: Build Comet-Nuget.sln
         run: MSBuild build/Comet-Nuget.sln
-        
+
       - name: Nuget Pack step
         shell: bash
         run: |
           MINOR_VERSION=$(( $BASE + $GITHUB_RUN_NUMBER ))
-          VERSION=0.3.$MINOR_VERSION-alpha
+          VERSION=$NUPKG_MAJOR.$MINOR_VERSION-alpha
           echo "PACKAGE VERSION: $VERSION"
           nuget pack Comet.nuspec -version $VERSION -Symbols -SymbolPackageFormat snupkg
 
@@ -70,10 +67,10 @@ jobs:
         shell: bash
         run: |
           MINOR_VERSION=$(( $BASE + $GITHUB_RUN_NUMBER ))
-          VERSION=0.3.$MINOR_VERSION-alpha
+          VERSION=$NUPKG_MAJOR.$MINOR_VERSION-alpha
           echo "PACKAGE VERSION: $VERSION"
           nuget pack "templates\comet-templates.nuspec" -version $VERSION
-                    
+
       - uses: actions/upload-artifact@v2
         name: Upload Nuget Artifact
         with:
@@ -88,7 +85,6 @@ jobs:
 
       # - name: Build Tests Project
       #   run: msbuild tests/Comet.Tests/Comet.Tests.csproj /p:Configuration=Release
-        
+
       # - name: Run Tests Project
       #   run: dotnet test tests/Comet.Tests/Comet.Tests.csproj
-      

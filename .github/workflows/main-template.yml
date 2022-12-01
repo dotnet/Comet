@@ -4,10 +4,10 @@ name: main-template
 
 on:
   push:
-    branches: [ main] 
+    branches: [main]
     paths:
-      - 'templates/**'
-      - '.github/workflows/main-template.yml'
+      - "templates/**"
+      - ".github/workflows/main-template.yml"
 
   workflow_dispatch:
 
@@ -15,45 +15,35 @@ jobs:
   build:
     name: Build Template
     env:
-        NUPKG_MAJOR: 0.2
-        BASE: 334
+      NUPKG_MAJOR: 0.4
+      BASE: 334
     runs-on: windows-2022
 
-    steps: 
+    steps:
       - uses: actions/checkout@v2
         with:
           submodules: true
 
-      - name:  install .NET 
+      - name: install .NET
         shell: pwsh
         run: |
           $ProgressPreference = 'SilentlyContinue'
           Invoke-WebRequest -Uri "https://dot.net/v1/dotnet-install.ps1" -OutFile dotnet-install.ps1
           & .\dotnet-install.ps1 -InstallDir "$env:ProgramFiles\dotnet\" -Verbose -Channel STS
-          & dotnet --list-sdks    
-              
+          & dotnet --list-sdks
+
       # - name: Install Visual Studio Preview
       #   shell: pwsh
       #   run: powershell .\build\install-vs.ps1
-      
+
       - name: Add msbuild to PATH
         uses: microsoft/setup-msbuild@v1.1
-        with:
-          vs-prerelease: true
-        
-      # - name: Add MSBuild to Path
-      #   shell: pwsh
-      #   run: |
-      #     dotnet tool update -g dotnet-vs
-      #     & echo "$(vs where preview --prop=InstallationPath)\MSBuild\Current\Bin" | Out-File -FilePath $env:GITHUB_PATH -Encoding utf8 -Append
-      
-    
-      
+
       - name: Nuget Pack Template step
         shell: bash
         run: |
           MINOR_VERSION=$(( $BASE + $GITHUB_RUN_NUMBER ))
-          VERSION=0.4.$MINOR_VERSION-beta
+          VERSION=$NUPKG_MAJOR.$MINOR_VERSION-beta
           echo "PACKAGE VERSION: $VERSION"
           nuget pack "templates\comet-templates.nuspec" -version $VERSION
 
@@ -65,29 +55,29 @@ jobs:
             **\*.nupkg
             **\*.snupkg
             **\*.symbols.nupkg
-  
+
   publish:
-      name: Publish
-      needs:
-        - build
-      runs-on: windows-latest
-      steps:
-        - name: Download Artifacts
-          uses: actions/download-artifact@v1
-          with:
-            name: nuget-artifact
-        
-        - name: Setup .NET Core
-          uses: actions/setup-dotnet@v1
-          with:
-            dotnet-version: 3.1.100
-            
-        - name: Setup NuGet
-          uses: nuget/setup-nuget@v1
-          with:
-            nuget-api-key: ${{ secrets.NUGET_API_KEY }}
-            nuget-version: 'latest'
-            
-        - name: Push nuget to Nuget.org
-          run: |
-            nuget push nuget-artifact\*.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey ${{ secrets.NUGET_ORG_API_KEY }} -SkipDuplicate
+    name: Publish
+    needs:
+      - build
+    runs-on: windows-latest
+    steps:
+      - name: Download Artifacts
+        uses: actions/download-artifact@v1
+        with:
+          name: nuget-artifact
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: 3.1.100
+
+      - name: Setup NuGet
+        uses: nuget/setup-nuget@v1
+        with:
+          nuget-api-key: ${{ secrets.NUGET_API_KEY }}
+          nuget-version: "latest"
+
+      - name: Push nuget to Nuget.org
+        run: |
+          nuget push nuget-artifact\*.nupkg -Source https://api.nuget.org/v3/index.json -ApiKey ${{ secrets.NUGET_ORG_API_KEY }} -SkipDuplicate

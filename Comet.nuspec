@@ -1,17 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
   <metadata>
-    <id>Clancey.Comet</id>
+    <id>FlyperStudio.Comet</id>
     <version>0.0.1-alpha</version>
     <title>Comet</title>
-    <authors>James Clancey</authors>
-    <owners>Clancey</owners>
+    <authors>Jesse Jiang</authors>
+    <owners>Flyper Studio</owners>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Comet MVU .net framework</description>
     <summary>Comet is an MVU UI Framework. It lets you build UI quickly and efficiently from C#. It also has HotReload.</summary>
-    <copyright>James Clancey</copyright>
-    <projectUrl>https://github.com/dotnet/Comet</projectUrl>
-    <repository type="git" url="https://github.com/dotnet/Comet"/>
+    <copyright>Jesse Jiang</copyright>
+    <projectUrl>https://github.com/flyperstudio/Comet</projectUrl>
+    <repository type="git" url="https://github.com/flyperstudio/Comet"/>
     <license type="expression">MIT</license>
     <language>C#</language>
     <dependencies>

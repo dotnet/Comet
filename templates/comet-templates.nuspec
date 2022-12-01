@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
     <metadata>
-        <id>Clancey.Comet.Templates.Multiplatform</id>
+        <id>FlyperStudio.Comet.Templates</id>
         <title>Comet Template Pack</title>
         <version>0.3.418-beta</version>
-        <authors>James Clancey</authors>
+        <authors>Jesse Jiang</authors>
         <description>Templates for building Android, iOS, and macOS application with Comet.</description>
-        <projectUrl>https://github.com/Clancey/Comet</projectUrl>
+        <projectUrl>https://github.com/flyperstudio/Comet</projectUrl>
         <licenseUrl>https://www.microsoft.com/web/webpi/eula/net_library_eula_enu.htm</licenseUrl>
         <iconUrl>https://xamarin.com/content/images/nuget/xamarin.png</iconUrl>
         <copyright>Copyright 2019</copyright>
