@@ -40,6 +40,8 @@ namespace Comet
 
 			public int IdePort { get; set; } = 9988;
 
+			int _attempts = 3;
+
 			public async void Initialize(IServiceProvider services)
 			{
 				var handlers = services.GetRequiredService<IMauiHandlersFactory>();
@@ -59,6 +61,14 @@ namespace Comet
 					try
 					{
 						var success = await Reloadify.Reload.Init(IdeIp, IdePort);
+
+						while(!success && _attempts > 0)
+						{
+							await Task.Delay(TimeSpan.FromSeconds(5));
+							Console.WriteLine("Trying to connect HotReload server....");
+							success = await Reloadify.Reload.Init(IdeIp, IdePort);
+							_attempts--;
+						}
 
 						Console.WriteLine($"HotReload Initialize: {success}");
 					}
