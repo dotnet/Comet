@@ -13,6 +13,7 @@ namespace Comet
 		public static readonly Alignment Top = new Alignment(LayoutAlignment.Center, LayoutAlignment.Start);
 		public static readonly Alignment TopLeading = new Alignment(LayoutAlignment.Start, LayoutAlignment.Start);
 		public static readonly Alignment TopTrailing = new Alignment(LayoutAlignment.End, LayoutAlignment.Start);
+		public static readonly Alignment Fill = new Alignment(LayoutAlignment.Fill, LayoutAlignment.Fill);
 
 		public Alignment(LayoutAlignment horizontal, LayoutAlignment vertical)
 		{

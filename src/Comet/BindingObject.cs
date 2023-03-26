@@ -141,14 +141,16 @@ namespace Comet
 		{
 			changeDictionary[fullProperty] = value;
 			UpdatePropertyChangeProperty(view, fullProperty, value);
-			if (GlobalProperties.Contains(property))
-				return false;
 			if (ViewUpdateProperties.TryGetValue((property.BindingObject, property.PropertyName), out var bindings))
 			{
 				foreach (var binding in bindings.ToList())
 				{
 					binding.Binding.BindingValueChanged(property.BindingObject, binding.PropertyName, value);
 				}
+			}
+			if (GlobalProperties.Contains(property))
+			{
+				return false;
 			}
 			return true;
 		}

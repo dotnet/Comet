@@ -1,9 +1,8 @@
-﻿using System;
-using Microsoft.Maui.Graphics;
-using Comet.Internal;
-using Xunit;
-using Microsoft.Maui.HotReload;
+﻿using Comet.Internal;
 using Microsoft.Maui;
+using Microsoft.Maui.Graphics;
+using Microsoft.Maui.HotReload;
+using Xunit;
 
 [assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace Comet.Tests
@@ -50,10 +49,11 @@ namespace Comet.Tests
 		public static void InitializeHandlers(View view, float width, float height)
 		{
 			InitializeHandlers(view);
-			var frame = new Rectangle(0, 0, width, height);
+			view.Alignment(Alignment.Fill);
+			var frame = new Rect(0, 0, width, height);
 			var iView = (IView)view;
 			iView.Measure(frame.Width, frame.Height);
-			iView.Arrange(new Rectangle(0, 0, width, height));
+			iView.Arrange(frame);
 		}
 		
 		public static void ResetComet()
