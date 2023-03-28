@@ -121,6 +121,27 @@ namespace Comet.Tests
 			Assert.True(textHandler.ChangedProperties.TryGetValue(nameof(IText.Text), out var changedText), "Text.Value Change was not set to Text handler");
 		}
 
+		[Fact]
+		public void BindingShouldKeepUpdate()
+		{
+			Text text = null;
+			Text text1 = null;
+			var view = new StatePage();
+
+			view.Body = () => new VStack
+			{				
+				(text = new Text(() => $"{view.clickCount}")),
+				(text1 = new Text(() => $"{view.clickCount}")),
+			};
+			view.SetViewHandlerToGeneric();
+
+			for (int i = 1; i < 10; ++i)
+			{
+				Assert.Equal(text.Value.CurrentValue, $"{i}");
+				Assert.Equal(text1.Value.CurrentValue, $"{i}");
+				view.clickCount.Value++;
+			}
+		}
 
 		[Fact]
 		public void SingleBindingNotEffectedByGlobal()

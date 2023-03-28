@@ -8,14 +8,14 @@ using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 using Microsoft.Maui.Hosting.Internal;
 using Microsoft.Maui.HotReload;
-using static Microsoft.Maui.HandlerMauiAppBuilderExtensions;
+using static Microsoft.Maui.Hosting.HandlerMauiAppBuilderExtensions;
 
 namespace Comet.Tests
 {
 	public static class UI
 	{
 		static bool hasInit;
-		public static IMauiHandlersServiceProvider Handlers { get; set; }
+		public static IMauiHandlersFactory Handlers { get; set; }
 		public static void Init(bool force = false)
 		{
 			if (hasInit && !force)
@@ -41,7 +41,7 @@ namespace Comet.Tests
 				};
 			
 
-			Handlers = new MauiHandlersServiceProvider(handlers.Select(x=> new HandlerRegistration((a)=> a.AddHandler(x.Key,x.Value))));
+			Handlers = new MauiHandlersFactory(handlers.Select(x=> new HandlerRegistration((a)=> a.AddHandler(x.Key,x.Value))));
 
 			MauiHotReloadHelper.IsEnabled = true;
 
