@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-
+using Comet.Styles;
 /*
 
 struct ContentView : View {
@@ -17,6 +17,16 @@ struct ContentView : View {
 */
 namespace Comet.Samples
 {
+	public class DemoSlideStyle : SliderStyle
+	{
+		public DemoSlideStyle()
+		{
+			TrackColor = Colors.Blue;
+			ProgressColor = Colors.Green;
+			ThumbColor = Colors.Red;
+		}
+	}
+
 	public class SliderSample1 : View
 	{
 		readonly State<double> celsius = 50;
@@ -27,7 +37,7 @@ namespace Comet.Samples
                 //new Slider(value: 12, from: -100, through: 100, by: 0.1f),
                 //new Slider(value: () => 12f, from: -100, through: 100, by: 0.1f),
                 //new Slider(value: new Binding<float>( getValue: () => 12f, setValue:null), from: -100, through: 100),
-                new Slider(value: celsius, minimum: -100, maximum: 100),
+                new Slider(value: celsius, minimum: -100, maximum: 100).Apply<DemoSlideStyle>(),
 				new Text(()=>$"{celsius.Value} Celsius"),
 				new Text(()=>$"{celsius.Value * 9 / 5 + 32} Fahrenheit"),
 			};

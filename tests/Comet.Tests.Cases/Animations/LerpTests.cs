@@ -1,7 +1,7 @@
 ﻿using System;
 using Xunit;
 using Microsoft.Maui.Animations;
-namespace Comet.Tests
+namespace Comet.Tests.Cases
 {
 	public class LerpTests : TestBase
 	{

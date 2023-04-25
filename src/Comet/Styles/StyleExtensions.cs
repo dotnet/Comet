@@ -2,12 +2,13 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Diagnostics;
 
 namespace Comet
 {
 	public static class StyleExtensions
 	{
-		public static T StyleId<T> (this T view, string styleId) where T : View
+		public static T StyleId<T>(this T view, string styleId) where T : View
 		{
 			view.StyleId = styleId;
 			return view;
@@ -88,6 +89,66 @@ namespace Comet
 		{
 			style.Apply(view);
 			return view;
+		}
+
+		private static T Apply<T>(T view, string styleId, ViewStyle style) where T : View
+		{
+			view.SetEnvironment(styleId, EnvironmentKeys.View.Border, style.Border);
+			view.SetEnvironment(styleId, EnvironmentKeys.Colors.Background, style.BackgroundColor);
+			view.SetEnvironment(styleId, EnvironmentKeys.View.Shadow, style.Shadow);
+			view.SetEnvironment(styleId, EnvironmentKeys.View.ClipShape, style.Border);
+			return view;
+		}
+
+		private static string GetStyleId<T>() where T : ViewStyle
+		{
+			var frame = new StackFrame(1);
+			string className = frame.GetMethod().DeclaringType.Name;
+			string styleId = $"{className}.{typeof(T)}";
+			Console.WriteLine($"$Get style Id {styleId}");
+			return styleId;
+		}
+
+		public static View Apply<T>(this View view) where T : ViewStyle, new()
+		{
+			string styleId = GetStyleId<T>();
+			var result = Apply(view, styleId, new T());
+			result.StyleId = styleId;
+			return result;
+		}
+
+		public static Button Apply<T>(this Button button) where T : ButtonStyle, new()
+		{
+			string styleId = GetStyleId<T>();
+			T style = new T();
+			var result = Apply(button, styleId, style);
+			result.SetEnvironment(styleId, EnvironmentKeys.Colors.Color, style.TextColor);
+			result.SetEnvironment(styleId, EnvironmentKeys.Button.Padding, style.Padding);
+			result.SetEnvironment(styleId, EnvironmentKeys.Fonts.Font, style.TextFont);
+			result.StyleId = styleId;
+			return result;
+		}
+
+		public static ProgressBar Apply<T>(this ProgressBar progressBar) where T : ProgressBarStyle, new()
+		{
+			string styleId = GetStyleId<T>();
+			T style = new T();
+			var result = Apply(progressBar, styleId, style);
+			result.SetEnvironment(styleId, EnvironmentKeys.ProgressBar.ProgressColor, style.ProgressColor);
+			result.StyleId = styleId;
+			return result;
+		}
+
+		public static Slider Apply<T>(this Slider slider) where T : SliderStyle, new()
+		{
+			string styleId = GetStyleId<T>();
+			T style = new T();
+			var result = Apply(slider, styleId, style);
+			result.SetEnvironment(styleId, EnvironmentKeys.Slider.TrackColor, style.TrackColor);
+			result.SetEnvironment(styleId, EnvironmentKeys.Slider.ProgressColor, style.ProgressColor);
+			result.SetEnvironment(styleId, EnvironmentKeys.Slider.ThumbColor, style.ThumbColor);
+			result.StyleId = styleId;
+			return result;
 		}
 	}
 }

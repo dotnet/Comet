@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2013/05/nuspec.xsd">
+  <metadata>
+    <id>FlyperStudio.Comet.Test</id>
+    <version>0.0.1-alpha</version>
+    <title>Comet.Test</title>
+    <authors>Jesse Jiang</authors>
+    <owners>Flyper Studio</owners>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Comet Test reference</description>
+    <summary>Test referece of Comet Test project</summary>
+    <copyright>Jesse Jiang</copyright>
+    <projectUrl>https://github.com/flyperstudio/Comet</projectUrl>
+    <repository type="git" url="https://github.com/flyperstudio/Comet"/>
+    <license type="expression">MIT</license>
+    <language>C#</language>
+    <dependencies>
+      <group targetFramework="net7.0">
+        <dependency id="FlyperStudio.Comet" version="0.4.339-beta" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="tests/Comet.Tests/bin/Debug/net7.0/Comet.Tests.dll" target="lib/net7.0/Comet.Tests.dll"/>
+    <file src="tests/Comet.Tests/bin/Debug/net7.0/Comet.Tests.pdb" target="lib/net7.0/Comet.Tests.pdb"/>
+  </files>
+</package>

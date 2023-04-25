@@ -1,34 +1,12 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
-    <IsPackable>false</IsPackable>
-    <Configurations>Release;Debug</Configurations>
+    <TargetFrameworks>net7.0</TargetFrameworks>
+    <MauiVersion>7.0.81</MauiVersion>
   </PropertyGroup>
-  
-    <PropertyGroup>
-        <TargetLatestRuntimePatch>true</TargetLatestRuntimePatch>
-    </PropertyGroup>
-    
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugSymbols>false</DebugSymbols>
-  </PropertyGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.5.0" />
-    <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5"><IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-<PrivateAssets>all</PrivateAssets>
-</PackageReference>
-  </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\..\src\Comet.SourceGenerator\Comet.SourceGenerator.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
     <ProjectReference Include="..\..\External\Maui\src\Core\src\Core.csproj" />
     <ProjectReference Include="..\..\External\Maui\src\Graphics\src\Graphics\Graphics.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Helpers\" />
-    <Folder Include="Animations\" />
   </ItemGroup>
 </Project>

@@ -3,7 +3,7 @@ using Microsoft.Maui.Graphics;
 using Comet.Tests.Handlers;
 using Xunit;
 
-namespace Comet.Tests
+namespace Comet.Tests.Cases
 {
 	public class HStackTests : TestBase
 	{

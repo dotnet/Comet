@@ -152,9 +152,9 @@ namespace Comet
 			//If we are setting the value to null, 
 			//there is no reason to create the dictionary if it doesnt exist
 			if (cascades)
-				return Context(value != null)?.SetValue(key, value,true) ?? false;
+				return Context(value != null)?.SetValue(key, value, true) ?? false;
 			else
-				return LocalContext(value != null)?.SetValue(key, value,false) ?? false;
+				return LocalContext(value != null)?.SetValue(key, value, false) ?? false;
 		}
 
 		static Dictionary<(ContextualObject view, string property, bool cascades), (object oldValue, object newValue)> monitoredChanges = null;
@@ -232,7 +232,7 @@ namespace Comet
 			return contextualObject;
 		}
 
-		public static T SetEnvironment<T,TValue>(this T view, Type type, string key, Binding<TValue> binding, bool cascades = true, ControlState state = ControlState.Default)
+		public static T SetEnvironment<T, TValue>(this T view, Type type, string key, Binding<TValue> binding, bool cascades = true, ControlState state = ControlState.Default)
 			where T : View
 		{
 			binding.BindToProperty(view, key);
@@ -270,7 +270,23 @@ namespace Comet
 			return contextualObject;
 		}
 
-		public static void SetProperty(this View view, object value, [CallerMemberName] string key = "", bool cascades = true) => view.SetEnvironment(key,value, cascades);
+		public static T SetEnvironment<T>(this T contextualObject, string styleId, string key, StyleAwareValue styleValue)
+			where T : ContextualObject
+		{
+			if (styleValue == null)
+			{
+				contextualObject.SetEnvironment(styleId, key, null, true);
+				return contextualObject;
+			}
+			foreach (var pair in styleValue.ToEnvironmentValues())
+			{
+				var newKey = pair.key == null ? key : $"{pair.key}.{key}";
+				contextualObject.SetEnvironment(styleId, newKey, pair.value);
+			}
+			return contextualObject;
+		}
+
+		public static void SetProperty(this View view, object value, [CallerMemberName] string key = "", bool cascades = true) => view.SetEnvironment(key, value, cascades);
 		//public static T SetEnvironment<T>(this T contextualObject, IDictionary<string, object> data, bool cascades = true) where T : ContextualObject
 		//{
 		//    foreach (var pair in data)
@@ -286,7 +302,7 @@ namespace Comet
 
 		public static T GetEnvironment<T>(this View view, string key, ControlState state, bool cascades = true)
 		{
-			key = ContextualObject.GetControlStateKey(state,key);
+			key = ContextualObject.GetControlStateKey(state, key);
 			return view.GetEnvironment<T>(key, cascades);
 		}
 		public static T GetEnvironment<T>(this View view, string key, bool cascades = true)
@@ -302,7 +318,7 @@ namespace Comet
 
 		public static T GetEnvironment<T>(this View view, Type type, string key, bool cascades = true)
 			=> view.GetValue<T>(key, view, view.Parent, ContextualObject.GetTypedStyleId(view, key), ContextualObject.GetTypedKey(type ?? view.GetType(), key), cascades);
-		
+
 
 		public static object GetEnvironment(this View view, string key, bool cascades = true) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedStyleId(view, key), ContextualObject.GetTypedKey(view, key), cascades);
 		public static object GetEnvironment(this View view, Type type, string key, bool cascades = true) => view.GetValue(key, view, view.Parent, ContextualObject.GetTypedStyleId(view, key), ContextualObject.GetTypedKey(type ?? view.GetType(), key), cascades);

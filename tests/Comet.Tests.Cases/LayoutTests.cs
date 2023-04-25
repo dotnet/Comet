@@ -5,7 +5,7 @@ using Xunit;
 using Microsoft.Maui;
 using Microsoft.Maui.Primitives;
 
-namespace Comet.Tests
+namespace Comet.Tests.Cases
 {
 	public class LayoutTests : TestBase
 	{

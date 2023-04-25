@@ -3,7 +3,7 @@ using Xunit;
 using Microsoft.Maui.Animations;
 using Microsoft.Maui;
 
-namespace Comet.Tests
+namespace Comet.Tests.Cases
 {
     public class AnimationTests : TestBase
     {

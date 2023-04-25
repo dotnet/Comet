@@ -2,7 +2,7 @@
 using Comet.Internal;
 using Xunit;
 
-namespace Comet.Tests
+namespace Comet.Tests.Cases
 {
 	public class StateBindingTests : TestBase
 	{

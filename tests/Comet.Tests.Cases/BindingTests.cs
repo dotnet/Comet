@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Comet.Tests.Handlers;
 using Microsoft.Maui;
 using Xunit;
-namespace Comet.Tests
+namespace Comet.Tests.Cases
 {
 	public class BindingTests : TestBase
 	{
@@ -129,7 +129,7 @@ namespace Comet.Tests
 			var view = new StatePage();
 
 			view.Body = () => new VStack
-			{				
+			{
 				(text = new Text(() => $"{view.clickCount}")),
 				(text1 = new Text(() => $"{view.clickCount}")),
 			};
@@ -309,8 +309,8 @@ namespace Comet.Tests
 			var view = new StatePage();
 			const string startingValue = "0";
 			var model = new ParentClassWithState();
-		
-			view.Body = () => (text = new Text(()=> $"{model.CurrentDataModel.Value?.Count ?? 0}"));
+
+			view.Body = () => (text = new Text(() => $"{model.CurrentDataModel.Value?.Count ?? 0}"));
 
 
 			var viewHandler = view.SetViewHandlerToGeneric();
@@ -406,7 +406,7 @@ namespace Comet.Tests
 			});
 
 
-			await Task.WhenAll(firstViewTask, secondViewTask);	
+			await Task.WhenAll(firstViewTask, secondViewTask);
 
 
 			Assert.Equal(1, firstViewBuildCount);
@@ -430,6 +430,24 @@ namespace Comet.Tests
 
 		}
 
+		[Fact]
+		public void TestButtonClick()
+		{
+			var view = new StatePage();
+			view.Body = () => new VStack
+			{
+				new Text(() => $"{view.clickCount}").Tag("text"),
+				new Button("Click", () => view.clickCount.Value ++ ).Tag("button"),
+			};
+
+			view.SetViewHandlerToGeneric();
+
+			var button = view.GetViewWithTag<Button>("button");
+			var text = view.GetViewWithTag<Text>("text");
+
+			if (button.Clicked.Value is Action func) func();
+			Assert.Equal(text.Value, "2");
+		}
 
 	}
 }

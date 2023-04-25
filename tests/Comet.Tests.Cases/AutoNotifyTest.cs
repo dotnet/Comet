@@ -4,7 +4,7 @@ using System.Text;
 using Comet;
 using Xunit;
 
-namespace Comet.Tests
+namespace Comet.Tests.Cases
 {
 	public partial class StringConcatanator
 	{

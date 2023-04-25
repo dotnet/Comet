@@ -3,7 +3,7 @@ public class MainPage : View
 {
 
 	[State]
-	readonly CometRide comet = new();
+	public readonly CometRide comet = new();
 
 	[Body]
 	View body()
@@ -14,7 +14,7 @@ public class MainPage : View
 
 				new Button("Ride the Comet! ☄️", ()=>{
 					comet.Rides++;
-				})
+				}).Tag("button")
 					.Frame(height:44)
 					.Margin(8)
 					.Color(Colors.White)

@@ -1,7 +1,15 @@
 ﻿using System.Threading;
-
+using Comet.Styles;
 namespace Comet.Samples
 {
+	public class DemoProgressBarStyle : ProgressBarStyle 
+	{
+		public DemoProgressBarStyle()
+		{
+			ProgressColor = Colors.Green;
+		}
+	}
+
 	public class ProgressBarSample1 : View
 	{
 		readonly State<double> percentage = new State<double>(.1);
@@ -20,7 +28,7 @@ namespace Comet.Samples
 		[Body]
 		View body() => new VStack()
 		{
-			new ProgressBar(percentage),
+			new ProgressBar(percentage).Apply<DemoProgressBarStyle>(),
 			new Text(()=>$"{percentage.Value.ToString("P2")}"),
 		};
 

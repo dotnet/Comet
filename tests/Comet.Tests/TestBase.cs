@@ -2,9 +2,7 @@
 using Microsoft.Maui;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.HotReload;
-using Xunit;
 
-[assembly: CollectionBehavior(DisableTestParallelization = true)]
 namespace Comet.Tests
 {
 	public class TestBase
