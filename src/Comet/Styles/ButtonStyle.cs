@@ -10,7 +10,7 @@ namespace Comet.Styles
 {
 	public class ButtonStyle : ViewStyle
 	{
-		public StyleAwareValue<ControlState,Color> TextColor { get; set; }
+		public StyleAwareValue<ControlState, Color> TextColor { get; set; }
 
 		public StyleAwareValue<ControlState, Font> TextFont { get; set; }
 

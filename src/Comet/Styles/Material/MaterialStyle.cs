@@ -86,7 +86,6 @@ namespace Comet.Styles.Material
 			ProgressBar = new ProgressBarStyle
 			{
 				ProgressColor = colorPalette.P500,
-				TrackColor = colorPalette.P100,
 			};
 		}
 

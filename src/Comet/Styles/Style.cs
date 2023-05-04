@@ -175,7 +175,6 @@ namespace Comet.Styles
 
 		protected virtual void ApplyProgresBarStyle(ContextualObject view)
 		{
-			SetEnvironment(view, "", EnvironmentKeys.ProgressBar.TrackColor, ProgressBar?.TrackColor);
 			SetEnvironment(view, "", EnvironmentKeys.ProgressBar.ProgressColor, ProgressBar?.ProgressColor);
 			ApplyViewStyles(view, ProgressBar, typeof(ProgressBar));
 
