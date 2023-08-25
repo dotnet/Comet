@@ -93,67 +93,11 @@ namespace Comet
 			}));
 
 
-#if WINDOWS
-			var dictionaries = Microsoft.UI.Xaml.Application.Current?.Resources?.MergedDictionaries;
-			if (dictionaries != null)
-			{
-				// WinUI
-				AddLibraryResources<Microsoft.UI.Xaml.Controls.XamlControlsResources>();
-
-				// Microsoft.Maui
-				AddLibraryResources("MicrosoftMauiCoreIncluded", "ms-appx:///Microsoft.Maui/Platform/Windows/Styles/Resources.xbf");
-			}
-
-#endif
 			ThreadHelper.SetFireOnMainThread(MainThread.BeginInvokeOnMainThread);
 
 			return builder;
 		}
 
 
-#if WINDOWS
-			static void AddLibraryResources(string key, string uri)
-			{
-				var resources = Microsoft.UI.Xaml.Application.Current?.Resources;
-				if (resources == null)
-					return;
-
-				var dictionaries = resources.MergedDictionaries;
-				if (dictionaries == null)
-					return;
-
-				if (!resources.ContainsKey(key))
-				{
-					dictionaries.Add(new Microsoft.UI.Xaml.ResourceDictionary
-					{
-						Source = new Uri(uri)
-					});
-				}
-			}
-
-			static void AddLibraryResources<T>()
-				where T : Microsoft.UI.Xaml.ResourceDictionary, new()
-			{
-				var dictionaries = Microsoft.UI.Xaml.Application.Current?.Resources?.MergedDictionaries;
-				if (dictionaries == null)
-					return;
-
-				var found = false;
-				foreach (var dic in dictionaries)
-				{
-					if (dic is T)
-					{
-						found = true;
-						break;
-					}
-				}
-
-				if (!found)
-				{
-					var dic = new T();
-					dictionaries.Add(dic);
-				}
-			}
-#endif
 	}
 }

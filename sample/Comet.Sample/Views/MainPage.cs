@@ -11,7 +11,7 @@ namespace Comet.Samples
 	{
 		List<MenuItem> pages = new List<MenuItem>
 		{
-			new MenuItem("Ride the Comet",()=> new RideSample()),
+			new MenuItem("!Ride the Comet",()=> new RideSample()),
 			new MenuItem("Text Styles",()=> new TextStylesSample()),
 			new MenuItem("LayoutTest",()=> new ViewLayoutTestCase()),
 			new MenuItem("Text Weight",()=> new TextWeightSample()),

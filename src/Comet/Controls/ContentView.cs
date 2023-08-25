@@ -94,12 +94,12 @@ namespace Comet
 			base.ResumeAnimations();
 		}
 
-		public IReadOnlyList<View> GetChildren() => new []{ Content };
-		Size IContentView.CrossPlatformMeasure(double widthConstraint, double heightConstraint) => this.Measure(widthConstraint, heightConstraint);
-		Size IContentView.CrossPlatformArrange(Rect bounds)
+		public IReadOnlyList<View> GetChildren() => new[] { Content };
+		Size ICrossPlatformLayout.CrossPlatformMeasure(double widthConstraint, double heightConstraint) => this.Measure(widthConstraint, heightConstraint);
+		Size ICrossPlatformLayout.CrossPlatformArrange(Rect bounds)
 		{
-			if(!this.MeasurementValid)
-				Measure(bounds.Width,bounds.Height);
+			if (!this.MeasurementValid)
+				Measure(bounds.Width, bounds.Height);
 			this.LayoutSubviews(bounds);
 			return this.MeasuredSize;
 		}

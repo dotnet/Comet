@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
+using Microsoft.Maui.ApplicationModel;
 using Microsoft.Maui.Handlers;
 using Microsoft.Maui.Hosting;
 
@@ -86,6 +87,8 @@ namespace Comet
 				return vc;
 			}
 		}
+
 #endif
+		AppTheme IApplication.UserAppTheme => AppTheme.Unspecified;
 	}
 }

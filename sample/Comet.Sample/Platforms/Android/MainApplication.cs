@@ -1,11 +1,8 @@
-﻿using System;
-using Android.App;
+﻿using Android.App;
 using Android.Runtime;
 using Comet.Samples;
-using Microsoft.Maui;
-using Microsoft.Maui.Hosting;
 
-namespace CometSample
+namespace Comet.Sample
 {
 	[Application]
 	public class MainApplication : MauiApplication

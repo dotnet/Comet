@@ -48,7 +48,7 @@ namespace Comet
 
 				Reloadify.Reload.Instance.ReplaceType = (d) =>
 				{
-					MauiHotReloadHelper.RegisterReplacedView(d.ClassName, d.Type);
+					//MauiHotReloadHelper.RegisterReplacedView(d.ClassName, d.Type);
 				};
 
 				Reloadify.Reload.Instance.FinishedReload = () =>

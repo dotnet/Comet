@@ -1,51 +1,79 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
 	<PropertyGroup>
-		<TargetFrameworks>net7.0-android;net7.0-ios;net7.0-maccatalyst</TargetFrameworks>
-		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows')) and '$(MSBuildRuntimeType)' == 'Full'">$(TargetFrameworks);net7.0-windows10.0.19041.0</TargetFrameworks>
-		
+		<TargetFrameworks>net8.0-android;net8.0-ios;net8.0-maccatalyst</TargetFrameworks>
+		<TargetFrameworks Condition="$([MSBuild]::IsOSPlatform('windows'))">$(TargetFrameworks);net8.0-windows10.0.19041.0</TargetFrameworks>
+		<!-- Uncomment to also build the tizen app. You will need to install tizen by following this: https://github.com/Samsung/Tizen.NET -->
+		<!-- <TargetFrameworks>$(TargetFrameworks);net8.0-tizen</TargetFrameworks> -->
+
+		<!-- Note for MacCatalyst:
+		The default runtime is maccatalyst-x64, except in Release config, in which case the default is maccatalyst-x64;maccatalyst-arm64.
+		When specifying both architectures, use the plural <RuntimeIdentifiers> instead of the singular <RuntimeIdentifer>.
+		The Mac App Store will NOT accept apps with ONLY maccatalyst-arm64 indicated;
+		either BOTH runtimes must be indicated or ONLY macatalyst-x64. -->
+		<!-- ex. <RuntimeIdentifiers>maccatalyst-x64;maccatalyst-arm64</RuntimeIdentifiers> -->
+
 		<OutputType>Exe</OutputType>
-		<RootNamespace>CometSample</RootNamespace>
-		<SingleProject>true</SingleProject>
-		<IsPackable>false</IsPackable>
+		<RootNamespace>Comet.Sample</RootNamespace>
 		<UseMaui>true</UseMaui>
-		<EnablePreviewMsixTooling>true</EnablePreviewMsixTooling>
+		<SingleProject>true</SingleProject>
+		<ImplicitUsings>disable</ImplicitUsings>
+
 		<!-- Display name -->
-		<ApplicationTitle>CometSample</ApplicationTitle>
+		<ApplicationTitle>Comet.Sample</ApplicationTitle>
+
 		<!-- App Identifier -->
-		<ApplicationId>com.companyname.CometSample</ApplicationId>
-		<ApplicationId Condition="$(TargetFramework.Contains('-windows'))">f6dfda62-c049-43db-a384-843c190fe298</ApplicationId>
+		<ApplicationId>com.companyname.comet.sample</ApplicationId>
+
 		<!-- Versions -->
+		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
 		<ApplicationVersion>1</ApplicationVersion>
-		<!-- Required for C# Hot Reload -->
-		<UseInterpreter Condition="'$(Configuration)' == 'Debug'">True</UseInterpreter>
-		<_FastDeploymentDiagnosticLogging>True</_FastDeploymentDiagnosticLogging>
-		<WarningsNotAsErrors>CA1416</WarningsNotAsErrors>
-		<NoWarn>1701;1702;0649;</NoWarn>
+
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">11.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'maccatalyst'">13.1</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'android'">21.0</SupportedOSPlatformVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
+		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
+		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
 	</PropertyGroup>
-	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net6.0-ios|AnyCPU'">
-		<EnableCodeSigning>false</EnableCodeSigning>
-	</PropertyGroup>
-	<ItemGroup Condition=" $(TargetFramework.Contains('-windows')) ">
-		<PackageReference Include="Microsoft.WindowsAppSDK" />
-	</ItemGroup>
+
 	<ItemGroup>
 		<!-- App Icon -->
-		<MauiIcon Include="Resources\appicon.svg" ForegroundFile="Resources\appiconfg.svg" Color="#512BD4" />
+		<MauiIcon Include="Resources\AppIcon\appicon.svg" ForegroundFile="Resources\AppIcon\appiconfg.svg" Color="#512BD4" />
+
 		<!-- Splash Screen -->
-		<MauiSplashScreen Include="Resources\appiconfg.svg" Color="#512BD4" />
+		<MauiSplashScreen Include="Resources\Splash\splash.svg" Color="#512BD4" BaseSize="128,128" />
+
 		<!-- Images -->
 		<MauiImage Include="Resources\Images\*" />
+		<MauiImage Update="Resources\Images\dotnet_bot.svg" BaseSize="168,208" />
+
 		<!-- Custom Fonts -->
 		<MauiFont Include="Resources\Fonts\*" />
+
+		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
+		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
+
 	<ItemGroup>
+		<PackageReference Include="Microsoft.Maui.Controls" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Maui.Controls.Compatibility" Version="$(MauiVersion)" />
+		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="8.0.0-preview.7.23364.3" />
 		<PackageReference Include="Reloadify3000" Version="1.0.8" />
-		<ProjectReference Include="..\..\src\Comet\Comet.csproj" />
 	</ItemGroup>
-	<ProjectExtensions>
-		<VisualStudio>
-			<UserProperties XamarinHotReloadDebuggerTimeoutExceptionCometSingleProjectSampleHideInfoBar="True" />
-		</VisualStudio>
-	</ProjectExtensions>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\src\Comet\Comet.csproj" />
+	</ItemGroup>
+
+	<!-- Build Properties must be defined within these property groups to ensure successful publishing
+       to the Mac App Store. See: https://aka.ms/maui-publish-app-store#define-build-properties-in-your-project-file -->
+  <PropertyGroup Condition="$(TargetFramework.Contains('-maccatalyst')) and '$(Configuration)' == 'Debug'">
+    <CodesignEntitlements>Platforms/MacCatalyst/Entitlements.Debug.plist</CodesignEntitlements>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(TargetFramework.Contains('-maccatalyst')) and '$(Configuration)' == 'Release'">
+    <CodesignEntitlements>Platforms/MacCatalyst/Entitlements.Release.plist</CodesignEntitlements>
+    <UseHardenedRuntime>true</UseHardenedRuntime>
+  </PropertyGroup>
 </Project>

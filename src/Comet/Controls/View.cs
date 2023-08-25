@@ -14,14 +14,13 @@ using Microsoft.Maui.Animations;
 using Microsoft.Maui.Devices;
 using Microsoft.Maui.Graphics;
 using Microsoft.Maui.HotReload;
-using Microsoft.Maui.Internal;
 using Microsoft.Maui.Layouts;
 using Microsoft.Maui.Primitives;
 
 namespace Comet
 {
 
-	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement, IGestureView, IBorder, IVisualTreeElement
+	public class View : ContextualObject, IDisposable, IView, IHotReloadableView, ISafeAreaView, IContentTypeHash, IAnimator, ITitledElement, IGestureView, IBorder, IVisualTreeElement, IPadding
 	{
 		static internal readonly WeakList<IView> ActiveViews = new WeakList<IView>();
 		HashSet<(string Field, string Key)> usedEnvironmentData = new HashSet<(string Field, string Key)>();
@@ -838,5 +837,7 @@ namespace Comet
 		bool IView.IsFocused { get; set; }
 
 		bool IView.InputTransparent => this.GetPropertyValue<bool?>() ?? false;
+
+		Thickness IPadding.Padding => this.GetPadding();
 	}
 }
