@@ -103,5 +103,7 @@ namespace Comet
 			this.LayoutSubviews(bounds);
 			return this.MeasuredSize;
 		}
+		Size IContentView.CrossPlatformMeasure(double widthConstraint, double heightConstraint) => this.Measure(widthConstraint, heightConstraint);
+		Size IContentView.CrossPlatformArrange(Rect bounds) => ((ICrossPlatformLayout)this).CrossPlatformArrange(bounds);
 	}
 }
