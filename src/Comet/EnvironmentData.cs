@@ -14,7 +14,7 @@ namespace Comet
 
 		public static class Fonts
 		{
-			//public const string Font = "Font";
+			public const string Font = "Font";
 			public const string Size = "Font.Size";
 			public const string Weight = "Font.Weight";
 			public const string Family = "Font.Family";
@@ -60,6 +60,11 @@ namespace Comet
 			public const string Opacity = nameof(Microsoft.Maui.IView.Opacity);
 		}
 
+		public static class Button
+		{
+			public const string Padding = "Padding";
+		}
+
 		public static class Shape
 		{
 			public const string LineWidth = "Shape.LineWidth";
@@ -101,14 +106,13 @@ namespace Comet
 		}
 		public static class Slider
 		{
-			public const string TrackColor = "SliderTrackColor";
-			public const string ProgressColor = "SliderProgressColor";
-			public const string ThumbColor = "SliderThumbColor";
+			public const string TrackColor = "MinimumTrackColor";
+			public const string ProgressColor = "MaximumTrackColor";
+			public const string ThumbColor = "ThumbColor";
 		}
 		public static class ProgressBar
 		{
-			public const string TrackColor = "ProgressBarTrackColor";
-			public const string ProgressColor = "ProgressBarProgressColor";
+			public const string ProgressColor = "ProgressColor";
 		}
 	}
 
